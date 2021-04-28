@@ -1,0 +1,14 @@
+.video_item {
+  .video_item_info {
+    bottom: -70px;
+  }
+
+  &:hover {
+    .video_thumbnail {
+      transform: scale(1.2);
+    }
+    .video_item_info {
+      bottom: 0;
+    }
+  }
+}
