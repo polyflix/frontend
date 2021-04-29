@@ -13,12 +13,12 @@ The application runs in production at : [https://polyflix.dokku.thomasgouveia.fr
 
 ## Development
 
-In order to run the app locally, you must have a [back-end](https://gitlab.polytech.umontpellier.fr/gouveia/polyflix-gouveia/back-end) up and running. See the README for instructions.
+In order to run the app locally, you must have a [back-end](https://gitlab.polytech.umontpellier.fr/polyflix-do/back-end) up and running. See the README for instructions.
 
 Clone the repository :
 
 ```bash
-git clone git@gitlab.polytech.umontpellier.fr:gouveia/polyflix-gouveia/front-end.git
+git clone git@gitlab.polytech.umontpellier.fr:polyflix-do/front-end.git
 ```
 
 Install dependencies :
