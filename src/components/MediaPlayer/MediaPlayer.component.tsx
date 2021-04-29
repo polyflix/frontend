@@ -41,6 +41,7 @@ const MediaPlayer: React.FC<Props> = ({ video, ...rest }) => {
         width="100%"
         height="100vh"
         controls
+        playing={true}
         url="https://media.vimejs.com/720p.mp4"
       />
     </div>
