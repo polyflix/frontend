@@ -13,11 +13,12 @@ export class VideoService {
    * @returns {Promise<VideosWithPagination>}
    */
   static async getVideos(
+    token: Token,
+    userOnly?: boolean,
     page?: number,
-    limit?: number,
-    token?: Token
+    limit?: number
   ): Promise<VideosWithPagination> {
-    const path = `/videos${token ? "/me" : ""}`;
+    const path = `/videos${userOnly ? "/me" : ""}`;
     // Build search query
     let query;
     if (page || limit) {
@@ -32,7 +33,7 @@ export class VideoService {
 
     const { status, response, error } = await GET(url, {
       // If we have a token, we put it into the headers for the request
-      headers: token ? token.getAuthorizationHeader() : {},
+      headers: token.getAuthorizationHeader(),
     });
     if (status !== 200) {
       throw error;
@@ -101,8 +102,10 @@ export class VideoService {
    * @param {string} slug the video slug
    * @returns {Promise<Video>}
    */
-  static async getVideoBySlug(slug: string): Promise<Video> {
-    const { status, response, error } = await GET(`/videos/${slug}`);
+  static async getVideoBySlug(token: Token, slug: string): Promise<Video> {
+    const { status, response, error } = await GET(`/videos/${slug}`, {
+      headers: token.getAuthorizationHeader(),
+    });
     if (status !== StatusCodes.OK) {
       throw error;
     }

@@ -1,5 +1,29 @@
-import axios, { AxiosRequestConfig, Method } from "axios";
+import axios, { AxiosRequestConfig, AxiosResponse, Method } from "axios";
 import { API_URL } from "../constants/api.constant";
+
+axios.interceptors.response.use(
+  (response: AxiosResponse) => response,
+  (error) => {
+    const originalRequest = error.config;
+    const { status } = error.response;
+    if (status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true;
+      return POST("/auth/refresh").then((res: ApiResponse) => {
+        const { error, response } = res;
+        if (error) return Promise.reject(error);
+
+        const { token } = response;
+
+        originalRequest.headers = {
+          ...originalRequest.headers,
+          Authorization: `Bearer ${token}`,
+        };
+
+        return axios(originalRequest);
+      });
+    }
+  }
+);
 
 interface RequestOptions {
   body?: any;

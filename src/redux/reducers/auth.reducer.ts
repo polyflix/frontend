@@ -2,7 +2,8 @@ import { AuthAction, AuthState } from "../../types/auth.type";
 import { AuthActions } from "../actions/auth.action";
 
 const initialState: AuthState = {
-  isLoading: false,
+  isLoading: true,
+  hasRefresh: false,
   isAuthenticated: false,
   user: null,
   token: null,
@@ -38,9 +39,16 @@ const authReducer = (
         authError: null,
         isLoading: true,
       };
-
+    case AuthActions.REFRESH_AUTH_IN_PROGRESS:
+      return {
+        ...state,
+        authError: null,
+        isLoading: true,
+        hasRefresh: true,
+      };
     case AuthActions.LOGIN_FAILURE:
     case AuthActions.REGISTER_FAILURE:
+    case AuthActions.REFRESH_AUTH_FAILURE:
       return {
         ...state,
         ...action.payload,
@@ -48,7 +56,6 @@ const authReducer = (
         isAuthenticated: false,
       };
     case AuthActions.LOGOUT:
-    case AuthActions.REFRESH_AUTH_FAILURE:
       return {
         ...state,
         isAuthenticated: false,

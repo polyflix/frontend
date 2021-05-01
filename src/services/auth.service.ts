@@ -8,6 +8,7 @@ import {
   LoginSuccessAction,
   LogoutAction,
   RefreshAuthFailureAction,
+  RefreshAuthInProgress,
   RefreshAuthSuccessAction,
   RegisterFailureAction,
   RegisterInProgressAction,
@@ -15,7 +16,6 @@ import {
 } from "../redux/actions/auth.action";
 import { AuthAction, ILoginForm, IRegisterForm } from "../types/auth.type";
 import { GET, POST } from "../utils/api.util";
-import { TimerService } from "./timer.service";
 
 export class AuthService {
   /**
@@ -37,9 +37,6 @@ export class AuthService {
       const { user, accessToken } = response;
 
       const token = Token.decode(accessToken);
-      TimerService.start(() => {
-        AuthService.refreshAuth(dispatch);
-      }, token.getExpirationInMillis());
 
       return dispatch(LoginSuccessAction(User.fromJson(user), token));
     };
@@ -48,23 +45,23 @@ export class AuthService {
   /**
    * Refresh authentication
    * @param {Dispatch<AuthAction>} dispatch the dispatcher
-   * @returns {AuthAction} the action dispatched
    */
-  static async refreshAuth(dispatch: Dispatch<AuthAction>) {
-    const { status, response } = await POST("/auth/refresh");
-    if (
-      status !== StatusCodes.OK ||
-      (status === StatusCodes.OK && !response.user)
-    ) {
-      return dispatch(RefreshAuthFailureAction());
-    }
-    const token = Token.decode(response.token);
-    TimerService.start(() => {
-      AuthService.refreshAuth(dispatch);
-    }, token.getExpirationInMillis());
-    return dispatch(
-      RefreshAuthSuccessAction(User.fromJson(response.user), token)
-    );
+  static refreshAuth() {
+    return async function (dispatch: Dispatch<AuthAction>) {
+      dispatch(RefreshAuthInProgress());
+      const { status, response } = await POST("/auth/refresh");
+      if (
+        status !== StatusCodes.OK ||
+        (status === StatusCodes.OK && !response.user)
+      ) {
+        return dispatch(RefreshAuthFailureAction());
+      }
+      const token = Token.decode(response.token);
+
+      return dispatch(
+        RefreshAuthSuccessAction(User.fromJson(response.user), token)
+      );
+    };
   }
 
   /**
@@ -73,8 +70,6 @@ export class AuthService {
   static logout() {
     return async function (dispatch: Dispatch<AuthAction>) {
       await GET("/auth/logout");
-      // Stop the timer for refresh when user sign out
-      TimerService.stop();
       return dispatch(LogoutAction());
     };
   }
@@ -97,9 +92,7 @@ export class AuthService {
       else {
         const { user, accessToken } = response;
         const token = Token.decode(accessToken);
-        TimerService.start(() => {
-          AuthService.refreshAuth(dispatch);
-        }, token.getExpirationInMillis());
+
         action = RegisterSuccessAction(User.fromJson(user), token);
       }
       return dispatch(action);

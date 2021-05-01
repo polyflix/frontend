@@ -24,6 +24,7 @@ export interface IRegisterForm extends ILoginForm {
 
 export type AuthState = {
   isLoading: boolean;
+  hasRefresh: boolean;
   isAuthenticated: boolean;
   user: User | null;
   token: Token | null;
