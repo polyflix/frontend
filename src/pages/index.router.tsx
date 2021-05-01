@@ -28,7 +28,13 @@ const IndexRouter = () => {
         location={location}
         key={`${location.pathname}${location.search}`}
       >
-        <Route exact path="/" component={HomePage} />
+        <ProtectedRoute
+          hasAccessIf={isAuthenticated}
+          exact
+          path="/"
+          redirectPath="/auth/login"
+          component={HomePage}
+        />
         <ProtectedRoute
           hasAccessIf={!isAuthenticated}
           redirectPath="/"
@@ -38,9 +44,15 @@ const IndexRouter = () => {
         <ProtectedRoute
           hasAccessIf={isAuthenticated}
           path="/profile"
+          redirectPath="/auth/login"
           component={ProfileRouter}
         />
-        <Route path="/videos" component={VideoRouter} />
+        <ProtectedRoute
+          hasAccessIf={isAuthenticated}
+          path="/videos"
+          redirectPath="/auth/login"
+          component={VideoRouter}
+        />
         <Route path="*" component={NotFoundPage} />
       </Switch>
     </AnimatePresence>

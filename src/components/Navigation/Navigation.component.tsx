@@ -34,7 +34,7 @@ export const NAV_HEIGHT = 65;
  */
 const Navigation: React.FC<Props> = ({ visible }) => {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
-  const { user } = useAuth();
+  const { user, isAuthenticated } = useAuth();
 
   const dispatch = useDispatch();
 
@@ -132,7 +132,7 @@ const Navigation: React.FC<Props> = ({ visible }) => {
   const getCommonContent = () => {
     return (
       <div className="flex items-center flex-row-reverse md:flex-row relative">
-        <Link to="/">
+        <Link to={isAuthenticated ? "/" : "#"}>
           <Image className="h-10 md:h-12" alt="Polyflix logo" src={logo} />
         </Link>
         <div className="mx-2"></div>
@@ -143,9 +143,11 @@ const Navigation: React.FC<Props> = ({ visible }) => {
             "fixed rounded-b-md p-4 md:p-0 bg-black transition-all left-0 w-full md:relative md:flex md:w-min"
           )}
         >
-          <Link to="/">
-            <Typography as="span">Videos</Typography>
-          </Link>
+          {isAuthenticated && (
+            <Link to="/">
+              <Typography as="span">Videos</Typography>
+            </Link>
+          )}
         </div>
       </div>
     );
