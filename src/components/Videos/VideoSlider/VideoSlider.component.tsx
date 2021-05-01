@@ -5,6 +5,7 @@ import SwiperCore, { Mousewheel, Navigation } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import Video from "../../../models/video.model";
 import Typography from "../../Typography/Typography.component";
+import NoData from "../../NoData/NoData";
 import VideoSliderItem from "../VideoSliderItem/VideoSliderItem.component";
 import SliderControl from "./SliderControl.component";
 
@@ -14,9 +15,8 @@ type Props = {
 };
 
 SwiperCore.use([Navigation, Mousewheel]);
-
 const VideoSlider: React.FC<Props> = ({ videos, title }) => {
-  return (
+  return videos.length !== 0 ? (
     <div>
       <Link to="#" className="flex items-center mb-3">
         <Typography as="h4" className="text-xl pl-3" bold>
@@ -52,6 +52,8 @@ const VideoSlider: React.FC<Props> = ({ videos, title }) => {
         </SliderControl>
       </Swiper>
     </div>
+  ) : (
+    <NoData />
   );
 };
 
