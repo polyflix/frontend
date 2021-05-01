@@ -1,5 +1,4 @@
 import { AnimatePresence } from "framer-motion";
-import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Route, Switch, useLocation } from "react-router-dom";
 import ProtectedRoute from "../components/ProtectedRoute/ProtectedRoute.component";
@@ -12,49 +11,52 @@ import ProfileRouter from "./profile/profile.router";
 import VideoRouter from "./videos/video.router";
 
 const IndexRouter = () => {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, isLoading, hasRefresh } = useAuth();
+
   const location = useLocation();
   const dispatch = useDispatch();
 
-  const [hasSentRefresh, setHasSentRefresh] = useState<boolean>(false);
-
-  if (!isAuthenticated && !hasSentRefresh) {
-    AuthService.refreshAuth(dispatch).finally(() => setHasSentRefresh(true));
+  if (!isAuthenticated && !hasRefresh) {
+    dispatch(AuthService.refreshAuth());
   }
 
   return (
     <AnimatePresence exitBeforeEnter>
-      <Switch
-        location={location}
-        key={`${location.pathname}${location.search}`}
-      >
-        <ProtectedRoute
-          hasAccessIf={isAuthenticated}
-          exact
-          path="/"
-          redirectPath="/auth/login"
-          component={HomePage}
-        />
-        <ProtectedRoute
-          hasAccessIf={!isAuthenticated}
-          redirectPath="/"
-          path="/auth"
-          component={AuthRouter}
-        />
-        <ProtectedRoute
-          hasAccessIf={isAuthenticated}
-          path="/profile"
-          redirectPath="/auth/login"
-          component={ProfileRouter}
-        />
-        <ProtectedRoute
-          hasAccessIf={isAuthenticated}
-          path="/videos"
-          redirectPath="/auth/login"
-          component={VideoRouter}
-        />
-        <Route path="*" component={NotFoundPage} />
-      </Switch>
+      {/* This is temporary awaiting the Hugo MR with Suspense */}
+      {isLoading && <div>Refresh auth</div>}
+      {!isLoading && (
+        <Switch
+          location={location}
+          key={`${location.pathname}${location.search}`}
+        >
+          <ProtectedRoute
+            hasAccessIf={isAuthenticated}
+            exact
+            path="/"
+            redirectPath="/auth/login"
+            component={HomePage}
+          />
+          <ProtectedRoute
+            hasAccessIf={!isAuthenticated}
+            redirectPath="/"
+            path="/auth"
+            component={AuthRouter}
+          />
+          <ProtectedRoute
+            hasAccessIf={isAuthenticated}
+            path="/profile"
+            redirectPath="/auth/login"
+            component={ProfileRouter}
+          />
+          <ProtectedRoute
+            hasAccessIf={isAuthenticated}
+            path="/videos"
+            redirectPath="/auth/login"
+            component={VideoRouter}
+          />
+          <Route path="*" component={NotFoundPage} />
+        </Switch>
+      )}
     </AnimatePresence>
   );
 };

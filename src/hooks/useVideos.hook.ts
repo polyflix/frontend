@@ -80,8 +80,8 @@ export const useVideos = <T = Video | VideosWithPagination>(
     if (authLoading || (!isCollection && !slug)) return;
     setLoading(true);
     (isCollection
-      ? getVideos(page, limit, userOnly ? (token as Token) : undefined)
-      : getVideoBySlug(slug as string)
+      ? getVideos(token as Token, userOnly, page, limit)
+      : getVideoBySlug(token as Token, slug as string)
     )
       .then((data: any) => {
         if (isCollection && onCollectionLoaded) {

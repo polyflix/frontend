@@ -15,6 +15,7 @@ export enum AuthActions {
   REGISTER_IN_PROGRESS = "REGISTER_IN_PROGRESS",
   REGISTER_FAILURE = "REGISTER_FAILURE",
   REFRESH_AUTH_SUCCESS = "REFRESH_AUTH_SUCCESS",
+  REFRESH_AUTH_IN_PROGRESS = "REFRESH_AUTH_IN_PROGRESS",
   REFRESH_AUTH_FAILURE = "REFRESH_AUTH_FAILURE",
 }
 
@@ -104,6 +105,14 @@ export const RefreshAuthSuccessAction = (
     user,
     token,
   });
+};
+
+/**
+ * Create a refresh auth in progress action
+ * @returns {AuthAction} the refresh in progress action
+ */
+export const RefreshAuthInProgress = (): AuthAction => {
+  return actionFactory<AuthState>(AuthActions.REFRESH_AUTH_IN_PROGRESS);
 };
 
 /**
