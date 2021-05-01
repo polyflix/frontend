@@ -54,7 +54,7 @@ const IndexRouter = () => {
             redirectPath="/auth/login"
             component={VideoRouter}
           />
-          <Route path="*" component={NotFoundPage} />
+          <Route component={NotFoundPage} />
         </Switch>
       )}
     </AnimatePresence>
