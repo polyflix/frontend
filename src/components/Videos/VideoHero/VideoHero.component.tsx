@@ -4,6 +4,7 @@ import Video from "../../../models/video.model";
 import { applyBackgroundImage, cn } from "../../../utils/classes.util";
 import Paragraph from "../../Typography/Paragraph/Paragraph.component";
 import Typography from "../../Typography/Typography.component";
+import NoData from "../../NoData/NoData";
 import VideoButtons from "../VideoButtons/VideoButton.component";
 
 type Props = {
@@ -11,7 +12,7 @@ type Props = {
 };
 
 const VideoHero: React.FC<Props> = ({ video }) => {
-  return (
+  return video ? (
     <>
       <div
         style={applyBackgroundImage(video.thumbnail)}
@@ -31,6 +32,8 @@ const VideoHero: React.FC<Props> = ({ video }) => {
         </motion.div>
       </div>
     </>
+  ) : (
+    <NoData />
   );
 };
 

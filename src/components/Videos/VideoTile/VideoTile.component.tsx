@@ -4,6 +4,7 @@ import { applyBackgroundImage } from "../../../utils/classes.util";
 import Image from "../../Image/Image.component";
 import Paragraph from "../../Typography/Paragraph/Paragraph.component";
 import Typography from "../../Typography/Typography.component";
+import NoData from "../../NoData/NoData";
 import VideoButtons from "../VideoButtons/VideoButton.component";
 
 type Props = {
@@ -11,7 +12,7 @@ type Props = {
 };
 
 const VideoTile: React.FC<Props> = ({ video }) => {
-  return (
+  return video ? (
     <div
       style={applyBackgroundImage(video.thumbnail)}
       className="w-full h-auto relative"
@@ -38,6 +39,8 @@ const VideoTile: React.FC<Props> = ({ video }) => {
         </div>
       </div>
     </div>
+  ) : (
+    <NoData />
   );
 };
 
