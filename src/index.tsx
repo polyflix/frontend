@@ -1,21 +1,25 @@
+import { store } from "@data/redux/index.store";
+import DIProvider from "@ui/components/DIProvider/DIProvider.component";
+import IndexRouter from "@ui/pages/index.router";
 import React from "react";
 import ReactDOM from "react-dom";
-import { Provider } from "react-redux";
+import { Provider as ReduxProvider } from "react-redux";
 import { BrowserRouter as Router } from "react-router-dom";
 import "swiper/components/navigation/navigation.scss";
 import "swiper/swiper.scss";
-import IndexRouter from "./pages/index.router";
-import { store } from "./redux/index.store";
+import { providers } from "./providers";
 import reportWebVitals from "./reportWebVitals";
 import "./styles/index.scss";
 
 ReactDOM.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <Router>
-        <IndexRouter />
-      </Router>
-    </Provider>
+    <ReduxProvider store={store}>
+      <DIProvider providers={providers}>
+        <Router>
+          <IndexRouter />
+        </Router>
+      </DIProvider>
+    </ReduxProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );

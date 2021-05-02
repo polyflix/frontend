@@ -1,0 +1,20 @@
+{
+    "compilerOptions": {
+        "baseUrl": "src",
+        "paths": {
+            "@modules/di": ["./modules/di"],
+            "@core/hooks/*": ["./hooks/*"],
+            "@core/constants": ["./constants"],
+            "@core/services/*": ["./services/*"],
+            "@core/utils": ["./utils"],
+            "@core/types/*": ["./types/*"],
+            "@data/models/*": ["./models/*"],
+            "@data/redux/*": ["./redux/*"],
+            "@ui/components/*": ["./components/*"],
+            "@ui/pages/*": ["./pages/*"],
+            "@ui/animations/*": ["./animations/*"],
+            "@ui/styles/*": ["./styles/*"],
+            "@assets/*": ["./assets/*"]
+        }
+    }
+}

@@ -1,8 +1,8 @@
+import { WithClassname } from "@core/types/props.type";
+import { cn } from "@core/utils";
+import User from "@data/models/user.model";
+import Typography from "@ui/components/Typography/Typography.component";
 import React from "react";
-import User from "../../models/user.model";
-import { WithClassname } from "../../types/props.type";
-import { cn } from "../../utils/classes.util";
-import Typography from "../Typography/Typography.component";
 
 type Props = WithClassname & {
   /** The user we want to display the avatar */

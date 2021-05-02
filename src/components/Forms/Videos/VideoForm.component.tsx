@@ -1,3 +1,4 @@
+import { VideoService } from "@core/services/videos/video.service";
 import {
   EyeIcon,
   EyeOffIcon,
@@ -13,7 +14,7 @@ import stagger from "../../../animations/stagger";
 import { useAuth } from "../../../hooks/useAuth.hook";
 import { Token } from "../../../models/token.model";
 import Video from "../../../models/video.model";
-import { VideoService } from "../../../services/video.service";
+import { useInjection } from "../../../modules/di";
 import { IVideoForm } from "../../../types/videos.type";
 import Alert, { AlertType } from "../../Alert/Alert.component";
 import FilledButton from "../../Buttons/FilledButton/FilledButton.component";
@@ -35,6 +36,7 @@ type Props = {
  * The video form component
  */
 const VideoForm: React.FC<Props> = ({ video }) => {
+  const videoService = useInjection<VideoService>(VideoService);
   const { token } = useAuth();
   const { register, handleSubmit, errors, watch } = useForm<IVideoForm>({
     defaultValues: {
@@ -62,8 +64,8 @@ const VideoForm: React.FC<Props> = ({ video }) => {
     setLoading(true);
     try {
       let result = await (isUpdate
-        ? VideoService.updateVideo(video?.id as string, data, token as Token)
-        : VideoService.createVideo(data, token as Token));
+        ? videoService.updateVideo(video?.id as string, data, token as Token)
+        : videoService.createVideo(data, token as Token));
       setAlert({
         message: isUpdate
           ? `"${result.title}" successfully updated.`

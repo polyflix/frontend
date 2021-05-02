@@ -1,3 +1,7 @@
+import logo from "@assets/images/polyflix-logo.png";
+import { useAuth } from "@core/hooks/useAuth.hook";
+import { AuthService } from "@core/services/auth/auth.service";
+import { cn } from "@core/utils";
 import { Menu, Transition } from "@headlessui/react";
 import {
   ChevronDownIcon,
@@ -6,14 +10,10 @@ import {
   VideoCameraIcon,
 } from "@heroicons/react/outline";
 import { LoginIcon, UserAddIcon } from "@heroicons/react/solid";
+import { useInjection } from "@modules/di";
 import { motion } from "framer-motion";
 import { Fragment, useState } from "react";
-import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import logo from "../../assets/images/polyflix-logo.png";
-import { useAuth } from "../../hooks/useAuth.hook";
-import { AuthService } from "../../services/auth.service";
-import { cn } from "../../utils/classes.util";
 import { Url } from "../../utils/url.util";
 import Avatar from "../Avatar/Avatar.component";
 import OutlineButton from "../Buttons/OutlineButton/OutlineButton.component";
@@ -32,11 +32,10 @@ export const NAV_HEIGHT = 65;
 /**
  * The navigation component
  */
-const Navigation: React.FC<Props> = ({ visible }) => {
+const Navigation: React.FC<Props> = ({ visible, ...rest }) => {
+  const authService = useInjection<AuthService>(AuthService);
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const { user, isAuthenticated } = useAuth();
-
-  const dispatch = useDispatch();
 
   const isNavbarExited = Boolean(Url.hasParameter("play")) === true;
 
@@ -90,7 +89,7 @@ const Navigation: React.FC<Props> = ({ visible }) => {
                   </Menu.Item>
                   <Menu.Item>
                     <span
-                      onClick={() => dispatch(AuthService.logout())}
+                      onClick={() => authService!.logout()}
                       className="cursor-pointer text-nx-white flex rounded-md items-center w-full px-2 py-2 text-sm"
                     >
                       <LogoutIcon className="text-nx-red w-5 mr-3" />

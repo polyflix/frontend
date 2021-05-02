@@ -1,10 +1,14 @@
+import { IVideoForm, VideosWithPagination } from "@core/types/videos.type";
+import { Token } from "@data/models/token.model";
+import Video from "@data/models/video.model";
+import { Injectable } from "@modules/di";
 import { StatusCodes } from "http-status-codes";
-import { Token } from "../models/token.model";
-import Video from "../models/video.model";
-import { IVideoForm, VideosWithPagination } from "../types/videos.type";
-import { DELETE, GET, PATCH, POST } from "../utils/api.util";
+import { HttpService } from "../http/http.service";
 
+@Injectable()
 export class VideoService {
+  constructor(private readonly httpService: HttpService) {}
+
   /**
    * Get the videos list paginated.
    * @param {number | undefined} page the page to fetch
@@ -12,7 +16,7 @@ export class VideoService {
    * @param {Token | undefined} token the access token
    * @returns {Promise<VideosWithPagination>}
    */
-  static async getVideos(
+  public async getVideos(
     token: Token,
     userOnly?: boolean,
     page?: number,
@@ -31,7 +35,7 @@ export class VideoService {
     // The format is the following : /videos[/me][?page=1&limit=20]
     const url = `${path}${query ? "?" + query.toString() : ""}`;
 
-    const { status, response, error } = await GET(url, {
+    const { status, response, error } = await this.httpService.get(url, {
       // If we have a token, we put it into the headers for the request
       headers: token.getAuthorizationHeader(),
     });
@@ -50,8 +54,8 @@ export class VideoService {
    * @param {Token} token the access token
    * @returns {Promise<Video>}
    */
-  static async createVideo(video: IVideoForm, token: Token): Promise<Video> {
-    const { status, response, error } = await POST(`/videos`, {
+  public async createVideo(video: IVideoForm, token: Token): Promise<Video> {
+    const { status, response, error } = await this.httpService.post(`/videos`, {
       body: video,
       headers: token.getAuthorizationHeader(),
     });
@@ -66,8 +70,8 @@ export class VideoService {
    * @param {string} id the video id
    * @param {Token} token the access token
    */
-  static async deleteVideo(id: string, token: Token): Promise<void> {
-    const { status, error } = await DELETE(`/videos/${id}`, {
+  public async deleteVideo(id: string, token: Token): Promise<void> {
+    const { status, error } = await this.httpService.delete(`/videos/${id}`, {
       headers: token.getAuthorizationHeader(),
     });
     if (status !== StatusCodes.NO_CONTENT) {
@@ -82,15 +86,18 @@ export class VideoService {
    * @param {Token} token the access token
    * @returns {Promise<Video>}
    */
-  static async updateVideo(
+  public async updateVideo(
     id: string,
     data: IVideoForm,
     token: Token
   ): Promise<Video> {
-    const { status, response, error } = await PATCH(`/videos/${id}`, {
-      body: data,
-      headers: token.getAuthorizationHeader(),
-    });
+    const { status, response, error } = await this.httpService.patch(
+      `/videos/${id}`,
+      {
+        body: data,
+        headers: token.getAuthorizationHeader(),
+      }
+    );
     if (status !== StatusCodes.OK) {
       throw error;
     }
@@ -102,10 +109,13 @@ export class VideoService {
    * @param {string} slug the video slug
    * @returns {Promise<Video>}
    */
-  static async getVideoBySlug(token: Token, slug: string): Promise<Video> {
-    const { status, response, error } = await GET(`/videos/${slug}`, {
-      headers: token.getAuthorizationHeader(),
-    });
+  public async getVideoBySlug(token: Token, slug: string): Promise<Video> {
+    const { status, response, error } = await this.httpService.get(
+      `/videos/${slug}`,
+      {
+        headers: token.getAuthorizationHeader(),
+      }
+    );
     if (status !== StatusCodes.OK) {
       throw error;
     }
