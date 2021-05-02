@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import React from "react";
+import { useTranslation } from "react-i18next";
 import { Redirect, useParams } from "react-router";
 import fadeInDown from "../../animations/fadeInDown";
 import fadeOpacity from "../../animations/fadeOpacity";
@@ -16,6 +17,8 @@ import Video from "../../models/video.model";
 import { Url } from "../../utils/url.util";
 
 const VideoDetail: React.FC = () => {
+  const { t } = useTranslation();
+
   const isPlayingMode = Boolean(Url.hasParameter("play")) === true;
 
   const { slug } = useParams<{ slug: string }>();
@@ -39,7 +42,7 @@ const VideoDetail: React.FC = () => {
           />
           <Title variants={fadeInDown}>{_video.title}</Title>
           <Paragraph variants={fadeInDown} className="my-4">
-            Published by {_video.publisher.displayName}
+            {t("videoDetails.publishedBy")} {_video.publisher.displayName}
           </Paragraph>
           <Paragraph className="my-4" variants={fadeInDown}>
             {_video.description}

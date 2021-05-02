@@ -1,6 +1,7 @@
+import fadeOpacity from "@ui/animations/fadeOpacity";
 import { motion } from "framer-motion";
-import fadeInDown from "../../animations/fadeInDown";
 import { WithClassname, WithMotion } from "../../types/props.type";
+import { cn } from "../../utils/classes.util";
 
 type Props = WithClassname &
   WithMotion & {
@@ -64,14 +65,18 @@ const Spinner: React.FC<Props> = ({
   width = 38,
   page = false,
   style,
+  className = "",
   ...rest
 }) => {
   if (page) {
     return (
       <motion.div
-        variants={fadeInDown}
+        variants={fadeOpacity}
         style={style}
-        className="text-nx-red flex items-center justify-center"
+        className={cn(
+          "text-nx-red flex items-center justify-center",
+          className
+        )}
       >
         <SpinnerSvg width={60} height={60} {...rest} />
       </motion.div>

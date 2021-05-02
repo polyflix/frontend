@@ -9,6 +9,7 @@ import {
   UserIcon,
 } from "@heroicons/react/outline";
 import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import Video from "../../../models/video.model";
 import { cn } from "../../../utils/classes.util";
@@ -25,6 +26,7 @@ type Props = {
 
 const VideoListItem: React.FC<Props> = ({ video, onDelete }) => {
   const [open, setOpen] = useState<boolean>(false);
+  const { t } = useTranslation();
 
   const buildActionLink = (
     Icon: any,
@@ -58,7 +60,7 @@ const VideoListItem: React.FC<Props> = ({ video, onDelete }) => {
           <div className="col-span-10">
             <Alert type="error">
               <Typography bold as="span" className="text-sm">
-                Delete {video.title} ?
+                {t("shared.common.actions.delete")} {video.title} ?
               </Typography>
             </Alert>
           </div>
@@ -68,7 +70,7 @@ const VideoListItem: React.FC<Props> = ({ video, onDelete }) => {
                 as="span"
                 className="text-sm transition-all hover:underline"
               >
-                Cancel
+                {t("shared.common.actions.cancel")}
               </Typography>
             </div>
             <div className="mx-3"></div>
@@ -84,7 +86,7 @@ const VideoListItem: React.FC<Props> = ({ video, onDelete }) => {
                 className="text-nx-red text-sm transition-all hover:underline"
                 overrideDefaultClasses
               >
-                Delete
+                {t("shared.common.actions.delete")}
               </Typography>
             </div>
           </div>
@@ -113,11 +115,13 @@ const VideoListItem: React.FC<Props> = ({ video, onDelete }) => {
           >
             {video.isPublished ? (
               <>
-                <EyeIcon className="w-5 mr-2" /> Published
+                <EyeIcon className="w-5 mr-2" />{" "}
+                {t("userVideos.status.published.name")}
               </>
             ) : (
               <>
-                <EyeOffIcon className="w-5 mr-2" /> Draft
+                <EyeOffIcon className="w-5 mr-2" />{" "}
+                {t("userVideos.status.draft.name")}
               </>
             )}
           </Typography>
@@ -133,27 +137,42 @@ const VideoListItem: React.FC<Props> = ({ video, onDelete }) => {
           >
             {video.isPublic ? (
               <>
-                <GlobeIcon className="w-5 mr-2" /> Public
+                <GlobeIcon className="w-5 mr-2" />{" "}
+                {t("userVideos.visibility.public.name")}
               </>
             ) : (
               <>
-                <UserIcon className="w-5 mr-2" /> Private
+                <UserIcon className="w-5 mr-2" />{" "}
+                {t("userVideos.visibility.private.name")}
               </>
             )}
           </Typography>
         </div>
         <Paragraph className="mb-4">{video.shortDescription}</Paragraph>
         <div className="flex items-center">
-          {buildActionLink(PlayIcon, "Play", video.getStreamLink())}
+          {buildActionLink(
+            PlayIcon,
+            t("shared.common.actions.play"),
+            video.getStreamLink()
+          )}
           {buildActionLink(
             InformationCircleIcon,
-            "View",
+            t("shared.common.actions.info"),
             video.getInfoLink(),
             "ml-4"
           )}
-          {buildActionLink(PencilIcon, "Edit", video.getEditLink(), "ml-4")}
-          {buildActionLink(TrashIcon, "Delete", "#", "ml-4", () =>
-            setOpen(true)
+          {buildActionLink(
+            PencilIcon,
+            t("shared.common.actions.edit"),
+            video.getEditLink(),
+            "ml-4"
+          )}
+          {buildActionLink(
+            TrashIcon,
+            t("shared.common.actions.delete"),
+            "#",
+            "ml-4",
+            () => setOpen(true)
           )}
         </div>
       </div>

@@ -6,16 +6,18 @@ import VideoHero from "@ui/components/Videos/VideoHero/VideoHero.component";
 import VideoSlider from "@ui/components/Videos/VideoSlider/VideoSlider.component";
 import VideoTile from "@ui/components/Videos/VideoTile/VideoTile.component";
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 const HomePage: React.FC = () => {
   const { data, isLoading } = useVideos<VideosWithPagination>();
+  const { t } = useTranslation();
 
   return (
     <Page
       isLoading={isLoading}
       variants={fadeOpacity}
       withPadding={false}
-      title="Home"
+      title={t("home.seo.title")}
     >
       {data?.videos && (
         <>

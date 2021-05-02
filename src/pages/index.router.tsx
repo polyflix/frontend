@@ -2,6 +2,7 @@ import { useAuth } from "@core/hooks/useAuth.hook";
 import { AuthService } from "@core/services/auth/auth.service";
 import { useInjection } from "@modules/di";
 import ProtectedRoute from "@ui/components/ProtectedRoute/ProtectedRoute.component";
+import Spinner from "@ui/components/Spinner/Spinner.component";
 import { AnimatePresence } from "framer-motion";
 import { Route, Switch, useLocation } from "react-router-dom";
 import NotFoundPage from "./404.page";
@@ -23,8 +24,9 @@ const IndexRouter = () => {
 
   return (
     <AnimatePresence exitBeforeEnter>
-      {/* This is temporary awaiting the Hugo's MR with Suspense */}
-      {isLoading && <div>Refresh auth</div>}
+      {isLoading && (
+        <Spinner page className="w-screen h-screen dark:bg-black" />
+      )}
       {!isLoading && (
         <Switch
           location={location}

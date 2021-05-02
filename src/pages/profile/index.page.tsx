@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import fadeOpacity from "../../animations/fadeOpacity";
 import Container from "../../components/Container/Container.component";
 import Page from "../../components/Page/Page.component";
@@ -7,11 +8,14 @@ import { useAuth } from "../../hooks/useAuth.hook";
 
 const ProfilePage: React.FC = () => {
   const { user } = useAuth();
+  const { t } = useTranslation();
 
   return (
-    <Page variants={fadeOpacity} title="Profile">
+    <Page variants={fadeOpacity} title={t("userProfile.seo.title")}>
       <Container mxAuto>
-        <Title>Welcome back, {user?.displayName}</Title>
+        <Title>
+          {t("userProfile.welcome")}, {user?.displayName}
+        </Title>
       </Container>
     </Page>
   );

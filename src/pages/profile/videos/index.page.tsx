@@ -1,6 +1,7 @@
 import { VideoService } from "@core/services/videos/video.service";
 import { PlusIcon } from "@heroicons/react/outline";
 import React from "react";
+import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import fadeOpacity from "../../../animations/fadeOpacity";
 import Container from "../../../components/Container/Container.component";
@@ -18,6 +19,7 @@ import { useInjection } from "../../../modules/di";
 import { VideosWithPagination } from "../../../types/videos.type";
 
 const UserVideosPage: React.FC = () => {
+  const { t } = useTranslation();
   const videoService = useInjection<VideoService>(VideoService);
   const { token } = useAuth();
   const { setFinalPage, page, to } = usePagination();
@@ -35,17 +37,22 @@ const UserVideosPage: React.FC = () => {
   };
 
   return (
-    <Page isLoading={!data && isLoading} variants={fadeOpacity} title="Profile">
+    <Page
+      isLoading={!data && isLoading}
+      variants={fadeOpacity}
+      title={t("userVideos.seo.title")}
+    >
       <Container mxAuto className="px-5">
         <div className="flex items-center justify-between">
-          <Title className="my-5">My videos</Title>
+          <Title className="my-5">{t("userVideos.seo.title")}</Title>
           <Link to="/videos/create">
             <Typography
               as="span"
               className="flex items-center text-nx-red"
               overrideDefaultClasses
             >
-              <PlusIcon className="w-6" /> Add a new video
+              <PlusIcon className="w-6" /> {t("shared.common.actions.add")}{" "}
+              {t("videoManagement.video")}
             </Typography>
           </Link>
         </div>

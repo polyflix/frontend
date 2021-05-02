@@ -13,9 +13,11 @@ import { LoginIcon, UserAddIcon } from "@heroicons/react/solid";
 import { useInjection } from "@modules/di";
 import { motion } from "framer-motion";
 import { Fragment, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { Url } from "../../utils/url.util";
 import Avatar from "../Avatar/Avatar.component";
+import LanguageButton from "../Buttons/LanguageButton/LanguageButton.component";
 import OutlineButton from "../Buttons/OutlineButton/OutlineButton.component";
 import Container from "../Container/Container.component";
 import Image from "../Image/Image.component";
@@ -32,88 +34,94 @@ export const NAV_HEIGHT = 65;
 /**
  * The navigation component
  */
-const Navigation: React.FC<Props> = ({ visible, ...rest }) => {
+const Navigation: React.FC<Props> = ({ visible }) => {
   const authService = useInjection<AuthService>(AuthService);
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
-  const { user, isAuthenticated } = useAuth();
+  const { isAuthenticated } = useAuth();
+  const { user } = useAuth();
+  const { t } = useTranslation();
 
   const isNavbarExited = Boolean(Url.hasParameter("play")) === true;
 
   const getAuthenticatedContent = () => {
     return (
-      <Menu as="div" className="relative inline-block text-left">
-        {({ open }) => (
-          <>
-            <div>
-              <Menu.Button className="outline-none hover:text-nx-red inline-flex items-center transition-all justify-center w-full px-4 py-2 font-medium text-white bg-black rounded-md bg-opacity-20 hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
-                <span className="hidden md:block">{user?.displayName}</span>
-                {user && <Avatar className="md:hidden" user={user} />}
-                <ChevronDownIcon
-                  className="w-5 h-5 ml-2 -mr-1 text-nx-red"
-                  aria-hidden="true"
-                />
-              </Menu.Button>
-            </div>
-            <Transition
-              show={open}
-              as={Fragment}
-              enter="transition ease-out duration-100"
-              enterFrom="transform opacity-0 scale-95"
-              enterTo="transform opacity-100 scale-100"
-              leave="transition ease-in duration-75"
-              leaveFrom="transform opacity-100 scale-100"
-              leaveTo="transform opacity-0 scale-95"
-            >
-              <Menu.Items
-                static
-                className="absolute border-nx-red right-0 w-56 mt-2 origin-top-right bg-black divide-y divide-nx-dark rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+      <div className="flex items-center ">
+        <LanguageButton />
+        <Menu as="div" className="relative inline-block text-left">
+          {({ open }) => (
+            <>
+              <div>
+                <Menu.Button className="outline-none hover:text-nx-red inline-flex items-center transition-all justify-center w-full px-4 py-2 font-medium text-white bg-black rounded-md bg-opacity-20 hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
+                  <span className="hidden md:block">{user?.displayName}</span>
+                  {user && <Avatar className="md:hidden" user={user} />}
+                  <ChevronDownIcon
+                    className="w-5 h-5 ml-2 -mr-1 text-nx-red"
+                    aria-hidden="true"
+                  />
+                </Menu.Button>
+              </div>
+              <Transition
+                show={open}
+                as={Fragment}
+                enter="transition ease-out duration-100"
+                enterFrom="transform opacity-0 scale-95"
+                enterTo="transform opacity-100 scale-100"
+                leave="transition ease-in duration-75"
+                leaveFrom="transform opacity-100 scale-100"
+                leaveTo="transform opacity-0 scale-95"
               >
-                <div className="px-1 py-1">
-                  <Menu.Item>
-                    <Link to="/profile/videos">
-                      <span className="cursor-pointer text-nx-white flex rounded-md items-center w-full px-2 py-2 text-sm">
-                        <VideoCameraIcon className="text-nx-red w-5 mr-3" />
-                        My videos
+                <Menu.Items
+                  static
+                  className="absolute border-nx-red right-0 w-56 mt-2 origin-top-right bg-black divide-y divide-nx-dark rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                >
+                  <div className="px-1 py-1">
+                    <Menu.Item>
+                      <Link to="/profile/videos">
+                        <span className="cursor-pointer text-nx-white flex rounded-md items-center w-full px-2 py-2 text-sm">
+                          <VideoCameraIcon className="text-nx-red w-5 mr-3" />
+                          {t("userVideos.seo.title")}
+                        </span>
+                      </Link>
+                    </Menu.Item>
+                  </div>
+                  <div className="px-1 py-1">
+                    <Menu.Item>
+                      <Link to="/profile">
+                        <span className="cursor-pointer text-nx-white flex rounded-md items-center w-full px-2 py-2 text-sm">
+                          <UserIcon className="text-nx-red w-5 mr-3" />
+                          {t("userProfile.seo.title")}
+                        </span>
+                      </Link>
+                    </Menu.Item>
+                    <Menu.Item>
+                      <span
+                        onClick={() => authService.logout()}
+                        className="cursor-pointer text-nx-white flex rounded-md items-center w-full px-2 py-2 text-sm"
+                      >
+                        <LogoutIcon className="text-nx-red w-5 mr-3" />
+                        {t("shared.navbar.signOut")}
                       </span>
-                    </Link>
-                  </Menu.Item>
-                </div>
-                <div className="px-1 py-1">
-                  <Menu.Item>
-                    <Link to="/profile">
-                      <span className="cursor-pointer text-nx-white flex rounded-md items-center w-full px-2 py-2 text-sm">
-                        <UserIcon className="text-nx-red w-5 mr-3" />
-                        My profile
-                      </span>
-                    </Link>
-                  </Menu.Item>
-                  <Menu.Item>
-                    <span
-                      onClick={() => authService!.logout()}
-                      className="cursor-pointer text-nx-white flex rounded-md items-center w-full px-2 py-2 text-sm"
-                    >
-                      <LogoutIcon className="text-nx-red w-5 mr-3" />
-                      Sign out
-                    </span>
-                  </Menu.Item>
-                </div>
-              </Menu.Items>
-            </Transition>
-          </>
-        )}
-      </Menu>
+                    </Menu.Item>
+                  </div>
+                </Menu.Items>
+              </Transition>
+            </>
+          )}
+        </Menu>
+      </div>
     );
   };
 
   const getPublicContent = () => {
     return (
       <div className="flex items-center">
+        <LanguageButton />
         <Link to="/auth/register">
           <UserAddIcon className="text-nx-white w-6 md:hidden" />
           <Typography className="hidden md:block" as="span">
-            No account ?{" "}
+            {t("shared.navbar.signUp.0")}{" "}
             <Typography bold as="span">
-              Sign up now.
+              {t("shared.navbar.signUp.1")}.
             </Typography>
           </Typography>
         </Link>
@@ -121,7 +129,7 @@ const Navigation: React.FC<Props> = ({ visible, ...rest }) => {
         <Link to="/auth/login">
           <LoginIcon className="text-nx-white w-6 md:hidden" />
           <OutlineButton className="hidden md:block" as="button">
-            Sign in
+            {t("shared.navbar.signIn")}
           </OutlineButton>
         </Link>
       </div>
@@ -144,7 +152,7 @@ const Navigation: React.FC<Props> = ({ visible, ...rest }) => {
         >
           {isAuthenticated && (
             <Link to="/">
-              <Typography as="span">Videos</Typography>
+              <Typography as="span">{t("home.seo.title")}</Typography>
             </Link>
           )}
         </div>
