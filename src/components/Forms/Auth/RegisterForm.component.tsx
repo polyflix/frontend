@@ -2,6 +2,7 @@ import { AuthService } from "@core/services/auth/auth.service";
 import { motion } from "framer-motion";
 import React from "react";
 import { useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import fadeInDown from "../../../animations/fadeInDown";
 import stagger from "../../../animations/stagger";
@@ -21,19 +22,19 @@ import Input from "../Input/Input.component";
  */
 const RegisterForm: React.FC = () => {
   const authService = useInjection<AuthService>(AuthService);
+  const handleRegister = (data: IRegisterForm) => authService.register(data);
   const { authError, isLoading } = useAuth();
   const { register, handleSubmit, errors, watch } = useForm<IRegisterForm>();
-
-  const handleRegister = (data: IRegisterForm) => authService.register(data);
+  const { t } = useTranslation();
 
   return (
     <motion.div
       variants={stagger(0.1)}
       className="px-5 w-full md:w-8/12 lg:w-5/12 mx-auto"
     >
-      <Title variants={fadeInDown}>Sign up</Title>
+      <Title variants={fadeInDown}>{t("auth.signUp.seo.title")}</Title>
       <Paragraph variants={fadeInDown} className="my-3">
-        Fill the form below to create an account for Polyflix.
+        {t("auth.signUp.seo.description")}.
       </Paragraph>
       <form
         className="grid grid-cols-2 gap-4"
@@ -43,11 +44,14 @@ const RegisterForm: React.FC = () => {
           error={errors.firstName}
           name="firstName"
           className="col-span-1"
-          placeholder="Firstname"
+          placeholder={t("auth.signUp.inputs.firstname.name")}
           required
           variants={fadeInDown}
           ref={register({
-            required: { value: true, message: "First name is required." },
+            required: {
+              value: true,
+              message: `${t("auth.signUp.inputs.firstname.error")}.`,
+            },
           })}
         />
         <Input
@@ -55,21 +59,27 @@ const RegisterForm: React.FC = () => {
           name="lastName"
           required
           className="col-span-1"
-          placeholder="Lastname"
+          placeholder={t("auth.signUp.inputs.lastname.name")}
           variants={fadeInDown}
           ref={register({
-            required: { value: true, message: "Last name is required." },
+            required: {
+              value: true,
+              message: `${t("auth.signUp.inputs.lastname.error")}.`,
+            },
           })}
         />
         <Input
           error={errors.email}
           required
           name="email"
-          placeholder="Email"
+          placeholder={t("auth.inputs.email.name")}
           className="col-span-2"
           variants={fadeInDown}
           ref={register({
-            required: { value: true, message: "An email is required." },
+            required: {
+              value: true,
+              message: `${t("auth.inputs.email.error")}.`,
+            },
           })}
         />
         <Input
@@ -79,14 +89,17 @@ const RegisterForm: React.FC = () => {
           className="col-span-2"
           required
           variants={fadeInDown}
-          placeholder="Password"
-          hint="The password must be at least 8 characters"
+          placeholder={t("auth.inputs.password.name")}
+          hint={t("auth.inputs.password.description")}
           ref={register({
             minLength: {
               value: 8,
-              message: "The password must be at least 8 characters long",
+              message: `${t("auth.inputs.password.description")}.`,
             },
-            required: { value: true, message: "A password is required." },
+            required: {
+              value: true,
+              message: `${t("auth.inputs.password.error")}.`,
+            },
           })}
         />
         <Input
@@ -96,37 +109,37 @@ const RegisterForm: React.FC = () => {
           required
           className="col-span-2"
           variants={fadeInDown}
-          placeholder="Password confirm"
+          placeholder={t("auth.signUp.inputs.passwordConfirm.name")}
           ref={register({
             validate: (value) =>
-              value === watch("password") || "The password does not match.",
+              value === watch("password") ||
+              `${t("auth.signUp.inputs.passwordConfirm.error")}.`,
           })}
         />
         {isLoading && (
           <div className="flex items-center">
             <Spinner className="fill-current text-nx-dark"></Spinner>
             <Typography as="span" className="text-sm ml-2">
-              Please wait..
+              {t("shared.common.wait")}..
             </Typography>
           </div>
         )}
-        {authError && <Alert type="error">{authError}</Alert>}
+        {authError && <Alert type="error">{t("auth.signUp.error")}</Alert>}
         <FilledButton
           variants={fadeInDown}
           disabled={isLoading}
           as="input"
           className="col-span-2"
-          inputValue="Sign up"
+          inputValue={t("auth.signUp.action")}
         />
       </form>
       <Paragraph variants={fadeInDown} className="mt-2">
-        Already registered to Polyflix ?{" "}
+        {t("auth.signUp.footer.0")}{" "}
         <Link to="/auth/login">
           <Typography as="span" bold>
-            Sign in here
+            {t("auth.signUp.footer.1")}.
           </Typography>
         </Link>
-        .
       </Paragraph>
     </motion.div>
   );

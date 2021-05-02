@@ -1,5 +1,6 @@
 import { PlayIcon } from "@heroicons/react/solid";
 import React from "react";
+import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import Typography from "../../Typography/Typography.component";
 import Button from "../Button.component";
@@ -9,6 +10,8 @@ type Props = {
 };
 
 const PlayButton: React.FC<Props> = ({ playLink }) => {
+  const { t } = useTranslation();
+
   return (
     <Link to={playLink}>
       <Button
@@ -21,7 +24,7 @@ const PlayButton: React.FC<Props> = ({ playLink }) => {
           className="ml-1 text-sm md:text-base"
           as="span"
         >
-          Play
+          {t("shared.common.actions.play")}
         </Typography>
       </Button>
     </Link>

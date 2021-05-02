@@ -8,6 +8,7 @@ import {
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 import slugify from "slugify";
 import fadeInDown from "../../../animations/fadeInDown";
 import stagger from "../../../animations/stagger";
@@ -37,6 +38,7 @@ type Props = {
  */
 const VideoForm: React.FC<Props> = ({ video }) => {
   const videoService = useInjection<VideoService>(VideoService);
+  const { t } = useTranslation();
   const { token } = useAuth();
   const { register, handleSubmit, errors, watch } = useForm<IVideoForm>({
     defaultValues: {
@@ -68,12 +70,15 @@ const VideoForm: React.FC<Props> = ({ video }) => {
         : videoService.createVideo(data, token as Token));
       setAlert({
         message: isUpdate
-          ? `"${result.title}" successfully updated.`
-          : `"${result.title}" added to the library.`,
+          ? `"${result.title}" ${t("videoManagement.updateVideo.success")}.`
+          : `"${result.title}" ${t("videoManagement.addVideo.success")}.`,
         type: "success",
       });
     } catch (err) {
-      setAlert({ message: err, type: "error" });
+      setAlert({
+        message: `${t("videoManagement.addVideo.error")} "${data.title}"`,
+        type: "error",
+      });
     } finally {
       setLoading(false);
     }
@@ -87,10 +92,16 @@ const VideoForm: React.FC<Props> = ({ video }) => {
       <div className="grid items-center grid-cols-2 gap-4 py-4">
         <div className="col-span-2 md:col-span-1">
           <Title variants={fadeInDown}>
-            {isUpdate ? `${video?.title}` : "Add a new video"}
+            {isUpdate
+              ? `${video?.title}`
+              : `${t("shared.common.actions.add")}
+							${t("videoManagement.video")}`}
           </Title>
           <Paragraph variants={fadeInDown} className="my-3 text-sm">
-            Fill the form below to {isUpdate ? "update" : "create"} your video.
+            {isUpdate
+              ? `${t("videoManagement.updateVideo.description")}`
+              : `${t("videoManagement.addVideo.description")}`}
+            .
           </Paragraph>
         </div>
         <Image
@@ -112,7 +123,7 @@ const VideoForm: React.FC<Props> = ({ video }) => {
           name="title"
           error={errors.title}
           className="col-span-2 md:col-span-1"
-          placeholder="Title"
+          placeholder={t("videoManagement.inputs.title.name")}
           required
           variants={fadeInDown}
           hint={
@@ -121,10 +132,13 @@ const VideoForm: React.FC<Props> = ({ video }) => {
                   lower: true,
                   remove: /[*+~.()'"!:@]/g,
                 })}`
-              : "The title of the video."
+              : `${t("videoManagement.inputs.title.description")}.`
           }
           ref={register({
-            required: { value: true, message: "A title is required." },
+            required: {
+              value: true,
+              message: `${t("videoManagement.inputs.title.error")}.`,
+            },
           })}
         />
         <Input
@@ -133,19 +147,26 @@ const VideoForm: React.FC<Props> = ({ video }) => {
           required
           className="col-span-2 md:col-span-1"
           variants={fadeInDown}
-          placeholder="Thumbnail URL"
-          hint="The URL of the video thumbnail."
+          placeholder={t("videoManagement.inputs.thumbnail.name")}
+          hint={`${t("videoManagement.inputs.thumbnail.name")}.`}
           ref={register({
-            required: { value: true, message: "A thumbnail URL is required." },
+            required: {
+              value: true,
+              message: `${t("videoManagement.inputs.thumbnail.error")}.`,
+            },
           })}
         />
         <Textarea
+          error={errors.description}
           className="col-span-2"
           minHeight={200}
-          placeholder="Video description"
+          placeholder={t("videoManagement.inputs.description.name")}
           name="description"
           ref={register({
-            required: { value: true, message: "A description is required." },
+            required: {
+              value: true,
+              message: `${t("videoManagement.inputs.description.error")}.`,
+            },
           })}
           variants={fadeInDown}
         />
@@ -166,9 +187,9 @@ const VideoForm: React.FC<Props> = ({ video }) => {
             {watchPrivacy ? (
               <>
                 <Typography as="span" bold>
-                  Public.
+                  {`${t("userVideos.visibility.public.name")}.`}
                 </Typography>{" "}
-                Your video will be visible for everyone.
+                {`${t("userVideos.visibility.public.description")}.`}
                 <br />
                 <Typography
                   as="span"
@@ -176,15 +197,15 @@ const VideoForm: React.FC<Props> = ({ video }) => {
                   className="text-xs text-nx-red"
                   overrideDefaultClasses
                 >
-                  Click to change.
+                  {`${t("videoManagement.actions.switching")}.`}
                 </Typography>
               </>
             ) : (
               <>
                 <Typography as="span" bold>
-                  Private.
+                  {`${t("userVideos.visibility.private.name")}.`}
                 </Typography>{" "}
-                Your video will be visible only for you.
+                {`${t("userVideos.visibility.private.description")}.`}
                 <br />
                 <Typography
                   as="span"
@@ -192,7 +213,7 @@ const VideoForm: React.FC<Props> = ({ video }) => {
                   className="text-xs text-nx-red"
                   overrideDefaultClasses
                 >
-                  Click to change.
+                  {`${t("videoManagement.actions.switching")}.`}
                 </Typography>
               </>
             )}
@@ -215,9 +236,9 @@ const VideoForm: React.FC<Props> = ({ video }) => {
             {watchPublished ? (
               <>
                 <Typography as="span" bold>
-                  Published.
+                  {`${t("userVideos.status.published.name")}.`}
                 </Typography>{" "}
-                Your video can appears in search results (if it is public).
+                {`${t("userVideos.status.published.description")}.`}
                 <br />
                 <Typography
                   as="span"
@@ -225,15 +246,15 @@ const VideoForm: React.FC<Props> = ({ video }) => {
                   className="text-xs text-nx-red"
                   overrideDefaultClasses
                 >
-                  Click to change.
+                  {`${t("videoManagement.actions.switching")}.`}
                 </Typography>
               </>
             ) : (
               <>
                 <Typography as="span" bold>
-                  Draft.
+                  {`${t("userVideos.status.draft.name")}.`}
                 </Typography>{" "}
-                Your video is still in draft and users cannot see it.
+                {`${t("userVideos.status.draft.description")}.`}
                 <br />
                 <Typography
                   as="span"
@@ -241,7 +262,7 @@ const VideoForm: React.FC<Props> = ({ video }) => {
                   className="text-xs text-nx-red"
                   overrideDefaultClasses
                 >
-                  Click to change.
+                  {`${t("videoManagement.actions.switching")}.`}
                 </Typography>
               </>
             )}
@@ -251,7 +272,7 @@ const VideoForm: React.FC<Props> = ({ video }) => {
           <div className="col-span-2 flex items-center">
             <Spinner className="fill-current text-nx-dark"></Spinner>
             <Typography as="span" className="text-sm ml-2">
-              Please wait..
+              {t("shared.common.wait")}..
             </Typography>
           </div>
         )}
@@ -263,7 +284,11 @@ const VideoForm: React.FC<Props> = ({ video }) => {
         <FilledButton
           className="col-span-2"
           as="input"
-          inputValue={isUpdate ? "Update" : "Create"}
+          inputValue={
+            isUpdate
+              ? t("videoManagement.updateVideo.action")
+              : t("videoManagement.addVideo.action")
+          }
           variants={fadeInDown}
         />
       </form>

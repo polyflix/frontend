@@ -3,12 +3,15 @@ import Page from "@ui/components/Page/Page.component";
 import Paragraph from "@ui/components/Typography/Paragraph/Paragraph.component";
 import Typography from "@ui/components/Typography/Typography.component";
 import React from "react";
+import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
 const NotFoundPage: React.FC = () => {
+  const { t } = useTranslation();
+
   return (
     <Page
-      title="Page not found"
+      title={t("notFound.seo.title")}
       className="flex items-center justify-center flex-col"
     >
       <div className="flex flex-col items-center justify-center">
@@ -22,16 +25,15 @@ const NotFoundPage: React.FC = () => {
         </Typography>
 
         <Typography as="h1" className="text-3xl">
-          Oops, page not found !
+          {t("notFound.content.title")} !
         </Typography>
 
         <Paragraph className="my-4">
-          We can't find the page you want to access. The ressource has been
-          moved or deleted.{" "}
+          {t("notFound.content.description")}
         </Paragraph>
 
         <Link to="/">
-          <FilledButton as="button">Go home</FilledButton>
+          <FilledButton as="button">{t("notFound.content.home")}</FilledButton>
         </Link>
       </div>
     </Page>
