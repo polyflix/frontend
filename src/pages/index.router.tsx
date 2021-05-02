@@ -1,9 +1,9 @@
+import { useAuth } from "@core/hooks/useAuth.hook";
+import { AuthService } from "@core/services/auth/auth.service";
+import { useInjection } from "@modules/di";
+import ProtectedRoute from "@ui/components/ProtectedRoute/ProtectedRoute.component";
 import { AnimatePresence } from "framer-motion";
-import { useDispatch } from "react-redux";
 import { Route, Switch, useLocation } from "react-router-dom";
-import ProtectedRoute from "../components/ProtectedRoute/ProtectedRoute.component";
-import { useAuth } from "../hooks/useAuth.hook";
-import { AuthService } from "../services/auth.service";
 import NotFoundPage from "./404.page";
 import AuthRouter from "./auth/auth.router";
 import HomePage from "./home.page";
@@ -11,18 +11,19 @@ import ProfileRouter from "./profile/profile.router";
 import VideoRouter from "./videos/video.router";
 
 const IndexRouter = () => {
+  const authService = useInjection<AuthService>(AuthService);
+
   const { isAuthenticated, isLoading, hasRefresh } = useAuth();
 
   const location = useLocation();
-  const dispatch = useDispatch();
 
   if (!isAuthenticated && !hasRefresh) {
-    dispatch(AuthService.refreshAuth());
+    authService.refreshAuth();
   }
 
   return (
     <AnimatePresence exitBeforeEnter>
-      {/* This is temporary awaiting the Hugo MR with Suspense */}
+      {/* This is temporary awaiting the Hugo's MR with Suspense */}
       {isLoading && <div>Refresh auth</div>}
       {!isLoading && (
         <Switch

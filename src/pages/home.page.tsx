@@ -1,11 +1,11 @@
+import { useVideos } from "@core/hooks/useVideos.hook";
+import { VideosWithPagination } from "@core/types/videos.type";
+import fadeOpacity from "@ui/animations/fadeOpacity";
+import Page from "@ui/components/Page/Page.component";
+import VideoHero from "@ui/components/Videos/VideoHero/VideoHero.component";
+import VideoSlider from "@ui/components/Videos/VideoSlider/VideoSlider.component";
+import VideoTile from "@ui/components/Videos/VideoTile/VideoTile.component";
 import React from "react";
-import fadeOpacity from "../animations/fadeOpacity";
-import Page from "../components/Page/Page.component";
-import VideoHero from "../components/Videos/VideoHero/VideoHero.component";
-import VideoSlider from "../components/Videos/VideoSlider/VideoSlider.component";
-import VideoTile from "../components/Videos/VideoTile/VideoTile.component";
-import { useVideos } from "../hooks/useVideos.hook";
-import { VideosWithPagination } from "../types/videos.type";
 
 const HomePage: React.FC = () => {
   const { data, isLoading } = useVideos<VideosWithPagination>();

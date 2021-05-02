@@ -1,3 +1,4 @@
+import { VideoService } from "@core/services/videos/video.service";
 import { PlusIcon } from "@heroicons/react/outline";
 import React from "react";
 import { Link } from "react-router-dom";
@@ -13,10 +14,11 @@ import usePagination from "../../../hooks/usePagination.hook";
 import { useVideos } from "../../../hooks/useVideos.hook";
 import { Token } from "../../../models/token.model";
 import Video from "../../../models/video.model";
-import { VideoService } from "../../../services/video.service";
+import { useInjection } from "../../../modules/di";
 import { VideosWithPagination } from "../../../types/videos.type";
 
 const UserVideosPage: React.FC = () => {
+  const videoService = useInjection<VideoService>(VideoService);
   const { token } = useAuth();
   const { setFinalPage, page, to } = usePagination();
 
@@ -28,7 +30,7 @@ const UserVideosPage: React.FC = () => {
   });
 
   const onVideoDelete = async (id: string) => {
-    await VideoService.deleteVideo(id, token as Token);
+    await videoService.deleteVideo(id, token as Token);
     triggerReload();
   };
 

@@ -1,9 +1,9 @@
+import FilledButton from "@ui/components/Buttons/FilledButton/FilledButton.component";
+import Page from "@ui/components/Page/Page.component";
+import Paragraph from "@ui/components/Typography/Paragraph/Paragraph.component";
+import Typography from "@ui/components/Typography/Typography.component";
 import React from "react";
 import { Link } from "react-router-dom";
-import FilledButton from "../components/Buttons/FilledButton/FilledButton.component";
-import Page from "../components/Page/Page.component";
-import Paragraph from "../components/Typography/Paragraph/Paragraph.component";
-import Typography from "../components/Typography/Typography.component";
 
 const NotFoundPage: React.FC = () => {
   return (

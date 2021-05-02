@@ -1,12 +1,12 @@
+import { AuthService } from "@core/services/auth/auth.service";
 import { motion } from "framer-motion";
 import React from "react";
 import { useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import fadeInDown from "../../../animations/fadeInDown";
 import stagger from "../../../animations/stagger";
 import { useAuth } from "../../../hooks/useAuth.hook";
-import { AuthService } from "../../../services/auth.service";
+import { useInjection } from "../../../modules/di";
 import { IRegisterForm } from "../../../types/auth.type";
 import Alert from "../../Alert/Alert.component";
 import FilledButton from "../../Buttons/FilledButton/FilledButton.component";
@@ -20,12 +20,11 @@ import Input from "../Input/Input.component";
  * The register form component
  */
 const RegisterForm: React.FC = () => {
+  const authService = useInjection<AuthService>(AuthService);
   const { authError, isLoading } = useAuth();
   const { register, handleSubmit, errors, watch } = useForm<IRegisterForm>();
-  const dispatch = useDispatch();
 
-  const handleRegister = (data: IRegisterForm) =>
-    dispatch(AuthService.register(data));
+  const handleRegister = (data: IRegisterForm) => authService.register(data);
 
   return (
     <motion.div

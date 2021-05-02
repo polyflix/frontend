@@ -14,6 +14,7 @@
     "@types/react": "^17.0.3",
     "@types/react-dom": "^17.0.3",
     "axios": "^0.21.1",
+    "babel-plugin-transform-typescript-metadata": "^0.3.2",
     "framer-motion": "^4.0.3",
     "http-status-codes": "^2.1.4",
     "node-sass": "^5.0.0",
@@ -27,6 +28,7 @@
     "react-scripts": "4.0.3",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
+    "reflect-metadata": "^0.1.13",
     "slugify": "^1.5.0",
     "swiper": "^6.5.5",
     "typescript": "^4.2.3",
@@ -71,6 +73,7 @@
     ]
   },
   "devDependencies": {
+    "@babel/plugin-proposal-decorators": "^7.12.1",
     "@tailwindcss/postcss7-compat": "^2.0.4",
     "@types/react-helmet": "^6.1.0",
     "@types/react-redux": "^7.1.16",
@@ -79,6 +82,7 @@
     "@types/redux-thunk": "^2.1.0",
     "@types/swiper": "^5.4.2",
     "autoprefixer": "^9.8.6",
+    "craco-alias": "^2.2.0",
     "husky": "^5.2.0",
     "lint-staged": "^10.5.4",
     "postcss": "^7.0.35",

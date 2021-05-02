@@ -1,14 +1,14 @@
+import { WithClassname, WithMotion } from "@core/types/props.type";
+import { cn } from "@core/utils";
 import {
   CheckCircleIcon,
   ExclamationCircleIcon,
   ExclamationIcon,
   InformationCircleIcon,
 } from "@heroicons/react/outline";
+import Typography from "@ui/components/Typography/Typography.component";
 import { motion } from "framer-motion";
 import React, { PropsWithChildren } from "react";
-import { WithClassname, WithMotion } from "../../types/props.type";
-import { cn } from "../../utils/classes.util";
-import Typography from "../Typography/Typography.component";
 
 export type AlertType = "success" | "error" | "warning" | "info";
 

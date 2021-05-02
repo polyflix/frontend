@@ -1,8 +1,9 @@
+import { VideoService } from "@core/services/videos/video.service";
 import { useEffect, useState } from "react";
 import { AlertType } from "../components/Alert/Alert.component";
 import { Token } from "../models/token.model";
 import Video from "../models/video.model";
-import { VideoService } from "../services/video.service";
+import { useInjection } from "../modules/di";
 import { VideoState, VideosWithPagination } from "../types/videos.type";
 import { useAuth } from "./useAuth.hook";
 
@@ -53,7 +54,7 @@ type UseVideoHookOptions = {
 export const useVideos = <T = Video | VideosWithPagination>(
   options: UseVideoHookOptions = { mode: "collection" }
 ): VideoState<T> => {
-  const { getVideos, getVideoBySlug } = VideoService;
+  const videoService = useInjection<VideoService>(VideoService);
   const { token, isLoading: authLoading } = useAuth();
   // Configuration destructuration
   const { userOnly, page, limit, mode, slug, onCollectionLoaded } =
@@ -80,8 +81,8 @@ export const useVideos = <T = Video | VideosWithPagination>(
     if (authLoading || (!isCollection && !slug)) return;
     setLoading(true);
     (isCollection
-      ? getVideos(token as Token, userOnly, page, limit)
-      : getVideoBySlug(token as Token, slug as string)
+      ? videoService.getVideos(token as Token, userOnly, page, limit)
+      : videoService.getVideoBySlug(token as Token, slug as string)
     )
       .then((data: any) => {
         if (isCollection && onCollectionLoaded) {
