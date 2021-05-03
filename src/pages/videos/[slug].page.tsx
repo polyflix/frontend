@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { Redirect, useParams } from "react-router";
+import { Link } from "react-router-dom";
 import fadeInDown from "../../animations/fadeInDown";
 import fadeOpacity from "../../animations/fadeOpacity";
 import stagger from "../../animations/stagger";
@@ -42,7 +43,10 @@ const VideoDetail: React.FC = () => {
           />
           <Title variants={fadeInDown}>{_video.title}</Title>
           <Paragraph variants={fadeInDown} className="my-4">
-            {t("videoDetails.publishedBy")} {_video.publisher.displayName}
+            {t("videoDetails.publishedBy")}{" "}
+            <Link className="font-bold" to={`/profile/${_video.publisher.id}`}>
+              {_video.publisher.displayName}
+            </Link>
           </Paragraph>
           <Paragraph className="my-4" variants={fadeInDown}>
             {_video.description}

@@ -34,11 +34,9 @@ type UseVideoHookOptions = {
    */
   limit?: number;
   /**
-   * If set to true, the query will fetch only videos of the logged in user.
-   * Only usable if the mode is set to "collection".
-   * @type boolean
+   * If authorId, fetches the videos related to the author
    */
-  userOnly?: boolean;
+  authorId?: string;
   /**
    * Callback called when the collection is loaded.
    * @type function
@@ -57,7 +55,7 @@ export const useVideos = <T = Video | VideosWithPagination>(
   const videoService = useInjection<VideoService>(VideoService);
   const { token, isLoading: authLoading } = useAuth();
   // Configuration destructuration
-  const { userOnly, page, limit, mode, slug, onCollectionLoaded } =
+  const { authorId, page, limit, mode, slug, onCollectionLoaded } =
     options || {};
 
   // States definitions
@@ -81,7 +79,7 @@ export const useVideos = <T = Video | VideosWithPagination>(
     if (authLoading || (!isCollection && !slug)) return;
     setLoading(true);
     (isCollection
-      ? videoService.getVideos(token as Token, userOnly, page, limit)
+      ? videoService.getVideos(token as Token, authorId, page, limit)
       : videoService.getVideoBySlug(token as Token, slug as string)
     )
       .then((data: any) => {

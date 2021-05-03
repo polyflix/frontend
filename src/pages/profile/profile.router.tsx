@@ -1,14 +1,16 @@
 import { Route, Switch, useRouteMatch } from "react-router-dom";
 import ProfilePage from "./index.page";
-import UserVideosPage from "./videos/index.page";
+import ProfileRedirector from "./profile.redirect";
 
 const ProfileRouter = () => {
   const { path } = useRouteMatch();
-
   return (
     <Switch>
       <Route exact path={path} component={ProfilePage} />
-      <Route exact path={`${path}/videos`} component={UserVideosPage} />
+      <Route
+        path={[`${path}/videos`, `${path}/:id`]}
+        component={ProfileRedirector}
+      />
     </Switch>
   );
 };
