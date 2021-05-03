@@ -114,6 +114,16 @@
 			"description": {
 				"name": "Video description",
 				"error": "A description is required"
+			},
+			"videoURL": {
+				"name": "Video URL",
+				"description": "The URL of the video",
+				"error": "A video URL is required"
+			},
+			"videoPreviewURL": {
+				"name": "Video Preview URL",
+				"description": "The URL of the video preview ",
+				"error": "A video preview URL is required"
 			}
 		},
 		"addVideo": {

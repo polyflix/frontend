@@ -16,7 +16,9 @@ export default class Video {
     private readonly _isPublic: boolean,
     private readonly _publisher: VideoPublisher,
     private readonly _createdAt: Date,
-    private readonly _updatedAt: Date
+    private readonly _updatedAt: Date,
+    private readonly _videoURL: string,
+    private readonly _videoPreviewURL: string
   ) {}
 
   /**
@@ -35,7 +37,9 @@ export default class Video {
       json.isPublic,
       VideoPublisher.fromJson(json.publishedBy),
       new Date(json.createdAt),
-      new Date(json.updatedAt)
+      new Date(json.updatedAt),
+      json.videoURL,
+      json.videoPreviewURL
     );
   }
 
@@ -111,6 +115,22 @@ export default class Video {
    */
   get publisher(): VideoPublisher {
     return this._publisher;
+  }
+
+  /**
+   * Return the video publisher
+   * @returns {string} the video URL
+   */
+  get videoURL(): string {
+    return this._videoURL;
+  }
+
+  /**
+   * Return the video publisher
+   * @returns {string} the video URL
+   */
+  get videoPreviewURL(): string {
+    return this._videoPreviewURL;
   }
 
   private get link(): string {

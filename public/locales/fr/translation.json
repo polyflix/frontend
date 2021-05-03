@@ -114,6 +114,16 @@
 			"description": {
 				"name": "Description de la vidéo",
 				"error": "La description de la vidéo est requise"
+			},
+			"videoURL": {
+				"name": "Lien de la vidéo",
+				"description": "Lien de la vidéo",
+				"error": "Le lien de la vidéo est requis"
+			},
+			"videoPreviewURL": {
+				"name": "Lien de prévisualisation",
+				"description": "Lien de prévisualisation de la vidéo",
+				"error": "Le lien de prévisualtion de la vidéo est requis"
 			}
 		},
 		"addVideo": {
