@@ -23,7 +23,7 @@ const MediaPlayer: React.FC<Props> = ({ video, ...rest }) => {
         className="absolute transition-all bg-black w-full bg-opacity-50 left-0 flex py-4 px-3 items-center justify-between text-nx-white z-50"
       >
         <span className="flex items-center">
-          <Link to={video.getInfoLink()}>
+          <Link to="/">
             <ArrowLeftIcon className="w-8 transition-all hover:text-nx-red" />
           </Link>
           <span className="mx-2" />
@@ -31,9 +31,9 @@ const MediaPlayer: React.FC<Props> = ({ video, ...rest }) => {
             {video.title}
           </Typography>
         </span>
-        <span className="flex items-center">
+        <Link to={video.getInfoLink()} className="flex items-center">
           <InformationCircleIcon className="w-8" />
-        </span>
+        </Link>
       </div>
       <ReactPlayer
         onPlay={() => setOverlay(false)}

@@ -6,6 +6,7 @@ import { IVideoPublisher } from "../types/videos.type";
  */
 export default class VideoPublisher {
   private constructor(
+    private readonly _id: string,
     private readonly _firstName: string,
     private readonly _lastName: string
   ) {}
@@ -16,7 +17,7 @@ export default class VideoPublisher {
    * @returns {VideoPublisher}
    */
   static fromJson(json: IVideoPublisher): VideoPublisher {
-    return new VideoPublisher(json.firstName, json.lastName);
+    return new VideoPublisher(json.id, json.firstName, json.lastName);
   }
 
   /**
@@ -41,5 +42,13 @@ export default class VideoPublisher {
    */
   get lastName(): string {
     return this._lastName;
+  }
+
+  /**
+   * Return the id of the video publisher.
+   * @returns {string} the video published id
+   */
+  get id(): string {
+    return this._id;
   }
 }

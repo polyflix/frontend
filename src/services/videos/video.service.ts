@@ -11,18 +11,19 @@ export class VideoService {
 
   /**
    * Get the videos list paginated.
+   * @param {Token} token the access token
+   * @param {number | undefined} authorId the user to get videos from
    * @param {number | undefined} page the page to fetch
    * @param {number | undefined} limit the limit of items per page
-   * @param {Token | undefined} token the access token
    * @returns {Promise<VideosWithPagination>}
    */
   public async getVideos(
     token: Token,
-    userOnly?: boolean,
+    authorId?: string,
     page?: number,
     limit?: number
   ): Promise<VideosWithPagination> {
-    const path = `/videos${userOnly ? "/me" : ""}`;
+    const path = `${authorId ? `/users/${authorId}/videos` : "/videos"}`;
     // Build search query
     let query;
     if (page || limit) {

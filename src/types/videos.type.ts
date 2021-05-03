@@ -22,6 +22,7 @@ export type VideosWithPagination = {
 };
 
 export interface IVideoPublisher {
+  id: string;
   firstName: string;
   lastName: string;
 }

@@ -22,9 +22,14 @@ import Typography from "../../Typography/Typography.component";
 type Props = {
   video: Video;
   onDelete: () => void;
+  ownerItems?: boolean;
 };
 
-const VideoListItem: React.FC<Props> = ({ video, onDelete }) => {
+const VideoListItem: React.FC<Props> = ({
+  video,
+  onDelete,
+  ownerItems = true,
+}) => {
   const [open, setOpen] = useState<boolean>(false);
   const { t } = useTranslation();
 
@@ -103,7 +108,7 @@ const VideoListItem: React.FC<Props> = ({ video, onDelete }) => {
         <Typography bold className="text-lg md:text-xl" as="h3">
           {video.title}
         </Typography>
-        <div className="my-4 flex items-center">
+        <div className={`my-4 ${ownerItems ? "flex" : "hidden"} items-center`}>
           <Typography
             as="span"
             overrideDefaultClasses
@@ -161,19 +166,21 @@ const VideoListItem: React.FC<Props> = ({ video, onDelete }) => {
             video.getInfoLink(),
             "ml-4"
           )}
-          {buildActionLink(
-            PencilIcon,
-            t("shared.common.actions.edit"),
-            video.getEditLink(),
-            "ml-4"
-          )}
-          {buildActionLink(
-            TrashIcon,
-            t("shared.common.actions.delete"),
-            "#",
-            "ml-4",
-            () => setOpen(true)
-          )}
+          {ownerItems &&
+            buildActionLink(
+              PencilIcon,
+              t("shared.common.actions.edit"),
+              video.getEditLink(),
+              "ml-4"
+            )}
+          {ownerItems &&
+            buildActionLink(
+              TrashIcon,
+              t("shared.common.actions.delete"),
+              "#",
+              "ml-4",
+              () => setOpen(true)
+            )}
         </div>
       </div>
     </div>

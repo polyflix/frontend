@@ -10,7 +10,7 @@ import Typography from "@ui/components/Typography/Typography.component";
 import { motion } from "framer-motion";
 import React, { PropsWithChildren } from "react";
 
-export type AlertType = "success" | "error" | "warning" | "info";
+export type AlertType = "success" | "error" | "warning" | "info" | "not-found";
 
 type AlertMetadata = {
   icon: any;
@@ -38,6 +38,8 @@ const getAlertMetadata = (type: AlertType): AlertMetadata => {
       return alertMetadataFactory(ExclamationIcon, "text-yellow-500");
     case "info":
       return alertMetadataFactory(InformationCircleIcon, "text-blue-500");
+    case "not-found":
+      return alertMetadataFactory(ExclamationCircleIcon, "text-nx-red");
   }
 };
 
