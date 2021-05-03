@@ -7,6 +7,8 @@ export interface IVideoForm {
   thumbnail: string;
   isPublic: boolean;
   isPublished: boolean;
+  videoURL: string;
+  videoPreviewURL: string;
 }
 
 export type VideoState<T> = {
@@ -27,6 +29,8 @@ export interface IVideoPublisher {
 }
 
 export interface IVideo {
+  videoPreviewURL: string;
+  videoURL: string;
   isPublic: boolean;
   isPublished: boolean;
   description: string;

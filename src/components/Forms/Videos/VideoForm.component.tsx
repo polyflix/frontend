@@ -47,6 +47,8 @@ const VideoForm: React.FC<Props> = ({ video }) => {
       thumbnail: video?.thumbnail,
       isPublished: video?.isPublished || false,
       isPublic: video?.isPublic || false,
+      videoURL: video?.videoURL,
+      videoPreviewURL: video?.videoPreviewURL,
     },
   });
   const watchTitle = watch<"title", string>("title", "");
@@ -153,6 +155,36 @@ const VideoForm: React.FC<Props> = ({ video }) => {
             required: {
               value: true,
               message: `${t("videoManagement.inputs.thumbnail.error")}.`,
+            },
+          })}
+        />
+        <Input
+          error={errors.thumbnail}
+          name="videoURL"
+          required
+          className="col-span-2 md:col-span-1"
+          variants={fadeInDown}
+          placeholder={t("videoManagement.inputs.videoURL.name")}
+          hint={`${t("videoManagement.inputs.videoURL.name")}.`}
+          ref={register({
+            required: {
+              value: true,
+              message: `${t("videoManagement.inputs.videoURL.error")}.`,
+            },
+          })}
+        />
+        <Input
+          error={errors.thumbnail}
+          name="videoPreviewURL"
+          required
+          className="col-span-2 md:col-span-1"
+          variants={fadeInDown}
+          placeholder={t("videoManagement.inputs.videoPreviewURL.name")}
+          hint={`${t("videoManagement.inputs.videoPreviewURL.name")}.`}
+          ref={register({
+            required: {
+              value: true,
+              message: `${t("videoManagement.inputs.videoPreviewURL.error")}.`,
             },
           })}
         />
