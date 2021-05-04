@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import React from "react";
 import Video from "../../../models/video.model";
-import { applyBackgroundImage, cn } from "../../../utils/classes.util";
+import { applyBackgroundImage } from "../../../utils/classes.util";
 import Paragraph from "../../Typography/Paragraph/Paragraph.component";
 import Typography from "../../Typography/Typography.component";
 import NoData from "../../NoData/NoData";

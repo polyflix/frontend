@@ -1,4 +1,4 @@
-import logo from "@assets/images/polyflix-logo.png";
+import logo from "../../assets/images/polyflix-logo.png";
 import { useAuth } from "@core/hooks/useAuth.hook";
 import { AuthService } from "@core/services/auth/auth.service";
 import { cn } from "@core/utils";
