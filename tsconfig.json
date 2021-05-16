@@ -27,7 +27,5 @@
   },
   "include": [
     "src",
-    "modules"
   ],
-  "extends": "./tsconfig.paths.json"
 }
