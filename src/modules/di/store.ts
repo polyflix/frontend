@@ -51,6 +51,7 @@ export class Store {
           };
         }
       });
+
       return type;
     }
 
