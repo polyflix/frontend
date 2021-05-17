@@ -1,4 +1,5 @@
-FROM node:alpine as build
+FROM node:14-alpine as build
+RUN apk add g++ make python
 WORKDIR /app
 ARG REACT_APP_API_URL
 ENV REACT_APP_API_URL=${REACT_APP_API_URL}
