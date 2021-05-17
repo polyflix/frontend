@@ -25,41 +25,58 @@ variables:
       - node_modules/
     policy: pull
 
-dependencies:
-  interruptible: true
-  stage: prerequisites
-  image: $NODE_VERSION
-  script:
-    - npm ci
-  cache:
-    key: $CACHE_KEY
-    paths:
-      - node_modules/
-  rules:
-    - if: $CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BRANCH
-      changes:
-        - package-lock.json
+# This job is completly off because there is no cache for now
+# Waiting for Thomas' server to get back on
+
+# dependencies:
+#  interruptible: true
+#  stage: prerequisites
+#  image: $NODE_VERSION
+#  script:
+#    # If we use npm ci, the cache is useless as
+#    # node_modules is emptied everytime the command
+#    # is running
+#    # - npm ci
+#    - npm install
+#  cache:
+#    key: $CACHE_KEY
+#    paths:
+#      - node_modules/
+#  rules:
+#    - if: $CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BRANCH
+# In a feature branch, if there is no cache available the pipeline will
+# keep crashing. So it's better to run this job at anytime
+#      changes:
+#        - package-lock.json
 
 lint:
   interruptible: true
   stage: lint
   extends: .node
   script:
+    - npm install
     - npm run lint
     - npm run format:check
 
-audit:
-  interruptible: true
-  stage: lint
-  extends: .node
-  script:
-    - npm audit
+# This job is temporary commented out as CRA doesn't support
+# PostCSS^8 and this package has a moderate CVE to version <8
+# See more here: https://www.npmjs.com/advisories/1693
+# CRA Issue to intergrate PostCSS^8:
+# https://github.com/facebook/create-react-app/issues/9664
+
+# audit:
+#   interruptible: true
+#   stage: lint
+#   extends: .node
+#   script:
+#     - npm audit
 
 build:
   interruptible: true
   stage: build
   extends: .node
   script: 
+    - npm install
     - npm run build
   artifacts:
     paths:
