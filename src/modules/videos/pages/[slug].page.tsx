@@ -44,8 +44,8 @@ export const VideoDetail: React.FC = () => {
           <Title variants={fadeInDown}>{_video.title}</Title>
           <Paragraph variants={fadeInDown} className="my-4">
             {t("videoDetails.publishedBy")}{" "}
-            <Link className="font-bold" to={`/profile/${_video.publisher.id}`}>
-              {_video.publisher.displayName}
+            <Link className="font-bold" to={`/profile/${_video.publisher?.id}`}>
+              {_video.publisher?.displayName}
             </Link>
           </Paragraph>
           <Paragraph className="my-4" variants={fadeInDown}>

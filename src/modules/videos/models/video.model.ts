@@ -14,7 +14,8 @@ export class Video {
     private readonly _slug: string,
     private readonly _thumbnail: string,
     private readonly _isPublic: boolean,
-    private readonly _publisher: VideoPublisher,
+    private readonly _publisherId: string,
+    private readonly _publisher: VideoPublisher | null,
     private readonly _createdAt: Date,
     private readonly _updatedAt: Date,
     private readonly _videoURL: string,
@@ -27,15 +28,17 @@ export class Video {
    * @returns {Video} an instance of Video
    */
   static fromJson(json: IVideo): Video {
+    console.log(json);
     return new Video(
-      json._id,
+      json.id,
       json.title,
       json.isPublished,
       json.description,
       json.slug,
       json.thumbnail,
       json.isPublic,
-      VideoPublisher.fromJson(json.publishedBy),
+      json.publisherId,
+      json.publishedBy ? VideoPublisher.fromJson(json.publishedBy) : null,
       new Date(json.createdAt),
       new Date(json.updatedAt),
       json.videoURL,
@@ -113,7 +116,7 @@ export class Video {
    * Return the video publisher
    * @returns {VideoPublisher} the video publisher
    */
-  get publisher(): VideoPublisher {
+  get publisher(): VideoPublisher | null {
     return this._publisher;
   }
 

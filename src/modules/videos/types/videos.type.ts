@@ -35,9 +35,10 @@ export interface IVideo {
   isPublic: boolean;
   isPublished: boolean;
   description: string;
-  _id: string;
+  id: string;
   title: string;
-  publishedBy: IVideoPublisher;
+  publisherId: string;
+  publishedBy: IVideoPublisher | null;
   createdAt: string;
   updatedAt: string;
   slug: string;
