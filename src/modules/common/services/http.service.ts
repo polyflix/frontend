@@ -4,7 +4,7 @@ import axios, {
   AxiosResponse,
   Method,
 } from "axios";
-import { Injectable } from "../../di";
+import { Injectable } from "@polyflix/di";
 import { API_URL } from "../constants/api.constant";
 import { IApiResponse, IRequestOptions } from "../types/http.type";
 import { BaseHttpService } from "./abastract-http.service";

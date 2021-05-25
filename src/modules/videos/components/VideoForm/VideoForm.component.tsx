@@ -4,6 +4,7 @@ import {
   GlobeIcon,
   UserIcon,
 } from "@heroicons/react/outline";
+import { useInjection } from "@polyflix/di";
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -11,7 +12,6 @@ import { useTranslation } from "react-i18next";
 import slugify from "slugify";
 import { useAuth } from "../../../authentication/hooks/useAuth.hook";
 import { Token } from "../../../authentication/models/token.model";
-import { useInjection } from "../../../di";
 import { fadeInDown } from "../../../ui/animations/fadeInDown";
 import { stagger } from "../../../ui/animations/stagger";
 import { Alert, AlertType } from "../../../ui/components/Alert/Alert.component";

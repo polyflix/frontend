@@ -1,7 +1,7 @@
 import { StatusCodes } from "http-status-codes";
 import { Token } from "../../authentication/models/token.model";
 import { HttpService } from "../../common/services/http.service";
-import { Injectable } from "../../di";
+import { Injectable } from "@polyflix/di";
 import { Video } from "../models/video.model";
 import { IVideoForm, VideosWithPagination } from "../types/videos.type";
 

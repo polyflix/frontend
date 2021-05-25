@@ -1,4 +1,5 @@
 import { PlusIcon } from "@heroicons/react/outline";
+import { useInjection } from "@polyflix/di";
 import { useTranslation } from "react-i18next";
 import { Redirect, useParams } from "react-router";
 import { Link } from "react-router-dom";
@@ -6,7 +7,6 @@ import { useAuth } from "../../../authentication/hooks/useAuth.hook";
 import { Token } from "../../../authentication/models/token.model";
 import { Paginator } from "../../../common/components/Paginator/Paginator.component";
 import { usePagination } from "../../../common/hooks/usePagination.hook";
-import { useInjection } from "../../../di";
 import { fadeOpacity } from "../../../ui/animations/fadeOpacity";
 import { Container } from "../../../ui/components/Container/Container.component";
 import { Page } from "../../../ui/components/Page/Page.component";

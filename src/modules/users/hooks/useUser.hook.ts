@@ -2,7 +2,7 @@ import { StatusCodes } from "http-status-codes";
 import { useEffect, useState } from "react";
 import { useAuth } from "../../authentication/hooks/useAuth.hook";
 import { Token } from "../../authentication/models/token.model";
-import { useInjection } from "../../di";
+import { useInjection } from "@polyflix/di";
 import { AlertType } from "../../ui/components/Alert/Alert.component";
 import { User } from "../models/user.model";
 import { UserService } from "../services/user.service";

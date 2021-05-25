@@ -1,7 +1,7 @@
+import { Injectable } from "@polyflix/di";
 import { StatusCodes } from "http-status-codes";
 import { HttpService } from "../../common/services/http.service";
 import { ReduxService } from "../../common/services/redux.service";
-import { Injectable } from "../../di";
 import { User } from "../../users/models/user.model";
 import { Token } from "../models/token.model";
 import {

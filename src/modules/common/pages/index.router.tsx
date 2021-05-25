@@ -4,7 +4,7 @@ import { Route, Switch, useLocation } from "react-router-dom";
 import { useAuth } from "../../authentication/hooks/useAuth.hook";
 import { AuthRouter } from "../../authentication/pages/auth.router";
 import { AuthService } from "../../authentication/services/auth.service";
-import { useInjection } from "../../di";
+import { useInjection } from "@polyflix/di";
 import { Spinner } from "../../ui/components/Spinner/Spinner.component";
 import { ProfileRouter } from "../../users/pages/profile.router";
 import { VideoRouter } from "../../videos/pages/video.router";
