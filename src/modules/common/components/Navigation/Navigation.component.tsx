@@ -6,6 +6,7 @@ import {
   VideoCameraIcon,
 } from "@heroicons/react/outline";
 import { LoginIcon, UserAddIcon } from "@heroicons/react/solid";
+import { useInjection } from "@polyflix/di";
 import { motion } from "framer-motion";
 import { Fragment, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -13,7 +14,6 @@ import { Link } from "react-router-dom";
 import logo from "../../../../assets/images/polyflix-logo.png";
 import { useAuth } from "../../../authentication/hooks/useAuth.hook";
 import { AuthService } from "../../../authentication/services/auth.service";
-import { useInjection } from "../../../di";
 import { Avatar } from "../../../ui/components/Avatar/Avatar.component";
 import LanguageButton from "../../../ui/components/Buttons/LanguageButton/LanguageButton.component";
 import { OutlineButton } from "../../../ui/components/Buttons/OutlineButton/OutlineButton.component";

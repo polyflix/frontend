@@ -8,7 +8,7 @@ import "./config/i18n.config";
 import { IndexRouter } from "./modules/common/pages/index.router";
 import { store } from "./modules/common/redux/index.store";
 import "./modules/common/styles/index.scss";
-import { DIProvider } from "./modules/di";
+import { DIProvider } from "./modules/common/components";
 import { Spinner } from "./modules/ui/components/Spinner/Spinner.component";
 
 ReactDOM.render(

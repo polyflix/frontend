@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../../authentication/hooks/useAuth.hook";
 import { Token } from "../../authentication/models/token.model";
-import { useInjection } from "../../di";
+import { useInjection } from "@polyflix/di";
 import { AlertType } from "../../ui/components/Alert/Alert.component";
 import { Video } from "../models/video.model";
 import { VideoService } from "../services/video.service";

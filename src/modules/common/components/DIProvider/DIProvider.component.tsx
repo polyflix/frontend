@@ -1,8 +1,7 @@
 import React, { PropsWithChildren } from "react";
 import { useDispatch } from "react-redux";
-import { APP_DISPATCHER } from "../../../common/constants/injection.constant";
-import { Container } from "../../container";
-import { Provider } from "../../types";
+import { APP_DISPATCHER } from "../../constants/injection.constant";
+import { Container, Provider } from "@polyflix/di";
 
 type DIProviderProps = {
   providers?: Provider[];
@@ -12,7 +11,7 @@ type DIProviderProps = {
  * A simple component that can accepts an array of providers in props in order
  * to provide them in the store.
  */
-const DIProvider: React.FC<PropsWithChildren<DIProviderProps>> = ({
+export const DIProvider: React.FC<PropsWithChildren<DIProviderProps>> = ({
   providers,
   children,
 }) => {
@@ -28,5 +27,3 @@ const DIProvider: React.FC<PropsWithChildren<DIProviderProps>> = ({
 
   return <>{children}</>;
 };
-
-export default DIProvider;
