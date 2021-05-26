@@ -24,7 +24,11 @@ export const VideoDetail: React.FC = () => {
 
   const { slug } = useParams<{ slug: string }>();
 
-  const { data: video, isLoading, alert } = useVideos<Video>({
+  const {
+    data: video,
+    isLoading,
+    alert,
+  } = useVideos<Video>({
     mode: "document",
     slug,
   });

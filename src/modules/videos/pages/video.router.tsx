@@ -1,6 +1,6 @@
 import React from "react";
 import { Route, Switch, useRouteMatch } from "react-router-dom";
-import { CreateUpdateVideoPage } from "./[create|update].page";
+import { CreateUpdateVideoPage } from "./[create-update].page";
 import { VideoDetail } from "./[slug].page";
 
 export const VideoRouter: React.FC = () => {

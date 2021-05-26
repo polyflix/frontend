@@ -62,10 +62,11 @@ export const useVideos = <T = Video | VideosWithPagination>(
   const [reload, setReload] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [data, setData] = useState<T | null>(null);
-  const [alert, setAlert] = useState<{
-    type: AlertType;
-    message: string;
-  } | null>(null);
+  const [alert, setAlert] =
+    useState<{
+      type: AlertType;
+      message: string;
+    } | null>(null);
 
   // Is the hook in collection mode
   const isCollection = mode === "collection";

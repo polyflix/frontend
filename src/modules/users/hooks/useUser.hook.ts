@@ -21,10 +21,11 @@ export const useUser = <T = User>(
 
   const [loading, setLoading] = useState<boolean>(false);
   const [data, setData] = useState<T | null>(null);
-  const [alert, setAlert] = useState<{
-    type: AlertType;
-    message: string;
-  } | null>(null);
+  const [alert, setAlert] =
+    useState<{
+      type: AlertType;
+      message: string;
+    } | null>(null);
 
   useEffect(() => {
     if (authLoading) return;

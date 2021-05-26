@@ -57,10 +57,11 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
   const watchThumbnail = watch<"thumbnail", string>("thumbnail", "");
 
   const [loading, setLoading] = useState<boolean>(false);
-  const [alert, setAlert] = useState<{
-    type: AlertType;
-    message: string;
-  } | null>(null);
+  const [alert, setAlert] =
+    useState<{
+      type: AlertType;
+      message: string;
+    } | null>(null);
 
   const isUpdate = video instanceof Video;
 

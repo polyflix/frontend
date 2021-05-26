@@ -27,7 +27,11 @@ export const UserVideosPage: React.FC = () => {
   const { setFinalPage, page, to } = usePagination();
   const isOwnPage = !id;
 
-  const { data: fetchedUser, isLoading: isLoadingUser, alert } = useUser({
+  const {
+    data: fetchedUser,
+    isLoading: isLoadingUser,
+    alert,
+  } = useUser({
     id,
   });
 
