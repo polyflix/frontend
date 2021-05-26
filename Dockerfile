@@ -1,7 +1,10 @@
 FROM node:14-alpine as build
-RUN apk add g++ make python
-WORKDIR /app
+ARG GITLAB_REGISTRY_TOKEN
 ARG REACT_APP_API_URL
+RUN apk add g++ make python
+RUN npm config set --global @polyflix:registry https://gitlab.polytech.umontpellier.fr/api/v4/projects/1343/packages/npm/
+RUN npm config set --global -- '//gitlab.polytech.umontpellier.fr/api/v4/projects/1343/packages/npm/:_authToken' "${GITLAB_REGISTRY_TOKEN}"
+WORKDIR /app
 ENV REACT_APP_API_URL=${REACT_APP_API_URL}
 ENV PATH /app/node_modules/.bin:$PATH
 COPY package.json ./
