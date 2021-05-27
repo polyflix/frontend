@@ -1,157 +1,167 @@
 {
-	"shared": {
-		"common": {
-			"actions": {
-				"play": "Play",
-				"info": "More info",
-				"add": "Add",
-				"edit": "Edit",
-				"delete": "Delete",
-				"cancel": "Cancel"
-			},
-			"wait": "Please wait"
-		},
-		"navbar": {
-			"signIn": "Sign in",
-			"signOut": "Sign out",
-			"signUp": ["No account ?", "Sign up now"]
-		}
-	},
-	"home": {
-		"seo": {
-			"title": "Home"
-		},
-		"sliders": {
-			"continue_watching": "Continue watching",
-			"watch_again": "Watch again",
-			"latest": "Latest",
-			"popular": "Popular"
-		}
-	},
-	"auth": {
-		"inputs": {
-			"email": { "name": "Email", "error": "An email is required" },
-			"password": {
-				"name": "Password",
-				"description": "The password must be at least 8 characters",
-				"error": "A password is required"
-			}
-		},
-		"signIn": {
-			"seo": {
-				"title": "Sign in",
-				"description": "Enter your credentials to log in into your account"
-			},
-			"action": "Sign in",
-			"footer": ["New to Polyflix ?", "Sign up now"],
-			"error": "Bad credentials"
-		},
-		"signUp": {
-			"seo": {
-				"title": "Sign up",
-				"description": "Fill the form below to create an account for Polyflix"
-			},
-			"inputs": {
-				"firstname": {
-					"name": "Firstname",
-					"error": "First name is required"
-				},
-				"lastname": { "name": "Lastname", "error": "Last name is required" },
-				"passwordConfirm": {
-					"name": "Password confirm",
-					"error": "The passwords do not match"
-				}
-			},
-			"action": "Sign up",
-			"footer": ["Already registered to Polyflix ?", "Sign in here"],
-			"error": "Email already in use"
-		}
-	},
-	"userProfile": {
-		"seo": {
-			"title": "My profile"
-		},
-		"welcome": "Welcome back"
-	},
-	"videoDetails": {
-		"publishedBy": "Published by"
-	},
-	"userVideos": {
-		"seo": {
-			"title": "My videos"
-		},
-		"visibility": {
-			"private": {
-				"name": "Private",
-				"description": "Your video will be visible only for you"
-			},
-			"public": {
-				"name": "Public",
-				"description": "Your video will be visible for everyone"
-			}
-		},
-		"status": {
-			"draft": {
-				"name": "Draft",
-				"description": "Your video is still in draft and users cannot see it"
-			},
-			"published": {
-				"name": "Published",
-				"description": "Your video can appears in search results (if it is public)"
-			}
-		}
-	},
-	"videoManagement": {
-		"video": "a video",
-		"actions": {
-			"switching": "Click to change"
-		},
-		"inputs": {
-			"title": {
-				"name": "Title",
-				"description": "The title of the video",
-				"error": "A title is required"
-			},
-			"thumbnail": {
-				"name": "Thumbnail URL",
-				"description": "The URL of the video thumbnail",
-				"error": "A thumbnail URL is required"
-			},
-			"description": {
-				"name": "Video description",
-				"error": "A description is required"
-			},
-			"videoURL": {
-				"name": "Video URL",
-				"description": "The URL of the video",
-				"error": "A video URL is required"
-			},
-			"videoPreviewURL": {
-				"name": "Video Preview URL",
-				"description": "The URL of the video preview ",
-				"error": "A video preview URL is required"
-			}
-		},
-		"addVideo": {
-			"description": "Fill the form below to create your video",
-			"action": "Create",
-			"success": "added to the library",
-			"error": "A video already exists with the title"
-		},
-		"updateVideo": {
-			"description": "Fill the form below to update your video",
-			"action": "Update",
-			"success": "successfully updated"
-		}
-	},
-	"notFound": {
-		"seo": {
-			"title": "Page not found"
-		},
-		"content": {
-			"title": "Oops, page not found",
-			"description": "We can't find the page you want to access. The ressource has been moved or deleted.",
-			"home": "Go home"
-		}
-	}
+  "shared": {
+    "common": {
+      "actions": {
+        "play": "Play",
+        "info": "More info",
+        "add": "Add",
+        "edit": "Edit",
+        "delete": "Delete",
+        "cancel": "Cancel"
+      },
+      "wait": "Please wait"
+    },
+    "navbar": {
+      "signIn": "Sign in",
+      "signOut": "Sign out",
+      "signUp": ["No account ?", "Sign up now"]
+    }
+  },
+  "home": {
+    "seo": {
+      "title": "Home"
+    },
+    "sliders": {
+      "continue_watching": "Continue watching",
+      "watch_again": "Watch again",
+      "latest": "Latest",
+      "popular": "Popular"
+    }
+  },
+  "auth": {
+    "inputs": {
+      "email": { "name": "Email", "error": "An email is required" },
+      "password": {
+        "name": "Password",
+        "description": "The password must be at least 8 characters",
+        "error": "A password is required"
+      }
+    },
+    "signIn": {
+      "seo": {
+        "title": "Sign in",
+        "description": "Enter your credentials to log in into your account"
+      },
+      "action": "Sign in",
+      "footer": ["New to Polyflix ?", "Sign up now"],
+      "error": "Bad credentials"
+    },
+    "signUp": {
+      "seo": {
+        "title": "Sign up",
+        "description": "Fill the form below to create an account for Polyflix"
+      },
+      "inputs": {
+        "firstname": {
+          "name": "Firstname",
+          "error": "First name is required"
+        },
+        "lastname": { "name": "Lastname", "error": "Last name is required" },
+        "passwordConfirm": {
+          "name": "Password confirm",
+          "error": "The passwords do not match"
+        }
+      },
+      "action": "Sign up",
+      "footer": ["Already registered to Polyflix ?", "Sign in here"],
+      "error": "Email already in use"
+    }
+  },
+  "userProfile": {
+    "seo": {
+      "title": "My profile"
+    },
+    "welcome": "Welcome back"
+  },
+  "videoDetails": {
+    "publishedBy": "Published by"
+  },
+  "userVideos": {
+    "seo": {
+      "title": "My videos"
+    },
+    "visibility": {
+      "private": {
+        "name": "Private",
+        "description": "Your video will be visible only for you"
+      },
+      "public": {
+        "name": "Public",
+        "description": "Your video will be visible for everyone"
+      }
+    },
+    "status": {
+      "draft": {
+        "name": "Draft",
+        "description": "Your video is still in draft and users cannot see it"
+      },
+      "published": {
+        "name": "Published",
+        "description": "Your video can appears in search results (if it is public)"
+      }
+    }
+  },
+  "videoManagement": {
+    "video": "a video",
+    "actions": {
+      "switching": "Click to change"
+    },
+    "inputs": {
+      "title": {
+        "name": "Title",
+        "description": "The title of the video",
+        "error": "A title is required"
+      },
+      "thumbnail": {
+        "name": "Thumbnail URL",
+        "description": "The URL of the video thumbnail",
+        "error": "A thumbnail URL is required"
+      },
+      "description": {
+        "name": "Video description",
+        "error": "A description is required"
+      },
+      "videoURL": {
+        "name": "Video URL",
+        "description": "The URL of the video",
+        "error": "A video URL is required"
+      },
+      "videoPreviewURL": {
+        "name": "Video Preview URL",
+        "description": "The URL of the video preview ",
+        "error": "A video preview URL is required"
+      }
+    },
+    "addVideo": {
+      "description": "Fill the form below to create your video",
+      "action": "Create",
+      "success": "added to the library",
+      "error": "A video already exists with the title"
+    },
+    "updateVideo": {
+      "description": "Fill the form below to update your video",
+      "action": "Update",
+      "success": "successfully updated"
+    }
+  },
+  "notFound": {
+    "seo": {
+      "title": "Page not found"
+    },
+    "content": {
+      "title": "Oops, page not found",
+      "description": "We can't find the page you want to access. The ressource has been moved or deleted.",
+      "home": "Go home"
+    }
+  },
+  "video": {
+    "view": {
+      "tabs": {
+        "label": {
+          "playlist": "Playlist",
+          "subtitle": "Subtitles"
+        }
+      }
+    }
+  }
 }
