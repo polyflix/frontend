@@ -46,6 +46,8 @@ export class VideoService {
     return {
       pages: response.totalPages,
       videos: response.videos.map(Video.fromJson),
+      watchedVideos: response.watchedVideos.map(Video.fromJson),
+      watchingVideos: response.watchingVideos.map(Video.fromJson),
     };
   }
 
