@@ -22,15 +22,23 @@ export const HomePage: React.FC = () => {
       {data?.videos && (
         <>
           <VideoHero video={data.videos[0]} />
-          <div className="pb-8"></div>
-          <VideoSlider title="Top rated" videos={data.videos} />
-          <div className="pb-8"></div>
+          <div className="pb-8" />
+          <VideoSlider
+            title={t("home.sliders.continue_watching")}
+            videos={data.watchingVideos}
+          />
+          <div className="pb-8" />
           <VideoTile video={data.videos[5]} />
-          <div className="pb-8"></div>
-          <VideoSlider title="Latest" videos={data.videos} />
-          <div className="pb-8"></div>
-          <VideoSlider title="Popular" videos={data.videos} />
-          <div className="pb-8"></div>
+          <div className="pb-8" />
+          <VideoSlider title={t("home.sliders.latest")} videos={data.videos} />
+          <div className="pb-8" />
+          <VideoSlider title={t("home.sliders.popular")} videos={data.videos} />
+          <div className="pb-8" />
+          <VideoSlider
+            title={t("home.sliders.watch_again")}
+            videos={data.watchedVideos}
+          />
+          <div className="pb-8" />
         </>
       )}
     </Page>

@@ -1,5 +1,6 @@
-import { IVideo } from "../types/videos.type";
+import { IVideo } from "../types";
 import { VideoPublisher } from "./video-publisher.model";
+import WatchMetadata from "../../stats/models/userMeta.model";
 
 /**
  * Modelize the Video
@@ -15,6 +16,7 @@ export class Video {
     private readonly _thumbnail: string,
     private readonly _isPublic: boolean,
     private readonly _publisherId: string,
+    private readonly _userMeta: WatchMetadata | undefined,
     private readonly _publisher: VideoPublisher | null,
     private readonly _createdAt: Date,
     private readonly _updatedAt: Date,
@@ -28,7 +30,6 @@ export class Video {
    * @returns {Video} an instance of Video
    */
   static fromJson(json: IVideo): Video {
-    console.log(json);
     return new Video(
       json.id,
       json.title,
@@ -38,7 +39,8 @@ export class Video {
       json.thumbnail,
       json.isPublic,
       json.publisherId,
-      json.publishedBy ? VideoPublisher.fromJson(json.publishedBy) : null,
+      json.userMeta && WatchMetadata.fromJson(json.userMeta),
+      json.publishedBy && VideoPublisher.fromJson(json.publishedBy),
       new Date(json.createdAt),
       new Date(json.updatedAt),
       json.videoURL,
@@ -110,6 +112,15 @@ export class Video {
    */
   get isPublic(): boolean {
     return this._isPublic;
+  }
+
+  /**
+   * Return watching meta data over video if any
+   * @returns {WatchMetadata} Complete meta data based on user
+   * @returns {null} Nothing stored so returns nothing
+   */
+  get userMeta(): WatchMetadata | undefined {
+    return this._userMeta;
   }
 
   /**

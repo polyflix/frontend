@@ -1,5 +1,6 @@
 import { AlertType } from "../../ui/components/Alert/Alert.component";
 import { Video } from "../models/video.model";
+import { IWatchMetadata } from "../../stats/types/userMeta.type";
 
 export interface IVideoForm {
   title: string;
@@ -21,6 +22,8 @@ export type VideoState<T> = {
 export type VideosWithPagination = {
   pages: number;
   videos: Video[];
+  watchedVideos: Video[];
+  watchingVideos: Video[];
 };
 
 export interface IVideoPublisher {
@@ -39,6 +42,7 @@ export interface IVideo {
   title: string;
   publisherId: string;
   publishedBy: IVideoPublisher | null;
+  userMeta: IWatchMetadata | undefined;
   createdAt: string;
   updatedAt: string;
   slug: string;

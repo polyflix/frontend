@@ -20,6 +20,12 @@
 	"home": {
 		"seo": {
 			"title": "Home"
+		},
+		"sliders": {
+			"continue_watching": "Continue watching",
+			"watch_again": "Watch again",
+			"latest": "Latest",
+			"popular": "Popular"
 		}
 	},
 	"auth": {

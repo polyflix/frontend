@@ -20,6 +20,12 @@
 	"home": {
 		"seo": {
 			"title": "Accueil"
+		},
+		"sliders": {
+			"continue_watching": "Continuer...",
+			"watch_again": "Regarder de nouveau",
+			"latest": "Les dernières sorties",
+			"popular": "Populaire en ce moment"
 		}
 	},
 	"auth": {

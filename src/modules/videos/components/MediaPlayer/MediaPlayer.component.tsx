@@ -1,9 +1,13 @@
 import { ArrowLeftIcon, InformationCircleIcon } from "@heroicons/react/outline";
-import { useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import ReactPlayer from "react-player";
 import { Link } from "react-router-dom";
-import { Typography } from "../../../ui/components/Typography/Typography.component";
-import { Video } from "../../models/video.model";
+import { Typography } from "../../../ui";
+import { Video } from "../../models";
+import BaseReactPlayer from "react-player/types/base";
+import { useAuth } from "../../../authentication";
+import { StatsService } from "../../../stats/services/stats.service";
+import { useInjection } from "@polyflix/di";
 
 type Props = {
   /** The video we want to play in the player */
@@ -11,10 +15,42 @@ type Props = {
 };
 
 /**
- * A basic MediaPlayer component.
+ * A basic MediaPlayer component with statistics logic
  */
-export const MediaPlayer: React.FC<Props> = ({ video, ...rest }) => {
+export const MediaPlayer: React.FC<Props> = ({ video, ..._ }) => {
   const [overlay, setOverlay] = useState<boolean>(true);
+  const playerRef = useRef<BaseReactPlayer<any>>(null);
+  const { token } = useAuth();
+  const statsService = useInjection<StatsService>(StatsService);
+
+  const watchSyncCallback = useCallback(() => {
+    if (!playerRef?.current || !token) return;
+
+    let current_time = playerRef.current.getCurrentTime();
+    let duration = playerRef.current.getDuration();
+    statsService.updateSync(
+      {
+        videoId: video.id,
+        watchedSeconds: current_time,
+        watchedPercent: current_time / duration,
+      },
+      token
+    );
+  }, [statsService, token, video]);
+
+  const onProgress = () => watchSyncCallback();
+  const onSeek = () => watchSyncCallback();
+
+  useEffect(() => {
+    if (video.userMeta)
+      playerRef.current?.seekTo(video.userMeta.watchedSeconds, "seconds");
+    statsService.startTimer(watchSyncCallback);
+
+    return () => {
+      watchSyncCallback();
+      statsService.stopTimer();
+    };
+  }, [video.userMeta, token, statsService, watchSyncCallback]);
 
   return (
     <div className="h-screen w-screen fixed bg-black top-0 left-0 z-50">
@@ -36,12 +72,15 @@ export const MediaPlayer: React.FC<Props> = ({ video, ...rest }) => {
         </Link>
       </div>
       <ReactPlayer
+        ref={playerRef}
         onPlay={() => setOverlay(false)}
         onPause={() => setOverlay(true)}
         width="100%"
         height="100vh"
         controls
         playing={true}
+        onSeek={onSeek}
+        onProgress={onProgress}
         url="https://media.vimejs.com/720p.mp4"
       />
     </div>

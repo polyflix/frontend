@@ -12,10 +12,15 @@ import SliderControl from "./SliderControl.component";
 type Props = {
   title: string;
   videos: Video[];
+  hideIfNothing?: boolean;
 };
 
 SwiperCore.use([Navigation, Mousewheel]);
-export const VideoSlider: React.FC<Props> = ({ videos, title }) => {
+export const VideoSlider: React.FC<Props> = ({
+  videos,
+  title,
+  hideIfNothing = true,
+}) => {
   return videos.length !== 0 ? (
     <div>
       <Link to="#" className="flex items-center mb-3">
@@ -52,7 +57,7 @@ export const VideoSlider: React.FC<Props> = ({ videos, title }) => {
         </SliderControl>
       </Swiper>
     </div>
-  ) : (
+  ) : hideIfNothing ? null : (
     <NoData />
   );
 };
