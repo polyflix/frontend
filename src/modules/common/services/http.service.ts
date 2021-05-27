@@ -22,10 +22,6 @@ export class HttpService implements BaseHttpService {
     this._axios.interceptors.response.use(
       (response: AxiosResponse) => response,
       async (error) => {
-        if (error?.message === "Network Error") {
-          return Promise.reject({ response: "Server is unavailable", status: 500 });
-        }
-
         const originalRequest = error.config;
         const { status } = error.response;
 
@@ -111,8 +107,7 @@ export class HttpService implements BaseHttpService {
         response: data,
       };
     } catch (e) {
-      if (e?.status) return { error: e.response, status: e.status };
-      const { status, data, statusText } = e?.response;
+      const { status, data, statusText } = e.response;
       return {
         status,
         error: data.message || statusText,

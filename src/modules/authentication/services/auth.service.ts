@@ -57,7 +57,6 @@ export class AuthService {
    */
   public async refreshAuth() {
     this.reduxService.dispatch(RefreshAuthInProgress());
-    console.debug("Refreshing token on page load");
     const { status, response } = await this.httpService.post("/auth/refresh");
     if (
       status !== StatusCodes.OK ||
