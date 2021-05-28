@@ -11,9 +11,13 @@ import { VideoRouter } from "../../videos/pages/video.router";
 import { ProtectedRoute } from "../components/ProtectedRoute/ProtectedRoute.component";
 import { NotFoundPage } from "./404.page";
 import { HomePage } from "./home.page";
+import { useServerState } from "../hooks/useServerState.hook";
+import { ServerState } from "../types/serverState.type";
+import { ServerUnavailablePage } from "./503.page";
 
 export const IndexRouter: React.FC = () => {
   const { isAuthenticated, isLoading, hasRefresh } = useAuth();
+  const serverState = useServerState();
 
   const location = useLocation();
 
@@ -21,6 +25,8 @@ export const IndexRouter: React.FC = () => {
   if (!isAuthenticated && !hasRefresh) {
     authService.refreshAuth();
   }
+
+  if (serverState === ServerState.OFFLINE) return <ServerUnavailablePage />;
 
   return (
     <AnimatePresence exitBeforeEnter>

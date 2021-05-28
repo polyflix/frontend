@@ -5,15 +5,22 @@ import axios, {
   Method,
 } from "axios";
 import { Injectable } from "@polyflix/di";
-import { API_URL } from "../constants/api.constant";
+import { API_URL, NETWORK_ERROR } from "../constants/api.constant";
 import { IApiResponse, IRequestOptions } from "../types/http.type";
 import { BaseHttpService } from "./abastract-http.service";
+import { StatusCodes } from "http-status-codes";
+import { ReduxService } from "./redux.service";
+import { ServerStateAction } from "../types/serverState.type";
+import {
+  serverStateOfflineAction,
+  serverStateOnlineAction,
+} from "../redux/actions/serverState.action";
 
 @Injectable()
 export class HttpService implements BaseHttpService {
   private _axios: AxiosInstance;
 
-  constructor() {
+  constructor(private readonly reduxService: ReduxService<ServerStateAction>) {
     this._axios = axios.create({
       baseURL: API_URL,
       withCredentials: true,
@@ -22,6 +29,8 @@ export class HttpService implements BaseHttpService {
     this._axios.interceptors.response.use(
       (response: AxiosResponse) => response,
       async (error) => {
+        if (!error.response) throw NETWORK_ERROR;
+
         const originalRequest = error.config;
         const { status } = error.response;
 
@@ -102,11 +111,20 @@ export class HttpService implements BaseHttpService {
     const config = this.getRequestConfiguration(method, path, options);
     try {
       const { data, status } = await this._axios.request(config);
+      this.reduxService.dispatch(serverStateOnlineAction());
       return {
         status,
         response: data,
       };
     } catch (e) {
+      if (e instanceof Error) {
+        this.reduxService.dispatch(serverStateOfflineAction());
+        return {
+          status: StatusCodes.SERVICE_UNAVAILABLE,
+          error: e.message,
+        };
+      }
+
       const { status, data, statusText } = e.response;
       return {
         status,
