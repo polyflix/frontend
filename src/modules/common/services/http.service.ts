@@ -26,15 +26,19 @@ export class HttpService implements BaseHttpService {
       withCredentials: true,
     });
 
+    /**
+     * Interceptor used to send a refresh token reauest
+     * in the case we receive an unauthorized response
+     *
+     * Only try once!
+     */
     this._axios.interceptors.response.use(
       (response: AxiosResponse) => response,
       async (error) => {
-        if (!error.response) throw NETWORK_ERROR;
-
         const originalRequest = error.config;
-        const { status } = error.response;
 
-        if (status === 401 && !originalRequest._retry) {
+        if (error.message === NETWORK_ERROR) throw Error(NETWORK_ERROR);
+        if (error?.response?.status === 401 && !originalRequest._retry) {
           originalRequest._retry = true;
           const res = await this.post("/auth/refresh");
 
@@ -117,7 +121,7 @@ export class HttpService implements BaseHttpService {
         response: data,
       };
     } catch (e) {
-      if (e instanceof Error) {
+      if (e instanceof Error && e.message === NETWORK_ERROR) {
         this.reduxService.dispatch(serverStateOfflineAction());
         return {
           status: StatusCodes.SERVICE_UNAVAILABLE,
