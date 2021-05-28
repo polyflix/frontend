@@ -154,6 +154,17 @@
       "home": "Retourner à l'accueil"
     }
   },
+  "serverUnavailable": {
+    "seo": {
+      "title": "Service indisponible"
+    },
+    "content": {
+      "title": "Mince, quelqu'un a tiré le mauvais câble",
+      "description": "Nous ne sommes pas en mesure de vous proposer ce service tout de suite, ré-essayez plus tard.",
+      "redirect": "Découvrir un site incroyable",
+      "link": "https://lapin.fr"
+    }
+  },
   "video": {
     "view": {
       "tabs": {

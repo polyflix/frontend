@@ -154,6 +154,17 @@
       "home": "Go home"
     }
   },
+  "serverUnavailable": {
+    "seo": {
+      "title": "Server unavailable"
+    },
+    "content": {
+      "title": "Whoops, it's tea time",
+      "description": "We cannot server you this page, please try again.",
+      "redirect": "Discover something new",
+      "link": "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+    }
+  },
   "video": {
     "view": {
       "tabs": {
