@@ -78,7 +78,8 @@
   },
   "userVideos": {
     "seo": {
-      "title": "My videos"
+      "ownTitle": "My videos",
+      "userTitle": "{{user}}'s videos"
     },
     "visibility": {
       "private": {
@@ -172,7 +173,8 @@
           "playlist": "Playlist",
           "subtitle": "Subtitles"
         }
-      }
+      },
+      "publishedBy": "Published by"
     }
   }
 }
