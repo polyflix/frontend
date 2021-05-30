@@ -78,7 +78,7 @@ export const Navigation: React.FC<Props> = ({ visible }) => {
                       <Link to="/profile/videos">
                         <span className="cursor-pointer text-nx-white flex rounded-md items-center w-full px-2 py-2 text-sm">
                           <VideoCameraIcon className="text-nx-red w-5 mr-3" />
-                          {t("userVideos.seo.title")}
+                          {t("userVideos.seo.ownTitle")}
                         </span>
                       </Link>
                     </Menu.Item>

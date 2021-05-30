@@ -42,10 +42,7 @@ export const DeleteAcountForm: React.FC = () => {
     try {
       setIsLoading(true);
       reset();
-      await userService.deleteUser(
-        token as Token,
-        (user?.id as number).toString()
-      );
+      await userService.deleteUser(token as Token, user?.id as string);
     } catch (e) {
       setAlert({
         message: `${t("userProfile.form.badPassword")} (${e})`,
