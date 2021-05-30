@@ -81,6 +81,16 @@ export class HttpService implements BaseHttpService {
   }
 
   /**
+   * Execute an HTTP PUT call on a specific path.
+   * @param {string} path the request path
+   * @param {IRequestOptions} options the request options
+   * @returns {IApiResponse} the response
+   */
+  async put(path: string, options?: IRequestOptions): Promise<IApiResponse> {
+    return await this._fetch("PUT", path, options);
+  }
+
+  /**
    * Execute an HTTP PATCH call on a specific path.
    * @param {string} path the request path
    * @param {IRequestOptions} options the request options

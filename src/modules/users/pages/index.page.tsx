@@ -1,18 +1,20 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { useAuth } from "../../authentication";
-import { Container, fadeOpacity, Page, Title } from "../../ui";
+import { Container, fadeOpacity, Page } from "../../ui";
+import { DeleteAcountForm } from "../components/Forms/DeleteAccountForm.component";
+import { PasswordForm } from "../components/Forms/PasswordForm.component";
+import { ProfileForm } from "../components/Forms/ProfileForm.component";
 
 export const ProfilePage: React.FC = () => {
-  const { user } = useAuth();
   const { t } = useTranslation();
 
   return (
     <Page variants={fadeOpacity} title={t("userProfile.seo.title")}>
       <Container mxAuto>
-        <Title>
-          {t("userProfile.welcome")}, {user?.displayName}
-        </Title>
+        <ProfileForm />
+        <PasswordForm />
+        <DeleteAcountForm />
+        <div className="h-10"></div>
       </Container>
     </Page>
   );
