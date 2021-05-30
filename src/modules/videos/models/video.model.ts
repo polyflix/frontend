@@ -20,8 +20,8 @@ export class Video {
     private readonly _publisher: VideoPublisher | null,
     private readonly _createdAt: Date,
     private readonly _updatedAt: Date,
-    private readonly _videoURL: string,
-    private readonly _videoPreviewURL: string
+    private readonly _src: string,
+    private readonly _previewUrl: string
   ) {}
 
   /**
@@ -43,8 +43,8 @@ export class Video {
       json.publishedBy && VideoPublisher.fromJson(json.publishedBy),
       new Date(json.createdAt),
       new Date(json.updatedAt),
-      json.videoURL,
-      json.videoPreviewURL
+      json.src,
+      json.previewUrl
     );
   }
 
@@ -135,16 +135,16 @@ export class Video {
    * Return the video publisher
    * @returns {string} the video URL
    */
-  get videoURL(): string {
-    return this._videoURL;
+  get src(): string {
+    return this._src;
   }
 
   /**
    * Return the video publisher
    * @returns {string} the video URL
    */
-  get videoPreviewURL(): string {
-    return this._videoPreviewURL;
+  get previewUrl(): string {
+    return this._previewUrl;
   }
 
   private get link(): string {

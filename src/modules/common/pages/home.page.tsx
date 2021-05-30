@@ -25,10 +25,10 @@ export const HomePage: React.FC = () => {
           <div className="pb-8" />
           <VideoSlider
             title={t("home.sliders.continue_watching")}
-            videos={data.watchingVideos}
+            videos={data.videos}
           />
           <div className="pb-8" />
-          <VideoTile video={data.videos[5]} />
+          <VideoTile video={data.videos[3]} />
           <div className="pb-8" />
           <VideoSlider title={t("home.sliders.latest")} videos={data.videos} />
           <div className="pb-8" />
@@ -36,7 +36,7 @@ export const HomePage: React.FC = () => {
           <div className="pb-8" />
           <VideoSlider
             title={t("home.sliders.watch_again")}
-            videos={data.watchedVideos}
+            videos={data.videos}
           />
           <div className="pb-8" />
         </>

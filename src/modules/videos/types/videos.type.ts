@@ -8,8 +8,8 @@ export interface IVideoForm {
   thumbnail: string;
   isPublic: boolean;
   isPublished: boolean;
-  videoURL: string;
-  videoPreviewURL: string;
+  src: string;
+  previewUrl: string;
 }
 
 export type VideoState<T> = {
@@ -20,10 +20,10 @@ export type VideoState<T> = {
 };
 
 export type VideosWithPagination = {
-  pages: number;
+  totalCount: number;
   videos: Video[];
-  watchedVideos: Video[];
-  watchingVideos: Video[];
+  // watchedVideos: Video[];
+  // watchingVideos: Video[];
 };
 
 export interface IVideoPublisher {
@@ -33,8 +33,8 @@ export interface IVideoPublisher {
 }
 
 export interface IVideo {
-  videoPreviewURL: string;
-  videoURL: string;
+  previewUrl: string;
+  src: string;
   isPublic: boolean;
   isPublished: boolean;
   description: string;

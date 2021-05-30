@@ -47,8 +47,8 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
       thumbnail: video?.thumbnail,
       isPublished: video?.isPublished || false,
       isPublic: video?.isPublic || false,
-      videoURL: video?.videoURL,
-      videoPreviewURL: video?.videoPreviewURL,
+      src: video?.src,
+      previewUrl: video?.previewUrl,
     },
   });
   const watchTitle = watch<"title", string>("title", "");
@@ -68,13 +68,13 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
   const onSubmit = async (data: IVideoForm) => {
     setLoading(true);
     try {
-      let result = await (isUpdate
+      await (isUpdate
         ? videoService.updateVideo(video?.id as string, data, token as Token)
         : videoService.createVideo(data, token as Token));
       setAlert({
         message: isUpdate
-          ? `"${result.title}" ${t("videoManagement.updateVideo.success")}.`
-          : `"${result.title}" ${t("videoManagement.addVideo.success")}.`,
+          ? `"${data.title}" ${t("videoManagement.updateVideo.success")}.`
+          : `"${data.title}" ${t("videoManagement.addVideo.success")}.`,
         type: "success",
       });
     } catch (err) {
@@ -161,7 +161,7 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
         />
         <Input
           error={errors.thumbnail}
-          name="videoURL"
+          name="src"
           required
           className="col-span-2 md:col-span-1"
           variants={fadeInDown}
@@ -176,7 +176,7 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
         />
         <Input
           error={errors.thumbnail}
-          name="videoPreviewURL"
+          name="previewUrl"
           required
           className="col-span-2 md:col-span-1"
           variants={fadeInDown}

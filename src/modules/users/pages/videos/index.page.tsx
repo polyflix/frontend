@@ -41,7 +41,7 @@ export const UserVideosPage: React.FC = () => {
     triggerReload,
   } = useVideos<VideosWithPagination>({
     onCollectionLoaded: setFinalPage,
-    authorId: id || user?.id,
+    authorId: user?.id as string,
     mode: "collection",
     page,
     limit,
@@ -106,7 +106,7 @@ export const UserVideosPage: React.FC = () => {
                 className="py-5 justify-end"
                 page={page}
                 onPageChanged={to}
-                total={data.pages}
+                total={Math.floor(data.totalCount / data.videos.length)}
               />
             ) : (
               <div className="text-white">

@@ -23,14 +23,15 @@ export class VideoService {
     page?: number,
     limit?: number
   ): Promise<VideosWithPagination> {
-    const path = `${authorId ? `/users/${authorId}/videos` : "/videos"}`;
+    const path = "/videos";
     // Build search query
-    let query;
+    let query = new URLSearchParams();
     if (page || limit) {
       query = new URLSearchParams();
       if (page) query.append("page", page.toString());
       if (limit) query.append("limit", limit.toString());
     }
+    if (authorId) query.append("authorId", authorId);
 
     // Build the URL for the request.
     // The format is the following : /videos[/me][?page=1&limit=20]
@@ -44,10 +45,10 @@ export class VideoService {
       throw error;
     }
     return {
-      pages: response.totalPages,
-      videos: response.videos.map(Video.fromJson),
-      watchedVideos: response.watchedVideos?.map(Video.fromJson),
-      watchingVideos: response.watchingVideos?.map(Video.fromJson),
+      totalCount: response.totalCount,
+      videos: response.items.map(Video.fromJson),
+      // watchedVideos: response.watchedVideos.map(Video.fromJson),
+      // watchingVideos: response.watchingVideos.map(Video.fromJson),
     };
   }
 
@@ -94,7 +95,7 @@ export class VideoService {
     data: IVideoForm,
     token: Token
   ): Promise<Video> {
-    const { status, response, error } = await this.httpService.patch(
+    const { status, response, error } = await this.httpService.put(
       `/videos/${id}`,
       {
         body: data,
