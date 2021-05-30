@@ -21,10 +21,10 @@ import { useUser } from "../../hooks/useUser.hook";
 
 export const UserVideosPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
-  const { token } = useAuth();
+  const { token, user } = useAuth();
   const { t } = useTranslation();
   const videoService = useInjection<VideoService>(VideoService);
-  const { setFinalPage, page, to } = usePagination();
+  const { setFinalPage, page, to, limit } = usePagination();
   const isOwnPage = !id;
 
   const {
@@ -41,9 +41,10 @@ export const UserVideosPage: React.FC = () => {
     triggerReload,
   } = useVideos<VideosWithPagination>({
     onCollectionLoaded: setFinalPage,
-    authorId: id,
+    authorId: id || user?.id,
     mode: "collection",
     page,
+    limit,
   });
 
   const onVideoDelete = async (id: string) => {
@@ -59,8 +60,8 @@ export const UserVideosPage: React.FC = () => {
       variants={fadeOpacity}
       title={
         isOwnPage
-          ? t("userVideos.seo.title")
-          : `${fetchedUser?.displayName}'s profile`
+          ? t("userVideos.seo.ownTitle")
+          : t("userVideos.seo.userTitle", { user: fetchedUser?.displayName })
       }
     >
       <Container mxAuto className="px-5 flex flex-col">
@@ -72,8 +73,10 @@ export const UserVideosPage: React.FC = () => {
         <div className="flex items-center justify-between">
           <Title className="my-5">
             {isOwnPage
-              ? t("userVideos.seo.title")
-              : `${fetchedUser?.displayName}'s videos`}
+              ? t("userVideos.seo.ownTitle")
+              : t("userVideos.seo.userTitle", {
+                  user: fetchedUser?.displayName,
+                })}
           </Title>
           {isOwnPage && (
             <Link to="/videos/create">

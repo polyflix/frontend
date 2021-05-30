@@ -8,7 +8,7 @@ export interface ILoginForm {
 }
 
 export interface IUser {
-  id: number;
+  id: string;
   email: string;
   firstName: string;
   lastName: string;

@@ -6,7 +6,7 @@ import { IUser } from "../../authentication/types/auth.type";
  */
 export class User {
   private constructor(
-    private readonly _id: number,
+    private readonly _id: string,
     private readonly _email: string,
     private readonly _firstName: string,
     private readonly _lastName: string,
@@ -32,9 +32,9 @@ export class User {
 
   /**
    * Return the id of the user.
-   * @returns {number} the id of the user
+   * @returns {string} the id of the user
    */
-  get id(): number {
+  get id(): string {
     return this._id;
   }
 

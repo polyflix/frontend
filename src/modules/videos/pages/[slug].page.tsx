@@ -1,5 +1,6 @@
 import React, { Children } from "react";
 import { Redirect, useParams } from "react-router";
+import { Link } from "react-router-dom";
 import { Url } from "../../common/utils/url.util";
 import { fadeOpacity } from "../../ui/animations/fadeOpacity";
 import { Container } from "../../ui/components/Container/Container.component";
@@ -10,7 +11,7 @@ import { Video } from "../models/video.model";
 import styles from "./slug.module.scss";
 import { cn } from "../../common/utils/classes.util";
 import { useTranslation } from "react-i18next";
-import { ChevronDown, Playlist, Subtitle } from "../../ui";
+import { ChevronDown, Paragraph, Playlist, Subtitle } from "../../ui";
 import ReactPlayer from "react-player";
 
 export const VideoDetail: React.FC = () => {
@@ -56,6 +57,15 @@ export const VideoDetail: React.FC = () => {
               title={t("video.view.tabs.label.playlist")}
               icon={<Playlist />}
             >
+              <Paragraph className="my-1">
+                {t("video.view.publishedBy")}
+                <Link
+                  to={`/profile/${video?.publisher?.id}`}
+                  className="text-nx-red font-bold"
+                >
+                  {` ${video?.publisher?.displayName}`}
+                </Link>
+              </Paragraph>
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit
               illo voluptatum sint inventore quas aperiam animi incidunt
               similique laudantium, et aliquam blanditiis numquam veniam eos
