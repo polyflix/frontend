@@ -39,11 +39,7 @@ export const PasswordForm: React.FC = () => {
     setAlert(null);
     try {
       setIsLoading(true);
-      await userService.updateUser(
-        token as Token,
-        (user?.id as number).toString(),
-        data
-      );
+      await userService.updateUser(token as Token, user?.id as string, data);
       setAlert({
         message: t("userProfile.messages.successPassword"),
         type: "success",

@@ -42,11 +42,7 @@ export const ProfileForm: React.FC = () => {
   const handleUpdate = async (data: IUserProfileUpdate) => {
     setAlert(null);
     try {
-      await userService.updateUser(
-        token as Token,
-        (user?.id as number).toString(),
-        data
-      );
+      await userService.updateUser(token as Token, user?.id as string, data);
       setAlert({
         message: t("userProfile.messages.successProfile"),
         type: "success",
