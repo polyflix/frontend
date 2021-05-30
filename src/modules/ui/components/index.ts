@@ -18,3 +18,4 @@ export * from "./Avatar/Avatar.component";
 export * from "./Alert/Alert.component";
 export * from "./Buttons";
 export * from "./Input/Input.component";
+export * from "./Disclosure/Disclosure.component";

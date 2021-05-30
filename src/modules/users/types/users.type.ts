@@ -5,3 +5,18 @@ export type UserState<T> = {
   data: T | null;
   alert: { type: AlertType; message: string } | null;
 };
+
+export interface IUserProfileUpdate {
+  id: number;
+  email: string;
+  firstName: string;
+  lastName: string;
+  isAccountActivated: boolean;
+  isAdmin: boolean;
+}
+
+export interface IUserPasswordForm {
+  currentPassword: string;
+  password: string;
+  passwordConfirm: string;
+}

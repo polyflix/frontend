@@ -71,7 +71,27 @@
     "seo": {
       "title": "My profile"
     },
-    "welcome": "Welcome back"
+    "bigtitle": "Edit my profile",
+    "deleteAccountTitle": "Delete my account",
+    "form": {
+      "email": { "name": "E-mail address", "error": "Invalid e-mail address" },
+      "currentPassword": { "name": "Current password", "error": "Invalid password" },
+      "newPassword": { "name": "New password", "error": "Invalid new password" },
+      "newPasswordConfirm": { "name": "Confirm new password", "error": "Invalid new password" },
+      "submit": "Update my profile",
+      "editPassword": "Change my password",
+      "badPassword": "Bad password"
+    },
+    "deleteAccountForm": {
+      "submit": "Delete my account",
+      "hint": "Please enter your e-mail address to confirm the deletion of your account",
+      "warning": "Warning, this action cannot be reverted",
+      "wrongEmail": "Your e-mail address is not valid"
+    },
+    "messages": {
+      "successProfile": "Your profile has been updated successfully",
+      "successPassword": "Your password has been updated successfully"
+    }
   },
   "videoDetails": {
     "publishedBy": "Published by"

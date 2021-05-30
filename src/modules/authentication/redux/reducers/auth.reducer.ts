@@ -24,6 +24,7 @@ export const authReducer = (
     case AuthActions.LOGIN_SUCCESS:
     case AuthActions.REGISTER_SUCCESS:
     case AuthActions.REFRESH_AUTH_SUCCESS:
+    case AuthActions.UPDATE_USER_SUCCESS:
       return {
         ...state,
         ...action.payload,
@@ -61,6 +62,12 @@ export const authReducer = (
         isAuthenticated: false,
         user: null,
         token: null,
+      };
+    case AuthActions.UPDATE_USER_FAILURE:
+      return {
+        ...state,
+        ...action.payload,
+        isLoading: false,
       };
     default:
       return state;

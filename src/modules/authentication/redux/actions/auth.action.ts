@@ -17,6 +17,9 @@ export enum AuthActions {
   REFRESH_AUTH_SUCCESS = "REFRESH_AUTH_SUCCESS",
   REFRESH_AUTH_IN_PROGRESS = "REFRESH_AUTH_IN_PROGRESS",
   REFRESH_AUTH_FAILURE = "REFRESH_AUTH_FAILURE",
+  UPDATE_USER_SUCCESS = "UPDATE_USER_SUCCESS",
+  UPDATE_USER_FAILURE = "UPDATE_USER_FAILURE",
+  UPDATE_USER_IN_PROGRESS = "UPDATE_USER_IN_PROGRESS",
 }
 
 /**
@@ -121,4 +124,32 @@ export const RefreshAuthInProgress = (): AuthAction => {
  */
 export const RefreshAuthFailureAction = (): AuthAction => {
   return actionFactory<AuthState>(AuthActions.REFRESH_AUTH_FAILURE);
+};
+
+/**
+ * Create the update user success action
+ * @param {User} user the updated user
+ * @returns {AuthAction} the update user success action
+ */
+export const UpdateUserSuccessAction = (user: User): AuthAction => {
+  return actionFactory<AuthState>(AuthActions.UPDATE_USER_SUCCESS, { user });
+};
+
+/**
+ * Create the update user in progress action
+ * @returns {AuthAction} the update user in progress action
+ */
+export const UpdateUserInProgressAction = (): AuthAction => {
+  return actionFactory<AuthState>(AuthActions.UPDATE_USER_IN_PROGRESS);
+};
+
+/**
+ * Create the update user failure action
+ * @param {string} error the update user error
+ * @returns {AuthAction} the update user failure action
+ */
+export const UpdateUserFailureAction = (error: string): AuthAction => {
+  return actionFactory<AuthState>(AuthActions.UPDATE_USER_FAILURE, {
+    authError: error,
+  });
 };

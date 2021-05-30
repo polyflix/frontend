@@ -71,7 +71,30 @@
     "seo": {
       "title": "Mon profil"
     },
-    "welcome": "Ravis de vous revoir"
+    "bigtitle": "Modifier mes informations",
+    "deleteAccountTitle": "Supprimer mon compte",
+    "form": {
+      "email": { "name": "Adresse e-mail", "error": "L'adresse e-mail est invalide" },
+      "currentPassword": { "name": "Mot de passe actuel", "error": "Le mot de passe est invalide" },
+      "newPassword": { "name": "Nouveau mot de passe", "error": "Le nouveau mot de passe est invalide" },
+      "newPasswordConfirm": {
+        "name": "Confirmation du nouveau mot de passe",
+        "error": "Le nouveau mot de passe est invalide"
+      },
+      "submit": "Modifier mes informations",
+      "editPassword": "Modifier mon mot de passe",
+      "badPassword": "Le mot de passe est incorrect"
+    },
+    "deleteAccountForm": {
+      "submit": "Supprimer mon compte",
+      "hint": "Veuillez confirmer la suppression de votre compte en renseignant votre adresse e-mail",
+      "warning": "Attention, cette action est définitive",
+      "wrongEmail": "Votre adresse e-mail est invalide"
+    },
+    "messages": {
+      "successProfile": "Votre profil a bien été mis à jour",
+      "successPassword": "Votre mot de passe a bien été mis à jour"
+    }
   },
   "videoDetails": {
     "publishedBy": "Publiée par"
