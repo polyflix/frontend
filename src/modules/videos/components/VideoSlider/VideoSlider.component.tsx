@@ -40,7 +40,7 @@ export const VideoSlider: React.FC<Props> = ({
             slidesPerView: 4,
           },
         }}
-        mousewheel
+        mousewheel={false}
         spaceBetween={10}
         freeMode
       >

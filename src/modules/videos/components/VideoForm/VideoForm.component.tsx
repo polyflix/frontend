@@ -57,6 +57,7 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
   const watchThumbnail = watch<"thumbnail", string>("thumbnail", "");
 
   const [loading, setLoading] = useState<boolean>(false);
+  const [disable, setDisable] = useState<boolean>(false);
   const [alert, setAlert] =
     useState<{
       type: AlertType;
@@ -67,6 +68,7 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
 
   const onSubmit = async (data: IVideoForm) => {
     setLoading(true);
+    setDisable(true);
     try {
       await (isUpdate
         ? videoService.updateVideo(video?.id as string, data, token as Token)
@@ -84,6 +86,7 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
       });
     } finally {
       setLoading(false);
+      setDisable(false);
     }
   };
 
@@ -322,6 +325,7 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
               ? t("videoManagement.updateVideo.action")
               : t("videoManagement.addVideo.action")
           }
+          disabled={disable}
           variants={fadeInDown}
         />
       </form>
