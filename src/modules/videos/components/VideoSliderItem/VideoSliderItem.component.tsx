@@ -23,7 +23,7 @@ export const VideoSliderItem: React.FC<Props> = ({ video }) => {
     <Link to={video.getStreamLink()}>
       <div className={cn("h-48 2xl:h-72 relative", styles.video_item)}>
         <Image
-          className="absolute w-full h-full rounded-md"
+          className="absolute w-full h-full rounded-md object-cover"
           alt={`${video.title} thumbnail.`}
           src={video.thumbnail}
         />
