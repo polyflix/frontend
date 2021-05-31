@@ -13,7 +13,7 @@ type Props = {
 };
 
 type ItemFooterProps = {
-  meta: WatchMetadata;
+  meta: WatchMetadata | undefined;
   title: string;
   infoLink: string;
 };
@@ -27,13 +27,13 @@ export const VideoSliderItem: React.FC<Props> = ({ video }) => {
           alt={`${video.title} thumbnail.`}
           src={video.thumbnail}
         />
-        {video.userMeta && (
+        {
           <ItemFooter
             meta={video.userMeta}
             title={video.title}
             infoLink={video.getInfoLink()}
           />
-        )}
+        }
       </div>
     </Link>
   );
@@ -42,12 +42,14 @@ export const VideoSliderItem: React.FC<Props> = ({ video }) => {
 const ItemFooter: React.FC<ItemFooterProps> = ({ meta, title, infoLink }) => {
   return (
     <>
-      <div
-        className="bg-nx-red absolute bottom-0 h-1 z-10"
-        style={{
-          width: meta.watchedPercent * 100 + "%",
-        }}
-      />
+      {meta && (
+        <div
+          className="bg-nx-red absolute bottom-0 h-1 z-10"
+          style={{
+            width: meta.watchedPercent * 100 + "%",
+          }}
+        />
+      )}
       <div
         className={cn(
           "bg-nx-dark absolute w-full p-2 transition-all bg-opacity-80 flex justify-between items-center rounded-b-md",
