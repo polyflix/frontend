@@ -42,6 +42,10 @@ type UseVideoHookOptions = {
    * @type function
    */
   onCollectionLoaded?: (pages: number) => void;
+
+  isPublic?: boolean;
+
+  isPublished?: boolean;
 };
 
 /**
@@ -55,8 +59,16 @@ export const useVideos = <T = Video | VideosWithPagination>(
   const videoService = useInjection<VideoService>(VideoService);
   const { token, isLoading: authLoading } = useAuth();
   // Configuration destructuration
-  const { authorId, page, limit, mode, slug, onCollectionLoaded } =
-    options || {};
+  const {
+    authorId,
+    page,
+    limit,
+    mode,
+    slug,
+    onCollectionLoaded,
+    isPublic,
+    isPublished,
+  } = options || {};
 
   // States definitions
   const [reload, setReload] = useState<boolean>(false);
@@ -80,7 +92,13 @@ export const useVideos = <T = Video | VideosWithPagination>(
     if (authLoading || (!isCollection && !slug)) return;
     setLoading(true);
     (isCollection
-      ? videoService.getVideos(token as Token, authorId, page, limit)
+      ? videoService.getVideos(token as Token, {
+          authorId,
+          page,
+          pageSize: limit,
+          isPublic,
+          isPublished,
+        })
       : videoService.getVideoBySlug(token as Token, slug as string)
     )
       .then((data: any) => {
