@@ -1,9 +1,9 @@
+import { useInjection } from "@polyflix/di";
 import { motion } from "framer-motion";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { Token, useAuth } from "../../../authentication";
-import { useInjection } from "@polyflix/di";
+import { useAuth } from "../../../authentication";
 import {
   Alert,
   AlertType,
@@ -23,7 +23,7 @@ import { IUserPasswordForm } from "../../types";
  */
 export const PasswordForm: React.FC = () => {
   const userService = useInjection<UserService>(UserService);
-  const { token, user } = useAuth();
+  const { user } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
   const [alert, setAlert] =
     useState<{
@@ -39,7 +39,7 @@ export const PasswordForm: React.FC = () => {
     setAlert(null);
     try {
       setIsLoading(true);
-      await userService.updateUser(token as Token, user?.id as string, data);
+      await userService.updateUser(user?.id!, data);
       setAlert({
         message: t("userProfile.messages.successPassword"),
         type: "success",

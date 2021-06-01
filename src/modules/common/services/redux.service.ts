@@ -1,5 +1,5 @@
-import { Dispatch } from "react";
 import { Inject, Injectable } from "@polyflix/di";
+import { Dispatch } from "react";
 import { APP_DISPATCHER } from "../constants/injection.constant";
 
 @Injectable()

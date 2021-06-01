@@ -1,8 +1,7 @@
+import { useInjection } from "@polyflix/di";
 import { StatusCodes } from "http-status-codes";
 import { useEffect, useState } from "react";
 import { useAuth } from "../../authentication/hooks/useAuth.hook";
-import { Token } from "../../authentication/models/token.model";
-import { useInjection } from "@polyflix/di";
 import { AlertType } from "../../ui/components/Alert/Alert.component";
 import { User } from "../models/user.model";
 import { UserService } from "../services/user.service";
@@ -32,7 +31,7 @@ export const useUser = <T = User>(
     if (!id) return setData(user as any);
     setLoading(true);
     userService
-      .getUser(token as Token, id)
+      .getUser(id)
       .then((data: any) => {
         setData(data);
       })
