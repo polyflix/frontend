@@ -60,7 +60,7 @@ export const VideoDetail: React.FC = () => {
               <Paragraph className="my-1">
                 {t("video.view.publishedBy")}
                 <Link
-                  to={`/profile/${video?.publisher?.id}`}
+                  to={`/profile/videos/${video?.publisher?.id}`}
                   className="text-nx-red font-bold"
                 >
                   {` ${video?.publisher?.displayName}`}

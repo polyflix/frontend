@@ -9,6 +9,7 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
+import { Redirect, useHistory } from "react-router";
 import slugify from "slugify";
 import { useAuth } from "../../../authentication/hooks/useAuth.hook";
 import { Token } from "../../../authentication/models/token.model";
@@ -39,7 +40,8 @@ type Props = {
 export const VideoForm: React.FC<Props> = ({ video }) => {
   const videoService = useInjection<VideoService>(VideoService);
   const { t } = useTranslation();
-  const { token } = useAuth();
+  const { token, user } = useAuth();
+  let history = useHistory();
   const { register, handleSubmit, errors, watch } = useForm<IVideoForm>({
     defaultValues: {
       title: video?.title,
@@ -57,7 +59,7 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
   const watchThumbnail = watch<"thumbnail", string>("thumbnail", "");
 
   const [loading, setLoading] = useState<boolean>(false);
-  const [disable, setDisable] = useState<boolean>(false);
+  const [isSubmit, setIsSubmit] = useState<boolean>(false);
   const [alert, setAlert] =
     useState<{
       type: AlertType;
@@ -68,7 +70,7 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
 
   const onSubmit = async (data: IVideoForm) => {
     setLoading(true);
-    setDisable(true);
+    setIsSubmit(true);
     try {
       await (isUpdate
         ? videoService.updateVideo(video?.id as string, data, token as Token)
@@ -79,6 +81,7 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
           : `"${data.title}" ${t("videoManagement.addVideo.success")}.`,
         type: "success",
       });
+      history.push(`/profile/videos/${user?.id}`);
     } catch (err) {
       setAlert({
         message: `${t("videoManagement.addVideo.error")} "${data.title}"`,
@@ -86,7 +89,7 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
       });
     } finally {
       setLoading(false);
-      setDisable(false);
+      setIsSubmit(false);
     }
   };
 
@@ -163,7 +166,7 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
           })}
         />
         <Input
-          error={errors.thumbnail}
+          error={errors.src}
           name="src"
           required
           className="col-span-2 md:col-span-1"
@@ -178,7 +181,7 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
           })}
         />
         <Input
-          error={errors.thumbnail}
+          error={errors.previewUrl}
           name="previewUrl"
           required
           className="col-span-2 md:col-span-1"
@@ -325,7 +328,7 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
               ? t("videoManagement.updateVideo.action")
               : t("videoManagement.addVideo.action")
           }
-          disabled={disable}
+          disabled={isSubmit}
           variants={fadeInDown}
         />
       </form>

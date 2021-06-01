@@ -5,8 +5,8 @@ import {
   PaginationMode,
 } from "../types/pagination.type";
 
-const DEFAULT_PAGE = 1;
-const DEFAULT_LIMIT: ItemsPerPage = 20;
+export const DEFAULT_PAGE = 1;
+const DEFAULT_LIMIT: ItemsPerPage = 1;
 
 /**
  * Custom hook for handling pagination states.
@@ -16,9 +16,8 @@ export const usePagination = (): Pagination => {
   const [finalPage, setFinalPage] = useState<number>(DEFAULT_PAGE);
   const [page, setPage] = useState<number>(DEFAULT_PAGE);
   const [limit, setLimit] = useState<ItemsPerPage>(DEFAULT_LIMIT);
-
   const goToPage = (mode: PaginationMode): void => {
-    let _page;
+    let _page: number;
     switch (mode) {
       case "first":
         _page = DEFAULT_PAGE;
@@ -37,8 +36,8 @@ export const usePagination = (): Pagination => {
         break;
     }
     if (page !== _page) setPage(_page);
+
     window.scrollTo(0, 0);
-    return setPage(_page);
   };
 
   return {
