@@ -6,7 +6,7 @@ import {
 } from "../types/pagination.type";
 
 export const DEFAULT_PAGE = 1;
-const DEFAULT_LIMIT: ItemsPerPage = 1;
+const DEFAULT_LIMIT: ItemsPerPage = 20;
 
 /**
  * Custom hook for handling pagination states.

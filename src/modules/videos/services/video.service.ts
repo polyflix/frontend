@@ -5,6 +5,26 @@ import { Injectable } from "@polyflix/di";
 import { Video } from "../models/video.model";
 import { IVideoForm, VideosWithPagination } from "../types/videos.type";
 
+export type VideoParams = {
+  page?: number;
+
+  pageSize?: number;
+
+  order?: string;
+
+  slug?: string;
+
+  title?: string;
+
+  authorId?: string;
+
+  isPublished?: boolean;
+
+  isPublic?: boolean;
+
+  joinWithPublisher?: boolean;
+};
+
 @Injectable()
 export class VideoService {
   constructor(private readonly httpService: HttpService) {}
@@ -17,12 +37,12 @@ export class VideoService {
    * @param {number | undefined} limit the limit of items per page
    * @returns {Promise<VideosWithPagination>}
    */
+
   public async getVideos(
     token: Token,
-    authorId?: string,
-    page?: number,
-    pageSize?: number
+    params: VideoParams
   ): Promise<VideosWithPagination> {
+    const { pageSize, page, authorId, isPublic, isPublished } = params;
     const path = "/videos";
     // Build search query
     let query = new URLSearchParams();
@@ -32,6 +52,8 @@ export class VideoService {
       if (pageSize) query.append("pageSize", pageSize.toString());
     }
     if (authorId) query.append("authorId", authorId);
+    if (isPublic) query.append("isPublic", isPublic.toString());
+    if (isPublished) query.append("isPublished", isPublished.toString());
 
     // Build the URL for the request.
     // The format is the following : /videos[/me][?page=1&limit=20]

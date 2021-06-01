@@ -9,7 +9,11 @@ import { useVideos } from "../../videos/hooks/useVideos.hook";
 import { VideosWithPagination } from "../../videos/types/videos.type";
 
 export const HomePage: React.FC = () => {
-  const { data, isLoading } = useVideos<VideosWithPagination>();
+  const { data, isLoading } = useVideos<VideosWithPagination>({
+    isPublic: true,
+    isPublished: true,
+    mode: "collection",
+  });
   const { t } = useTranslation();
 
   return (
