@@ -4,6 +4,7 @@ import { HttpService } from "../../common/services/http.service";
 import { Injectable } from "@polyflix/di";
 import { Video } from "../models/video.model";
 import { IVideoForm, VideosWithPagination } from "../types/videos.type";
+import { SubtitleService } from "./subtitle.service";
 
 export type VideoParams = {
   page?: number;
@@ -27,7 +28,10 @@ export type VideoParams = {
 
 @Injectable()
 export class VideoService {
-  constructor(private readonly httpService: HttpService) {}
+  constructor(
+    private readonly httpService: HttpService,
+    private readonly subtitleService: SubtitleService
+  ) {}
 
   /**
    * Get the videos list paginated.
@@ -145,6 +149,11 @@ export class VideoService {
     if (status !== StatusCodes.OK) {
       throw error;
     }
-    return Video.fromJson(response);
+    const subtitles = await this.subtitleService.getSubtitleUrlByVideoId(
+      token,
+      response.id
+    );
+
+    return Video.fromJson({ ...response, subtitles });
   }
 }

@@ -1,6 +1,7 @@
 import { IVideo } from "../types";
 import { VideoPublisher } from "./video-publisher.model";
 import WatchMetadata from "../../stats/models/userMeta.model";
+import { Subtitle, SubtitleLanguages } from "./subtitle.model";
 
 /**
  * Modelize the Video
@@ -21,7 +22,8 @@ export class Video {
     private readonly _createdAt: Date,
     private readonly _updatedAt: Date,
     private readonly _src: string,
-    private readonly _previewUrl: string
+    private readonly _previewUrl: string,
+    private readonly _subtitles: Subtitle[]
   ) {}
 
   /**
@@ -44,7 +46,8 @@ export class Video {
       new Date(json.createdAt),
       new Date(json.updatedAt),
       json.src,
-      json.previewUrl
+      json.previewUrl,
+      json.subtitles
     );
   }
 
@@ -151,6 +154,10 @@ export class Video {
     return `/videos/${this._slug}`;
   }
 
+  get subtitles(): Subtitle[] {
+    return this._subtitles;
+  }
+
   /**
    * Return the video stream link.
    * @returns {string} the stream link for the video
@@ -173,5 +180,14 @@ export class Video {
    */
   getEditLink(): string {
     return `/videos/update/${this._slug}`;
+  }
+
+  /**
+   * Returns the subtitles linked to the selected language
+   * @returns {Subtitle[]} the subtitles array
+   * @returns {undefined} if no subtitles were found in this language
+   */
+  getSubtitles(lang: SubtitleLanguages): Subtitle | undefined {
+    return this._subtitles.find((sub) => sub.lang === lang);
   }
 }

@@ -193,8 +193,8 @@
     "view": {
       "tabs": {
         "label": {
-          "playlist": "List de lecture",
-          "subtitle": "Sous titres"
+          "playlist": "Liste de lecture",
+          "subtitle": "Sous-titres"
         }
       },
       "publishedBy": "Publiée par"
