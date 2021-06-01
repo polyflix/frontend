@@ -1,13 +1,13 @@
 import { ArrowLeftIcon, InformationCircleIcon } from "@heroicons/react/outline";
+import { useInjection } from "@polyflix/di";
 import { useCallback, useEffect, useRef, useState } from "react";
 import ReactPlayer from "react-player";
-import { Link } from "react-router-dom";
-import { Typography } from "../../../ui";
-import { Video } from "../../models";
 import BaseReactPlayer from "react-player/types/base";
+import { Link } from "react-router-dom";
 import { useAuth } from "../../../authentication";
 import { StatsService } from "../../../stats/services/stats.service";
-import { useInjection } from "@polyflix/di";
+import { Typography } from "../../../ui";
+import { Video } from "../../models";
 
 type Props = {
   /** The video we want to play in the player */
@@ -28,14 +28,11 @@ export const MediaPlayer: React.FC<Props> = ({ video, ..._ }) => {
 
     let current_time = playerRef.current.getCurrentTime();
     let duration = playerRef.current.getDuration();
-    statsService.updateSync(
-      {
-        videoId: video.id,
-        watchedSeconds: current_time,
-        watchedPercent: current_time / duration,
-      },
-      token
-    );
+    statsService.updateSync({
+      videoId: video.id,
+      watchedSeconds: current_time,
+      watchedPercent: current_time / duration,
+    });
   }, [statsService, token, video]);
 
   const onProgress = () => watchSyncCallback();

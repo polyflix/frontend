@@ -1,11 +1,10 @@
-import { HttpService } from "../../common/services";
-import { Token } from "../../authentication";
+import { Injectable } from "@polyflix/di";
 import {
   SYNC_RATE_LIMITER_MAX,
   SYNC_RATE_LIMITER_MIN,
 } from "../../common/constants/stats.constant";
+import { HttpService } from "../../common/services";
 import { UpsertUserVideoMeta } from "../types/userMeta.type";
-import { Injectable } from "@polyflix/di";
 
 @Injectable()
 export class StatsService {
@@ -23,7 +22,7 @@ export class StatsService {
    * @param {UpsertUserVideoMeta} updateData -- Dats to upsert
    * @param {Token} token -- user token
    */
-  public async updateSync(updateData: UpsertUserVideoMeta, token: Token) {
+  public async updateSync(updateData: UpsertUserVideoMeta) {
     if (this._lastSync && this._lastSync + SYNC_RATE_LIMITER_MIN > Date.now())
       return;
 

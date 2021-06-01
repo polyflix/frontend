@@ -1,7 +1,6 @@
-import { StatusCodes } from "http-status-codes";
-import { Token } from "../../authentication/models/token.model";
-import { HttpService } from "../../common/services/http.service";
 import { Injectable } from "@polyflix/di";
+import { StatusCodes } from "http-status-codes";
+import { HttpService } from "../../common/services/http.service";
 import { Subtitle } from "../models/subtitle.model";
 
 @Injectable()
@@ -13,15 +12,9 @@ export class SubtitleService {
    * @param {string} videoId id of the video
    * @returns {Promise<Subtitle>}
    */
-  public async getSubtitleUrlByVideoId(
-    token: Token,
-    videoId: string
-  ): Promise<Subtitle[]> {
+  public async getSubtitleUrlByVideoId(videoId: string): Promise<Subtitle[]> {
     const { status, response, error } = await this.httpService.get(
-      `/subtitles?videoId=${videoId}`,
-      {
-        headers: token.getAuthorizationHeader(),
-      }
+      `/subtitles?videoId=${videoId}`
     );
     if (status !== StatusCodes.OK) {
       throw error;

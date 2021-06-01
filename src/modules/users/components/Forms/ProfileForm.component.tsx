@@ -1,9 +1,9 @@
+import { useInjection } from "@polyflix/di";
 import { motion } from "framer-motion";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { Token, useAuth } from "../../../authentication";
-import { useInjection } from "@polyflix/di";
+import { useAuth } from "../../../authentication";
 import {
   Alert,
   AlertType,
@@ -23,7 +23,7 @@ import { IUserProfileUpdate } from "../../types";
  */
 export const ProfileForm: React.FC = () => {
   const userService = useInjection<UserService>(UserService);
-  const { token, user, isLoading } = useAuth();
+  const { user, isLoading } = useAuth();
   const [alert, setAlert] =
     useState<{
       type: AlertType;
@@ -42,7 +42,7 @@ export const ProfileForm: React.FC = () => {
   const handleUpdate = async (data: IUserProfileUpdate) => {
     setAlert(null);
     try {
-      await userService.updateUser(token as Token, user?.id as string, data);
+      await userService.updateUser(user?.id!, data);
       setAlert({
         message: t("userProfile.messages.successProfile"),
         type: "success",

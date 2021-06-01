@@ -1,9 +1,9 @@
+import { useInjection } from "@polyflix/di";
 import { motion } from "framer-motion";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { Token, useAuth } from "../../../authentication";
-import { useInjection } from "@polyflix/di";
+import { useAuth } from "../../../authentication";
 import {
   Alert,
   AlertType,
@@ -23,7 +23,7 @@ import { UserService } from "../../services";
  */
 export const DeleteAcountForm: React.FC = () => {
   const userService = useInjection<UserService>(UserService);
-  const { token, user } = useAuth();
+  const { user } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
   const [alert, setAlert] =
     useState<{
@@ -42,7 +42,7 @@ export const DeleteAcountForm: React.FC = () => {
     try {
       setIsLoading(true);
       reset();
-      await userService.deleteUser(token as Token, user?.id as string);
+      await userService.deleteUser(user?.id!);
     } catch (e) {
       setAlert({
         message: `${t("userProfile.form.badPassword")} (${e})`,

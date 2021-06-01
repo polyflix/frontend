@@ -1,7 +1,6 @@
+import { useInjection } from "@polyflix/di";
 import { useEffect, useState } from "react";
 import { useAuth } from "../../authentication/hooks/useAuth.hook";
-import { Token } from "../../authentication/models/token.model";
-import { useInjection } from "@polyflix/di";
 import { AlertType } from "../../ui/components/Alert/Alert.component";
 import { Video } from "../models/video.model";
 import { VideoService } from "../services/video.service";
@@ -57,7 +56,7 @@ export const useVideos = <T = Video | VideosWithPagination>(
   options: UseVideoHookOptions = { mode: "collection" }
 ): VideoState<T> => {
   const videoService = useInjection<VideoService>(VideoService);
-  const { token, isLoading: authLoading } = useAuth();
+  const { isLoading: authLoading } = useAuth();
   // Configuration destructuration
   const {
     authorId,
@@ -92,14 +91,14 @@ export const useVideos = <T = Video | VideosWithPagination>(
     if (authLoading || (!isCollection && !slug)) return;
     setLoading(true);
     (isCollection
-      ? videoService.getVideos(token as Token, {
+      ? videoService.getVideos({
           authorId,
           page,
           pageSize: limit,
           isPublic,
           isPublished,
         })
-      : videoService.getVideoBySlug(token as Token, slug as string)
+      : videoService.getVideoBySlug(slug as string)
     )
       .then((data: any) => {
         if (isCollection && onCollectionLoaded) {

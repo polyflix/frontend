@@ -1,20 +1,21 @@
+import { Injectable } from "@polyflix/di";
 import axios, {
   AxiosInstance,
   AxiosRequestConfig,
   AxiosResponse,
   Method,
 } from "axios";
-import { Injectable } from "@polyflix/di";
-import { API_URL, NETWORK_ERROR } from "../constants/api.constant";
-import { IApiResponse, IRequestOptions } from "../types/http.type";
-import { BaseHttpService } from "./abastract-http.service";
 import { StatusCodes } from "http-status-codes";
-import { ReduxService } from "./redux.service";
-import { ServerStateAction } from "../types/serverState.type";
+import { API_URL, NETWORK_ERROR } from "../constants/api.constant";
+import { store } from "../redux";
 import {
   serverStateOfflineAction,
   serverStateOnlineAction,
 } from "../redux/actions/serverState.action";
+import { IApiResponse, IRequestOptions } from "../types/http.type";
+import { ServerStateAction } from "../types/serverState.type";
+import { BaseHttpService } from "./abastract-http.service";
+import { ReduxService } from "./redux.service";
 
 @Injectable()
 export class HttpService implements BaseHttpService {
@@ -22,7 +23,6 @@ export class HttpService implements BaseHttpService {
 
   constructor(private readonly reduxService: ReduxService<ServerStateAction>) {
     this._axios = axios.create({
-      baseURL: API_URL,
       withCredentials: true,
     });
 
@@ -159,13 +159,25 @@ export class HttpService implements BaseHttpService {
     path: string,
     options?: IRequestOptions
   ): AxiosRequestConfig {
+    const isUrl = /^(http|https).+/.test(path);
+    const { auth } = store.getState();
     const { body, headers } = options || {};
     const baseConfig: AxiosRequestConfig = {
+      ...(!isUrl && { baseURL: API_URL }),
       method,
       url: path,
+      // By default, if a token is in the store, we pass it in every request
+      headers: {
+        ...(auth.token && auth.token.getAuthorizationHeader()),
+      },
     };
     if (body) baseConfig.data = body;
-    if (headers) baseConfig.headers = { ...baseConfig.headers, ...headers };
+    if (headers)
+      baseConfig.headers = {
+        ...baseConfig.headers,
+        ...headers,
+      };
+
     return baseConfig;
   }
 }
