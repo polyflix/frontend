@@ -1,6 +1,7 @@
 import { AlertType } from "../../ui/components/Alert/Alert.component";
 import { Video } from "../models/video.model";
 import { IWatchMetadata } from "../../stats/types/userMeta.type";
+import { Subtitle } from "../models";
 
 export interface IVideoForm {
   title: string;
@@ -47,4 +48,5 @@ export interface IVideo {
   updatedAt: string;
   slug: string;
   thumbnail: string;
+  subtitles: Subtitle[];
 }
