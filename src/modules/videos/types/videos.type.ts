@@ -21,7 +21,7 @@ export type VideoState<T> = {
 
 export type VideosWithPagination = {
   totalCount: number;
-  videos: Video[];
+  items: Video[];
   // watchedVideos: Video[];
   // watchingVideos: Video[];
 };

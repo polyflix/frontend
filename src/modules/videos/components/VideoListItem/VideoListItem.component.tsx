@@ -100,7 +100,7 @@ export const VideoListItem: React.FC<Props> = ({
       <div className="col-span-12 md:col-span-4 xl:col-span-3">
         <Image
           src={video.thumbnail}
-          className="rounded-md w-full md:h-48"
+          className="rounded-md w-full md:h-48 object-cover"
           alt={`${video.title} thumbnail`}
         />
       </div>

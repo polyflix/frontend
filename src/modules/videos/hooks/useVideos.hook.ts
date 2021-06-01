@@ -85,7 +85,7 @@ export const useVideos = <T = Video | VideosWithPagination>(
     )
       .then((data: any) => {
         if (isCollection && onCollectionLoaded) {
-          onCollectionLoaded(data.pages);
+          onCollectionLoaded(+(data as VideosWithPagination).totalCount);
         }
         setData(data);
       })

@@ -21,15 +21,15 @@ export class VideoService {
     token: Token,
     authorId?: string,
     page?: number,
-    limit?: number
+    pageSize?: number
   ): Promise<VideosWithPagination> {
     const path = "/videos";
     // Build search query
     let query = new URLSearchParams();
-    if (page || limit) {
+    if (page || pageSize) {
       query = new URLSearchParams();
       if (page) query.append("page", page.toString());
-      if (limit) query.append("limit", limit.toString());
+      if (pageSize) query.append("pageSize", pageSize.toString());
     }
     if (authorId) query.append("authorId", authorId);
 
@@ -46,7 +46,7 @@ export class VideoService {
     }
     return {
       totalCount: response.totalCount,
-      videos: response.items.map(Video.fromJson),
+      items: response.items.map(Video.fromJson),
       // watchedVideos: response.watchedVideos.map(Video.fromJson),
       // watchingVideos: response.watchingVideos.map(Video.fromJson),
     };

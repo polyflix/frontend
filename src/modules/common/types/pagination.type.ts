@@ -10,4 +10,4 @@ export type Pagination = {
 
 export type PaginationMode = "last" | "first" | "next" | "previous";
 
-export type ItemsPerPage = 20 | 30 | 50 | 100;
+export type ItemsPerPage = 20 | 30 | 50 | 100 | 1;

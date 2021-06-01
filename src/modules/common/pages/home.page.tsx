@@ -19,24 +19,24 @@ export const HomePage: React.FC = () => {
       withPadding={false}
       title={t("home.seo.title")}
     >
-      {data?.videos && (
+      {data?.items && (
         <>
-          <VideoHero video={data.videos[0]} />
+          <VideoHero video={data.items[0]} />
           <div className="pb-8" />
           <VideoSlider
             title={t("home.sliders.continue_watching")}
-            videos={data.videos}
+            videos={data.items}
           />
           <div className="pb-8" />
-          <VideoTile video={data.videos[3]} />
+          <VideoTile video={data.items[3]} />
           <div className="pb-8" />
-          <VideoSlider title={t("home.sliders.latest")} videos={data.videos} />
+          <VideoSlider title={t("home.sliders.latest")} videos={data.items} />
           <div className="pb-8" />
-          <VideoSlider title={t("home.sliders.popular")} videos={data.videos} />
+          <VideoSlider title={t("home.sliders.popular")} videos={data.items} />
           <div className="pb-8" />
           <VideoSlider
             title={t("home.sliders.watch_again")}
-            videos={data.videos}
+            videos={data.items}
           />
           <div className="pb-8" />
         </>

@@ -25,7 +25,7 @@ export const UserVideosPage: React.FC = () => {
   const { t } = useTranslation();
   const videoService = useInjection<VideoService>(VideoService);
   const { setFinalPage, page, to, limit } = usePagination();
-  const isOwnPage = !id;
+  const isOwnPage = user?.id === id;
 
   const {
     data: fetchedUser,
@@ -41,7 +41,7 @@ export const UserVideosPage: React.FC = () => {
     triggerReload,
   } = useVideos<VideosWithPagination>({
     onCollectionLoaded: setFinalPage,
-    authorId: user?.id as string,
+    authorId: id,
     mode: "collection",
     page,
     limit,
@@ -93,7 +93,7 @@ export const UserVideosPage: React.FC = () => {
         </div>
         {data && (
           <>
-            {data.videos.map((video: Video) => (
+            {data.items.map((video: Video) => (
               <VideoListItem
                 onDelete={() => onVideoDelete(video.id)}
                 key={video.id}
@@ -101,12 +101,12 @@ export const UserVideosPage: React.FC = () => {
                 ownerItems={isOwnPage}
               />
             ))}
-            {data.videos.length > 0 ? (
+            {data.items.length > 0 ? (
               <Paginator
                 className="py-5 justify-end"
                 page={page}
                 onPageChanged={to}
-                total={Math.floor(data.totalCount / data.videos.length)}
+                total={Math.floor(data.totalCount / data.items.length)}
               />
             ) : (
               <div className="text-white">
