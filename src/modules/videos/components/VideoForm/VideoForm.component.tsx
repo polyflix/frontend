@@ -9,7 +9,7 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { Redirect, useHistory } from "react-router";
+import { useHistory } from "react-router";
 import slugify from "slugify";
 import { useAuth } from "../../../authentication/hooks/useAuth.hook";
 import { Token } from "../../../authentication/models/token.model";
