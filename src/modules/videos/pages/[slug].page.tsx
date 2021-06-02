@@ -1,12 +1,10 @@
 import React from "react";
 import { Redirect, useParams } from "react-router";
-import ReactPlayer from "react-player";
 import { useTranslation } from "react-i18next";
 
 import { useVideos } from "../hooks/useVideos.hook";
 import { Link } from "react-router-dom";
 import { Url } from "../../common/utils/url.util";
-import { cn } from "../../common/utils/classes.util";
 import { Video } from "../models/video.model";
 import { fadeOpacity } from "../../ui/animations/fadeOpacity";
 
@@ -17,6 +15,7 @@ import { MediaPlayer } from "../components/MediaPlayer/MediaPlayer.component";
 import { VideoGhost } from "../components/VideoGhost/VideoGhost.component";
 import { SubtitleText, Tab, TabGroup } from "../components/SubtitlesTabs";
 import styles from "./slug.module.scss";
+import { Player } from "../../videos/components/Player/Player.component";
 import { SubtitleLanguages } from "../models";
 
 export const VideoDetail: React.FC = () => {
@@ -45,18 +44,11 @@ export const VideoDetail: React.FC = () => {
       <MediaPlayer video={_video} />
     ) : (
       <Container mxAuto fluid className={styles.root}>
-        <section>
-          <div className={cn(styles.player_container, styles.paper)}>
-            <ReactPlayer
-              className={styles.player}
-              width="100%"
-              height="100%"
-              controls
-              playing={false}
-              url="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
-            />
-          </div>
-        </section>
+        {video && (
+          <section>
+            <Player videoUrl={video.src} videoSubtitles={video.subtitles} />
+          </section>
+        )}
         <aside>
           <TabGroup>
             <Tab
