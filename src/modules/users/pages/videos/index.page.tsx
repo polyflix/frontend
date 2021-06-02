@@ -45,6 +45,8 @@ export const UserVideosPage: React.FC = () => {
     mode: "collection",
     page,
     limit,
+    isPublic: false,
+    isPublished: false,
   });
 
   const onVideoDelete = async (id: string) => {
