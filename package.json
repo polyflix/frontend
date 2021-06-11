@@ -51,7 +51,8 @@
     "start": "craco start",
     "build": "craco build",
     "test": "craco test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "prepare": "husky install && husky set .husky/pre-commit 'npx lint-staged' && husky add .husky/pre-commit 'npx commitlint --config .gitlab/commitlint.config.js --edit'"
   },
   "eslintConfig": {
     "extends": [
@@ -59,14 +60,10 @@
       "react-app/jest"
     ]
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
   "lint-staged": {
     "src/**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
-      "prettier --write"
+      "prettier --write",
+      "eslint --fix"
     ]
   },
   "browserslist": {
@@ -83,6 +80,8 @@
   },
   "devDependencies": {
     "@babel/plugin-proposal-decorators": "^7.12.1",
+    "@commitlint/cli": "^12.1.4",
+    "@commitlint/config-conventional": "^12.1.4",
     "@tailwindcss/postcss7-compat": "^2.0.4",
     "@types/react-helmet": "^6.1.0",
     "@types/react-redux": "^7.1.16",
@@ -91,7 +90,7 @@
     "@types/redux-thunk": "^2.1.0",
     "@types/swiper": "^5.4.2",
     "autoprefixer": "^9.8.6",
-    "husky": "^5.2.0",
+    "husky": "^6.0",
     "lint-staged": "^10.5.4",
     "postcss": "^7.0.35",
     "prettier": "^2.2.1",

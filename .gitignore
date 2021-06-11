@@ -24,3 +24,5 @@ yarn-error.log*
 
 # IntelliJ
 .idea
+
+.husky
