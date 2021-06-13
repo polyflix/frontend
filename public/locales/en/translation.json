@@ -181,7 +181,7 @@
     },
     "content": {
       "title": "Whoops, it's tea time",
-      "description": "We cannot server you this page, please try again.",
+      "description": "We cannot serve you this page, please try again.",
       "redirect": "Discover something new",
       "link": "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
     }
