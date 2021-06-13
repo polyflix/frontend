@@ -63,6 +63,18 @@ $padding: 1rem;
     margin-bottom: $margin;
     width: 100%;
   }
+
+  &__tile {
+    height: 12rem;
+    margin-bottom: $margin;
+    width: 100%;
+  }
+
+  &__title {
+    height: 3rem;
+    margin-bottom: $margin;
+    width: 3rem;
+  }
 }
 
 .root {

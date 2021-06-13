@@ -14,7 +14,7 @@ import { Page } from "../../ui/components/Page/Page.component";
 import { MediaPlayer } from "../components/MediaPlayer/MediaPlayer.component";
 import { VideoGhost } from "../components/VideoGhost/VideoGhost.component";
 import { SubtitleText, Tab, TabGroup } from "../components/SubtitlesTabs";
-import styles from "./slug.module.scss";
+import styles from "../../common/styles/ghost.module.scss";
 import { Player } from "../../videos/components/Player/Player.component";
 import { SubtitleLanguages } from "../models";
 
