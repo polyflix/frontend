@@ -4,7 +4,7 @@ import { cn } from "../../../common/utils/classes.util";
 
 import { ChevronDown } from "../../../ui";
 import { InnerTab } from "./InnerTab.component";
-import styles from "../../pages/slug.module.scss";
+import styles from "../../../common/styles/ghost.module.scss";
 
 export const TabGroup: React.FC<PropsWithChildren<{}>> = ({ children }) => {
   const [activeTab, setActiveTab] = React.useState<number>(0);

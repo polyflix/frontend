@@ -1,5 +1,5 @@
 import { cn } from "../../../common/utils/classes.util";
-import styles from "../../pages/slug.module.scss";
+import styles from "../../../common/styles/ghost.module.scss";
 
 export const InnerTab: React.FC<{
   title: string;

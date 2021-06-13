@@ -7,6 +7,7 @@ import { VideoSlider } from "../../videos/components/VideoSlider/VideoSlider.com
 import { VideoTile } from "../../videos/components/VideoTile/VideoTile.component";
 import { useVideos } from "../../videos/hooks/useVideos.hook";
 import { VideosWithPagination } from "../../videos/types/videos.type";
+import { VideosGhostSlider } from "../../videos/components/VideosGhostSlider/VideosGhostSlider.component";
 
 export const HomePage: React.FC = () => {
   const { data, isLoading } = useVideos<VideosWithPagination>({
@@ -18,12 +19,11 @@ export const HomePage: React.FC = () => {
 
   return (
     <Page
-      isLoading={isLoading}
       variants={fadeOpacity}
       withPadding={false}
       title={t("home.seo.title")}
     >
-      {data?.items && (
+      {data?.items && !isLoading ? (
         <>
           <VideoHero video={data.items[0]} />
           <div className="pb-8" />
@@ -44,6 +44,8 @@ export const HomePage: React.FC = () => {
           />
           <div className="pb-8" />
         </>
+      ) : (
+        <VideosGhostSlider />
       )}
     </Page>
   );
