@@ -123,7 +123,7 @@ export class HttpService implements BaseHttpService {
     options?: IRequestOptions
   ): Promise<IApiResponse> {
     const config = this.getRequestConfiguration(method, path, options);
-    console.log("Fetching ", method, path);
+
     try {
       const { data, status } = await this._axios.request(config);
       this.reduxService.dispatch(serverStateOnlineAction());
