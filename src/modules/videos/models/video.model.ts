@@ -163,7 +163,7 @@ export class Video {
    * @returns {string} the stream link for the video
    */
   getStreamLink(): string {
-    return `${this.link}?play=true`;
+    return `${this.link}`;
   }
 
   /**

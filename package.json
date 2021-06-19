@@ -52,7 +52,7 @@
     "build": "craco build",
     "test": "craco test",
     "eject": "react-scripts eject",
-    "prepare": "husky install && husky set .husky/pre-commit 'npx lint-staged' && husky add .husky/pre-commit 'npx commitlint --config .gitlab/commitlint.config.js --edit'"
+    "setup": "rimraf .husky && husky install && husky set .husky/pre-commit 'npx lint-staged' && husky set .husky/commit-msg 'commitlint --config .gitlab/commitlint.config.js --edit \"$1\"'"
   },
   "eslintConfig": {
     "extends": [
@@ -94,6 +94,7 @@
     "lint-staged": "^10.5.4",
     "postcss": "^7.0.35",
     "prettier": "^2.2.1",
+    "rimraf": "^3.0.2",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.0.4"
   }
 }
