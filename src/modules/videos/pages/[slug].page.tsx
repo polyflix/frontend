@@ -8,7 +8,13 @@ import { Url } from "../../common/utils/url.util";
 import { Video } from "../models/video.model";
 import { fadeOpacity } from "../../ui/animations/fadeOpacity";
 
-import { Playlist, Subtitle, Paragraph } from "../../ui";
+import {
+  Playlist,
+  Subtitle,
+  Paragraph,
+  Typography,
+  OutlineButton,
+} from "../../ui";
 import { Container } from "../../ui/components/Container/Container.component";
 import { Page } from "../../ui/components/Page/Page.component";
 import { MediaPlayer } from "../components/MediaPlayer/MediaPlayer.component";
@@ -17,6 +23,9 @@ import { SubtitleText, Tab, TabGroup } from "../components/SubtitlesTabs";
 import styles from "../../common/styles/ghost.module.scss";
 import { Player } from "../../videos/components/Player/Player.component";
 import { SubtitleLanguages } from "../models";
+import { PencilIcon } from "@heroicons/react/outline";
+import { useSelector } from "react-redux";
+import { RootState } from "../../common";
 
 export const VideoDetail: React.FC = () => {
   const { t } = useTranslation();
@@ -24,6 +33,7 @@ export const VideoDetail: React.FC = () => {
   const isPlayingMode = Boolean(Url.hasParameter("play")) === true;
 
   const { slug } = useParams<{ slug: string }>();
+  const user = useSelector((state: RootState) => state?.auth?.user);
 
   const {
     data: video,
@@ -47,6 +57,19 @@ export const VideoDetail: React.FC = () => {
         {video && (
           <section>
             <Player videoUrl={video.src} videoSubtitles={video.subtitles} />
+            <div className="flex justify-between flex-wrap mt-2">
+              <Typography as="h4" className="text-xl pl-3" bold>
+                {video.title}
+              </Typography>
+              {user?.id === video.publisher?.id && (
+                <Link to={video.getEditLink()}>
+                  <OutlineButton as={"button"} className={"flex"}>
+                    <PencilIcon className="w-4 md:w-5 mr-2 text-nx-red" />
+                    {t("shared.common.actions.edit")}
+                  </OutlineButton>
+                </Link>
+              )}
+            </div>
           </section>
         )}
         <aside>
