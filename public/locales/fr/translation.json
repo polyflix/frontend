@@ -1,203 +1,216 @@
 {
-  "shared": {
-    "common": {
-      "actions": {
-        "play": "Lecture",
-        "info": "Plus d'infos",
-        "add": "Ajouter",
-        "edit": "Éditer",
-        "delete": "Supprimer",
-        "cancel": "Annuler"
-      },
-      "wait": "Patientez"
-    },
-    "navbar": {
-      "signIn": "Se connecter",
-      "signOut": "Se déconnecter",
-      "signUp": ["Pas de compte ?", "Inscrivez-vous dès maintenant"]
-    }
-  },
-  "home": {
-    "seo": {
-      "title": "Accueil"
-    },
-    "sliders": {
-      "continue_watching": "Continuer...",
-      "watch_again": "Regarder de nouveau",
-      "latest": "Les dernières sorties",
-      "popular": "Populaire en ce moment"
-    }
-  },
-  "auth": {
-    "inputs": {
-      "email": {
-        "name": "Adresse e-mail",
-        "error": "Une adresse e-mail est requise"
-      },
-      "password": {
-        "name": "Mot de passe",
-        "description": "Le mot de passe doit contenir au moins 8 caractères",
-        "error": "Un mot de passe est requis"
-      }
-    },
-    "signIn": {
-      "seo": {
-        "title": "Se connecter",
-        "description": "Entrez vos identifiants pour vous connecter à votre compte"
-      },
-      "action": "Se connecter",
-      "footer": ["Nouveau sur Polyflix ?", "Inscrivez-vous dès maintenant"],
-      "error": "Adresse e-mail ou mot de passe invalide"
-    },
-    "signUp": {
-      "seo": {
-        "title": "S'inscrire",
-        "description": "Remplissez le formulaire ci-dessous pour créer un comtpe sur Polyflix"
-      },
-      "inputs": {
-        "firstname": { "name": "Prénom", "error": "Le prénom est requis" },
-        "lastname": { "name": "Nom", "error": "Le nom est requis" },
-        "passwordConfirm": {
-          "name": "Confirmation du mot de passe",
-          "error": "Les mot de passe ne correspondent pas"
-        }
-      },
-      "action": "S'inscrire",
-      "footer": ["Déjà inscrit sur Polyflix ?", "Connectez-vous ici"],
-      "error": "Adresse e-mail déjà utilisée"
-    }
-  },
-  "userProfile": {
-    "seo": {
-      "title": "Mon profil"
-    },
-    "bigtitle": "Modifier mes informations",
-    "deleteAccountTitle": "Supprimer mon compte",
-    "form": {
-      "email": { "name": "Adresse e-mail", "error": "L'adresse e-mail est invalide" },
-      "currentPassword": { "name": "Mot de passe actuel", "error": "Le mot de passe est invalide" },
-      "newPassword": { "name": "Nouveau mot de passe", "error": "Le nouveau mot de passe est invalide" },
-      "newPasswordConfirm": {
-        "name": "Confirmation du nouveau mot de passe",
-        "error": "Le nouveau mot de passe est invalide"
-      },
-      "submit": "Modifier mes informations",
-      "editPassword": "Modifier mon mot de passe",
-      "badPassword": "Le mot de passe est incorrect"
-    },
-    "deleteAccountForm": {
-      "submit": "Supprimer mon compte",
-      "hint": "Veuillez confirmer la suppression de votre compte en renseignant votre adresse e-mail",
-      "warning": "Attention, cette action est définitive",
-      "wrongEmail": "Votre adresse e-mail est invalide"
-    },
-    "messages": {
-      "successProfile": "Votre profil a bien été mis à jour",
-      "successPassword": "Votre mot de passe a bien été mis à jour"
-    }
-  },
-  "videoDetails": {
-    "publishedBy": "Publiée par"
-  },
-  "userVideos": {
-    "seo": {
-      "ownTitle": "Mes vidéos",
-      "userTitle": "Vidéos de {{user}}"
-    },
-    "visibility": {
-      "private": {
-        "name": "Privée",
-        "description": "Votre vidéo sera visible uniquement par vous"
-      },
-      "public": {
-        "name": "Publique",
-        "description": "Votre vidéo sera visible par tout le monde"
-      }
-    },
-    "status": {
-      "draft": {
-        "name": "Brouillon",
-        "description": "Votre vidéo est encore en brouillon et les autres utilisateurs ne peuvent pas la voir"
-      },
-      "published": {
-        "name": "Publiée",
-        "description": "Votre vidéo peut apparaître dans les résultats de recherche (si elle est publique)"
-      }
-    }
-  },
-  "videoManagement": {
-    "video": "une vidéo",
-    "actions": {
-      "switching": "Cliquez pour changer"
-    },
-    "inputs": {
-      "title": {
-        "name": "Titre",
-        "description": "Le titre de la vidéo",
-        "error": "Le titre de la vidéo est requis"
-      },
-      "thumbnail": {
-        "name": "Lien de la miniature",
-        "description": "Lien de la miniature de la vidéo",
-        "error": "Le lien de la miniature est requis"
-      },
-      "description": {
-        "name": "Description de la vidéo",
-        "error": "La description de la vidéo est requise"
-      },
-      "videoURL": {
-        "name": "Lien de la vidéo",
-        "description": "Lien de la vidéo",
-        "error": "Le lien de la vidéo est requis"
-      },
-      "videoPreviewURL": {
-        "name": "Lien de prévisualisation",
-        "description": "Lien de prévisualisation de la vidéo",
-        "error": "Le lien de prévisualtion de la vidéo est requis"
-      }
-    },
-    "addVideo": {
-      "description": "Remplissez le formulaire ci-dessous pour créer votre vidéo",
-      "action": "Créer",
-      "success": "ajoutée à la librairie",
-      "error": "Une vidéo existe déjà avec le titre"
-    },
-    "updateVideo": {
-      "description": "Remplissez le formulaire ci-dessous pour modifier votre vidéo",
-      "action": "Modifier",
-      "success": "mise à jour avec succès"
-    }
-  },
-  "notFound": {
-    "seo": {
-      "title": "Page introuvable"
-    },
-    "content": {
-      "title": "Oops, page introuvable",
-      "description": "Nous ne trouvons pas la page que vous souhaitez accéder. La resource a été déplacée ou bien supprimée.",
-      "home": "Retourner à l'accueil"
-    }
-  },
-  "serverUnavailable": {
-    "seo": {
-      "title": "Service indisponible"
-    },
-    "content": {
-      "title": "Mince, quelqu'un a tiré le mauvais câble",
-      "description": "Nous ne sommes pas en mesure de vous proposer ce service tout de suite, ré-essayez plus tard.",
-      "redirect": "Découvrir un site incroyable",
-      "link": "https://lapin.fr"
-    }
-  },
-  "video": {
-    "view": {
-      "tabs": {
-        "label": {
-          "playlist": "Liste de lecture",
-          "subtitle": "Sous-titres"
-        }
-      },
-      "publishedBy": "Publiée par"
-    }
-  }
+	"shared": {
+		"common": {
+			"actions": {
+				"play": "Lecture",
+				"info": "Plus d'infos",
+				"add": "Ajouter",
+				"edit": "Éditer",
+				"delete": "Supprimer",
+				"cancel": "Annuler"
+			},
+			"wait": "Patientez"
+		},
+		"navbar": {
+			"signIn": "Se connecter",
+			"signOut": "Se déconnecter",
+			"signUp": ["Pas de compte ?", "Inscrivez-vous dès maintenant"]
+		}
+	},
+	"home": {
+		"seo": {
+			"title": "Accueil"
+		},
+		"sliders": {
+			"continue_watching": "Continuer...",
+			"watch_again": "Regarder de nouveau",
+			"latest": "Les dernières sorties",
+			"popular": "Populaire en ce moment"
+		}
+	},
+	"auth": {
+		"inputs": {
+			"email": {
+				"name": "Adresse e-mail",
+				"error": "Une adresse e-mail est requise"
+			},
+			"password": {
+				"name": "Mot de passe",
+				"description": "Le mot de passe doit contenir au moins 8 caractères",
+				"error": "Un mot de passe est requis"
+			}
+		},
+		"signIn": {
+			"seo": {
+				"title": "Se connecter",
+				"description": "Entrez vos identifiants pour vous connecter à votre compte"
+			},
+			"action": "Se connecter",
+			"footer": ["Nouveau sur Polyflix ?", "Inscrivez-vous dès maintenant"],
+			"error": "Adresse e-mail ou mot de passe invalide"
+		},
+		"signUp": {
+			"seo": {
+				"title": "S'inscrire",
+				"description": "Remplissez le formulaire ci-dessous pour créer un comtpe sur Polyflix"
+			},
+			"inputs": {
+				"firstname": { "name": "Prénom", "error": "Le prénom est requis" },
+				"lastname": { "name": "Nom", "error": "Le nom est requis" },
+				"passwordConfirm": {
+					"name": "Confirmation du mot de passe",
+					"error": "Les mot de passe ne correspondent pas"
+				}
+			},
+			"action": "S'inscrire",
+			"footer": ["Déjà inscrit sur Polyflix ?", "Connectez-vous ici"],
+			"error": "Adresse e-mail déjà utilisée"
+		}
+	},
+	"userProfile": {
+		"seo": {
+			"title": "Mon profil"
+		},
+		"bigtitle": "Modifier mes informations",
+		"deleteAccountTitle": "Supprimer mon compte",
+		"form": {
+			"email": {
+				"name": "Adresse e-mail",
+				"error": "L'adresse e-mail est invalide"
+			},
+			"currentPassword": {
+				"name": "Mot de passe actuel",
+				"error": "Le mot de passe est invalide"
+			},
+			"newPassword": {
+				"name": "Nouveau mot de passe",
+				"error": "Le nouveau mot de passe est invalide"
+			},
+			"newPasswordConfirm": {
+				"name": "Confirmation du nouveau mot de passe",
+				"error": "Le nouveau mot de passe est invalide"
+			},
+			"submit": "Modifier mes informations",
+			"editPassword": "Modifier mon mot de passe",
+			"badPassword": "Le mot de passe est incorrect"
+		},
+		"deleteAccountForm": {
+			"submit": "Supprimer mon compte",
+			"hint": "Veuillez confirmer la suppression de votre compte en renseignant votre adresse e-mail",
+			"warning": "Attention, cette action est définitive",
+			"wrongEmail": "Votre adresse e-mail est invalide"
+		},
+		"messages": {
+			"successProfile": "Votre profil a bien été mis à jour",
+			"successPassword": "Votre mot de passe a bien été mis à jour"
+		}
+	},
+	"videoDetails": {
+		"publishedBy": "Publiée par"
+	},
+	"userVideos": {
+		"seo": {
+			"ownTitle": "Mes vidéos",
+			"userTitle": "Vidéos de {{user}}"
+		},
+		"list": {
+			"ownNoVideos": "Vous n'avez pas encore uploadé de vidéos",
+			"userNoVideos": "{{user}} n'a pas encore uploadé de vidéos"
+		},
+		"visibility": {
+			"private": {
+				"name": "Privée",
+				"description": "Votre vidéo sera visible uniquement par vous"
+			},
+			"public": {
+				"name": "Publique",
+				"description": "Votre vidéo sera visible par tout le monde"
+			}
+		},
+		"status": {
+			"draft": {
+				"name": "Brouillon",
+				"description": "Votre vidéo est encore en brouillon et les autres utilisateurs ne peuvent pas la voir"
+			},
+			"published": {
+				"name": "Publiée",
+				"description": "Votre vidéo peut apparaître dans les résultats de recherche (si elle est publique)"
+			}
+		}
+	},
+	"videoManagement": {
+		"video": "une vidéo",
+		"actions": {
+			"switching": "Cliquez pour changer"
+		},
+		"inputs": {
+			"title": {
+				"name": "Titre",
+				"description": "Le titre de la vidéo",
+				"error": "Le titre de la vidéo est requis"
+			},
+			"thumbnail": {
+				"name": "Lien de la miniature",
+				"description": "Lien de la miniature de la vidéo",
+				"error": "Le lien de la miniature est requis"
+			},
+			"description": {
+				"name": "Description de la vidéo",
+				"error": "La description de la vidéo est requise"
+			},
+			"videoURL": {
+				"name": "Lien de la vidéo",
+				"description": "Lien de la vidéo",
+				"error": "Le lien de la vidéo est requis"
+			},
+			"videoPreviewURL": {
+				"name": "Lien de prévisualisation",
+				"description": "Lien de prévisualisation de la vidéo",
+				"error": "Le lien de prévisualtion de la vidéo est requis"
+			}
+		},
+		"addVideo": {
+			"description": "Remplissez le formulaire ci-dessous pour créer votre vidéo",
+			"action": "Créer",
+			"success": "ajoutée à la librairie",
+			"error": "Une vidéo existe déjà avec le titre"
+		},
+		"updateVideo": {
+			"description": "Remplissez le formulaire ci-dessous pour modifier votre vidéo",
+			"action": "Modifier",
+			"success": "mise à jour avec succès"
+		}
+	},
+	"notFound": {
+		"seo": {
+			"title": "Page introuvable"
+		},
+		"content": {
+			"title": "Oops, page introuvable",
+			"description": "Nous ne trouvons pas la page que vous souhaitez accéder. La resource a été déplacée ou bien supprimée.",
+			"home": "Retourner à l'accueil"
+		}
+	},
+	"serverUnavailable": {
+		"seo": {
+			"title": "Service indisponible"
+		},
+		"content": {
+			"title": "Mince, quelqu'un a tiré le mauvais câble",
+			"description": "Nous ne sommes pas en mesure de vous proposer ce service tout de suite, ré-essayez plus tard.",
+			"redirect": "Découvrir un site incroyable",
+			"link": "https://lapin.fr"
+		}
+	},
+	"video": {
+		"view": {
+			"tabs": {
+				"label": {
+					"playlist": "Liste de lecture",
+					"subtitle": "Sous-titres"
+				}
+			},
+			"publishedBy": "Publiée par"
+		}
+	}
 }

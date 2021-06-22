@@ -86,7 +86,7 @@ export const useVideos = <T = Video | VideosWithPagination>(
 
   useEffect(() => {
     // If the auth is currently loading, skip the call
-    // because we potentially want a token for execute the
+    // because we potentially want a token to execute the
     // query.
     if (authLoading || (!isCollection && !slug)) return;
     setLoading(true);
