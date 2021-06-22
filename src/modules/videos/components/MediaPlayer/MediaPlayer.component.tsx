@@ -78,7 +78,7 @@ export const MediaPlayer: React.FC<Props> = ({ video, ..._ }) => {
         playing={true}
         onSeek={onSeek}
         onProgress={onProgress}
-        url="https://media.vimejs.com/720p.mp4"
+        url={video.src}
       />
     </div>
   );

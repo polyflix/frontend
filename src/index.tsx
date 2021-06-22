@@ -10,11 +10,19 @@ import { IndexRouter } from "./modules/common/pages/index.router";
 import { store } from "./modules/common/redux/index.store";
 import "./modules/common/styles/index.scss";
 import { Spinner } from "./modules/ui/components/Spinner/Spinner.component";
+import { MINIO_URL } from "./modules/common/constants/minio.constant";
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <DIProvider providers={[]}>
+      <DIProvider
+        providers={[
+          {
+            provide: "minio.url",
+            useValue: MINIO_URL,
+          },
+        ]}
+      >
         <Router>
           <Suspense
             fallback={

@@ -12,13 +12,12 @@ import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router";
 import slugify from "slugify";
 import { useAuth } from "../../../authentication/hooks/useAuth.hook";
-import { Token } from "../../../authentication/models/token.model";
 import { fadeInDown } from "../../../ui/animations/fadeInDown";
 import { stagger } from "../../../ui/animations/stagger";
 import { Alert, AlertType } from "../../../ui/components/Alert/Alert.component";
 import { FilledButton } from "../../../ui/components/Buttons/FilledButton/FilledButton.component";
 import { Checkbox } from "../../../ui/components/Checkbox/Checkbox.component";
-import { Image } from "../../../ui/components/Image/Image.component";
+import { Image as Img } from "../../../ui/components/Image/Image.component";
 import { Input } from "../../../ui/components/Input/Input.component";
 import { Spinner } from "../../../ui/components/Spinner/Spinner.component";
 import { Textarea } from "../../../ui/components/Textarea/Textarea.component";
@@ -28,6 +27,11 @@ import { Typography } from "../../../ui/components/Typography/Typography.compone
 import { Video } from "../../models/video.model";
 import { VideoService } from "../../services/video.service";
 import { IVideoForm } from "../../types/videos.type";
+import { UploadButton } from "../../../ui/components/Buttons/UploadButton/UploadButton.component";
+import { ImageFile } from "../../../upload/models/files/image.model";
+import { VideoFile } from "../../../upload/models/files/video.model";
+import { MinioService } from "../../../upload/services/minio.service";
+import { MinioFile } from "../../../upload/models/files/minio-file.model";
 
 type Props = {
   /** If video exists, the form will be in update mode, otherwise in create mode. */
@@ -38,25 +42,30 @@ type Props = {
  * The video form component
  */
 export const VideoForm: React.FC<Props> = ({ video }) => {
+  const isUpdate = video instanceof Video;
+
   const videoService = useInjection<VideoService>(VideoService);
+  const minioService = useInjection<MinioService>(MinioService);
+
   const { t } = useTranslation();
-  const { token, user } = useAuth();
+  const { user } = useAuth();
   let history = useHistory();
+
   const { register, handleSubmit, errors, watch } = useForm<IVideoForm>({
     defaultValues: {
       title: video?.title,
       description: video?.description,
-      thumbnail: video?.thumbnail,
       isPublished: video?.isPublished || false,
       isPublic: video?.isPublic || false,
-      src: video?.src,
-      previewUrl: video?.previewUrl,
+      thumbnail: video?.thumbnail,
+      src: video?.previewUrl,
+      previewUrl: video?.src,
     },
   });
+
   const watchTitle = watch<"title", string>("title", "");
   const watchPrivacy = watch<"isPublic", boolean>("isPublic");
   const watchPublished = watch<"isPublished", boolean>("isPublished");
-  const watchThumbnail = watch<"thumbnail", string>("thumbnail", "");
 
   const [loading, setLoading] = useState<boolean>(false);
   const [isSubmit, setIsSubmit] = useState<boolean>(false);
@@ -65,20 +74,40 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
       type: AlertType;
       message: string;
     } | null>(null);
+  const [files, setFiles] = useState<MinioFile[]>([]);
 
-  const isUpdate = video instanceof Video;
+  const getFile = (files: MinioFile[], field: keyof IVideoForm) => {
+    return files.find((file) => file.getField() === field);
+  };
+
+  const thumbnailFile = getFile(files, "thumbnail");
+  const thumbnailPreview =
+    video?.thumbnail ||
+    (thumbnailFile as ImageFile)?.getPreview() ||
+    "https://i.stack.imgur.com/y9DpT.jpg";
 
   const onSubmit = async (data: IVideoForm) => {
     setLoading(true);
     setIsSubmit(true);
     try {
-      await (isUpdate
-        ? videoService.updateVideo(video?.id as string, data, token as Token)
-        : videoService.createVideo(data, token as Token));
+      const uploadedFiles = await minioService.upload(files);
+      const attributes: (keyof IVideoForm)[] = [
+        "thumbnail",
+        "src",
+        "previewUrl",
+      ];
+      attributes.forEach((attr) => {
+        const url = getFile(uploadedFiles, attr)?.getFileURL();
+        if (url) data = { ...data, [attr]: url };
+      });
+
+      let result = await (isUpdate
+        ? videoService.updateVideo(video?.id as string, data)
+        : videoService.createVideo(data));
       setAlert({
         message: isUpdate
-          ? `"${data.title}" ${t("videoManagement.updateVideo.success")}.`
-          : `"${data.title}" ${t("videoManagement.addVideo.success")}.`,
+          ? `"${result.title}" ${t("videoManagement.updateVideo.success")}.`
+          : `"${result.title}" ${t("videoManagement.addVideo.success")}.`,
         type: "success",
       });
       history.push(`/profile/videos/${user?.id}`);
@@ -113,13 +142,9 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
             .
           </Paragraph>
         </div>
-        <Image
+        <Img
           variants={fadeInDown}
-          src={
-            watchThumbnail === ""
-              ? "https://i.stack.imgur.com/y9DpT.jpg"
-              : watchThumbnail
-          }
+          src={thumbnailPreview}
           className="w-full col-span-2 md:col-span-1 rounded-md"
           alt={`${watchTitle} thumbnail`}
         />
@@ -150,50 +175,32 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
             },
           })}
         />
-        <Input
-          error={errors.thumbnail}
+        <UploadButton<ImageFile>
+          uploadClass={ImageFile}
+          onFileUpload={(file) => setFiles([...files, file])}
+          variants={fadeInDown}
+          className="col-span-2 md:col-span-1"
+          placeholder="Uploader la miniature"
+          format="image/*"
           name="thumbnail"
-          required
-          className="col-span-2 md:col-span-1"
-          variants={fadeInDown}
-          placeholder={t("videoManagement.inputs.thumbnail.name")}
-          hint={`${t("videoManagement.inputs.thumbnail.name")}.`}
-          ref={register({
-            required: {
-              value: true,
-              message: `${t("videoManagement.inputs.thumbnail.error")}.`,
-            },
-          })}
         />
-        <Input
-          error={errors.src}
+        <UploadButton<VideoFile>
+          uploadClass={VideoFile}
+          onFileUpload={(file) => setFiles([...files, file])}
+          variants={fadeInDown}
+          className="col-span-2 md:col-span-1"
+          placeholder="Uploader la vidéo"
+          format="video/*"
           name="src"
-          required
-          className="col-span-2 md:col-span-1"
-          variants={fadeInDown}
-          placeholder={t("videoManagement.inputs.videoURL.name")}
-          hint={`${t("videoManagement.inputs.videoURL.name")}.`}
-          ref={register({
-            required: {
-              value: true,
-              message: `${t("videoManagement.inputs.videoURL.error")}.`,
-            },
-          })}
         />
-        <Input
-          error={errors.previewUrl}
-          name="previewUrl"
-          required
-          className="col-span-2 md:col-span-1"
+        <UploadButton<VideoFile>
+          uploadClass={VideoFile}
+          onFileUpload={(file) => setFiles([...files, file])}
           variants={fadeInDown}
-          placeholder={t("videoManagement.inputs.videoPreviewURL.name")}
-          hint={`${t("videoManagement.inputs.videoPreviewURL.name")}.`}
-          ref={register({
-            required: {
-              value: true,
-              message: `${t("videoManagement.inputs.videoPreviewURL.error")}.`,
-            },
-          })}
+          className="col-span-2 md:col-span-1"
+          placeholder="Uploader la vidéo de prévisualisation"
+          format="video/*"
+          name="previewUrl"
         />
         <Textarea
           error={errors.description}

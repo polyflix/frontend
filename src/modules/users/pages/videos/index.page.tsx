@@ -4,7 +4,6 @@ import { useTranslation } from "react-i18next";
 import { Redirect, useParams } from "react-router";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../../authentication/hooks/useAuth.hook";
-import { Token } from "../../../authentication/models/token.model";
 import { Paginator } from "../../../common/components/Paginator/Paginator.component";
 import { usePagination } from "../../../common/hooks/usePagination.hook";
 import { fadeOpacity } from "../../../ui/animations/fadeOpacity";
@@ -21,7 +20,7 @@ import { useUser } from "../../hooks/useUser.hook";
 
 export const UserVideosPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
-  const { token, user } = useAuth();
+  const { user } = useAuth();
   const { t } = useTranslation();
   const videoService = useInjection<VideoService>(VideoService);
   const { setFinalPage, page, to, limit } = usePagination();
@@ -50,7 +49,7 @@ export const UserVideosPage: React.FC = () => {
   });
 
   const onVideoDelete = async (id: string) => {
-    await videoService.deleteVideo(id, token as Token);
+    await videoService.deleteVideo(id);
     triggerReload();
   };
 
@@ -114,8 +113,10 @@ export const UserVideosPage: React.FC = () => {
               <div className="text-white">
                 {" "}
                 {isOwnPage
-                  ? "You have not uploaded any videos yet"
-                  : `${fetchedUser?.displayName} has not uploaded any videos yet`}
+                  ? t("userVideos.list.ownNoVideos")
+                  : t("userVideos.list.userNoVideos", {
+                      user: fetchedUser?.displayName,
+                    })}
               </div>
             )}
           </>
