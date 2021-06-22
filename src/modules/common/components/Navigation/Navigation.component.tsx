@@ -114,7 +114,6 @@ export const Navigation: React.FC<Props> = ({ visible }) => {
   const getPublicContent = () => {
     return (
       <div className="flex items-center">
-        <LanguageButton />
         <Link to="/auth/register">
           <UserAddIcon className="text-nx-white w-6 md:hidden" />
           <Typography className="hidden md:block" as="span">
@@ -124,6 +123,7 @@ export const Navigation: React.FC<Props> = ({ visible }) => {
             </Typography>
           </Typography>
         </Link>
+        <LanguageButton />
         <div className="mx-2"></div>
         <Link to="/auth/login">
           <LoginIcon className="text-nx-white w-6 md:hidden" />
