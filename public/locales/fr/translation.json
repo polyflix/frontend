@@ -5,11 +5,18 @@
 				"play": "Lecture",
 				"info": "Plus d'infos",
 				"add": "Ajouter",
+				"history": "Historique",
 				"edit": "Éditer",
 				"delete": "Supprimer",
-				"cancel": "Annuler"
+				"cancel": "Annuler",
+				"back": "Retour"
 			},
-			"wait": "Patientez"
+			"filters": {
+				"newest": "Plus récent",
+				"oldest": "Plus vieux"
+			},
+			"wait": "Patientez",
+			"seen": "Vu le {{date}}"
 		},
 		"navbar": {
 			"signIn": "Se connecter",
@@ -111,11 +118,13 @@
 	"userVideos": {
 		"seo": {
 			"ownTitle": "Mes vidéos",
-			"userTitle": "Vidéos de {{user}}"
+			"userTitle": "Vidéos de {{user}}",
+			"ownHistory": "Mon historique"
 		},
 		"list": {
 			"ownNoVideos": "Vous n'avez pas encore uploadé de vidéos",
-			"userNoVideos": "{{user}} n'a pas encore uploadé de vidéos"
+			"userNoVideos": "{{user}} n'a pas encore uploadé de vidéos",
+			"historyNoVideos": "Vous n'avez pas encore visionné de vidéo"
 		},
 		"visibility": {
 			"private": {

@@ -5,11 +5,18 @@
 				"play": "Play",
 				"info": "More info",
 				"add": "Add",
+				"history": "History",
 				"edit": "Edit",
 				"delete": "Delete",
-				"cancel": "Cancel"
+				"cancel": "Cancel",
+				"back": "Go back"
 			},
-			"wait": "Please wait"
+			"filters": {
+				"newest": "Newest",
+				"oldest": "Oldest"
+			},
+			"wait": "Please wait",
+			"seen": "Seen {{date}}"
 		},
 		"navbar": {
 			"signIn": "Sign in",
@@ -108,11 +115,13 @@
 	"userVideos": {
 		"seo": {
 			"ownTitle": "My videos",
-			"userTitle": "{{user}}'s videos"
+			"userTitle": "{{user}}'s videos",
+			"ownHistory": "My videos history"
 		},
 		"list": {
 			"ownNoVideos": "You have not uploaded any videos yet",
-			"userNoVideos": "{{user}} has not uploaded any videos yet"
+			"userNoVideos": "{{user}} has not uploaded any videos yet",
+			"historyNoVideos": "You did not watch any video yet!"
 		},
 		"visibility": {
 			"private": {

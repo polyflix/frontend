@@ -42,9 +42,30 @@ type UseVideoHookOptions = {
    */
   onCollectionLoaded?: (pages: number) => void;
 
+  /**
+   * Whether videos need to be public or not
+   */
   isPublic?: boolean;
 
+  /**
+   * Whether videos need to be already published or not
+   */
   isPublished?: boolean;
+
+  /**
+   * Whether videos are pending watching by user
+   */
+  isWatching?: boolean;
+
+  /**
+   * Whether videos are already watched by user
+   */
+  isWatched?: boolean;
+
+  /**
+   * Ordering options
+   */
+  order?: string;
 };
 
 /**
@@ -67,6 +88,9 @@ export const useVideos = <T = Video | VideosWithPagination>(
     onCollectionLoaded,
     isPublic,
     isPublished,
+    isWatching,
+    isWatched,
+    order,
   } = options || {};
 
   // States definitions
@@ -97,6 +121,9 @@ export const useVideos = <T = Video | VideosWithPagination>(
           pageSize: limit,
           isPublic,
           isPublished,
+          isWatched,
+          isWatching,
+          order,
         })
       : videoService.getVideoBySlug(slug as string)
     )
