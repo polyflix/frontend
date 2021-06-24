@@ -22,6 +22,10 @@ export type VideoParams = {
 
   isPublic?: boolean;
 
+  isWatched?: boolean;
+
+  isWatching?: boolean;
+
   joinWithPublisher?: boolean;
 };
 
@@ -40,7 +44,16 @@ export class VideoService {
    * @returns {Promise<VideosWithPagination>}
    */
   public async getVideos(params: VideoParams): Promise<VideosWithPagination> {
-    const { pageSize, page, authorId, isPublic, isPublished } = params;
+    const {
+      pageSize,
+      page,
+      authorId,
+      isPublic,
+      isPublished,
+      isWatched,
+      isWatching,
+      order,
+    } = params;
     const path = "/videos";
     // Build search query
     let query = new URLSearchParams();
@@ -52,6 +65,9 @@ export class VideoService {
     if (authorId) query.append("authorId", authorId);
     if (isPublic) query.append("isPublic", isPublic.toString());
     if (isPublished) query.append("isPublished", isPublished.toString());
+    if (isWatched) query.append("isWatched", isWatched.toString());
+    if (isWatching) query.append("isWatching", isWatching.toString());
+    if (order) query.append("order", order);
 
     // Build the URL for the request.
     // The format is the following : /videos[/me][?page=1&limit=20]

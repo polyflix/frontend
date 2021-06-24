@@ -21,7 +21,7 @@ import { Video } from "../../models/video.model";
 
 type Props = {
   video: Video;
-  onDelete: () => void;
+  onDelete?: () => void;
   ownerItems?: boolean;
 };
 
@@ -32,6 +32,7 @@ export const VideoListItem: React.FC<Props> = ({
 }) => {
   const [open, setOpen] = useState<boolean>(false);
   const { t } = useTranslation();
+  const { userMeta } = video;
 
   const buildActionLink = (
     Icon: any,
@@ -79,21 +80,23 @@ export const VideoListItem: React.FC<Props> = ({
               </Typography>
             </div>
             <div className="mx-3"></div>
-            <div
-              className="cursor-pointer"
-              onClick={() => {
-                setOpen(false);
-                onDelete();
-              }}
-            >
-              <Typography
-                as="span"
-                className="text-nx-red text-sm transition-all hover:underline"
-                overrideDefaultClasses
+            {onDelete && (
+              <div
+                className="cursor-pointer"
+                onClick={() => {
+                  setOpen(false);
+                  onDelete();
+                }}
               >
-                {t("shared.common.actions.delete")}
-              </Typography>
-            </div>
+                <Typography
+                  as="span"
+                  className="text-nx-red text-sm transition-all hover:underline"
+                  overrideDefaultClasses
+                >
+                  {t("shared.common.actions.delete")}
+                </Typography>
+              </div>
+            )}
           </div>
         </div>
       </Notification>
@@ -103,6 +106,14 @@ export const VideoListItem: React.FC<Props> = ({
           className="rounded-md w-full md:h-48 object-cover"
           alt={`${video.title} thumbnail`}
         />
+        {userMeta && (
+          <div
+            className="bg-nx-red relative bottom-1 h-1 z-10"
+            style={{
+              width: userMeta.watchedPercent * 100 + "%",
+            }}
+          />
+        )}
       </div>
       <div className="col-span-12 md:col-span-8 xl:col-span-9 flex flex-col justify-center">
         <Typography bold className="text-lg md:text-xl" as="h3">
@@ -181,6 +192,13 @@ export const VideoListItem: React.FC<Props> = ({
               "ml-4",
               () => setOpen(true)
             )}
+          {!ownerItems && userMeta && (
+            <span className="text-nx-gray opacity-80 px-4 text-sm">
+              {t("shared.common.seen", {
+                date: new Date(userMeta.createdAt).toLocaleDateString(),
+              })}
+            </span>
+          )}
         </div>
       </div>
     </div>

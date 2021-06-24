@@ -1,4 +1,4 @@
-import { PlusIcon } from "@heroicons/react/outline";
+import { ClockIcon, PlusIcon } from "@heroicons/react/outline";
 import { useInjection } from "@polyflix/di";
 import { useTranslation } from "react-i18next";
 import { Redirect, useParams } from "react-router";
@@ -80,16 +80,24 @@ export const UserVideosPage: React.FC = () => {
                 })}
           </Title>
           {isOwnPage && (
-            <Link to="/videos/create">
-              <Typography
-                as="span"
-                className="flex items-center text-nx-red"
-                overrideDefaultClasses
-              >
-                <PlusIcon className="w-6" /> {t("shared.common.actions.add")}{" "}
-                {t("videoManagement.video")}
-              </Typography>
-            </Link>
+            <Typography
+              as="span"
+              className="flex items-center text-nx-red"
+              overrideDefaultClasses
+            >
+              <Link to="/videos/create">
+                <span className="inline-flex mx-2">
+                  <PlusIcon className="w-6" /> {t("shared.common.actions.add")}{" "}
+                  {t("videoManagement.video")}
+                </span>
+              </Link>
+              <Link to="/profile/videos/history">
+                <span className="text-nx-gray inline-flex mx-2">
+                  <ClockIcon className="w-6 mr-1" />{" "}
+                  {t("shared.common.actions.history")}{" "}
+                </span>
+              </Link>
+            </Typography>
           )}
         </div>
         {data && (

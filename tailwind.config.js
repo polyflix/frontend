@@ -13,7 +13,8 @@ module.exports = {
         "nx-dark": "#221F1F",
         "nx-red": "#E50914",
         "nx-red-dark": "#B81D24",
-        "nx-white": "#F5F5F1"
+        "nx-white": "#F5F5F1",
+        "nx-gray": "#cdcaca",
       }
     },
   },
