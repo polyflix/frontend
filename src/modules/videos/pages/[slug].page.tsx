@@ -56,7 +56,12 @@ export const VideoDetail: React.FC = () => {
       <Container mxAuto fluid className={styles.root}>
         {video && (
           <section>
-            <Player videoUrl={video.src} videoSubtitles={video.subtitles} />
+            <Player
+              videoId={video.id}
+              userMeta={video.userMeta}
+              videoUrl={video.src}
+              videoSubtitles={video.subtitles}
+            />
             <div className="flex justify-between flex-wrap mt-2">
               <Typography as="h4" className="text-xl pl-3" bold>
                 {video.title}

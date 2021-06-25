@@ -1,49 +1,133 @@
-import React from "react";
-import Plyr from "plyr-react";
-import { SourceInfo, Options, Provider, Track } from "plyr";
+import React, { useEffect, useRef } from "react";
 import "plyr-react/dist/plyr.css";
 import { Subtitle } from "../../models/subtitle.model";
+import {
+  DefaultUi,
+  Player as PlayerVime,
+  Video,
+  Vimeo,
+  Youtube,
+  usePlayerContext,
+} from "@vime/react";
+import { useAuth } from "../../../authentication";
+import { useInjection } from "@polyflix/di";
+import { StatsService } from "../../../stats/services/stats.service";
+import WatchMetadata from "../../../stats/models/userMeta.model";
+import { Track } from "../../types/track.type";
+import { ProviderType } from "../../types";
 
 type Props = {
   videoUrl: string;
   videoSubtitles: Subtitle[];
+  videoId: string;
+  userMeta?: WatchMetadata;
 };
 
 const MATCH_URL_YOUTUBE =
   /(?:youtu\.be\/|youtube(?:-nocookie)?\.com\/(?:embed\/|v\/|watch\/|watch\?v=|watch\?.+&v=))((\w|-){11})|youtube\.com\/playlist\?list=|youtube\.com\/user\//;
 const MATCH_URL_VIMEO = /vimeo\.com\/.+/;
 
-export const Player: React.FC<Props> = ({ videoUrl, videoSubtitles }) => {
-  const provider = getProvider(videoUrl);
-  let tracks = getTracks(videoSubtitles);
+export const Player: React.FC<Props> = ({
+  videoUrl,
+  userMeta,
+  videoSubtitles,
+  videoId,
+}) => {
+  const ref = useRef<HTMLVmPlayerElement>(null);
+  const { token } = useAuth();
+  const statsService = useInjection<StatsService>(StatsService);
 
-  const videoSrc: SourceInfo = {
-    type: "video",
-    sources: [
-      {
-        src: videoUrl,
-        provider: provider,
-      },
-    ],
-    tracks: tracks as Track[],
+  const [currentTime] = usePlayerContext(ref, "currentTime", 0);
+  const [durationTime] = usePlayerContext(ref, "duration", 0);
+
+  const onTriggerWatchtimeEvent = () => {
+    if (!ref?.current || !token) return;
+    statsService.updateSync({
+      videoId: videoId,
+      watchedSeconds: currentTime,
+      watchedPercent: currentTime / durationTime,
+    });
   };
 
-  const videoOptions: Options = {};
+  useEffect(onTriggerWatchtimeEvent, [
+    currentTime,
+    durationTime,
+    ref,
+    statsService,
+    token,
+    videoId,
+    onTriggerWatchtimeEvent,
+  ]);
 
-  const playerStyle = {
-    "--plyr-color-main": "red",
-  } as React.CSSProperties;
+  useEffect(() => {
+    statsService.startTimer(onTriggerWatchtimeEvent);
 
-  return <Plyr source={videoSrc} options={videoOptions} style={playerStyle} />;
+    return () => {
+      onTriggerWatchtimeEvent();
+      statsService.stopTimer();
+    };
+    // We disable eslint on the next line, else it would prompt a warning on
+    // on the fact that onTriggerWatchTimeEvent is not in dependency array.
+    // But we know tat it is a constant that won't move at all
+    // eslint-disable-next-line
+  }, [statsService]);
+
+  return (
+    <PlayerVime
+      playsinline
+      ref={ref}
+      onVmSeeked={onTriggerWatchtimeEvent}
+      onVmCurrentTimeChange={onTriggerWatchtimeEvent}
+    >
+      <Provider videoUrl={videoUrl} videoSubtitles={videoSubtitles} />
+      <DefaultUi>{/* Custom UI Component. */}</DefaultUi>
+    </PlayerVime>
+  );
 };
 
+/**
+ * Depending on the video source we extend the proper video player
+ * @param videoUrl
+ * @param videoSubtitles
+ * @constructor
+ */
+const Provider: React.FC<Omit<Props, "videoId">> = ({
+  videoUrl,
+  videoSubtitles,
+}) => {
+  const [provider, url] = getProvider(videoUrl);
+  const tracks = getTracks(videoSubtitles);
+
+  switch (provider) {
+    case ProviderType.VIDEO:
+      return (
+        <Video>
+          <source data-src={url} type="video/mp4" />
+          {tracks.map((track) => (
+            <track {...track} />
+          ))}
+        </Video>
+      );
+    case ProviderType.VIMEO:
+      return <Vimeo videoId={url} />;
+    case ProviderType.YOUTUBE:
+      return <Youtube videoId={url} cookies={false} />;
+    default:
+      return <p>Video type unknown</p>;
+  }
+};
+
+/**
+ * Format tracks in order to be imported properly
+ * @param videoSubtitles
+ */
 function getTracks(videoSubtitles: Subtitle[]) {
-  let tracks = [];
+  let tracks: Track[] = [];
   for (const subtitle of videoSubtitles) {
     tracks.push({
       kind: "captions",
       label: subtitle.lang,
-      srcLang: subtitle.lang,
+      srclang: subtitle.lang,
       src: subtitle.vttUrl,
       default: tracks.length === 0, // 1st is default
     });
@@ -56,14 +140,16 @@ function getTracks(videoSubtitles: Subtitle[]) {
  * @param videoUrl The video url
  * @returns The provider : 'youtube' | 'vimeo' | 'html5'
  */
-function getProvider(videoUrl: string) {
-  let provider: Provider;
+function getProvider(videoUrl: string): [ProviderType, string] {
+  let provider: [ProviderType, string];
   if (MATCH_URL_YOUTUBE.test(videoUrl)) {
-    provider = "youtube";
+    provider = [ProviderType.YOUTUBE, videoUrl.split("?v=")[1]];
   } else if (MATCH_URL_VIMEO.test(videoUrl)) {
-    provider = "vimeo";
+    const match = videoUrl.match(/http:\/\/(www\.)?vimeo.com\/(\d+)($|\/)/);
+    if (!match) return [ProviderType.UNKNOWN, ""];
+    provider = [ProviderType.VIMEO, match[2]];
   } else {
-    provider = "html5";
+    provider = [ProviderType.VIDEO, videoUrl];
   }
   return provider;
 }

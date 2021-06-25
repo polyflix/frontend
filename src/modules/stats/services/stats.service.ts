@@ -23,11 +23,19 @@ export class StatsService {
    * @param {Token} token -- user token
    */
   public async updateSync(updateData: UpsertUserVideoMeta) {
-    if (this._lastSync && this._lastSync + SYNC_RATE_LIMITER_MIN > Date.now())
+    if (
+      (this._lastSync && this._lastSync + SYNC_RATE_LIMITER_MIN > Date.now()) ||
+      !this._timer ||
+      (this._lastSync && !this._timer)
+    )
       return;
 
     // Threshold to prevent too low data
     if (updateData.watchedSeconds < 5) return;
+
+    // This update of value must be here, so we don't have multiple call at once
+    // as it is an async method
+    this._lastSync = Date.now();
 
     // We round the watched% to 2 digits
     updateData.watchedPercent =
@@ -40,13 +48,13 @@ export class StatsService {
         body: updateData,
       });
       console.debug(
-        `Updated stats watchtime on ${updateData.watchedSeconds} seconds (${updateData.watchedPercent}%)`
+        `Updated stats watchtime on ${
+          updateData.watchedSeconds
+        } seconds (${Math.round(updateData.watchedPercent * 100)}%)`
       );
     } catch (e) {
       console.debug("Failed to send watchtime...");
     }
-
-    this._lastSync = Date.now();
   }
 
   /**
@@ -55,6 +63,7 @@ export class StatsService {
    * @param {function} callback
    */
   public startTimer(callback: () => void) {
+    console.log("start timer");
     if (this._timer) this.stopTimer();
 
     this._timer = setInterval(callback, SYNC_RATE_LIMITER_MAX);
@@ -65,6 +74,7 @@ export class StatsService {
    * started & stopped properly
    */
   public stopTimer() {
+    console.log("stop timer");
     if (!this._timer)
       throw new Error("[StatsService] Cannot stop a timer which isn't started");
 
