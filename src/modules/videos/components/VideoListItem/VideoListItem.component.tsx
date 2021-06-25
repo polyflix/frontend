@@ -163,6 +163,15 @@ export const VideoListItem: React.FC<Props> = ({
               </>
             )}
           </Typography>
+          <div className="mx-2"></div>
+          <Typography
+            as="span"
+            overrideDefaultClasses
+            bold
+            className="text-blue-500 flex items-center text-sm md:text-base"
+          >
+            <EyeIcon className="w-5 mr-2" /> {video.watchCount}
+          </Typography>
         </div>
         <Paragraph className="mb-4">{video.shortDescription}</Paragraph>
         <div className="flex items-center">

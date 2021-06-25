@@ -22,6 +22,7 @@ export class Video {
     private readonly _createdAt: Date,
     private readonly _updatedAt: Date,
     private readonly _src: string,
+    private readonly _watchCount: number,
     private readonly _previewUrl: string,
     private readonly _subtitles: Subtitle[]
   ) {}
@@ -46,6 +47,7 @@ export class Video {
       new Date(json.createdAt),
       new Date(json.updatedAt),
       json.src,
+      json.watchCount,
       json.previewUrl,
       json.subtitles
     );
@@ -156,6 +158,10 @@ export class Video {
 
   get subtitles(): Subtitle[] {
     return this._subtitles;
+  }
+
+  get watchCount(): number {
+    return this._watchCount;
   }
 
   /**
