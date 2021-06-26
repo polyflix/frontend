@@ -1,6 +1,7 @@
 import { v4 as uuidv4 } from "uuid";
 import { MINIO_URL } from "../../../common/constants/minio.constant";
 import { Bucket } from "../../types/upload.type";
+import * as path from "path";
 
 export class MinioFile {
   private minioFilename: string;
@@ -74,7 +75,7 @@ export class MinioFile {
    * @returns {string}
    */
   private getExtension(): string {
-    return this.file.name.split(".")[1];
+    return path.extname(this.file.name);
   }
 
   /**
