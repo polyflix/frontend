@@ -1,5 +1,4 @@
 import React, { useEffect, useRef } from "react";
-import "plyr-react/dist/plyr.css";
 import { Subtitle } from "../../models/subtitle.model";
 import {
   DefaultUi,

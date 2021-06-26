@@ -63,7 +63,6 @@ export class StatsService {
    * @param {function} callback
    */
   public startTimer(callback: () => void) {
-    console.log("start timer");
     if (this._timer) this.stopTimer();
 
     this._timer = setInterval(callback, SYNC_RATE_LIMITER_MAX);
@@ -74,7 +73,6 @@ export class StatsService {
    * started & stopped properly
    */
   public stopTimer() {
-    console.log("stop timer");
     if (!this._timer)
       throw new Error("[StatsService] Cannot stop a timer which isn't started");
 
