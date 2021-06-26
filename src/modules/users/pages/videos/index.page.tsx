@@ -15,7 +15,6 @@ import { VideoListItem } from "../../../videos/components/VideoListItem/VideoLis
 import { useVideos } from "../../../videos/hooks/useVideos.hook";
 import { Video } from "../../../videos/models/video.model";
 import { VideoService } from "../../../videos/services/video.service";
-import { VideosWithPagination } from "../../../videos/types/videos.type";
 import { useUser } from "../../hooks/useUser.hook";
 
 export const UserVideosPage: React.FC = () => {
@@ -37,20 +36,21 @@ export const UserVideosPage: React.FC = () => {
   const {
     data,
     isLoading: isLoadingVideo,
-    triggerReload,
-  } = useVideos<VideosWithPagination>({
-    onCollectionLoaded: setFinalPage,
-    authorId: id,
-    mode: "collection",
-    page,
-    limit,
-    isPublic: false,
-    isPublished: false,
-  });
+    refresh,
+  } = useVideos(
+    {
+      authorId: id,
+      page,
+      pageSize: limit,
+      isPublic: false,
+      isPublished: false,
+    },
+    setFinalPage
+  );
 
   const onVideoDelete = async (id: string) => {
     await videoService.deleteVideo(id);
-    triggerReload();
+    refresh();
   };
 
   if (alert && alert.type === "not-found") return <Redirect to="/not-found" />;
