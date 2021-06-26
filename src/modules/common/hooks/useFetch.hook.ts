@@ -45,6 +45,7 @@ export const useFetch = <Type, Service>(
   const fetch = async () => {
     try {
       setLoading(true);
+
       const result = await injectedService[handler](...args);
       setData(result);
     } catch (err) {
