@@ -1,31 +1,28 @@
+import { PencilIcon } from "@heroicons/react/outline";
 import React from "react";
-import { Redirect, useParams } from "react-router";
 import { useTranslation } from "react-i18next";
-
-import { useVideos } from "../hooks/useVideos.hook";
+import { Redirect, useParams } from "react-router";
 import { Link } from "react-router-dom";
+import { useAuth } from "../../authentication";
+import styles from "../../common/styles/ghost.module.scss";
 import { Url } from "../../common/utils/url.util";
-import { Video } from "../models/video.model";
-import { fadeOpacity } from "../../ui/animations/fadeOpacity";
-
 import {
+  OutlineButton,
+  Paragraph,
   Playlist,
   Subtitle,
-  Paragraph,
   Typography,
-  OutlineButton,
 } from "../../ui";
+import { fadeOpacity } from "../../ui/animations/fadeOpacity";
 import { Container } from "../../ui/components/Container/Container.component";
 import { Page } from "../../ui/components/Page/Page.component";
-import { MediaPlayer } from "../components/MediaPlayer/MediaPlayer.component";
-import { VideoGhost } from "../components/VideoGhost/VideoGhost.component";
-import { SubtitleText, Tab, TabGroup } from "../components/SubtitlesTabs";
-import styles from "../../common/styles/ghost.module.scss";
 import { Player } from "../../videos/components/Player/Player.component";
+import { MediaPlayer } from "../components/MediaPlayer/MediaPlayer.component";
+import { SubtitleText, Tab, TabGroup } from "../components/SubtitlesTabs";
+import { VideoGhost } from "../components/VideoGhost/VideoGhost.component";
+import { useVideo } from "../hooks/useVideo.hook";
 import { SubtitleLanguages } from "../models";
-import { PencilIcon } from "@heroicons/react/outline";
-import { useSelector } from "react-redux";
-import { RootState } from "../../common";
+import { Video } from "../models/video.model";
 
 export const VideoDetail: React.FC = () => {
   const { t } = useTranslation();
@@ -33,16 +30,9 @@ export const VideoDetail: React.FC = () => {
   const isPlayingMode = Boolean(Url.hasParameter("play")) === true;
 
   const { slug } = useParams<{ slug: string }>();
-  const user = useSelector((state: RootState) => state?.auth?.user);
+  const { user } = useAuth();
 
-  const {
-    data: video,
-    isLoading,
-    alert,
-  } = useVideos<Video>({
-    mode: "document",
-    slug,
-  });
+  const { data: video, isLoading, alert } = useVideo(slug);
 
   const ghosts = new Array(5).fill(null);
 

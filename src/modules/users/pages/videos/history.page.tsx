@@ -1,8 +1,13 @@
+import { ArrowCircleLeftIcon } from "@heroicons/react/outline";
+import { ArrowDownIcon, ArrowUpIcon } from "@heroicons/react/solid";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Redirect, useHistory } from "react-router";
 import { useAuth } from "../../../authentication/hooks/useAuth.hook";
 import { Paginator } from "../../../common/components/Paginator/Paginator.component";
 import { usePagination } from "../../../common/hooks/usePagination.hook";
+import { OrderEnum } from "../../../common/types/OrderEnum";
+import { buildQueryOrdering } from "../../../common/utils/order.util";
 import { fadeOpacity } from "../../../ui/animations/fadeOpacity";
 import { Container } from "../../../ui/components/Container/Container.component";
 import { Page } from "../../../ui/components/Page/Page.component";
@@ -11,12 +16,6 @@ import { Typography } from "../../../ui/components/Typography/Typography.compone
 import { VideoListItem } from "../../../videos/components/VideoListItem/VideoListItem.component";
 import { useVideos } from "../../../videos/hooks/useVideos.hook";
 import { Video } from "../../../videos/models/video.model";
-import { VideosWithPagination } from "../../../videos/types/videos.type";
-import { ArrowCircleLeftIcon } from "@heroicons/react/outline";
-import { OrderEnum } from "../../../common/types/OrderEnum";
-import { useState } from "react";
-import { buildQueryOrdering } from "../../../common/utils/order.util";
-import { ArrowDownIcon, ArrowUpIcon } from "@heroicons/react/solid";
 
 export const UserVideosHistoryPage: React.FC = () => {
   const { user } = useAuth();
@@ -25,24 +24,20 @@ export const UserVideosHistoryPage: React.FC = () => {
   const { goBack } = useHistory();
   const [ordering, setOrdering] = useState<OrderEnum>(OrderEnum.DESC);
 
-  const {
-    data,
-    isLoading: isLoadingVideo,
-    triggerReload,
-  } = useVideos<VideosWithPagination>({
-    onCollectionLoaded: setFinalPage,
-    mode: "collection",
-    page,
-    limit,
-    isWatching: true,
-    isWatched: true,
-    order: buildQueryOrdering("userMeta.createdAt", ordering),
-  });
+  const { data, isLoading: isLoadingVideo } = useVideos(
+    {
+      order: buildQueryOrdering("userMeta.createdAt", ordering),
+      page,
+      pageSize: limit,
+      isWatching: true,
+      isWatched: true,
+    },
+    setFinalPage
+  );
 
   const onToggleOrder = () => {
     if (ordering === OrderEnum.DESC) setOrdering(OrderEnum.ASC);
     else setOrdering(OrderEnum.DESC);
-    triggerReload();
   };
 
   if (!user?.id) return <Redirect to="/not-found" />;
