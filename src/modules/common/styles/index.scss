@@ -3,6 +3,7 @@
 @tailwind utilities;
 
 @import "./fonts";
+@import "~@vime/core/themes/default.css";
 
 html {
   scroll-behavior: smooth;

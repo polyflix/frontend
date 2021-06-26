@@ -51,3 +51,10 @@ export interface IVideo {
   thumbnail: string;
   subtitles: Subtitle[];
 }
+
+export enum ProviderType {
+  YOUTUBE = "youtube",
+  VIMEO = "vimeo",
+  VIDEO = "video",
+  UNKNOWN = "unknown",
+}
