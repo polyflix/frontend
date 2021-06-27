@@ -23,8 +23,6 @@ export type VideoState<T> = {
 export type VideosWithPagination = {
   totalCount: number;
   items: Video[];
-  // watchedVideos: Video[];
-  // watchingVideos: Video[];
 };
 
 export interface IVideoPublisher {
