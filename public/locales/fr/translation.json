@@ -190,6 +190,34 @@
 			"success": "mise à jour avec succès"
 		}
 	},
+	"collectionManagement": {
+		"collection": "une collection",
+		"actions": {
+			"switching": "Cliquez pour changer"
+		},
+		"inputs": {
+			"title": {
+				"name": "Titre",
+				"description": "Le titre de la collection",
+				"error": "Le titre de la collection est requis"
+			},
+			"description": {
+				"name": "Description de la collection",
+				"error": "La description de la collection est requise"
+			}
+		},
+		"addCollection": {
+			"description": "Remplissez le formulaire ci-dessous pour créer votre collection",
+			"action": "Créer",
+			"success": "ajoutée à la librairie",
+			"error": "Une collection existe déjà avec le titre"
+		},
+		"updateCollection": {
+			"description": "Remplissez le formulaire ci-dessous pour modifier votre collection",
+			"action": "Modifier",
+			"success": "mise à jour avec succès"
+		}
+	},
 	"notFound": {
 		"seo": {
 			"title": "Page introuvable"
