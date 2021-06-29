@@ -26,7 +26,8 @@ import { Collection } from "../../models";
 import { SearchCollection } from "../SearchCollection/SearchCollection.component";
 import { CollectionService } from "../../services";
 import { ICollectionForm } from "../../types";
-
+import { VideoListItem } from "../../../videos/components/VideoListItem/VideoListItem.component"
+import { Video } from "../../../videos/models/video.model";
 type Props = {
   /** If collection exists, the form will be in update mode, otherwise in create mode. */
   collection?: Collection | null;
@@ -53,6 +54,7 @@ export const CollectionForm: React.FC<Props> = ({ collection }) => {
 
   const watchTitle = watch<"title", string>("title", "");
 
+  const [videos, setVideos] = useState<Video[]>(collection?.videos ?? []);
   const [loading, setLoading] = useState<boolean>(false);
   const [isSubmit, setIsSubmit] = useState<boolean>(false);
   const [alert, setAlert] =
@@ -61,13 +63,27 @@ export const CollectionForm: React.FC<Props> = ({ collection }) => {
       message: string;
     } | null>(null);
 
+  const onVideoDelete = (id: string) => {
+    setVideos(videos.filter(video => video.id !== id));
+  }
+  
+  const addVideo = (video: Video) => {
+    let contain: boolean = false;
+    videos.forEach((el: Video) => {
+      if(el.id === video.id) {
+        contain = true;
+      } 
+    })
+    if(!contain) setVideos([...videos, video]);
+  }
+
   const onSubmit = async (data: ICollectionForm) => {
     setLoading(true);
     setIsSubmit(true);
     try {
       let result = await (isUpdate
-        ? collectionService.updateCollection(collection?.id as string, data)
-        : collectionService.createCollection(data));
+        ? collectionService.updateCollection(collection?.id as string, { ...data, videos: videos.map(v => ({id: v.id})) })
+        : collectionService.createCollection({ ...data, videos: videos.map(v => ({id: v.id})) }));
       setAlert({
         message: isUpdate
           ? `"${result.title}" ${t(
@@ -117,17 +133,6 @@ export const CollectionForm: React.FC<Props> = ({ collection }) => {
         className="grid items-center grid-cols-2 gap-4"
         onSubmit={handleSubmit(onSubmit)}
       >
-        <FilledButton
-          className="col-span-2"
-          as="input"
-          inputValue={
-            isUpdate
-              ? t("collectionManagement.updateCollection.action")
-              : t("collectionManagement.addCollection.action")
-          }
-          disabled={isSubmit}
-          variants={fadeInDown}
-        />
         <Input
           name="title"
           error={errors.title}
@@ -164,7 +169,17 @@ export const CollectionForm: React.FC<Props> = ({ collection }) => {
           })}
           variants={fadeInDown}
         />
-        <SearchCollection variants={fadeInDown}></SearchCollection>
+        <FilledButton
+          className="col-span-2"
+          as="input"
+          inputValue={
+            isUpdate
+              ? t("collectionManagement.updateCollection.action")
+              : t("collectionManagement.addCollection.action")
+          }
+          disabled={isSubmit}
+          variants={fadeInDown}
+        />
         {loading && (
           <div className="col-span-2 flex items-center">
             <Spinner className="fill-current text-nx-dark"></Spinner>
@@ -179,6 +194,14 @@ export const CollectionForm: React.FC<Props> = ({ collection }) => {
           </Alert>
         )}
       </form>
+      <div className="mt-4">
+        <SearchCollection variants={fadeInDown} placeholder={t("collectionManagement.inputs.search.name")} addVideo={addVideo}></SearchCollection>
+        <>
+          {videos.map((video: Video) => (
+            <VideoListItem video={video} ownerItems={false} links={false} onDelete={() => onVideoDelete(video.id)}/>
+          ))}
+        </>
+      </div>
     </motion.div>
   );
 };

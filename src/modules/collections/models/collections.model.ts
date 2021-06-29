@@ -34,7 +34,7 @@ export class Collection {
       json.publishedBy && CollectionPublisher.fromJson(json.publishedBy),
       new Date(json.createdAt),
       new Date(json.updatedAt),
-      json.videos
+      json.videos && json.videos.map((video) => Video.fromJson(video))
     );
   }
 
@@ -78,6 +78,14 @@ export class Collection {
    */
   get description(): string {
     return this._description;
+  }
+
+  /**
+   * Return the collection videos.
+   * @returns {Video[]} the collection videos
+   */
+  get videos(): Video[] {
+    return this._videos;
   }
 
   /**

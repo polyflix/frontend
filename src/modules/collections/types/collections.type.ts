@@ -1,11 +1,16 @@
 import { AlertType } from "../../ui/components/Alert/Alert.component";
 import { Collection } from "../models/collections.model";
-import { Video } from "../../videos";
+import { IVideo } from "../../videos/types/videos.type";
 
 export interface ICollectionForm {
   title: string;
   description: string;
+  videos: videoLite[];
 }
+
+type videoLite = {
+  id: string;
+};
 
 export type CollectionState<T> = {
   isLoading: boolean;
@@ -50,5 +55,5 @@ export interface ICollection {
   createdAt: string;
   updatedAt: string;
   slug: string;
-  videos: Video[];
+  videos: IVideo[];
 }

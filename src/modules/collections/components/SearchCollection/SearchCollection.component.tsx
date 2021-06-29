@@ -6,18 +6,17 @@ import { useInjection } from "@polyflix/di";
 import { Video } from "../../../videos";
 import { VideoService } from "../../../videos/services";
 
-type Props = WithClassname & WithMotion & {};
+type Props = WithClassname & WithMotion & { addVideo: (video: Video) => void, placeholder: string };
 
-export const SearchCollection: React.FC<Props> = ({...rest}) => {
+export const SearchCollection: React.FC<Props> = ({addVideo, placeholder, ...rest}) => {
   const videoService = useInjection<VideoService>(VideoService);
 
   const [input, setInput] = useState<string>('');
   const [videoList, setVideoList] = useState<Video[]>([]);
-  const [currentVideo, setCurrentVideo] = useState<Video | null>(null);
 
   const onClickVideo = (video: Video) => {
-    setInput(video.title);
-    setCurrentVideo(video); 
+    addVideo(video);
+    setInput('');
     setVideoList([]);
   }
 
@@ -37,6 +36,7 @@ export const SearchCollection: React.FC<Props> = ({...rest}) => {
         className="dark:bg-nx-white focus:outline-none py-3 px-3 font-display"
         value={input}
         onChange={(e) => search(e.target.value)}
+        placeholder={placeholder}
       />
       {input && videoList.length !== 0
         ? <VideoList onClickVideo={onClickVideo} videoList={videoList} className="col-span-2" />

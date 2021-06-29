@@ -11,6 +11,7 @@ export interface IVideoFilter extends PaginationFilter {
   isPublic?: boolean;
   isWatched?: boolean;
   isWatching?: boolean;
+  exact?: boolean;
 }
 
 @Injectable()
