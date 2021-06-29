@@ -54,7 +54,7 @@
     "build": "craco build",
     "test": "craco test",
     "eject": "react-scripts eject",
-    "setup": "rimraf .husky && husky install && husky set .husky/pre-commit 'npx lint-staged' && husky set .husky/commit-msg 'commitlint --config .gitlab/commitlint.config.js --edit \"$1\"'"
+    "setup": "rimraf .husky && husky install && husky set .husky/pre-commit 'npx lint-staged' && husky set .husky/commit-msg 'npx commitlint --config .gitlab/commitlint.config.js --edit \"$1\"'"
   },
   "eslintConfig": {
     "extends": [
