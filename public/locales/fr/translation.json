@@ -204,6 +204,9 @@
 			"description": {
 				"name": "Description de la collection",
 				"error": "La description de la collection est requise"
+			},
+			"search": {
+				"name": "Recherche video"
 			}
 		},
 		"addCollection": {
