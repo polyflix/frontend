@@ -1,16 +1,19 @@
 import { Injectable } from "@polyflix/di";
 import { StatusCodes } from "http-status-codes";
 import { HttpService } from "../../common/services/http.service";
-import { Collection } from "../models";
 import {
-  ICollectionForm,
-  CollectionsWithPagination,
-  CollectionParams,
-} from "../types";
+  CollectionFilter,
+  ICollectionFilter,
+} from "../filters/collection.filter";
+import { Collection } from "../models";
+import { ICollectionForm, CollectionsWithPagination } from "../types";
 
 @Injectable()
 export class CollectionService {
-  constructor(private readonly httpService: HttpService) {}
+  constructor(
+    private readonly httpService: HttpService,
+    private readonly collectionFilter: CollectionFilter
+  ) {}
 
   /**
    * Get the collections list paginated.
@@ -20,20 +23,13 @@ export class CollectionService {
    * @returns {Promise<CollectionsWithPagination>}
    */
   public async getCollections(
-    params: CollectionParams
+    filters: ICollectionFilter
   ): Promise<CollectionsWithPagination> {
-    const { pageSize, page, publisherId, title } = params;
-    const path = "/collections";
-    // Build search query
-    let query = new URLSearchParams();
-    if (page) query.append("page", page.toString());
-    if (pageSize) query.append("pageSize", pageSize.toString());
-    if (publisherId) query.append("publisherId", publisherId);
-    if (title) query.append("title", title);
-
-    // Build the URL for the request.
-    // The format is the following : /collections[?page=1&pageSize=20]
-    const url = `${path}${query ? "?" + query.toString() : ""}`;
+    const searchQuery = this.collectionFilter.buildFilters(filters);
+    let url = "/collections";
+    if (searchQuery !== "" && searchQuery) {
+      url += `?${searchQuery}`;
+    }
 
     const { status, response, error } = await this.httpService.get(url);
     if (status !== 200) {
