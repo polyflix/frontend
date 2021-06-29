@@ -177,17 +177,19 @@ export const VideoListItem: React.FC<Props> = ({
         </div>
         <Paragraph className="mb-4">{video.shortDescription}</Paragraph>
         <div className="flex items-center">
-          {links && buildActionLink(
-            PlayIcon,
-            t("shared.common.actions.play"),
-            video.getStreamLink()
-          )}
-          {links && buildActionLink(
-            InformationCircleIcon,
-            t("shared.common.actions.info"),
-            video.getInfoLink(),
-            "ml-4"
-          )}
+          {links &&
+            buildActionLink(
+              PlayIcon,
+              t("shared.common.actions.play"),
+              video.getStreamLink()
+            )}
+          {links &&
+            buildActionLink(
+              InformationCircleIcon,
+              t("shared.common.actions.info"),
+              video.getInfoLink(),
+              "ml-4"
+            )}
           {ownerItems &&
             buildActionLink(
               PencilIcon,

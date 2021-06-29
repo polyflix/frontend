@@ -26,7 +26,7 @@ import { Collection } from "../../models";
 import { SearchCollection } from "../SearchCollection/SearchCollection.component";
 import { CollectionService } from "../../services";
 import { ICollectionForm } from "../../types";
-import { VideoListItem } from "../../../videos/components/VideoListItem/VideoListItem.component"
+import { VideoListItem } from "../../../videos/components/VideoListItem/VideoListItem.component";
 import { Video } from "../../../videos/models/video.model";
 type Props = {
   /** If collection exists, the form will be in update mode, otherwise in create mode. */
@@ -64,26 +64,32 @@ export const CollectionForm: React.FC<Props> = ({ collection }) => {
     } | null>(null);
 
   const onVideoDelete = (id: string) => {
-    setVideos(videos.filter(video => video.id !== id));
-  }
-  
+    setVideos(videos.filter((video) => video.id !== id));
+  };
+
   const addVideo = (video: Video) => {
     let contain: boolean = false;
     videos.forEach((el: Video) => {
-      if(el.id === video.id) {
+      if (el.id === video.id) {
         contain = true;
-      } 
-    })
-    if(!contain) setVideos([...videos, video]);
-  }
+      }
+    });
+    if (!contain) setVideos([...videos, video]);
+  };
 
   const onSubmit = async (data: ICollectionForm) => {
     setLoading(true);
     setIsSubmit(true);
     try {
       let result = await (isUpdate
-        ? collectionService.updateCollection(collection?.id as string, { ...data, videos: videos.map(v => ({id: v.id})) })
-        : collectionService.createCollection({ ...data, videos: videos.map(v => ({id: v.id})) }));
+        ? collectionService.updateCollection(collection?.id as string, {
+            ...data,
+            videos: videos.map((v) => ({ id: v.id })),
+          })
+        : collectionService.createCollection({
+            ...data,
+            videos: videos.map((v) => ({ id: v.id })),
+          }));
       setAlert({
         message: isUpdate
           ? `"${result.title}" ${t(
@@ -195,10 +201,19 @@ export const CollectionForm: React.FC<Props> = ({ collection }) => {
         )}
       </form>
       <div className="mt-4">
-        <SearchCollection variants={fadeInDown} placeholder={t("collectionManagement.inputs.search.name")} addVideo={addVideo}></SearchCollection>
+        <SearchCollection
+          variants={fadeInDown}
+          placeholder={t("collectionManagement.inputs.search.name")}
+          addVideo={addVideo}
+        ></SearchCollection>
         <>
           {videos.map((video: Video) => (
-            <VideoListItem video={video} ownerItems={false} links={false} onDelete={() => onVideoDelete(video.id)}/>
+            <VideoListItem
+              video={video}
+              ownerItems={false}
+              links={false}
+              onDelete={() => onVideoDelete(video.id)}
+            />
           ))}
         </>
       </div>

@@ -6,25 +6,30 @@ import { useInjection } from "@polyflix/di";
 import { Video } from "../../../videos";
 import { VideoService } from "../../../videos/services";
 
-type Props = WithClassname & WithMotion & { addVideo: (video: Video) => void, placeholder: string };
+type Props = WithClassname &
+  WithMotion & { addVideo: (video: Video) => void; placeholder: string };
 
-export const SearchCollection: React.FC<Props> = ({addVideo, placeholder, ...rest}) => {
+export const SearchCollection: React.FC<Props> = ({
+  addVideo,
+  placeholder,
+  ...rest
+}) => {
   const videoService = useInjection<VideoService>(VideoService);
 
-  const [input, setInput] = useState<string>('');
+  const [input, setInput] = useState<string>("");
   const [videoList, setVideoList] = useState<Video[]>([]);
 
   const onClickVideo = (video: Video) => {
     addVideo(video);
-    setInput('');
+    setInput("");
     setVideoList([]);
-  }
+  };
 
   const search = async (title: string) => {
-    let paginatedVideos = await videoService.getVideos({title, exact: false});
+    let paginatedVideos = await videoService.getVideos({ title, exact: false });
     setInput(title);
     setVideoList(paginatedVideos.items);
-  } 
+  };
 
   return (
     <motion.div
@@ -38,10 +43,13 @@ export const SearchCollection: React.FC<Props> = ({addVideo, placeholder, ...res
         onChange={(e) => search(e.target.value)}
         placeholder={placeholder}
       />
-      {input && videoList.length !== 0
-        ? <VideoList onClickVideo={onClickVideo} videoList={videoList} className="col-span-2" />
-        : null
-      }
+      {input && videoList.length !== 0 ? (
+        <VideoList
+          onClickVideo={onClickVideo}
+          videoList={videoList}
+          className="col-span-2"
+        />
+      ) : null}
     </motion.div>
   );
 };
