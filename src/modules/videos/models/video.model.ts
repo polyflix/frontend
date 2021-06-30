@@ -164,6 +164,10 @@ export class Video {
     return this._watchCount;
   }
 
+  get createdAt(): Date {
+    return new Date(this._createdAt);
+  }
+
   /**
    * Return the video stream link.
    * @returns {string} the stream link for the video

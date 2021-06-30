@@ -6,3 +6,4 @@ export * from "./VideoListItem/VideoListItem.component";
 export * from "./VideoSliderItem/VideoSliderItem.component";
 export * from "./VideoSlider/VideoSlider.component";
 export * from "./VideoTile/VideoTile.component";
+export * from "./SubtitleText/SubtitleText";
