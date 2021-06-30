@@ -1,0 +1,5 @@
+@import "../../../../common/styles/mixins";
+
+.root {
+  @include ratio_16-9;
+}

@@ -1,9 +1,10 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { fadeOpacity } from "../../ui/animations/fadeOpacity";
+import { GhostHeroTile } from "../../ui/components/Ghost/GhostHeroTile.component";
+import { GhostSlider } from "../../ui/components/Ghost/GhostSlider.component";
 import { Page } from "../../ui/components/Page/Page.component";
 import { VideoHero } from "../../videos/components/VideoHero/VideoHero.component";
-import { VideosGhostSlider } from "../../videos/components/VideosGhostSlider/VideosGhostSlider.component";
 import { VideoSlider } from "../../videos/components/VideoSlider/VideoSlider.component";
 import { VideoTile } from "../../videos/components/VideoTile/VideoTile.component";
 import { useVideos } from "../../videos/hooks/useVideos.hook";
@@ -51,7 +52,11 @@ export const HomePage: React.FC = () => {
           <div className="pb-8" />
         </>
       ) : (
-        <VideosGhostSlider />
+        <>
+          <GhostHeroTile />
+          <GhostSlider count={5} />
+          <GhostSlider count={5} />
+        </>
       )}
     </Page>
   );

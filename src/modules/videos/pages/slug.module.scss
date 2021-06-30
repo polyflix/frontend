@@ -1,0 +1,34 @@
+@import "../../common/styles/vairables";
+@import "../../common/styles/mixins";
+
+.data_container {
+  overflow: hidden;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  &__sub1 {
+    display: flex;
+    flex-direction: column;
+    flex: 1 0 auto;
+    position: relative;
+  }
+  &__sub2 {
+    display: flex;
+    flex-direction: column;
+    flex: 1 0 auto;
+  }
+  &__sub3 {
+    display: flex;
+    flex: 1 0 0;
+    flex-basis: 0;
+    padding-bottom: 1rem;
+  }
+  &__content {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    overflow-y: scroll;
+    scrollbar-width: none;
+    margin: 0 -17px -17px 0;
+  }
+}
