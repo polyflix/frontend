@@ -188,7 +188,7 @@
 		}
 	},
 	"collectionManagement": {
-		"collection": "a collection",
+		"collection": "Collection",
 		"actions": {
 			"switching": "Click to change"
 		},

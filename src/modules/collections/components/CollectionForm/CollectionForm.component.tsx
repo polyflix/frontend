@@ -62,12 +62,7 @@ export const CollectionForm: React.FC<Props> = ({ collection }) => {
   };
 
   const addVideo = (video: Video) => {
-    let contain: boolean = false;
-    videos.forEach((el: Video) => {
-      if (el.id === video.id) {
-        contain = true;
-      }
-    });
+    const contain = videos.some((el: Video) => el.id === video.id);
     if (!contain) setVideos([...videos, video]);
   };
 
@@ -94,7 +89,8 @@ export const CollectionForm: React.FC<Props> = ({ collection }) => {
             )}.`,
         type: "success",
       });
-      history.push(`/profile/videos/${user?.id}`);
+      // history.push(`/profile/videos/${user?.id}`);
+      history.push(`/`);
     } catch (err) {
       setAlert({
         message: `${t("collectionManagement.addCollection.error")} "${

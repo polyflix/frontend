@@ -206,7 +206,7 @@
 				"error": "La description de la collection est requise"
 			},
 			"search": {
-				"name": "Recherche video"
+				"name": "Rechercher une vidéo"
 			}
 		},
 		"addCollection": {

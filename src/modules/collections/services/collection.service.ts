@@ -108,9 +108,6 @@ export class CollectionService {
     if (status !== StatusCodes.OK) {
       throw error;
     }
-    // const subtitles = await this.subtitleService.getSubtitleUrlByVideoId(
-    //   response.id
-    // );
 
     return Collection.fromJson(response);
   }

@@ -95,16 +95,4 @@ export class Collection {
   get publisher(): CollectionPublisher | null {
     return this._publisher;
   }
-
-  // private get link(): string {
-  //   return `/videos/${this._slug}`;
-  // }
-
-  // /**
-  //  * Return the edit link for the video
-  //  * @returns {}
-  //  */
-  // getEditLink(): string {
-  //   return `/videos/update/${this._slug}`;
-  // }
 }
