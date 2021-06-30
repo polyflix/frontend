@@ -1,9 +1,3 @@
-import {
-  EyeIcon,
-  EyeOffIcon,
-  GlobeIcon,
-  UserIcon,
-} from "@heroicons/react/outline";
 import { useInjection } from "@polyflix/di";
 import { motion } from "framer-motion";
 import { useState } from "react";
