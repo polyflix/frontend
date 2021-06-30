@@ -11,6 +11,12 @@ The application runs in production at : [https://polyflix.dokku.thomasgouveia.fr
 - [Framer Motion](https://www.framer.com/motion/)
 - [Tailwind CSS](https://tailwindcss.com/)
 
+## Configure your IDE
+
+In order to maintain consistent coding styles across various editors and IDEs install the EditorConfig plugin on your IDE
+
+https://editorconfig.org/#download
+
 ## Development
 
 In order to run the app locally, you must have a [back-end](https://gitlab.polytech.umontpellier.fr/polyflix-do/back-end) up and running. See the README for instructions.
