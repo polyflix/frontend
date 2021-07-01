@@ -85,6 +85,6 @@ export class MinioFile {
    * @returns {string}
    */
   private generateRandomName(): string {
-    return `${uuidv4()}.${this.getExtension()}`;
+    return `${uuidv4()}${this.getExtension()}`;
   }
 }
