@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router";
 import slugify from "slugify";
-import { useAuth } from "../../../authentication/hooks/useAuth.hook";
+// import { useAuth } from "../../../authentication/hooks/useAuth.hook";
 import { fadeInDown } from "../../../ui/animations/fadeInDown";
 import { stagger } from "../../../ui/animations/stagger";
 import { Alert, AlertType } from "../../../ui/components/Alert/Alert.component";
@@ -36,7 +36,7 @@ export const CollectionForm: React.FC<Props> = ({ collection }) => {
   const collectionService = useInjection<CollectionService>(CollectionService);
 
   const { t } = useTranslation();
-  const { user } = useAuth();
+  // const { user } = useAuth();
   let history = useHistory();
 
   const { register, handleSubmit, errors, watch } = useForm<ICollectionForm>({
