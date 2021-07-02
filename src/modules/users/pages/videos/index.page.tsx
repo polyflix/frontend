@@ -42,8 +42,6 @@ export const UserVideosPage: React.FC = () => {
       authorId: id,
       page,
       pageSize: limit,
-      isPublic: false,
-      isPublished: false,
     },
     setFinalPage
   );

@@ -1,0 +1,12 @@
+@import "../../../../common/styles/mixins";
+
+.root {
+  display: grid;
+  grid-template-columns: 1.5fr 2fr;
+  box-sizing: border-box;
+  width: 100%;
+
+  .thumbnail {
+    @include ratio_16-9;
+  }
+}

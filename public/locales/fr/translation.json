@@ -244,13 +244,14 @@
 	},
 	"video": {
 		"view": {
-			"tabs": {
-				"label": {
-					"playlist": "Liste de lecture",
-					"subtitle": "Sous-titres"
-				}
-			},
-			"publishedBy": "Publiée par"
+		  "label": {
+			"description": "Description",
+			"subtitle": "Sous-titres"
+		  },
+		  "content": {
+			"noSubtitle": "Il n'y a pas de sous-titre pour cette video"
+		  },
+		  "publishedBy": "Publiée par"
 		}
-	}
+	  }
 }
