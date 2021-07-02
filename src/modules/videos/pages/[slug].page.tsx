@@ -95,7 +95,7 @@ export const VideoDetail: React.FC = () => {
                     )}
                   >
                     <div className="flex flex-col md:pr-4 w-full">
-                      <div className="py-2 flex items-center text-sm sticky top-0 bg-black bg-opacity-80">
+                      <div className="py-2 flex items-center text-sm sticky top-0 bg-black bg-opacity-80 z-10">
                         {!isMdScreen && (
                           <ChevronRightIcon
                             className={cn(
@@ -132,7 +132,7 @@ export const VideoDetail: React.FC = () => {
                           ))}
                       </div>
                       <div
-                        className="relative"
+                        className="relative z-0"
                         style={{ paddingBottom: "70px" }}
                       >
                         {!isMdScreen ? (
@@ -151,7 +151,7 @@ export const VideoDetail: React.FC = () => {
                               ) : (
                                 <Typography
                                   as="p"
-                                  className="text-sm py-4 md:pr-1 flex flex-col items-center absolute top-1/2 left-1/2 transform -translate-x-2/4"
+                                  className="text-center text-sm py-4 md:pr-1 flex flex-col items-center absolute top-1/2 left-1/2 transform -translate-x-2/4 w-full"
                                 >
                                   <ExclamationIcon className="w-6 md:w-7 text-nx-red mr-2" />
 
