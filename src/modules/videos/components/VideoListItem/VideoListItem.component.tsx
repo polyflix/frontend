@@ -23,12 +23,14 @@ type Props = {
   video: Video;
   onDelete?: () => void;
   ownerItems?: boolean;
+  links?: boolean;
 };
 
 export const VideoListItem: React.FC<Props> = ({
   video,
   onDelete,
   ownerItems = true,
+  links = true,
 }) => {
   const [open, setOpen] = useState<boolean>(false);
   const { t } = useTranslation();
@@ -175,17 +177,19 @@ export const VideoListItem: React.FC<Props> = ({
         </div>
         <Paragraph className="mb-4">{video.shortDescription}</Paragraph>
         <div className="flex items-center">
-          {buildActionLink(
-            PlayIcon,
-            t("shared.common.actions.play"),
-            video.getStreamLink()
-          )}
-          {buildActionLink(
-            InformationCircleIcon,
-            t("shared.common.actions.info"),
-            video.getInfoLink(),
-            "ml-4"
-          )}
+          {links &&
+            buildActionLink(
+              PlayIcon,
+              t("shared.common.actions.play"),
+              video.getStreamLink()
+            )}
+          {links &&
+            buildActionLink(
+              InformationCircleIcon,
+              t("shared.common.actions.info"),
+              video.getInfoLink(),
+              "ml-4"
+            )}
           {ownerItems &&
             buildActionLink(
               PencilIcon,
@@ -193,7 +197,7 @@ export const VideoListItem: React.FC<Props> = ({
               video.getEditLink(),
               "ml-4"
             )}
-          {ownerItems &&
+          {(ownerItems || !links) &&
             buildActionLink(
               TrashIcon,
               t("shared.common.actions.delete"),

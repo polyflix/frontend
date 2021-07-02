@@ -8,6 +8,7 @@ import { useInjection } from "@polyflix/di";
 import { Spinner } from "../../ui/components/Spinner/Spinner.component";
 import { ProfileRouter } from "../../users/pages/profile.router";
 import { VideoRouter } from "../../videos/pages/video.router";
+import { CollectionRouter } from "../../collections/pages/collection.router";
 import { ProtectedRoute } from "../components/ProtectedRoute/ProtectedRoute.component";
 import { NotFoundPage } from "./404.page";
 import { HomePage } from "./home.page";
@@ -62,6 +63,12 @@ export const IndexRouter: React.FC = () => {
             path="/videos"
             redirectPath="/auth/login"
             component={VideoRouter}
+          />
+          <ProtectedRoute
+            hasAccessIf={isAuthenticated}
+            path="/collections"
+            redirectPath="/auth/login"
+            component={CollectionRouter}
           />
           <Route component={NotFoundPage} />
         </Switch>
