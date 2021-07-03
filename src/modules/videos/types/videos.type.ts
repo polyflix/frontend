@@ -4,6 +4,7 @@ import { IWatchMetadata } from "../../stats/types/userMeta.type";
 import { Subtitle } from "../models";
 
 export interface IVideoForm {
+  hasSubtitle: boolean;
   title: string;
   description: string;
   thumbnail: string;
