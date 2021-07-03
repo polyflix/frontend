@@ -21,4 +21,30 @@ export class SubtitleService {
     }
     return await Promise.all(response.map(Subtitle.fromJson));
   }
+
+  /**
+   * Create subtitles for a video
+   * @param {string} videoID
+   */
+  public async createSubtitle(videoId: string): Promise<void> {
+    const { status, error } = await this.httpService.post(`/subtitles`, {
+      body: { lang: "fr-FR", videoId: videoId },
+    });
+    if (status !== StatusCodes.CREATED) {
+      throw error;
+    }
+  }
+
+  /**
+   * Delte all subtitles of a video
+   * @param {string} videoID
+   */
+  public async deleteSubtitle(videoId: string): Promise<void> {
+    const { status, error } = await this.httpService.delete(`/subtitles`, {
+      body: { videoId: videoId },
+    });
+    if (status !== StatusCodes.NO_CONTENT) {
+      throw error;
+    }
+  }
 }

@@ -3,10 +3,11 @@ import {
   EyeOffIcon,
   GlobeIcon,
   UserIcon,
+  TranslateIcon,
 } from "@heroicons/react/outline";
 import { useInjection } from "@polyflix/di";
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router";
@@ -32,6 +33,7 @@ import { ImageFile } from "../../../upload/models/files/image.model";
 import { VideoFile } from "../../../upload/models/files/video.model";
 import { MinioService } from "../../../upload/services/minio.service";
 import { MinioFile } from "../../../upload/models/files/minio-file.model";
+import { SubtitleService } from "../../services";
 
 type Props = {
   /** If video exists, the form will be in update mode, otherwise in create mode. */
@@ -45,36 +47,51 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
   const isUpdate = video instanceof Video;
 
   const videoService = useInjection<VideoService>(VideoService);
+  const subtitleService = useInjection<SubtitleService>(SubtitleService);
   const minioService = useInjection<MinioService>(MinioService);
 
   const { t } = useTranslation();
   const { user } = useAuth();
   let history = useHistory();
 
-  const { register, handleSubmit, errors, watch } = useForm<IVideoForm>({
-    defaultValues: {
-      title: video?.title,
-      description: video?.description,
-      isPublished: video?.isPublished || false,
-      isPublic: video?.isPublic || false,
-      thumbnail: video?.thumbnail,
-      src: video?.previewUrl,
-      previewUrl: video?.src,
-    },
-  });
-
-  const watchTitle = watch<"title", string>("title", "");
-  const watchPrivacy = watch<"isPublic", boolean>("isPublic");
-  const watchPublished = watch<"isPublished", boolean>("isPublished");
-
   const [loading, setLoading] = useState<boolean>(false);
   const [isSubmit, setIsSubmit] = useState<boolean>(false);
+  const [subtitleExists, setSubtitleExists] = useState<boolean>(false);
   const [alert, setAlert] =
     useState<{
       type: AlertType;
       message: string;
     } | null>(null);
   const [files, setFiles] = useState<MinioFile[]>([]);
+
+  const { register, handleSubmit, errors, watch, setValue } =
+    useForm<IVideoForm>({
+      defaultValues: {
+        title: video?.title,
+        description: video?.description,
+        isPublished: video?.isPublished || false,
+        isPublic: video?.isPublic || false,
+        thumbnail: video?.thumbnail,
+        src: video?.previewUrl,
+        previewUrl: video?.src,
+      },
+    });
+
+  const watchTitle = watch<"title", string>("title", "");
+  const watchPrivacy = watch<"isPublic", boolean>("isPublic");
+  const watchPublished = watch<"isPublished", boolean>("isPublished");
+  const watchHasSubtitle = watch<"hasSubtitle", boolean>("hasSubtitle");
+
+  useEffect(() => {
+    async function checkSubtitleExists() {
+      if (isUpdate) {
+        const sub = await subtitleService.getSubtitleUrlByVideoId(video?.id!);
+        setValue("hasSubtitle", sub.length > 0);
+        setSubtitleExists(sub.length > 0);
+      }
+    }
+    checkSubtitleExists();
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const getFile = (files: MinioFile[], field: keyof IVideoForm) => {
     return files.find((file) => file.getField() === field);
@@ -104,6 +121,10 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
       let result = await (isUpdate
         ? videoService.updateVideo(video?.id as string, data)
         : videoService.createVideo(data));
+      if (data.hasSubtitle && !subtitleExists)
+        await subtitleService.createSubtitle(video?.id || result.id);
+      else if (!data.hasSubtitle && subtitleExists)
+        await subtitleService.deleteSubtitle(video?.id!);
       setAlert({
         message: isUpdate
           ? `"${result.title}" ${t("videoManagement.updateVideo.success")}.`
@@ -202,6 +223,7 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
           format="video/*"
           name="previewUrl"
         />
+
         <Textarea
           error={errors.description}
           className="col-span-2"
@@ -301,6 +323,54 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
                   {`${t("userVideos.status.draft.name")}.`}
                 </Typography>{" "}
                 {`${t("userVideos.status.draft.description")}.`}
+                <br />
+                <Typography
+                  as="span"
+                  bold
+                  className="text-xs text-nx-red"
+                  overrideDefaultClasses
+                >
+                  {`${t("videoManagement.actions.switching")}.`}
+                </Typography>
+              </>
+            )}
+          </Typography>
+        </Checkbox>
+        <Checkbox
+          className="col-span-2"
+          name="hasSubtitle"
+          ref={register()}
+          icon={
+            watchHasSubtitle ? (
+              <TranslateIcon className="text-green-500 w-6 mr-2" />
+            ) : (
+              <TranslateIcon className="text-nx-red w-6 mr-2" />
+            )
+          }
+        >
+          <Typography className="text-sm" as="span">
+            {watchHasSubtitle ? (
+              <>
+                <Typography as="span" bold>
+                  {`${t("userVideos.subtitle.withSubtile.name")}.`}
+                </Typography>{" "}
+                {`${t("userVideos.subtitle.withSubtile.description")}.`}
+                <br />
+                <Typography
+                  as="span"
+                  bold
+                  className="text-xs text-nx-red"
+                  overrideDefaultClasses
+                >
+                  {`${t("videoManagement.actions.switching")}.`}
+                </Typography>
+              </>
+            ) : (
+              <>
+                <Typography as="span" bold>
+                  {`${t("userVideos.subtitle.withoutSubtile.name")}.`}
+                </Typography>{" "}
+                {`${t("userVideos.subtitle.withoutSubtile.description")}.`}
                 <br />
                 <Typography
                   as="span"
