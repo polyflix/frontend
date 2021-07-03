@@ -1,7 +1,7 @@
 import { IVideo } from "../types";
-import { VideoPublisher } from "./video-publisher.model";
 import WatchMetadata from "../../stats/models/userMeta.model";
 import { Subtitle, SubtitleLanguages } from "./subtitle.model";
+import { Publisher } from "../../common/models";
 
 /**
  * Modelize the Video
@@ -18,7 +18,7 @@ export class Video {
     private readonly _isPublic: boolean,
     private readonly _publisherId: string,
     private readonly _userMeta: WatchMetadata | undefined,
-    private readonly _publisher: VideoPublisher | null,
+    private readonly _publisher: Publisher | null,
     private readonly _createdAt: Date,
     private readonly _updatedAt: Date,
     private readonly _src: string,
@@ -43,7 +43,7 @@ export class Video {
       json.isPublic,
       json.publisherId,
       json.userMeta && WatchMetadata.fromJson(json.userMeta),
-      json.publishedBy && VideoPublisher.fromJson(json.publishedBy),
+      json.publishedBy && Publisher.fromJson(json.publishedBy),
       new Date(json.createdAt),
       new Date(json.updatedAt),
       json.src,
@@ -132,7 +132,7 @@ export class Video {
    * Return the video publisher
    * @returns {VideoPublisher} the video publisher
    */
-  get publisher(): VideoPublisher | null {
+  get publisher(): Publisher | null {
     return this._publisher;
   }
 

@@ -2,6 +2,7 @@ import { AlertType } from "../../ui/components/Alert/Alert.component";
 import { Video } from "../models/video.model";
 import { IWatchMetadata } from "../../stats/types/userMeta.type";
 import { Subtitle } from "../models";
+import { IPublisher } from "../../common/types";
 
 export interface IVideoForm {
   hasSubtitle: boolean;
@@ -26,12 +27,6 @@ export type VideosWithPagination = {
   items: Video[];
 };
 
-export interface IVideoPublisher {
-  id: string;
-  firstName: string;
-  lastName: string;
-}
-
 export interface IVideo {
   previewUrl: string;
   src: string;
@@ -41,7 +36,7 @@ export interface IVideo {
   id: string;
   title: string;
   publisherId: string;
-  publishedBy: IVideoPublisher | null;
+  publishedBy: IPublisher | null;
   userMeta: IWatchMetadata | undefined;
   watchCount: number;
   createdAt: string;
