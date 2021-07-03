@@ -1,6 +1,7 @@
 import { AlertType } from "../../ui/components/Alert/Alert.component";
 import { Collection } from "../models/collections.model";
 import { IVideo } from "../../videos/types/videos.type";
+import { IPublisher } from "../../common/types";
 
 export interface ICollectionForm {
   title: string;
@@ -24,12 +25,6 @@ export type CollectionsWithPagination = {
   items: Collection[];
 };
 
-export interface ICollectionPublisher {
-  id: string;
-  firstName: string;
-  lastName: string;
-}
-
 export type CollectionParams = {
   page?: number;
 
@@ -51,7 +46,7 @@ export interface ICollection {
   description: string;
   title: string;
   publisherId: string;
-  publishedBy: ICollectionPublisher | null;
+  publishedBy: IPublisher | null;
   createdAt: string;
   updatedAt: string;
   slug: string;
