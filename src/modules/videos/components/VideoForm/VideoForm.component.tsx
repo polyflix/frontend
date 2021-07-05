@@ -4,6 +4,7 @@ import {
   GlobeIcon,
   UserIcon,
   TranslateIcon,
+  ArrowCircleLeftIcon,
 } from "@heroicons/react/outline";
 import { useInjection } from "@polyflix/di";
 import { motion } from "framer-motion";
@@ -103,6 +104,8 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
     (thumbnailFile as ImageFile)?.getPreview() ||
     "https://i.stack.imgur.com/y9DpT.jpg";
 
+  const onGoBack = () => history.goBack();
+
   const onSubmit = async (data: IVideoForm) => {
     setLoading(true);
     setIsSubmit(true);
@@ -149,6 +152,16 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
       className="p-5 w-full md:w-8/12 mx-auto"
     >
       <div className="grid items-center grid-cols-2 gap-4 py-4">
+        <Typography
+          as="span"
+          className="text-nx-red col-span-4"
+          overrideDefaultClasses
+        >
+          <span className="inline-flex mx-2 cursor-pointer" onClick={onGoBack}>
+            <ArrowCircleLeftIcon className="w-6 mr-1" />{" "}
+            {t("shared.common.actions.back")}{" "}
+          </span>
+        </Typography>
         <div className="col-span-2 md:col-span-1">
           <Title variants={fadeInDown}>
             {isUpdate
