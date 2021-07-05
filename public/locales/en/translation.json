@@ -16,15 +16,16 @@
         "oldest": "Oldest"
       },
       "wait": "Please wait",
-      "seen": "Seen {{date}}"
+      "seen": "Seen {{date}}",
+      "createdAt": "Created {{date}}"
     },
     "navbar": {
       "signIn": "Sign in",
       "signOut": "Sign out",
-      "signUp": [
-        "No account ?",
-        "Sign up now"
-      ]
+      "signUp": ["No account ?", "Sign up now"]
+    },
+    "informations": {
+      "publishedBy": "Published by {{user}}"
     }
   },
   "home": {
@@ -56,10 +57,7 @@
         "description": "Enter your credentials to log in into your account"
       },
       "action": "Sign in",
-      "footer": [
-        "New to Polyflix ?",
-        "Sign up now"
-      ],
+      "footer": ["New to Polyflix ?", "Sign up now"],
       "error": "Bad credentials"
     },
     "signUp": {
@@ -82,10 +80,7 @@
         }
       },
       "action": "Sign up",
-      "footer": [
-        "Already registered to Polyflix ?",
-        "Sign in here"
-      ],
+      "footer": ["Already registered to Polyflix ?", "Sign in here"],
       "error": "Email already in use"
     }
   },
