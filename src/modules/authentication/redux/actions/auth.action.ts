@@ -132,7 +132,10 @@ export const RefreshAuthFailureAction = (): AuthAction => {
  * @returns {AuthAction} the update user success action
  */
 export const UpdateUserSuccessAction = (user: User): AuthAction => {
-  return actionFactory<AuthState>(AuthActions.UPDATE_USER_SUCCESS, { user });
+  return actionFactory<AuthState>(AuthActions.UPDATE_USER_SUCCESS, {
+    user,
+    authError: undefined,
+  });
 };
 
 /**
