@@ -46,15 +46,19 @@ export class UserService {
     id: string,
     data: IUserProfileUpdate | IUserPasswordForm
   ): Promise<void> {
-    const { status, response, error } = await this.httpService.put(
-      `/users/${id}`,
-      {
+    const { status: updateStatus, error: updateError } =
+      await this.httpService.put(`/users/${id}`, {
         body: data,
-      }
-    );
+      });
+    const { status, response, error } = await this.httpService.get(`/users/me`);
+
+    if (updateStatus !== StatusCodes.OK) {
+      return this.reduxService.dispatch(UpdateUserFailureAction(updateError));
+    }
     if (status !== StatusCodes.OK) {
       return this.reduxService.dispatch(UpdateUserFailureAction(error));
     }
+
     return this.reduxService.dispatch(
       UpdateUserSuccessAction(User.fromJson(response))
     );
