@@ -3,52 +3,48 @@ import { useInjection } from "@polyflix/di";
 import { useTranslation } from "react-i18next";
 import { Redirect, useParams } from "react-router";
 import { Link } from "react-router-dom";
-import { useAuth } from "../../../authentication/hooks/useAuth.hook";
-import { Paginator } from "../../../common/components/Paginator/Paginator.component";
-import { usePagination } from "../../../common/hooks/usePagination.hook";
-import { fadeOpacity } from "../../../ui/animations/fadeOpacity";
+import { usePagination } from "../../../common/hooks";
+import { fadeOpacity, Typography } from "../../../ui";
 import { Container } from "../../../ui/components/Container/Container.component";
 import { Page } from "../../../ui/components/Page/Page.component";
 import { Title } from "../../../ui/components/Typography/Title/Title.component";
-import { Typography } from "../../../ui/components/Typography/Typography.component";
-import { CollectionListItem } from "../../../collections/components/CollectionListItem/CollectionListItem.component";
-import { CollectionService } from "../../../collections/services/collection.service";
-import { useUser } from "../../hooks/useUser.hook";
-import { Collection, useCollections } from "../../../collections";
+import { Paginator } from "../../../common/components/Paginator/Paginator.component";
+import { CollectionListItem } from "../../../collections/components";
+import { useAuth } from "../../../authentication/hooks";
+import { useUser } from "../../hooks";
+import { CollectionService } from "../../../collections/services";
+import { useCollections } from "../../../collections/hooks";
+import { CollectionsWithPagination } from "../../../collections/types";
+import { Collection } from "../../../collections/models";
 
 export const UserCollectionsPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const { user } = useAuth();
+  const isOwnPage = user?.id === id;
   const { t } = useTranslation();
   const collectionService = useInjection<CollectionService>(CollectionService);
-  const { setFinalPage, page, to, limit } = usePagination();
-  const isOwnPage = user?.id === id;
+  const { page, to, limit } = usePagination();
 
-  const {
-    data: fetchedUser,
-    isLoading: isLoadingUser,
-    alert,
-  } = useUser({
+  const { data: fetchedUser, isLoading: isLoadingUser } = useUser({
     id,
   });
 
   const {
     data,
     isLoading: isLoadingVideo,
-  } = useCollections(
-    {
-      publisherId: id,
-      page,
-      pageSize: limit,
-      mode: 'collection'
-    });
+    alert,
+    refresh,
+  } = useCollections<CollectionsWithPagination>({
+    page,
+    pageSize: limit,
+    mode: "collection",
+  });
 
   const onCollectionDelete = async (id: string) => {
     await collectionService.deleteCollection(id);
+    refresh();
   };
-
   if (alert && alert.type === "not-found") return <Redirect to="/not-found" />;
-
   return (
     <Page
       isLoading={isLoadingVideo || isLoadingUser}
@@ -56,7 +52,9 @@ export const UserCollectionsPage: React.FC = () => {
       title={
         isOwnPage
           ? t("userCollections.seo.ownTitle")
-          : t("userCollections.seo.userTitle", { user: fetchedUser?.displayName })
+          : t("userCollections.seo.userTitle", {
+              user: fetchedUser?.displayName,
+            })
       }
     >
       <Container mxAuto className="px-5 flex flex-col">
@@ -92,12 +90,11 @@ export const UserCollectionsPage: React.FC = () => {
           <>
             {data.items.map((collection: Collection) => (
               <CollectionListItem
-                // onDelete={() => onVideoDelete(video.id)}
-                // key={video.id}
-                // video={video}
-                // ownerItems={isOwnPage}
+                key={collection.id}
+                onDelete={() => onCollectionDelete(collection.id)}
                 collection={collection}
-              />
+                ownerItems={isOwnPage}
+              ></CollectionListItem>
             ))}
             {data.items.length > 0 ? (
               <Paginator

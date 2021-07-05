@@ -220,6 +220,15 @@
       "userNoCollections": "{{user}} has not uploaded any collections yet"
     }
   },
+  "collections": {
+    "seo": {
+      "title": "Collections",
+      "mainTitle": "All collections"
+    },
+    "actions": {
+      "goto": "Check this collection"
+    }
+  },
   "collectionManagement": {
     "collection": "Collection",
     "actions": {

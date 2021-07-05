@@ -17,7 +17,7 @@ export type CollectionState<T> = {
   isLoading: boolean;
   data: T | null;
   alert: { type: AlertType; message: string } | null;
-  triggerReload: () => void;
+  refresh: () => void;
 };
 
 export type CollectionsWithPagination = {
