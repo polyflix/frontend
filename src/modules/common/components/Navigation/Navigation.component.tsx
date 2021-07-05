@@ -82,6 +82,14 @@ export const Navigation: React.FC<Props> = ({ visible }) => {
                         </span>
                       </Link>
                     </Menu.Item>
+                    <Menu.Item>
+                      <Link to={`/profile/collections/${user?.id}`}>
+                        <span className="cursor-pointer text-nx-white flex rounded-md items-center w-full px-2 py-2 text-sm">
+                          <VideoCameraIcon className="text-nx-red w-5 mr-3" />
+                          {t("userCollections.seo.ownTitle")}
+                        </span>
+                      </Link>
+                    </Menu.Item>
                   </div>
                   <div className="px-1 py-1">
                     <Menu.Item>

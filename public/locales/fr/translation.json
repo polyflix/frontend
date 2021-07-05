@@ -172,6 +172,12 @@
       }
     }
   },
+  "userCollections": {
+    "seo": {
+      "ownTitle": "Mes collections",
+      "userTitle": "Collection de {{user}}"
+    }
+  },
   "videoManagement": {
     "video": "une vidéo",
     "actions": {
