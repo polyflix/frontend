@@ -16,7 +16,8 @@
         "oldest": "Plus vieux"
       },
       "wait": "Patientez",
-      "seen": "Vu le {{date}}"
+      "seen": "Vu le {{date}}",
+      "createdAt": "Créé le {{date}}"
     },
     "navbar": {
       "signIn": "Se connecter",

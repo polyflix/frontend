@@ -212,6 +212,13 @@ export const VideoListItem: React.FC<Props> = ({
               })}
             </span>
           )}
+          {ownerItems && (
+            <span className="text-nx-gray opacity-80 px-4 text-sm">
+              {t("shared.common.createdAt", {
+                date: new Date(video.createdAt).toLocaleDateString(),
+              })}
+            </span>
+          )}
         </div>
       </div>
     </div>
