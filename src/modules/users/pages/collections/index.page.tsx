@@ -1,4 +1,4 @@
-import { ClockIcon, PlusIcon } from "@heroicons/react/outline";
+import { PlusIcon } from "@heroicons/react/outline";
 import { useInjection } from "@polyflix/di";
 import { useTranslation } from "react-i18next";
 import { Redirect, useParams } from "react-router";
@@ -11,17 +11,16 @@ import { Container } from "../../../ui/components/Container/Container.component"
 import { Page } from "../../../ui/components/Page/Page.component";
 import { Title } from "../../../ui/components/Typography/Title/Title.component";
 import { Typography } from "../../../ui/components/Typography/Typography.component";
-import { VideoListItem } from "../../../videos/components/VideoListItem/VideoListItem.component";
-import { useVideos } from "../../../videos/hooks/useVideos.hook";
-import { Video } from "../../../videos/models/video.model";
-import { VideoService } from "../../../videos/services/video.service";
+import { CollectionListItem } from "../../../collections/components/CollectionListItem/CollectionListItem.component";
+import { CollectionService } from "../../../collections/services/collection.service";
 import { useUser } from "../../hooks/useUser.hook";
+import { Collection, useCollections } from "../../../collections";
 
 export const UserCollectionsPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const { user } = useAuth();
   const { t } = useTranslation();
-  const videoService = useInjection<VideoService>(VideoService);
+  const collectionService = useInjection<CollectionService>(CollectionService);
   const { setFinalPage, page, to, limit } = usePagination();
   const isOwnPage = user?.id === id;
 
@@ -36,19 +35,16 @@ export const UserCollectionsPage: React.FC = () => {
   const {
     data,
     isLoading: isLoadingVideo,
-    refresh,
-  } = useVideos(
+  } = useCollections(
     {
-      authorId: id,
+      publisherId: id,
       page,
       pageSize: limit,
-    },
-    setFinalPage
-  );
+      mode: 'collection'
+    });
 
-  const onVideoDelete = async (id: string) => {
-    await videoService.deleteVideo(id);
-    refresh();
+  const onCollectionDelete = async (id: string) => {
+    await collectionService.deleteCollection(id);
   };
 
   if (alert && alert.type === "not-found") return <Redirect to="/not-found" />;
@@ -94,12 +90,13 @@ export const UserCollectionsPage: React.FC = () => {
         </div>
         {data && (
           <>
-            {data.items.map((video: Video) => (
-              <VideoListItem
-                onDelete={() => onVideoDelete(video.id)}
-                key={video.id}
-                video={video}
-                ownerItems={isOwnPage}
+            {data.items.map((collection: Collection) => (
+              <CollectionListItem
+                // onDelete={() => onVideoDelete(video.id)}
+                // key={video.id}
+                // video={video}
+                // ownerItems={isOwnPage}
+                collection={collection}
               />
             ))}
             {data.items.length > 0 ? (
