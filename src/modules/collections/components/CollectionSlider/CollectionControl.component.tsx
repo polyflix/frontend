@@ -1,14 +1,19 @@
 import React, { PropsWithChildren } from "react";
 import { cn } from "../../../common/utils/classes.util";
 
-type Props = { direction: "next" | "previous" };
+type Props = {
+  direction: "next" | "previous";
+  onClick: () => void;
+};
 
 const SliderControl: React.FC<PropsWithChildren<Props>> = ({
   children,
   direction,
+  onClick,
 }) => {
   return (
     <div
+      onClick={onClick}
       style={{
         boxShadow: "0 0 80px 110px rgba(0, 0, 0, 0.5)",
       }}
