@@ -1,6 +1,7 @@
 import { AlertType } from "../../ui/components/Alert/Alert.component";
 import { Course } from "../models";
 import { IPublisher } from "../../common/types";
+import { ICollection } from "../../collections/types";
 
 export interface ICourseForm {
   title: string;
@@ -27,6 +28,7 @@ export interface ICourse {
   title: string;
   publisherId: string;
   publishedBy: IPublisher | null;
+  collections: ICollection[];
   createdAt: string;
   updatedAt: string;
   slug: string;

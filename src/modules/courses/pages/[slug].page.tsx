@@ -11,6 +11,7 @@ import { cn } from "../../common/utils/classes.util";
 import { useMediaQuery } from "react-responsive";
 import { useCourse } from "../hooks";
 import { Course } from "../models";
+import { CollectionList } from "../../collections/components";
 
 export const CourseDetail: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -31,15 +32,20 @@ export const CourseDetail: React.FC = () => {
         >
           <Typography as="h1" className="text-4xl sml-2">
             {_course.title}
-            <Typography as="span" className="text-sm italic">
-              {t("shared.informations.publishedBy")}
-              {_course.publisher?.displayName}
-            </Typography>
+          </Typography>
+          <Typography as="h2" className="text-md italic">
+            {t("shared.informations.publishedBy")}
+            {_course.publisher?.displayName}
           </Typography>
           <Paragraph className="text-sm py-4 md:pr-1">
             {_course.content}
           </Paragraph>
         </div>
+        {_course && _course.getCollections().length !== 0 ? (
+          <CollectionList
+            collections={_course.getCollections()}
+          ></CollectionList>
+        ) : null}
       </Container>
     );
   };

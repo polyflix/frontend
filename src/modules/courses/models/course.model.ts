@@ -1,3 +1,4 @@
+import { Collection } from "../../collections/models";
 import { Publisher } from "../../common/models";
 import { ICourse } from "../types";
 
@@ -13,6 +14,7 @@ export class Course {
     private readonly _slug: string,
     private readonly _publisherId: string,
     private readonly _publisher: Publisher | null,
+    private readonly _collections: Collection[],
     private readonly _createdAt: Date,
     private readonly _updatedAt: Date
   ) {}
@@ -30,6 +32,7 @@ export class Course {
       json.slug,
       json.publisherId,
       json.publishedBy && Publisher.fromJson(json.publishedBy),
+      json.collections.map((collection) => Collection.fromJson(collection)),
       new Date(json.createdAt),
       new Date(json.updatedAt)
     );
@@ -103,5 +106,13 @@ export class Course {
    */
   getEditLink(): string {
     return `/courses/update/${this._slug}`;
+  }
+
+  /**
+   * Return the collection of courses Course
+   * @returns {}
+   */
+  getCollections(): Collection[] {
+    return this._collections;
   }
 }
