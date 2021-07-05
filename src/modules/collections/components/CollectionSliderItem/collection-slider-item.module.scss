@@ -1,3 +1,9 @@
+@import "../../../common/styles/mixins";
+
+.root {
+  @include ratio_16-9;
+}
+
 .video_item {
   .video_item_info {
     bottom: 0;

@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { Button, NoData, Typography } from "../../ui";
 import { fadeOpacity } from "../../ui/animations/fadeOpacity";
 import { GhostHeroTile } from "../../ui/components/Ghost/GhostHeroTile.component";
-import { GhostSlider } from "../../ui/components/Ghost/GhostSlider.component";
+import { GhostSlider } from "../../ui/components/Ghost/GhostSlider/GhostSlider.component";
 import { Page } from "../../ui/components/Page/Page.component";
 import { VideoHero } from "../../videos/components/VideoHero/VideoHero.component";
 import { VideoSlider } from "../../videos/components/VideoSlider/VideoSlider.component";

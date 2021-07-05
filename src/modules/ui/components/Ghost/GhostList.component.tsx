@@ -13,7 +13,7 @@ export const GhostList: React.FC<Props> = ({ count, className = "" }) => {
   };
 
   return (
-    <ul className={cn(className, "w-full")}>
+    <ul className={cn(className, "w-full gap-2 flex flex-col")}>
       {ghosts().map((_, i: number) => (
         <GhostListItem key={i} />
       ))}
