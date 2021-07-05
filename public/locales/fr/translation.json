@@ -172,12 +172,6 @@
       }
     }
   },
-  "userCollections": {
-    "seo": {
-      "ownTitle": "Mes collections",
-      "userTitle": "Collection de {{user}}"
-    }
-  },
   "videoManagement": {
     "video": "une vidéo",
     "actions": {
@@ -219,6 +213,16 @@
       "description": "Remplissez le formulaire ci-dessous pour modifier votre vidéo",
       "action": "Modifier",
       "success": "mise à jour avec succès"
+    }
+  },
+  "userCollections": {
+    "seo": {
+      "ownTitle": "Mes collections",
+      "userTitle": "Collection de {{user}}"
+    },
+    "list": {
+      "ownNoCollections": "Vous n'avez pas encore uploadé de collections",
+      "userNoCollections": "{{user}} n'a pas encore uploadé de collections"
     }
   },
   "collectionManagement": {

@@ -172,12 +172,6 @@
       }
     }
   },
-  "userCollections": {
-    "seo": {
-      "ownTitle": "My collections",
-      "userTitle": "{{user}}'s collection"
-    }
-  },
   "videoManagement": {
     "video": "a video",
     "actions": {
@@ -219,6 +213,16 @@
       "description": "Fill the form below to update your video",
       "action": "Update",
       "success": "successfully updated"
+    }
+  },
+  "userCollections": {
+    "seo": {
+      "ownTitle": "My collections",
+      "userTitle": "{{user}}'s collection"
+    },
+    "list": {
+      "ownNoCollections": "You have not uploaded any collections yet",
+      "userNoCollections": "{{user}} has not uploaded any collections yet"
     }
   },
   "collectionManagement": {
