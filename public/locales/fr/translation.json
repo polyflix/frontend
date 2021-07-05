@@ -15,6 +15,9 @@
         "newest": "Plus récent",
         "oldest": "Plus vieux"
       },
+      "errors": {
+        "noData": "Désolé, il n'y a rien à afficher ici..."
+      },
       "wait": "Patientez",
       "seen": "Vu le {{date}}",
       "createdAt": "Créé le {{date}}"
@@ -31,6 +34,9 @@
   "home": {
     "seo": {
       "title": "Accueil"
+    },
+    "errors": {
+      "createVideo": "Créer une vidéo"
     },
     "sliders": {
       "continue_watching": "Continuer...",

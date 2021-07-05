@@ -15,7 +15,7 @@ const SliderControl: React.FC<PropsWithChildren<Props>> = ({
       className={cn(
         `${direction === "next" ? "right" : "left"}-0`,
         `control-${direction}`,
-        "absolute bg-black z-10 bg-opacity-50 top-0 h-full flex items-center px-2 transition-all text-nx-white hover:text-nx-red"
+        "absolute bg-black z-10 bg-opacity-60 top-0 h-full flex items-center px-2 transition-all text-nx-white hover:text-nx-red"
       )}
     >
       {children}

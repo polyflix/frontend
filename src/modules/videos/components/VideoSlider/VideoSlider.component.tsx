@@ -23,21 +23,27 @@ export const VideoSlider: React.FC<Props> = ({
 }) => {
   return videos.length !== 0 ? (
     <div>
-      <Link to="#" className="flex items-center mb-3">
+      <Link to="#" className="group flex items-center mb-6 w-fit">
         <Typography as="h4" className="text-xl pl-3" bold>
           {title}
         </Typography>
-        <ChevronRightIcon className="w-5 pt-1 text-nx-white" />
+        <ChevronRightIcon className="w-5 pt-1 text-nx-white transition-transform transform group-hover:translate-x-1" />
       </Link>
       <Swiper
         navigation={{ nextEl: ".control-next", prevEl: ".control-previous" }}
         slidesPerView={1}
         breakpoints={{
-          768: {
+          400: {
             slidesPerView: 2,
+          },
+          800: {
+            slidesPerView: 3,
           },
           1024: {
             slidesPerView: 4,
+          },
+          1200: {
+            slidesPerView: 5,
           },
         }}
         mousewheel={false}

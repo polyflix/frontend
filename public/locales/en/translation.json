@@ -15,6 +15,9 @@
         "newest": "Newest",
         "oldest": "Oldest"
       },
+      "errors": {
+        "noData": "Sorry, there is nothing to show here..."
+      },
       "wait": "Please wait",
       "seen": "Seen {{date}}",
       "createdAt": "Created {{date}}"
@@ -31,6 +34,9 @@
   "home": {
     "seo": {
       "title": "Home"
+    },
+    "errors": {
+      "createVideo": "Create a video"
     },
     "sliders": {
       "continue_watching": "Continue watching",

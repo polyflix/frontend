@@ -16,7 +16,9 @@ export const VideoHero: React.FC<Props> = ({ video }) => {
     <>
       <div
         style={applyBackgroundImage(video.thumbnail)}
-        className={cn("h-screen")}
+        className={cn(
+          "min-h-500 landscape:h-screen landscape:min-h-full h-screen-50vh md:h-screen"
+        )}
       >
         <motion.div
           className="w-full md:w-6/12 lg:w-4/12 h-full bg-black bg-opacity-50 flex flex-col justify-center px-5"
@@ -33,6 +35,14 @@ export const VideoHero: React.FC<Props> = ({ video }) => {
       </div>
     </>
   ) : (
-    <NoData />
+    <div
+      style={{
+        minHeight: "200px",
+        height: "80vh",
+      }}
+      className="flex items-center justify-center border-b-2 border-nx-dark"
+    >
+      <NoData />
+    </div>
   );
 };
