@@ -153,7 +153,7 @@ export class Video {
   }
 
   private get link(): string {
-    return `/videos/${this._slug}`;
+    return `/watch/${this._slug}`;
   }
 
   get subtitles(): Subtitle[] {

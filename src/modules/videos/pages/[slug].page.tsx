@@ -6,6 +6,7 @@ import { useAuth } from "../../authentication";
 import { Url } from "../../common/utils/url.util";
 import { fadeOpacity } from "../../ui/animations/fadeOpacity";
 
+import { GhostTile } from "../../ui/components/Ghost/GhostTile/GhostTile.component";
 import { Paragraph, Typography } from "../../ui";
 import { Container } from "../../ui/components/Container/Container.component";
 import { Page } from "../../ui/components/Page/Page.component";
@@ -25,14 +26,19 @@ import { useMediaQuery } from "react-responsive";
 import { useVideo } from "../hooks/useVideo.hook";
 import { SubtitleLanguages } from "../models";
 import { Video } from "../models/video.model";
-import { VideoSlider } from "../components";
-import { useVideos } from "../hooks/useVideos.hook";
 import { GhostSlider } from "../../ui/components/Ghost/GhostSlider.component";
+import { useCollections } from "../../collections/hooks";
+import { Collection } from "../../collections/models";
+import { useQuery } from "../../common/hooks/useQuery";
+import { CollectionSlider } from "../../collections/components/CollectionSlider/CollectionSlider.component";
 
 export const VideoDetail: React.FC = () => {
   const isPlayingMode = Boolean(Url.hasParameter("play")) === true;
 
   const { slug } = useParams<{ slug: string }>();
+
+  let query = useQuery();
+
   const { user } = useAuth();
   const { t } = useTranslation();
 
@@ -40,21 +46,22 @@ export const VideoDetail: React.FC = () => {
 
   const [isSubtitleVisible, setIsSubtitleVisible] = useState(false);
 
-  const { data, isLoading: isVideoLoading } = useVideos({
-    isPublic: true,
-    isPublished: true,
-  });
-  const { data: video, isLoading, alert } = useVideo(slug);
+  const { data: video, isLoading: isVideoLoading, alert } = useVideo(slug);
 
-  const isMdScreen = useMediaQuery({ query: "(max-width: 767px)" });
+  const isLtMdScreen = useMediaQuery({ query: "(max-width: 767px)" });
   const isXlScreen = useMediaQuery({ query: "(min-width: 1280px)" });
+
+  const { data: collection, isLoading: isCollectionLoading } =
+    useCollections<Collection>({
+      mode: "document",
+      slug: query.get("c") as string,
+    });
 
   const calcDataContainerWidth = (): string => {
     return isContainerDataVisible ? (isXlScreen ? "580px" : "400px") : "36px";
   };
 
   const buildContent = (_video: Video) => {
-    document?.getElementById("dsefault-tab")?.click();
     const subtitles = _video.getSubtitles(SubtitleLanguages.FR);
     const blocks = subtitles?.getBlocks();
 
@@ -65,7 +72,7 @@ export const VideoDetail: React.FC = () => {
         <div
           className={cn(
             "flex flex-col md:flex-row gap-4 mb-8",
-            isMdScreen ? styles.container_mobile : styles.container_desktop
+            isLtMdScreen ? styles.container_mobile : styles.container_desktop
           )}
         >
           <div className="flex-auto rounded-md">
@@ -81,7 +88,7 @@ export const VideoDetail: React.FC = () => {
           <div
             className={cn(styles.data_container)}
             style={{
-              width: isMdScreen ? "100%" : calcDataContainerWidth(),
+              width: isLtMdScreen ? "100%" : calcDataContainerWidth(),
             }}
           >
             <div className={cn(styles.data_container__sub1)}>
@@ -90,13 +97,13 @@ export const VideoDetail: React.FC = () => {
                   <div
                     className={cn(
                       "text-white",
-                      isMdScreen && "m-0",
+                      isLtMdScreen && "m-0",
                       styles.data_container__content
                     )}
                   >
                     <div className="flex flex-col md:pr-4 w-full">
                       <div className="py-2 flex items-center text-sm sticky top-0 bg-black bg-opacity-80 z-10">
-                        {!isMdScreen && (
+                        {!isLtMdScreen && (
                           <ChevronRightIcon
                             className={cn(
                               "w-4 md:w-5 mr-2 text-nx-red cursor-pointer",
@@ -107,7 +114,7 @@ export const VideoDetail: React.FC = () => {
                             }
                           />
                         )}
-                        {!isMdScreen &&
+                        {!isLtMdScreen &&
                           isContainerDataVisible &&
                           (isSubtitleVisible ? (
                             <button
@@ -135,7 +142,7 @@ export const VideoDetail: React.FC = () => {
                         className="relative z-0"
                         style={{ paddingBottom: "70px" }}
                       >
-                        {!isMdScreen ? (
+                        {!isLtMdScreen ? (
                           isContainerDataVisible &&
                           (isSubtitleVisible ? (
                             <div>
@@ -206,16 +213,38 @@ export const VideoDetail: React.FC = () => {
             </div>
           </div>
         </div>
-        {!isVideoLoading ? (
-          data?.items && (
-            <VideoSlider
-              title={t("home.sliders.latest")}
-              videos={data?.items}
-            />
-          )
-        ) : (
-          <GhostSlider count={5} />
+        {collection?.videos && (
+          <CollectionSlider
+            collection={collection}
+            startIndex={+(query.get("index") || 0)}
+          />
         )}
+      </Container>
+    );
+  };
+
+  const buildGhost = () => {
+    return (
+      <Container mxAuto fluid className="p-4 pb-8">
+        <div
+          className={cn(
+            "flex flex-col md:flex-row gap-4 mb-8",
+            isLtMdScreen ? styles.container_mobile : styles.container_desktop
+          )}
+        >
+          <div className="flex-auto rounded-md">
+            <GhostTile aspectRatio={true} />
+          </div>
+          <div
+            className={cn(styles.data_container, "flex")}
+            style={{
+              width: isLtMdScreen ? "100%" : calcDataContainerWidth(),
+            }}
+          >
+            <GhostTile aspectRatio={false} className="h-full min-h-2" />
+          </div>
+        </div>
+        <GhostSlider count={5} />
       </Container>
     );
   };
@@ -225,10 +254,11 @@ export const VideoDetail: React.FC = () => {
     <Page
       withNavbar={isPlayingMode ? false : true}
       variants={fadeOpacity}
-      isLoading={isLoading}
       title={video?.title}
     >
-      {video && buildContent(video)}
+      {!isVideoLoading && !isCollectionLoading && video
+        ? buildContent(video)
+        : buildGhost()}
     </Page>
   );
 };

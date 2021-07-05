@@ -30,7 +30,7 @@ export const GhostSlider: React.FC<Props> = ({ count = 5 }) => {
       >
         {ghosts().map((_, i: number) => (
           <SwiperSlide key={i}>
-            <GhostTile />
+            <GhostTile className="h-40 2xl:h-60" aspectRatio={true} />
           </SwiperSlide>
         ))}
       </Swiper>
