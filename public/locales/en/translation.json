@@ -24,7 +24,7 @@
       "signUp": ["No account ?", "Sign up now"]
     },
     "informations": {
-      "publishedBy": "Published by "
+      "publishedBy": "Published by {{user}}"
     }
   },
   "home": {
