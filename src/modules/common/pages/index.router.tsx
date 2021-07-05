@@ -59,12 +59,14 @@ export const IndexRouter: React.FC = () => {
             redirectPath="/auth/login"
             component={ProfileRouter}
           />
+
           <ProtectedRoute
             hasAccessIf={isAuthenticated}
-            path="/videos"
+            path="/watch"
             redirectPath="/auth/login"
             component={VideoRouter}
           />
+
           <ProtectedRoute
             hasAccessIf={isAuthenticated}
             path="/collections"
