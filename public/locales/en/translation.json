@@ -16,7 +16,8 @@
         "oldest": "Oldest"
       },
       "wait": "Please wait",
-      "seen": "Seen {{date}}"
+      "seen": "Seen {{date}}",
+      "createdAt": "Created {{date}}"
     },
     "navbar": {
       "signIn": "Sign in",
