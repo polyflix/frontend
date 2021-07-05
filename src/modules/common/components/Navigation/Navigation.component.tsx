@@ -4,6 +4,7 @@ import {
   LogoutIcon,
   UserIcon,
   VideoCameraIcon,
+  DocumentIcon,
 } from "@heroicons/react/outline";
 import { LoginIcon, UserAddIcon } from "@heroicons/react/solid";
 import { useInjection } from "@polyflix/di";
@@ -85,7 +86,7 @@ export const Navigation: React.FC<Props> = ({ visible }) => {
                     <Menu.Item>
                       <Link to={`/profile/collections/${user?.id}`}>
                         <span className="cursor-pointer text-nx-white flex rounded-md items-center w-full px-2 py-2 text-sm">
-                          <VideoCameraIcon className="text-nx-red w-5 mr-3" />
+                          <DocumentIcon className="text-nx-red w-5 mr-3" />
                           {t("userCollections.seo.ownTitle")}
                         </span>
                       </Link>
