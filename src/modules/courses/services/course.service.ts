@@ -28,7 +28,7 @@ export class CourseService {
   /**
    * Get the courses list paginated.
    * @param {Token} token the access token
-   * @param {number | undefined} authorId the user to get videos from
+   * @param {number | undefined} authorId the user to get courses from
    * @param {number | undefined} page the page to fetch
    * @param {number | undefined} limit the limit of items per page
    * @returns {Promise<CoursesWithPagination>}
@@ -49,7 +49,7 @@ export class CourseService {
     if (authorId) query.append("authorId", authorId);
 
     // Build the URL for the request.
-    // The format is the following : /videos[/me][?page=1&limit=20]
+    // The format is the following : /courses[/me][?page=1&limit=20]
     const url = `${path}${query ? "?" + query.toString() : ""}`;
 
     const { status, response, error } = await this.httpService.get(url);
@@ -59,27 +59,8 @@ export class CourseService {
     return {
       totalCount: response.totalCount,
       items: response.items.map(Course.fromJson),
-      // watchedVideos: response.watchedVideos.map(Video.fromJson),
-      // watchingVideos: response.watchingVideos.map(Video.fromJson),
     };
   }
-
-  /**
-   * Create a video
-   * @param {IVideoForm} video the form data to post
-   * @param {Token} token the access token
-   * @returns {Promise<Video>}
-   */
-  // public async createVideo(video: IVideoForm, token: Token): Promise<Video> {
-  //   const { status, response, error } = await this.httpService.post(`/videos`, {
-  //     body: video,
-  //     headers: token.getAuthorizationHeader(),
-  //   });
-  //   if (status !== StatusCodes.CREATED) {
-  //     throw error;
-  //   }
-  //   return response;
-  // }
 
   /**
    * Delete a course
@@ -94,31 +75,6 @@ export class CourseService {
       throw error;
     }
   }
-
-  /**
-   * Update a video
-   * @param {string} id the video id
-   * @param {IVideoForm} data the video form
-   * @param {Token} token the access token
-   * @returns {Promise<Video>}
-   */
-  // public async updateVideo(
-  //   id: string,
-  //   data: IVideoForm,
-  //   token: Token
-  // ): Promise<Video> {
-  //   const { status, response, error } = await this.httpService.put(
-  //     `/videos/${id}`,
-  //     {
-  //       body: data,
-  //       headers: token.getAuthorizationHeader(),
-  //     }
-  //   );
-  //   if (status !== StatusCodes.OK) {
-  //     throw error;
-  //   }
-  //   return Video.fromJson(response);
-  // }
 
   /**
    * Find a course by slug.
