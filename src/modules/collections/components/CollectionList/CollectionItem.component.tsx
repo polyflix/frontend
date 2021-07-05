@@ -14,7 +14,7 @@ export const CollectionItem: React.FC<Props> = ({ collection }) => {
       <motion.div className="w-full md:w-6/12 lg:w-4/12 h-full bg-black bg-opacity-50 flex flex-col justify-center px-5">
         <li>
           <article>
-            // TODO: update link to collection
+            {/* // TODO: update link to collection */}
             <Link
               to={
                 "/watch/" +
