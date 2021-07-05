@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Subtitle } from "../../models/subtitle.model";
 import {
   DefaultUi,
@@ -36,8 +36,8 @@ export const Player: React.FC<Props> = ({
   const { token } = useAuth();
   const statsService = useInjection<StatsService>(StatsService);
 
-  const [currentTime] = usePlayerContext(ref, "currentTime", 0);
   const [durationTime] = usePlayerContext(ref, "duration", 0);
+  const [currentTime, setCurrentTime] = useState(0);
 
   const onTriggerWatchtimeEvent = () => {
     if (!ref?.current || !token) return;
@@ -46,6 +46,14 @@ export const Player: React.FC<Props> = ({
       watchedSeconds: currentTime,
       watchedPercent: currentTime / durationTime,
     });
+  };
+
+  const onTimeUpdate = (event: CustomEvent<number>) => {
+    setCurrentTime(event.detail);
+  };
+
+  const onPlaybackStarted = () => {
+    if (userMeta) setCurrentTime(userMeta.watchedSeconds);
   };
 
   useEffect(onTriggerWatchtimeEvent, [
@@ -76,7 +84,9 @@ export const Player: React.FC<Props> = ({
       playsinline
       ref={ref}
       onVmSeeked={onTriggerWatchtimeEvent}
-      onVmCurrentTimeChange={onTriggerWatchtimeEvent}
+      onVmCurrentTimeChange={onTimeUpdate}
+      currentTime={currentTime}
+      onVmPlaybackStarted={onPlaybackStarted}
     >
       <Provider videoUrl={videoUrl} videoSubtitles={videoSubtitles} />
       <DefaultUi>{/* Custom UI Component. */}</DefaultUi>
