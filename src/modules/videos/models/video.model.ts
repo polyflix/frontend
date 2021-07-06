@@ -23,6 +23,7 @@ export class Video {
     private readonly _updatedAt: Date,
     private readonly _src: string,
     private readonly _watchCount: number,
+    private _likes: number,
     private readonly _previewUrl: string,
     private readonly _subtitles: Subtitle[]
   ) {}
@@ -48,6 +49,7 @@ export class Video {
       new Date(json.updatedAt),
       json.src,
       json.watchCount,
+      json.likes,
       json.previewUrl,
       json.subtitles
     );
@@ -162,6 +164,14 @@ export class Video {
 
   get watchCount(): number {
     return this._watchCount;
+  }
+
+  get likes(): number {
+    return this._likes;
+  }
+
+  set likes(nbLike: number) {
+    this._likes = nbLike;
   }
 
   get createdAt(): Date {
