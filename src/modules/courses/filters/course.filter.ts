@@ -6,6 +6,7 @@ export interface ICourseFilter extends PaginationFilter {
   order?: string;
   slug?: string;
   title?: string;
+  publisherId?: string;
 }
 
 @Injectable()

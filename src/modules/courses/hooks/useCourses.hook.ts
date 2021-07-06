@@ -5,15 +5,15 @@ import { CoursesWithPagination } from "../types";
 
 export const useCourses = (
   filters: ICourseFilter,
-  onCollectionLoaded?: (totalItems: number) => any
+  onCourseLoaded?: (totalItems: number) => any
 ) => {
   return useFetch<CoursesWithPagination, CourseService>(
     CourseService,
     "getCourses",
     [filters],
     {
-      onComplete: onCollectionLoaded
-        ? ({ totalCount }) => onCollectionLoaded(totalCount)
+      onComplete: onCourseLoaded
+        ? ({ totalCount }) => onCourseLoaded(totalCount)
         : undefined,
       deps: [filters.page, filters.order, filters.pageSize],
     }

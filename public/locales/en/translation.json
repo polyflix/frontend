@@ -31,6 +31,18 @@
       "publishedBy": "Published by {{user}}"
     }
   },
+  "courses": {
+    "seo": {
+      "title": "Courses",
+      "mainTitle": "All courses"
+    },
+    "error": {
+      "noCourses": "No courses found"
+    },
+    "actions": {
+      "goto": "Check this courses"
+    }
+  },
   "home": {
     "seo": {
       "title": "Home"
@@ -130,6 +142,16 @@
   },
   "videoDetails": {
     "publishedBy": "Published by"
+  },
+  "userCourses": {
+    "seo": {
+      "ownTitle": "My courses",
+      "userTitle": "{{user}}'s courses"
+    },
+    "list": {
+      "ownNoCourses": "You have not uploaded any courses yet",
+      "userNoCourses": "{{user}} has not uploaded any courses yet"
+    }
   },
   "userVideos": {
     "seo": {
@@ -232,7 +254,8 @@
       "mainTitle": "All collections"
     },
     "actions": {
-      "goto": "Check this collection"
+      "goto": "Check this collection",
+      "noGoto": "Can't check this collection"
     }
   },
   "collectionManagement": {
@@ -267,6 +290,23 @@
       "description": "Fill the form below to update your collection",
       "action": "Update",
       "success": "successfully updated"
+    }
+  },
+  "courseManagement": {
+    "course": "a course",
+    "actions": {
+      "switching": "Click to change"
+    },
+    "addCourse": {
+      "description": "Fill the form below to create your course",
+      "action": "Create",
+      "success": "Added to the library",
+      "error": "A course already exists with the title"
+    },
+    "updateCourse": {
+      "description": "Fill the form below to update your course",
+      "action": "Update",
+      "success": "Successfully updated"
     }
   },
   "notFound": {

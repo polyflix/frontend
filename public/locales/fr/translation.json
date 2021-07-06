@@ -31,6 +31,18 @@
       "publishedBy": "Publié par {{user}}"
     }
   },
+  "courses": {
+    "seo": {
+      "title": "Cours",
+      "mainTitle": "Tous les cours"
+    },
+    "error": {
+      "noCourses": "Nous n'avons trouvé aucun cours"
+    },
+    "actions": {
+      "goto": "Accéder au cours"
+    }
+  },
   "home": {
     "seo": {
       "title": "Accueil"
@@ -130,6 +142,16 @@
   },
   "videoDetails": {
     "publishedBy": "Publiée par"
+  },
+  "userCourses": {
+    "seo": {
+      "ownTitle": "Mes cours",
+      "userTitle": "Cours de {{user}}"
+    },
+    "list": {
+      "ownNoCourses": "Vous n'avez pas encore uploadé de cours",
+      "userNoCourses": "{{user}} n'a pas encore uploadé de cours"
+    }
   },
   "userVideos": {
     "seo": {
@@ -232,7 +254,8 @@
       "mainTitle": "Toutes les collections"
     },
     "actions": {
-      "goto": "Voir la collection"
+      "goto": "Voir la collection",
+      "noGoto": "Impossible de voir la collection"
     }
   },
   "collectionManagement": {
@@ -265,6 +288,23 @@
     },
     "updateCollection": {
       "description": "Remplissez le formulaire ci-dessous pour modifier votre collection",
+      "action": "Modifier",
+      "success": "mise à jour avec succès"
+    }
+  },
+  "courseManagement": {
+    "course": "un cours",
+    "actions": {
+      "switching": "Cliquez pour changer"
+    },
+    "addCourse": {
+      "description": "Remplissez le formulaire ci-dessous pour créer votre cours",
+      "action": "Créer",
+      "success": "ajouté à la librairie",
+      "error": "Un cours avec ce titre existe déjà"
+    },
+    "updateCourse": {
+      "description": "Remplissez le formulaire ci-dessous pour modifier votre cours",
       "action": "Modifier",
       "success": "mise à jour avec succès"
     }

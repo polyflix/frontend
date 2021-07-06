@@ -12,14 +12,12 @@ export type CourseState<T> = {
   isLoading: boolean;
   data: T | null;
   alert: { type: AlertType; message: string } | null;
-  triggerReload: () => void;
+  refresh: () => void;
 };
 
 export type CoursesWithPagination = {
   totalCount: number;
   items: Course[];
-  // watchedCourses: Course[];
-  // watchingCourses: Course[];
 };
 
 export interface ICourse {
