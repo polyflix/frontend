@@ -37,6 +37,13 @@ export class StatsService {
     // as it is an async method
     this._lastSync = Date.now();
 
+    console.debug(
+      "[stats.services.ts] ",
+      Math.round(updateData.watchedPercent * 100) / 100,
+      "(",
+      updateData.watchedPercent,
+      ") "
+    );
     // We round the watched% to 2 digits
     updateData.watchedPercent =
       Math.round(updateData.watchedPercent * 100) / 100;
