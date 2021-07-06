@@ -45,6 +45,12 @@ export const Player: React.FC<Props> = ({
 
   const onTriggerWatchtimeEvent = () => {
     if (!player?.current || !token) return;
+    console.debug(
+      "[updateSync] durationTime: ",
+      durationTime,
+      "currentTime: ",
+      currentTime
+    );
     statsService.updateSync({
       videoId: videoId,
       watchedSeconds: currentTime,
