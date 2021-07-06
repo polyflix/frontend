@@ -43,12 +43,6 @@ export const Player: React.FC<Props> = ({
       [0, -1].indexOf(playerRef.current.duration) > -1
     )
       return;
-    console.debug(
-      "[updateSync] durationTime: ",
-      playerRef.current.duration,
-      "currentTime: ",
-      playerRef.current.currentTime
-    );
     statsService.updateSync({
       videoId: videoId,
       watchedSeconds: playerRef.current.currentTime,
