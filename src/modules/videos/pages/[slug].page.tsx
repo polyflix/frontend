@@ -140,7 +140,7 @@ const SidebarComponent: React.FC<SidebarComponentProps> = ({
     }
   };
 
-  if (isLiked === undefined) {
+  if (video && isLiked === undefined) {
     setLiked(video?.userMeta ? video?.userMeta.isLiked : false);
   }
 
