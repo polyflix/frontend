@@ -20,10 +20,10 @@ type ItemFooterProps = {
 
 export const VideoSliderItem: React.FC<Props> = ({ video }) => {
   return (
-    <Link to={video.getStreamLink()}>
-      <div className={cn("h-48 2xl:h-72 relative", styles.video_item)}>
+    <Link to={video.getStreamLink()} className={cn(styles.root, "flex")}>
+      <div className={cn("absolute top-0 left-0", styles.video_item)}>
         <Image
-          className="absolute w-full h-full rounded-md object-cover"
+          className="w-full h-full rounded-md object-cover"
           alt={`${video.title} thumbnail.`}
           src={video.thumbnail}
         />
@@ -56,7 +56,7 @@ const ItemFooter: React.FC<ItemFooterProps> = ({ meta, title, infoLink }) => {
           styles.video_item_info
         )}
       >
-        <Typography bold as="h3">
+        <Typography bold as="h3" className="truncate">
           {title}
         </Typography>
         <Link to={infoLink}>

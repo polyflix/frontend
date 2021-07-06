@@ -1,7 +1,8 @@
 import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { GhostTitle } from "./GhostTitle.component";
-import { GhostTile } from "./GhostTile/GhostTile.component";
+import { GhostTitle } from "../GhostTitle.component";
+import { GhostTile } from "../GhostTile/GhostTile.component";
+import styles from "./GhostSlider.module.scss";
 
 type Props = {
   count: number;
@@ -30,7 +31,12 @@ export const GhostSlider: React.FC<Props> = ({ count = 5 }) => {
       >
         {ghosts().map((_, i: number) => (
           <SwiperSlide key={i}>
-            <GhostTile className="h-40 2xl:h-60" aspectRatio={true} />
+            <div className={styles.root}>
+              <GhostTile
+                className="absolute top-0 left-0 w-full h-full"
+                aspectRatio={true}
+              />
+            </div>
           </SwiperSlide>
         ))}
       </Swiper>

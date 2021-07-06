@@ -7,10 +7,13 @@ import { GhostTitle } from "./GhostTitle.component";
 
 export const GhostListItem: React.FC<WithClassname> = ({ className = "" }) => {
   return (
-    <li className={className}>
+    <li className={cn(className, "flex")}>
       <span className={cn("h-10 w-10 rounded-full flex", styles.ghost)}></span>
-      <GhostTitle className="h-2 my-1" />
-      <GhostText className="h-1 my-1 w-9/12" />
+      <div className="ml-2 w-full">
+        <GhostTitle className="h-3 my-1 w-4/12" />
+        <GhostText className="h-2.5 mb-1 mt-2 w-full" />
+        <GhostText className="h-2.5 my-1 w-full" />
+      </div>
     </li>
   );
 };

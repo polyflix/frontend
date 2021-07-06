@@ -15,11 +15,17 @@ module.exports = {
         "nx-red-dark": "#B81D24",
         "nx-white": "#F5F5F1",
         "nx-gray": "#cdcaca",
+      },
+      screens: {
+        'portrait': { 'raw': '(orientation: portrait)' },
+        'landscape': { 'raw': '(orientation: landscape)' }
       }
     },
   },
   variants: {
-    extend: {},
+    extend: {
+      translate: ['group-hover']
+    }
   },
   plugins: [],
 }

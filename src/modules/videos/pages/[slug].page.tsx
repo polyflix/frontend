@@ -7,7 +7,7 @@ import { Url } from "../../common/utils/url.util";
 import { fadeOpacity } from "../../ui/animations/fadeOpacity";
 
 import { GhostTile } from "../../ui/components/Ghost/GhostTile/GhostTile.component";
-import { Paragraph, Typography } from "../../ui";
+import { GhostList, Paragraph, Typography } from "../../ui";
 import { Container } from "../../ui/components/Container/Container.component";
 import { Page } from "../../ui/components/Page/Page.component";
 import { Player } from "../../videos/components/Player/Player.component";
@@ -26,11 +26,12 @@ import { useMediaQuery } from "react-responsive";
 import { useVideo } from "../hooks/useVideo.hook";
 import { SubtitleLanguages } from "../models";
 import { Video } from "../models/video.model";
-import { GhostSlider } from "../../ui/components/Ghost/GhostSlider.component";
+import { GhostSlider } from "../../ui/components/Ghost/GhostSlider/GhostSlider.component";
 import { useCollections } from "../../collections/hooks";
 import { Collection } from "../../collections/models";
 import { useQuery } from "../../common/hooks/useQuery";
 import { CollectionSlider } from "../../collections/components/CollectionSlider/CollectionSlider.component";
+import { GhostParagraph } from "../../ui/components/Ghost/GhostParagraph";
 
 export const VideoDetail: React.FC = () => {
   const isPlayingMode = Boolean(Url.hasParameter("play")) === true;
@@ -102,7 +103,7 @@ export const VideoDetail: React.FC = () => {
                     )}
                   >
                     <div className="flex flex-col md:pr-4 w-full">
-                      <div className="py-2 flex items-center text-sm sticky top-0 bg-black bg-opacity-80 z-10">
+                      <div className="py-2 flex items-center text-sm sticky top-0 bg-black bg-opacity-90 z-10">
                         {!isLtMdScreen && (
                           <ChevronRightIcon
                             className={cn(
@@ -167,18 +168,28 @@ export const VideoDetail: React.FC = () => {
                               )}
                             </div>
                           ) : (
-                            <Paragraph className="text-sm py-4 md:pr-1">
-                              {video?.description}
-                            </Paragraph>
+                            <div className="pt-2">
+                              <Typography as="h4" bold className="text-2xl">
+                                {video?.title}
+                              </Typography>
+                              <Paragraph className="text-xs py-4 md:pr-1 ">
+                                {video?.description}
+                              </Paragraph>
+                            </div>
                           ))
                         ) : (
-                          <Paragraph className="text-sm py-4 md:pr-1">
-                            {video?.description}
-                          </Paragraph>
+                          <>
+                            <Typography as="h4" bold className="text-2xl">
+                              {video?.title}
+                            </Typography>
+                            <Paragraph className="text-xs py-4 md:pr-1 text-opacity-60">
+                              {video?.description}
+                            </Paragraph>
+                          </>
                         )}
                       </div>
                     </div>
-                    <div className="flex items-center pt-4 pr-4 w-full absolute bottom-0 bg-black bg-opacity-80">
+                    <div className="flex items-center pt-4 pr-4 w-full absolute bottom-0 bg-black">
                       {isContainerDataVisible && (
                         <>
                           <img
@@ -236,12 +247,16 @@ export const VideoDetail: React.FC = () => {
             <GhostTile aspectRatio={true} />
           </div>
           <div
-            className={cn(styles.data_container, "flex")}
+            className={cn(
+              styles.data_container,
+              "flex flex-col justify-between"
+            )}
             style={{
               width: isLtMdScreen ? "100%" : calcDataContainerWidth(),
             }}
           >
-            <GhostTile aspectRatio={false} className="h-full min-h-2" />
+            <GhostParagraph count={5} />
+            <GhostList count={1} />
           </div>
         </div>
         <GhostSlider count={5} />

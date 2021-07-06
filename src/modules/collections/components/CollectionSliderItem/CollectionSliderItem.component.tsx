@@ -29,10 +29,13 @@ export const CollectionSliderItem: React.FC<Props> = ({
   currentIndex,
 }) => {
   return (
-    <Link to={`${video.getStreamLink()}?${querry(currentIndex)}`}>
-      <div className={cn("h-40 2xl:h-60 relative", styles.video_item)}>
+    <Link
+      to={`${video.getStreamLink()}?${querry(currentIndex)}`}
+      className={cn(styles.root, "flex")}
+    >
+      <div className={cn("absolute top-0 left-0", styles.video_item)}>
         <Image
-          className="absolute w-full h-full rounded-md object-cover"
+          className="w-full h-full rounded-md object-cover"
           alt={`${video.title} thumbnail.`}
           src={video.thumbnail}
         />
