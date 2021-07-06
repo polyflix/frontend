@@ -20,6 +20,8 @@ import {
   TranslateIcon,
   InformationCircleIcon,
   ExclamationIcon,
+  EyeIcon,
+  ThumbUpIcon,
 } from "@heroicons/react/outline";
 import { SubtitleText } from "../components/SubtitleText/SubtitleText";
 import { useMediaQuery } from "react-responsive";
@@ -31,9 +33,13 @@ import { useCollections } from "../../collections/hooks";
 import { Collection } from "../../collections/models";
 import { useQuery } from "../../common/hooks/useQuery";
 import { CollectionSlider } from "../../collections/components/CollectionSlider/CollectionSlider.component";
+import { StatsService } from "../../stats/services/stats.service";
+import { useInjection } from "@polyflix/di";
 import { GhostParagraph } from "../../ui/components/Ghost/GhostParagraph";
 
 export const VideoDetail: React.FC = () => {
+  const statsService = useInjection<StatsService>(StatsService);
+
   const isPlayingMode = Boolean(Url.hasParameter("play")) === true;
 
   const { slug } = useParams<{ slug: string }>();
@@ -58,13 +64,30 @@ export const VideoDetail: React.FC = () => {
       slug: query.get("c") as string,
     });
 
+  const [isLiked, setLiked] = useState<boolean | undefined>(undefined);
+
   const calcDataContainerWidth = (): string => {
     return isContainerDataVisible ? (isXlScreen ? "580px" : "400px") : "36px";
+  };
+
+  const like = () => {
+    if (video) {
+      statsService.likeVideo(video.id);
+      if (!isLiked) {
+        video.likes += 1;
+      } else {
+        video.likes -= 1;
+      }
+      setLiked(!isLiked);
+    }
   };
 
   const buildContent = (_video: Video) => {
     const subtitles = _video.getSubtitles(SubtitleLanguages.FR);
     const blocks = subtitles?.getBlocks();
+    if (isLiked === undefined) {
+      setLiked(_video.userMeta ? _video.userMeta.isLiked : false);
+    }
 
     return isPlayingMode ? (
       <MediaPlayer video={_video} />
@@ -189,27 +212,59 @@ export const VideoDetail: React.FC = () => {
                         )}
                       </div>
                     </div>
-                    <div className="flex items-center pt-4 pr-4 w-full absolute bottom-0 bg-black">
+                    <div className="flex items-center pt-4 pr-4 w-full absolute bottom-0 bg-black gap-4">
                       {isContainerDataVisible && (
                         <>
-                          <img
-                            className="cursor-pointer w-10 h-10 rounded-3xl mr-3"
-                            src="https://picsum.photos/50"
-                            alt="avatar"
-                          />
-                          <div className="flex-1 overflow-hidden">
-                            <div>
-                              <Link
-                                to={`/profile/videos/${video?.publisher?.id}`}
-                                className="font-bold text-red-300 cursor-pointer hover:underline"
-                              >
-                                {` ${video?.publisher?.displayName}`}
-                              </Link>
-                            </div>
-                            <p className="text-white leading-normal">
-                              {video?.createdAt.toLocaleDateString()}
-                            </p>
+                          <div
+                            className="overflow-hidden"
+                            style={{ minWidth: "40px" }}
+                          >
+                            <Typography
+                              as="span"
+                              overrideDefaultClasses
+                              bold
+                              className="flex items-center text-sm md:text-base"
+                            >
+                              <EyeIcon className="text-blue-500  w-5 mr-2" />{" "}
+                              {video?.watchCount}
+                            </Typography>
+
+                            <Typography
+                              as="span"
+                              overrideDefaultClasses
+                              bold
+                              className="flex items-center text-sm md:text-base"
+                            >
+                              <ThumbUpIcon
+                                className={`${
+                                  isLiked ? "text-blue-500" : "text-grey-500"
+                                } w-5 mr-2 cursor-pointer w-fit`}
+                                onClick={() => like()}
+                              />
+                              {video?.likes}
+                            </Typography>
                           </div>
+                          <div className="flex items-center flex-1">
+                            <img
+                              className="cursor-pointer w-10 h-10 rounded-3xl mr-3"
+                              src="https://picsum.photos/50"
+                              alt="avatar"
+                            />
+                            <div className="overflow-hidden">
+                              <div>
+                                <Link
+                                  to={`/profile/videos/${video?.publisher?.id}`}
+                                  className="font-bold text-red-300 cursor-pointer hover:underline"
+                                >
+                                  {` ${video?.publisher?.displayName}`}
+                                </Link>
+                              </div>
+                              <p className="text-white leading-normal">
+                                {video?.createdAt.toLocaleDateString()}
+                              </p>
+                            </div>
+                          </div>
+
                           {video && user?.id === video?.publisher?.id && (
                             <Link to={video?.getEditLink()}>
                               <PencilIcon className="w-4 md:w-5 mr-2 text-nx-red" />

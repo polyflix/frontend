@@ -86,4 +86,16 @@ export class StatsService {
     clearInterval(this._timer);
     this._timer = null;
   }
+
+  /**
+   * Add or remove like from video
+   * with the id videoId
+   */
+  public async likeVideo(videoId: string) {
+    await this.httpService.patch("/stats/like", {
+      body: {
+        videoId,
+      },
+    });
+  }
 }

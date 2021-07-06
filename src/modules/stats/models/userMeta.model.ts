@@ -13,6 +13,7 @@ export default class WatchMetadata {
     private readonly _watchedSeconds: number,
     private readonly _watchedPercent: number,
     private readonly _isWatched: boolean,
+    private readonly _isLiked: boolean,
     private readonly _updatedAt: string,
     private readonly _createdAt: string
   ) {}
@@ -22,6 +23,7 @@ export default class WatchMetadata {
       json.watchedSeconds,
       json.watchedPercent,
       json.isWatched,
+      json.isLiked,
       json.updatedAt,
       json.createdAt
     );
@@ -37,6 +39,10 @@ export default class WatchMetadata {
 
   get isWatched(): boolean {
     return this._isWatched;
+  }
+
+  get isLiked(): boolean {
+    return this._isLiked;
   }
 
   get updatedAt(): string {
