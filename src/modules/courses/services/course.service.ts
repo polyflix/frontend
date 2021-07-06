@@ -1,6 +1,5 @@
 import { Injectable } from "@polyflix/di";
 import { StatusCodes } from "http-status-codes";
-import { Token } from "../../authentication/models/token.model";
 import { HttpService } from "../../common/services/http.service";
 import { Course } from "../models";
 import { CoursesWithPagination } from "../types";
@@ -16,7 +15,7 @@ export type CourseParams = {
 
   title?: string;
 
-  authorId?: string;
+  publisherId?: string;
 
   joinWithPublisher?: boolean;
 };
@@ -37,7 +36,7 @@ export class CourseService {
   public async getCourses(
     params: CourseParams
   ): Promise<CoursesWithPagination> {
-    const { pageSize, page, authorId } = params;
+    const { pageSize, page, publisherId } = params;
     const path = "/courses";
     // Build search query
     let query = new URLSearchParams();
@@ -46,7 +45,7 @@ export class CourseService {
       if (page) query.append("page", page.toString());
       if (pageSize) query.append("pageSize", pageSize.toString());
     }
-    if (authorId) query.append("authorId", authorId);
+    if (publisherId) query.append("publisherId", publisherId);
 
     // Build the URL for the request.
     // The format is the following : /courses[/me][?page=1&limit=20]
@@ -67,10 +66,11 @@ export class CourseService {
    * @param {string} id the video id
    * @param {Token} token the access token
    */
-  public async deleteCourse(id: string, token: Token): Promise<void> {
-    const { status, error } = await this.httpService.delete(`/courses/${id}`, {
-      headers: token.getAuthorizationHeader(),
-    });
+  public async deleteCourse(id: string): Promise<void> {
+    const { status, error } = await this.httpService.delete(
+      `/courses/${id}`,
+      {}
+    );
     if (status !== StatusCodes.NO_CONTENT) {
       throw error;
     }

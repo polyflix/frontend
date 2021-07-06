@@ -1,16 +1,16 @@
 module.exports = {
-  purge: ['./src/**/*.{js,jsx,ts,tsx}', './public/index.html'],
-  darkMode: 'class', // or 'media' or 'class'
+  purge: ["./src/**/*.{js,jsx,ts,tsx}", "./public/index.html"],
+  darkMode: "class", // or 'media' or 'class'
   theme: {
     fontFamily: {
-      jakarta: ['Jakarta']
+      jakarta: ["Jakarta"],
     },
     extend: {
       inset: {
-        'nav': '65px'
+        nav: "65px",
       },
       width: {
-        'fit': 'fit-content'
+        fit: "fit-content",
       },
       colors: {
         "nx-dark": "#221F1F",
@@ -20,15 +20,15 @@ module.exports = {
         "nx-gray": "#cdcaca",
       },
       screens: {
-        'portrait': { 'raw': '(orientation: portrait)' },
-        'landscape': { 'raw': '(orientation: landscape)' }
-      }
+        portrait: { raw: "(orientation: portrait)" },
+        landscape: { raw: "(orientation: landscape)" },
+      },
     },
   },
   variants: {
     extend: {
-      translate: ['group-hover']
-    }
+      translate: ["group-hover"],
+    },
   },
   plugins: [],
-}
+};

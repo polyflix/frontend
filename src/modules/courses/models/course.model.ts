@@ -32,7 +32,7 @@ export class Course {
       json.slug,
       json.publisherId,
       json.publishedBy && Publisher.fromJson(json.publishedBy),
-      json.collections.map((collection) => Collection.fromJson(collection)),
+      json.collections?.map((collection) => Collection.fromJson(collection)),
       new Date(json.createdAt),
       new Date(json.updatedAt)
     );
@@ -106,6 +106,9 @@ export class Course {
    */
   getEditLink(): string {
     return `/courses/update/${this._slug}`;
+  }
+  get createdAt(): Date {
+    return new Date(this._createdAt);
   }
 
   /**

@@ -1,5 +1,6 @@
 import { Menu, Transition } from "@headlessui/react";
 import {
+  BookOpenIcon,
   ChevronDownIcon,
   LogoutIcon,
   UserIcon,
@@ -91,6 +92,14 @@ export const Navigation: React.FC<Props> = ({ visible }) => {
                         </span>
                       </Link>
                     </Menu.Item>
+                    <Menu.Item>
+                      <Link to={`/profile/courses/${user?.id}`}>
+                        <span className="cursor-pointer text-nx-white flex rounded-md items-center w-full px-2 py-2 text-sm">
+                          <BookOpenIcon className="text-nx-red w-5 mr-3" />
+                          {t("userCourses.seo.ownTitle")}
+                        </span>
+                      </Link>
+                    </Menu.Item>
                   </div>
                   <div className="px-1 py-1">
                     <Menu.Item>
@@ -155,12 +164,17 @@ export const Navigation: React.FC<Props> = ({ visible }) => {
         <div
           className={cn(
             isMenuOpen ? "top-nav" : "-top-full",
-            "fixed rounded-b-md p-4 md:p-0 bg-black transition-all left-0 w-full md:relative md:flex md:w-min"
+            "fixed rounded-b-md p-4 md:p-0 bg-black transition-all left-0 w-full md:relative gap-2 md:gap-4 flex flex-col md:flex-row md:w-4/5"
           )}
         >
           {isAuthenticated && (
             <Link to="/">
               <Typography as="span">{t("home.seo.title")}</Typography>
+            </Link>
+          )}
+          {isAuthenticated && (
+            <Link to="/courses">
+              <Typography as="span">{t("courses.seo.title")}</Typography>
             </Link>
           )}
         </div>

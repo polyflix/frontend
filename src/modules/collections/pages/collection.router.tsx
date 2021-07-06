@@ -13,7 +13,7 @@ export const CollectionRouter: React.FC = () => {
         path={`${path}/(create|update)/:slug?`}
         component={CreateUpdateCollectionPage}
       />
-      <Route path={`${path}`} component={CollectionsPage} />
+      <Route path={`${path}`} exact component={CollectionsPage} />
     </Switch>
   );
 };

@@ -2,22 +2,22 @@ import { PencilIcon, TrashIcon } from "@heroicons/react/outline";
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import { cn } from "../../../common/utils";
-import { Alert } from "../../../ui/components";
-import { Paragraph } from "../../../ui/components/Typography/Paragraph/Paragraph.component";
-import { Typography } from "../../../ui/components/Typography/Typography.component";
-import { Notification } from "../../../ui/components/Notification/Notification.component";
-import { Collection } from "../../models";
+import { cn } from "../../common/utils";
+import { Alert } from "../../ui/components";
+import { Paragraph } from "../../ui/components/Typography/Paragraph/Paragraph.component";
+import { Typography } from "../../ui/components/Typography/Typography.component";
+import { Course } from "../models";
+import { Notification } from "../../ui/components/Notification/Notification.component";
 
 type Props = {
-  collection: Collection;
+  course: Course;
   onDelete?: () => void; // commented to simplify upgrade
   ownerItems?: boolean;
   links?: boolean;
 };
 
-export const CollectionListItem: React.FC<Props> = ({
-  collection,
+export const CourseListItem: React.FC<Props> = ({
+  course,
   onDelete,
   ownerItems = true,
   links = true,
@@ -57,7 +57,7 @@ export const CollectionListItem: React.FC<Props> = ({
           <div className="col-span-10">
             <Alert type="error">
               <Typography bold as="span" className="text-sm">
-                {t("shared.common.actions.delete")} {collection.title} ?
+                {t("shared.common.actions.delete")} {course.title} ?
               </Typography>
             </Alert>
           </div>
@@ -93,37 +93,22 @@ export const CollectionListItem: React.FC<Props> = ({
       </Notification>
       <div className="col-span-12 md:col-span-8 xl:col-span-9 flex flex-col justify-center">
         <Typography bold className="text-lg md:text-xl" as="h3">
-          {collection.title}
+          {course.title}
         </Typography>
-        <Paragraph className="mb-4">{collection.shortDescription}</Paragraph>
-        {collection.videos ? (
-          <Link
-            to={
-              "/watch/" +
-              collection.videos[0].slug +
-              "?c=" +
-              collection.slug +
-              "&index=0"
-            }
-            className="bg-nx-red px-4 py-2 rounded-md text-lg transition-colors w-fit inline-block text-white hover:bg-nx-red-dark"
-          >
-            {t("collections.actions.goto")}
-          </Link>
-        ) : (
-          <Link
-            to={"#"}
-            className="bg-nx-red px-4 py-2 rounded-md text-lg transition-colors w-fit inline-block text-white"
-          >
-            {t("collections.actions.noGoto")}
-          </Link>
-        )}
+        <Paragraph className="mb-4">{course.shortDescription}</Paragraph>
+        <Link
+          to={"/courses/" + course.slug}
+          className="bg-nx-red px-4 py-2 rounded-md text-lg transition-colors w-fit inline-block text-white hover:bg-nx-red-dark"
+        >
+          {t("courses.actions.goto")}
+        </Link>
       </div>
       <div className="flex items-center">
         {ownerItems &&
           buildActionLink(
             PencilIcon,
             t("shared.common.actions.edit"),
-            collection.getEditLink(),
+            course.getEditLink(),
             "ml-4"
           )}
         {(ownerItems || !links) &&
@@ -137,7 +122,7 @@ export const CollectionListItem: React.FC<Props> = ({
         {ownerItems && (
           <span className="text-nx-gray opacity-80 px-4 text-sm">
             {t("shared.common.createdAt", {
-              date: new Date(collection.createdAt).toLocaleDateString(),
+              date: new Date(course.createdAt).toLocaleDateString(),
             })}
           </span>
         )}
