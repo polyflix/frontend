@@ -132,7 +132,7 @@ export class Video {
 
   /**
    * Return the video publisher
-   * @returns {VideoPublisher} the video publisher
+   * @returns {Publisher} the video publisher
    */
   get publisher(): Publisher | null {
     return this._publisher;

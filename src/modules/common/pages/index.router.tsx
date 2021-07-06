@@ -15,6 +15,7 @@ import { HomePage } from "./home.page";
 import { useServerState } from "../hooks/useServerState.hook";
 import { ServerState } from "../types/serverState.type";
 import { ServerUnavailablePage } from "./503.page";
+import { PathRouter } from "../../paths/pages";
 import { CourseRouter } from "../../courses/pages";
 
 export const IndexRouter: React.FC = () => {
@@ -72,6 +73,12 @@ export const IndexRouter: React.FC = () => {
             path="/collections"
             redirectPath="/auth/login"
             component={CollectionRouter}
+          />
+          <ProtectedRoute
+            hasAccessIf={isAuthenticated}
+            path="/paths"
+            redirectPath="/auth/login"
+            component={PathRouter}
           />
           <ProtectedRoute
             hasAccessIf={isAuthenticated}
