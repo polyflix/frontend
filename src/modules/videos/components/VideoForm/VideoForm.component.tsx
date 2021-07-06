@@ -156,7 +156,7 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
       <div className="grid items-center grid-cols-2 gap-4 py-4">
         <Typography
           as="span"
-          className="text-nx-red col-span-4"
+          className="text-nx-red col-span-2"
           overrideDefaultClasses
         >
           <span className="inline-flex mx-2 cursor-pointer" onClick={onGoBack}>

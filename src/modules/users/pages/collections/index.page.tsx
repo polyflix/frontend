@@ -79,7 +79,7 @@ export const UserCollectionsPage: React.FC = () => {
               overrideDefaultClasses
             >
               <Link to="/collections/create">
-                <span className="inline-flex mx-2">
+                <span className="inline-flex mx-2 truncate">
                   <PlusIcon className="w-6" /> {t("shared.common.actions.add")}{" "}
                   {t("collectionManagement.collection")}
                 </span>
