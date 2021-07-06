@@ -250,6 +250,9 @@
         "name": "Collection description",
         "error": "A description is required"
       },
+      "select": {
+        "description": "Collection availability"
+      },
       "search": {
         "name": "Video search"
       }

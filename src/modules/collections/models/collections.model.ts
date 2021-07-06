@@ -13,6 +13,7 @@ export class Collection {
     private readonly _description: string,
     private readonly _slug: string,
     private readonly _publisherId: string,
+    private readonly _availability: string,
     private readonly _publisher: Publisher | null,
     private readonly _createdAt: Date,
     private readonly _updatedAt: Date,
@@ -31,6 +32,7 @@ export class Collection {
       json.description,
       json.slug,
       json.publisherId,
+      json.availability,
       json.publishedBy && Publisher.fromJson(json.publishedBy),
       new Date(json.createdAt),
       new Date(json.updatedAt),
@@ -78,6 +80,14 @@ export class Collection {
    */
   get description(): string {
     return this._description;
+  }
+
+  /**
+   * Return the collection availability.
+   * @returns {string} the collection availability
+   */
+  get availability(): string {
+    return this._availability;
   }
 
   /**

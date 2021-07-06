@@ -250,6 +250,9 @@
         "name": "Description de la collection",
         "error": "La description de la collection est requise"
       },
+      "select": {
+        "description": "Disponibilité de la collection"
+      },
       "search": {
         "name": "Rechercher une vidéo"
       }
