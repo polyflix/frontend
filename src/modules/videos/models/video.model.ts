@@ -1,6 +1,7 @@
 import { IVideo } from "../types";
 import WatchMetadata from "../../stats/models/userMeta.model";
 import { Subtitle, SubtitleLanguages } from "./subtitle.model";
+import { MINIO_URL } from "../../common/constants/minio.constant";
 import { Publisher } from "../../common/models";
 
 /**
@@ -24,7 +25,6 @@ export class Video {
     private readonly _src: string,
     private readonly _watchCount: number,
     private _likes: number,
-    private readonly _previewUrl: string,
     private readonly _subtitles: Subtitle[]
   ) {}
 
@@ -50,7 +50,6 @@ export class Video {
       json.src,
       json.watchCount,
       json.likes,
-      json.previewUrl,
       json.subtitles
     );
   }
@@ -146,14 +145,6 @@ export class Video {
     return this._src;
   }
 
-  /**
-   * Return the video publisher
-   * @returns {string} the video URL
-   */
-  get previewUrl(): string {
-    return this._previewUrl;
-  }
-
   private get link(): string {
     return `/watch/${this._slug}`;
   }
@@ -199,6 +190,8 @@ export class Video {
    * @returns {}
    */
   getEditLink(): string {
+    if (this.src.startsWith(MINIO_URL))
+      return `/videos/update/${this._slug}?type=upload`;
     return `/videos/update/${this._slug}`;
   }
 

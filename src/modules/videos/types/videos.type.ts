@@ -12,7 +12,6 @@ export interface IVideoForm {
   isPublic: boolean;
   isPublished: boolean;
   src: string;
-  previewUrl: string;
 }
 
 export type VideoState<T> = {
@@ -28,7 +27,6 @@ export type VideosWithPagination = {
 };
 
 export interface IVideo {
-  previewUrl: string;
   src: string;
   isPublic: boolean;
   isPublished: boolean;

@@ -201,12 +201,13 @@
       "switching": "Click to change"
     },
     "inputs": {
+      "noFile": "No file chosen",
       "title": {
         "name": "Title",
         "description": "The title of the video",
         "error": "A title is required"
       },
-      "thumbnail": {
+      "thumbnailURL": {
         "name": "Thumbnail URL",
         "description": "The URL of the video thumbnail",
         "error": "A thumbnail URL is required"
@@ -220,11 +221,8 @@
         "description": "The URL of the video",
         "error": "A video URL is required"
       },
-      "videoPreviewURL": {
-        "name": "Video Preview URL",
-        "description": "The URL of the video preview ",
-        "error": "A video preview URL is required"
-      }
+      "thumbnailUpload": "Upload thumbnail",
+      "videoUpload": "Upload video"
     },
     "addVideo": {
       "description": "Fill the form below to create your video",
@@ -236,6 +234,17 @@
       "description": "Fill the form below to update your video",
       "action": "Update",
       "success": "successfully updated"
+    },
+    "onBoarding": {
+      "source": "Select your source",
+      "youtube": {
+        "title": "Import from YouTube or Vimeo",
+        "description": "Make sure you have the video and the thumbnail links"
+      },
+      "local": {
+        "title": "Import from local",
+        "description": "Import your video and your thumbnail from your local files"
+      }
     }
   },
   "userCollections": {
