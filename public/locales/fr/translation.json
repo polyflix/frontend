@@ -216,6 +216,25 @@
       "success": "mise à jour avec succès"
     }
   },
+  "userCollections": {
+    "seo": {
+      "ownTitle": "Mes collections",
+      "userTitle": "Collection de {{user}}"
+    },
+    "list": {
+      "ownNoCollections": "Vous n'avez pas encore uploadé de collections",
+      "userNoCollections": "{{user}} n'a pas encore uploadé de collections"
+    }
+  },
+  "collections": {
+    "seo": {
+      "title": "Les collections",
+      "mainTitle": "Toutes les collections"
+    },
+    "actions": {
+      "goto": "Voir la collection"
+    }
+  },
   "collectionManagement": {
     "collection": "une collection",
     "actions": {

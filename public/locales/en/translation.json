@@ -216,6 +216,25 @@
       "success": "successfully updated"
     }
   },
+  "userCollections": {
+    "seo": {
+      "ownTitle": "My collections",
+      "userTitle": "{{user}}'s collection"
+    },
+    "list": {
+      "ownNoCollections": "You have not uploaded any collections yet",
+      "userNoCollections": "{{user}} has not uploaded any collections yet"
+    }
+  },
+  "collections": {
+    "seo": {
+      "title": "Collections",
+      "mainTitle": "All collections"
+    },
+    "actions": {
+      "goto": "Check this collection"
+    }
+  },
   "collectionManagement": {
     "collection": "Collection",
     "actions": {

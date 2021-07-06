@@ -1,5 +1,6 @@
 import React from "react";
 import { Route, Switch, useRouteMatch } from "react-router-dom";
+import { CollectionsPage } from "./index.page";
 import { CreateUpdateCollectionPage } from "./[create-update].page";
 
 export const CollectionRouter: React.FC = () => {
@@ -12,6 +13,7 @@ export const CollectionRouter: React.FC = () => {
         path={`${path}/(create|update)/:slug?`}
         component={CreateUpdateCollectionPage}
       />
+      <Route path={`${path}`} component={CollectionsPage} />
     </Switch>
   );
 };

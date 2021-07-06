@@ -95,4 +95,28 @@ export class Collection {
   get publisher(): Publisher | null {
     return this._publisher;
   }
+
+  private get link(): string {
+    return `/collections/${this._slug}`;
+  }
+
+  /**
+   * Return the Course information link
+   * @returns {string} the Course info link
+   */
+  getInfoLink(): string {
+    return this.link;
+  }
+
+  /**
+   * Return the edit link for the Course
+   * @returns {}
+   */
+  getEditLink(): string {
+    return `/collections/update/${this._slug}`;
+  }
+
+  get createdAt(): Date {
+    return new Date(this._createdAt);
+  }
 }

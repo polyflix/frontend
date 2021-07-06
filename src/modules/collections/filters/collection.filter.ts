@@ -6,7 +6,7 @@ export interface ICollectionFilter extends PaginationFilter {
   order?: string;
   slug?: string;
   title?: string;
-  pulblisherId?: string;
+  publisherId?: string;
 }
 
 @Injectable()

@@ -45,7 +45,7 @@ export const useCollections = <T = Collection | CollectionsWithPagination>(
   // Is the hook in collection mode
   const isCollection = mode === "collection";
 
-  const triggerReload = () => setReload(!reload);
+  const refresh = () => setReload(!reload);
 
   useEffect(() => {
     // If the auth is currently loading, skip the call
@@ -71,5 +71,5 @@ export const useCollections = <T = Collection | CollectionsWithPagination>(
     // eslint-disable-next-line
   }, [page, pageSize, reload]);
 
-  return { data, alert, isLoading: loading, triggerReload };
+  return { data, alert, isLoading: loading, refresh };
 };

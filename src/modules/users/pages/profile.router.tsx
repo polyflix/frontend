@@ -1,6 +1,7 @@
 import { Route, Switch, useRouteMatch } from "react-router-dom";
 import { ProfilePage } from "./index.page";
 import { UserVideosPage } from "./videos/index.page";
+import { UserCollectionsPage } from "./collections/index.page";
 import { UserVideosHistoryPage } from "./videos/history.page";
 
 export const ProfileRouter = () => {
@@ -13,6 +14,7 @@ export const ProfileRouter = () => {
         component={UserVideosHistoryPage}
       />
       <Route path={`${path}/videos/:id`} component={UserVideosPage} />
+      <Route path={`${path}/collections/:id`} component={UserCollectionsPage} />
     </Switch>
   );
 };

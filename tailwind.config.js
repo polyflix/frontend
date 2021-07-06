@@ -9,6 +9,9 @@ module.exports = {
       inset: {
         'nav': '65px'
       },
+      width: {
+        'fit': 'fit-content'
+      },
       colors: {
         "nx-dark": "#221F1F",
         "nx-red": "#E50914",
