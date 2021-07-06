@@ -7,6 +7,7 @@ export interface ICollectionForm {
   title: string;
   description: string;
   videos: videoLite[];
+  availability: string;
 }
 
 type videoLite = {
@@ -50,5 +51,6 @@ export interface ICollection {
   createdAt: string;
   updatedAt: string;
   slug: string;
+  availability: string;
   videos: IVideo[];
 }

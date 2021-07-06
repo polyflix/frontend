@@ -22,6 +22,7 @@ import { CollectionService } from "../../services";
 import { ICollectionForm } from "../../types";
 import { VideoListItem } from "../../../videos/components/VideoListItem/VideoListItem.component";
 import { Video } from "../../../videos/models/video.model";
+import { Select } from "../../../ui/components/Select/select.component";
 type Props = {
   /** If collection exists, the form will be in update mode, otherwise in create mode. */
   collection?: Collection | null;
@@ -43,6 +44,7 @@ export const CollectionForm: React.FC<Props> = ({ collection }) => {
     defaultValues: {
       title: collection?.title,
       description: collection?.description,
+      availability: collection?.availability,
     },
   });
 
@@ -157,6 +159,19 @@ export const CollectionForm: React.FC<Props> = ({ collection }) => {
           minHeight={200}
           placeholder={t("collectionManagement.inputs.description.name")}
           name="description"
+          ref={register({
+            required: {
+              value: true,
+              message: `${t("collectionManagement.inputs.description.error")}.`,
+            },
+          })}
+          variants={fadeInDown}
+        />
+        <Select
+          options={["public", "private", "protected"]}
+          className="col-span-2"
+          name="availability"
+          hint={`${t("collectionManagement.inputs.select.description")}.`}
           ref={register({
             required: {
               value: true,
