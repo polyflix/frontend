@@ -26,7 +26,7 @@ export const UserVideosHistoryPage: React.FC = () => {
 
   const { data, isLoading: isLoadingVideo } = useVideos(
     {
-      order: buildQueryOrdering("userMeta.createdAt", ordering),
+      order: buildQueryOrdering("userMeta.updatedAt", ordering),
       page,
       pageSize: limit,
       isWatching: true,
