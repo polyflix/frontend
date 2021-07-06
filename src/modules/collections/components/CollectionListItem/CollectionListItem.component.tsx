@@ -112,7 +112,7 @@ export const CollectionListItem: React.FC<Props> = ({
         ) : (
           <Link
             to={"#"}
-            className="bg-nx-red px-4 py-2 rounded-md text-lg transition-colors w-fit inline-block text-white"
+            className="bg-nx-red px-4 py-2 cursor-not-allowed opacity-50 rounded-md text-lg transition-colors w-fit inline-block text-white"
           >
             {t("collections.actions.noGoto")}
           </Link>
