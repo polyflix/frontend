@@ -334,7 +334,7 @@
     "view": {
       "label": {
         "description": "Description",
-        "subtitle": "Subtitle"
+        "subtitle": "Subtitles"
       },
       "content": {
         "noSubtitle": "There is no subtitle for this video"

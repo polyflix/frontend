@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import { useTranslation } from "react-i18next";
+import React, { useRef, useState } from "react";
 import { Redirect, useParams } from "react-router";
+import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../authentication";
 import { Url } from "../../common/utils/url.util";
@@ -23,11 +23,11 @@ import {
   EyeIcon,
   ThumbUpIcon,
 } from "@heroicons/react/outline";
-import { SubtitleText } from "../components/SubtitleText/SubtitleText";
 import { useMediaQuery } from "react-responsive";
 import { useVideo } from "../hooks/useVideo.hook";
 import { SubtitleLanguages } from "../models";
 import { Video } from "../models/video.model";
+import { SubtitleText } from "../components";
 import { GhostSlider } from "../../ui/components/Ghost/GhostSlider/GhostSlider.component";
 import { useCollections } from "../../collections/hooks";
 import { Collection } from "../../collections/models";
@@ -46,6 +46,8 @@ export const VideoDetail: React.FC = () => {
   const { data: video, isLoading: isVideoLoading, alert } = useVideo(slug);
 
   const isLtMdScreen = useMediaQuery({ query: "(max-width: 767px)" });
+
+  const playerRef = useRef<HTMLVmPlayerElement>(null);
 
   const buildContent = () => {
     const subtitles = video?.getSubtitles(SubtitleLanguages.FR);
@@ -68,12 +70,17 @@ export const VideoDetail: React.FC = () => {
                 userMeta={video.userMeta}
                 videoUrl={video.src}
                 videoSubtitles={video.subtitles}
+                playerRef={playerRef}
               />
             ) : (
               <GhostTile aspectRatio={true} />
             )}
           </div>
-          <SidebarComponent blocks={blocks} video={video} />
+          <SidebarComponent
+            blocks={blocks}
+            video={video}
+            playerRef={playerRef}
+          />
         </div>
         <CollectionComponent />
       </Container>
@@ -95,11 +102,13 @@ export const VideoDetail: React.FC = () => {
 type SidebarComponentProps = {
   blocks: Block[] | undefined;
   video: Video | undefined;
+  playerRef: React.RefObject<HTMLVmPlayerElement>;
 };
 
 const SidebarComponent: React.FC<SidebarComponentProps> = ({
   blocks,
   video,
+  playerRef,
 }) => {
   const { user } = useAuth();
   const { t } = useTranslation();
@@ -205,6 +214,7 @@ const SidebarComponent: React.FC<SidebarComponentProps> = ({
                                   <SubtitleText
                                     block={block}
                                     key={block.sequence}
+                                    playerRef={playerRef}
                                   />
                                 );
                               })
