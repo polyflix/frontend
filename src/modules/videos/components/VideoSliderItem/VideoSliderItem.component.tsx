@@ -21,7 +21,9 @@ type ItemFooterProps = {
 export const VideoSliderItem: React.FC<Props> = ({ video }) => {
   return (
     <Link to={video.getStreamLink()} className={cn(styles.root, "flex")}>
-      <div className={cn("absolute top-0 left-0", styles.video_item)}>
+      <div
+        className={cn("absolute top-0 left-0 w-full h-full", styles.video_item)}
+      >
         <Image
           className="w-full h-full rounded-md object-cover"
           alt={`${video.title} thumbnail.`}
