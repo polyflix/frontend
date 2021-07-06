@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect } from "react";
 import { Subtitle } from "../../models/subtitle.model";
 import {
   DefaultUi,
@@ -19,6 +19,7 @@ type Props = {
   videoSubtitles: Subtitle[];
   videoId: string;
   userMeta?: WatchMetadata;
+  playerRef: React.RefObject<HTMLVmPlayerElement>;
 };
 
 const MATCH_URL_YOUTUBE =
@@ -30,37 +31,39 @@ export const Player: React.FC<Props> = ({
   userMeta,
   videoSubtitles,
   videoId,
+  playerRef,
 }) => {
-  const player = useRef<HTMLVmPlayerElement>(null);
   const { token } = useAuth();
   const statsService = useInjection<StatsService>(StatsService);
+
   const onTriggerWatchtimeEvent = () => {
     if (
-      !player?.current ||
+      !playerRef?.current ||
       !token ||
-      [0, -1].indexOf(player.current.duration) > -1
+      [0, -1].indexOf(playerRef.current.duration) > -1
     )
       return;
     console.debug(
       "[updateSync] durationTime: ",
-      player.current.duration,
+      playerRef.current.duration,
       "currentTime: ",
-      player.current.currentTime
+      playerRef.current.currentTime
     );
     statsService.updateSync({
       videoId: videoId,
-      watchedSeconds: player.current.currentTime,
-      watchedPercent: player.current.currentTime / player.current.duration,
+      watchedSeconds: playerRef.current.currentTime,
+      watchedPercent:
+        playerRef.current.currentTime / playerRef.current.duration,
     });
   };
 
   const onPlaybackStart = () => {
-    if (player?.current && userMeta?.watchedSeconds)
-      player.current.currentTime = userMeta.watchedSeconds;
+    if (playerRef?.current && userMeta?.watchedSeconds)
+      playerRef.current.currentTime = userMeta.watchedSeconds;
   };
 
   useEffect(onTriggerWatchtimeEvent, [
-    player,
+    playerRef,
     statsService,
     token,
     videoId,
@@ -83,7 +86,7 @@ export const Player: React.FC<Props> = ({
   return (
     <PlayerVime
       playsinline
-      ref={player}
+      ref={playerRef}
       onVmSeeked={onTriggerWatchtimeEvent}
       onVmPlaybackStarted={onPlaybackStart}
     >
@@ -99,7 +102,7 @@ export const Player: React.FC<Props> = ({
  * @param videoSubtitles
  * @constructor
  */
-const Provider: React.FC<Omit<Props, "videoId">> = ({
+const Provider: React.FC<Omit<Props, "videoId" | "playerRef">> = ({
   videoUrl,
   videoSubtitles,
 }) => {
@@ -109,10 +112,10 @@ const Provider: React.FC<Omit<Props, "videoId">> = ({
   switch (provider) {
     case ProviderType.VIDEO:
       return (
-        <Video>
+        <Video crossOrigin="use-credentials">
           <source data-src={url} type="video/mp4" />
-          {tracks.map((track) => (
-            <track {...track} />
+          {tracks.map((track, i) => (
+            <track {...track} key={i} />
           ))}
         </Video>
       );
@@ -133,9 +136,9 @@ function getTracks(videoSubtitles: Subtitle[]) {
   let tracks: Track[] = [];
   for (const subtitle of videoSubtitles) {
     tracks.push({
-      kind: "captions",
+      kind: "subtitles",
       label: subtitle.lang,
-      srclang: subtitle.lang,
+      srcLang: subtitle.lang,
       src: subtitle.vttUrl,
       default: tracks.length === 0, // 1st is default
     });
