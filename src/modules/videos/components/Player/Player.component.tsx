@@ -23,7 +23,7 @@ type Props = {
 };
 
 const MATCH_URL_YOUTUBE =
-  /(?:youtu\.be\/|youtube(?:-nocookie)?\.com\/(?:embed\/|v\/|watch\/|watch\?v=|watch\?.+&v=))((\w|-){11})|youtube\.com\/playlist\?list=|youtube\.com\/user\//;
+  /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
 const MATCH_URL_VIMEO = /vimeo\.com\/.+/;
 
 export const Player: React.FC<Props> = ({
@@ -148,11 +148,15 @@ function getTracks(videoSubtitles: Subtitle[]) {
 function getProvider(videoUrl: string): [ProviderType, string] {
   let provider: [ProviderType, string];
   if (MATCH_URL_YOUTUBE.test(videoUrl)) {
-    provider = [ProviderType.YOUTUBE, videoUrl.split("?v=")[1]];
+    const match = videoUrl.match(MATCH_URL_YOUTUBE);
+    provider = [
+      ProviderType.YOUTUBE,
+      match && match[7].length === 11 ? match[7] : "",
+    ];
   } else if (MATCH_URL_VIMEO.test(videoUrl)) {
-    const match = videoUrl.match(/http:\/\/(www\.)?vimeo.com\/(\d+)($|\/)/);
+    const match = videoUrl.match(MATCH_URL_VIMEO);
     if (!match) return [ProviderType.UNKNOWN, ""];
-    provider = [ProviderType.VIMEO, match[2]];
+    provider = [ProviderType.VIMEO, match[0].split("/")[1]];
   } else {
     provider = [ProviderType.VIDEO, videoUrl];
   }

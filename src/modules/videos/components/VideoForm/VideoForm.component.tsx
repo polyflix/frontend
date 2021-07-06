@@ -11,7 +11,7 @@ import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { useHistory } from "react-router";
+import { useHistory, useLocation } from "react-router";
 import slugify from "slugify";
 import { useAuth } from "../../../authentication/hooks/useAuth.hook";
 import { fadeInDown } from "../../../ui/animations/fadeInDown";
@@ -54,6 +54,7 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
   const { t } = useTranslation();
   const { user } = useAuth();
   let history = useHistory();
+  const type = new URLSearchParams(useLocation().search).get("type");
 
   const [loading, setLoading] = useState<boolean>(false);
   const [isSubmit, setIsSubmit] = useState<boolean>(false);
@@ -73,8 +74,7 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
         isPublished: video?.isPublished || false,
         isPublic: video?.isPublic || false,
         thumbnail: video?.thumbnail,
-        src: video?.previewUrl,
-        previewUrl: video?.src,
+        src: video?.src,
       },
     });
 
@@ -82,6 +82,7 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
   const watchPrivacy = watch<"isPublic", boolean>("isPublic");
   const watchPublished = watch<"isPublished", boolean>("isPublished");
   const watchHasSubtitle = watch<"hasSubtitle", boolean>("hasSubtitle");
+  const watchThumbnail = watch<"thumbnail", string>("thumbnail", "");
 
   useEffect(() => {
     async function checkSubtitleExists() {
@@ -98,8 +99,19 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
     return files.find((file) => file.getField() === field);
   };
 
+  const uploadFiles = async (data: IVideoForm) => {
+    const uploadedFiles = await minioService.upload(files);
+    const attributes: (keyof IVideoForm)[] = ["thumbnail", "src"];
+    attributes.forEach((attr) => {
+      const url = getFile(uploadedFiles, attr)?.getFileURL();
+      if (url) data = { ...data, [attr]: url };
+    });
+    return data;
+  };
+
   const thumbnailFile = getFile(files, "thumbnail");
   const thumbnailPreview =
+    watchThumbnail ||
     video?.thumbnail ||
     (thumbnailFile as ImageFile)?.getPreview() ||
     "https://i.stack.imgur.com/y9DpT.jpg";
@@ -110,17 +122,7 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
     setLoading(true);
     setIsSubmit(true);
     try {
-      const uploadedFiles = await minioService.upload(files);
-      const attributes: (keyof IVideoForm)[] = [
-        "thumbnail",
-        "src",
-        "previewUrl",
-      ];
-      attributes.forEach((attr) => {
-        const url = getFile(uploadedFiles, attr)?.getFileURL();
-        if (url) data = { ...data, [attr]: url };
-      });
-
+      if (type === "upload") data = await uploadFiles(data);
       let result = await (isUpdate
         ? videoService.updateVideo(video?.id as string, data)
         : videoService.createVideo(data));
@@ -209,34 +211,61 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
             },
           })}
         />
-        <UploadButton<ImageFile>
-          uploadClass={ImageFile}
-          onFileUpload={(file) => setFiles([...files, file])}
-          variants={fadeInDown}
-          className="col-span-2 md:col-span-1"
-          placeholder="Uploader la miniature"
-          format="image/*"
-          name="thumbnail"
-        />
-        <UploadButton<VideoFile>
-          uploadClass={VideoFile}
-          onFileUpload={(file) => setFiles([...files, file])}
-          variants={fadeInDown}
-          className="col-span-2 md:col-span-1"
-          placeholder="Uploader la vidéo"
-          format="video/*"
-          name="src"
-        />
-        <UploadButton<VideoFile>
-          uploadClass={VideoFile}
-          onFileUpload={(file) => setFiles([...files, file])}
-          variants={fadeInDown}
-          className="col-span-2 md:col-span-1"
-          placeholder="Uploader la vidéo de prévisualisation"
-          format="video/*"
-          name="previewUrl"
-        />
-
+        {type !== "upload" ? (
+          <>
+            <Input
+              error={errors.thumbnail}
+              name="thumbnail"
+              required
+              className="col-span-2 md:col-span-1"
+              variants={fadeInDown}
+              placeholder={t("videoManagement.inputs.thumbnail.name")}
+              hint={`${t("videoManagement.inputs.thumbnail.name")}.`}
+              ref={register({
+                required: {
+                  value: true,
+                  message: `${t("videoManagement.inputs.thumbnail.error")}.`,
+                },
+              })}
+            />
+            <Input
+              error={errors.src}
+              name="src"
+              required
+              className="col-span-2"
+              variants={fadeInDown}
+              placeholder={t("videoManagement.inputs.videoURL.name")}
+              hint={`${t("videoManagement.inputs.videoURL.name")}.`}
+              ref={register({
+                required: {
+                  value: true,
+                  message: `${t("videoManagement.inputs.videoURL.error")}.`,
+                },
+              })}
+            />
+          </>
+        ) : (
+          <>
+            <UploadButton<ImageFile>
+              uploadClass={ImageFile}
+              onFileUpload={(file) => setFiles([...files, file])}
+              variants={fadeInDown}
+              className="col-span-2 md:col-span-1"
+              placeholder={t("videoManagement.inputs.thumbnailUpload")}
+              format="image/*"
+              name="thumbnail"
+            />
+            <UploadButton<VideoFile>
+              uploadClass={VideoFile}
+              onFileUpload={(file) => setFiles([...files, file])}
+              variants={fadeInDown}
+              className="col-span-2"
+              placeholder={t("videoManagement.inputs.videoUpload")}
+              format="video/*"
+              name="src"
+            />
+          </>
+        )}
         <Textarea
           error={errors.description}
           className="col-span-2"
@@ -349,54 +378,56 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
             )}
           </Typography>
         </Checkbox>
-        <Checkbox
-          className="col-span-2"
-          name="hasSubtitle"
-          ref={register()}
-          icon={
-            watchHasSubtitle ? (
-              <TranslateIcon className="text-green-500 w-6 mr-2" />
-            ) : (
-              <TranslateIcon className="text-nx-red w-6 mr-2" />
-            )
-          }
-        >
-          <Typography className="text-sm" as="span">
-            {watchHasSubtitle ? (
-              <>
-                <Typography as="span" bold>
-                  {`${t("userVideos.subtitle.withSubtile.name")}.`}
-                </Typography>{" "}
-                {`${t("userVideos.subtitle.withSubtile.description")}.`}
-                <br />
-                <Typography
-                  as="span"
-                  bold
-                  className="text-xs text-nx-red"
-                  overrideDefaultClasses
-                >
-                  {`${t("videoManagement.actions.switching")}.`}
-                </Typography>
-              </>
-            ) : (
-              <>
-                <Typography as="span" bold>
-                  {`${t("userVideos.subtitle.withoutSubtile.name")}.`}
-                </Typography>{" "}
-                {`${t("userVideos.subtitle.withoutSubtile.description")}.`}
-                <br />
-                <Typography
-                  as="span"
-                  bold
-                  className="text-xs text-nx-red"
-                  overrideDefaultClasses
-                >
-                  {`${t("videoManagement.actions.switching")}.`}
-                </Typography>
-              </>
-            )}
-          </Typography>
-        </Checkbox>
+        {type === "upload" && (
+          <Checkbox
+            className="col-span-2"
+            name="hasSubtitle"
+            ref={register()}
+            icon={
+              watchHasSubtitle ? (
+                <TranslateIcon className="text-green-500 w-6 mr-2" />
+              ) : (
+                <TranslateIcon className="text-nx-red w-6 mr-2" />
+              )
+            }
+          >
+            <Typography className="text-sm" as="span">
+              {watchHasSubtitle ? (
+                <>
+                  <Typography as="span" bold>
+                    {`${t("userVideos.subtitle.withSubtile.name")}.`}
+                  </Typography>{" "}
+                  {`${t("userVideos.subtitle.withSubtile.description")}.`}
+                  <br />
+                  <Typography
+                    as="span"
+                    bold
+                    className="text-xs text-nx-red"
+                    overrideDefaultClasses
+                  >
+                    {`${t("videoManagement.actions.switching")}.`}
+                  </Typography>
+                </>
+              ) : (
+                <>
+                  <Typography as="span" bold>
+                    {`${t("userVideos.subtitle.withoutSubtile.name")}.`}
+                  </Typography>{" "}
+                  {`${t("userVideos.subtitle.withoutSubtile.description")}.`}
+                  <br />
+                  <Typography
+                    as="span"
+                    bold
+                    className="text-xs text-nx-red"
+                    overrideDefaultClasses
+                  >
+                    {`${t("videoManagement.actions.switching")}.`}
+                  </Typography>
+                </>
+              )}
+            </Typography>
+          </Checkbox>
+        )}
         {loading && (
           <div className="col-span-2 flex items-center">
             <Spinner className="fill-current text-nx-dark"></Spinner>

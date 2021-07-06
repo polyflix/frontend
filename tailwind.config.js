@@ -9,6 +9,9 @@ module.exports = {
       inset: {
         nav: "65px",
       },
+      fontSize: {
+        none: 0,
+      },
       width: {
         fit: "fit-content",
       },

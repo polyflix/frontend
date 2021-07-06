@@ -4,6 +4,7 @@ import { WithClassname, WithMotion } from "../../../../common";
 import { cn } from "../../../../common/utils/classes.util";
 import { motion } from "framer-motion";
 import { MinioFile } from "../../../../upload/models/files/minio-file.model";
+import { useTranslation } from "react-i18next";
 
 type Props<T> = WithClassname &
   WithMotion & {
@@ -29,6 +30,7 @@ export const UploadButton = <T extends any>({
   ...rest
 }: Props<T>) => {
   const [file, setFile] = useState<T>();
+  const { t } = useTranslation();
 
   const selectFile = async ({
     currentTarget,
@@ -46,14 +48,15 @@ export const UploadButton = <T extends any>({
       {...rest}
       className={cn("flex flex-col text-center mb-4", className)}
     >
-      <div className="bg-nx-red py-3 relative cursor-pointer rounded-md transition-colors hover:bg-nx-red-dark text-white inline-flex justify-center items-center">
+      <div className="bg-nx-red py-3 relative rounded-md transition-colors hover:bg-nx-red-dark text-white inline-flex justify-center items-center">
         <UploadIcon className="w-4 h-4 mr-2" />
         <span>{placeholder}</span>
         <input
           accept={format}
           type="file"
-          className="opacity-0 absolute cursor-pointer"
+          className="opacity-0 absolute cursor-pointerb w-full h-full cursor-pointer text-none"
           onChange={selectFile}
+          title={t("videoManagement.inputs.noFile")}
         />
       </div>
       {file && (

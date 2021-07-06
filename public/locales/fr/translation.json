@@ -201,6 +201,7 @@
       "switching": "Cliquez pour changer"
     },
     "inputs": {
+      "noFile": "Aucun fichier choisi",
       "title": {
         "name": "Titre",
         "description": "Le titre de la vidéo",
@@ -220,11 +221,8 @@
         "description": "Lien de la vidéo",
         "error": "Le lien de la vidéo est requis"
       },
-      "videoPreviewURL": {
-        "name": "Lien de prévisualisation",
-        "description": "Lien de prévisualisation de la vidéo",
-        "error": "Le lien de prévisualtion de la vidéo est requis"
-      }
+      "thumbnailUpload": "Uploader la miniature",
+      "videoUpload": "Uploader la vidéo"
     },
     "addVideo": {
       "description": "Remplissez le formulaire ci-dessous pour créer votre vidéo",
@@ -236,6 +234,17 @@
       "description": "Remplissez le formulaire ci-dessous pour modifier votre vidéo",
       "action": "Modifier",
       "success": "mise à jour avec succès"
+    },
+    "onBoarding": {
+      "source": "Choisissez votre source",
+      "youtube": {
+        "title": "Importez depuis YouTube ou Vimeo",
+        "description": "Munissez-vous du lien de la vidéo et de la miniature"
+      },
+      "local": {
+        "title": "Importez depuis vos fichiers",
+        "description": "Importez votre vidéo et votre miniature depuis vos fichiers locaux"
+      }
     }
   },
   "userCollections": {

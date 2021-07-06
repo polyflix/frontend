@@ -84,7 +84,7 @@ export const UserVideosPage: React.FC = () => {
               className="flex items-center text-nx-red"
               overrideDefaultClasses
             >
-              <Link to="/videos/create">
+              <Link to="/videos/new">
                 <span className="inline-flex mx-2">
                   <PlusIcon className="w-6" /> {t("shared.common.actions.add")}{" "}
                   {t("videoManagement.video")}
