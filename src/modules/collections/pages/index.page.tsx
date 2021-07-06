@@ -13,7 +13,7 @@ import { CollectionsWithPagination } from "../types";
 
 export const CollectionsPage: React.FC = () => {
   const { t } = useTranslation();
-  const { setFinalPage, page, to, limit } = usePagination();
+  const { page, to, limit } = usePagination();
 
   const {
     data,
