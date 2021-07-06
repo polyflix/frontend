@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import { Subtitle } from "../../models/subtitle.model";
 import {
   DefaultUi,
@@ -32,15 +32,19 @@ export const Player: React.FC<Props> = ({
   videoSubtitles,
   videoId,
 }) => {
-  const ref = useRef<HTMLVmPlayerElement>(null);
+  const player = useRef<HTMLVmPlayerElement>(null);
   const { token } = useAuth();
   const statsService = useInjection<StatsService>(StatsService);
 
-  const [durationTime] = usePlayerContext(ref, "duration", 0);
-  const [currentTime, setCurrentTime] = useState(0);
+  const [durationTime] = usePlayerContext(player, "duration", 0);
+  const [currentTime, setCurrentTime] = usePlayerContext(
+    player,
+    "currentTime",
+    0
+  );
 
   const onTriggerWatchtimeEvent = () => {
-    if (!ref?.current || !token) return;
+    if (!player?.current || !token) return;
     statsService.updateSync({
       videoId: videoId,
       watchedSeconds: currentTime,
@@ -59,7 +63,7 @@ export const Player: React.FC<Props> = ({
   useEffect(onTriggerWatchtimeEvent, [
     currentTime,
     durationTime,
-    ref,
+    player,
     statsService,
     token,
     videoId,
@@ -82,7 +86,7 @@ export const Player: React.FC<Props> = ({
   return (
     <PlayerVime
       playsinline
-      ref={ref}
+      ref={player}
       onVmSeeked={onTriggerWatchtimeEvent}
       onVmCurrentTimeChange={onTimeUpdate}
       currentTime={currentTime}
