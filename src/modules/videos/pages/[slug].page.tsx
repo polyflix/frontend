@@ -267,7 +267,7 @@ const SidebarComponent: React.FC<SidebarComponentProps> = ({
                             <ThumbUpIcon
                               className={`${
                                 isLiked ? "text-blue-500" : "text-grey-500"
-                              } w-5 mr-2 cursor-pointer w-fit`}
+                              } w-5 mr-2 cursor-pointer`}
                               onClick={() => like()}
                             />
                             {video?.likes}

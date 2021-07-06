@@ -19,11 +19,17 @@ export const GhostSlider: React.FC<Props> = ({ count = 5 }) => {
       <Swiper
         slidesPerView={1}
         breakpoints={{
-          768: {
+          400: {
             slidesPerView: 2,
+          },
+          800: {
+            slidesPerView: 3,
           },
           1024: {
             slidesPerView: 4,
+          },
+          1200: {
+            slidesPerView: 5,
           },
         }}
         mousewheel={false}
