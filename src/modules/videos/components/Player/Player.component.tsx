@@ -6,7 +6,6 @@ import {
   Video,
   Vimeo,
   Youtube,
-  usePlayerContext,
 } from "@vime/react";
 import { useAuth } from "../../../authentication";
 import { useInjection } from "@polyflix/di";
@@ -35,13 +34,6 @@ export const Player: React.FC<Props> = ({
   const player = useRef<HTMLVmPlayerElement>(null);
   const { token } = useAuth();
   const statsService = useInjection<StatsService>(StatsService);
-
-  const [currentTime, setCurrentTime] = usePlayerContext(
-    player,
-    "currentTime",
-    0
-  );
-
   const onTriggerWatchtimeEvent = () => {
     if (
       !player?.current ||
@@ -53,25 +45,21 @@ export const Player: React.FC<Props> = ({
       "[updateSync] durationTime: ",
       player.current.duration,
       "currentTime: ",
-      currentTime
+      player.current.currentTime
     );
     statsService.updateSync({
       videoId: videoId,
-      watchedSeconds: currentTime,
-      watchedPercent: currentTime / player.current.duration,
+      watchedSeconds: player.current.currentTime,
+      watchedPercent: player.current.currentTime / player.current.duration,
     });
   };
 
-  const onTimeUpdate = (event: CustomEvent<number>) => {
-    setCurrentTime(event.detail);
-  };
-
-  const onPlaybackStarted = () => {
-    if (userMeta) setCurrentTime(userMeta.watchedSeconds);
+  const onPlaybackStart = () => {
+    if (player?.current && userMeta?.watchedSeconds)
+      player.current.currentTime = userMeta.watchedSeconds;
   };
 
   useEffect(onTriggerWatchtimeEvent, [
-    currentTime,
     player,
     statsService,
     token,
@@ -97,9 +85,7 @@ export const Player: React.FC<Props> = ({
       playsinline
       ref={player}
       onVmSeeked={onTriggerWatchtimeEvent}
-      onVmCurrentTimeChange={onTimeUpdate}
-      currentTime={currentTime}
-      onVmPlaybackStarted={onPlaybackStarted}
+      onVmPlaybackStarted={onPlaybackStart}
     >
       <Provider videoUrl={videoUrl} videoSubtitles={videoSubtitles} />
       <DefaultUi>{/* Custom UI Component. */}</DefaultUi>
