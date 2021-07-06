@@ -36,7 +36,6 @@ export const Player: React.FC<Props> = ({
   const { token } = useAuth();
   const statsService = useInjection<StatsService>(StatsService);
 
-  const [durationTime] = usePlayerContext(player, "duration", 0);
   const [currentTime, setCurrentTime] = usePlayerContext(
     player,
     "currentTime",
@@ -44,17 +43,22 @@ export const Player: React.FC<Props> = ({
   );
 
   const onTriggerWatchtimeEvent = () => {
-    if (!player?.current || !token) return;
+    if (
+      !player?.current ||
+      !token ||
+      [0, -1].indexOf(player.current.duration) > -1
+    )
+      return;
     console.debug(
       "[updateSync] durationTime: ",
-      durationTime,
+      player.current.duration,
       "currentTime: ",
       currentTime
     );
     statsService.updateSync({
       videoId: videoId,
       watchedSeconds: currentTime,
-      watchedPercent: currentTime / durationTime,
+      watchedPercent: currentTime / player.current.duration,
     });
   };
 
@@ -68,7 +72,6 @@ export const Player: React.FC<Props> = ({
 
   useEffect(onTriggerWatchtimeEvent, [
     currentTime,
-    durationTime,
     player,
     statsService,
     token,
