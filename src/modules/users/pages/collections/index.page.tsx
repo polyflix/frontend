@@ -20,11 +20,10 @@ import { Collection } from "../../../collections/models";
 export const UserCollectionsPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const { user } = useAuth();
-  const isOwnPage = user?.id === id;
-  console.log(isOwnPage);
   const { t } = useTranslation();
   const collectionService = useInjection<CollectionService>(CollectionService);
   const { page, to, limit } = usePagination();
+  const isOwnPage = user?.id === id;
 
   const { data: fetchedUser, isLoading: isLoadingUser } = useUser({
     id,
