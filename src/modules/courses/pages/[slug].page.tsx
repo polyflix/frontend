@@ -42,10 +42,8 @@ export const CourseDetail: React.FC = () => {
             {_course.content}
           </Paragraph>
         </div>
-        {_course && _course.getCollections().length !== 0 ? (
-          <CollectionList
-            collections={_course.getCollections()}
-          ></CollectionList>
+        {_course && _course.collections.length !== 0 ? (
+          <CollectionList collections={_course.collections}></CollectionList>
         ) : null}
       </Container>
     );
