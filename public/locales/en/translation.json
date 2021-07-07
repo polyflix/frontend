@@ -43,6 +43,18 @@
       "goto": "Check this courses"
     }
   },
+  "paths": {
+    "seo": {
+      "title": "Paths",
+      "mainTitle": "All paths"
+    },
+    "error": {
+      "noPaths": "No paths found"
+    },
+    "actions": {
+      "goto": "Check this path"
+    }
+  },
   "home": {
     "seo": {
       "title": "Home"
@@ -151,6 +163,16 @@
     "list": {
       "ownNoCourses": "You have not uploaded any courses yet",
       "userNoCourses": "{{user}} has not uploaded any courses yet"
+    }
+  },
+  "userPaths": {
+    "seo": {
+      "ownTitle": "My paths",
+      "userTitle": "{{user}}'s paths"
+    },
+    "list": {
+      "ownNoPaths": "You have not uploaded any paths yet",
+      "userNoPaths": "{{user}} has not uploaded any paths yet"
     }
   },
   "userVideos": {
@@ -314,6 +336,23 @@
     },
     "updateCourse": {
       "description": "Fill the form below to update your course",
+      "action": "Update",
+      "success": "Successfully updated"
+    }
+  },
+  "pathManagement": {
+    "path": "a path",
+    "actions": {
+      "switching": "Click to change"
+    },
+    "addPath": {
+      "description": "Fill the form below to create your path",
+      "action": "Create",
+      "success": "Added to the library",
+      "error": "A path already exists with the title"
+    },
+    "updatePath": {
+      "description": "Fill the form below to update your path",
       "action": "Update",
       "success": "Successfully updated"
     }

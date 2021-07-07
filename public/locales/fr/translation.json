@@ -43,6 +43,18 @@
       "goto": "Accéder au cours"
     }
   },
+  "paths": {
+    "seo": {
+      "title": "Parcours",
+      "mainTitle": "Tous les parcours"
+    },
+    "error": {
+      "noPaths": "Nous n'avons trouvé aucun parcours"
+    },
+    "actions": {
+      "goto": "Accéder au parcours"
+    }
+  },
   "home": {
     "seo": {
       "title": "Accueil"
@@ -151,6 +163,16 @@
     "list": {
       "ownNoCourses": "Vous n'avez pas encore uploadé de cours",
       "userNoCourses": "{{user}} n'a pas encore uploadé de cours"
+    }
+  },
+  "userPaths": {
+    "seo": {
+      "ownTitle": "Mes parcours",
+      "userTitle": "Parcours de {{user}}"
+    },
+    "list": {
+      "ownNoCourses": "Vous n'avez pas encore créé de parcours",
+      "userNoCourses": "{{user}} n'a pas encore créé de parcours"
     }
   },
   "userVideos": {
@@ -314,6 +336,23 @@
     },
     "updateCourse": {
       "description": "Remplissez le formulaire ci-dessous pour modifier votre cours",
+      "action": "Modifier",
+      "success": "mise à jour avec succès"
+    }
+  },
+  "pathManagement": {
+    "path": "un parcours",
+    "actions": {
+      "switching": "Cliquez pour changer"
+    },
+    "addPath": {
+      "description": "Remplissez le formulaire ci-dessous pour créer votre parcours",
+      "action": "Créer",
+      "success": "ajouté à la librairie",
+      "error": "Un parcours avec ce titre existe déjà"
+    },
+    "updatePath": {
+      "description": "Remplissez le formulaire ci-dessous pour modifier votre parcours",
       "action": "Modifier",
       "success": "mise à jour avec succès"
     }
