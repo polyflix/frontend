@@ -29,7 +29,7 @@ export const Courseline: React.FC<Props> = ({ course, position }) => {
                   className="w-3 h-3 mr-6 overflow-visible text-gray-300"
                 >
                   <circle cx="6" cy="6" r="6" fill="currentColor"></circle>
-                  {position !== "first" ? (
+                  {position !== "first" && position !== "single" ? (
                     <path
                       d="M 6 -6 V -30"
                       fill="none"
@@ -38,7 +38,7 @@ export const Courseline: React.FC<Props> = ({ course, position }) => {
                       className="text-gray-200"
                     ></path>
                   ) : null}
-                  {position !== "last" ? (
+                  {position !== "last" && position !== "single" ? (
                     <path
                       d="M 6 18 V 500"
                       fill="none"

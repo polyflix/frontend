@@ -14,8 +14,10 @@ export const Timeline: React.FC<Props> = ({ courses }) => {
       <motion.div className="w-full h-full bg-black bg-opacity-50 flex flex-col justify-center px-5">
         <ul className="rounded-3xl bg-black bg-opacity-50 p-2 sm:p-5 xl:p-6">
           {courses.map((course, index) => {
-            let position: string;
-            if (index === 0) {
+            let position: "single" | "first" | "last" | "default";
+            if (courses.length === 1) {
+              position = "single";
+            } else if (index === 0) {
               position = "first";
             } else if (index === courses.length - 1) {
               position = "last";

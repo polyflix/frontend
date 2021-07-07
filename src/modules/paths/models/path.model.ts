@@ -32,7 +32,7 @@ export class Path {
       json.slug,
       json.publisherId,
       json.publishedBy && Publisher.fromJson(json.publishedBy),
-      json.courses.map((course) => OrderedCourse.fromJson(course)),
+      json.courses?.map((course) => OrderedCourse.fromJson(course)),
       new Date(json.createdAt),
       new Date(json.updatedAt)
     );
@@ -94,14 +94,6 @@ export class Path {
 
   get createdAt(): Date {
     return new Date(this._createdAt);
-  }
-
-  /**
-   * Return the path stream link.
-   * @returns {string} the stream link for the path
-   */
-  getStreamLink(): string {
-    return `${this.link}`;
   }
 
   /**
