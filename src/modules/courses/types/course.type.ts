@@ -6,7 +6,12 @@ import { ICollection } from "../../collections/types";
 export interface ICourseForm {
   title: string;
   content: string;
+  collections: collectionLite[];
 }
+
+type collectionLite = {
+  id: string;
+};
 
 export type CourseState<T> = {
   isLoading: boolean;

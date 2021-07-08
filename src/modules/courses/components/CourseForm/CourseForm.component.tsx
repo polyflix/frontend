@@ -5,7 +5,6 @@ import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router";
 import slugify from "slugify";
-// import { useAuth } from "../../../authentication/hooks/useAuth.hook";
 import { fadeInDown } from "../../../ui/animations/fadeInDown";
 import { stagger } from "../../../ui/animations/stagger";
 import { Alert, AlertType } from "../../../ui/components/Alert/Alert.component";
@@ -16,42 +15,42 @@ import { Textarea } from "../../../ui/components/Textarea/Textarea.component";
 import { Paragraph } from "../../../ui/components/Typography/Paragraph/Paragraph.component";
 import { Title } from "../../../ui/components/Typography/Title/Title.component";
 import { Typography } from "../../../ui/components/Typography/Typography.component";
-import { Collection } from "../../models";
-import { SearchCollection } from "../SearchCollection/SearchCollection.component";
-import { CollectionService } from "../../services";
-import { ICollectionForm } from "../../types";
-import { VideoListItem } from "../../../videos/components/VideoListItem/VideoListItem.component";
-import { Video } from "../../../videos/models/video.model";
-import { Select } from "../../../ui/components/Select/select.component";
+import { Course } from "../../models";
+import { SearchCourse } from "../SearchCourse/SearchCourse.component";
+import { CourseService } from "../../services";
+import { ICourseForm } from "../../types";
+import { CollectionListItem } from "../../../collections/components/CollectionListItem/CollectionListItem.component";
+import { Collection } from "../../../collections/models/collections.model";
 import { useAuth } from "../../../authentication/hooks/useAuth.hook";
 type Props = {
-  /** If collection exists, the form will be in update mode, otherwise in create mode. */
-  collection?: Collection | null;
+  /** If course exists, the form will be in update mode, otherwise in create mode. */
+  course?: Course | null;
 };
 
 /**
- * The collection form component
+ * The course form component
  */
-export const CollectionForm: React.FC<Props> = ({ collection }) => {
-  const isUpdate = collection instanceof Collection;
+export const CourseForm: React.FC<Props> = ({ course }) => {
+  const isUpdate = course instanceof Course;
 
-  const collectionService = useInjection<CollectionService>(CollectionService);
+  const courseService = useInjection<CourseService>(CourseService);
 
   const { t } = useTranslation();
   const { user } = useAuth();
   let history = useHistory();
 
-  const { register, handleSubmit, errors, watch } = useForm<ICollectionForm>({
+  const { register, handleSubmit, errors, watch } = useForm<ICourseForm>({
     defaultValues: {
-      title: collection?.title,
-      description: collection?.description,
-      availability: collection?.availability,
+      title: course?.title,
+      content: course?.content,
     },
   });
 
   const watchTitle = watch<"title", string>("title", "");
 
-  const [videos, setVideos] = useState<Video[]>(collection?.videos ?? []);
+  const [collections, setCollections] = useState<Collection[]>(
+    course?.collections ?? []
+  );
   const [loading, setLoading] = useState<boolean>(false);
   const [isSubmit, setIsSubmit] = useState<boolean>(false);
   const [alert, setAlert] =
@@ -60,44 +59,42 @@ export const CollectionForm: React.FC<Props> = ({ collection }) => {
       message: string;
     } | null>(null);
 
-  const onVideoDelete = (id: string) => {
-    setVideos(videos.filter((video) => video.id !== id));
+  const onCollectionDelete = (id: string) => {
+    setCollections(collections.filter((collection) => collection.id !== id));
   };
 
-  const addVideo = (video: Video) => {
-    const contain = videos.some((el: Video) => el.id === video.id);
-    if (!contain) setVideos([...videos, video]);
+  const addCollection = (collection: Collection) => {
+    const contain = collections.some(
+      (el: Collection) => el.id === collection.id
+    );
+    if (!contain) setCollections([...collections, collection]);
   };
 
-  const onSubmit = async (data: ICollectionForm) => {
+  const onSubmit = async (data: ICourseForm) => {
     setLoading(true);
     setIsSubmit(true);
     try {
       let result = await (isUpdate
-        ? collectionService.updateCollection(collection?.id as string, {
+        ? courseService.updateCourse(course?.id as string, {
             ...data,
-            videos: videos.map((v) => ({ id: v.id })),
+            collections: collections.map((v) => ({ id: v.id })),
           })
-        : collectionService.createCollection({
+        : courseService.createCourse({
             ...data,
-            videos: videos.map((v) => ({ id: v.id })),
+            collections: collections.map((v) => ({ id: v.id })),
           }));
       setAlert({
         message: isUpdate
           ? `"${result.title}" ${t(
-              "collectionManagement.updateCollection.success"
+              "courseManagement.updateCourse.success"
             )}.TOTO`
-          : `"${result.title}" ${t(
-              "collectionManagement.addCollection.success"
-            )}.`,
+          : `"${result.title}" ${t("courseManagement.addCourse.success")}.`,
         type: "success",
       });
-      history.push(`/profile/collections/${user?.id}`);
+      history.push(`/profile/courses/${user?.id}`);
     } catch (err) {
       setAlert({
-        message: `${t("collectionManagement.addCollection.error")} "${
-          data.title
-        }"`,
+        message: `${t("courseManagement.addCourse.error")} "${data.title}"`,
         type: "error",
       });
     } finally {
@@ -115,14 +112,14 @@ export const CollectionForm: React.FC<Props> = ({ collection }) => {
         <div className="col-span-2 md:col-span-1">
           <Title variants={fadeInDown}>
             {isUpdate
-              ? `${collection?.title}`
+              ? `${course?.title}`
               : `${t("shared.common.actions.add")}
-							${t("collectionManagement.collection")}`}
+							${t("courseManagement.course")}`}
           </Title>
           <Paragraph variants={fadeInDown} className="my-3 text-sm">
             {isUpdate
-              ? `${t("collectionManagement.updateCollection.description")}`
-              : `${t("collectionManagement.addCollection.description")}`}
+              ? `${t("courseManagement.updateCourse.description")}`
+              : `${t("courseManagement.addCourse.description")}`}
             .
           </Paragraph>
         </div>
@@ -135,7 +132,7 @@ export const CollectionForm: React.FC<Props> = ({ collection }) => {
           name="title"
           error={errors.title}
           className="col-span-2"
-          placeholder={t("collectionManagement.inputs.title.name")}
+          placeholder={t("courseManagement.inputs.title.name")}
           required
           variants={fadeInDown}
           hint={
@@ -144,38 +141,25 @@ export const CollectionForm: React.FC<Props> = ({ collection }) => {
                   lower: true,
                   remove: /[*+~.()'"!:@]/g,
                 })}`
-              : `${t("collectionManagement.inputs.title.description")}.`
+              : `${t("courseManagement.inputs.title.description")}.`
           }
           ref={register({
             required: {
               value: true,
-              message: `${t("collectionManagement.inputs.title.error")}.`,
+              message: `${t("courseManagement.inputs.title.error")}.`,
             },
           })}
         />
         <Textarea
-          error={errors.description}
+          error={errors.content}
           className="col-span-2"
           minHeight={200}
-          placeholder={t("collectionManagement.inputs.description.name")}
-          name="description"
+          placeholder={t("courseManagement.inputs.description.name")}
+          name="content"
           ref={register({
             required: {
               value: true,
-              message: `${t("collectionManagement.inputs.description.error")}.`,
-            },
-          })}
-          variants={fadeInDown}
-        />
-        <Select
-          options={["public", "private", "protected"]}
-          className="col-span-2"
-          name="availability"
-          hint={`${t("collectionManagement.inputs.select.description")}.`}
-          ref={register({
-            required: {
-              value: true,
-              message: `${t("collectionManagement.inputs.description.error")}.`,
+              message: `${t("courseManagement.inputs.description.error")}.`,
             },
           })}
           variants={fadeInDown}
@@ -185,8 +169,8 @@ export const CollectionForm: React.FC<Props> = ({ collection }) => {
           as="input"
           inputValue={
             isUpdate
-              ? t("collectionManagement.updateCollection.action")
-              : t("collectionManagement.addCollection.action")
+              ? t("courseManagement.updateCourse.action")
+              : t("courseManagement.addCourse.action")
           }
           disabled={isSubmit}
           variants={fadeInDown}
@@ -206,18 +190,18 @@ export const CollectionForm: React.FC<Props> = ({ collection }) => {
         )}
       </form>
       <div className="mt-4">
-        <SearchCollection
+        <SearchCourse
           variants={fadeInDown}
-          placeholder={t("collectionManagement.inputs.search.name")}
-          addVideo={addVideo}
-        ></SearchCollection>
+          placeholder={t("courseManagement.inputs.search.name")}
+          addCollection={addCollection}
+        />
         <>
-          {videos.map((video: Video) => (
-            <VideoListItem
-              video={video}
+          {collections.map((collection: Collection) => (
+            <CollectionListItem
+              collection={collection}
               ownerItems={false}
               links={false}
-              onDelete={() => onVideoDelete(video.id)}
+              onDelete={() => onCollectionDelete(collection.id)}
             />
           ))}
         </>

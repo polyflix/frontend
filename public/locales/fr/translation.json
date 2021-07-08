@@ -328,6 +328,20 @@
     "actions": {
       "switching": "Cliquez pour changer"
     },
+    "inputs": {
+      "title": {
+        "name": "Titre",
+        "description": "Le titre du cour",
+        "error": "Le titre du cours est requis"
+      },
+      "description": {
+        "name": "Contenu du cours",
+        "error": "Le contenu du cours est requis"
+      },
+      "search": {
+        "name": "Rechercher une collection"
+      }
+    },
     "addCourse": {
       "description": "Remplissez le formulaire ci-dessous pour créer votre cours",
       "action": "Créer",

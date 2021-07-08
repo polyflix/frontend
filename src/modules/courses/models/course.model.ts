@@ -115,7 +115,7 @@ export class Course {
    * Return the collection of courses Course
    * @returns {}
    */
-  getCollections(): Collection[] {
+  get collections(): Collection[] {
     return this._collections;
   }
 }

@@ -328,6 +328,20 @@
     "actions": {
       "switching": "Click to change"
     },
+    "inputs": {
+      "title": {
+        "name": "Title",
+        "description": "The title of the course",
+        "error": "A title is required"
+      },
+      "description": {
+        "name": "Course content",
+        "error": "A content is required"
+      },
+      "search": {
+        "name": "Collection search"
+      }
+    },
     "addCourse": {
       "description": "Fill the form below to create your course",
       "action": "Create",

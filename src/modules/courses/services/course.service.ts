@@ -2,7 +2,7 @@ import { Injectable } from "@polyflix/di";
 import { StatusCodes } from "http-status-codes";
 import { HttpService } from "../../common/services/http.service";
 import { Course } from "../models";
-import { CoursesWithPagination } from "../types";
+import { CoursesWithPagination, ICourseForm } from "../types";
 
 export type CourseParams = {
   page?: number;
@@ -60,6 +60,23 @@ export class CourseService {
       items: response.items.map(Course.fromJson),
     };
   }
+  /**
+   * Create a course
+   * @param {ICourseForm} course the form data to post
+   * @returns {Promise<Course>}
+   */
+  public async createCourse(course: ICourseForm): Promise<Course> {
+    const { status, response, error } = await this.httpService.post(
+      `/courses`,
+      {
+        body: course,
+      }
+    );
+    if (status !== StatusCodes.CREATED) {
+      throw error;
+    }
+    return response;
+  }
 
   /**
    * Delete a course
@@ -90,5 +107,24 @@ export class CourseService {
     }
 
     return Course.fromJson({ ...response });
+  }
+
+  /**
+   * Update a course
+   * @param {string} id the course id
+   * @param {ICourseForm} data the course form
+   * @returns {Promise<Course>}
+   */
+  public async updateCourse(id: string, data: ICourseForm): Promise<Course> {
+    const { status, response, error } = await this.httpService.put(
+      `/courses/${id}`,
+      {
+        body: data,
+      }
+    );
+    if (status !== StatusCodes.OK) {
+      throw error;
+    }
+    return Course.fromJson(response);
   }
 }
