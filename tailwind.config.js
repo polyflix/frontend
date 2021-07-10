@@ -26,6 +26,9 @@ module.exports = {
         portrait: { raw: "(orientation: portrait)" },
         landscape: { raw: "(orientation: landscape)" },
       },
+      borderWidth: {
+        "3": "3px",
+      }
     },
   },
   variants: {

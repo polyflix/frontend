@@ -56,10 +56,7 @@ export const ProfileForm: React.FC = () => {
   };
 
   return (
-    <motion.div
-      variants={stagger(0.1)}
-      className="p-5 w-full md:w-8/12 lg:w-9/12 mx-auto"
-    >
+    <motion.div variants={stagger(0.1)} className="py-5 w-full">
       <Title variants={fadeInDown}>{t("userProfile.bigtitle")}</Title>
       <form
         className="mt-4 grid grid-cols-2 gap-4"
