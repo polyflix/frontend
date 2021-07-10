@@ -220,7 +220,7 @@ export const VideoListItem: React.FC<Props> = ({
           {!ownerItems && userMeta && (
             <span className="text-nx-gray opacity-80 px-4 text-sm">
               {t("shared.common.seen", {
-                date: new Date(userMeta.createdAt).toLocaleDateString(),
+                date: new Date(userMeta.updatedAt).toLocaleDateString(),
               })}
             </span>
           )}
