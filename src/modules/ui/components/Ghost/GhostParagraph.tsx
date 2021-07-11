@@ -7,6 +7,11 @@ type Props = WithClassname & {
   count: number;
 };
 
+/**
+ * @param {number} count -- Number of lines shown
+ * @param className
+ * @constructor
+ */
 export const GhostParagraph: React.FC<Props> = ({ count, className = "" }) => {
   const ghosts = () => {
     return new Array(count).fill(null);

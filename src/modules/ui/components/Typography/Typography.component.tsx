@@ -11,6 +11,8 @@ type Props = WithClassname &
     overrideDefaultClasses?: boolean;
     /** If true, the text will be displayed in bold */
     bold?: boolean;
+    /** Light version of the font-family, if available */
+    light?: boolean;
   };
 
 /**
@@ -22,6 +24,7 @@ export const Typography: React.FC<PropsWithChildren<Props>> = ({
   overrideDefaultClasses = false,
   className = "",
   bold = false,
+  light = false,
   ...rest
 }) => {
   const Component = motion[as];
@@ -31,7 +34,8 @@ export const Typography: React.FC<PropsWithChildren<Props>> = ({
       className={cn(
         className,
         !overrideDefaultClasses && "dark:text-nx-white",
-        bold && "font-bold"
+        bold && "font-bold",
+        light && "font-light"
       )}
     >
       {children}

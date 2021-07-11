@@ -3,6 +3,7 @@ import { Route, Switch, useRouteMatch } from "react-router-dom";
 import { NewVideoPage } from "./new-video.page";
 import { CreateUpdateVideoPage } from "./[create-update].page";
 import { VideoDetail } from "./[slug].page";
+import { StatsPage } from "./stats.page";
 
 export const VideoRouter: React.FC = () => {
   const { path } = useRouteMatch();
@@ -15,6 +16,7 @@ export const VideoRouter: React.FC = () => {
         path={`${path}/(create|update)/:slug?`}
         component={CreateUpdateVideoPage}
       />
+      <Route path={`${path}/:slug/statistics`} component={StatsPage} />
       <Route path={`${path}/:slug`} component={VideoDetail} />
     </Switch>
   );

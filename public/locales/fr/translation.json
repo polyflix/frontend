@@ -9,18 +9,28 @@
         "edit": "Éditer",
         "delete": "Supprimer",
         "cancel": "Annuler",
-        "back": "Retour"
+        "back": "Retour",
+        "stats": "Statistiques"
       },
       "filters": {
         "newest": "Plus récent",
         "oldest": "Plus vieux"
+      },
+      "dates": {
+        "thisWeek": "Cette semaine",
+        "thisMonth": "Ce mois-ci",
+        "soon": "Bientôt"
       },
       "errors": {
         "noData": "Désolé, il n'y a rien à afficher ici..."
       },
       "wait": "Patientez",
       "seen": "Vu le {{date}}",
-      "createdAt": "Créé le {{date}}"
+      "createdAt": "Créé le {{date}}",
+      "updatedAt": "Mise à jour le {{date}}",
+      "views": "Vue(s)",
+      "likes": "Retour(s) positif(s)",
+      "comments": "Commentaire(s)"
     },
     "navbar": {
       "signIn": "Se connecter",

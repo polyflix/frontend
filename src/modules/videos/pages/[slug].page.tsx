@@ -90,7 +90,7 @@ export const VideoDetail: React.FC = () => {
   if (alert) return <Redirect to="/not-found" />;
   return (
     <Page
-      withNavbar={isPlayingMode ? false : true}
+      withNavbar={!isPlayingMode}
       variants={fadeOpacity}
       title={video?.title}
     >
