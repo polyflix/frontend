@@ -9,18 +9,28 @@
         "edit": "Edit",
         "delete": "Delete",
         "cancel": "Cancel",
-        "back": "Go back"
+        "back": "Go back",
+        "stats": "Statistics"
       },
       "filters": {
         "newest": "Newest",
         "oldest": "Oldest"
+      },
+      "dates": {
+        "thisWeek": "This week",
+        "thisMonth": "This month",
+        "soon": "Soon"
       },
       "errors": {
         "noData": "Sorry, there is nothing to show here..."
       },
       "wait": "Please wait",
       "seen": "Seen {{date}}",
-      "createdAt": "Created {{date}}"
+      "createdAt": "Created {{date}}",
+      "updatedAt": "Updated {{date}}",
+      "views": "View(s)",
+      "likes": "Like(s)",
+      "comments": "Comment(s)"
     },
     "navbar": {
       "signIn": "Sign in",

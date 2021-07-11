@@ -186,6 +186,13 @@ export class Video {
   }
 
   /**
+   * Returns a link to go to statistics page
+   */
+  getStatsLink(): string {
+    return `/videos/${this._slug}/statistics`;
+  }
+
+  /**
    * Return the edit link for the video
    * @returns {}
    */

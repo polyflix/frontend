@@ -2,12 +2,12 @@ import { PencilIcon, TrashIcon } from "@heroicons/react/outline";
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import { cn } from "../../../common/utils";
 import { Alert } from "../../../ui/components";
 import { Paragraph } from "../../../ui/components/Typography/Paragraph/Paragraph.component";
 import { Typography } from "../../../ui/components/Typography/Typography.component";
 import { Notification } from "../../../ui/components/Notification/Notification.component";
 import { Collection } from "../../models";
+import { ActionLink } from "../../../common/components/ActionLink.component";
 
 type Props = {
   collection: Collection;
@@ -24,31 +24,6 @@ export const CollectionListItem: React.FC<Props> = ({
 }) => {
   const [open, setOpen] = useState<boolean>(false);
   const { t } = useTranslation();
-
-  const buildActionLink = (
-    Icon: any,
-    text: string,
-    to: string,
-    className: string = "",
-    onClick?: () => void
-  ) => {
-    const content = (
-      <Typography
-        as="span"
-        className={cn(
-          "flex text-sm md:text-base hover:underline cursor-pointer hover:text-nx-red",
-          className
-        )}
-      >
-        <Icon className="w-4 md:w-5 mr-2 text-nx-red" /> {text}
-      </Typography>
-    );
-    return onClick ? (
-      <span onClick={onClick}>{content}</span>
-    ) : (
-      <Link to={to}>{content}</Link>
-    );
-  };
 
   return (
     <div className="grid grid-cols-12 gap-5 my-5">
@@ -119,21 +94,22 @@ export const CollectionListItem: React.FC<Props> = ({
         )}
       </div>
       <div className="flex items-center">
-        {ownerItems &&
-          buildActionLink(
-            PencilIcon,
-            t("shared.common.actions.edit"),
-            collection.getEditLink(),
-            "ml-4"
-          )}
-        {(ownerItems || !links) &&
-          buildActionLink(
-            TrashIcon,
-            t("shared.common.actions.delete"),
-            "#",
-            "ml-4",
-            () => setOpen(true)
-          )}
+        {ownerItems && (
+          <ActionLink
+            Icon={PencilIcon}
+            text={t("shared.common.actions.edit")}
+            to={collection.getEditLink()}
+            className={"ml-4"}
+          />
+        )}
+        {(ownerItems || !links) && (
+          <ActionLink
+            Icon={TrashIcon}
+            text={t("shared.common.actions.delete")}
+            onClick={() => setOpen(true)}
+            className={"ml-4"}
+          />
+        )}
         {ownerItems && (
           <span className="text-nx-gray opacity-80 px-4 text-sm">
             {t("shared.common.createdAt", {

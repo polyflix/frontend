@@ -3,7 +3,6 @@ import {
   EyeOffIcon,
   GlobeIcon,
   InformationCircleIcon,
-  PencilIcon,
   PlayIcon,
   ThumbUpIcon,
   TrashIcon,
@@ -11,7 +10,6 @@ import {
 } from "@heroicons/react/outline";
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Link } from "react-router-dom";
 import { cn } from "../../../common/utils/classes.util";
 import { Alert } from "../../../ui/components/Alert/Alert.component";
 import { Image } from "../../../ui/components/Image/Image.component";
@@ -19,6 +17,8 @@ import { Notification } from "../../../ui/components/Notification/Notification.c
 import { Paragraph } from "../../../ui/components/Typography/Paragraph/Paragraph.component";
 import { Typography } from "../../../ui/components/Typography/Typography.component";
 import { Video } from "../../models/video.model";
+import { VideoListItemOptions } from "./VideoListItemOptions.component";
+import { ActionLink } from "../../../common/components/ActionLink.component";
 
 type Props = {
   video: Video;
@@ -27,6 +27,14 @@ type Props = {
   links?: boolean;
 };
 
+/**
+ * Simple tile of a video, left is the thumbnail, right is composed
+ * of title, isPublished or isPublic, views & likes & some actions buttons
+ * @param video
+ * @param onDelete
+ * @param ownerItems
+ * @param links -- Define whether the update & stats links must be shown (delete is still shown)
+ */
 export const VideoListItem: React.FC<Props> = ({
   video,
   onDelete,
@@ -36,31 +44,6 @@ export const VideoListItem: React.FC<Props> = ({
   const [open, setOpen] = useState<boolean>(false);
   const { t } = useTranslation();
   const { userMeta } = video;
-
-  const buildActionLink = (
-    Icon: any,
-    text: string,
-    to: string,
-    className: string = "",
-    onClick?: () => void
-  ) => {
-    const content = (
-      <Typography
-        as="span"
-        className={cn(
-          "flex text-sm md:text-base hover:underline cursor-pointer hover:text-nx-red",
-          className
-        )}
-      >
-        <Icon className="w-4 md:w-5 mr-2 text-nx-red" /> {text}
-      </Typography>
-    );
-    return onClick ? (
-      <span onClick={onClick}>{content}</span>
-    ) : (
-      <Link to={to}>{content}</Link>
-    );
-  };
 
   return (
     <div className="grid grid-cols-12 gap-5 my-5">
@@ -189,34 +172,29 @@ export const VideoListItem: React.FC<Props> = ({
         </div>
         <Paragraph className="mb-4">{video.shortDescription}</Paragraph>
         <div className="flex items-center">
-          {links &&
-            buildActionLink(
-              PlayIcon,
-              t("shared.common.actions.play"),
-              video.getStreamLink()
-            )}
-          {links &&
-            buildActionLink(
-              InformationCircleIcon,
-              t("shared.common.actions.info"),
-              video.getInfoLink(),
-              "ml-4"
-            )}
-          {ownerItems &&
-            buildActionLink(
-              PencilIcon,
-              t("shared.common.actions.edit"),
-              video.getEditLink(),
-              "ml-4"
-            )}
-          {(ownerItems || !links) &&
-            buildActionLink(
-              TrashIcon,
-              t("shared.common.actions.delete"),
-              "#",
-              "ml-4",
-              () => setOpen(true)
-            )}
+          {links && (
+            <ActionLink
+              Icon={PlayIcon}
+              to={video.getStreamLink()}
+              text={t("shared.common.actions.play")}
+            />
+          )}
+          {links && (
+            <ActionLink
+              Icon={InformationCircleIcon}
+              to={video.getInfoLink()}
+              text={t("shared.common.actions.info")}
+              className={"ml-4"}
+            />
+          )}
+          {!links && (
+            <ActionLink
+              Icon={TrashIcon}
+              onClick={() => setOpen(true)}
+              text={t("shared.common.actions.delete")}
+              className={"ml-4"}
+            />
+          )}
           {!ownerItems && userMeta && (
             <span className="text-nx-gray opacity-80 px-4 text-sm">
               {t("shared.common.seen", {
@@ -230,6 +208,15 @@ export const VideoListItem: React.FC<Props> = ({
                 date: new Date(video.createdAt).toLocaleDateString(),
               })}
             </span>
+          )}
+          {ownerItems && links && (
+            <div className="ml-auto text-white">
+              <VideoListItemOptions
+                onTriggerDelete={() => setOpen(true)}
+                editLink={video.getEditLink()}
+                statsLink={video.getStatsLink()}
+              />
+            </div>
           )}
         </div>
       </div>
