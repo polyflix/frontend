@@ -1,6 +1,18 @@
 import { Block, VttFile } from "@polyflix/vtt-parser";
 import { ISubtitle } from "../types/subtitle.type";
 
+export enum SubtitleStatus {
+  IN_PROGRESS = "IN_PROGRESS",
+  COMPLETED = "COMPLETED",
+  FAILURE = "FAILURE",
+  NOT_FOUND = "NOT_FOUND",
+}
+
+export enum SubtitleLanguages {
+  FR = "fr-FR",
+  EN = "en-US",
+}
+
 /**
  * Modelize the subtitle entity
  * @class Subtitle
@@ -21,15 +33,31 @@ export class Subtitle {
    * @returns {Subtitle} an instance of Subtitle
    */
   static async fromJson(json: ISubtitle): Promise<Subtitle> {
-    const vttFile = await VttFile.fromUrl(json.vttUrl);
-    return new Subtitle(
-      json.id,
-      json.videoId,
-      json.lang,
-      json.vttUrl,
-      json.status,
-      vttFile
-    );
+    let vttFile = null;
+    try {
+      if (json.status === SubtitleStatus.COMPLETED) {
+        vttFile = await VttFile.fromUrl(json.vttUrl);
+      } else {
+        vttFile = new VttFile("");
+      }
+      return new Subtitle(
+        json.id,
+        json.videoId,
+        json.lang,
+        json.vttUrl,
+        json.status,
+        vttFile
+      );
+    } catch (e) {
+      return new Subtitle(
+        json.id,
+        json.videoId,
+        json.lang,
+        json.vttUrl,
+        SubtitleStatus.NOT_FOUND,
+        new VttFile("")
+      );
+    }
   }
 
   /**
@@ -87,15 +115,4 @@ export class Subtitle {
   getBlocks(): Block[] | undefined {
     return this.vttFile.getBlocks();
   }
-}
-
-export enum SubtitleStatus {
-  IN_PROGRESS = "IN_PROGRESS",
-  COMPLETED = "COMPLETED",
-  FAILURE = "FAILURE",
-}
-
-export enum SubtitleLanguages {
-  FR = "fr-FR",
-  EN = "en-US",
 }
