@@ -409,7 +409,9 @@
         "subtitle": "Subtitles"
       },
       "content": {
-        "noSubtitle": "There is no subtitle for this video"
+        "noSubtitle": "There is no subtitles for this video",
+        "generatingSubtitles": "Subtitles are being generated...",
+        "subtitleError": "The subtitles could not be generated due to an internal error."
       },
       "publishedBy": "Published by"
     }

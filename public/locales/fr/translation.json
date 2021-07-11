@@ -409,7 +409,9 @@
         "subtitle": "Sous-titres"
       },
       "content": {
-        "noSubtitle": "Il n'y a pas de sous-titre pour cette video"
+        "noSubtitle": "Il n'y a pas de sous-titres pour cette video",
+        "generatingSubtitles": "Les sous-titres sont en cours de génération...",
+        "subtitleError": "Les sous-titres n'ont pas pu être générés."
       },
       "publishedBy": "Publiée par"
     }

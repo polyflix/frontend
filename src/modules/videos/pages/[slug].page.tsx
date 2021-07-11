@@ -25,7 +25,7 @@ import {
 } from "@heroicons/react/outline";
 import { useMediaQuery } from "react-responsive";
 import { useVideo } from "../hooks/useVideo.hook";
-import { SubtitleLanguages } from "../models";
+import { Subtitle, SubtitleLanguages, SubtitleStatus } from "../models";
 import { Video } from "../models/video.model";
 import { SubtitleText } from "../components";
 import { GhostSlider } from "../../ui/components/Ghost/GhostSlider/GhostSlider.component";
@@ -36,7 +36,6 @@ import { CollectionSlider } from "../../collections/components/CollectionSlider/
 import { StatsService } from "../../stats/services/stats.service";
 import { useInjection } from "@polyflix/di";
 import { GhostParagraph } from "../../ui/components/Ghost/GhostParagraph";
-import { Block } from "@polyflix/vtt-parser";
 
 export const VideoDetail: React.FC = () => {
   const isPlayingMode = Boolean(Url.hasParameter("play")) === true;
@@ -51,7 +50,6 @@ export const VideoDetail: React.FC = () => {
 
   const buildContent = () => {
     const subtitles = video?.getSubtitles(SubtitleLanguages.FR);
-    const blocks = subtitles?.getBlocks();
 
     return isPlayingMode ? (
       video && <MediaPlayer video={video} />
@@ -77,7 +75,7 @@ export const VideoDetail: React.FC = () => {
             )}
           </div>
           <SidebarComponent
-            blocks={blocks}
+            subtitles={subtitles}
             video={video}
             playerRef={playerRef}
           />
@@ -100,16 +98,18 @@ export const VideoDetail: React.FC = () => {
 };
 
 type SidebarComponentProps = {
-  blocks: Block[] | undefined;
+  subtitles: Subtitle | undefined;
   video: Video | undefined;
   playerRef: React.RefObject<HTMLVmPlayerElement>;
 };
 
 const SidebarComponent: React.FC<SidebarComponentProps> = ({
-  blocks,
+  subtitles,
   video,
   playerRef,
 }) => {
+  const blocks = subtitles?.getBlocks();
+
   const { user } = useAuth();
   const { t } = useTranslation();
 
@@ -224,8 +224,14 @@ const SidebarComponent: React.FC<SidebarComponentProps> = ({
                                 className="text-center text-sm py-4 md:pr-1 flex flex-col items-center absolute top-1/2 left-1/2 transform -translate-x-2/4 w-full"
                               >
                                 <ExclamationIcon className="w-6 md:w-7 text-nx-red mr-2" />
-
-                                {t("video.view.content.noSubtitle")}
+                                {subtitles
+                                  ? subtitles?.status ===
+                                    SubtitleStatus.IN_PROGRESS
+                                    ? t(
+                                        "video.view.content.generatingSubtitles"
+                                      )
+                                    : t("video.view.content.subtitleError")
+                                  : t("video.view.content.noSubtitle")}
                               </Typography>
                             )}
                           </div>
