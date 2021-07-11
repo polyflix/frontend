@@ -10,16 +10,14 @@ type ShortCardProps = WithClassname &
     redirect?: string;
   };
 
-const ShortCard: FC<ShortCardProps> = ({
+export const ShortCard: FC<ShortCardProps> = ({
   onClick,
   className = "",
   children,
   redirect,
   ...rest
 }) => {
-  const body = <span className="w-11/12">{children}</span>;
-
-  return (
+  const body = (
     <div
       className={cn(
         "border-nx-red border-3 text-nx-white rounded-lg p-4 flex cursor-pointer hover:bg-nx-white" +
@@ -28,17 +26,15 @@ const ShortCard: FC<ShortCardProps> = ({
       )}
       onClick={onClick}
     >
-      <span className="w-11/12">
-        {redirect ? <WithLink redirect={redirect}>{body}</WithLink> : body}
-      </span>
+      <span className="w-11/12">{children}</span>
 
       <Arrow {...rest} />
     </div>
   );
+  if (redirect) return <WithLink redirect={redirect}>{body}</WithLink>;
+  else return body;
 };
 
 const WithLink: FC<{ redirect: string }> = ({ redirect, children }) => {
   return <Link to={redirect}>{children}</Link>;
 };
-
-export { ShortCard };

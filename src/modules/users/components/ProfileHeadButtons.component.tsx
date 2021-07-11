@@ -1,4 +1,4 @@
-import { ShortCard } from "../../common/components/ShortCard";
+import { ShortCard } from "../../common/components/ShortCard.component";
 import { LockClosedIcon, XIcon } from "@heroicons/react/outline";
 import React from "react";
 import { useTranslation } from "react-i18next";
