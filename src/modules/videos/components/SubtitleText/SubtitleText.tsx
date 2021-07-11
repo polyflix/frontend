@@ -1,4 +1,4 @@
-import { PropsWithChildren } from "react";
+import { PropsWithChildren, useRef } from "react";
 import { Block } from "@polyflix/vtt-parser";
 import { usePlayerContext } from "@vime/react";
 
@@ -16,15 +16,24 @@ export const SubtitleText: React.FC<
     "currentTime",
     0
   );
+  const blockRef = useRef<HTMLDivElement>(null);
+  const executeScroll = () =>
+    blockRef?.current?.scrollIntoView({ block: "center" });
+
+  const isCurrent =
+    block.startTime / 1000 <= currentTime && block.endTime / 1000 > currentTime;
+
+  isCurrent && executeScroll();
 
   return (
     <span
-      className={`cursor-pointer ${
-        block.startTime / 1000 <= currentTime &&
-        block.endTime / 1000 > currentTime &&
-        "text-nx-red transition-all"
+      ref={blockRef}
+      className={`cursor-pointer whitespace-pre-line ${
+        isCurrent && "text-nx-red transition-all"
       }`}
       onClick={() => setCurrentTime(block.startTime / 1000)}
-    >{`${block.text} `}</span>
+    >
+      {`${block.text.replace(".", ".\n")} `}
+    </span>
   );
 };
