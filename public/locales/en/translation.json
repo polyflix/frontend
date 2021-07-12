@@ -35,7 +35,10 @@
     "navbar": {
       "signIn": "Sign in",
       "signOut": "Sign out",
-      "signUp": ["No account ?", "Sign up now"]
+      "signUp": [
+        "No account ?",
+        "Sign up now"
+      ]
     },
     "informations": {
       "publishedBy": "Published by {{user}}"
@@ -97,7 +100,10 @@
         "description": "Enter your credentials to log in into your account"
       },
       "action": "Sign in",
-      "footer": ["New to Polyflix ?", "Sign up now"],
+      "footer": [
+        "New to Polyflix ?",
+        "Sign up now"
+      ],
       "error": "Bad credentials"
     },
     "signUp": {
@@ -120,7 +126,10 @@
         }
       },
       "action": "Sign up",
-      "footer": ["Already registered to Polyflix ?", "Sign in here"],
+      "footer": [
+        "Already registered to Polyflix ?",
+        "Sign in here"
+      ],
       "error": "Email already in use"
     }
   },
@@ -161,6 +170,16 @@
       "successProfile": "Your profile has been updated successfully",
       "successPassword": "Your password has been updated successfully"
     }
+  },
+  "groups": {
+    "seo": {
+      "title": "My groups",
+      "joined": "joined",
+      "join": "Join",
+      "available": "Available",
+      "nodata": "You"
+    },
+    "welcome": "Your groups"
   },
   "videoDetails": {
     "publishedBy": "Published by"
@@ -280,6 +299,42 @@
         "description": "Import your video and your thumbnail from your local files"
       }
     }
+  },
+  "groupManagement": {
+    "group": "a group",
+    "seo": {
+      "available": "Groups available",
+      "all": "All groups",
+      "title": "My groups",
+      "join": "Join",
+      "joined": "Groups joined",
+      "leave": "Leave"
+    },
+    "addGroup": {
+      "description": "Fill the form below to update your group",
+      "action": "Create",
+      "success": "added to the library",
+      "error": "A group already exists with the name"
+    },
+    "updateGroup": {
+      "description": "Fill the form below to update your group",
+      "action": "Update",
+      "success": "updated to the library",
+      "error": "A group already exists with the name"
+    },
+    "inputs": {
+      "name": {
+        "name": "Name",
+        "description": "The group name",
+        "error": "A group name is required"
+      },
+      "description": {
+        "name": "Group description",
+        "error": "A group description is required"
+      }
+    },
+    "nodata": "You haven't joined any group",
+    "nobody": "There is no member in this group"
   },
   "userCollections": {
     "seo": {
