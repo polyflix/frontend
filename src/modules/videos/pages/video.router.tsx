@@ -17,7 +17,7 @@ export const VideoRouter: React.FC = () => {
         component={CreateUpdateVideoPage}
       />
       <Route path={`${path}/:slug/statistics`} component={StatsPage} />
-      <Route path={`${path}/:slug`} component={VideoDetail} />
+      <Route path={`${path}`} component={VideoDetail} />
     </Switch>
   );
 };

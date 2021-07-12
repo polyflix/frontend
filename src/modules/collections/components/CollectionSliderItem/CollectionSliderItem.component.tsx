@@ -30,7 +30,7 @@ export const CollectionSliderItem: React.FC<Props> = ({
 }) => {
   return (
     <Link
-      to={`${video.getStreamLink()}?${querry(currentIndex)}`}
+      to={`${video.getStreamLink()}&${querry(currentIndex)}`}
       className={cn(styles.root, "flex")}
     >
       <div

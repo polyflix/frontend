@@ -80,6 +80,13 @@ export class Video {
     return this._title;
   }
 
+  get shortTitle(): string {
+    const MAX_TITLE_LENGTH = 40;
+    return this._title.length > MAX_TITLE_LENGTH
+      ? this._title.slice(0, MAX_TITLE_LENGTH) + "..."
+      : this._title;
+  }
+
   /**
    * Return true if the video is published, false otherwise
    * @returns {boolean} true if the video is published, false otherwise
@@ -146,7 +153,7 @@ export class Video {
   }
 
   private get link(): string {
-    return `/watch/${this._slug}`;
+    return `/watch?v=${this._slug}`;
   }
 
   get subtitles(): Subtitle[] {
