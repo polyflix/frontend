@@ -6,6 +6,9 @@ module.exports = {
       jakarta: ["Jakarta"],
     },
     extend: {
+      cursor: {
+        grab: 'grab'
+      },
       inset: {
         nav: "65px",
       },

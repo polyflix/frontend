@@ -1,6 +1,7 @@
 import { Injectable } from "@polyflix/di";
 import { StatusCodes } from "http-status-codes";
 import { HttpService } from "../../common/services/http.service";
+import { CourseFilter, ICourseFilter } from "../filters";
 import { Course } from "../models";
 import { CoursesWithPagination, ICourseForm } from "../types";
 
@@ -18,11 +19,16 @@ export type CourseParams = {
   publisherId?: string;
 
   joinWithPublisher?: boolean;
+
+  exact?: boolean;
 };
 
 @Injectable()
 export class CourseService {
-  constructor(private readonly httpService: HttpService) {}
+  constructor(
+    private readonly httpService: HttpService,
+    private readonly courseFilter: CourseFilter
+  ) {}
 
   /**
    * Get the courses list paginated.
@@ -34,27 +40,19 @@ export class CourseService {
    */
 
   public async getCourses(
-    params: CourseParams
+    filters: ICourseFilter
   ): Promise<CoursesWithPagination> {
-    const { pageSize, page, publisherId } = params;
-    const path = "/courses";
-    // Build search query
-    let query = new URLSearchParams();
-    if (page || pageSize) {
-      query = new URLSearchParams();
-      if (page) query.append("page", page.toString());
-      if (pageSize) query.append("pageSize", pageSize.toString());
+    const searchQuery = this.courseFilter.buildFilters(filters);
+    let url = "/courses";
+    if (searchQuery !== "" && searchQuery) {
+      url += `?${searchQuery}`;
     }
-    if (publisherId) query.append("publisherId", publisherId);
-
-    // Build the URL for the request.
-    // The format is the following : /courses[/me][?page=1&limit=20]
-    const url = `${path}${query ? "?" + query.toString() : ""}`;
 
     const { status, response, error } = await this.httpService.get(url);
     if (status !== 200) {
       throw error;
     }
+
     return {
       totalCount: response.totalCount,
       items: response.items.map(Course.fromJson),

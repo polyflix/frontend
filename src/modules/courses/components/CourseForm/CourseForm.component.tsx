@@ -1,4 +1,5 @@
 import { useInjection } from "@polyflix/di";
+import { ArrowCircleLeftIcon } from "@heroicons/react/outline";
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -70,6 +71,8 @@ export const CourseForm: React.FC<Props> = ({ course }) => {
     if (!contain) setCollections([...collections, collection]);
   };
 
+  const onGoBack = () => history.goBack();
+
   const onSubmit = async (data: ICourseForm) => {
     setLoading(true);
     setIsSubmit(true);
@@ -109,6 +112,16 @@ export const CourseForm: React.FC<Props> = ({ course }) => {
       className="p-5 w-full md:w-8/12 mx-auto"
     >
       <div className="grid items-center grid-cols-2 gap-4 py-4">
+        <Typography
+          as="span"
+          className="text-nx-red col-span-2"
+          overrideDefaultClasses
+        >
+          <span className="inline-flex mx-2 cursor-pointer" onClick={onGoBack}>
+            <ArrowCircleLeftIcon className="w-6 mr-1" />{" "}
+            {t("shared.common.actions.back")}{" "}
+          </span>
+        </Typography>
         <div className="col-span-2 md:col-span-1">
           <Title variants={fadeInDown}>
             {isUpdate
