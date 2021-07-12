@@ -17,6 +17,7 @@ import { ServerState } from "../types/serverState.type";
 import { ServerUnavailablePage } from "./503.page";
 import { PathRouter } from "../../paths/pages";
 import { CourseRouter } from "../../courses/pages";
+import { GroupsRouter } from "../../groups/pages/groups.router";
 
 export const IndexRouter: React.FC = () => {
   const { isAuthenticated, isLoading, hasRefresh } = useAuth();
@@ -59,6 +60,12 @@ export const IndexRouter: React.FC = () => {
             path="/profile"
             redirectPath="/auth/login"
             component={ProfileRouter}
+          />
+          <ProtectedRoute
+            hasAccessIf={isAuthenticated}
+            path="/groups"
+            redirectPath="/auth/login"
+            component={GroupsRouter}
           />
 
           <ProtectedRoute

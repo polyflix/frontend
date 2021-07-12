@@ -120,15 +120,23 @@ export const Navigation: React.FC<Props> = ({ visible }) => {
                       </Link>
                     </Menu.Item>
                     <Menu.Item>
-                      <span
-                        onClick={() => authService.logout()}
-                        className="cursor-pointer text-nx-white flex rounded-md items-center w-full px-2 py-2 text-sm"
-                      >
-                        <LogoutIcon className="text-nx-red w-5 mr-3" />
-                        {t("shared.navbar.signOut")}
-                      </span>
+                      <Link to="/groups">
+                        <span className="cursor-pointer text-nx-white flex rounded-md items-center w-full px-2 py-2 text-sm">
+                          <UserIcon className="text-nx-red w-5 mr-3" />
+                          {t("groupManagement.seo.title")}
+                        </span>
+                      </Link>
                     </Menu.Item>
                   </div>
+                  <Menu.Item>
+                    <span
+                      onClick={() => authService.logout()}
+                      className="cursor-pointer text-nx-white flex rounded-md items-center w-full px-2 py-2 text-sm"
+                    >
+                      <LogoutIcon className="text-nx-red w-5 mr-3" />
+                      {t("shared.navbar.signOut")}
+                    </span>
+                  </Menu.Item>
                 </Menu.Items>
               </Transition>
             </>

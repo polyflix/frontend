@@ -35,7 +35,10 @@
     "navbar": {
       "signIn": "Se connecter",
       "signOut": "Se déconnecter",
-      "signUp": ["Pas de compte ?", "Inscrivez-vous dès maintenant"]
+      "signUp": [
+        "Pas de compte ?",
+        "Inscrivez-vous dès maintenant"
+      ]
     },
     "informations": {
       "publishedBy": "Publié par {{user}}"
@@ -97,7 +100,10 @@
         "description": "Entrez vos identifiants pour vous connecter à votre compte"
       },
       "action": "Se connecter",
-      "footer": ["Nouveau sur Polyflix ?", "Inscrivez-vous dès maintenant"],
+      "footer": [
+        "Nouveau sur Polyflix ?",
+        "Inscrivez-vous dès maintenant"
+      ],
       "error": "Adresse e-mail ou mot de passe invalide"
     },
     "signUp": {
@@ -120,7 +126,10 @@
         }
       },
       "action": "S'inscrire",
-      "footer": ["Déjà inscrit sur Polyflix ?", "Connectez-vous ici"],
+      "footer": [
+        "Déjà inscrit sur Polyflix ?",
+        "Connectez-vous ici"
+      ],
       "error": "Adresse e-mail déjà utilisée"
     }
   },
@@ -396,6 +405,42 @@
       "action": "Modifier",
       "success": "mise à jour avec succès"
     }
+  },
+  "groupManagement": {
+    "group": "un groupe",
+    "seo": {
+      "available": "Groupes disponibles",
+      "all": "Tous les groupes",
+      "title": "Mes groupes",
+      "join": "Rejoindre",
+      "joined": "Groupes rejoints",
+      "leave": "Quitter"
+    },
+    "addGroup": {
+      "description": "Remplissez le formulaire ci-dessous pour créer votre groupe",
+      "action": "Créer",
+      "success": "ajouté",
+      "error": "Un groupe existe déjà avec le titre"
+    },
+    "updateGroup": {
+      "description": "Remplissez le formulaire ci-dessous pour mettre à jour votre groupe",
+      "action": "Mettre à jour",
+      "success": "ajouté",
+      "error": "Un groupe existe déjà avec le titre"
+    },
+    "inputs": {
+      "name": {
+        "name": "Nom",
+        "description": "Le nom du groupe",
+        "error": "Le nom du groupe est requis"
+      },
+      "description": {
+        "name": "Description du groupe",
+        "error": "La description du groupe requis"
+      }
+    },
+    "nodata": "Vous n'avez encore rejoint aucun groupe",
+    "nobody": "Il n'y a aucun membre dans ce groupe"
   },
   "notFound": {
     "seo": {
