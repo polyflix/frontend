@@ -239,10 +239,11 @@
         "description": "Le titre de la vidéo",
         "error": "Le titre de la vidéo est requis"
       },
-      "thumbnail": {
+      "thumbnailURL": {
         "name": "Lien de la miniature",
         "description": "Lien de la miniature de la vidéo",
-        "error": "Le lien de la miniature est requis"
+        "missing": "Le lien de la miniature est requis",
+        "error": "Le lien de la miniature est invalide"
       },
       "description": {
         "name": "Description de la vidéo",
@@ -251,7 +252,8 @@
       "videoURL": {
         "name": "Lien de la vidéo",
         "description": "Lien de la vidéo",
-        "error": "Le lien de la vidéo est requis"
+        "missing": "Le lien de la vidéo est requis",
+        "error": "Le lien de la vidéo est invalide"
       },
       "thumbnailUpload": "Uploader la miniature",
       "videoUpload": "Uploader la vidéo"
