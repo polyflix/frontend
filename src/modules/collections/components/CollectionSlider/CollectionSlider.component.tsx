@@ -1,6 +1,5 @@
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/outline";
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
 import SwiperCore, { Mousewheel, Navigation } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { NoData } from "../../../ui/components/NoData/NoData.component";
@@ -24,34 +23,9 @@ export const CollectionSlider: React.FC<Props> = ({
 }) => {
   const [playlistIndex, setPlaylistIndex] = useState(startIndex);
 
-  useEffect(() => {}, [startIndex]);
-
-  let history = useHistory();
-
-  const onChangeVideo = (value: "next" | "previous") => {
-    let _playlistIndex: number;
-    switch (value) {
-      case "next":
-        _playlistIndex =
-          playlistIndex + 1 < collection.videos.length
-            ? playlistIndex + 1
-            : playlistIndex;
-        break;
-      case "previous":
-        _playlistIndex =
-          playlistIndex - 1 >= 0 ? playlistIndex - 1 : playlistIndex;
-        break;
-    }
-
-    setPlaylistIndex(_playlistIndex);
-    updateLocation(_playlistIndex);
-  };
-
-  const updateLocation = (index: number) => {
-    history.push(
-      `${collection.videos[index].getStreamLink()}?${buildQuery(index)}`
-    );
-  };
+  useEffect(() => {
+    setPlaylistIndex(startIndex);
+  }, [startIndex]);
 
   const buildQuery = (index: number): URLSearchParams => {
     const query = new URLSearchParams();
@@ -91,10 +65,7 @@ export const CollectionSlider: React.FC<Props> = ({
         spaceBetween={10}
         freeMode
       >
-        <SliderControl
-          direction="previous"
-          onClick={() => onChangeVideo("previous")}
-        >
+        <SliderControl direction="previous">
           <ChevronLeftIcon className="w-10" />
         </SliderControl>
         {collection?.videos?.map((video, i: number) => (
@@ -107,7 +78,7 @@ export const CollectionSlider: React.FC<Props> = ({
             />
           </SwiperSlide>
         ))}
-        <SliderControl direction="next" onClick={() => onChangeVideo("next")}>
+        <SliderControl direction="next">
           <ChevronRightIcon className="w-10" />
         </SliderControl>
       </Swiper>

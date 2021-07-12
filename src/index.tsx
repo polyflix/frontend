@@ -26,7 +26,7 @@ ReactDOM.render(
         <Router>
           <Suspense
             fallback={
-              <Spinner page className="w-screen h-screen dark:bg-black" />
+              <Spinner page className="w-screen h-screen dark:bg-red" />
             }
           >
             <IndexRouter />

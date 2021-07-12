@@ -71,27 +71,12 @@ export const CollectionListItem: React.FC<Props> = ({
           {collection.title}
         </Typography>
         <Paragraph className="mb-4">{collection.shortDescription}</Paragraph>
-        {collection.videos ? (
-          <Link
-            to={
-              "/watch/" +
-              collection.videos[0].slug +
-              "?c=" +
-              collection.slug +
-              "&index=0"
-            }
-            className="bg-nx-red px-4 py-2 rounded-md text-lg transition-colors w-fit inline-block text-white hover:bg-nx-red-dark"
-          >
-            {t("collections.actions.goto")}
-          </Link>
-        ) : (
-          <Link
-            to={"#"}
-            className="bg-nx-red px-4 py-2 cursor-not-allowed opacity-50 rounded-md text-lg transition-colors w-fit inline-block text-white"
-          >
-            {t("collections.actions.noGoto")}
-          </Link>
-        )}
+        <Link
+          to={`/watch?v=0&c=${collection.slug}&index=0`}
+          className="bg-nx-red px-4 py-2 rounded-md text-lg transition-colors w-fit inline-block text-white hover:bg-nx-red-dark"
+        >
+          {t("collections.actions.goto")}
+        </Link>
       </div>
       <div className="flex items-center">
         {ownerItems && (

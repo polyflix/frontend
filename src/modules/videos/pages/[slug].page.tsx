@@ -1,9 +1,8 @@
-import React, { useRef, useState } from "react";
-import { Redirect, useParams } from "react-router";
+import React, { useEffect, useRef, useState } from "react";
+import { Redirect } from "react-router";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../authentication";
-import { Url } from "../../common/utils/url.util";
 import { fadeOpacity } from "../../ui/animations/fadeOpacity";
 
 import { GhostTile } from "../../ui/components/Ghost/GhostTile/GhostTile.component";
@@ -11,7 +10,6 @@ import { GhostList, Paragraph, Typography } from "../../ui";
 import { Container } from "../../ui/components/Container/Container.component";
 import { Page } from "../../ui/components/Page/Page.component";
 import { Player } from "../../videos/components/Player/Player.component";
-import { MediaPlayer } from "../components/MediaPlayer/MediaPlayer.component";
 import styles from "./slug.module.scss";
 import { cn } from "../../common/utils/classes.util";
 import {
@@ -38,62 +36,108 @@ import { useInjection } from "@polyflix/di";
 import { GhostParagraph } from "../../ui/components/Ghost/GhostParagraph";
 
 export const VideoDetail: React.FC = () => {
-  const isPlayingMode = Boolean(Url.hasParameter("play")) === true;
+  const [pageTitle, setPageTitle] = useState<string>();
+  const [videoSlug, setVideoSlug] = useState<string>();
+  const [collectionLoaded, setCollectionLoaded] = useState<boolean>(false);
+  const [error, setError] = useState();
 
-  const { slug } = useParams<{ slug: string }>();
+  const query = useQuery();
 
+  useEffect(() => {
+    if (query.has("v") && !collectionLoaded) {
+      setVideoSlug(query.get("v") as string);
+    }
+  }, [query, collectionLoaded]);
+
+  const onCollectionLoaded = (firstVideoSlug: string) => {
+    if (query.has("index") && +(query.get("index") as string) === 0)
+      setVideoSlug(firstVideoSlug);
+    setCollectionLoaded(true);
+  };
+
+  const buildContent = () => {
+    return (
+      <Container mxAuto fluid className="p-4 pb-8">
+        {videoSlug && (!query.has("c") || collectionLoaded) && (
+          <VideoContainer
+            onLoad={setPageTitle}
+            onError={setError}
+            slug={videoSlug}
+          />
+        )}
+        {query.has("c") && (
+          <CollectionComponent
+            onLoad={onCollectionLoaded}
+            slug={query.get("c") as string}
+          />
+        )}
+      </Container>
+    );
+  };
+
+  if (error) return <Redirect to="/not-found" />;
+  return (
+    <Page variants={fadeOpacity} title={pageTitle}>
+      {buildContent()}
+    </Page>
+  );
+};
+
+type VideoContainerProps = {
+  onLoad: (elm: string) => void;
+  onError: (error: any) => void;
+  slug: string;
+};
+
+const VideoContainer: React.FC<VideoContainerProps> = ({
+  onLoad,
+  onError,
+  slug,
+}) => {
   const { data: video, isLoading: isVideoLoading, alert } = useVideo(slug);
 
   const isLtMdScreen = useMediaQuery({ query: "(max-width: 767px)" });
 
   const playerRef = useRef<HTMLVmPlayerElement>(null);
 
-  const buildContent = () => {
-    const subtitles = video?.getSubtitles(SubtitleLanguages.FR);
+  const subtitles = video?.getSubtitles(SubtitleLanguages.FR);
 
-    return isPlayingMode ? (
-      video && <MediaPlayer video={video} />
-    ) : (
-      <Container mxAuto fluid className="p-4 pb-8">
-        <div
-          className={cn(
-            "flex flex-col md:flex-row gap-4 mb-8",
-            isLtMdScreen ? styles.container_mobile : styles.container_desktop
-          )}
-        >
-          <div className="flex-auto rounded-md">
-            {!isVideoLoading && video ? (
-              <Player
-                videoId={video.id}
-                userMeta={video.userMeta}
-                videoUrl={video.src}
-                videoSubtitles={video.subtitles}
-                playerRef={playerRef}
-              />
-            ) : (
-              <GhostTile aspectRatio={true} />
-            )}
-          </div>
-          <SidebarComponent
-            subtitles={subtitles}
-            video={video}
-            playerRef={playerRef}
-          />
-        </div>
-        <CollectionComponent />
-      </Container>
-    );
+  const onVideoEnd = () => {
+    // TODO: For when the reader is less buggy
   };
 
-  if (alert) return <Redirect to="/not-found" />;
+  useEffect(() => {
+    onError(alert);
+    if (video) onLoad(video?.title);
+  }, [video, onLoad, onError, alert]);
+
   return (
-    <Page
-      withNavbar={!isPlayingMode}
-      variants={fadeOpacity}
-      title={video?.title}
+    <div
+      className={cn(
+        "flex flex-col md:flex-row gap-4 mb-8",
+        isLtMdScreen ? styles.container_mobile : styles.container_desktop
+      )}
     >
-      {buildContent()}
-    </Page>
+      <div className={cn("flex-auto rounded-md")}>
+        {!isVideoLoading && video ? (
+          <Player
+            videoId={video.id}
+            userMeta={video.userMeta}
+            videoUrl={video.src}
+            videoSubtitles={video.subtitles}
+            playerRef={playerRef}
+            onVideoEnd={onVideoEnd}
+          />
+        ) : (
+          <GhostTile aspectRatio={true} />
+        )}
+      </div>
+      <SidebarComponent
+        subtitles={subtitles}
+        video={video}
+        playerRef={playerRef}
+      />
+    </div>
   );
 };
 
@@ -334,14 +378,26 @@ const SidebarComponent: React.FC<SidebarComponentProps> = ({
   );
 };
 
-const CollectionComponent: React.FC = () => {
+type CollectionComponentProps = {
+  onLoad: (elm: string) => void;
+  slug: string;
+};
+
+const CollectionComponent: React.FC<CollectionComponentProps> = ({
+  onLoad,
+  slug,
+}) => {
   let query = useQuery();
 
   const { data: collection, isLoading: isCollectionLoading } =
     useCollections<Collection>({
       mode: "document",
-      slug: query.get("c") as string,
+      slug,
     });
+
+  useEffect(() => {
+    if (collection) onLoad(collection.videos[0].slug);
+  }, [collection, onLoad]);
 
   return (
     <>

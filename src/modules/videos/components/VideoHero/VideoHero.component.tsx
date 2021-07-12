@@ -27,7 +27,7 @@ export const VideoHero: React.FC<Props> = ({ video }) => {
           }}
         >
           <Typography as="h1" className="text-4xl md:text-6xl" bold>
-            {video.title}
+            {video.shortTitle}
           </Typography>
           <Paragraph className="my-5">{video.shortDescription}</Paragraph>
           <VideoButtons video={video} />
