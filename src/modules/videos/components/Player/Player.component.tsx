@@ -1,26 +1,10 @@
 import React, { useEffect } from "react";
 import { Subtitle } from "../../models/subtitle.model";
 import {
-  CaptionControl,
-  Captions,
-  ClickToPlay,
-  ControlGroup,
-  Controls,
-  ControlSpacer,
-  DblClickFullscreen,
-  DefaultSettings,
-  FullscreenControl,
-  PipControl,
-  PlaybackControl,
+  DefaultUi,
   Player as PlayerVime,
-  Poster,
-  Scrim,
-  ScrubberControl,
-  Spinner,
-  Ui,
   Video,
   Vimeo,
-  VolumeControl,
   Youtube,
 } from "@vime/react";
 import { useAuth } from "../../../authentication";
@@ -138,10 +122,19 @@ export const Player: React.FC<Props & { onVideoEnd: () => void }> = ({
 
     // toggle captions
     if (event.key === "c") {
-      if (playerRef.current.isTextTrackVisible) {
-        playerRef.current.setTextTrackVisibility(false);
+      if (player.isTextTrackVisible) {
+        player.setTextTrackVisibility(false);
       } else {
-        playerRef.current.setTextTrackVisibility(true);
+        player.setTextTrackVisibility(true);
+      }
+    }
+
+    // toggle captions
+    if (event.key === "p") {
+      if (player.isPiPActive) {
+        player.exitPiP();
+      } else {
+        player.enterPiP();
       }
     }
   };
@@ -188,32 +181,7 @@ export const Player: React.FC<Props & { onVideoEnd: () => void }> = ({
           onVmPlaybackEnded={onVideoEnd}
         >
           <Provider videoUrl={videoUrl} videoSubtitles={videoSubtitles} />
-          <Ui>
-            <Scrim />
-            <ClickToPlay />
-            <DblClickFullscreen />
-            <Spinner />
-            <Poster />
-            <Captions />
-
-            <Controls fullWidth>
-              <ControlGroup>
-                <ScrubberControl />
-              </ControlGroup>
-
-              <ControlGroup space="top">
-                <PlaybackControl />
-                <VolumeControl />
-
-                <ControlSpacer />
-
-                <CaptionControl />
-                <PipControl />
-                <DefaultSettings />
-                <FullscreenControl />
-              </ControlGroup>
-            </Controls>
-          </Ui>
+          <DefaultUi></DefaultUi>
         </PlayerVime>
       </div>
     </div>
