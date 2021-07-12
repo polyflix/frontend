@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { scaleBand, scaleLinear } from "@visx/scale";
 import { max } from "d3-array";
 import { Axis, AxisBottom } from "@visx/axis";
@@ -11,6 +11,7 @@ import { ParentSize } from "@visx/responsive";
 import { timeFormat, timeParse } from "d3-time-format";
 import { useTranslation } from "react-i18next";
 import { StatViewQuery } from "../types/StatView.type";
+import { formatEnglish } from "../../common/utils/date.util";
 
 type Props = {
   width: number;
@@ -24,7 +25,12 @@ const formatDate = (date: string) => format(parseDate(date) as Date);
 const getDate = (d: StatViewQuery) => d.createdAt;
 const y = (d: StatViewQuery) => d.viewsCount;
 
-export const ViewChart: React.FC<Props> = ({ height, width, data }) => {
+export const ViewChart: React.FC<Props> = ({
+  height,
+  width,
+  data: viewData,
+}) => {
+  const [data, setData] = useState(viewData);
   const { t } = useTranslation();
   const padding = 30;
   const colors = {
@@ -37,7 +43,7 @@ export const ViewChart: React.FC<Props> = ({ height, width, data }) => {
   };
 
   const yScale = scaleLinear({
-    domain: [0, max(data.map(y)) ?? 100],
+    domain: [0, max(data.map(y)) === 0 ? 1 : max(data.map(y)) ?? 1],
     range: [height - padding, padding * 2],
   });
 
@@ -45,6 +51,17 @@ export const ViewChart: React.FC<Props> = ({ height, width, data }) => {
     domain: data.map(getDate),
     range: [padding, width - padding],
   });
+
+  useEffect(() => {
+    const d = viewData;
+    d.push({
+      likesCount: 0,
+      viewsCount: 0,
+      watchedPercentMean: 0,
+      createdAt: formatEnglish(new Date(Date.now() + 86400000)),
+    });
+    setData(d);
+  }, [viewData]);
 
   dateScale.rangeRound([0, width]);
   return (
