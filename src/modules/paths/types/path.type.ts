@@ -3,7 +3,11 @@ import { AlertType } from "../../ui/components/Alert/Alert.component";
 import { Path } from "../models/path.model";
 import { IOrderedCourse } from "./orderedCourse.type";
 
-export interface IPathForm {}
+export interface IPathForm {
+  title: string;
+  description: string;
+  courses: Omit<IOrderedCourse, "id">[];
+}
 
 export type PathState<T> = {
   isLoading: boolean;

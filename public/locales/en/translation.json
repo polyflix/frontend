@@ -369,6 +369,20 @@
     "actions": {
       "switching": "Click to change"
     },
+    "inputs": {
+      "title": {
+        "name": "Title",
+        "description": "The title of the path",
+        "error": "A title is required"
+      },
+      "description": {
+        "name": "Path description",
+        "error": "A description is required"
+      },
+      "search": {
+        "name": "Course search"
+      }
+    },
     "addPath": {
       "description": "Fill the form below to create your path",
       "action": "Create",

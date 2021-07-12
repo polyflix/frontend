@@ -369,6 +369,20 @@
     "actions": {
       "switching": "Cliquez pour changer"
     },
+    "inputs": {
+      "title": {
+        "name": "Titre",
+        "description": "Le titre du parcours",
+        "error": "Le titre du parcours est requis"
+      },
+      "description": {
+        "name": "Description du parcours",
+        "error": "La description du parcours est requise"
+      },
+      "search": {
+        "name": "Rechercher un cours"
+      }
+    },
     "addPath": {
       "description": "Remplissez le formulaire ci-dessous pour créer votre parcours",
       "action": "Créer",

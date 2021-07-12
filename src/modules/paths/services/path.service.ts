@@ -3,7 +3,7 @@ import { StatusCodes } from "http-status-codes";
 import { HttpService } from "../../common/services/http.service";
 import { IPathFilter, PathFilter } from "../filters/path.filter";
 import { Path } from "../models/path.model";
-import { PathsWithPagination } from "../types";
+import { IPathForm, PathsWithPagination } from "../types";
 
 @Injectable()
 export class PathService {
@@ -36,6 +36,21 @@ export class PathService {
   }
 
   /**
+   * Create a path
+   * @param {IPathForm} path the form data to post
+   * @returns {Promise<Path>}
+   */
+  public async createPath(path: IPathForm): Promise<Path> {
+    const { status, response, error } = await this.httpService.post(`/paths`, {
+      body: path,
+    });
+    if (status !== StatusCodes.CREATED) {
+      throw error;
+    }
+    return response;
+  }
+
+  /**
    * Delete a path
    * @param {string} id the path id
    */
@@ -44,6 +59,25 @@ export class PathService {
     if (status !== StatusCodes.NO_CONTENT) {
       throw error;
     }
+  }
+
+  /**
+   * Update a path
+   * @param {string} id the  path id
+   * @param {IPathForm} data the path form
+   * @returns {Promise<Path>}
+   */
+  public async updatePath(id: string, data: IPathForm): Promise<Path> {
+    const { status, response, error } = await this.httpService.put(
+      `/paths/${id}`,
+      {
+        body: data,
+      }
+    );
+    if (status !== StatusCodes.OK) {
+      throw error;
+    }
+    return Path.fromJson(response);
   }
 
   /**

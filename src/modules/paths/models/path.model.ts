@@ -119,4 +119,12 @@ export class Path {
   getOrderedCourses(): OrderedCourse[] {
     return this._courses;
   }
+
+  /**
+   * Return the array of ordered course
+   * @returns {OrderedCourse[]}
+   */
+  get courses(): OrderedCourse[] {
+    return this._courses;
+  }
 }
