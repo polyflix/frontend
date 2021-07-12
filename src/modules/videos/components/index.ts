@@ -1,4 +1,3 @@
-export * from "./MediaPlayer/MediaPlayer.component";
 export * from "./VideoButtons/VideoButton.component";
 export * from "./VideoForm/VideoForm.component";
 export * from "./VideoHero/VideoHero.component";
