@@ -9,7 +9,7 @@ import {
 } from "@vime/react";
 import { useAuth } from "../../../authentication";
 import { useInjection } from "@polyflix/di";
-import { StatsService } from "../../../stats/services/stats.service";
+import { WatchtimeSyncService } from "../../../stats/services/watchtime-sync.service";
 import WatchMetadata from "../../../stats/models/userMeta.model";
 import { Track } from "../../types/track.type";
 import { ProviderType } from "../../types";
@@ -34,7 +34,7 @@ export const Player: React.FC<Props> = ({
   playerRef,
 }) => {
   const { token } = useAuth();
-  const statsService = useInjection<StatsService>(StatsService);
+  const statsService = useInjection<WatchtimeSyncService>(WatchtimeSyncService);
 
   const onTriggerWatchtimeEvent = () => {
     if (

@@ -7,7 +7,7 @@ import { HttpService } from "../../common/services";
 import { UpsertUserVideoMeta } from "../types/userMeta.type";
 
 @Injectable()
-export class StatsService {
+export class WatchtimeSyncService {
   private _lastSync: number | null = null;
   private _timer: NodeJS.Timeout | null = null;
 
@@ -47,11 +47,6 @@ export class StatsService {
       await this.httpService.post("/stats/watchtime", {
         body: updateData,
       });
-      console.debug(
-        `Updated stats watchtime on ${
-          updateData.watchedSeconds
-        } seconds (${Math.round(updateData.watchedPercent * 100)}%)`
-      );
     } catch (e) {
       console.debug("Failed to send watchtime...");
     }

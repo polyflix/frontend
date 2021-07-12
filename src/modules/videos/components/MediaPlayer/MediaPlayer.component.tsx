@@ -5,7 +5,7 @@ import ReactPlayer from "react-player";
 import BaseReactPlayer from "react-player/types/base";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../../authentication";
-import { StatsService } from "../../../stats/services/stats.service";
+import { WatchtimeSyncService } from "../../../stats/services/watchtime-sync.service";
 import { Typography } from "../../../ui";
 import { Video } from "../../models";
 
@@ -21,7 +21,7 @@ export const MediaPlayer: React.FC<Props> = ({ video, ..._ }) => {
   const [overlay, setOverlay] = useState<boolean>(true);
   const playerRef = useRef<BaseReactPlayer<any>>(null);
   const { token } = useAuth();
-  const statsService = useInjection<StatsService>(StatsService);
+  const statsService = useInjection<WatchtimeSyncService>(WatchtimeSyncService);
 
   const watchSyncCallback = useCallback(() => {
     if (!playerRef?.current || !token) return;

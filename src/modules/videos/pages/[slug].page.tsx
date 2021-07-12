@@ -33,7 +33,7 @@ import { useCollections } from "../../collections/hooks";
 import { Collection } from "../../collections/models";
 import { useQuery } from "../../common/hooks/useQuery";
 import { CollectionSlider } from "../../collections/components/CollectionSlider/CollectionSlider.component";
-import { StatsService } from "../../stats/services/stats.service";
+import { WatchtimeSyncService } from "../../stats/services/watchtime-sync.service";
 import { useInjection } from "@polyflix/di";
 import { GhostParagraph } from "../../ui/components/Ghost/GhostParagraph";
 
@@ -113,7 +113,8 @@ const SidebarComponent: React.FC<SidebarComponentProps> = ({
   const { user } = useAuth();
   const { t } = useTranslation();
 
-  const statsService = useInjection<StatsService>(StatsService);
+  const watchtimeSyncService =
+    useInjection<WatchtimeSyncService>(WatchtimeSyncService);
 
   const [isContainerDataVisible, setContainerDataIsVisible] = useState(true);
 
@@ -130,7 +131,7 @@ const SidebarComponent: React.FC<SidebarComponentProps> = ({
 
   const like = () => {
     if (video) {
-      statsService.likeVideo(video.id);
+      watchtimeSyncService.likeVideo(video.id);
       if (!isLiked) {
         video.likes += 1;
       } else {
