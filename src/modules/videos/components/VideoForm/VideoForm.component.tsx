@@ -35,6 +35,7 @@ import { VideoFile } from "../../../upload/models/files/video.model";
 import { MinioService } from "../../../upload/services/minio.service";
 import { MinioFile } from "../../../upload/models/files/minio-file.model";
 import { SubtitleService } from "../../services";
+import urlRegex from "url-regex";
 
 type Props = {
   /** If video exists, the form will be in update mode, otherwise in create mode. */
@@ -219,12 +220,15 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
               required
               className="col-span-2 md:col-span-1"
               variants={fadeInDown}
-              placeholder={t("videoManagement.inputs.thumbnail.name")}
-              hint={`${t("videoManagement.inputs.thumbnail.name")}.`}
+              placeholder={t("videoManagement.inputs.thumbnailURL.name")}
+              hint={`${t("videoManagement.inputs.thumbnailURL.name")}.`}
               ref={register({
-                required: {
-                  value: true,
-                  message: `${t("videoManagement.inputs.thumbnail.error")}.`,
+                required: `${t(
+                  "videoManagement.inputs.thumbnailURL.missing"
+                )}.`,
+                pattern: {
+                  value: urlRegex({ exact: true }),
+                  message: `${t("videoManagement.inputs.thumbnailURL.error")}.`,
                 },
               })}
             />
@@ -237,8 +241,9 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
               placeholder={t("videoManagement.inputs.videoURL.name")}
               hint={`${t("videoManagement.inputs.videoURL.name")}.`}
               ref={register({
-                required: {
-                  value: true,
+                required: `${t("videoManagement.inputs.videoURL.missing")}.`,
+                pattern: {
+                  value: urlRegex({ exact: true }),
                   message: `${t("videoManagement.inputs.videoURL.error")}.`,
                 },
               })}

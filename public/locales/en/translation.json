@@ -242,7 +242,8 @@
       "thumbnailURL": {
         "name": "Thumbnail URL",
         "description": "The URL of the video thumbnail",
-        "error": "A thumbnail URL is required"
+        "missing": "A thumbnail URL is required",
+        "error": "The thumbnail URL is invalid"
       },
       "description": {
         "name": "Video description",
@@ -251,7 +252,8 @@
       "videoURL": {
         "name": "Video URL",
         "description": "The URL of the video",
-        "error": "A video URL is required"
+        "missing": "A video URL is required",
+        "error": "The video URL is invalid"
       },
       "thumbnailUpload": "Upload thumbnail",
       "videoUpload": "Upload video"
