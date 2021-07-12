@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import {
   Container,
   fadeOpacity,
@@ -66,7 +66,9 @@ export const StatsPage: React.FC = () => {
             />
           )}
           <div className="h-96 w-full">
-            <ResponsiveViewChart />
+            {!isStatsLoading && stats && (
+              <ResponsiveViewChart data={stats.views} />
+            )}
           </div>
         </Container>
       </motion.div>

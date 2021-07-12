@@ -5,42 +5,26 @@ import { Axis, AxisBottom } from "@visx/axis";
 import { LinearGradient } from "@visx/gradient";
 import { MarkerCircle } from "@visx/marker";
 import { LinePath } from "@visx/shape";
-import { curveNatural } from "@visx/curve";
+import { curveCardinal as curve } from "@visx/curve";
 import { Text } from "@visx/text";
 import { ParentSize } from "@visx/responsive";
 import { timeFormat, timeParse } from "d3-time-format";
 import { useTranslation } from "react-i18next";
+import { StatViewQuery } from "../types/StatView.type";
 
 type Props = {
   width: number;
   height: number;
+  data: StatViewQuery[];
 };
-
-type Data = {
-  date: string;
-  occurrence: number;
-};
-
-const data: Data[] = [
-  { date: "2020-03-01", occurrence: 0 },
-  { date: "2020-03-02", occurrence: 10 },
-  { date: "2020-03-03", occurrence: 30 },
-  { date: "2020-03-04", occurrence: 5 },
-  { date: "2020-03-05", occurrence: 16 },
-  { date: "2020-03-06", occurrence: 23 },
-  { date: "2020-03-07", occurrence: 48 },
-  { date: "2020-03-08", occurrence: 80 },
-  { date: "2020-03-09", occurrence: 38 },
-  { date: "2020-03-10", occurrence: 0 },
-];
 
 const parseDate = timeParse("%Y-%m-%d");
 const format = timeFormat("%b %d");
 const formatDate = (date: string) => format(parseDate(date) as Date);
-const getDate = (d: Data) => d.date;
-const y = (d: Data) => d.occurrence;
+const getDate = (d: StatViewQuery) => d.createdAt;
+const y = (d: StatViewQuery) => d.viewsCount;
 
-export const ViewChart: React.FC<Props> = ({ height, width }) => {
+export const ViewChart: React.FC<Props> = ({ height, width, data }) => {
   const { t } = useTranslation();
   const padding = 30;
   const colors = {
@@ -99,12 +83,12 @@ export const ViewChart: React.FC<Props> = ({ height, width }) => {
 
         <LinePath
           data={data}
-          x={(d) => dateScale(d.date) as number}
-          y={(d) => yScale(d.occurrence)}
+          x={(d) => dateScale(d.createdAt) as number}
+          y={(d) => yScale(d.viewsCount)}
           stroke="url('#line-gradient')"
           fill={"url('#background-gradient')"}
           strokeWidth={3}
-          curve={curveNatural}
+          curve={curve}
           markerEnd="url(#marker-circle)"
           markerMid="url(#marker-circle)"
           markerStart="url(#marker-circle)"
@@ -152,10 +136,12 @@ export const ViewChart: React.FC<Props> = ({ height, width }) => {
   );
 };
 
-export const ResponsiveViewChart: React.FC = () => (
+export const ResponsiveViewChart: React.FC<Omit<Props, "width" | "height">> = ({
+  ...rest
+}) => (
   <ParentSize debounceTime={10}>
     {({ width: visWidth, height: visHeight }) => (
-      <ViewChart height={visHeight} width={visWidth} />
+      <ViewChart height={visHeight} width={visWidth} {...rest} />
     )}
   </ParentSize>
 );
