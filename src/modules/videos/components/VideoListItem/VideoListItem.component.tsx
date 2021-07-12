@@ -102,9 +102,20 @@ export const VideoListItem: React.FC<Props> = ({
         )}
       </div>
       <div className="col-span-12 md:col-span-8 xl:col-span-9 flex flex-col justify-center">
-        <Typography bold className="text-lg md:text-xl" as="h3">
-          {video.title}
-        </Typography>
+        <div className="flex">
+          <Typography bold className="text-lg md:text-xl" as="h3">
+            {video.title}
+          </Typography>
+          {ownerItems && links && (
+            <div className="ml-auto text-white">
+              <VideoListItemOptions
+                onTriggerDelete={() => setOpen(true)}
+                editLink={video.getEditLink()}
+                statsLink={video.getStatsLink()}
+              />
+            </div>
+          )}
+        </div>
         <div className={`my-4 ${ownerItems ? "flex" : "hidden"} items-center`}>
           <Typography
             as="span"
@@ -208,15 +219,6 @@ export const VideoListItem: React.FC<Props> = ({
                 date: new Date(video.createdAt).toLocaleDateString(),
               })}
             </span>
-          )}
-          {ownerItems && links && (
-            <div className="ml-auto text-white">
-              <VideoListItemOptions
-                onTriggerDelete={() => setOpen(true)}
-                editLink={video.getEditLink()}
-                statsLink={video.getStatsLink()}
-              />
-            </div>
           )}
         </div>
       </div>
