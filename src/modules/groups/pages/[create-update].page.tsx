@@ -5,7 +5,6 @@ import { Page } from "../../ui";
 import { Group } from "../models/group.model";
 import { GroupForm } from "../components/GroupForm/GroupForm.component";
 import { useGroups } from "../hooks/useGroupHooks";
-import { GroupDetails } from "../components/GroupDetails/GroupDetails.component";
 
 export const CreateUpdateGroupPage: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -25,7 +24,6 @@ export const CreateUpdateGroupPage: React.FC = () => {
       } ${t("groupManagement.group")}`}
     >
       <GroupForm group={data} />
-      <GroupDetails group={data} />
     </Page>
   );
 };

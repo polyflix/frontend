@@ -20,6 +20,8 @@ import {
 import { Group } from "../../models/group.model";
 import { IGroupForm } from "../../types/groups.type";
 import { GroupService } from "../../services/group.service";
+import { GroupDetails } from "../GroupDetails/GroupDetails.component";
+import { useHistory } from "react-router";
 
 type Props = {
   /** If group exists, the form will be in update mode, otherwise in create mode. */
@@ -41,6 +43,8 @@ export const GroupForm: React.FC<Props> = ({ group }) => {
     },
   });
 
+  let history = useHistory();
+  const [isSubmit, setIsSubmit] = useState(false);
   const [loading, setLoading] = useState(false);
   const [alert, setAlert] =
     useState<{
@@ -51,6 +55,7 @@ export const GroupForm: React.FC<Props> = ({ group }) => {
   const isUpdate = group instanceof Group;
 
   const onSubmit = async (data: IGroupForm) => {
+    setIsSubmit(true);
     setLoading(true);
     try {
       await (isUpdate
@@ -66,6 +71,7 @@ export const GroupForm: React.FC<Props> = ({ group }) => {
           : `"${data.title}" ${t("groupManagement.addGroup.success")}.`,
         type: "success",
       });
+      history.push("/groups");
     } catch (err) {
       setAlert({
         message: `${t("groupManagement.addGroup.error")} "${data.title}"`,
@@ -111,7 +117,7 @@ export const GroupForm: React.FC<Props> = ({ group }) => {
           ref={register({
             required: {
               value: true,
-              message: `${t("groupManagement.inputs.title.error")}.`,
+              message: `${t("groupManagement.inputs.name.error")}.`,
             },
           })}
         />
@@ -150,9 +156,11 @@ export const GroupForm: React.FC<Props> = ({ group }) => {
               ? t("groupManagement.updateGroup.action")
               : t("groupManagement.addGroup.action")
           }
+          disabled={isSubmit}
           variants={fadeInDown}
         />
       </form>
+      {!isUpdate || <GroupDetails group={group || null} />}
     </motion.div>
   );
 };
