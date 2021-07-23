@@ -39,6 +39,7 @@ export const UserCollectionsPage: React.FC = () => {
     page,
     pageSize: limit,
     mode: "collection",
+    order: "-updatedAt",
   });
 
   const onCollectionDelete = async (id: string) => {
@@ -95,7 +96,7 @@ export const UserCollectionsPage: React.FC = () => {
                 onDelete={() => onCollectionDelete(collection.id)}
                 collection={collection}
                 ownerItems={isOwnPage}
-              ></CollectionListItem>
+              />
             ))}
             {data.items.length > 0 ? (
               <Paginator

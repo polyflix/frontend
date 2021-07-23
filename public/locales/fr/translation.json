@@ -190,8 +190,8 @@
       "userTitle": "Parcours de {{user}}"
     },
     "list": {
-      "ownNoCourses": "Vous n'avez pas encore créé de parcours",
-      "userNoCourses": "{{user}} n'a pas encore créé de parcours"
+      "ownNoPaths": "Vous n'avez pas encore créé de parcours",
+      "userNoPaths": "{{user}} n'a pas encore créé de parcours"
     }
   },
   "userVideos": {

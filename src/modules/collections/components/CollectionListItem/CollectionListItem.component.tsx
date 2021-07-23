@@ -69,6 +69,13 @@ export const CollectionListItem: React.FC<Props> = ({
       <div className="col-span-12 md:col-span-8 xl:col-span-9 flex flex-col justify-center">
         <Typography bold className="text-lg md:text-xl" as="h3">
           {collection.title}
+          {ownerItems && (
+            <span className="text-nx-gray opacity-80 px-4 text-sm font-normal">
+              {t("shared.common.createdAt", {
+                date: new Date(collection.createdAt).toLocaleDateString(),
+              })}
+            </span>
+          )}
         </Typography>
         <Paragraph className="mb-4">{collection.shortDescription}</Paragraph>
         <Link
@@ -78,7 +85,7 @@ export const CollectionListItem: React.FC<Props> = ({
           {t("collections.actions.goto")}
         </Link>
       </div>
-      <div className="flex items-center">
+      <div className="flex items-center flex-shrink flex-grow">
         {ownerItems && (
           <ActionLink
             Icon={PencilIcon}
@@ -94,13 +101,6 @@ export const CollectionListItem: React.FC<Props> = ({
             onClick={() => setOpen(true)}
             className={"ml-4"}
           />
-        )}
-        {ownerItems && (
-          <span className="text-nx-gray opacity-80 px-4 text-sm">
-            {t("shared.common.createdAt", {
-              date: new Date(collection.createdAt).toLocaleDateString(),
-            })}
-          </span>
         )}
       </div>
     </div>

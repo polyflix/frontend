@@ -1,6 +1,5 @@
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/outline";
 import React from "react";
-import { Link } from "react-router-dom";
 import SwiperCore, { Mousewheel, Navigation } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { NoData } from "../../../ui/components/NoData/NoData.component";
@@ -23,12 +22,13 @@ export const VideoSlider: React.FC<Props> = ({
 }) => {
   return videos.length !== 0 ? (
     <div>
-      <Link to="#" className="group flex items-center mb-6 w-fit">
+      <span className="group flex items-center mb-6 w-fit">
         <Typography as="h4" className="text-xl pl-3" bold>
           {title}
         </Typography>
-        <ChevronRightIcon className="w-5 pt-1 text-nx-white transition-transform transform group-hover:translate-x-1" />
-      </Link>
+        {/* Removed class  group-hover:translate-x-1 on chevron, as there is no link anymore */}
+        <ChevronRightIcon className="w-5 pt-1 text-nx-white transition-transform transform" />
+      </span>
       <Swiper
         navigation={{ nextEl: ".control-next", prevEl: ".control-previous" }}
         slidesPerView={1}
