@@ -17,7 +17,7 @@ export const CollectionsPage: React.FC = () => {
 
   const {
     data,
-    isLoading: isLoadingVideo,
+    isLoading: isLoadingCollection,
     alert,
   } = useCollections<CollectionsWithPagination>({
     page,
@@ -29,7 +29,7 @@ export const CollectionsPage: React.FC = () => {
 
   return (
     <Page
-      isLoading={isLoadingVideo}
+      isLoading={isLoadingCollection}
       variants={fadeOpacity}
       title={t("collections.seo.title")}
     >
