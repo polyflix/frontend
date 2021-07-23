@@ -37,7 +37,6 @@ export class GroupService {
       // eslint-disable-next-line
       throw { error, status };
     }
-    console.log(response);
     return response.items.map(Group.fromJson);
   }
 
@@ -94,7 +93,6 @@ export class GroupService {
    * Join a group
    * @param {string} id the group id
    * @param {string} id the user id
-   * @param {Token} token the access token
    * @returns {Promise<Group>}
    */
   public async joinGroup(id: string): Promise<Group> {

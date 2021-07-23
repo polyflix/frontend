@@ -29,7 +29,7 @@ export const GroupSlider: React.FC<Props> = ({
     return isJoined ? (
       <div className="text-white">{t("groupManagement.nodata")}</div>
     ) : (
-      <div className="text-white">{t("noData.content.title")}</div>
+      <div className="text-white">{t("groupManagement.no-exist")}</div>
     );
   return (
     <div>

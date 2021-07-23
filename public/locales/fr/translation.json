@@ -440,6 +440,7 @@
       }
     },
     "nodata": "Vous n'avez encore rejoint aucun groupe",
+    "no-exist": "Il n'existe aucun groupe",
     "nobody": "Il n'y a aucun membre dans ce groupe"
   },
   "notFound": {

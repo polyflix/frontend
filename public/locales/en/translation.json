@@ -334,6 +334,7 @@
       }
     },
     "nodata": "You haven't joined any group",
+    "no-exist": "There is no existing group",
     "nobody": "There is no member in this group"
   },
   "userCollections": {
