@@ -36,7 +36,7 @@ export interface IVideo {
   publisherId: string;
   publishedBy: IPublisher | null;
   userMeta: IWatchMetadata | undefined;
-  watchCount: number;
+  views: number;
   likes: number;
   createdAt: string;
   updatedAt: string;

@@ -316,7 +316,7 @@ const SidebarComponent: React.FC<SidebarComponentProps> = ({
                             className="flex items-center text-sm md:text-base"
                           >
                             <EyeIcon className="text-blue-500  w-5 mr-2" />{" "}
-                            {video?.watchCount}
+                            {video?.views}
                           </Typography>
 
                           <Typography
