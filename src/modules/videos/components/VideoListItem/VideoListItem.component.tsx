@@ -168,7 +168,7 @@ export const VideoListItem: React.FC<Props> = ({
             bold
             className="text-blue-500 flex items-center text-sm md:text-base"
           >
-            <EyeIcon className="w-5 mr-2" /> {video.watchCount}
+            <EyeIcon className="w-5 mr-2" /> {video.views}
           </Typography>
 
           <div className="mx-2"></div>
