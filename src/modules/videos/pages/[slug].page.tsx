@@ -123,10 +123,12 @@ const VideoContainer: React.FC<VideoContainerProps> = ({
           <Player
             videoId={video.id}
             userMeta={video.userMeta}
-            videoUrl={video.src}
+            streamUrl={video.src}
+            videoSourceType={video.srcType}
             videoSubtitles={video.subtitles}
             playerRef={playerRef}
             onVideoEnd={onVideoEnd}
+            rawVideoId={video.srcRaw}
           />
         ) : (
           <GhostTile aspectRatio={true} />

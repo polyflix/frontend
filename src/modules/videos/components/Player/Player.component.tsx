@@ -1,30 +1,22 @@
 import React, { useEffect } from "react";
 import { Subtitle } from "../../models/subtitle.model";
-import {
-  DefaultUi,
-  Player as PlayerVime,
-  Video,
-  Vimeo,
-  Youtube,
-} from "@vime/react";
+import { DefaultUi, Player as PlayerVime, Video, Youtube } from "@vime/react";
 import { useAuth } from "../../../authentication";
 import { useInjection } from "@polyflix/di";
 import { WatchtimeSyncService } from "../../../stats/services/watchtime-sync.service";
 import WatchMetadata from "../../../stats/models/userMeta.model";
 import { Track } from "../../types/track.type";
-import { ProviderType } from "../../types";
+import { VideoSource } from "../../types";
 
 type Props = {
-  videoUrl: string;
+  streamUrl: string;
+  rawVideoId: string;
   videoSubtitles: Subtitle[];
   videoId: string;
   userMeta?: WatchMetadata;
   playerRef: React.RefObject<HTMLVmPlayerElement>;
+  videoSourceType: VideoSource;
 };
-
-const MATCH_URL_YOUTUBE =
-  /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
-const MATCH_URL_VIMEO = /vimeo\.com\/.+/;
 
 const PLAYER_VOLUME_DOWN_STEP = 10;
 const PLAYER_VOLUME_UP_STEP = 10;
@@ -32,12 +24,14 @@ const PLAYER_MOVE_FORWARD_STEP = 13;
 const PLAYER_MOVE_BACKWARD_STEP = 10;
 
 export const Player: React.FC<Props & { onVideoEnd: () => void }> = ({
-  videoUrl,
+  streamUrl,
   userMeta,
   videoSubtitles,
   videoId,
   playerRef,
   onVideoEnd,
+  rawVideoId,
+  videoSourceType,
 }) => {
   const { token } = useAuth();
   const statsService = useInjection<WatchtimeSyncService>(WatchtimeSyncService);
@@ -180,7 +174,12 @@ export const Player: React.FC<Props & { onVideoEnd: () => void }> = ({
           onVmPlaybackStarted={onPlaybackStart}
           onVmPlaybackEnded={onVideoEnd}
         >
-          <Provider videoUrl={videoUrl} videoSubtitles={videoSubtitles} />
+          <Provider
+            rawVideoId={rawVideoId}
+            streamUrl={streamUrl}
+            videoSourceType={videoSourceType}
+            videoSubtitles={videoSubtitles}
+          />
           <DefaultUi></DefaultUi>
         </PlayerVime>
       </div>
@@ -195,26 +194,31 @@ export const Player: React.FC<Props & { onVideoEnd: () => void }> = ({
  * @constructor
  */
 const Provider: React.FC<Omit<Props, "videoId" | "playerRef">> = ({
-  videoUrl,
+  streamUrl,
   videoSubtitles,
+  videoSourceType,
+  rawVideoId,
 }) => {
-  const [provider, url] = getProvider(videoUrl);
   const tracks = getTracks(videoSubtitles);
 
-  switch (provider) {
-    case ProviderType.VIDEO:
+  switch (videoSourceType) {
+    case VideoSource.YOUTUBE:
+      return <Youtube videoId={rawVideoId} cookies={false} />;
+    case VideoSource.INTERNAL:
       return (
         <Video crossOrigin="use-credentials">
-          <source data-src={url} type="video/mp4" />
+          <source data-src={streamUrl} type="video/mp4" />
           {tracks.map((track, i) => (
             <track {...track} key={i} />
           ))}
         </Video>
       );
-    case ProviderType.VIMEO:
-      return <Vimeo videoId={url} />;
-    case ProviderType.YOUTUBE:
-      return <Youtube videoId={url} cookies={false} />;
+    case VideoSource.UNKNOWN:
+      return (
+        <Video crossOrigin="use-credentials">
+          <source data-src={streamUrl} type="video/mp4" />
+        </Video>
+      );
     default:
       return <p>Video type unknown</p>;
   }
@@ -236,27 +240,4 @@ function getTracks(videoSubtitles: Subtitle[]) {
     });
   }
   return tracks;
-}
-
-/**
- * Find the video provider from the video url
- * @param videoUrl The video url
- * @returns The provider : 'youtube' | 'vimeo' | 'html5'
- */
-function getProvider(videoUrl: string): [ProviderType, string] {
-  let provider: [ProviderType, string];
-  if (MATCH_URL_YOUTUBE.test(videoUrl)) {
-    const match = videoUrl.match(MATCH_URL_YOUTUBE);
-    provider = [
-      ProviderType.YOUTUBE,
-      match && match[7].length === 11 ? match[7] : "",
-    ];
-  } else if (MATCH_URL_VIMEO.test(videoUrl)) {
-    const match = videoUrl.match(MATCH_URL_VIMEO);
-    if (!match) return [ProviderType.UNKNOWN, ""];
-    provider = [ProviderType.VIMEO, match[0].split("/")[1]];
-  } else {
-    provider = [ProviderType.VIDEO, videoUrl];
-  }
-  return provider;
 }
