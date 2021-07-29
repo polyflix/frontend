@@ -154,7 +154,7 @@ export class Video {
   get src(): string {
     switch (this._sourceType) {
       case VideoSource.INTERNAL:
-        return `https://minio.${window.location.hostname}/videos/${this._source}}`;
+        return `https://minio.${window.location.hostname}/videos/${this._source}`;
       case VideoSource.YOUTUBE:
         return `https://www.youtube-nocookie.com/embed/${this._source}`;
       default:
