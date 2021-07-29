@@ -1,4 +1,4 @@
-import { IVideo } from "../types";
+import { IVideo, VideoSource } from "../types";
 import WatchMetadata from "../../stats/models/userMeta.model";
 import { Subtitle, SubtitleLanguages } from "./subtitle.model";
 import { MINIO_URL } from "../../common/constants/minio.constant";
@@ -22,7 +22,8 @@ export class Video {
     private readonly _publisher: Publisher | null,
     private readonly _createdAt: Date,
     private readonly _updatedAt: Date,
-    private readonly _src: string,
+    private readonly _source: string,
+    private readonly _sourceType: VideoSource,
     private readonly _views: number,
     private _likes: number,
     private readonly _subtitles: Subtitle[]
@@ -47,7 +48,8 @@ export class Video {
       json.publishedBy && Publisher.fromJson(json.publishedBy),
       new Date(json.createdAt),
       new Date(json.updatedAt),
-      json.src,
+      json.source,
+      json.sourceType,
       json.views,
       json.likes,
       json.subtitles
@@ -145,11 +147,27 @@ export class Video {
   }
 
   /**
-   * Return the video publisher
+   * Return the video streaming URL
+   * Temporary switch videoType, as we don't have presignedUrl generation yet
    * @returns {string} the video URL
    */
   get src(): string {
-    return this._src;
+    switch (this._sourceType) {
+      case VideoSource.INTERNAL:
+        return `https://minio.${window.location.hostname}/videos/${this._source}}`;
+      case VideoSource.YOUTUBE:
+        return `https://www.youtube-nocookie.com/embed/${this._source}`;
+      default:
+        return this._source;
+    }
+  }
+
+  get srcRaw(): string {
+    return this._source;
+  }
+
+  get srcType(): VideoSource {
+    return this._sourceType;
   }
 
   private get link(): string {

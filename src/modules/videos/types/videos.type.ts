@@ -4,6 +4,12 @@ import { IWatchMetadata } from "../../stats/types/userMeta.type";
 import { Subtitle } from "../models";
 import { IPublisher } from "../../common/types";
 
+export enum VideoSource {
+  YOUTUBE = "youtube",
+  INTERNAL = "internal",
+  UNKNOWN = "unknown",
+}
+
 export interface IVideoForm {
   hasSubtitle: boolean;
   title: string;
@@ -27,7 +33,8 @@ export type VideosWithPagination = {
 };
 
 export interface IVideo {
-  src: string;
+  source: string;
+  sourceType: VideoSource;
   isPublic: boolean;
   isPublished: boolean;
   description: string;
