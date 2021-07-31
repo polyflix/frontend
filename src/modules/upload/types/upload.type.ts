@@ -1,5 +1,5 @@
 export type PresignedUrl = {
-  presignedUrl: string;
+  tokenAccess: string;
 };
 
 export enum Bucket {

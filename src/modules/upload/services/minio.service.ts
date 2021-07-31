@@ -21,10 +21,11 @@ export class MinioService implements IUploadStrategy<MinioFile> {
   async upload(files: MinioFile[]): Promise<MinioFile[]> {
     try {
       for (const file of files) {
-        const { presignedUrl } = await this.getPresignedUrl(
-          file.getMinioFilename(),
-          file.getBucketName()
-        );
+        const { tokenAccess: presignedUrl } =
+          await this.getVideoPutPresignedUrl(
+            file.getMinioFilename(),
+            file.getBucketName()
+          );
         await axios.put(presignedUrl, file.getBlob());
       }
       return files;
@@ -40,12 +41,28 @@ export class MinioService implements IUploadStrategy<MinioFile> {
    * @param bucketName - Upload bucket
    * @returns {Promise<PresignedUrl>}
    */
-  private async getPresignedUrl(
+  private async getVideoPutPresignedUrl(
     fileName: string,
     bucketName: string
   ): Promise<PresignedUrl> {
     const { status, response, error } = await this.httpService.get(
-      `/upload/presignedUrl?fileName=${fileName}&bucketName=${bucketName}`
+      `/token/video/upload?fileName=${fileName}&bucketName=${bucketName}`
+    );
+    if (status !== StatusCodes.OK) {
+      throw error;
+    }
+    return response;
+  }
+
+  /**
+   *	Request a preSignedUrl to see video content
+   *
+   * @param {string} videoId -- ID of video
+   * @returns {Promise<PresignedUrl>}
+   */
+  public async getVideoPresignedUrl(videoId: string): Promise<PresignedUrl> {
+    const { status, response, error } = await this.httpService.get(
+      `/token/video/${videoId}`
     );
     if (status !== StatusCodes.OK) {
       throw error;
