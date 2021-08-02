@@ -104,6 +104,7 @@ const VideoContainer: React.FC<VideoContainerProps> = ({
   slug,
 }) => {
   const { data: video, isLoading: isVideoLoading, alert } = useVideo(slug);
+  console.log(video);
 
   const isLtMdScreen = useMediaQuery({ query: "(max-width: 767px)" });
 

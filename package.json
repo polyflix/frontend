@@ -32,6 +32,7 @@
     "babel-plugin-transform-typescript-metadata": "^0.3.2",
     "d3-array": "^3.0.1",
     "d3-time-format": "^4.0.0",
+    "dayjs": "^1.10.6",
     "framer-motion": "^4.0.3",
     "gsap": "^3.6.1",
     "http-status-codes": "^2.1.4",

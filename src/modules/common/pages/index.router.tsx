@@ -18,6 +18,7 @@ import { ServerUnavailablePage } from "./503.page";
 import { PathRouter } from "../../paths/pages";
 import { CourseRouter } from "../../courses/pages";
 import { GroupsRouter } from "../../groups/pages/groups.router";
+import { SubtitleRouter } from "../../subtitles/pages/subtitle.router";
 
 export const IndexRouter: React.FC = () => {
   const { isAuthenticated, isLoading, hasRefresh } = useAuth();
@@ -92,6 +93,12 @@ export const IndexRouter: React.FC = () => {
             path="/courses"
             redirectPath="/auth/login"
             component={CourseRouter}
+          />
+          <ProtectedRoute
+            hasAccessIf={isAuthenticated}
+            path="/subtitle-editing"
+            redirectPath="/auth/login"
+            component={SubtitleRouter}
           />
           <Route component={NotFoundPage} />
         </Switch>

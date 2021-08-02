@@ -19,6 +19,8 @@ export enum SubtitleLanguages {
  */
 export class Subtitle {
   constructor(
+    private readonly _id: string,
+    private readonly _videoId: string,
     private readonly _lang: SubtitleLanguages,
     private readonly _vttUrl: string,
     private readonly _vttFile: VttFile
