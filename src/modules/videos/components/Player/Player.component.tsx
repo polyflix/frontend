@@ -1,21 +1,44 @@
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Subtitle } from "../../models/subtitle.model";
-import { DefaultUi, Player as PlayerVime, Video, Youtube } from "@vime/react";
+import {
+  Captions,
+  ClickToPlay,
+  DblClickFullscreen,
+  DefaultControls,
+  DefaultSettings,
+  LoadingScreen,
+  Player as PlayerVime,
+  Poster,
+  Ui,
+  Video,
+  Youtube,
+} from "@vime/react";
 import { useAuth } from "../../../authentication";
 import { useInjection } from "@polyflix/di";
 import { WatchtimeSyncService } from "../../../stats/services/watchtime-sync.service";
 import WatchMetadata from "../../../stats/models/userMeta.model";
 import { Track } from "../../types/track.type";
 import { VideoSource } from "../../types";
+import { MinioService } from "../../../upload/services/minio.service";
+import { ErrorCard } from "../../../common/components/ErrorCard/ErrorCard.component";
 
 type Props = {
-  streamUrl: string;
-  rawVideoId: string;
   videoSubtitles: Subtitle[];
   videoId: string;
   userMeta?: WatchMetadata;
   playerRef: React.RefObject<HTMLVmPlayerElement>;
+  /**
+   * Kind of video loaded
+   */
   videoSourceType: VideoSource;
+  /**
+   * If it is a youtube video, we want the target ID
+   */
+  rawVideoSource: string;
+  /**
+   * Thumbnail of video, used as poster for player
+   */
+  videoThumbnail: string;
 };
 
 const PLAYER_VOLUME_DOWN_STEP = 10;
@@ -23,18 +46,76 @@ const PLAYER_VOLUME_UP_STEP = 10;
 const PLAYER_MOVE_FORWARD_STEP = 13;
 const PLAYER_MOVE_BACKWARD_STEP = 10;
 
+/**
+ * Type used to fetch the stream Url
+ */
+type streamUrlHookType = [
+  streamUrl: string | null,
+  error: string | null,
+  loading: boolean
+];
+
+const useStreamUrl = (
+  videoId: string,
+  videoSourceType: VideoSource,
+  videoSource: string
+): streamUrlHookType => {
+  const minioService = useInjection<MinioService>(MinioService);
+  const { isLoading: authLoading } = useAuth();
+  const [loading, setLoading] = useState<boolean>(true);
+  const [streamUrl, setStreamUrl] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (authLoading || streamUrl) return;
+    if (
+      videoSourceType === VideoSource.YOUTUBE ||
+      videoSourceType === VideoSource.UNKNOWN
+    ) {
+      setStreamUrl(videoSource);
+      setLoading(false);
+      return;
+    }
+
+    minioService
+      .getVideoPresignedUrl(videoId)
+      .then(({ tokenAccess }) => {
+        setStreamUrl(tokenAccess);
+      })
+      .catch((err) => {
+        setError(err);
+      })
+      .finally(() => setLoading(false));
+  }, [
+    authLoading,
+    videoId,
+    loading,
+    streamUrl,
+    minioService,
+    videoSourceType,
+    videoSource,
+  ]);
+  return [streamUrl, error, loading];
+};
+
 export const Player: React.FC<Props & { onVideoEnd: () => void }> = ({
-  streamUrl,
   userMeta,
   videoSubtitles,
   videoId,
   playerRef,
   onVideoEnd,
-  rawVideoId,
+  rawVideoSource,
   videoSourceType,
+  videoThumbnail,
 }) => {
   const { token } = useAuth();
   const statsService = useInjection<WatchtimeSyncService>(WatchtimeSyncService);
+  const [streamUrl, streamUrlError, loading] = useStreamUrl(
+    videoId,
+    videoSourceType,
+    rawVideoSource
+  );
+  const [mediaError, setMediaError] = useState<string>();
 
   const onTriggerWatchtimeEvent = () => {
     if (
@@ -51,87 +132,90 @@ export const Player: React.FC<Props & { onVideoEnd: () => void }> = ({
     });
   };
 
-  const keyboardListener = (event: KeyboardEvent) => {
-    if (!playerRef?.current) return;
-    const player = playerRef?.current;
+  const keyboardListener = useCallback(
+    (event: KeyboardEvent) => {
+      if (!playerRef?.current) return;
+      const player = playerRef?.current;
 
-    // Play / Pause the video
-    if (event.key === "k" || event.key === " ") {
-      if (player?.paused) {
-        player?.play();
-      } else {
-        player?.pause();
+      // Play / Pause the video
+      if (event.key === "k" || event.key === " ") {
+        if (player?.paused) {
+          player?.play();
+        } else {
+          player?.pause();
+        }
       }
-    }
 
-    // Mute the video
-    if (event.key === "m") {
-      if (player?.muted) {
-        player.muted = false;
-      } else {
-        player.muted = true;
+      // Mute the video
+      if (event.key === "m") {
+        if (player?.muted) {
+          player.muted = false;
+        } else {
+          player.muted = true;
+        }
       }
-    }
 
-    // enter / exit fullscreen
-    if (event.key === "f") {
-      if (player?.isFullscreenActive) {
-        player?.exitFullscreen();
-      } else {
-        player?.enterFullscreen();
+      // enter / exit fullscreen
+      if (event.key === "f") {
+        if (player?.isFullscreenActive) {
+          player?.exitFullscreen();
+        } else {
+          player?.enterFullscreen();
+        }
       }
-    }
 
-    // Volume up
-    if (event.key === "ArrowUp") {
-      let vol = player?.volume;
-      let nextVol = vol + PLAYER_VOLUME_UP_STEP;
-      if (nextVol > 100) nextVol = 100;
-      player.volume = nextVol;
-    }
-
-    // Volume down
-    if (event.key === "ArrowDown") {
-      let vol = player?.volume;
-      let nextVol = vol - PLAYER_VOLUME_DOWN_STEP;
-      if (nextVol < 0) nextVol = 0;
-      player.volume = nextVol;
-    }
-
-    // Move forward
-    if (event.key === "ArrowLeft") {
-      let time = player.currentTime;
-      let nextTime = time - PLAYER_MOVE_BACKWARD_STEP;
-      if (nextTime < 0) nextTime = 0;
-      player.currentTime = nextTime;
-    }
-
-    // Move backwark
-    if (event.key === "ArrowRight") {
-      let time = player.currentTime;
-      let nextTime = time + PLAYER_MOVE_FORWARD_STEP;
-      if (nextTime > player.duration) nextTime = player.duration;
-      player.currentTime = nextTime;
-    }
-
-    // toggle captions
-    if (event.key === "c") {
-      if (player.isTextTrackVisible) {
-        player.setTextTrackVisibility(false);
-      } else {
-        player.setTextTrackVisibility(true);
+      // Volume up
+      if (event.key === "ArrowUp") {
+        let vol = player?.volume;
+        let nextVol = vol + PLAYER_VOLUME_UP_STEP;
+        if (nextVol > 100) nextVol = 100;
+        player.volume = nextVol;
       }
-    }
 
-    // toggle captions
-    if (event.key === "p") {
-      if (player.isPiPActive) {
-        player.exitPiP();
-      } else {
-        player.enterPiP();
+      // Volume down
+      if (event.key === "ArrowDown") {
+        let vol = player?.volume;
+        let nextVol = vol - PLAYER_VOLUME_DOWN_STEP;
+        if (nextVol < 0) nextVol = 0;
+        player.volume = nextVol;
       }
-    }
-  };
+
+      // Move forward
+      if (event.key === "ArrowLeft") {
+        let time = player.currentTime;
+        let nextTime = time - PLAYER_MOVE_BACKWARD_STEP;
+        if (nextTime < 0) nextTime = 0;
+        player.currentTime = nextTime;
+      }
+
+      // Move backwark
+      if (event.key === "ArrowRight") {
+        let time = player.currentTime;
+        let nextTime = time + PLAYER_MOVE_FORWARD_STEP;
+        if (nextTime > player.duration) nextTime = player.duration;
+        player.currentTime = nextTime;
+      }
+
+      // toggle captions
+      if (event.key === "c") {
+        if (player.isTextTrackVisible) {
+          player.setTextTrackVisibility(false);
+        } else {
+          player.setTextTrackVisibility(true);
+        }
+      }
+
+      // toggle captions
+      if (event.key === "p") {
+        if (player.isPiPActive) {
+          player.exitPiP();
+        } else {
+          player.enterPiP();
+        }
+      }
+    },
+    [playerRef]
+  );
 
   const onPlaybackStart = () => {
     if (playerRef?.current && userMeta?.watchedSeconds)
@@ -147,9 +231,10 @@ export const Player: React.FC<Props & { onVideoEnd: () => void }> = ({
   ]);
 
   useEffect(() => {
-    document.addEventListener("keydown", keyboardListener);
+    if (streamUrl && !mediaError && !streamUrlError)
+      document.addEventListener("keydown", keyboardListener);
     return () => document.removeEventListener("keydown", keyboardListener);
-  });
+  }, [keyboardListener, streamUrl, mediaError, streamUrlError]);
 
   useEffect(() => {
     statsService.startTimer(onTriggerWatchtimeEvent);
@@ -167,20 +252,43 @@ export const Player: React.FC<Props & { onVideoEnd: () => void }> = ({
   return (
     <div style={{ position: "relative", paddingTop: "56.25%" }}>
       <div className="absolute top-0 left-0 w-full">
+        {(mediaError || streamUrlError) && (
+          <div
+            style={{ zIndex: 999 }}
+            className="absolute w-full h-full bg-black bg-opacity-40"
+          >
+            <ErrorCard />
+          </div>
+        )}
         <PlayerVime
           playsinline
           ref={playerRef}
           onVmSeeked={onTriggerWatchtimeEvent}
           onVmPlaybackStarted={onPlaybackStart}
           onVmPlaybackEnded={onVideoEnd}
+          currentPoster={videoThumbnail}
+          onVmError={(e) => {
+            if (e.detail instanceof MediaError) {
+              setMediaError(`${e.detail.message} - Code ${e.detail.code}`);
+            }
+          }}
         >
           <Provider
-            rawVideoId={rawVideoId}
-            streamUrl={streamUrl}
+            rawVideoSource={streamUrl ?? ""}
             videoSourceType={videoSourceType}
             videoSubtitles={videoSubtitles}
           />
-          <DefaultUi></DefaultUi>
+          <Ui>
+            <DblClickFullscreen />
+            <Captions />
+            <LoadingScreen hideDots={streamUrlError !== null} />
+            <div className="opacity-50">
+              <Poster />
+            </div>
+            {streamUrl && !loading && <DefaultControls />}
+            {streamUrl && !loading && <DefaultSettings />}
+            {streamUrl && !loading && <ClickToPlay />}
+          </Ui>
         </PlayerVime>
       </div>
     </div>
@@ -193,17 +301,14 @@ export const Player: React.FC<Props & { onVideoEnd: () => void }> = ({
  * @param videoSubtitles
  * @constructor
  */
-const Provider: React.FC<Omit<Props, "videoId" | "playerRef">> = ({
-  streamUrl,
-  videoSubtitles,
-  videoSourceType,
-  rawVideoId,
-}) => {
+const Provider: React.FC<
+  Omit<Props, "videoId" | "playerRef" | "videoThumbnail">
+> = ({ videoSubtitles, videoSourceType, rawVideoSource: streamUrl }) => {
   const tracks = getTracks(videoSubtitles);
 
   switch (videoSourceType) {
     case VideoSource.YOUTUBE:
-      return <Youtube videoId={rawVideoId} cookies={false} />;
+      return <Youtube videoId={streamUrl} cookies={false} />;
     case VideoSource.INTERNAL:
       return (
         <Video crossOrigin="use-credentials">
@@ -219,8 +324,6 @@ const Provider: React.FC<Omit<Props, "videoId" | "playerRef">> = ({
           <source data-src={streamUrl} type="video/mp4" />
         </Video>
       );
-    default:
-      return <p>Video type unknown</p>;
   }
 };
 
