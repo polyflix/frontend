@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Subtitle } from "../../models/subtitle.model";
 import {
   ClickToPlay,
@@ -153,6 +153,7 @@ const useSubtitles = ({
 
 export const Player: React.FC<Props> = ({ playerRef, onVideoEnd, video }) => {
   const { token } = useAuth();
+  const hostRef = useRef<HTMLDivElement>(null);
   const statsService = useInjection<WatchtimeSyncService>(WatchtimeSyncService);
   const {
     streamUrl,
@@ -185,86 +186,83 @@ export const Player: React.FC<Props> = ({ playerRef, onVideoEnd, video }) => {
     });
   };
 
-  const keyboardListener = useCallback(
-    (event: KeyboardEvent) => {
-      if (!playerRef?.current) return;
-      const player = playerRef?.current;
+  const keyboardListener = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    if (!playerRef?.current) return;
+    const player = playerRef?.current;
 
-      // Play / Pause the video
-      if (event.key === "k" || event.key === " ") {
-        if (player?.paused) {
-          player?.play();
-        } else {
-          player?.pause();
-        }
+    // Play / Pause the video
+    if (event.key === "k" || event.key === " ") {
+      if (player?.paused) {
+        player?.play();
+      } else {
+        player?.pause();
       }
+    }
 
-      // Mute the video
-      if (event.key === "m") {
-        player.muted = !player?.muted;
-      }
+    // Mute the video
+    if (event.key === "m") {
+      player.muted = !player?.muted;
+    }
 
-      // enter / exit fullscreen
-      if (event.key === "f") {
-        if (player?.isFullscreenActive) {
-          player?.exitFullscreen();
-        } else {
-          player?.enterFullscreen();
-        }
+    // enter / exit fullscreen
+    if (event.key === "f") {
+      if (player?.isFullscreenActive) {
+        player?.exitFullscreen();
+      } else {
+        player?.enterFullscreen();
       }
+    }
 
-      // Volume up
-      if (event.key === "ArrowUp") {
-        let vol = player?.volume;
-        let nextVol = vol + PLAYER_VOLUME_UP_STEP;
-        if (nextVol > 100) nextVol = 100;
-        player.volume = nextVol;
-      }
+    // Volume up
+    if (event.key === "ArrowUp") {
+      let vol = player?.volume;
+      let nextVol = vol + PLAYER_VOLUME_UP_STEP;
+      if (nextVol > 100) nextVol = 100;
+      player.volume = nextVol;
+    }
 
-      // Volume down
-      if (event.key === "ArrowDown") {
-        let vol = player?.volume;
-        let nextVol = vol - PLAYER_VOLUME_DOWN_STEP;
-        if (nextVol < 0) nextVol = 0;
-        player.volume = nextVol;
-      }
+    // Volume down
+    if (event.key === "ArrowDown") {
+      let vol = player?.volume;
+      let nextVol = vol - PLAYER_VOLUME_DOWN_STEP;
+      if (nextVol < 0) nextVol = 0;
+      player.volume = nextVol;
+    }
 
-      // Move forward
-      if (event.key === "ArrowLeft") {
-        let time = player.currentTime;
-        let nextTime = time - PLAYER_MOVE_BACKWARD_STEP;
-        if (nextTime < 0) nextTime = 0;
-        player.currentTime = nextTime;
-      }
+    // Move forward
+    if (event.key === "ArrowLeft") {
+      let time = player.currentTime;
+      let nextTime = time - PLAYER_MOVE_BACKWARD_STEP;
+      if (nextTime < 0) nextTime = 0;
+      player.currentTime = nextTime;
+    }
 
-      // Move backwark
-      if (event.key === "ArrowRight") {
-        let time = player.currentTime;
-        let nextTime = time + PLAYER_MOVE_FORWARD_STEP;
-        if (nextTime > player.duration) nextTime = player.duration;
-        player.currentTime = nextTime;
-      }
+    // Move backwark
+    if (event.key === "ArrowRight") {
+      let time = player.currentTime;
+      let nextTime = time + PLAYER_MOVE_FORWARD_STEP;
+      if (nextTime > player.duration) nextTime = player.duration;
+      player.currentTime = nextTime;
+    }
 
-      // toggle captions
-      if (event.key === "c") {
-        if (player.isTextTrackVisible) {
-          player.setTextTrackVisibility(false);
-        } else {
-          player.setTextTrackVisibility(true);
-        }
+    // toggle captions
+    if (event.key === "c") {
+      if (player.isTextTrackVisible) {
+        player.setTextTrackVisibility(false);
+      } else {
+        player.setTextTrackVisibility(true);
       }
+    }
 
-      // toggle captions
-      if (event.key === "p") {
-        if (player.isPiPActive) {
-          player.exitPiP();
-        } else {
-          player.enterPiP();
-        }
+    // toggle captions
+    if (event.key === "p") {
+      if (player.isPiPActive) {
+        player.exitPiP();
+      } else {
+        player.enterPiP();
       }
-    },
-    [playerRef]
-  );
+    }
+  };
 
   const onPlaybackStart = () => {
     if (playerRef?.current && userMeta?.watchedSeconds)
@@ -278,16 +276,8 @@ export const Player: React.FC<Props> = ({ playerRef, onVideoEnd, video }) => {
     videoId,
     onTriggerWatchtimeEvent,
   ]);
-
-  useEffect(() => {
-    if (streamUrl && !mediaError && !streamUrlError)
-      document.addEventListener("keydown", keyboardListener);
-    return () => document.removeEventListener("keydown", keyboardListener);
-  }, [keyboardListener, streamUrl, mediaError, streamUrlError]);
-
   useEffect(() => {
     statsService.startTimer(onTriggerWatchtimeEvent);
-
     return () => {
       onTriggerWatchtimeEvent();
       statsService.stopTimer();
@@ -299,7 +289,12 @@ export const Player: React.FC<Props> = ({ playerRef, onVideoEnd, video }) => {
   }, [statsService]);
 
   return (
-    <div style={{ position: "relative", paddingTop: "56.25%" }}>
+    <div
+      ref={hostRef}
+      onKeyDown={keyboardListener}
+      tabIndex={0}
+      style={{ position: "relative", paddingTop: "56.25%" }}
+    >
       <div className="absolute top-0 left-0 w-full">
         {(mediaError || streamUrlError) && (
           <div

@@ -24,6 +24,7 @@ module.exports = {
         "nx-red-dark": "#B81D24",
         "nx-white": "#F5F5F1",
         "nx-gray": "#cdcaca",
+        "darkgray": "#161616"
       },
       screens: {
         portrait: { raw: "(orientation: portrait)" },

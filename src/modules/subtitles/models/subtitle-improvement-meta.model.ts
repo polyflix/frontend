@@ -7,7 +7,7 @@ import { ISubtitleImprovementMeta } from "../types/subtitle-improvement-meta.typ
 export class SubtitleImprovementMeta {
   private constructor(
     private readonly _id: string,
-    private readonly _isLiked: boolean,
+    private _isLiked: boolean,
     private readonly _updatedAt: Date,
     private readonly _createdAt: Date
   ) {}
@@ -29,9 +29,15 @@ export class SubtitleImprovementMeta {
   get id(): string {
     return this._id;
   }
+
   get isLiked(): boolean {
     return this._isLiked;
   }
+
+  set isLiked(status: boolean) {
+    this._isLiked = status;
+  }
+
   get createdAt(): Date {
     return this._createdAt;
   }

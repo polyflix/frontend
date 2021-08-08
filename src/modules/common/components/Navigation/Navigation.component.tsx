@@ -8,7 +8,7 @@ import {
   CollectionIcon,
   AcademicCapIcon,
 } from "@heroicons/react/outline";
-import { LoginIcon, UserAddIcon } from "@heroicons/react/solid";
+import { LoginIcon, UserAddIcon, ViewListIcon } from "@heroicons/react/solid";
 import { useInjection } from "@polyflix/di";
 import { motion } from "framer-motion";
 import { Fragment, useState } from "react";
@@ -106,6 +106,14 @@ export const Navigation: React.FC<Props> = ({ visible }) => {
                         <span className="cursor-pointer text-nx-white flex rounded-md items-center w-full px-2 py-2 text-sm">
                           <AcademicCapIcon className="text-nx-red w-5 mr-3" />
                           {t("userPaths.seo.ownTitle")}
+                        </span>
+                      </Link>
+                    </Menu.Item>
+                    <Menu.Item>
+                      <Link to={`/profile/subtitles/${user?.id}`}>
+                        <span className="cursor-pointer text-nx-white flex rounded-md items-center w-full px-2 py-2 text-sm">
+                          <ViewListIcon className="text-nx-red w-5 mr-3" />
+                          {t("userSubtitleImprovement.seo.ownTitle")}
                         </span>
                       </Link>
                     </Menu.Item>

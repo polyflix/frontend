@@ -1,5 +1,9 @@
 import { User } from "../../users";
-import { ISubtitleImprovement } from "../types/subtitle-improvement.type";
+import { Subtitle } from "../../videos";
+import {
+  ISubtitleImprovement,
+  SubtitleImprovementStatus,
+} from "../types/subtitle-improvement.type";
 import { SubtitleImprovementMeta } from "./subtitle-improvement-meta.model";
 
 /**
@@ -8,15 +12,17 @@ import { SubtitleImprovementMeta } from "./subtitle-improvement-meta.model";
  */
 export class SubtitleImprovement {
   private constructor(
-    private readonly _id: string,
-    private readonly _subtitleId: string,
+    private readonly _subtitle: Subtitle,
     private readonly _comment: string,
-    private readonly _likes: number,
-    private readonly _isApproved: boolean,
-    private readonly _createdBy: User,
-    private readonly _subtitleImprovementMeta: SubtitleImprovementMeta,
-    private readonly _createdAt: Date,
-    private readonly _updatedAt: Date
+    private readonly _timestamp: number,
+    private readonly _id?: string,
+    private _likes?: number,
+    private _isApproved?: boolean,
+    private readonly _createdBy?: User,
+    private readonly _subtitleImprovementMeta?: SubtitleImprovementMeta,
+    private readonly _createdAt?: Date,
+    private readonly _updatedAt?: Date,
+    private readonly _status?: SubtitleImprovementStatus
   ) {}
 
   /**
@@ -26,9 +32,10 @@ export class SubtitleImprovement {
    */
   static fromJson(json: ISubtitleImprovement): SubtitleImprovement {
     return new SubtitleImprovement(
-      json.id,
-      json.subtitleId,
+      json.subtitle,
       json.comment,
+      json.timestamp,
+      json.id,
       json.likes,
       json.isApproved,
       json.createdBy,
@@ -39,38 +46,54 @@ export class SubtitleImprovement {
   }
 
   get id(): string {
-    return this._id;
+    return this._id as string;
   }
 
-  get subtitleId(): string {
-    return this._subtitleId;
+  get subtitle(): Subtitle {
+    return this._subtitle;
   }
 
   get comment(): string {
     return this._comment;
   }
 
+  get timestamp(): number {
+    return this._timestamp;
+  }
+
   get likes(): number {
-    return this._likes;
+    return this._likes as number;
+  }
+
+  set likes(count: number) {
+    this._likes = count;
   }
 
   get isApproved(): boolean {
-    return this._isApproved;
+    return this._isApproved as boolean;
   }
 
-  get createdBy(): User {
+  set isApproved(status: boolean) {
+    this._isApproved = status;
+  }
+
+  get createdBy(): User | undefined {
     return this._createdBy;
   }
 
   get subtitleImprovementMeta(): SubtitleImprovementMeta {
-    return this._subtitleImprovementMeta;
+    return this._subtitleImprovementMeta as SubtitleImprovementMeta;
   }
 
   get createdAt(): Date {
-    return this._createdAt;
+    return new Date(this._createdAt as Date);
   }
 
   get updatedAt(): Date {
-    return this._updatedAt;
+    return new Date(this._updatedAt as Date);
+  }
+
+  get status(): SubtitleImprovementStatus {
+    return this._status as SubtitleImprovementStatus;
   }
 }

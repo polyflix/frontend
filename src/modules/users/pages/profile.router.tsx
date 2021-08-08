@@ -7,6 +7,7 @@ import { UserCoursesPage } from "./courses/index.page";
 import { UserPathsPage } from "./paths/index.page";
 import { PasswordUpdatePage } from "./profile/password.page";
 import { DeleteAccountPage } from "./profile/delete.page";
+import { UserSubtitleImprovementPage } from "./subtitles/subtitle-improvement.page";
 
 export const ProfileRouter = () => {
   const { path } = useRouteMatch();
@@ -23,6 +24,10 @@ export const ProfileRouter = () => {
       <Route path={`${path}/courses/:id`} component={UserCoursesPage} />
       <Route path={`${path}/collections/:id`} component={UserCollectionsPage} />
       <Route path={`${path}/paths/:id`} component={UserPathsPage} />
+      <Route
+        path={`${path}/subtitles/:id`}
+        component={UserSubtitleImprovementPage}
+      />
     </Switch>
   );
 };

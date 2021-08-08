@@ -1,4 +1,5 @@
 import { AlertType } from "../../ui/components/Alert/Alert.component";
+import { Video } from "../models";
 import { SubtitleLanguages, SubtitleStatus } from "../models/subtitle.model";
 
 export type SubtitleState<T> = {
@@ -10,7 +11,7 @@ export type SubtitleState<T> = {
 
 export interface ISubtitle {
   id: string;
-  videoId: string;
+  video?: Video;
   lang: SubtitleLanguages;
   vttUrl: string;
   status: SubtitleStatus;

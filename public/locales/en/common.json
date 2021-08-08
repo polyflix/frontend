@@ -10,7 +10,8 @@
         "delete": "Delete",
         "cancel": "Cancel",
         "back": "Go back",
-        "stats": "Statistics"
+        "stats": "Statistics",
+        "view": "See"
       },
       "filters": {
         "newest": "Newest",
@@ -22,7 +23,17 @@
         "soon": "Soon"
       },
       "errors": {
-        "noData": "Sorry, there is nothing to show here..."
+        "noData": "Sorry, there is nothing to show here...",
+        "common": "An error has occurred"
+      },
+      "form": {
+        "errors": {
+          "required": "This field is required"
+        },
+        "actions": {
+          "create": "Create",
+          "update": "Update"
+        }
       },
       "wait": "Please wait",
       "seen": "Seen {{date}}",
@@ -35,10 +46,7 @@
     "navbar": {
       "signIn": "Sign in",
       "signOut": "Sign out",
-      "signUp": [
-        "No account ?",
-        "Sign up now"
-      ]
+      "signUp": ["No account ?", "Sign up now"]
     },
     "informations": {
       "publishedBy": "Published by {{user}}"
@@ -100,10 +108,7 @@
         "description": "Enter your credentials to log in into your account"
       },
       "action": "Sign in",
-      "footer": [
-        "New to Polyflix ?",
-        "Sign up now"
-      ],
+      "footer": ["New to Polyflix ?", "Sign up now"],
       "error": "Bad credentials"
     },
     "signUp": {
@@ -126,10 +131,7 @@
         }
       },
       "action": "Sign up",
-      "footer": [
-        "Already registered to Polyflix ?",
-        "Sign in here"
-      ],
+      "footer": ["Already registered to Polyflix ?", "Sign in here"],
       "error": "Email already in use"
     }
   },
@@ -192,6 +194,15 @@
     "list": {
       "ownNoCourses": "You have not uploaded any courses yet",
       "userNoCourses": "{{user}} has not uploaded any courses yet"
+    }
+  },
+  "userSubtitleImprovement": {
+    "seo": {
+      "ownTitle": "My Subtitle Improvement",
+      "userTitle": "{{user}}'s subtitle Improvement"
+    },
+    "content": {
+      "onMyVideo": "Improvement on my videos"
     }
   },
   "userPaths": {
@@ -486,6 +497,21 @@
         "subtitleError": "The subtitles could not be generated due to an internal error."
       },
       "publishedBy": "Published by"
+    }
+  },
+  "subtitleImprovement": {
+    "content": {
+      "approve": "Approve",
+      "disapprove": "Disapprove"
+    },
+    "form": {
+      "fields": {
+        "comment": "Suggestion"
+      },
+      "success": "Suggestion {{action}}",
+      "errors": {
+        "common": "An error has occurred"
+      }
     }
   }
 }

@@ -10,7 +10,8 @@
         "delete": "Supprimer",
         "cancel": "Annuler",
         "back": "Retour",
-        "stats": "Statistiques"
+        "stats": "Statistiques",
+        "view": "Voir"
       },
       "filters": {
         "newest": "Plus récent",
@@ -22,7 +23,8 @@
         "soon": "Bientôt"
       },
       "errors": {
-        "noData": "Désolé, il n'y a rien à afficher ici..."
+        "noData": "Désolé, il n'y a rien à afficher ici...",
+        "common": "Une erreur s'est produite"
       },
       "wait": "Patientez",
       "seen": "Vu le {{date}}",
@@ -30,15 +32,21 @@
       "updatedAt": "Mise à jour le {{date}}",
       "views": "Vue(s)",
       "likes": "Retour(s) positif(s)",
-      "comments": "Commentaire(s)"
+      "comments": "Commentaire(s)",
+      "form": {
+        "errors": {
+          "required": "Ce champ est obligatoire"
+        },
+        "actions": {
+          "create": "Créer",
+          "update": "Mis à jour"
+        }
+      }
     },
     "navbar": {
       "signIn": "Se connecter",
       "signOut": "Se déconnecter",
-      "signUp": [
-        "Pas de compte ?",
-        "Inscrivez-vous dès maintenant"
-      ]
+      "signUp": ["Pas de compte ?", "Inscrivez-vous dès maintenant"]
     },
     "informations": {
       "publishedBy": "Publié par {{user}}"
@@ -100,10 +108,7 @@
         "description": "Entrez vos identifiants pour vous connecter à votre compte"
       },
       "action": "Se connecter",
-      "footer": [
-        "Nouveau sur Polyflix ?",
-        "Inscrivez-vous dès maintenant"
-      ],
+      "footer": ["Nouveau sur Polyflix ?", "Inscrivez-vous dès maintenant"],
       "error": "Adresse e-mail ou mot de passe invalide"
     },
     "signUp": {
@@ -126,10 +131,7 @@
         }
       },
       "action": "S'inscrire",
-      "footer": [
-        "Déjà inscrit sur Polyflix ?",
-        "Connectez-vous ici"
-      ],
+      "footer": ["Déjà inscrit sur Polyflix ?", "Connectez-vous ici"],
       "error": "Adresse e-mail déjà utilisée"
     }
   },
@@ -182,6 +184,15 @@
     "list": {
       "ownNoCourses": "Vous n'avez pas encore uploadé de cours",
       "userNoCourses": "{{user}} n'a pas encore uploadé de cours"
+    }
+  },
+  "userSubtitleImprovement": {
+    "seo": {
+      "ownTitle": "Mes améliorations de sous-titres",
+      "userTitle": "Améliorations de sous-titres de {{user}}"
+    },
+    "content": {
+      "onMyVideo": "Ammélioration sur mes vidéos"
     }
   },
   "userPaths": {
@@ -476,6 +487,21 @@
         "subtitleError": "Les sous-titres n'ont pas pu être générés."
       },
       "publishedBy": "Publiée par"
+    }
+  },
+  "subtitleImprovement": {
+    "content": {
+      "approve": "Approver",
+      "disapprove": "Désapprouver"
+    },
+    "form": {
+      "fields": {
+        "comment": "Suggestion"
+      },
+      "success": "Suggestion {{action}}",
+      "errors": {
+        "common": "Une erreur s'est produite"
+      }
     }
   }
 }

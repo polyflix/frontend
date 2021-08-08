@@ -181,7 +181,6 @@ export class HttpService implements BaseHttpService {
         ...baseConfig.headers,
         ...headers,
       };
-
     return baseConfig;
   }
 }

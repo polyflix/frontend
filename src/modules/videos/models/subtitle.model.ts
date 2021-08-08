@@ -1,4 +1,5 @@
 import { Block, VttFile } from "@polyflix/vtt-parser";
+import { Video } from ".";
 import { ISubtitle } from "../types/subtitle.type";
 
 export enum SubtitleStatus {
@@ -19,11 +20,11 @@ export enum SubtitleLanguages {
  */
 export class Subtitle {
   constructor(
-    private readonly _id: string,
-    private readonly _videoId: string,
     private readonly _lang: SubtitleLanguages,
     private readonly _vttUrl: string,
-    private readonly _vttFile: VttFile
+    private readonly _vttFile: VttFile,
+    private readonly _id?: string,
+    private readonly _video?: Video
   ) {}
 
   /**
@@ -39,10 +40,14 @@ export class Subtitle {
       } else {
         vttFile = new VttFile("");
       }
-      return new Subtitle(json.lang, json.vttUrl, vttFile);
+      return new Subtitle(json.lang, json.vttUrl, vttFile, json.id);
     } catch (e) {
-      return new Subtitle(json.lang, json.vttUrl, new VttFile(""));
+      return new Subtitle(json.lang, json.vttUrl, new VttFile(""), json.id);
     }
+  }
+
+  get id(): string {
+    return this._id as string;
   }
 
   /**
@@ -67,6 +72,10 @@ export class Subtitle {
    */
   get vttFile(): VttFile {
     return this._vttFile;
+  }
+
+  get video(): Video | undefined {
+    return this._video;
   }
 
   /**
