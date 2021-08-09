@@ -1,8 +1,10 @@
 import { IVideo, VideoSource } from "../types";
 import WatchMetadata from "../../stats/models/userMeta.model";
-import { Subtitle, SubtitleLanguages } from "./subtitle.model";
+import { SubtitleLanguages } from "./subtitle.model";
 import { MINIO_URL } from "../../common/constants/minio.constant";
 import { Publisher } from "../../common/models";
+import { PolyflixLanguage } from "../../common/types/language.type";
+import { getSubtitleLanguageFromPolyflix } from "../../common/utils/language.util";
 
 /**
  * Modelize the Video
@@ -26,7 +28,7 @@ export class Video {
     private readonly _sourceType: VideoSource,
     private readonly _views: number,
     private _likes: number,
-    private readonly _subtitles: Subtitle[]
+    private readonly _availableLanguages: SubtitleLanguages[]
   ) {}
 
   /**
@@ -52,7 +54,7 @@ export class Video {
       json.sourceType,
       json.views,
       json.likes,
-      json.subtitles
+      json.availableLanguages
     );
   }
 
@@ -174,10 +176,6 @@ export class Video {
     return `/watch?v=${this._slug}`;
   }
 
-  get subtitles(): Subtitle[] {
-    return this._subtitles;
-  }
-
   get views(): number {
     return this._views;
   }
@@ -228,11 +226,30 @@ export class Video {
   }
 
   /**
-   * Returns the subtitles linked to the selected language
-   * @returns {Subtitle[]} the subtitles array
-   * @returns {undefined} if no subtitles were found in this language
+   * Returns languages available for a video
+   * @returns {SubtitleLanguages[]} List of available languages
    */
-  getSubtitles(lang: SubtitleLanguages): Subtitle | undefined {
-    return this._subtitles.find((sub) => sub.lang === lang);
+  getSubtitleLanguages(): SubtitleLanguages[] {
+    return this._availableLanguages;
+  }
+
+  /**
+   * When multiple languages are available, do a Best Effort to find a matching
+   * language
+   * @param {PolyflixLanguage} currentLang
+   */
+  selectProperLanguage(
+    currentLang: PolyflixLanguage
+  ): SubtitleLanguages | undefined {
+    const languages = this.getSubtitleLanguages();
+    if (languages.length === 0) return;
+    // Can't use languages[0], as we don't want index error if it is not as 0
+    else if (languages.length === 1) return languages.find((_) => true);
+
+    return (
+      languages.find(
+        (l) => l === getSubtitleLanguageFromPolyflix(currentLang)
+      ) ?? languages.find((_) => true)
+    );
   }
 }

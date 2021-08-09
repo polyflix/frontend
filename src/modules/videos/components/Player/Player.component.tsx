@@ -17,13 +17,13 @@ import { useAuth } from "../../../authentication";
 import { useInjection } from "@polyflix/di";
 import { WatchtimeSyncService } from "../../../stats/services/watchtime-sync.service";
 import WatchMetadata from "../../../stats/models/userMeta.model";
-import { Track } from "../../types/track.type";
 import { VideoSource } from "../../types";
 import { MinioService } from "../../../upload/services/minio.service";
 import { ErrorCard } from "../../../common/components/ErrorCard/ErrorCard.component";
+import { Track } from "../../types/track.type";
 
 type Props = {
-  videoSubtitles: Subtitle[];
+  videoSubtitles?: Subtitle[];
   videoId: string;
   userMeta?: WatchMetadata;
   playerRef: React.RefObject<HTMLVmPlayerElement>;
@@ -100,7 +100,6 @@ const useStreamUrl = (
 
 export const Player: React.FC<Props & { onVideoEnd: () => void }> = ({
   userMeta,
-  videoSubtitles,
   videoId,
   playerRef,
   onVideoEnd,
@@ -276,7 +275,6 @@ export const Player: React.FC<Props & { onVideoEnd: () => void }> = ({
           <Provider
             rawVideoSource={streamUrl ?? ""}
             videoSourceType={videoSourceType}
-            videoSubtitles={videoSubtitles}
           />
           <Ui>
             <DblClickFullscreen />
@@ -304,7 +302,7 @@ export const Player: React.FC<Props & { onVideoEnd: () => void }> = ({
 const Provider: React.FC<
   Omit<Props, "videoId" | "playerRef" | "videoThumbnail">
 > = ({ videoSubtitles, videoSourceType, rawVideoSource: streamUrl }) => {
-  const tracks = getTracks(videoSubtitles);
+  const tracks = getTracks(videoSubtitles ?? []);
 
   switch (videoSourceType) {
     case VideoSource.YOUTUBE:

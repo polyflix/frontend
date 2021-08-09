@@ -1,7 +1,7 @@
 import { AlertType } from "../../ui/components/Alert/Alert.component";
 import { Video } from "../models/video.model";
 import { IWatchMetadata } from "../../stats/types/userMeta.type";
-import { Subtitle } from "../models";
+import { SubtitleLanguages } from "../models";
 import { IPublisher } from "../../common/types";
 
 export enum VideoSource {
@@ -49,7 +49,7 @@ export interface IVideo {
   updatedAt: string;
   slug: string;
   thumbnail: string;
-  subtitles: Subtitle[];
+  availableLanguages: SubtitleLanguages[];
 }
 
 export enum ProviderType {
