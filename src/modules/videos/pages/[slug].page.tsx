@@ -126,15 +126,7 @@ const VideoContainer: React.FC<VideoContainerProps> = ({
     >
       <div className={cn("flex-auto rounded-md")}>
         {!isVideoLoading && video ? (
-          <Player
-            videoId={video.id}
-            userMeta={video.userMeta}
-            videoSourceType={video.srcType}
-            playerRef={playerRef}
-            onVideoEnd={onVideoEnd}
-            rawVideoSource={video.srcRaw}
-            videoThumbnail={video.thumbnail}
-          />
+          <Player video={video} playerRef={playerRef} onVideoEnd={onVideoEnd} />
         ) : (
           <GhostTile aspectRatio={true} />
         )}

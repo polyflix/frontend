@@ -58,6 +58,10 @@ export class Video {
     );
   }
 
+  get availableLanguages(): SubtitleLanguages[] {
+    return this._availableLanguages;
+  }
+
   /**
    * Return a video description shortened.
    * @returns {string} the video description shortened
@@ -149,14 +153,12 @@ export class Video {
   }
 
   /**
-   * Return the video streaming URL
-   * Temporary switch videoType, as we don't have presignedUrl generation yet
+   * Return the video streaming URL when it is a youtube URL or
+   * unknown source
    * @returns {string} the video URL
    */
   get src(): string {
     switch (this._sourceType) {
-      case VideoSource.INTERNAL:
-        return `https://minio.${window.location.hostname}/videos/${this._source}`;
       case VideoSource.YOUTUBE:
         return `https://www.youtube-nocookie.com/embed/${this._source}`;
       default:
