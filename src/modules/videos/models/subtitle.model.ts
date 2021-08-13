@@ -18,12 +18,9 @@ export enum SubtitleLanguages {
  * @class Subtitle
  */
 export class Subtitle {
-  private constructor(
-    private readonly _id: string,
-    private readonly _videoId: string,
+  constructor(
     private readonly _lang: SubtitleLanguages,
     private readonly _vttUrl: string,
-    private readonly _status: SubtitleStatus,
     private readonly _vttFile: VttFile
   ) {}
 
@@ -40,40 +37,10 @@ export class Subtitle {
       } else {
         vttFile = new VttFile("");
       }
-      return new Subtitle(
-        json.id,
-        json.videoId,
-        json.lang,
-        json.vttUrl,
-        json.status,
-        vttFile
-      );
+      return new Subtitle(json.lang, json.vttUrl, vttFile);
     } catch (e) {
-      return new Subtitle(
-        json.id,
-        json.videoId,
-        json.lang,
-        json.vttUrl,
-        SubtitleStatus.NOT_FOUND,
-        new VttFile("")
-      );
+      return new Subtitle(json.lang, json.vttUrl, new VttFile(""));
     }
-  }
-
-  /**
-   * Returns the subtitle id
-   * @returns {string} the subtitle id
-   */
-  get id(): string {
-    return this._id;
-  }
-
-  /**
-   * Returns the id of the subtitle's linked video
-   * @returns {string} the video id
-   */
-  get videoId(): string {
-    return this._videoId;
   }
 
   /**
@@ -90,14 +57,6 @@ export class Subtitle {
    */
   get vttUrl(): string {
     return this._vttUrl;
-  }
-
-  /**
-   * Returns the status of the subtitles
-   * @returns {SubtitleStatus} the status of the subtitles
-   */
-  get status(): SubtitleStatus {
-    return this._status;
   }
 
   /**

@@ -1,44 +1,37 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { Subtitle } from "../../models/subtitle.model";
 import {
-  Captions,
   ClickToPlay,
   DblClickFullscreen,
   DefaultControls,
   DefaultSettings,
   LoadingScreen,
   Player as PlayerVime,
+  Video as VideoVime,
   Poster,
   Ui,
-  Video,
   Youtube,
 } from "@vime/react";
 import { useAuth } from "../../../authentication";
 import { useInjection } from "@polyflix/di";
 import { WatchtimeSyncService } from "../../../stats/services/watchtime-sync.service";
-import WatchMetadata from "../../../stats/models/userMeta.model";
-import { Track } from "../../types/track.type";
 import { VideoSource } from "../../types";
 import { MinioService } from "../../../upload/services/minio.service";
 import { ErrorCard } from "../../../common/components/ErrorCard/ErrorCard.component";
+import { Track } from "../../types/track.type";
+import { Video } from "../../models";
+import { VttFile } from "@polyflix/vtt-parser";
 
 type Props = {
-  videoSubtitles: Subtitle[];
-  videoId: string;
-  userMeta?: WatchMetadata;
+  video: Video;
+  /**
+   * Reference used for the player & sync of subtitles
+   */
   playerRef: React.RefObject<HTMLVmPlayerElement>;
   /**
-   * Kind of video loaded
+   * ??
    */
-  videoSourceType: VideoSource;
-  /**
-   * If it is a youtube video, we want the target ID
-   */
-  rawVideoSource: string;
-  /**
-   * Thumbnail of video, used as poster for player
-   */
-  videoThumbnail: string;
+  onVideoEnd: () => void;
 };
 
 const PLAYER_VOLUME_DOWN_STEP = 10;
@@ -49,36 +42,44 @@ const PLAYER_MOVE_BACKWARD_STEP = 10;
 /**
  * Type used to fetch the stream Url
  */
-type streamUrlHookType = [
-  streamUrl: string | null,
-  error: string | null,
-  loading: boolean
-];
+type streamUrlHookType = {
+  streamUrl?: string;
+  error?: string;
+  loading: boolean;
+};
 
-const useStreamUrl = (
-  videoId: string,
-  videoSourceType: VideoSource,
-  videoSource: string
-): streamUrlHookType => {
+/**
+ * Inside hook in order to fetch a presigned URL for a video
+ * @param {string} srcRaw -- Raw source of a video (youtube id, minio file path...)
+ * @param {VideoSource} srcType -- KInd of video fetched (Youtube, internal...)
+ * @param {src} src -- When youtube or unknown video, the streaming link can be formed instantly
+ * @param {string} id -- Video ID
+ */
+const useStreamUrl = ({
+  srcRaw,
+  srcType,
+  src,
+  id,
+}: Video): streamUrlHookType => {
   const minioService = useInjection<MinioService>(MinioService);
   const { isLoading: authLoading } = useAuth();
   const [loading, setLoading] = useState<boolean>(true);
-  const [streamUrl, setStreamUrl] = useState<string | null>(null);
-  const [error, setError] = useState<string | null>(null);
+  const [streamUrl, setStreamUrl] = useState<string | undefined>();
+  const [error, setError] = useState<string | undefined>();
 
+  /*
+   * Fetch a Presigned Url for a video
+   */
   useEffect(() => {
     if (authLoading || streamUrl) return;
-    if (
-      videoSourceType === VideoSource.YOUTUBE ||
-      videoSourceType === VideoSource.UNKNOWN
-    ) {
-      setStreamUrl(videoSource);
+    if (srcType === VideoSource.YOUTUBE || srcType === VideoSource.UNKNOWN) {
+      setStreamUrl(src);
       setLoading(false);
       return;
     }
 
     minioService
-      .getVideoPresignedUrl(videoId)
+      .getVideoPresignedUrl(id)
       .then(({ tokenAccess }) => {
         setStreamUrl(tokenAccess);
       })
@@ -86,36 +87,88 @@ const useStreamUrl = (
         setError(err);
       })
       .finally(() => setLoading(false));
-  }, [
-    authLoading,
-    videoId,
-    loading,
-    streamUrl,
-    minioService,
-    videoSourceType,
-    videoSource,
-  ]);
-  return [streamUrl, error, loading];
+  }, [authLoading, id, loading, streamUrl, minioService, srcType, src, srcRaw]);
+  return { streamUrl, error, loading };
 };
 
-export const Player: React.FC<Props & { onVideoEnd: () => void }> = ({
-  userMeta,
-  videoSubtitles,
-  videoId,
-  playerRef,
-  onVideoEnd,
-  rawVideoSource,
-  videoSourceType,
-  videoThumbnail,
-}) => {
+type UseSubtitlesProps = {
+  subtitles?: Subtitle[];
+  loading: boolean;
+};
+
+const useSubtitles = ({
+  availableLanguages,
+  id,
+  srcType,
+}: Video): UseSubtitlesProps => {
+  const minioService = useInjection<MinioService>(MinioService);
+  const { isLoading: authLoading } = useAuth();
+  const [loading, setLoading] = useState<boolean>(true);
+  const [subtitles, setSubtitles] = useState<Subtitle[] | undefined>();
+
+  const fetchSubtitles = useCallback(async () => {
+    const subtitles: Subtitle[] = [];
+    for (let i = 0; i < availableLanguages.length; i++) {
+      const lang = availableLanguages[i];
+      try {
+        const { tokenAccess } = await minioService.getSubtitlePresignedUrl(
+          id,
+          lang
+        );
+        subtitles.push(
+          new Subtitle(lang, tokenAccess, await VttFile.fromUrl(tokenAccess))
+        );
+      } catch (e) {
+        console.error("Failed to fetch subtitle ", lang);
+        console.error(e);
+      }
+    }
+    setLoading(false);
+    setSubtitles(subtitles);
+  }, [minioService, availableLanguages, id]);
+
+  useEffect(() => {
+    if (authLoading || subtitles) return;
+    if (srcType !== VideoSource.INTERNAL || availableLanguages.length === 0) {
+      setSubtitles([]);
+      setLoading(false);
+      return;
+    }
+
+    // Add .finally to avoid warning about unprocessed promise
+    fetchSubtitles().finally();
+  }, [
+    authLoading,
+    fetchSubtitles,
+    subtitles,
+    availableLanguages.length,
+    srcType,
+  ]);
+
+  return {
+    loading,
+    subtitles,
+  };
+};
+
+export const Player: React.FC<Props> = ({ playerRef, onVideoEnd, video }) => {
   const { token } = useAuth();
   const statsService = useInjection<WatchtimeSyncService>(WatchtimeSyncService);
-  const [streamUrl, streamUrlError, loading] = useStreamUrl(
-    videoId,
-    videoSourceType,
-    rawVideoSource
-  );
+  const {
+    streamUrl,
+    error: streamUrlError,
+    loading: videoLoading,
+  } = useStreamUrl(video);
+  const { subtitles, loading: subtitlesLoading } = useSubtitles(video);
   const [mediaError, setMediaError] = useState<string>();
+
+  const {
+    srcType: videoSourceType,
+    thumbnail: videoThumbnail,
+    id: videoId,
+    userMeta,
+  } = video;
+  const loading = videoLoading || subtitlesLoading;
 
   const onTriggerWatchtimeEvent = () => {
     if (
@@ -148,11 +201,7 @@ export const Player: React.FC<Props & { onVideoEnd: () => void }> = ({
 
       // Mute the video
       if (event.key === "m") {
-        if (player?.muted) {
-          player.muted = false;
-        } else {
-          player.muted = true;
-        }
+        player.muted = !player?.muted;
       }
 
       // enter / exit fullscreen
@@ -273,14 +322,17 @@ export const Player: React.FC<Props & { onVideoEnd: () => void }> = ({
             }
           }}
         >
-          <Provider
-            rawVideoSource={streamUrl ?? ""}
-            videoSourceType={videoSourceType}
-            videoSubtitles={videoSubtitles}
-          />
-          <Ui>
+          {!subtitlesLoading && subtitles && (
+            <Provider
+              rawVideoSource={streamUrl ?? ""}
+              videoSourceType={videoSourceType}
+              videoSubtitles={subtitles}
+            />
+          )}
+          <Ui className="absolute h-screen w-full bg-red-600 top-0 left-0 border-none">
             <DblClickFullscreen />
-            <Captions />
+            {/* Remove captions as they were creating double subtitles, so not needed */}
+            {/*<Captions />*/}
             <LoadingScreen hideDots={streamUrlError !== null} />
             <div className="opacity-50">
               <Poster />
@@ -295,34 +347,42 @@ export const Player: React.FC<Props & { onVideoEnd: () => void }> = ({
   );
 };
 
+type ProviderProps = {
+  rawVideoSource: string;
+  videoSubtitles: Subtitle[];
+  videoSourceType: VideoSource;
+};
+
 /**
  * Depending on the video source we extend the proper video player
  * @param videoUrl
  * @param videoSubtitles
  * @constructor
  */
-const Provider: React.FC<
-  Omit<Props, "videoId" | "playerRef" | "videoThumbnail">
-> = ({ videoSubtitles, videoSourceType, rawVideoSource: streamUrl }) => {
-  const tracks = getTracks(videoSubtitles);
+const Provider: React.FC<ProviderProps> = ({
+  videoSubtitles,
+  videoSourceType,
+  rawVideoSource: streamUrl,
+}) => {
+  const tracks = getTracks(videoSubtitles ?? []);
 
   switch (videoSourceType) {
     case VideoSource.YOUTUBE:
       return <Youtube videoId={streamUrl} cookies={false} />;
     case VideoSource.INTERNAL:
       return (
-        <Video crossOrigin="use-credentials">
+        <VideoVime crossOrigin="use-credentials">
           <source data-src={streamUrl} type="video/mp4" />
           {tracks.map((track, i) => (
             <track {...track} key={i} />
           ))}
-        </Video>
+        </VideoVime>
       );
     case VideoSource.UNKNOWN:
       return (
-        <Video crossOrigin="use-credentials">
+        <VideoVime crossOrigin="use-credentials">
           <source data-src={streamUrl} type="video/mp4" />
-        </Video>
+        </VideoVime>
       );
   }
 };

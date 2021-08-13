@@ -95,10 +95,7 @@ export class VideoService {
     if (status !== StatusCodes.OK) {
       throw error;
     }
-    const subtitles = await this.subtitleService.getSubtitleUrlByVideoId(
-      response.id
-    );
 
-    return Video.fromJson({ ...response, subtitles });
+    return Video.fromJson(response);
   }
 }

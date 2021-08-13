@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import { EnglishFlagIcon } from "../../Icons/EnglishFlag.icon";
 import { FrenchFlagIcon } from "../../Icons/FrenchFlag.icon";
 import { Button } from "../Button.component";
+import { PolyflixLanguage } from "../../../../common/types/language.type";
 
 export const LanguageButton: React.FC = () => {
   const { i18n } = useTranslation();
@@ -14,7 +15,10 @@ export const LanguageButton: React.FC = () => {
     localStorage.setItem("i18nextLng", currentLanguage);
   }
 
-  const otherLanguage = currentLanguage === "en" ? "fr" : "en";
+  const otherLanguage =
+    currentLanguage === PolyflixLanguage.EN
+      ? PolyflixLanguage.FR
+      : PolyflixLanguage.EN;
 
   const changeLanguage = (language: string) => {
     i18n.changeLanguage(language);
@@ -23,7 +27,11 @@ export const LanguageButton: React.FC = () => {
 
   return (
     <Button as="button" onClick={() => changeLanguage(otherLanguage)}>
-      {currentLanguage === "fr" ? <FrenchFlagIcon /> : <EnglishFlagIcon />}
+      {currentLanguage === PolyflixLanguage.FR ? (
+        <FrenchFlagIcon />
+      ) : (
+        <EnglishFlagIcon />
+      )}
     </Button>
   );
 };

@@ -23,7 +23,7 @@ import {
 } from "@heroicons/react/outline";
 import { useMediaQuery } from "react-responsive";
 import { useVideo } from "../hooks/useVideo.hook";
-import { Subtitle, SubtitleLanguages, SubtitleStatus } from "../models";
+import { Subtitle } from "../models";
 import { Video } from "../models/video.model";
 import { SubtitleText } from "../components";
 import { GhostSlider } from "../../ui/components/Ghost/GhostSlider/GhostSlider.component";
@@ -34,6 +34,9 @@ import { CollectionSlider } from "../../collections/components/CollectionSlider/
 import { WatchtimeSyncService } from "../../stats/services/watchtime-sync.service";
 import { useInjection } from "@polyflix/di";
 import { GhostParagraph } from "../../ui/components/Ghost/GhostParagraph";
+import { MinioService } from "../../upload/services/minio.service";
+import { PolyflixLanguage } from "../../common/types/language.type";
+import { Block, VttFile } from "@polyflix/vtt-parser";
 
 export const VideoDetail: React.FC = () => {
   const [pageTitle, setPageTitle] = useState<string>();
@@ -89,6 +92,12 @@ type VideoContainerProps = {
   slug: string;
 };
 
+export type SubtitleFetchingState = {
+  state: "loading" | "error" | "idle" | "succeed";
+  subtitle?: Subtitle;
+  blocks?: Block[];
+};
+
 const VideoContainer: React.FC<VideoContainerProps> = ({
   onLoad,
   onError,
@@ -100,8 +109,6 @@ const VideoContainer: React.FC<VideoContainerProps> = ({
 
   const playerRef = useRef<HTMLVmPlayerElement>(null);
 
-  const subtitles = video?.getSubtitles(SubtitleLanguages.FR);
-
   const onVideoEnd = () => {
     // TODO: For when the reader is less buggy
   };
@@ -110,7 +117,6 @@ const VideoContainer: React.FC<VideoContainerProps> = ({
     onError(alert);
     if (video) onLoad(video?.title);
   }, [video, onLoad, onError, alert]);
-
   return (
     <div
       className={cn(
@@ -120,53 +126,71 @@ const VideoContainer: React.FC<VideoContainerProps> = ({
     >
       <div className={cn("flex-auto rounded-md")}>
         {!isVideoLoading && video ? (
-          <Player
-            videoId={video.id}
-            userMeta={video.userMeta}
-            videoSourceType={video.srcType}
-            videoSubtitles={video.subtitles}
-            playerRef={playerRef}
-            onVideoEnd={onVideoEnd}
-            rawVideoSource={video.srcRaw}
-            videoThumbnail={video.thumbnail}
-          />
+          <Player video={video} playerRef={playerRef} onVideoEnd={onVideoEnd} />
         ) : (
           <GhostTile aspectRatio={true} />
         )}
       </div>
-      <SidebarComponent
-        subtitles={subtitles}
-        video={video}
-        playerRef={playerRef}
-      />
+      <SidebarComponent video={video} playerRef={playerRef} />
     </div>
   );
 };
 
 type SidebarComponentProps = {
-  subtitles: Subtitle | undefined;
-  video: Video | undefined;
+  video?: Video;
   playerRef: React.RefObject<HTMLVmPlayerElement>;
 };
 
 const SidebarComponent: React.FC<SidebarComponentProps> = ({
-  subtitles,
   video,
   playerRef,
 }) => {
-  const blocks = subtitles?.getBlocks();
-
   const { user } = useAuth();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   const watchtimeSyncService =
     useInjection<WatchtimeSyncService>(WatchtimeSyncService);
 
   const [isContainerDataVisible, setContainerDataIsVisible] = useState(true);
-
   const [isSubtitleVisible, setIsSubtitleVisible] = useState(false);
-
   const [isLiked, setLiked] = useState<boolean | undefined>(undefined);
+  const [subtitles, setSubtitles] = useState<SubtitleFetchingState>();
+  const minioService = useInjection<MinioService>(MinioService);
+
+  useEffect(() => {
+    if (!video) return;
+    const language = video.selectProperLanguage(
+      i18n.language as PolyflixLanguage
+    );
+    if (
+      !language ||
+      (subtitles && subtitles.subtitle?.lang === language) ||
+      subtitles?.state === "loading"
+    )
+      return;
+    setSubtitles({
+      state: "loading",
+    });
+    minioService
+      .getSubtitlePresignedUrl(video.id, language)
+      .then(async ({ tokenAccess }) => {
+        const subtitles = new Subtitle(
+          language,
+          tokenAccess,
+          await VttFile.fromUrl(tokenAccess)
+        );
+        setSubtitles({
+          state: "succeed",
+          subtitle: subtitles,
+          blocks: subtitles.getBlocks(),
+        });
+      })
+      .catch((_) => {
+        setSubtitles({
+          state: "error",
+        });
+      });
+  }, [i18n.language, minioService, subtitles, video]);
 
   const isLtMdScreen = useMediaQuery({ query: "(max-width: 767px)" });
   const isXlScreen = useMediaQuery({ query: "(min-width: 1280px)" });
@@ -208,7 +232,7 @@ const SidebarComponent: React.FC<SidebarComponentProps> = ({
                 styles.data_container__content
               )}
             >
-              {blocks || video ? (
+              {video ? (
                 <>
                   <div className="flex flex-col md:pr-4 w-full">
                     <div className="py-2 flex items-center text-sm sticky top-0 bg-black bg-opacity-90 z-10">
@@ -255,8 +279,8 @@ const SidebarComponent: React.FC<SidebarComponentProps> = ({
                         isContainerDataVisible &&
                         (isSubtitleVisible ? (
                           <div>
-                            {blocks ? (
-                              blocks.map((block) => {
+                            {subtitles && subtitles.blocks ? (
+                              subtitles.blocks.map((block) => {
                                 return (
                                   <SubtitleText
                                     block={block}
@@ -271,13 +295,8 @@ const SidebarComponent: React.FC<SidebarComponentProps> = ({
                                 className="text-center text-sm py-4 md:pr-1 flex flex-col items-center absolute top-1/2 left-1/2 transform -translate-x-2/4 w-full"
                               >
                                 <ExclamationIcon className="w-6 md:w-7 text-nx-red mr-2" />
-                                {subtitles
-                                  ? subtitles?.status ===
-                                    SubtitleStatus.IN_PROGRESS
-                                    ? t(
-                                        "video.view.content.generatingSubtitles"
-                                      )
-                                    : t("video.view.content.subtitleError")
+                                {subtitles?.state === "loading"
+                                  ? t("video.view.content.generatingSubtitles")
                                   : t("video.view.content.noSubtitle")}
                               </Typography>
                             )}

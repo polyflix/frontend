@@ -4,6 +4,7 @@ import { StatusCodes } from "http-status-codes";
 import { HttpService } from "../../common/services";
 import { MinioFile } from "../models/files/minio-file.model";
 import { IUploadStrategy, PresignedUrl } from "../types/upload.type";
+import { SubtitleLanguages } from "../../videos";
 
 @Injectable()
 export class MinioService implements IUploadStrategy<MinioFile> {
@@ -63,6 +64,26 @@ export class MinioService implements IUploadStrategy<MinioFile> {
   public async getVideoPresignedUrl(videoId: string): Promise<PresignedUrl> {
     const { status, response, error } = await this.httpService.get(
       `/token/video/${videoId}`
+    );
+    if (status !== StatusCodes.OK) {
+      throw error;
+    }
+    return response;
+  }
+
+  /**
+   *	Request a preSignedUrl to see subtitle content
+   *
+   * @param {string} videoId -- ID of video
+   * @param {SubtitleLanguages} language -- Language needed
+   * @returns {Promise<PresignedUrl>}
+   */
+  public async getSubtitlePresignedUrl(
+    videoId: string,
+    language: SubtitleLanguages
+  ): Promise<PresignedUrl> {
+    const { status, response, error } = await this.httpService.get(
+      `/token/video/${videoId}/subtitle/${language}`
     );
     if (status !== StatusCodes.OK) {
       throw error;
