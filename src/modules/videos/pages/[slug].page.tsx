@@ -165,7 +165,7 @@ const SidebarComponent: React.FC<SidebarComponentProps> = ({
     if (
       !language ||
       (subtitles && subtitles.subtitle?.lang === language) ||
-      subtitles?.state === "loading"
+      ["loading", "error"].indexOf(subtitles?.state ?? "") > -1
     )
       return;
     setSubtitles({
@@ -214,7 +214,6 @@ const SidebarComponent: React.FC<SidebarComponentProps> = ({
   if (video && isLiked === undefined) {
     setLiked(video?.userMeta ? video?.userMeta.isLiked : false);
   }
-
   return (
     <div
       className={cn(styles.data_container)}
@@ -295,9 +294,12 @@ const SidebarComponent: React.FC<SidebarComponentProps> = ({
                                 className="text-center text-sm py-4 md:pr-1 flex flex-col items-center absolute top-1/2 left-1/2 transform -translate-x-2/4 w-full"
                               >
                                 <ExclamationIcon className="w-6 md:w-7 text-nx-red mr-2" />
-                                {subtitles?.state === "loading"
-                                  ? t("video.view.content.generatingSubtitles")
-                                  : t("video.view.content.noSubtitle")}
+                                {subtitles?.state === "loading" &&
+                                  t("video.view.content.generatingSubtitles")}
+                                {subtitles?.state === "error" &&
+                                  t("video.view.content.subtitleError")}
+                                {!subtitles?.state &&
+                                  t("video.view.content.noSubtitle")}
                               </Typography>
                             )}
                           </div>

@@ -107,7 +107,7 @@ const useSubtitles = ({
   const [subtitles, setSubtitles] = useState<Subtitle[] | undefined>();
 
   const fetchSubtitles = useCallback(async () => {
-    const subtitles: Subtitle[] = [];
+    const fetchedSubtitles: Subtitle[] = [];
     for (let i = 0; i < availableLanguages.length; i++) {
       const lang = availableLanguages[i];
       try {
@@ -115,7 +115,7 @@ const useSubtitles = ({
           id,
           lang
         );
-        subtitles.push(
+        fetchedSubtitles.push(
           new Subtitle(lang, tokenAccess, await VttFile.fromUrl(tokenAccess))
         );
       } catch (e) {
@@ -124,7 +124,7 @@ const useSubtitles = ({
       }
     }
     setLoading(false);
-    setSubtitles(subtitles);
+    setSubtitles(fetchedSubtitles);
   }, [minioService, availableLanguages, id]);
 
   useEffect(() => {
