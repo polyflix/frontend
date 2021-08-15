@@ -226,12 +226,12 @@
       }
     },
     "subtitle": {
-      "withSubtile": {
+      "withSubtitle": {
         "name": "Sous-titre",
         "description": "Des sous-titres seront générés et ajoutés à cette vidéo"
       },
-      "withoutSubtile": {
-        "name": "Sans sous-stitre",
+      "withoutSubtitle": {
+        "name": "Sans sous-titre",
         "description": "Aucun sous-titre ne sera généré pour cette vidéo"
       }
     }

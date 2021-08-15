@@ -236,11 +236,11 @@
       }
     },
     "subtitle": {
-      "withSubtile": {
+      "withSubtitle": {
         "name": "Subtitle",
         "description": "Subtitle will be generated and added to this video"
       },
-      "withoutSubtile": {
+      "withoutSubtitle": {
         "name": "No subtitle",
         "description": "No subtitle will be generated for this video"
       }

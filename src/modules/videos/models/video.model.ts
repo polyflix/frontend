@@ -1,7 +1,6 @@
 import { IVideo, VideoSource } from "../types";
 import WatchMetadata from "../../stats/models/userMeta.model";
 import { SubtitleLanguages } from "./subtitle.model";
-import { MINIO_URL } from "../../common/constants/minio.constant";
 import { Publisher } from "../../common/models";
 import { PolyflixLanguage } from "../../common/types/language.type";
 import { getSubtitleLanguageFromPolyflix } from "../../common/utils/language.util";
@@ -222,7 +221,7 @@ export class Video {
    * @returns {}
    */
   getEditLink(): string {
-    if (this.src.startsWith(MINIO_URL))
+    if (this._sourceType === VideoSource.INTERNAL)
       return `/videos/update/${this._slug}?type=upload`;
     return `/videos/update/${this._slug}`;
   }
