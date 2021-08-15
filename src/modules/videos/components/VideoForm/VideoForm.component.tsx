@@ -400,9 +400,9 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
               {watchHasSubtitle ? (
                 <>
                   <Typography as="span" bold>
-                    {`${t("userVideos.subtitle.withSubtile.name")}.`}
+                    {`${t("userVideos.subtitle.withSubtitle.name")}.`}
                   </Typography>{" "}
-                  {`${t("userVideos.subtitle.withSubtile.description")}.`}
+                  {`${t("userVideos.subtitle.withSubtitle.description")}.`}
                   <br />
                   <Typography
                     as="span"
@@ -416,9 +416,9 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
               ) : (
                 <>
                   <Typography as="span" bold>
-                    {`${t("userVideos.subtitle.withoutSubtile.name")}.`}
+                    {`${t("userVideos.subtitle.withoutSubtitle.name")}.`}
                   </Typography>{" "}
-                  {`${t("userVideos.subtitle.withoutSubtile.description")}.`}
+                  {`${t("userVideos.subtitle.withoutSubtitle.description")}.`}
                   <br />
                   <Typography
                     as="span"
