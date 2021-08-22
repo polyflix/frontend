@@ -489,7 +489,8 @@
     "view": {
       "label": {
         "description": "Description",
-        "subtitle": "Subtitles"
+        "subtitle": "Subtitles",
+        "note": "Notes"
       },
       "content": {
         "noSubtitle": "There is no subtitles for this video",
