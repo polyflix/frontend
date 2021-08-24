@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
 import { WithClassname, cn } from "../../common";
 import { PolyflixLanguage } from "../../common/types/language.type";
-import { GhostText } from "../../ui";
+import { Alert, GhostText } from "../../ui";
 import { MinioService } from "../../upload/services/minio.service";
 import { Subtitle, Video } from "../../videos";
 import { SubtitleService } from "../../videos/services";
@@ -23,7 +23,7 @@ export const SubtitleEditorPanel: React.FC<SubtitleEditorPanelProps> = ({
   playerRef,
   className = "",
 }) => {
-  const { i18n } = useTranslation();
+  const { i18n, t } = useTranslation();
   const [subtitles, setSubtitles] = useState<SubtitleFetchingState>();
   const minioService = useInjection<MinioService>(MinioService);
   const subtitleService = useInjection<SubtitleService>(SubtitleService);
@@ -85,7 +85,7 @@ export const SubtitleEditorPanel: React.FC<SubtitleEditorPanelProps> = ({
         "lg:ml-4 flex flex-col gap-2 pt-4 lg:p-2 box-border"
       )}
     >
-      {video &&
+      {video && blocks.length > 0 ? (
         blocks?.map((block: Block, i: number) => (
           <SubtitleBlock
             subtitles={subtitles}
@@ -94,9 +94,16 @@ export const SubtitleEditorPanel: React.FC<SubtitleEditorPanelProps> = ({
             key={i}
             video={video}
           />
-        ))}
+        ))
+      ) : (
+        <div className="w-full h-full flex items-center justify-center">
+          <Alert type="not-found" className="col-span-2">
+            {t("shared.common.errors.noData")}
+          </Alert>
+        </div>
+      )}
     </div>
-  ) : (
+  ) : subtitles?.state === "loading" ? (
     <div
       className={cn(
         className,
@@ -110,5 +117,9 @@ export const SubtitleEditorPanel: React.FC<SubtitleEditorPanelProps> = ({
         </div>
       ))}
     </div>
+  ) : (
+    <Alert type="not-found" className="w-1/3">
+      {t("shared.common.errors.common")}
+    </Alert>
   );
 };

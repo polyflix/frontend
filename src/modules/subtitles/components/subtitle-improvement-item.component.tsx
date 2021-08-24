@@ -9,12 +9,12 @@ import {
 } from "@heroicons/react/outline";
 import { useInjection } from "@polyflix/di";
 import { Block } from "@polyflix/vtt-parser";
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useSelector, useDispatch } from "react-redux";
 import { useAuth } from "../../authentication";
 import { WithClassname, RootState } from "../../common";
-import { Typography } from "../../ui";
+import { Alert, Typography } from "../../ui";
 import { Video } from "../../videos";
 import { SubtitleImprovement } from "../models/subtitle-improvement.model";
 import {
@@ -27,6 +27,7 @@ import {
   SetBlockSuccess,
   UpdateFormElementInProgress,
 } from "../redux/actions/subtitle-improvement.action";
+import { Notification } from "../../ui/components/Notification/Notification.component";
 import { SubtitleImprovementMetaService } from "../services/subtitle-improvement-meta.service";
 import { SubtitleImprovementService } from "../services/subtitle-improvement.service";
 import { Avatar } from "./avatar.component";
@@ -41,6 +42,8 @@ type SubtitleImprovementItemProps = WithClassname & {
 export const SubtitleImprovementItem: React.FC<SubtitleImprovementItemProps> =
   ({ subtitleImprovement, block, video }) => {
     const { t } = useTranslation();
+    const [openDeleteConfirmation, setOpenDeleteConfirmation] =
+      useState<boolean>(false);
     const { user } = useAuth();
     const subtitleImprovementService = useInjection<SubtitleImprovementService>(
       SubtitleImprovementService
@@ -103,7 +106,6 @@ export const SubtitleImprovementItem: React.FC<SubtitleImprovementItemProps> =
       dispatch(DeleteElementInProgress(block.startTime));
       subtitleImprovementService
         .patchApproved(subtitleImprovement.id, status)
-        .catch((e) => dispatch(DeleteElementFailure(block.startTime)))
         .then(() => {
           subtitleImprovement.isApproved = status;
           if (status) {
@@ -112,11 +114,54 @@ export const SubtitleImprovementItem: React.FC<SubtitleImprovementItemProps> =
             );
           }
           dispatch(DeleteElementSuccess(block.startTime, subtitleImprovement));
-        });
+        })
+        .catch((e) => dispatch(DeleteElementFailure(block.startTime)));
     };
 
     return (
       <div className="bg-darkgray bg-opacity-30 rounded w-full p-4 pb-6 box-border relative">
+        <Notification show={openDeleteConfirmation}>
+          <div className="flex flex-col md:grid md:items-center md:grid-cols-12">
+            <div className="col-span-10">
+              <Alert type="error">
+                <Typography bold as="span" className="text-sm">
+                  {t("shared.common.actions.delete")} "{block.text}" ?
+                </Typography>
+              </Alert>
+            </div>
+            <div className="flex items-center justify-end md:col-span-2">
+              <div
+                className="cursor-pointer"
+                onClick={() => setOpenDeleteConfirmation(false)}
+              >
+                <Typography
+                  as="span"
+                  className="text-sm transition-all hover:underline"
+                >
+                  {t("shared.common.actions.cancel")}
+                </Typography>
+              </div>
+              <div className="mx-3"></div>
+              {!disableActions && (
+                <div
+                  className="cursor-pointer"
+                  onClick={() => {
+                    setOpenDeleteConfirmation(false);
+                    handleDelete();
+                  }}
+                >
+                  <Typography
+                    as="span"
+                    className="text-nx-red text-sm transition-all hover:underline"
+                    overrideDefaultClasses
+                  >
+                    {t("shared.common.actions.delete")}
+                  </Typography>
+                </div>
+              )}
+            </div>
+          </div>
+        </Notification>
         <div className="flex flex-row gap-4 absolute right-4 top-4">
           {(user?.id === subtitleImprovement.createdBy?.id ||
             user?.id === video.publisher?.id) && (
@@ -167,7 +212,7 @@ export const SubtitleImprovementItem: React.FC<SubtitleImprovementItemProps> =
                             </Button>
                             <Button
                               disabled={disableActions}
-                              onClick={() => handleDelete()}
+                              onClick={() => setOpenDeleteConfirmation(true)}
                               className="bg-nx-red-dark hover:bg-nx-red p-2 w-full"
                             >
                               <TrashIcon className="h-5 w-5" />
