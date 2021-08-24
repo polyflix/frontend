@@ -1,6 +1,7 @@
 import { useTranslation } from "react-i18next";
 import { useParams } from "react-router";
 import {
+  Alert,
   fadeOpacity,
   GhostText,
   GhostTile,
@@ -83,6 +84,7 @@ export const UserSubtitleImprovement: React.FC = () => {
                 })}
           </Title>
           {myImprovementsGroup &&
+          Object.keys(myImprovementsGroup).length > 0 ? (
             Object.keys(myImprovementsGroup).map((key: string, i: number) => (
               <div
                 key={i}
@@ -139,7 +141,12 @@ export const UserSubtitleImprovement: React.FC = () => {
                   )}
                 </div>
               </div>
-            ))}
+            ))
+          ) : (
+            <Alert type="info" className="w-1/3">
+              {t("shared.common.errors.noData")}
+            </Alert>
+          )}
         </>
       ) : (
         <div className="flex flex-col gap-4">
@@ -191,6 +198,7 @@ export const UserSubtitleImprovementVideo: React.FC = () => {
             {t("userSubtitleImprovement.content.onMyVideo")}
           </Title>
           {improvementOnMyVideoGroup &&
+          Object.keys(improvementOnMyVideoGroup).length > 0 ? (
             Object.keys(improvementOnMyVideoGroup).map(
               (key: string, i: number) => (
                 <div
@@ -264,7 +272,12 @@ export const UserSubtitleImprovementVideo: React.FC = () => {
                   </div>
                 </div>
               )
-            )}
+            )
+          ) : (
+            <Alert type="info" className="w-1/3">
+              {t("shared.common.errors.noData")}
+            </Alert>
+          )}
         </>
       ) : (
         <div className="flex flex-col gap-4">

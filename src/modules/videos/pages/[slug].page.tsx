@@ -260,9 +260,11 @@ const SidebarComponent: React.FC<SidebarComponentProps> = ({
                               </Typography>
                             </button>
                             <span className="flex-1"></span>
-                            <Link to={`/subtitle-editing/${video.slug}`}>
-                              <PencilIcon className="w-4 md:w-5 mr-2 text-nx-red" />
-                            </Link>
+                            {subtitles && subtitles.blocks && (
+                              <Link to={`/subtitle-editing/${video.slug}`}>
+                                <PencilIcon className="w-4 md:w-5 mr-2 text-nx-red" />
+                              </Link>
+                            )}
                           </>
                         ) : (
                           <button

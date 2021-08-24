@@ -34,9 +34,11 @@ export const VideoContainer: React.FC<VideoContainerProps> = ({
       ) : !alert ? (
         <GhostTile aspectRatio={true} />
       ) : (
-        <Alert type={alert.type} className="col-span-2">
-          {alert.message}
-        </Alert>
+        <div className="w-full flex items-center justify-center">
+          <Alert type={alert.type} className="col-span-2">
+            {alert.message}
+          </Alert>
+        </div>
       )}
     </div>
   );

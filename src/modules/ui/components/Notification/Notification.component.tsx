@@ -37,7 +37,7 @@ export const Notification: React.FC<PropsWithChildren<Props>> = ({
         <motion.div
           key={key}
           variants={notificationAnimation}
-          className="fixed left-0 flex justify-center bottom-4 w-full"
+          className="fixed left-0 flex justify-center bottom-4 w-full z-50"
         >
           <div className="bg-nx-dark w-11/12 md:w-8/12 lg:w-6/12 rounded-md p-3">
             {children}
