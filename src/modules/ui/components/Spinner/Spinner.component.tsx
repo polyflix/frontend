@@ -13,8 +13,14 @@ type Props = WithClassname &
     page?: boolean;
   };
 
-const SpinnerSvg: React.FC<Props> = ({ height, width, ...rest }) => (
+const SpinnerSvg: React.FC<Props> = ({
+  height,
+  width,
+  className = "",
+  ...rest
+}) => (
   <motion.svg
+    className={className}
     {...rest}
     width={height}
     height={width}
@@ -82,5 +88,7 @@ export const Spinner: React.FC<Props> = ({
       </motion.div>
     );
   }
-  return <SpinnerSvg width={width} height={height} {...rest} />;
+  return (
+    <SpinnerSvg width={width} height={height} className={className} {...rest} />
+  );
 };

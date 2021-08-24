@@ -249,15 +249,21 @@ const SidebarComponent: React.FC<SidebarComponentProps> = ({
                       {!isLtMdScreen &&
                         isContainerDataVisible &&
                         (isSubtitleVisible ? (
-                          <button
-                            className="flex border-2 border-red-600 rounded-lg px-2 py-1 text-nx-red cursor-pointer hover:bg-red-600 hover:text-white"
-                            onClick={() => setIsSubtitleVisible(false)}
-                          >
-                            <InformationCircleIcon className="w-4 md:w-5" />
-                            <Typography as="p" className="text-sm ml-2">
-                              {t("video.view.label.description")}
-                            </Typography>
-                          </button>
+                          <>
+                            <button
+                              className="flex border-2 border-red-600 rounded-lg px-2 py-1 text-nx-red cursor-pointer hover:bg-red-600 hover:text-white"
+                              onClick={() => setIsSubtitleVisible(false)}
+                            >
+                              <InformationCircleIcon className="w-4 md:w-5" />
+                              <Typography as="p" className="text-sm ml-2">
+                                {t("video.view.label.description")}
+                              </Typography>
+                            </button>
+                            <span className="flex-1"></span>
+                            <Link to={`/subtitle-editing/${video.slug}`}>
+                              <PencilIcon className="w-4 md:w-5 mr-2 text-nx-red" />
+                            </Link>
+                          </>
                         ) : (
                           <button
                             className="flex border-2 border-red-600 rounded-lg px-2 py-1 text-nx-red cursor-pointer hover:bg-red-600 hover:text-white"

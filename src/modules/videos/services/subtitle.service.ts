@@ -1,6 +1,7 @@
 import { Injectable } from "@polyflix/di";
 import { StatusCodes } from "http-status-codes";
 import { HttpService } from "../../common/services/http.service";
+import { Video } from "../models";
 import { Subtitle } from "../models/subtitle.model";
 
 @Injectable()
@@ -26,9 +27,9 @@ export class SubtitleService {
    * Create subtitles for a video
    * @param {string} videoID
    */
-  public async createSubtitle(videoId: string): Promise<void> {
+  public async createSubtitle(video: Video): Promise<void> {
     const { status, error } = await this.httpService.post(`/subtitles`, {
-      body: { lang: "fr-FR", videoId: videoId },
+      body: { lang: "fr-FR", video: video },
     });
     if (status !== StatusCodes.CREATED) {
       throw error;

@@ -128,7 +128,7 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
         ? videoService.updateVideo(video?.id as string, data)
         : videoService.createVideo(data));
       if (data.hasSubtitle && !subtitleExists)
-        await subtitleService.createSubtitle(video?.id || result.id);
+        await subtitleService.createSubtitle(video || result);
       else if (!data.hasSubtitle && subtitleExists)
         await subtitleService.deleteSubtitle(video?.id!);
       setAlert({
