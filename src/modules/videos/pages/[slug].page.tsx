@@ -37,6 +37,7 @@ import { GhostParagraph } from "../../ui/components/Ghost/GhostParagraph";
 import { MinioService } from "../../upload/services/minio.service";
 import { PolyflixLanguage } from "../../common/types/language.type";
 import { Block, VttFile } from "@polyflix/vtt-parser";
+import { VideoNote } from "../components/VideoNote/VideoNote.component";
 
 export const VideoDetail: React.FC = () => {
   const [pageTitle, setPageTitle] = useState<string>();
@@ -152,7 +153,7 @@ const SidebarComponent: React.FC<SidebarComponentProps> = ({
     useInjection<WatchtimeSyncService>(WatchtimeSyncService);
 
   const [isContainerDataVisible, setContainerDataIsVisible] = useState(true);
-  const [isSubtitleVisible, setIsSubtitleVisible] = useState(false);
+  const [visiblePanelElement, setVisiblePanelElement] = useState("description");
   const [isLiked, setLiked] = useState<boolean | undefined>(undefined);
   const [subtitles, setSubtitles] = useState<SubtitleFetchingState>();
   const minioService = useInjection<MinioService>(MinioService);
@@ -246,37 +247,76 @@ const SidebarComponent: React.FC<SidebarComponentProps> = ({
                           }
                         />
                       )}
-                      {!isLtMdScreen &&
-                        isContainerDataVisible &&
-                        (isSubtitleVisible ? (
-                          <>
-                            <button
-                              className="flex border-2 border-red-600 rounded-lg px-2 py-1 text-nx-red cursor-pointer hover:bg-red-600 hover:text-white"
-                              onClick={() => setIsSubtitleVisible(false)}
+                      {!isLtMdScreen && isContainerDataVisible && (
+                        <ul className="flex mb-1 list-none flex-wrap pb-1 flex-row">
+                          <li className="-mb-px mr-2 last:mr-0 flex-auto text-center">
+                            <a
+                              className={
+                                "flex rounded-lg font-bold uppercase px-5 py-3 cursor-pointer hover:bg-red-600 " +
+                                (visiblePanelElement === "description"
+                                  ? "text-white bg-red-600"
+                                  : "text-red-600 bg-black")
+                              }
+                              onClick={(e) => {
+                                e.preventDefault();
+                                setVisiblePanelElement("description");
+                              }}
+                              href="#description"
                             >
                               <InformationCircleIcon className="w-4 md:w-5" />
                               <Typography as="p" className="text-sm ml-2">
                                 {t("video.view.label.description")}
                               </Typography>
-                            </button>
+                            </a>
                             <span className="flex-1"></span>
                             {subtitles && subtitles.blocks && (
                               <Link to={`/subtitle-editing/${video.slug}`}>
                                 <PencilIcon className="w-4 md:w-5 mr-2 text-nx-red" />
                               </Link>
                             )}
-                          </>
-                        ) : (
-                          <button
-                            className="flex border-2 border-red-600 rounded-lg px-2 py-1 text-nx-red cursor-pointer hover:bg-red-600 hover:text-white"
-                            onClick={() => setIsSubtitleVisible(true)}
-                          >
-                            <TranslateIcon className="w-4 md:w-5" />
-                            <Typography as="p" className="text-sm ml-2">
-                              {t("video.view.label.subtitle")}
-                            </Typography>
-                          </button>
-                        ))}
+                          </li>
+                          <li className="-mb-px mr-2 last:mr-0 flex-auto text-center">
+                            <a
+                              className={
+                                "flex rounded-lg font-bold uppercase px-5 py-3 cursor-pointer hover:bg-red-600 " +
+                                (visiblePanelElement === "subtitle"
+                                  ? "text-white bg-red-600"
+                                  : "text-red-600 bg-black")
+                              }
+                              onClick={(e) => {
+                                e.preventDefault();
+                                setVisiblePanelElement("subtitle");
+                              }}
+                              href="#subtitle"
+                            >
+                              <TranslateIcon className="w-4 md:w-5" />
+                              <Typography as="p" className="text-sm ml-2">
+                                {t("video.view.label.subtitle")}
+                              </Typography>
+                            </a>
+                          </li>
+                          <li className="-mb-px mr-2 last:mr-0 flex-auto text-center">
+                            <a
+                              className={
+                                "flex rounded-lg font-bold uppercase px-5 py-3 cursor-pointer hover:bg-red-600 " +
+                                (visiblePanelElement === "note"
+                                  ? "text-white bg-red-600"
+                                  : "text-red-600 bg-black")
+                              }
+                              onClick={(e) => {
+                                e.preventDefault();
+                                setVisiblePanelElement("note");
+                              }}
+                              href="#note"
+                            >
+                              <PencilIcon className="w-4 md:w-5" />
+                              <Typography as="p" className="text-sm ml-2">
+                                {t("video.view.label.note")}
+                              </Typography>
+                            </a>
+                          </li>
+                        </ul>
+                      )}
                     </div>
                     <div
                       className="relative z-0"
@@ -284,7 +324,7 @@ const SidebarComponent: React.FC<SidebarComponentProps> = ({
                     >
                       {!isLtMdScreen ? (
                         isContainerDataVisible &&
-                        (isSubtitleVisible ? (
+                        ((visiblePanelElement === "subtitle" && (
                           <div>
                             {subtitles && subtitles.blocks ? (
                               subtitles.blocks.map((block) => {
@@ -311,16 +351,22 @@ const SidebarComponent: React.FC<SidebarComponentProps> = ({
                               </Typography>
                             )}
                           </div>
-                        ) : (
-                          <div className="pt-2">
-                            <Typography as="h4" bold className="text-2xl">
-                              {video?.title}
-                            </Typography>
-                            <Paragraph className="text-xs py-4 md:pr-1 ">
-                              {video?.description}
-                            </Paragraph>
-                          </div>
-                        ))
+                        )) ||
+                          (visiblePanelElement === "description" && (
+                            <div className="pt-2">
+                              <Typography as="h4" bold className="text-2xl">
+                                {video?.title}
+                              </Typography>
+                              <Paragraph className="text-xs py-4 md:pr-1 ">
+                                {video?.description}
+                              </Paragraph>
+                            </div>
+                          )) ||
+                          (visiblePanelElement === "note" && (
+                            <div className="pt-2">
+                              <VideoNote video={video}></VideoNote>
+                            </div>
+                          )))
                       ) : (
                         <>
                           <Typography as="h4" bold className="text-2xl">

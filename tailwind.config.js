@@ -7,7 +7,7 @@ module.exports = {
     },
     extend: {
       cursor: {
-        grab: 'grab'
+        grab: "grab",
       },
       inset: {
         nav: "65px",
@@ -24,15 +24,15 @@ module.exports = {
         "nx-red-dark": "#B81D24",
         "nx-white": "#F5F5F1",
         "nx-gray": "#cdcaca",
-        "darkgray": "#161616"
+        darkgray: "#161616",
       },
       screens: {
         portrait: { raw: "(orientation: portrait)" },
         landscape: { raw: "(orientation: landscape)" },
       },
       borderWidth: {
-        "3": "3px",
-      }
+        3: "3px",
+      },
     },
   },
   variants: {
@@ -40,5 +40,9 @@ module.exports = {
       translate: ["group-hover"],
     },
   },
-  plugins: [],
+  plugins: [
+    require("@tailwindcss/forms"),
+    require("@tailwindcss/line-clamp"),
+    require("@tailwindcss/typography"),
+  ],
 };

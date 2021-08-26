@@ -479,7 +479,8 @@
     "view": {
       "label": {
         "description": "Description",
-        "subtitle": "Sous-titres"
+        "subtitle": "Sous-titres",
+        "note": "Notes"
       },
       "content": {
         "noSubtitle": "Il n'y a pas de sous-titres pour cette video",
