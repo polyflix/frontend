@@ -22,6 +22,8 @@ type Props = WithClassname &
     required?: boolean;
     /** If true, the field will be disabled */
     disabled?: boolean;
+    /** onchage event for input tag */
+    onChange?: () => void;
   };
 
 /**
@@ -38,12 +40,14 @@ export const Input = forwardRef<HTMLInputElement, Props>(
       required = false,
       error,
       hint,
+      onChange,
       ...rest
     },
     forwardRef
   ) => (
     <motion.div {...rest} className={cn("flex flex-col", className)}>
       <input
+        onChange={onChange}
         name={name}
         type={type}
         disabled={disabled}
