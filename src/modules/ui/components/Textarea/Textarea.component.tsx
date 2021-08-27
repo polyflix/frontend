@@ -47,7 +47,9 @@ export const Textarea = forwardRef<HTMLTextAreaElement, Props>(
         style={minHeight ? { minHeight: `${minHeight}px` } : {}}
         name={name}
         disabled={disabled}
-        className="border resize-none dark:bg-nx-white focus:outline-none py-3 px-5 rounded-md font-display"
+        className={`border resize-none dark:bg-nx-white focus:outline-none py-3 px-5 rounded-md font-display ${
+          disabled ? "dark:bg-nx-gray" : ""
+        }`}
         placeholder={`${placeholder} ${required ? "*" : ""}`}
         ref={forwardRef}
       ></textarea>
