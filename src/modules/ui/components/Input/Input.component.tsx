@@ -22,7 +22,7 @@ type Props = WithClassname &
     required?: boolean;
     /** If true, the field will be disabled */
     disabled?: boolean;
-    /** onchage event for input tag */
+    /** onChange event for input tag */
     onChange?: () => void;
   };
 
@@ -51,9 +51,10 @@ export const Input = forwardRef<HTMLInputElement, Props>(
         name={name}
         type={type}
         disabled={disabled}
-        className={`border dark:bg-nx-white focus:outline-none py-3 px-5 rounded-md font-display ${
-          disabled ? "dark:bg-nx-gray" : ""
-        }`}
+        className={cn(
+          "border dark:bg-nx-white focus:outline-none py-3 px-5 rounded-md font-display",
+          disabled && "dark:bg-nx-gray opacity-80"
+        )}
         placeholder={`${placeholder} ${required ? "*" : ""}`}
         ref={forwardRef}
       />

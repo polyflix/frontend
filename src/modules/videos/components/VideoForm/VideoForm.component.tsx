@@ -135,7 +135,7 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
       const valid = await trigger("src");
       if (valid) {
         const src = getValues("src");
-        const id = src.match(/[a-z0-9_-]{11}/gim);
+        const id = src.match(/[a-zA-Z0-9_-]{11}/);
         if (id) {
           const metadata = await videoService.getVideoMetadata(id[0]);
           setValue("thumbnail", metadata.snippet?.thumbnails?.high?.url);
@@ -145,7 +145,6 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
       }
     } catch (e) {
       setAlert({
-        // Change error
         message: `${t("videoManagement.addVideo.error")}`,
         type: "error",
       });
