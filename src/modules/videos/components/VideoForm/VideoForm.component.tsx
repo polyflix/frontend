@@ -57,6 +57,9 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
   let history = useHistory();
   const type = new URLSearchParams(useLocation().search).get("type");
 
+  const [autocompleted, setAutocompleted] = useState<boolean>(
+    isUpdate || type === "upload"
+  );
   const [loading, setLoading] = useState<boolean>(false);
   const [isSubmit, setIsSubmit] = useState<boolean>(false);
   const [subtitleExists, setSubtitleExists] = useState<boolean>(false);
@@ -67,17 +70,24 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
     } | null>(null);
   const [files, setFiles] = useState<MinioFile[]>([]);
 
-  const { register, handleSubmit, errors, watch, setValue } =
-    useForm<IVideoForm>({
-      defaultValues: {
-        title: video?.title,
-        description: video?.description,
-        isPublished: video?.isPublished || false,
-        isPublic: video?.isPublic || false,
-        thumbnail: video?.thumbnail,
-        src: video?.src,
-      },
-    });
+  const {
+    register,
+    handleSubmit,
+    errors,
+    watch,
+    setValue,
+    getValues,
+    trigger,
+  } = useForm<IVideoForm>({
+    defaultValues: {
+      title: video?.title,
+      description: video?.description,
+      isPublished: video?.isPublished || false,
+      isPublic: video?.isPublic || false,
+      thumbnail: video?.thumbnail,
+      src: video?.src,
+    },
+  });
 
   const watchTitle = watch<"title", string>("title", "");
   const watchPrivacy = watch<"isPublic", boolean>("isPublic");
@@ -118,6 +128,31 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
     "https://i.stack.imgur.com/y9DpT.jpg";
 
   const onGoBack = () => history.goBack();
+
+  const autocomplete = async () => {
+    setLoading(true);
+    try {
+      const valid = await trigger("src");
+      if (valid) {
+        const src = getValues("src");
+        const id = src.match(/[a-zA-Z0-9_-]{11}/);
+        if (id) {
+          const metadata = await videoService.getVideoMetadata(id[0]);
+          setValue("thumbnail", metadata.snippet?.thumbnails?.high?.url);
+          setValue("description", metadata.snippet?.description);
+          setValue("title", metadata.snippet?.title);
+        }
+      }
+    } catch (e) {
+      setAlert({
+        message: `${t("videoManagement.addVideo.error")}`,
+        type: "error",
+      });
+    } finally {
+      setAutocompleted(true);
+      setLoading(false);
+    }
+  };
 
   const onSubmit = async (data: IVideoForm) => {
     setLoading(true);
@@ -191,6 +226,7 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
         onSubmit={handleSubmit(onSubmit)}
       >
         <Input
+          disabled={!autocompleted}
           name="title"
           error={errors.title}
           className="col-span-2 md:col-span-1"
@@ -215,6 +251,7 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
         {type !== "upload" ? (
           <>
             <Input
+              disabled={!autocompleted}
               error={errors.thumbnail}
               name="thumbnail"
               required
@@ -233,6 +270,7 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
               })}
             />
             <Input
+              onChange={autocomplete}
               error={errors.src}
               name="src"
               required
@@ -243,7 +281,8 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
               ref={register({
                 required: `${t("videoManagement.inputs.videoURL.missing")}.`,
                 pattern: {
-                  value: urlRegex({ exact: true }),
+                  value:
+                    /^((?:https?:)?\/\/)?((?:www|m)\.)?((?:youtube\.com|youtu.be|youtube-nocookie.com))(\/(?:[\w-]+\?v=|embed\/|v\/)?)([\w-]+)(\S+)?$/gm,
                   message: `${t("videoManagement.inputs.videoURL.error")}.`,
                 },
               })}
@@ -272,6 +311,7 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
           </>
         )}
         <Textarea
+          disabled={!autocompleted}
           error={errors.description}
           className="col-span-2"
           minHeight={200}
