@@ -251,12 +251,13 @@ const SidebarComponent: React.FC<SidebarComponentProps> = ({
                         <ul className="flex mb-1 list-none flex-wrap pb-1 flex-row">
                           <li className="-mb-px mr-2 last:mr-0 flex-auto text-center">
                             <a
-                              className={
-                                "flex rounded-lg font-bold uppercase px-5 py-3 cursor-pointer hover:bg-red-600 " +
-                                (visiblePanelElement === "description"
+                              className={cn(
+                                "flex rounded-lg font-bold uppercase px-5 py-3 cursor-pointer",
+                                visiblePanelElement === "description"
                                   ? "text-white bg-red-600"
-                                  : "text-red-600 bg-black")
-                              }
+                                  : "text-red-600 bg-black",
+                                "hover:bg-red-600 hover:text-white"
+                              )}
                               onClick={(e) => {
                                 e.preventDefault();
                                 setVisiblePanelElement("description");
@@ -269,20 +270,16 @@ const SidebarComponent: React.FC<SidebarComponentProps> = ({
                               </Typography>
                             </a>
                             <span className="flex-1"></span>
-                            {subtitles && subtitles.blocks && (
-                              <Link to={`/subtitle-editing/${video.slug}`}>
-                                <PencilIcon className="w-4 md:w-5 mr-2 text-nx-red" />
-                              </Link>
-                            )}
                           </li>
                           <li className="-mb-px mr-2 last:mr-0 flex-auto text-center">
                             <a
-                              className={
-                                "flex rounded-lg font-bold uppercase px-5 py-3 cursor-pointer hover:bg-red-600 " +
-                                (visiblePanelElement === "subtitle"
+                              className={cn(
+                                "flex rounded-lg font-bold uppercase px-5 py-3 cursor-pointer",
+                                visiblePanelElement === "subtitle"
                                   ? "text-white bg-red-600"
-                                  : "text-red-600 bg-black")
-                              }
+                                  : "text-red-600 bg-black",
+                                "hover:bg-red-600 hover:text-white"
+                              )}
                               onClick={(e) => {
                                 e.preventDefault();
                                 setVisiblePanelElement("subtitle");
@@ -297,19 +294,20 @@ const SidebarComponent: React.FC<SidebarComponentProps> = ({
                           </li>
                           <li className="-mb-px mr-2 last:mr-0 flex-auto text-center">
                             <a
-                              className={
-                                "flex rounded-lg font-bold uppercase px-5 py-3 cursor-pointer hover:bg-red-600 " +
-                                (visiblePanelElement === "note"
+                              className={cn(
+                                "flex rounded-lg font-bold uppercase px-5 py-3 cursor-pointer",
+                                visiblePanelElement === "note"
                                   ? "text-white bg-red-600"
-                                  : "text-red-600 bg-black")
-                              }
+                                  : "text-red-600 bg-black",
+                                "hover:bg-red-600 hover:text-white"
+                              )}
                               onClick={(e) => {
                                 e.preventDefault();
                                 setVisiblePanelElement("note");
                               }}
                               href="#note"
                             >
-                              <PencilIcon className="w-4 md:w-5" />
+                              <PencilIcon className="w-4 md:w-5 " />
                               <Typography as="p" className="text-sm ml-2">
                                 {t("video.view.label.note")}
                               </Typography>
@@ -326,6 +324,11 @@ const SidebarComponent: React.FC<SidebarComponentProps> = ({
                         isContainerDataVisible &&
                         ((visiblePanelElement === "subtitle" && (
                           <div>
+                            {subtitles && subtitles.blocks && (
+                              <Link to={`/subtitle-editing/${video.slug}`}>
+                                <PencilIcon className="w-4 md:w-5 mr-2 text-nx-red" />
+                              </Link>
+                            )}
                             {subtitles && subtitles.blocks ? (
                               subtitles.blocks.map((block) => {
                                 return (

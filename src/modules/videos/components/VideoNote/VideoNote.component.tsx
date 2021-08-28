@@ -83,7 +83,6 @@ export const VideoNote: React.FC<Props> = ({ video }) => {
         "|" as const,
         "quote" as const,
         "unordered-list" as const,
-        "ordered-list" as const,
         "table" as const,
         "|" as const,
         "link" as const,
@@ -100,9 +99,9 @@ export const VideoNote: React.FC<Props> = ({ video }) => {
   return (
     <div id="FrameworkEditorContainer" className="relative prose max-w-none">
       <i
-        className={`absolute inset-y-4 right-4 fa fab fa-save text-${
-          isUnsavedChange ? "red" : "grey"
-        }-500`}
+        className={`absolute inset-y-4 right-4 fa fab fa-save ${
+          isUnsavedChange ? "text-nx-red" : "text-grey-500"
+        }`}
       ></i>
       <SimpleMdeReact
         id="note"
