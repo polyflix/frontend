@@ -8,7 +8,7 @@ import {
 } from "@heroicons/react/outline";
 import { useInjection } from "@polyflix/di";
 import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useHistory, useLocation } from "react-router";
@@ -22,7 +22,6 @@ import { Checkbox } from "../../../ui/components/Checkbox/Checkbox.component";
 import { Image as Img } from "../../../ui/components/Image/Image.component";
 import { Input } from "../../../ui/components/Input/Input.component";
 import { Spinner } from "../../../ui/components/Spinner/Spinner.component";
-import { Textarea } from "../../../ui/components/Textarea/Textarea.component";
 import { Paragraph } from "../../../ui/components/Typography/Paragraph/Paragraph.component";
 import { Title } from "../../../ui/components/Typography/Title/Title.component";
 import { Typography } from "../../../ui/components/Typography/Typography.component";
@@ -36,6 +35,7 @@ import { MinioService } from "../../../upload/services/minio.service";
 import { MinioFile } from "../../../upload/models/files/minio-file.model";
 import { SubtitleService } from "../../services";
 import urlRegex from "url-regex";
+import SimpleMdeReact from "react-simplemde-editor";
 
 type Props = {
   /** If video exists, the form will be in update mode, otherwise in create mode. */
@@ -94,6 +94,17 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
   const watchPublished = watch<"isPublished", boolean>("isPublished");
   const watchHasSubtitle = watch<"hasSubtitle", boolean>("hasSubtitle");
   const watchThumbnail = watch<"thumbnail", string>("thumbnail", "");
+  const watchDescription = watch<"description", string>(
+    "description",
+    t("videoManagement.inputs.description.name")
+  );
+
+  // We need to do this to get the value of textarea that isn't working with only description in useForm
+  const [desc, setDesc] = useState<string | undefined>(video?.description);
+  const onChange = (value: string) => {
+    setValue("description", value);
+    setDesc(value);
+  };
 
   useEffect(() => {
     async function checkSubtitleExists() {
@@ -159,6 +170,7 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
     setIsSubmit(true);
     try {
       if (type === "upload") data = await uploadFiles(data);
+      data.description = desc || "";
       let result = await (isUpdate
         ? videoService.updateVideo(video?.id as string, data)
         : videoService.createVideo(data));
@@ -183,6 +195,35 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
       setIsSubmit(false);
     }
   };
+
+  //Editor Options
+  const MDOptions = useMemo(() => {
+    return {
+      autoSave: false,
+      // uploadImage: true,
+      spellChecker: false,
+      sideBySideFullscreen: false,
+      minHeight: "550px",
+      toolbar: [
+        "bold" as const,
+        "italic" as const,
+        "heading" as const,
+        "code" as const,
+        "|" as const,
+        "quote" as const,
+        "unordered-list" as const,
+        "table" as const,
+        "|" as const,
+        "link" as const,
+        "image" as const,
+        "|" as const,
+        "preview" as const,
+        "|" as const,
+        "guide" as const,
+        "|" as const,
+      ],
+    };
+  }, []);
 
   return (
     <motion.div
@@ -310,6 +351,13 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
             />
           </>
         )}
+        <SimpleMdeReact
+          className="col-span-2"
+          value={watchDescription}
+          onChange={onChange}
+          options={MDOptions}
+        />
+        {/* <Textarea
         <Textarea
           disabled={!autocompleted}
           error={errors.description}
@@ -324,7 +372,7 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
             },
           })}
           variants={fadeInDown}
-        />
+        /> */}
         <Checkbox
           className="col-span-2"
           error={errors.isPublic}
