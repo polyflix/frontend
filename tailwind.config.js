@@ -25,6 +25,7 @@ module.exports = {
         "nx-white": "#F5F5F1",
         "nx-gray": "#cdcaca",
         darkgray: "#161616",
+        "light-black": "#0b0b0b"
       },
       screens: {
         portrait: { raw: "(orientation: portrait)" },
@@ -38,6 +39,7 @@ module.exports = {
   variants: {
     extend: {
       translate: ["group-hover"],
+      opacity: ["group-hover"],
     },
   },
   plugins: [

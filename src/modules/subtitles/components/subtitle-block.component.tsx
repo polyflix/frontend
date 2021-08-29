@@ -1,4 +1,4 @@
-import { PencilIcon } from "@heroicons/react/outline";
+import { PencilIcon, XIcon } from "@heroicons/react/outline";
 import { Block } from "@polyflix/vtt-parser";
 import { usePlayerContext } from "@vime/react";
 import React, { useState } from "react";
@@ -23,7 +23,7 @@ export const SubtitleBlock: React.FC<SubtitleBlockProps> = ({
   subtitles,
   video,
 }) => {
-  const [isFromOpen, setIsFromOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   const [currentTime, setCurrentTime] = usePlayerContext(
     playerRef,
@@ -69,23 +69,28 @@ export const SubtitleBlock: React.FC<SubtitleBlockProps> = ({
   return (
     <>
       <div
-        className={cn(className, "flex flex-row items-center justify-start")}
+        className={cn(
+          className,
+          "flex flex-row items-center justify-start group"
+        )}
       >
         <span
-          onClick={() => setIsFromOpen(!isFromOpen)}
+          onClick={() => setIsOpen(!isOpen)}
           className={cn(
-            "w-5 h-5 mr-2 text-nx-red hover:hidden cursor-pointer",
-            !isCurrent(block) && !isFromOpen && "text-opacity-50",
+            "w-5 h-5 mr-2 text-nx-red hover:hidden cursor-pointer group-hover:opacity-100",
+            !isOpen && "opacity-0",
+            !isCurrent(block) && !isOpen && "text-opacity-50",
+            isCurrent(block) && "opacity-100",
             "hover:text-opacity-100"
           )}
         >
-          <PencilIcon />
+          {isOpen ? <XIcon /> : <PencilIcon />}
         </span>
         <div
           className={cn(
             "flex flex-row box-border items-center justify-start group cursor-pointer pt-2 pb-2 w-full",
             isCurrent(block) &&
-              "border-l-2 border-nx-red pl-0 relative bg-gray-800 bg-opacity-30"
+              "border-l-2 border-nx-red pl-0 relative bg-light-black"
           )}
           onClick={() => goToMilis(block.startTime)}
         >
@@ -97,7 +102,7 @@ export const SubtitleBlock: React.FC<SubtitleBlockProps> = ({
           </Typography>
         </div>
       </div>
-      {isFromOpen && (
+      {isOpen && (
         <SubtitleBlockContent
           block={block}
           subtitles={subtitles}

@@ -36,7 +36,6 @@
     "babel-plugin-transform-typescript-metadata": "^0.3.2",
     "d3-array": "^3.0.1",
     "d3-time-format": "^4.0.0",
-    "easymde": "^2.15.0",
     "dayjs": "^1.10.6",
     "easymde": "^2.15.0",
     "framer-motion": "^4.0.3",

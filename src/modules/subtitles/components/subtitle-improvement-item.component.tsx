@@ -9,11 +9,11 @@ import {
 } from "@heroicons/react/outline";
 import { useInjection } from "@polyflix/di";
 import { Block } from "@polyflix/vtt-parser";
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useSelector, useDispatch } from "react-redux";
 import { useAuth } from "../../authentication";
-import { WithClassname, RootState } from "../../common";
+import { WithClassname, RootState, cn } from "../../common";
 import { Alert, Typography } from "../../ui";
 import { Video } from "../../videos";
 import { SubtitleImprovement } from "../models/subtitle-improvement.model";
@@ -48,6 +48,7 @@ export const SubtitleImprovementItem: React.FC<SubtitleImprovementItemProps> =
     const subtitleImprovementService = useInjection<SubtitleImprovementService>(
       SubtitleImprovementService
     );
+    const [isLiked, setIsLiked] = useState<boolean>(false);
 
     const disableActions = useSelector(
       (state: RootState) =>
@@ -62,10 +63,13 @@ export const SubtitleImprovementItem: React.FC<SubtitleImprovementItemProps> =
         SubtitleImprovementMetaService
       );
 
-    const onLike = () => {
-      const isLiked =
-        subtitleImprovement?.subtitleImprovementMeta?.isLiked || false;
+    useEffect(() => {
+      setIsLiked(
+        subtitleImprovement?.subtitleImprovementMeta?.isLiked || false
+      );
+    }, [subtitleImprovement?.subtitleImprovementMeta?.isLiked]);
 
+    const onLike = () => {
       const likes = subtitleImprovement.likes;
       dispatch(UpdateElementInProgress(block.startTime));
       const newLikesCount = isLiked ? likes - 1 : likes + 1;
@@ -119,7 +123,7 @@ export const SubtitleImprovementItem: React.FC<SubtitleImprovementItemProps> =
     };
 
     return (
-      <div className="bg-darkgray bg-opacity-30 rounded w-full p-4 pb-6 box-border relative">
+      <div className="bg-light-black rounded w-full p-4 pb-6 box-border relative border-darkgray border-2">
         <Notification show={openDeleteConfirmation}>
           <div className="flex flex-col md:grid md:items-center md:grid-cols-12">
             <div className="col-span-10">
@@ -190,12 +194,12 @@ export const SubtitleImprovementItem: React.FC<SubtitleImprovementItemProps> =
                   >
                     <Menu.Items
                       static
-                      className="absolute right-0 w-56 mt-2 p-1 origin-top-right bg-darkgray divide-y divide-nx-dark rounded-md shadow-lg focus:outline-none z-10"
+                      className="absolute right-0 w-56 mt-2 p-1 origin-top-right bg-light-black border-darkgray border-2  divide-y divide-nx-dark rounded-md shadow-lg focus:outline-none z-10"
                     >
                       <div className="px-1 py-1 flex flex-col gap-4">
                         {user?.id === subtitleImprovement.createdBy?.id && (
                           <div className="flex flex-col gap-2">
-                            <Button
+                            <button
                               disabled={disableActions}
                               onClick={() =>
                                 dispatch(
@@ -205,42 +209,42 @@ export const SubtitleImprovementItem: React.FC<SubtitleImprovementItemProps> =
                                   )
                                 )
                               }
-                              className=" bg-green-500 hover:bg-green-700 p-2 w-full flex items-start"
+                              className=" text-green-500 hover:text-green-700 p-2 w-full flex items-start gap-2"
                             >
                               <PencilIcon className="h-5 w-5" />
                               {t("shared.common.actions.edit")}
-                            </Button>
-                            <Button
+                            </button>
+                            <button
                               disabled={disableActions}
                               onClick={() => setOpenDeleteConfirmation(true)}
-                              className="bg-nx-red-dark hover:bg-nx-red p-2 w-full"
+                              className="text-nx-red-dark hover:text-nx-red p-2 w-full flex items-start gap-2"
                             >
                               <TrashIcon className="h-5 w-5" />
                               {t("shared.common.actions.delete")}
-                            </Button>
+                            </button>
                           </div>
                         )}
                         {user?.id === video.publisher?.id && (
                           <div className="flex flex-col gap-2">
                             <Menu.Item>
-                              <Button
+                              <button
                                 disabled={disableActions}
-                                className="bg-green-500 hover:bg-green-700 w-full"
+                                className="text-green-500 hover:text-green-700 p-2 w-full flex items-start gap-2"
                                 onClick={() => onApprove(true)}
                               >
                                 <CheckIcon className="h-5 w-5" />
                                 {t("subtitleImprovement.content.approve")}
-                              </Button>
+                              </button>
                             </Menu.Item>
                             <Menu.Item>
-                              <Button
+                              <button
                                 disabled={disableActions}
-                                className="bg-nx-red-dark hover:bg-nx-red w-full"
+                                className="text-nx-red-dark hover:text-nx-red p-2 w-full flex items-start gap-2"
                                 onClick={() => onApprove(false)}
                               >
                                 <XIcon className="h-5 w-5" />
                                 {t("subtitleImprovement.content.disapprove")}
-                              </Button>
+                              </button>
                             </Menu.Item>
                           </div>
                         )}
@@ -257,9 +261,12 @@ export const SubtitleImprovementItem: React.FC<SubtitleImprovementItemProps> =
           {subtitleImprovement.comment}
         </Typography>
 
-        <div className="flex flex-row gap-4 absolute -bottom-4 left-0 w-full px-4 box-border">
+        <div className="flex flex-row gap-4 absolute -bottom-3 left-0 w-full px-4 box-border">
           <Button
-            className="bg-darkgray hover:bg-opacity-60"
+            className={cn(
+              "bg-darkgray hover:bg-opacity-60",
+              isLiked ? "text-blue-500" : "text-grey-500"
+            )}
             disabled={disableActions}
             onClick={() => onLike()}
           >

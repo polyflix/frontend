@@ -118,8 +118,12 @@ export const SubtitleEditorPanel: React.FC<SubtitleEditorPanelProps> = ({
       ))}
     </div>
   ) : (
-    <Alert type="not-found" className="w-1/3">
-      {t("shared.common.errors.common")}
-    </Alert>
+    <>
+      {subtitles?.state === "error" && (
+        <Alert type="not-found" className="w-1/3">
+          {t("shared.common.errors.common")}
+        </Alert>
+      )}
+    </>
   );
 };
