@@ -15,8 +15,17 @@ import {
   RegisterFailureAction,
   RegisterInProgressAction,
   RegisterSuccessAction,
+  ResetPasswordFailureAction,
+  ResetPasswordInProgressAction,
+  ResetPasswordSuccessAction,
 } from "../redux/actions/auth.action";
-import { AuthAction, ILoginForm, IRegisterForm } from "../types/auth.type";
+import {
+  AuthAction,
+  ILoginForm,
+  IRegisterForm,
+  IResetPasswordForm,
+  IResetRequestForm,
+} from "../types/auth.type";
 
 @Injectable()
 export class AuthService {
@@ -102,5 +111,36 @@ export class AuthService {
     return this.reduxService.dispatch(
       RegisterSuccessAction(User.fromJson(user), token)
     );
+  }
+
+  /**
+   * Send reset password email
+   * @param {IResetRequestForm} resetRequestForm
+   */
+  public async sendResetEmail(resetRequestForm: IResetRequestForm) {
+    resetRequestForm.redirect =
+      window.location.protocol + "//" + window.location.host + "/auth/";
+    await this.httpService.post("/auth/forgotPassword", {
+      body: resetRequestForm,
+    });
+  }
+
+  /**
+   * Reset password
+   * @param {IResetPasswordForm} resetRequestForm
+   */
+  public async resetPassword(
+    resetPasswordForm: IResetPasswordForm
+  ): Promise<boolean> {
+    this.reduxService.dispatch(ResetPasswordInProgressAction());
+    const { status } = await this.httpService.post("/auth/resetPassword", {
+      body: resetPasswordForm,
+    });
+    if (![StatusCodes.OK, StatusCodes.CREATED].includes(status)) {
+      this.reduxService.dispatch(ResetPasswordFailureAction());
+      return false;
+    }
+    this.reduxService.dispatch(ResetPasswordSuccessAction());
+    return true;
   }
 }
