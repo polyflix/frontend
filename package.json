@@ -36,6 +36,7 @@
     "babel-plugin-transform-typescript-metadata": "^0.3.2",
     "d3-array": "^3.0.1",
     "d3-time-format": "^4.0.0",
+    "easymde": "^2.15.0",
     "dayjs": "^1.10.6",
     "easymde": "^2.15.0",
     "framer-motion": "^4.0.3",
@@ -58,6 +59,7 @@
     "react-helmet": "^6.1.0",
     "react-hook-form": "^6.15.5",
     "react-i18next": "^11.8.15",
+    "react-markdown": "^7.0.0",
     "react-player": "^2.9.0",
     "react-redux": "^7.2.3",
     "react-responsive": "^8.2.0",
@@ -75,6 +77,9 @@
     "url-regex": "^5.0.0",
     "uuid": "^8.3.2",
     "web-vitals": "^1.1.1"
+  },
+  "clear": {
+    "@polyflix:registry": "https://gitlab.polytech.umontpellier.fr/api/v4/projects/1343/packages/npm/"
   },
   "scripts": {
     "lint": "eslint ./src",

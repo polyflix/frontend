@@ -2,7 +2,6 @@ import React from "react";
 import { applyBackgroundImage } from "../../../common/utils/classes.util";
 import { Image } from "../../../ui/components/Image/Image.component";
 import { NoData } from "../../../ui/components/NoData/NoData.component";
-import { Paragraph } from "../../../ui/components/Typography/Paragraph/Paragraph.component";
 import { Typography } from "../../../ui/components/Typography/Typography.component";
 import { Video } from "../../models/video.model";
 import { VideoButtons } from "../VideoButtons/VideoButton.component";
@@ -30,10 +29,10 @@ export const VideoTile: React.FC<Props> = ({ video }) => {
             </div>
           </div>
           <div className="col-span-2 py-5 md:py-0 md:col-span-1 flex flex-col justify-center">
-            <Typography bold className="text-lg md:text-2xl" as="h1">
+            <Typography bold className="text-lg md:text-2xl my-5" as="h1">
               {video.title}
             </Typography>
-            <Paragraph className="my-3">{video.shortDescription}</Paragraph>
+            {/* <Paragraph className="my-3">{video.shortDescription}</Paragraph> */}
             <VideoButtons video={video} />
           </div>
         </div>

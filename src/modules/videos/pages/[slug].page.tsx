@@ -6,7 +6,7 @@ import { useAuth } from "../../authentication";
 import { fadeOpacity } from "../../ui/animations/fadeOpacity";
 
 import { GhostTile } from "../../ui/components/Ghost/GhostTile/GhostTile.component";
-import { GhostList, Paragraph, Typography } from "../../ui";
+import { GhostList, Title, Typography } from "../../ui";
 import { Container } from "../../ui/components/Container/Container.component";
 import { Page } from "../../ui/components/Page/Page.component";
 import { Player } from "../../videos/components/Player/Player.component";
@@ -15,11 +15,10 @@ import { cn } from "../../common/utils/classes.util";
 import {
   PencilIcon,
   ChevronRightIcon,
-  TranslateIcon,
-  InformationCircleIcon,
   ExclamationIcon,
   EyeIcon,
   ThumbUpIcon,
+  TranslateIcon,
 } from "@heroicons/react/outline";
 import { useMediaQuery } from "react-responsive";
 import { useVideo } from "../hooks/useVideo.hook";
@@ -37,6 +36,7 @@ import { GhostParagraph } from "../../ui/components/Ghost/GhostParagraph";
 import { MinioService } from "../../upload/services/minio.service";
 import { PolyflixLanguage } from "../../common/types/language.type";
 import { Block, VttFile } from "@polyflix/vtt-parser";
+import ReactMarkdown from "react-markdown";
 import { VideoNote } from "../components/VideoNote/VideoNote.component";
 
 export const VideoDetail: React.FC = () => {
@@ -119,21 +119,85 @@ const VideoContainer: React.FC<VideoContainerProps> = ({
     if (video) onLoad(video?.title);
   }, [video, onLoad, onError, alert]);
   return (
-    <div
-      className={cn(
-        "flex flex-col md:flex-row gap-4 mb-8",
-        isLtMdScreen ? styles.container_mobile : styles.container_desktop
-      )}
-    >
-      <div className={cn("flex-auto rounded-md")}>
-        {!isVideoLoading && video ? (
-          <Player video={video} playerRef={playerRef} onVideoEnd={onVideoEnd} />
-        ) : (
-          <GhostTile aspectRatio={true} />
+    <>
+      <div
+        className={cn(
+          "flex flex-col md:flex-row gap-4 mb-8",
+          isLtMdScreen ? styles.container_mobile : styles.container_desktop
         )}
+      >
+        <div className={cn("flex-auto rounded-md")}>
+          {!isVideoLoading && video ? (
+            <Player
+              video={video}
+              playerRef={playerRef}
+              onVideoEnd={onVideoEnd}
+            />
+          ) : (
+            <GhostTile aspectRatio={true} />
+          )}
+        </div>
+        <SidebarComponent video={video} playerRef={playerRef} />
       </div>
-      <SidebarComponent video={video} playerRef={playerRef} />
-    </div>
+      <Title className="text-4xl">{video?.title}</Title>
+      {video?.description && (
+        <ReactMarkdown
+          components={{
+            h1: ({ node, ...props }) => (
+              <h1 className="text-3xl font-bold text-nx-red" {...props}>
+                {}
+              </h1>
+            ),
+            h2: ({ node, ...props }) => (
+              <h2 className="text-2xl font-semibold" {...props}>
+                {}
+              </h2>
+            ),
+            h3: ({ node, ...props }) => (
+              <h3 className="text-xl font-semibold" {...props}>
+                {}
+              </h3>
+            ),
+            h4: ({ node, ...props }) => (
+              <h4 className="text-lg font-semibold" {...props}>
+                {}
+              </h4>
+            ),
+            h5: ({ node, ...props }) => (
+              <h5 className="text-md font-semibold" {...props}>
+                {}
+              </h5>
+            ),
+            h6: ({ node, ...props }) => (
+              <h6 className="font-semibold" {...props}>
+                {}
+              </h6>
+            ),
+            a: ({ node, ...props }) => (
+              <a className="text-blue-500 underline" {...props}>
+                {}
+              </a>
+            ),
+            ul: ({ node, ...props }) => (
+              <ul className="list-disc list-inside" {...props}>
+                {}
+              </ul>
+            ),
+            pre: ({ node, ...props }) => (
+              <pre
+                className="rounded-lg bg-gray-100 bg-opacity-5 p-4"
+                {...props}
+              >
+                {}
+              </pre>
+            ),
+          }}
+          className=" py-4 md:pr-1 text-opacity-90 text-white"
+        >
+          {video.description}
+        </ReactMarkdown>
+      )}
+    </>
   );
 };
 
@@ -249,7 +313,7 @@ const SidebarComponent: React.FC<SidebarComponentProps> = ({
                       )}
                       {!isLtMdScreen && isContainerDataVisible && (
                         <ul className="flex mb-1 list-none flex-wrap pb-1 flex-row">
-                          <li className="-mb-px mr-2 last:mr-0 flex-auto text-center">
+                          {/* <li className="-mb-px mr-2 last:mr-0 flex-auto text-center">
                             <a
                               className={cn(
                                 "flex rounded-lg font-bold uppercase px-5 py-3 cursor-pointer",
@@ -270,7 +334,7 @@ const SidebarComponent: React.FC<SidebarComponentProps> = ({
                               </Typography>
                             </a>
                             <span className="flex-1"></span>
-                          </li>
+                          </li> */}
                           <li className="-mb-px mr-2 last:mr-0 flex-auto text-center">
                             <a
                               className={cn(
@@ -357,12 +421,13 @@ const SidebarComponent: React.FC<SidebarComponentProps> = ({
                         )) ||
                           (visiblePanelElement === "description" && (
                             <div className="pt-2">
-                              <Typography as="h4" bold className="text-2xl">
+                              {/* Volontary let description old code to facilitate future rewords on description and short resume. Issues opened */}
+                              {/* <Typography as="h4" bold className="text-2xl">
                                 {video?.title}
                               </Typography>
                               <Paragraph className="text-xs py-4 md:pr-1 ">
                                 {video?.description}
-                              </Paragraph>
+                              </Paragraph> */}
                             </div>
                           )) ||
                           (visiblePanelElement === "note" && (
@@ -372,12 +437,12 @@ const SidebarComponent: React.FC<SidebarComponentProps> = ({
                           )))
                       ) : (
                         <>
-                          <Typography as="h4" bold className="text-2xl">
+                          {/* <Typography as="h4" bold className="text-2xl">
                             {video?.title}
                           </Typography>
                           <Paragraph className="text-xs py-4 md:pr-1 text-opacity-60">
                             {video?.description}
-                          </Paragraph>
+                          </Paragraph> */}
                         </>
                       )}
                     </div>
