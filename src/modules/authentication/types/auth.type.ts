@@ -7,6 +7,17 @@ export interface ILoginForm {
   password: string;
 }
 
+export interface IResetRequestForm {
+  email: string;
+  redirect: string;
+}
+
+export interface IResetPasswordForm {
+  newPassword: string;
+  passwordConfirm: string;
+  token: string;
+  email: string;
+}
 export interface IUser {
   id: string;
   email: string;

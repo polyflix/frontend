@@ -102,6 +102,19 @@
         "error": "A password is required"
       }
     },
+    "resetPassword": {
+      "seo": {
+        "title": "Forgot password",
+        "description": [
+          "Enter the email address linked to your account",
+          "If the address exists, an email containing a reset link will be sent",
+          "Enter new password"
+        ]
+      },
+      "footer": "Forgot password ?",
+      "action": "Reset password",
+      "error": "Token expired or invalid"
+    },
     "signIn": {
       "seo": {
         "title": "Sign in",

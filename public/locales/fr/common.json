@@ -102,6 +102,19 @@
         "error": "Un mot de passe est requis"
       }
     },
+    "resetPassword": {
+      "seo": {
+        "title": "Mot de passe oublié",
+        "description": [
+          "Entrez l'adresse email liée à votre compte",
+          "Si l'adresse existe, un email contenant un lien de réinitialisation sera envoyé",
+          "Entrez votre nouveau mot de passe"
+        ]
+      },
+      "footer": "Mot de passe oublié ?",
+      "action": "Réinitialiser le mot de passe",
+      "error": "Token expiré ou invalide"
+    },
     "signIn": {
       "seo": {
         "title": "Se connecter",
@@ -114,7 +127,7 @@
     "signUp": {
       "seo": {
         "title": "S'inscrire",
-        "description": "Remplissez le formulaire ci-dessous pour créer un comtpe sur Polyflix"
+        "description": "Remplissez le formulaire ci-dessous pour créer un compte sur Polyflix"
       },
       "inputs": {
         "firstname": {

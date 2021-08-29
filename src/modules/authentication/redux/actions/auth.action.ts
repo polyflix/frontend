@@ -14,6 +14,9 @@ export enum AuthActions {
   REGISTER_SUCCESS = "REGISTER_SUCCESS",
   REGISTER_IN_PROGRESS = "REGISTER_IN_PROGRESS",
   REGISTER_FAILURE = "REGISTER_FAILURE",
+  RESET_PASSWORD_SUCCESS = "RESET_PASSWORD_SUCESS",
+  RESET_PASSWORD_IN_PROGRESS = "RESET_PASSWORD_IN_PROGRESS",
+  RESET_PASSWORD_FAILURE = "RESET_PASSWORD_FAILURE",
   REFRESH_AUTH_SUCCESS = "REFRESH_AUTH_SUCCESS",
   REFRESH_AUTH_IN_PROGRESS = "REFRESH_AUTH_IN_PROGRESS",
   REFRESH_AUTH_FAILURE = "REFRESH_AUTH_FAILURE",
@@ -84,6 +87,20 @@ export const RegisterFailureAction = (error: string): AuthAction => {
   return actionFactory<AuthState>(AuthActions.REGISTER_FAILURE, {
     authError: error,
   });
+};
+
+export const ResetPasswordFailureAction = (): AuthAction => {
+  return actionFactory<AuthState>(AuthActions.RESET_PASSWORD_FAILURE, {
+    authError: "Token expiré ou invalid.",
+  });
+};
+
+export const ResetPasswordSuccessAction = (): AuthAction => {
+  return actionFactory<AuthState>(AuthActions.RESET_PASSWORD_SUCCESS);
+};
+
+export const ResetPasswordInProgressAction = (): AuthAction => {
+  return actionFactory<AuthState>(AuthActions.RESET_PASSWORD_IN_PROGRESS);
 };
 
 /**
