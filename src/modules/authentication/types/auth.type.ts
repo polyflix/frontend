@@ -31,6 +31,7 @@ export interface IRegisterForm extends ILoginForm {
   firstName: string;
   lastName: string;
   passwordConfirm: string;
+  redirect: string;
 }
 
 export type AuthState = {

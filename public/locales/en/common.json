@@ -154,7 +154,20 @@
       },
       "action": "Sign up",
       "footer": ["Already registered to Polyflix ?", "Sign in here"],
-      "error": "Email already in use"
+      "error": "Email already in use",
+      "accountValidation": {
+        "description": [
+          "Your account has not been activated yet",
+          "An activation link has been sent to your mailbox",
+          "If you have not received it, check your spam"
+        ],
+        "title": "Account activation",
+        "action": "Send activation mail again",
+        "error": [
+          "An error occurred while activating your account",
+          "If your account activation email does not work, we can send you a new one"
+        ]
+      }
     }
   },
   "userProfile": {

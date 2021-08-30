@@ -15,6 +15,7 @@ import {
   RegisterFailureAction,
   RegisterInProgressAction,
   RegisterSuccessAction,
+  ValidateAccountAction,
   ResetPasswordFailureAction,
   ResetPasswordInProgressAction,
   ResetPasswordSuccessAction,
@@ -94,6 +95,8 @@ export class AuthService {
    */
   public async register(registerForm: IRegisterForm) {
     this.reduxService.dispatch(RegisterInProgressAction());
+    registerForm.redirect =
+      window.location.protocol + "//" + window.location.host + "/auth/";
 
     const { status, response, error } = await this.httpService.post(
       "/auth/register",
@@ -142,5 +145,26 @@ export class AuthService {
     }
     this.reduxService.dispatch(ResetPasswordSuccessAction());
     return true;
+  }
+
+  public async activateAccount(userId: string) {
+    const { response } = await this.httpService.post("/auth/activateAccount", {
+      body: {
+        userId,
+      },
+    });
+    if (response) {
+      this.reduxService.dispatch(ValidateAccountAction(response));
+    }
+  }
+
+  public async sendValidationEmail(email: string) {
+    await this.httpService.post("/auth/validationEmail", {
+      body: {
+        email,
+        redirect:
+          window.location.protocol + "//" + window.location.host + "/auth/",
+      },
+    });
   }
 }

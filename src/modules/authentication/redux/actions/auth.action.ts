@@ -23,6 +23,7 @@ export enum AuthActions {
   UPDATE_USER_SUCCESS = "UPDATE_USER_SUCCESS",
   UPDATE_USER_FAILURE = "UPDATE_USER_FAILURE",
   UPDATE_USER_IN_PROGRESS = "UPDATE_USER_IN_PROGRESS",
+  VALIDATE_ACCOUNT = "VALIDATE_ACCOUNT",
 }
 
 /**
@@ -172,4 +173,8 @@ export const UpdateUserFailureAction = (error: string): AuthAction => {
   return actionFactory<AuthState>(AuthActions.UPDATE_USER_FAILURE, {
     authError: error,
   });
+};
+
+export const ValidateAccountAction = (user: User): AuthAction => {
+  return actionFactory<AuthState>(AuthActions.VALIDATE_ACCOUNT, { user });
 };
