@@ -1,13 +1,15 @@
 import { Route, Switch, useRouteMatch } from "react-router-dom";
-import { ProfilePage } from "./profile/index.page";
-import { UserVideosPage } from "./videos/index.page";
 import { UserCollectionsPage } from "./collections/index.page";
-import { UserVideosHistoryPage } from "./videos/history.page";
 import { UserCoursesPage } from "./courses/index.page";
 import { UserPathsPage } from "./paths/index.page";
-import { PasswordUpdatePage } from "./profile/password.page";
 import { DeleteAccountPage } from "./profile/delete.page";
+import { ProfilePage } from "./profile/index.page";
+import { PasswordUpdatePage } from "./profile/password.page";
+import { QuizzesHistoryPage } from "./quizzes/history.page";
+import { UserQuizzesPage } from "./quizzes/index.page";
 import { UserSubtitleImprovementPage } from "./subtitles/subtitle-improvement.page";
+import { UserVideosHistoryPage } from "./videos/history.page";
+import { UserVideosPage } from "./videos/index.page";
 
 export const ProfileRouter = () => {
   const { path } = useRouteMatch();
@@ -24,6 +26,12 @@ export const ProfileRouter = () => {
       <Route path={`${path}/courses/:id`} component={UserCoursesPage} />
       <Route path={`${path}/collections/:id`} component={UserCollectionsPage} />
       <Route path={`${path}/paths/:id`} component={UserPathsPage} />
+      <Route
+        exact
+        path={`${path}/quizzes/:id/history`}
+        component={QuizzesHistoryPage}
+      />
+      <Route path={`${path}/quizzes/:id`} component={UserQuizzesPage} />
       <Route
         path={`${path}/subtitles/:id`}
         component={UserSubtitleImprovementPage}

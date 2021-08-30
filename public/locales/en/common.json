@@ -41,7 +41,9 @@
       "updatedAt": "Updated {{date}}",
       "views": "View(s)",
       "likes": "Like(s)",
-      "comments": "Comment(s)"
+      "comments": "Comment(s)",
+      "all": "All",
+      "filtersLabel": "Filters"
     },
     "navbar": {
       "signIn": "Sign in",

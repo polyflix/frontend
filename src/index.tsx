@@ -1,8 +1,10 @@
 import React, { Suspense } from "react";
+import "react-circular-progressbar/dist/styles.css";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import { BrowserRouter as Router } from "react-router-dom";
 import "swiper/components/navigation/navigation.scss";
+import "easymde/dist/easymde.min.css";
 import "swiper/swiper.scss";
 import "./config/i18n.config";
 import { DIProvider } from "./modules/common/components";

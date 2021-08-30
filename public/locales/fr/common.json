@@ -33,6 +33,8 @@
       "views": "Vue(s)",
       "likes": "Retour(s) positif(s)",
       "comments": "Commentaire(s)",
+      "all": "Tous",
+      "filtersLabel": "Filtres",
       "form": {
         "errors": {
           "required": "Ce champ est obligatoire"

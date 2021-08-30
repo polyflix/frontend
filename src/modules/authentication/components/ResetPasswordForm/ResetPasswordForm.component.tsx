@@ -23,8 +23,8 @@ import { useHistory } from "react-router-dom";
  */
 export const ResetPasswordForm: React.FC = () => {
   const queries = useQuery();
-  const resetToken: string | null = queries.get("token");
-  const resetEmail: string | null = queries.get("email");
+  const resetToken: string | null = (queries as URLSearchParams).get("token");
+  const resetEmail: string | null = (queries as URLSearchParams).get("email");
   const history = useHistory();
 
   const authService = useInjection<AuthService>(AuthService);

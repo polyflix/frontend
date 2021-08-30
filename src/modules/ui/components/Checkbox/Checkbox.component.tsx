@@ -3,7 +3,6 @@ import { forwardRef, PropsWithChildren } from "react";
 import { FieldError } from "react-hook-form";
 import { WithClassname, WithMotion } from "../../../common/types/props.type";
 import { cn } from "../../../common/utils/classes.util";
-import { fadeInDown } from "../../animations/fadeInDown";
 
 type Props = WithClassname &
   WithMotion & {
@@ -15,31 +14,35 @@ type Props = WithClassname &
     error?: FieldError;
     /** The icon for the checkbox */
     icon?: any;
+    checked?: boolean;
   };
 
 /**
  * A custom checkbox compatible with react-hook-form API.
  */
 export const Checkbox = forwardRef<HTMLInputElement, PropsWithChildren<Props>>(
-  ({ className = "", name, error, children, icon, ...rest }, forwardRef) => (
+  (
+    { className = "", name, error, children, icon, checked, ...rest },
+    forwardRef
+  ) => (
     <motion.div
       {...rest}
       className={cn(className, "relative", icon && "flex items-center")}
-      variants={fadeInDown}
     >
-      {icon}
+      {children ? icon : null}
       <input
         className={cn("mr-2", icon && "opacity-0 absolute")}
         id={name}
         ref={forwardRef}
         type="checkbox"
+        checked={checked}
         name={name}
-      ></input>
+      />
       <label
         className="cursor-pointer transition-all hover:underline"
         htmlFor={name}
       >
-        {children}
+        {children ? children : icon}
       </label>
     </motion.div>
   )

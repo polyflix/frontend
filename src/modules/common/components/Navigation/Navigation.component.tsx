@@ -1,12 +1,13 @@
 import { Menu, Transition } from "@headlessui/react";
 import {
+  AcademicCapIcon,
+  AnnotationIcon,
   BookOpenIcon,
   ChevronDownIcon,
+  CollectionIcon,
   LogoutIcon,
   UserIcon,
   VideoCameraIcon,
-  CollectionIcon,
-  AcademicCapIcon,
 } from "@heroicons/react/outline";
 import { LoginIcon, UserAddIcon, ViewListIcon } from "@heroicons/react/solid";
 import { useInjection } from "@polyflix/di";
@@ -110,6 +111,14 @@ export const Navigation: React.FC<Props> = ({ visible }) => {
                       </Link>
                     </Menu.Item>
                     <Menu.Item>
+                      <Link to={`/profile/quizzes/${user?.id}`}>
+                        <span className="cursor-pointer text-nx-white flex rounded-md items-center w-full px-2 py-2 text-sm">
+                          <AnnotationIcon className="text-nx-red w-5 mr-3" />
+                          {t("quizzes.seo.user.title", { ns: "resources" })}
+                        </span>
+                      </Link>
+                    </Menu.Item>
+                    <Menu.Item>
                       <Link to={`/profile/subtitles/${user?.id}`}>
                         <span className="cursor-pointer text-nx-white flex rounded-md items-center w-full px-2 py-2 text-sm">
                           <ViewListIcon className="text-nx-red w-5 mr-3" />
@@ -193,19 +202,22 @@ export const Navigation: React.FC<Props> = ({ visible }) => {
           )}
         >
           {isAuthenticated && (
-            <Link to="/">
-              <Typography as="span">{t("home.seo.title")}</Typography>
-            </Link>
-          )}
-          {isAuthenticated && (
-            <Link to="/courses">
-              <Typography as="span">{t("courses.seo.title")}</Typography>
-            </Link>
-          )}
-          {isAuthenticated && (
-            <Link to="/paths">
-              <Typography as="span">{t("paths.seo.title")}</Typography>
-            </Link>
+            <>
+              <Link to="/">
+                <Typography as="span">{t("home.seo.title")}</Typography>
+              </Link>
+              <Link to="/courses">
+                <Typography as="span">{t("courses.seo.title")}</Typography>
+              </Link>
+              <Link to="/paths">
+                <Typography as="span">{t("paths.seo.title")}</Typography>
+              </Link>
+              <Link to="/quizzes">
+                <Typography as="span">
+                  {t("quizzes.seo.global.title", { ns: "resources" })}
+                </Typography>
+              </Link>
+            </>
           )}
         </div>
       </div>

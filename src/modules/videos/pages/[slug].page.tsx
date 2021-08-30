@@ -1,43 +1,42 @@
-import React, { useEffect, useRef, useState } from "react";
-import { Redirect } from "react-router";
-import { useTranslation } from "react-i18next";
-import { Link } from "react-router-dom";
-import { useAuth } from "../../authentication";
-import { fadeOpacity } from "../../ui/animations/fadeOpacity";
-
-import { GhostTile } from "../../ui/components/Ghost/GhostTile/GhostTile.component";
-import { GhostList, Title, Typography } from "../../ui";
-import { Container } from "../../ui/components/Container/Container.component";
-import { Page } from "../../ui/components/Page/Page.component";
-import { Player } from "../../videos/components/Player/Player.component";
-import styles from "./slug.module.scss";
-import { cn } from "../../common/utils/classes.util";
 import {
-  PencilIcon,
   ChevronRightIcon,
   ExclamationIcon,
   EyeIcon,
+  PencilIcon,
   ThumbUpIcon,
   TranslateIcon,
 } from "@heroicons/react/outline";
+import { useInjection } from "@polyflix/di";
+import { Block, VttFile } from "@polyflix/vtt-parser";
+import React, { useEffect, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
+import ReactMarkdown from "react-markdown";
 import { useMediaQuery } from "react-responsive";
-import { useVideo } from "../hooks/useVideo.hook";
-import { Subtitle } from "../models";
-import { Video } from "../models/video.model";
-import { SubtitleText } from "../components";
-import { GhostSlider } from "../../ui/components/Ghost/GhostSlider/GhostSlider.component";
+import { Redirect } from "react-router";
+import { Link } from "react-router-dom";
+import { useAuth } from "../../authentication";
+import { CollectionSlider } from "../../collections/components/CollectionSlider/CollectionSlider.component";
 import { useCollections } from "../../collections/hooks";
 import { Collection } from "../../collections/models";
 import { useQuery } from "../../common/hooks/useQuery";
-import { CollectionSlider } from "../../collections/components/CollectionSlider/CollectionSlider.component";
-import { WatchtimeSyncService } from "../../stats/services/watchtime-sync.service";
-import { useInjection } from "@polyflix/di";
-import { GhostParagraph } from "../../ui/components/Ghost/GhostParagraph";
-import { MinioService } from "../../upload/services/minio.service";
 import { PolyflixLanguage } from "../../common/types/language.type";
-import { Block, VttFile } from "@polyflix/vtt-parser";
-import ReactMarkdown from "react-markdown";
+import { cn } from "../../common/utils/classes.util";
+import { WatchtimeSyncService } from "../../stats/services/watchtime-sync.service";
+import { GhostList, Title, Typography } from "../../ui";
+import { fadeOpacity } from "../../ui/animations/fadeOpacity";
+import { Container } from "../../ui/components/Container/Container.component";
+import { GhostParagraph } from "../../ui/components/Ghost/GhostParagraph";
+import { GhostSlider } from "../../ui/components/Ghost/GhostSlider/GhostSlider.component";
+import { GhostTile } from "../../ui/components/Ghost/GhostTile/GhostTile.component";
+import { Page } from "../../ui/components/Page/Page.component";
+import { MinioService } from "../../upload/services/minio.service";
+import { Player } from "../../videos/components/Player/Player.component";
+import { SubtitleText } from "../components";
 import { VideoNote } from "../components/VideoNote/VideoNote.component";
+import { useVideo } from "../hooks/useVideo.hook";
+import { Subtitle } from "../models";
+import { Video } from "../models/video.model";
+import styles from "./slug.module.scss";
 
 export const VideoDetail: React.FC = () => {
   const [pageTitle, setPageTitle] = useState<string>();
@@ -45,7 +44,7 @@ export const VideoDetail: React.FC = () => {
   const [collectionLoaded, setCollectionLoaded] = useState<boolean>(false);
   const [error, setError] = useState();
 
-  const query = useQuery();
+  const query = useQuery() as URLSearchParams;
 
   useEffect(() => {
     if (query.has("v") && !collectionLoaded) {
@@ -533,7 +532,7 @@ const CollectionComponent: React.FC<CollectionComponentProps> = ({
   onLoad,
   slug,
 }) => {
-  let query = useQuery();
+  let query = useQuery() as URLSearchParams;
 
   const { data: collection, isLoading: isCollectionLoading } =
     useCollections<Collection>({

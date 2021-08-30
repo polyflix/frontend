@@ -1,8 +1,7 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useInjection } from "@polyflix/di";
-import { Video } from "../../models/video.model";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import SimpleMdeReact from "react-simplemde-editor";
-import "easymde/dist/easymde.min.css";
+import { Video } from "../../models/video.model";
 import { NoteService } from "../../services/note.service";
 
 type Props = {
@@ -26,7 +25,6 @@ export const VideoNote: React.FC<Props> = ({ video }) => {
     noteService
       .getNote(video!.id)
       .then((data: any) => {
-        console.log(data);
         setValue(data.content);
       })
       .catch((err) => {

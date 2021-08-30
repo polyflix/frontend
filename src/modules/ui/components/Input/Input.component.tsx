@@ -52,13 +52,13 @@ export const Input = forwardRef<HTMLInputElement, Props>(
         type={type}
         disabled={disabled}
         className={cn(
-          "border dark:bg-nx-white focus:outline-none py-3 px-5 rounded-md font-display",
+          "border dark:bg-nx-white focus:outline-none py-2 px-5 rounded-md font-display",
           disabled && "dark:bg-nx-gray opacity-80"
         )}
         placeholder={`${placeholder} ${required ? "*" : ""}`}
         ref={forwardRef}
       />
-      {!error && hint && <small className="text-gray-400">{hint}</small>}
+      {!error && hint && <small className="text-gray-400 mt-2">{hint}</small>}
       {error && <small className="text-red-400">{error.message}</small>}
     </motion.div>
   )
