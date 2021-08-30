@@ -352,7 +352,7 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
           </>
         )}
         <SimpleMdeReact
-          className="col-span-2"
+          className="col-span-2 prose"
           value={watchDescription}
           onChange={onChange}
           options={MDOptions}
