@@ -143,7 +143,13 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
     imageFile?.getPreview() ||
     "https://i.stack.imgur.com/y9DpT.jpg";
 
-  const videoPreview = video?.src || videoFile?.getPreview();
+  const [videoPreview, setVideoPreview] = useState(
+    video?.src || videoFile?.getPreview()
+  );
+
+  useEffect(() => {
+    setVideoPreview(video?.src || videoFile?.getPreview());
+  }, [video, videoFile]);
 
   const onGoBack = () => history.goBack();
 
@@ -243,7 +249,7 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
     context?.drawImage(video as CanvasImageSource, 0, 0, 1280, 720);
     canvas.toBlob((blob) => {
       if (blob) {
-        const file = new File([blob], `capture at ${video.currentTime}sec`);
+        const file = new File([blob], `capture_at_${video.currentTime}sec`);
         const minioFile = new ImageFile(file, "thumbnail");
         setImageFile(minioFile);
       }

@@ -5,16 +5,10 @@ import {
   ClickToPlay,
   Controls,
   Control,
-  Tooltip,
   ScrubberControl,
-  ControlSpacer,
   LoadingScreen,
 } from "@vime/react";
-import {
-  UploadIcon,
-  InformationCircleIcon,
-  VideoCameraIcon,
-} from "@heroicons/react/outline";
+import { UploadIcon } from "@heroicons/react/outline";
 import { WithMotion } from "../../../common";
 import { motion } from "framer-motion";
 
@@ -44,13 +38,6 @@ export const FrameSelector: React.FC<Props> = ({
             <Control label="upload" onClick={getFrame}>
               <UploadIcon className="w-6 h-6 m-1" />
             </Control>
-            {/* <ControlSpacer />
-					<Control
-					label="information"
-					>
-					<InformationCircleIcon className="w-6 h-6 m-1" />
-					<Tooltip position="bottom" direction="left">Description de la fonctionnnalité</Tooltip>
-					</Control> */}
           </Controls>
           <ClickToPlay />
           <LoadingScreen hideDots>
