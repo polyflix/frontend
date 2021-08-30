@@ -8,7 +8,7 @@ import {
 } from "@heroicons/react/outline";
 import { useInjection } from "@polyflix/di";
 import { motion } from "framer-motion";
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState, useRef, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useHistory, useLocation } from "react-router";
@@ -34,6 +34,7 @@ import { VideoFile } from "../../../upload/models/files/video.model";
 import { MinioService } from "../../../upload/services/minio.service";
 import { MinioFile } from "../../../upload/models/files/minio-file.model";
 import { SubtitleService } from "../../services";
+import { FrameSelector } from "../FrameSelector/FrameSelector.component";
 import urlRegex from "url-regex";
 import SimpleMdeReact from "react-simplemde-editor";
 
@@ -46,6 +47,7 @@ type Props = {
  * The video form component
  */
 export const VideoForm: React.FC<Props> = ({ video }) => {
+  const player = useRef<HTMLVmPlayerElement>(null);
   const isUpdate = video instanceof Video;
 
   const videoService = useInjection<VideoService>(VideoService);
@@ -132,11 +134,14 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
   };
 
   const thumbnailFile = getFile(files, "thumbnail");
+  const videolFile = getFile(files, "src");
   const thumbnailPreview =
     watchThumbnail ||
     video?.thumbnail ||
     (thumbnailFile as ImageFile)?.getPreview() ||
     "https://i.stack.imgur.com/y9DpT.jpg";
+
+  const videoPreview = video?.src || (videolFile as VideoFile)?.getPreview();
 
   const onGoBack = () => history.goBack();
 
@@ -225,6 +230,24 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
     };
   }, []);
 
+  const save = async () => {
+    const provider = await player.current?.getProvider();
+    const video = provider?.lastChild?.lastChild as HTMLVideoElement;
+
+    let canvas = document.createElement("canvas");
+    let context = canvas.getContext("2d");
+    [canvas.height, canvas.width] = [720, 1280];
+
+    context?.drawImage(video as CanvasImageSource, 0, 0, 1280, 720);
+    canvas.toBlob((blob) => {
+      if (blob) {
+        const file = new File([blob], `capture at ${video.currentTime}sec`);
+        const minioFile = new ImageFile(file, "thumbnail");
+        setFiles([minioFile, ...files]);
+      }
+    });
+  };
+
   return (
     <motion.div
       variants={stagger(0.1)}
@@ -255,12 +278,24 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
             .
           </Paragraph>
         </div>
+      </div>
+      <div className="grid items-center grid-cols-2 gap-4 py-4">
         <Img
           variants={fadeInDown}
           src={thumbnailPreview}
-          className="w-full col-span-2 md:col-span-1 rounded-md"
+          className="w-full col-span-2 lg:col-span-1 rounded-md"
           alt={`${watchTitle} thumbnail`}
         />
+        {type === "upload" ? (
+          <div className="w-full col-span-2 lg:col-span-1 rounded-md overflow-hidden">
+            <FrameSelector
+              variants={fadeInDown}
+              playerRef={player}
+              getFrame={save}
+              videoPreview={videoPreview}
+            />
+          </div>
+        ) : null}
       </div>
       <form
         className="grid items-center grid-cols-2 gap-4"
@@ -333,7 +368,7 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
           <>
             <UploadButton<ImageFile>
               uploadClass={ImageFile}
-              onFileUpload={(file) => setFiles([...files, file])}
+              onFileUpload={(file) => setFiles([file, ...files])}
               variants={fadeInDown}
               className="col-span-2 md:col-span-1"
               placeholder={t("videoManagement.inputs.thumbnailUpload")}
@@ -342,7 +377,7 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
             />
             <UploadButton<VideoFile>
               uploadClass={VideoFile}
-              onFileUpload={(file) => setFiles([...files, file])}
+              onFileUpload={(file) => setFiles([file, ...files])}
               variants={fadeInDown}
               className="col-span-2"
               placeholder={t("videoManagement.inputs.videoUpload")}
