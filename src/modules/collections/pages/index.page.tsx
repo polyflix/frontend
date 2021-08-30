@@ -1,15 +1,15 @@
-import { useTranslation } from "react-i18next";
-import { Redirect } from "react-router";
-import { usePagination } from "../../common/hooks";
-import { useCollections } from "../hooks";
-import { fadeOpacity, Typography } from "../../ui";
-import { Container } from "../../ui/components/Container/Container.component";
-import { Page } from "../../ui/components/Page/Page.component";
-import { Title } from "../../ui/components/Typography/Title/Title.component";
-import { Collection } from "../models";
-import { Paginator } from "../../common/components/Paginator/Paginator.component";
-import { CollectionListItem } from "../components";
-import { CollectionsWithPagination } from "../types";
+import { useTranslation } from 'react-i18next';
+import { Redirect } from 'react-router';
+import { usePagination } from '../../common/hooks';
+import { useCollections } from '../hooks';
+import { fadeOpacity, Typography } from '../../ui';
+import { Container } from '../../ui/components/Container/Container.component';
+import { Page } from '../../ui/components/Page/Page.component';
+import { Title } from '../../ui/components/Typography/Title/Title.component';
+import { Collection } from '../models';
+import { Paginator } from '../../common/components/Paginator/Paginator.component';
+import { CollectionListItem } from '../components';
+import { CollectionsWithPagination } from '../types';
 
 export const CollectionsPage: React.FC = () => {
   const { t } = useTranslation();
@@ -22,25 +22,25 @@ export const CollectionsPage: React.FC = () => {
   } = useCollections<CollectionsWithPagination>({
     page,
     pageSize: limit,
-    mode: "collection",
+    mode: 'collection',
   });
 
-  if (alert && alert.type === "not-found") return <Redirect to="/not-found" />;
+  if (alert && alert.type === 'not-found') return <Redirect to="/not-found" />;
 
   return (
     <Page
       isLoading={isLoadingCollection}
       variants={fadeOpacity}
-      title={t("collections.seo.title")}
+      title={t('collections.seo.title')}
     >
       <Container mxAuto className="px-5 flex flex-col">
-        {alert && alert.type === "error" && (
+        {alert && alert.type === 'error' && (
           <div className="bg-nx-red-dark w-1/4 text-white font-extrabold rounded flex text-center justify-center self-center">
             {`${alert.message}`}
           </div>
         )}
         <div className="flex items-center justify-between">
-          <Title className="my-5">{t("collections.seo.mainTitle")}</Title>
+          <Title className="my-5">{t('collections.seo.mainTitle')}</Title>
         </div>
         {data && (
           <>
@@ -48,7 +48,7 @@ export const CollectionsPage: React.FC = () => {
               <CollectionListItem
                 collection={collection}
                 ownerItems={false}
-              ></CollectionListItem>
+              />
             ))}
             {data.items.length > 0 ? (
               <Paginator
@@ -59,8 +59,8 @@ export const CollectionsPage: React.FC = () => {
               />
             ) : (
               <div className="text-white">
-                {" "}
-                <Typography as="h3">{t("courses.error.noCourses")}</Typography>
+                {' '}
+                <Typography as="h3">{t('courses.error.noCourses')}</Typography>
               </div>
             )}
           </>

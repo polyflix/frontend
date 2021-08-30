@@ -1,28 +1,28 @@
-import { motion } from "framer-motion";
-import { PropsWithChildren } from "react";
-import { WithClassname, WithMotion } from "../../../common/types/props.type";
-import { cn } from "../../../common/utils/classes.util";
+import { motion } from 'framer-motion';
+import { PropsWithChildren } from 'react';
+import { WithClassname, WithMotion } from '../../../common/types/props.type';
+import { cn } from '../../../common/utils/classes.util';
 
 type Props = WithClassname &
   WithMotion & {
     /** The rendered HTML tag  */
-    as: "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "p" | "span";
+    as: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p' | 'span'
     /** If set to true, it default classes will be override */
-    overrideDefaultClasses?: boolean;
+    overrideDefaultClasses?: boolean
     /** If true, the text will be displayed in bold */
-    bold?: boolean;
+    bold?: boolean
     /** Light version of the font-family, if available */
-    light?: boolean;
-  };
+    light?: boolean
+  }
 
 /**
  * A component to standardize the typography in the app.
  */
 export const Typography: React.FC<PropsWithChildren<Props>> = ({
   children,
-  as = "p",
+  as = 'p',
   overrideDefaultClasses = false,
-  className = "",
+  className = '',
   bold = false,
   light = false,
   ...rest
@@ -33,9 +33,9 @@ export const Typography: React.FC<PropsWithChildren<Props>> = ({
       {...rest}
       className={cn(
         className,
-        !overrideDefaultClasses && "dark:text-nx-white",
-        bold && "font-bold",
-        light && "font-light"
+        !overrideDefaultClasses && 'dark:text-nx-white',
+        bold && 'font-bold',
+        light && 'font-light',
       )}
     >
       {children}

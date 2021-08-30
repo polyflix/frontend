@@ -1,4 +1,4 @@
-import { INote } from "../types/note.type";
+import { INote } from '../types/note.type'
 
 /**
  * Modelize a note
@@ -13,14 +13,14 @@ export class Note {
    * @returns {Video} an instance of Video
    */
   static fromJson(json: INote): Note {
-    return new Note(json.content);
+    return new Note(json.content)
   }
 
   get content(): string {
-    return this._content;
+    return this._content
   }
 
   set content(newContent: string) {
-    this._content = newContent;
+    this._content = newContent
   }
 }

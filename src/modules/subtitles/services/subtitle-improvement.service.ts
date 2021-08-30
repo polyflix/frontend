@@ -1,48 +1,48 @@
-import { Injectable } from "@polyflix/di";
-import { StatusCodes } from "http-status-codes";
-import { HttpService } from "../../common/services/http.service";
+import { Injectable } from '@polyflix/di'
+import { StatusCodes } from 'http-status-codes'
+import { HttpService } from '../../common/services/http.service'
 import {
   ISubtitleImprovementFilter,
   SubtitleImprovementFilter,
-} from "../filters/subtitle-improvement.filter";
-import { SubtitleImprovement } from "../models/subtitle-improvement.model";
-import { ISubtitleImprovement } from "../types/subtitle-improvement.type";
+} from '../filters/subtitle-improvement.filter'
+import { SubtitleImprovement } from '../models/subtitle-improvement.model'
+import { ISubtitleImprovement } from '../types/subtitle-improvement.type'
 
 @Injectable()
 export class SubtitleImprovementService {
-  private endpoint: string;
+  private endpoint: string
   constructor(
     private readonly http: HttpService,
     private readonly subtitleImprovementFilter: SubtitleImprovementFilter
   ) {
-    this.endpoint = "/subtitle-improvements";
+    this.endpoint = '/subtitle-improvements'
   }
 
   async findAll(
     filters: ISubtitleImprovementFilter
   ): Promise<SubtitleImprovement[]> {
-    const query = this.subtitleImprovementFilter.buildFilters(filters);
+    const query = this.subtitleImprovementFilter.buildFilters(filters)
 
-    let url = `${this.endpoint}`;
-    if (query !== "" && query) {
-      url += `?${query}`;
+    let url = `${this.endpoint}`
+    if (query !== '' && query) {
+      url += `?${query}`
     }
 
-    const { status, response, error } = await this.http.get(`${url}`);
+    const { status, response, error } = await this.http.get(`${url}`)
     if (status !== StatusCodes.OK) {
-      throw error;
+      throw error
     }
-    return response;
+    return response
   }
 
   async get(id: string): Promise<SubtitleImprovement> {
     const { status, response, error } = await this.http.get(
       `${this.endpoint}/${id}`
-    );
+    )
     if (status !== StatusCodes.OK) {
-      throw error;
+      throw error
     }
-    return response;
+    return response
   }
 
   async create(data: ISubtitleImprovement): Promise<SubtitleImprovement> {
@@ -51,11 +51,11 @@ export class SubtitleImprovementService {
       {
         body: data,
       }
-    );
+    )
     if (status !== StatusCodes.CREATED) {
-      throw error;
+      throw error
     }
-    return response;
+    return response
   }
 
   async update(data: ISubtitleImprovement): Promise<void> {
@@ -64,16 +64,16 @@ export class SubtitleImprovementService {
       {
         body: data,
       }
-    );
+    )
     if (status !== StatusCodes.NO_CONTENT) {
-      throw error;
+      throw error
     }
   }
 
   async delete(id: string): Promise<void> {
-    const { status, error } = await this.http.delete(`${this.endpoint}/${id}`);
+    const { status, error } = await this.http.delete(`${this.endpoint}/${id}`)
     if (status !== StatusCodes.NO_CONTENT) {
-      throw error;
+      throw error
     }
   }
 
@@ -85,9 +85,9 @@ export class SubtitleImprovementService {
           likes,
         },
       }
-    );
+    )
     if (status !== StatusCodes.NO_CONTENT) {
-      throw error;
+      throw error
     }
   }
 
@@ -99,9 +99,9 @@ export class SubtitleImprovementService {
           isApproved,
         },
       }
-    );
+    )
     if (status !== StatusCodes.NO_CONTENT) {
-      throw error;
+      throw error
     }
   }
 }

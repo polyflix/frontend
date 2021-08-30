@@ -1,17 +1,15 @@
-import React from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { GhostTitle } from "../GhostTitle.component";
-import { GhostTile } from "../GhostTile/GhostTile.component";
-import styles from "./GhostSlider.module.scss";
+import React from 'react';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { GhostTitle } from '../GhostTitle.component';
+import { GhostTile } from '../GhostTile/GhostTile.component';
+import styles from './GhostSlider.module.scss';
 
 type Props = {
-  count: number;
-};
+  count: number
+}
 
 export const GhostSlider: React.FC<Props> = ({ count = 5 }) => {
-  const ghosts = () => {
-    return new Array(count).fill(null);
-  };
+  const ghosts = () => new Array(count).fill(null);
 
   return (
     <div className="mt-12">
@@ -40,7 +38,7 @@ export const GhostSlider: React.FC<Props> = ({ count = 5 }) => {
             <div className={styles.root}>
               <GhostTile
                 className="absolute top-0 left-0 w-full h-full"
-                aspectRatio={true}
+                aspectRatio
               />
             </div>
           </SwiperSlide>

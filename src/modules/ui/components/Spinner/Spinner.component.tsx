@@ -1,22 +1,22 @@
-import { motion } from "framer-motion";
-import { WithClassname, WithMotion } from "../../../common/types/props.type";
-import { cn } from "../../../common/utils/classes.util";
-import { fadeOpacity } from "../../animations/fadeOpacity";
+import { motion } from 'framer-motion';
+import { WithClassname, WithMotion } from '../../../common/types/props.type';
+import { cn } from '../../../common/utils/classes.util';
+import { fadeOpacity } from '../../animations/fadeOpacity';
 
 type Props = WithClassname &
   WithMotion & {
     /** The spinner height */
-    height?: number;
+    height?: number
     /** The spinner width */
-    width?: number;
+    width?: number
     /** If true, the spinner will be displayed in a page */
-    page?: boolean;
-  };
+    page?: boolean
+  }
 
 const SpinnerSvg: React.FC<Props> = ({
   height,
   width,
-  className = "",
+  className = '',
   ...rest
 }) => (
   <motion.svg
@@ -24,7 +24,7 @@ const SpinnerSvg: React.FC<Props> = ({
     {...rest}
     width={height}
     height={width}
-    viewBox={`0 0 38 38`}
+    viewBox="0 0 38 38"
     xmlns="http://www.w3.org/2000/svg"
   >
     <defs>
@@ -71,7 +71,7 @@ export const Spinner: React.FC<Props> = ({
   width = 38,
   page = false,
   style,
-  className = "",
+  className = '',
   ...rest
 }) => {
   if (page) {
@@ -80,8 +80,8 @@ export const Spinner: React.FC<Props> = ({
         variants={fadeOpacity}
         style={style}
         className={cn(
-          "text-nx-red flex items-center justify-center",
-          className
+          'text-nx-red flex items-center justify-center',
+          className,
         )}
       >
         <SpinnerSvg width={60} height={60} {...rest} />

@@ -1,15 +1,17 @@
-import React from "react";
-import { useTranslation } from "react-i18next";
-import { Container, fadeOpacity, Page, stagger } from "../../../ui";
-import { PasswordForm } from "../../components/Forms/PasswordForm.component";
-import { motion } from "framer-motion";
-import { GoBack } from "../../../common/components/Navigation/GoBack.component";
+import React from 'react';
+import { useTranslation } from 'react-i18next';
+import { motion } from 'framer-motion';
+import {
+  Container, fadeOpacity, Page, stagger,
+} from '../../../ui';
+import { PasswordForm } from '../../components/Forms/PasswordForm.component';
+import { GoBack } from '../../../common/components/Navigation/GoBack.component';
 
 export const PasswordUpdatePage: React.FC = () => {
   const { t } = useTranslation();
 
   return (
-    <Page variants={fadeOpacity} title={t("userProfile.seo.title")}>
+    <Page variants={fadeOpacity} title={t('userProfile.seo.title')}>
       <Container mxAuto>
         <motion.div
           variants={stagger(0.1)}

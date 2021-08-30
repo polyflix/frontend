@@ -1,12 +1,12 @@
-import { Injectable } from "@polyflix/di";
-import { StatusCodes } from "http-status-codes";
-import { HttpService } from "../../common/services/http.service";
+import { Injectable } from '@polyflix/di'
+import { StatusCodes } from 'http-status-codes'
+import { HttpService } from '../../common/services/http.service'
 
 @Injectable()
 export class SubtitleImprovementMetaService {
-  private endpoint: string;
+  private endpoint: string
   constructor(private readonly http: HttpService) {
-    this.endpoint = "/subtitle-improvements-meta";
+    this.endpoint = '/subtitle-improvements-meta'
   }
 
   async patchIsLiked(id: string, isLiked: boolean): Promise<void> {
@@ -17,10 +17,10 @@ export class SubtitleImprovementMetaService {
           isLiked,
         },
       }
-    );
+    )
     if (status !== StatusCodes.NO_CONTENT) {
-      throw error;
+      throw error
     }
-    return response;
+    return response
   }
 }

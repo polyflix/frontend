@@ -1,9 +1,9 @@
-import { Injectable } from "@polyflix/di";
-import { StatusCodes } from "http-status-codes";
-import { HttpService } from "../../common/services/http.service";
-import { IPathFilter, PathFilter } from "../filters/path.filter";
-import { Path } from "../models/path.model";
-import { IPathForm, PathsWithPagination } from "../types";
+import { Injectable } from '@polyflix/di'
+import { StatusCodes } from 'http-status-codes'
+import { HttpService } from '../../common/services/http.service'
+import { IPathFilter, PathFilter } from '../filters/path.filter'
+import { Path } from '../models/path.model'
+import { IPathForm, PathsWithPagination } from '../types'
 
 @Injectable()
 export class PathService {
@@ -19,20 +19,20 @@ export class PathService {
    * @returns {Promise<PathsWithPagination>}
    */
   public async getPaths(filters: IPathFilter): Promise<PathsWithPagination> {
-    const searchQuery = this.pathFilter.buildFilters(filters);
-    let url = "/paths";
-    if (searchQuery !== "" && searchQuery) {
-      url += `?${searchQuery}`;
+    const searchQuery = this.pathFilter.buildFilters(filters)
+    let url = '/paths'
+    if (searchQuery !== '' && searchQuery) {
+      url += `?${searchQuery}`
     }
 
-    const { status, response, error } = await this.httpService.get(url);
+    const { status, response, error } = await this.httpService.get(url)
     if (status !== 200) {
-      throw error;
+      throw error
     }
     return {
       totalCount: response.totalCount,
       items: response.items.map(Path.fromJson),
-    };
+    }
   }
 
   /**
@@ -43,11 +43,11 @@ export class PathService {
   public async createPath(path: IPathForm): Promise<Path> {
     const { status, response, error } = await this.httpService.post(`/paths`, {
       body: path,
-    });
+    })
     if (status !== StatusCodes.CREATED) {
-      throw error;
+      throw error
     }
-    return response;
+    return response
   }
 
   /**
@@ -55,9 +55,9 @@ export class PathService {
    * @param {string} id the path id
    */
   public async deletePath(id: string): Promise<void> {
-    const { status, error } = await this.httpService.delete(`/paths/${id}`);
+    const { status, error } = await this.httpService.delete(`/paths/${id}`)
     if (status !== StatusCodes.NO_CONTENT) {
-      throw error;
+      throw error
     }
   }
 
@@ -73,11 +73,11 @@ export class PathService {
       {
         body: data,
       }
-    );
+    )
     if (status !== StatusCodes.OK) {
-      throw error;
+      throw error
     }
-    return Path.fromJson(response);
+    return Path.fromJson(response)
   }
 
   /**
@@ -88,11 +88,11 @@ export class PathService {
   public async getPathBySlug(slug: string): Promise<Path> {
     const { status, response, error } = await this.httpService.get(
       `/paths/${slug}`
-    );
+    )
     if (status !== StatusCodes.OK) {
-      throw error;
+      throw error
     }
 
-    return Path.fromJson(response);
+    return Path.fromJson(response)
   }
 }

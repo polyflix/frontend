@@ -3,25 +3,25 @@ import {
   ExclamationCircleIcon,
   ExclamationIcon,
   InformationCircleIcon,
-} from "@heroicons/react/outline";
-import { motion } from "framer-motion";
-import React, { PropsWithChildren } from "react";
-import { WithClassname, WithMotion } from "../../../common/types/props.type";
-import { cn } from "../../../common/utils/classes.util";
-import { Typography } from "../Typography/Typography.component";
+} from '@heroicons/react/outline';
+import { motion } from 'framer-motion';
+import React, { PropsWithChildren } from 'react';
+import { WithClassname, WithMotion } from '../../../common/types/props.type';
+import { cn } from '../../../common/utils/classes.util';
+import { Typography } from '../Typography/Typography.component';
 
-export type AlertType = "success" | "error" | "warning" | "info" | "not-found";
+export type AlertType = 'success' | 'error' | 'warning' | 'info' | 'not-found'
 
 type AlertMetadata = {
-  icon: any;
-  classes: string;
-};
+  icon: any
+  classes: string
+}
 
 type Props = WithClassname &
   WithMotion & {
     /** The type of the alert to display */
-    type?: AlertType;
-  };
+    type?: AlertType
+  }
 
 const alertMetadataFactory = (icon: any, classes: string): AlertMetadata => ({
   icon,
@@ -30,16 +30,16 @@ const alertMetadataFactory = (icon: any, classes: string): AlertMetadata => ({
 
 const getAlertMetadata = (type: AlertType): AlertMetadata => {
   switch (type) {
-    case "error":
-      return alertMetadataFactory(ExclamationCircleIcon, "text-nx-red");
-    case "success":
-      return alertMetadataFactory(CheckCircleIcon, "text-green-500");
-    case "warning":
-      return alertMetadataFactory(ExclamationIcon, "text-yellow-500");
-    case "info":
-      return alertMetadataFactory(InformationCircleIcon, "text-blue-500");
-    case "not-found":
-      return alertMetadataFactory(ExclamationCircleIcon, "text-nx-red");
+    case 'error':
+      return alertMetadataFactory(ExclamationCircleIcon, 'text-nx-red');
+    case 'success':
+      return alertMetadataFactory(CheckCircleIcon, 'text-green-500');
+    case 'warning':
+      return alertMetadataFactory(ExclamationIcon, 'text-yellow-500');
+    case 'info':
+      return alertMetadataFactory(InformationCircleIcon, 'text-blue-500');
+    case 'not-found':
+      return alertMetadataFactory(ExclamationCircleIcon, 'text-nx-red');
   }
 };
 
@@ -48,8 +48,8 @@ const getAlertMetadata = (type: AlertType): AlertMetadata => {
  * It renders a text prefixed by an icon.
  */
 export const Alert: React.FC<PropsWithChildren<Props>> = ({
-  type = "error",
-  className = "",
+  type = 'error',
+  className = '',
   children,
   ...rest
 }) => {
@@ -57,7 +57,7 @@ export const Alert: React.FC<PropsWithChildren<Props>> = ({
   return (
     <motion.div
       {...rest}
-      className={cn(className, "flex items-center", classes)}
+      className={cn(className, 'flex items-center', classes)}
     >
       <Icon className="w-7" />
       <Typography as="span" className="text-sm ml-2">

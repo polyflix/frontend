@@ -1,19 +1,18 @@
-import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/outline";
-import React, { useState } from "react";
-import SwiperCore, { Mousewheel, Navigation } from "swiper";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { NoData } from "../../../ui/components/NoData/NoData.component";
-import { Typography } from "../../../ui/components/Typography/Typography.component";
-import SliderControl from "./CollectionControl.component";
-import { CollectionSliderItem } from "../CollectionSliderItem/CollectionSliderItem.component";
-import { Collection } from "../../models/collections.model";
-import { useEffect } from "react";
+import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/outline';
+import React, { useState, useEffect } from 'react';
+import SwiperCore, { Mousewheel, Navigation } from 'swiper';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { NoData } from '../../../ui/components/NoData/NoData.component';
+import { Typography } from '../../../ui/components/Typography/Typography.component';
+import SliderControl from './CollectionControl.component';
+import { CollectionSliderItem } from '../CollectionSliderItem/CollectionSliderItem.component';
+import { Collection } from '../../models/collections.model';
 
 type Props = {
-  collection: Collection;
-  hideIfNothing?: boolean;
-  startIndex: number;
-};
+  collection: Collection
+  hideIfNothing?: boolean
+  startIndex: number
+}
 
 SwiperCore.use([Navigation, Mousewheel]);
 export const CollectionSlider: React.FC<Props> = ({
@@ -29,8 +28,8 @@ export const CollectionSlider: React.FC<Props> = ({
 
   const buildQuery = (index: number): URLSearchParams => {
     const query = new URLSearchParams();
-    query.append("c", `${collection.slug}`);
-    query.append("index", `${index}`);
+    query.append('c', `${collection.slug}`);
+    query.append('index', `${index}`);
     return query;
   };
 
@@ -43,7 +42,7 @@ export const CollectionSlider: React.FC<Props> = ({
         <ChevronRightIcon className="w-5 pt-1 text-nx-white" />
       </div>
       <Swiper
-        navigation={{ nextEl: ".control-next", prevEl: ".control-previous" }}
+        navigation={{ nextEl: '.control-next', prevEl: '.control-previous' }}
         breakpoints={{
           550: {
             slidesPerView: 1,

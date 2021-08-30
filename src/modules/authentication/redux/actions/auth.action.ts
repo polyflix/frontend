@@ -1,25 +1,25 @@
-import { actionFactory } from "../../../common/factories/action.factory";
-import { User } from "../../../users/models/user.model";
-import { Token } from "../../models/token.model";
-import { AuthAction, AuthState } from "../../types/auth.type";
+import { actionFactory } from '../../../common/factories/action.factory'
+import { User } from '../../../users/models/user.model'
+import { Token } from '../../models/token.model'
+import { AuthAction, AuthState } from '../../types/auth.type'
 
 /**
  * AuthActions enumeration.
  */
 export enum AuthActions {
-  LOGOUT = "LOGOUT",
-  LOGIN_SUCCESS = "LOGIN_SUCCESS",
-  LOGIN_IN_PROGRESS = "LOGIN_IN_PROGRESS",
-  LOGIN_FAILURE = "LOGIN_FAILURE",
-  REGISTER_SUCCESS = "REGISTER_SUCCESS",
-  REGISTER_IN_PROGRESS = "REGISTER_IN_PROGRESS",
-  REGISTER_FAILURE = "REGISTER_FAILURE",
-  REFRESH_AUTH_SUCCESS = "REFRESH_AUTH_SUCCESS",
-  REFRESH_AUTH_IN_PROGRESS = "REFRESH_AUTH_IN_PROGRESS",
-  REFRESH_AUTH_FAILURE = "REFRESH_AUTH_FAILURE",
-  UPDATE_USER_SUCCESS = "UPDATE_USER_SUCCESS",
-  UPDATE_USER_FAILURE = "UPDATE_USER_FAILURE",
-  UPDATE_USER_IN_PROGRESS = "UPDATE_USER_IN_PROGRESS",
+  LOGOUT = 'LOGOUT',
+  LOGIN_SUCCESS = 'LOGIN_SUCCESS',
+  LOGIN_IN_PROGRESS = 'LOGIN_IN_PROGRESS',
+  LOGIN_FAILURE = 'LOGIN_FAILURE',
+  REGISTER_SUCCESS = 'REGISTER_SUCCESS',
+  REGISTER_IN_PROGRESS = 'REGISTER_IN_PROGRESS',
+  REGISTER_FAILURE = 'REGISTER_FAILURE',
+  REFRESH_AUTH_SUCCESS = 'REFRESH_AUTH_SUCCESS',
+  REFRESH_AUTH_IN_PROGRESS = 'REFRESH_AUTH_IN_PROGRESS',
+  REFRESH_AUTH_FAILURE = 'REFRESH_AUTH_FAILURE',
+  UPDATE_USER_SUCCESS = 'UPDATE_USER_SUCCESS',
+  UPDATE_USER_FAILURE = 'UPDATE_USER_FAILURE',
+  UPDATE_USER_IN_PROGRESS = 'UPDATE_USER_IN_PROGRESS',
 }
 
 /**
@@ -32,16 +32,16 @@ export const LoginSuccessAction = (user: User, token: Token): AuthAction => {
   return actionFactory<AuthState>(AuthActions.LOGIN_SUCCESS, {
     user,
     token,
-  });
-};
+  })
+}
 
 /**
  * Create a login in progress action
  * @returns {AuthAction} the login in progress action
  */
 export const LoginInProgressAction = (): AuthAction => {
-  return actionFactory<AuthState>(AuthActions.LOGIN_IN_PROGRESS);
-};
+  return actionFactory<AuthState>(AuthActions.LOGIN_IN_PROGRESS)
+}
 
 /**
  * Create a login failure action
@@ -51,16 +51,16 @@ export const LoginInProgressAction = (): AuthAction => {
 export const LoginFailureAction = (error: string): AuthAction => {
   return actionFactory<AuthState>(AuthActions.LOGIN_FAILURE, {
     authError: error,
-  });
-};
+  })
+}
 
 /**
  * Create a register in progress action
  * @returns {AuthAction} the register in progress action
  */
 export const RegisterInProgressAction = (): AuthAction => {
-  return actionFactory<AuthState>(AuthActions.REGISTER_IN_PROGRESS);
-};
+  return actionFactory<AuthState>(AuthActions.REGISTER_IN_PROGRESS)
+}
 
 /**
  * Create the register success action
@@ -72,8 +72,8 @@ export const RegisterSuccessAction = (user: User, token: Token): AuthAction => {
   return actionFactory<AuthState>(AuthActions.REGISTER_SUCCESS, {
     user,
     token,
-  });
-};
+  })
+}
 
 /**
  * Create the register failure action
@@ -83,16 +83,16 @@ export const RegisterSuccessAction = (user: User, token: Token): AuthAction => {
 export const RegisterFailureAction = (error: string): AuthAction => {
   return actionFactory<AuthState>(AuthActions.REGISTER_FAILURE, {
     authError: error,
-  });
-};
+  })
+}
 
 /**
  * Create the logout action
  * @returns {AuthAction} the log out action
  */
 export const LogoutAction = (): AuthAction => {
-  return actionFactory<AuthState>(AuthActions.LOGOUT);
-};
+  return actionFactory<AuthState>(AuthActions.LOGOUT)
+}
 
 /**
  * Create the refresh auth action
@@ -107,24 +107,24 @@ export const RefreshAuthSuccessAction = (
   return actionFactory<AuthState>(AuthActions.REFRESH_AUTH_SUCCESS, {
     user,
     token,
-  });
-};
+  })
+}
 
 /**
  * Create a refresh auth in progress action
  * @returns {AuthAction} the refresh in progress action
  */
 export const RefreshAuthInProgress = (): AuthAction => {
-  return actionFactory<AuthState>(AuthActions.REFRESH_AUTH_IN_PROGRESS);
-};
+  return actionFactory<AuthState>(AuthActions.REFRESH_AUTH_IN_PROGRESS)
+}
 
 /**
  * Create the refresh auth failure action
  * @returns {AuthAction} the refresh auth failure action
  */
 export const RefreshAuthFailureAction = (): AuthAction => {
-  return actionFactory<AuthState>(AuthActions.REFRESH_AUTH_FAILURE);
-};
+  return actionFactory<AuthState>(AuthActions.REFRESH_AUTH_FAILURE)
+}
 
 /**
  * Create the update user success action
@@ -135,16 +135,16 @@ export const UpdateUserSuccessAction = (user: User): AuthAction => {
   return actionFactory<AuthState>(AuthActions.UPDATE_USER_SUCCESS, {
     user,
     authError: undefined,
-  });
-};
+  })
+}
 
 /**
  * Create the update user in progress action
  * @returns {AuthAction} the update user in progress action
  */
 export const UpdateUserInProgressAction = (): AuthAction => {
-  return actionFactory<AuthState>(AuthActions.UPDATE_USER_IN_PROGRESS);
-};
+  return actionFactory<AuthState>(AuthActions.UPDATE_USER_IN_PROGRESS)
+}
 
 /**
  * Create the update user failure action
@@ -154,5 +154,5 @@ export const UpdateUserInProgressAction = (): AuthAction => {
 export const UpdateUserFailureAction = (error: string): AuthAction => {
   return actionFactory<AuthState>(AuthActions.UPDATE_USER_FAILURE, {
     authError: error,
-  });
-};
+  })
+}

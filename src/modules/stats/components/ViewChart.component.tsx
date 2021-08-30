@@ -1,26 +1,26 @@
-import React, { useEffect, useState } from "react";
-import { scaleBand, scaleLinear } from "@visx/scale";
-import { max } from "d3-array";
-import { Axis, AxisBottom } from "@visx/axis";
-import { LinearGradient } from "@visx/gradient";
-import { MarkerCircle } from "@visx/marker";
-import { LinePath } from "@visx/shape";
-import { curveCardinal as curve } from "@visx/curve";
-import { Text } from "@visx/text";
-import { ParentSize } from "@visx/responsive";
-import { timeFormat, timeParse } from "d3-time-format";
-import { useTranslation } from "react-i18next";
-import { StatViewQuery } from "../types/StatView.type";
-import { formatEnglish } from "../../common/utils/date.util";
+import React, { useEffect, useState } from 'react';
+import { scaleBand, scaleLinear } from '@visx/scale';
+import { max } from 'd3-array';
+import { Axis, AxisBottom } from '@visx/axis';
+import { LinearGradient } from '@visx/gradient';
+import { MarkerCircle } from '@visx/marker';
+import { LinePath } from '@visx/shape';
+import { curveCardinal as curve } from '@visx/curve';
+import { Text } from '@visx/text';
+import { ParentSize } from '@visx/responsive';
+import { timeFormat, timeParse } from 'd3-time-format';
+import { useTranslation } from 'react-i18next';
+import { StatViewQuery } from '../types/StatView.type';
+import { formatEnglish } from '../../common/utils/date.util';
 
 type Props = {
-  width: number;
-  height: number;
-  data: StatViewQuery[];
-};
+  width: number
+  height: number
+  data: StatViewQuery[]
+}
 
-const parseDate = timeParse("%Y-%m-%d");
-const format = timeFormat("%b %d");
+const parseDate = timeParse('%Y-%m-%d');
+const format = timeFormat('%b %d');
 const formatDate = (date: string) => format(parseDate(date) as Date);
 const getDate = (d: StatViewQuery) => d.createdAt;
 const y = (d: StatViewQuery) => d.viewsCount;
@@ -34,12 +34,12 @@ export const ViewChart: React.FC<Props> = ({
   const { t } = useTranslation();
   const padding = 30;
   const colors = {
-    white: "#FFFFFF",
-    black: "#1B1B1B",
-    gray: "#98A7C0",
-    darkGray: "#2A2A2A",
-    accent: "#E50914",
-    darkAccent: "#B81D24",
+    white: '#FFFFFF',
+    black: '#1B1B1B',
+    gray: '#98A7C0',
+    darkGray: '#2A2A2A',
+    accent: '#E50914',
+    darkAccent: '#B81D24',
   };
 
   const yScale = scaleLinear({
@@ -87,7 +87,7 @@ export const ViewChart: React.FC<Props> = ({
           tickLabelProps={() => ({
             fill: colors.gray,
             fontSize: 11,
-            textAnchor: "middle",
+            textAnchor: 'middle',
           })}
         />
 
@@ -121,8 +121,8 @@ export const ViewChart: React.FC<Props> = ({
           tickStroke={colors.darkGray}
           tickLabelProps={() => ({
             fill: colors.gray,
-            textAnchor: "end",
-            verticalAnchor: "middle",
+            textAnchor: 'end',
+            verticalAnchor: 'middle',
           })}
         />
         <LinearGradient
@@ -144,8 +144,8 @@ export const ViewChart: React.FC<Props> = ({
           x={padding / 2}
           y={padding}
         >
-          {`${t("shared.common.views")} ${t(
-            "shared.common.dates.thisWeek"
+          {`${t('shared.common.views')} ${t(
+            'shared.common.dates.thisWeek',
           ).toLowerCase()}`}
         </Text>
       </svg>
@@ -153,7 +153,7 @@ export const ViewChart: React.FC<Props> = ({
   );
 };
 
-export const ResponsiveViewChart: React.FC<Omit<Props, "width" | "height">> = ({
+export const ResponsiveViewChart: React.FC<Omit<Props, 'width' | 'height'>> = ({
   ...rest
 }) => (
   <ParentSize debounceTime={10}>

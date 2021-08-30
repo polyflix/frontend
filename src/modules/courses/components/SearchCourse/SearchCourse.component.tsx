@@ -1,16 +1,16 @@
-import React, { useState } from "react";
-import { CollectionList } from "../CollectionList/CollectionList.component";
-import { motion } from "framer-motion";
-import { WithClassname, WithMotion } from "../../../common";
-import { useInjection } from "@polyflix/di";
-import { Collection } from "../../../collections/models/collections.model";
-import { CollectionService } from "../../../collections/services/collection.service";
+import React, { useState } from 'react';
+import { motion } from 'framer-motion';
+import { useInjection } from '@polyflix/di';
+import { CollectionList } from '../CollectionList/CollectionList.component';
+import { WithClassname, WithMotion } from '../../../common';
+import { Collection } from '../../../collections/models/collections.model';
+import { CollectionService } from '../../../collections/services/collection.service';
 
 type Props = WithClassname &
   WithMotion & {
-    addCollection: (collection: Collection) => void;
-    placeholder: string;
-  };
+    addCollection: (collection: Collection) => void
+    placeholder: string
+  }
 
 export const SearchCourse: React.FC<Props> = ({
   addCollection,
@@ -19,17 +19,17 @@ export const SearchCourse: React.FC<Props> = ({
 }) => {
   const collectionService = useInjection<CollectionService>(CollectionService);
 
-  const [input, setInput] = useState<string>("");
+  const [input, setInput] = useState<string>('');
   const [collectionList, setCollectionList] = useState<Collection[]>([]);
 
   const onClickCollection = (collection: Collection) => {
     addCollection(collection);
-    setInput("");
+    setInput('');
     setCollectionList([]);
   };
 
   const search = async (title: string) => {
-    let paginatedCollections = await collectionService.getCollections({
+    const paginatedCollections = await collectionService.getCollections({
       title,
       exact: false,
     });

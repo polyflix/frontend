@@ -1,2 +1,2 @@
-export * from "./CollectionList";
-export * from "./CollectionListItem/CollectionListItem.component";
+export * from './CollectionList'
+export * from './CollectionListItem/CollectionListItem.component'

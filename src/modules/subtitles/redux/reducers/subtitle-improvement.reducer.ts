@@ -1,11 +1,11 @@
-import { SubtitleImprovement } from "../../models/subtitle-improvement.model";
+import { SubtitleImprovement } from '../../models/subtitle-improvement.model'
 import {
   SubtitleImprovementItemAction,
   SubtitleImprovementListActions,
   SubtitleImprovementState,
-} from "../actions/subtitle-improvement.action";
+} from '../actions/subtitle-improvement.action'
 
-const initialState: SubtitleImprovementState = [];
+const initialState: SubtitleImprovementState = []
 
 export const subtitleImprovementReducer = (
   state: SubtitleImprovementState = initialState,
@@ -21,10 +21,10 @@ export const subtitleImprovementReducer = (
               list: action.payload?.list as SubtitleImprovement[],
               disableActions: false,
               isLoading: false,
-            };
+            }
           }
-          return elm;
-        });
+          return elm
+        })
       }
       return state.concat({
         ...state,
@@ -33,7 +33,7 @@ export const subtitleImprovementReducer = (
         disableActions: false,
         isLoading: false,
         isError: false,
-      });
+      })
     case SubtitleImprovementListActions.UPDATE_LIST_IN_PROGRESS:
       return state.map((elm) => {
         if (elm.timestamp === action.payload?.timestamp) {
@@ -42,10 +42,10 @@ export const subtitleImprovementReducer = (
             isLoading: true,
             disableActions: true,
             isError: false,
-          };
+          }
         }
-        return elm;
-      });
+        return elm
+      })
     case SubtitleImprovementListActions.UPDATE_LIST_FAILURE:
       return state.map((elm) => {
         if (elm.timestamp === action.payload?.timestamp) {
@@ -54,10 +54,10 @@ export const subtitleImprovementReducer = (
             isLoading: false,
             disableActions: false,
             isError: true,
-          };
+          }
         }
-        return elm;
-      });
+        return elm
+      })
     case SubtitleImprovementListActions.ADD_ELEMENT_SUCCESS:
       if (state?.some((elm) => elm.timestamp === action.payload?.timestamp)) {
         return state.map((elm) => {
@@ -71,10 +71,10 @@ export const subtitleImprovementReducer = (
                 action?.payload?.item as SubtitleImprovement
               ) as SubtitleImprovement[],
               item: undefined,
-            };
+            }
           }
-          return elm;
-        });
+          return elm
+        })
       } else {
         return state.concat({
           ...state,
@@ -84,7 +84,7 @@ export const subtitleImprovementReducer = (
           isLoading: false,
           isError: false,
           item: undefined,
-        });
+        })
       }
     case SubtitleImprovementListActions.ADD_ELEMENT_IN_PROGRESS:
       return state.map((elm) => {
@@ -94,10 +94,10 @@ export const subtitleImprovementReducer = (
             isLoading: false,
             disableActions: true,
             isError: false,
-          };
+          }
         }
-        return elm;
-      });
+        return elm
+      })
     case SubtitleImprovementListActions.ADD_ELEMENT_FAILURE:
       return state.map((elm) => {
         if (elm.timestamp === action.payload?.timestamp) {
@@ -106,10 +106,10 @@ export const subtitleImprovementReducer = (
             isLoading: false,
             disableActions: false,
             isError: true,
-          };
+          }
         }
-        return elm;
-      });
+        return elm
+      })
     case SubtitleImprovementListActions.UPDATE_ELEMENT_SUCCESS:
       if (state?.some((elm) => elm.timestamp === action.payload?.timestamp)) {
         return state.map((elm) => {
@@ -125,16 +125,16 @@ export const subtitleImprovementReducer = (
                   return {
                     ...item,
                     ...action.payload?.item,
-                  } as SubtitleImprovement;
+                  } as SubtitleImprovement
                 }
-                return item;
+                return item
               }),
-            };
+            }
           }
-          return elm;
-        });
+          return elm
+        })
       } else {
-        return state;
+        return state
       }
     case SubtitleImprovementListActions.UPDATE_ELEMENT_IN_PROGRESS:
       return state.map((elm) => {
@@ -144,10 +144,10 @@ export const subtitleImprovementReducer = (
             isLoading: false,
             disableActions: true,
             isError: false,
-          };
+          }
         }
-        return elm;
-      });
+        return elm
+      })
     case SubtitleImprovementListActions.UPDATE_ELEMENT_FAILURE:
       return state.map((elm) => {
         if (elm.timestamp === action.payload?.timestamp) {
@@ -156,20 +156,20 @@ export const subtitleImprovementReducer = (
             isLoading: false,
             disableActions: false,
             isError: true,
-          };
+          }
         }
-        return elm;
-      });
+        return elm
+      })
     case SubtitleImprovementListActions.UPDATE_FORM_ELEMENT_IN_PROGRESS:
       return state.map((elm) => {
         if (elm.timestamp === action.payload?.timestamp) {
           return {
             ...elm,
             editingItem: action.payload?.editingItem,
-          };
+          }
         }
-        return elm;
-      });
+        return elm
+      })
     case SubtitleImprovementListActions.UPDATE_FORM_ELEMENT_SUCCESS:
       return state.map((elm) => {
         if (elm.timestamp === action.payload?.timestamp) {
@@ -177,10 +177,10 @@ export const subtitleImprovementReducer = (
             ...elm,
             editingItem: undefined,
             isLoading: false,
-          };
+          }
         }
-        return elm;
-      });
+        return elm
+      })
     case SubtitleImprovementListActions.DELETE_ELEMENT_SUCCESS:
       return state.map((elm) => {
         if (elm.timestamp === action.payload?.timestamp) {
@@ -193,10 +193,10 @@ export const subtitleImprovementReducer = (
             isLoading: false,
             disableActions: false,
             isError: false,
-          };
+          }
         }
-        return elm;
-      });
+        return elm
+      })
     case SubtitleImprovementListActions.DELETE_ELEMENT_IN_PROGRESS:
       return state.map((elm) => {
         if (elm.timestamp === action.payload?.timestamp) {
@@ -204,10 +204,10 @@ export const subtitleImprovementReducer = (
             ...elm,
             disableActions: true,
             isError: false,
-          };
+          }
         }
-        return elm;
-      });
+        return elm
+      })
     case SubtitleImprovementListActions.DELETE_ELEMENT_FAILURE:
       return state.map((elm) => {
         if (elm.timestamp === action.payload?.timestamp) {
@@ -216,10 +216,10 @@ export const subtitleImprovementReducer = (
             isLoading: false,
             disableActions: false,
             isError: true,
-          };
+          }
         }
-        return elm;
-      });
+        return elm
+      })
     case SubtitleImprovementListActions.SET_BLOCK_SUCCESS:
       if (state?.some((elm) => elm.timestamp === action.payload?.timestamp)) {
         return state.map((elm) => {
@@ -227,10 +227,10 @@ export const subtitleImprovementReducer = (
             return {
               ...elm,
               text: action.payload?.text as string,
-            };
+            }
           }
-          return elm;
-        });
+          return elm
+        })
       }
       return state.concat({
         ...state,
@@ -239,8 +239,8 @@ export const subtitleImprovementReducer = (
         disableActions: false,
         isLoading: false,
         isError: false,
-      });
+      })
     default:
-      return state;
+      return state
   }
-};
+}

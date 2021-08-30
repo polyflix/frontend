@@ -1,12 +1,12 @@
-import { Injectable } from "@polyflix/di";
-import { StatusCodes } from "http-status-codes";
-import { HttpService } from "../../common/services/http.service";
+import { Injectable } from '@polyflix/di'
+import { StatusCodes } from 'http-status-codes'
+import { HttpService } from '../../common/services/http.service'
 import {
   CollectionFilter,
   ICollectionFilter,
-} from "../filters/collection.filter";
-import { Collection } from "../models";
-import { ICollectionForm, CollectionsWithPagination } from "../types";
+} from '../filters/collection.filter'
+import { Collection } from '../models'
+import { ICollectionForm, CollectionsWithPagination } from '../types'
 
 @Injectable()
 export class CollectionService {
@@ -25,20 +25,20 @@ export class CollectionService {
   public async getCollections(
     filters: ICollectionFilter
   ): Promise<CollectionsWithPagination> {
-    const searchQuery = this.collectionFilter.buildFilters(filters);
-    let url = "/collections";
-    if (searchQuery !== "" && searchQuery) {
-      url += `?${searchQuery}`;
+    const searchQuery = this.collectionFilter.buildFilters(filters)
+    let url = '/collections'
+    if (searchQuery !== '' && searchQuery) {
+      url += `?${searchQuery}`
     }
 
-    const { status, response, error } = await this.httpService.get(url);
+    const { status, response, error } = await this.httpService.get(url)
     if (status !== 200) {
-      throw error;
+      throw error
     }
     return {
       totalCount: response.totalCount,
       items: response.items.map(Collection.fromJson),
-    };
+    }
   }
 
   /**
@@ -54,11 +54,11 @@ export class CollectionService {
       {
         body: collection,
       }
-    );
+    )
     if (status !== StatusCodes.CREATED) {
-      throw error;
+      throw error
     }
-    return response;
+    return response
   }
 
   /**
@@ -68,9 +68,9 @@ export class CollectionService {
   public async deleteCollection(id: string): Promise<void> {
     const { status, error } = await this.httpService.delete(
       `/collections/${id}`
-    );
+    )
     if (status !== StatusCodes.NO_CONTENT) {
-      throw error;
+      throw error
     }
   }
 
@@ -89,11 +89,11 @@ export class CollectionService {
       {
         body: data,
       }
-    );
+    )
     if (status !== StatusCodes.OK) {
-      throw error;
+      throw error
     }
-    return Collection.fromJson(response);
+    return Collection.fromJson(response)
   }
 
   /**
@@ -104,11 +104,11 @@ export class CollectionService {
   public async getCollectionBySlug(slug: string): Promise<Collection> {
     const { status, response, error } = await this.httpService.get(
       `/collections/${slug}`
-    );
+    )
     if (status !== StatusCodes.OK) {
-      throw error;
+      throw error
     }
 
-    return Collection.fromJson(response);
+    return Collection.fromJson(response)
   }
 }

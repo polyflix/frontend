@@ -1,10 +1,10 @@
-import { Injectable } from "@polyflix/di";
-import { StatusCodes } from "http-status-codes";
-import { HttpService } from "../../common/services/http.service";
-import { IVideoFilter, VideoFilter } from "../filters/video.filter";
-import { Video } from "../models/video.model";
-import { IVideoForm, VideosWithPagination } from "../types/videos.type";
-import { SubtitleService } from "./subtitle.service";
+import { Injectable } from '@polyflix/di'
+import { StatusCodes } from 'http-status-codes'
+import { HttpService } from '../../common/services/http.service'
+import { IVideoFilter, VideoFilter } from '../filters/video.filter'
+import { Video } from '../models/video.model'
+import { IVideoForm, VideosWithPagination } from '../types/videos.type'
+import { SubtitleService } from './subtitle.service'
 
 @Injectable()
 export class VideoService {
@@ -22,20 +22,20 @@ export class VideoService {
    * @returns {Promise<VideosWithPagination>}
    */
   public async getVideos(filters: IVideoFilter): Promise<VideosWithPagination> {
-    const searchQuery = this.videoFilter.buildFilters(filters);
-    let url = "/videos";
-    if (searchQuery !== "" && searchQuery) {
-      url += `?${searchQuery}`;
+    const searchQuery = this.videoFilter.buildFilters(filters)
+    let url = '/videos'
+    if (searchQuery !== '' && searchQuery) {
+      url += `?${searchQuery}`
     }
 
-    const { status, response, error } = await this.httpService.get(url);
+    const { status, response, error } = await this.httpService.get(url)
     if (status !== 200) {
-      throw error;
+      throw error
     }
     return {
       totalCount: response.totalCount,
       items: response.items.map(Video.fromJson),
-    };
+    }
   }
 
   /**
@@ -46,11 +46,11 @@ export class VideoService {
   public async createVideo(video: IVideoForm): Promise<Video> {
     const { status, response, error } = await this.httpService.post(`/videos`, {
       body: video,
-    });
+    })
     if (status !== StatusCodes.CREATED) {
-      throw error;
+      throw error
     }
-    return response;
+    return response
   }
 
   /**
@@ -58,9 +58,9 @@ export class VideoService {
    * @param {string} id the video id
    */
   public async deleteVideo(id: string): Promise<void> {
-    const { status, error } = await this.httpService.delete(`/videos/${id}`);
+    const { status, error } = await this.httpService.delete(`/videos/${id}`)
     if (status !== StatusCodes.NO_CONTENT) {
-      throw error;
+      throw error
     }
   }
 
@@ -76,11 +76,11 @@ export class VideoService {
       {
         body: data,
       }
-    );
+    )
     if (status !== StatusCodes.OK) {
-      throw error;
+      throw error
     }
-    return Video.fromJson(response);
+    return Video.fromJson(response)
   }
 
   /**
@@ -91,11 +91,11 @@ export class VideoService {
   public async getVideoBySlug(slug: string): Promise<Video> {
     const { status, response, error } = await this.httpService.get(
       `/videos/${slug}`
-    );
+    )
     if (status !== StatusCodes.OK) {
-      throw error;
+      throw error
     }
 
-    return Video.fromJson(response);
+    return Video.fromJson(response)
   }
 }

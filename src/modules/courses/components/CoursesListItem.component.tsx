@@ -1,20 +1,20 @@
-import { PencilIcon, TrashIcon } from "@heroicons/react/outline";
-import React, { useState } from "react";
-import { useTranslation } from "react-i18next";
-import { Link } from "react-router-dom";
-import { Alert } from "../../ui/components";
-import { Paragraph } from "../../ui/components/Typography/Paragraph/Paragraph.component";
-import { Typography } from "../../ui/components/Typography/Typography.component";
-import { Course } from "../models";
-import { Notification } from "../../ui/components/Notification/Notification.component";
-import { ActionLink } from "../../common/components/ActionLink.component";
+import { PencilIcon, TrashIcon } from '@heroicons/react/outline';
+import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
+import { Alert } from '../../ui/components';
+import { Paragraph } from '../../ui/components/Typography/Paragraph/Paragraph.component';
+import { Typography } from '../../ui/components/Typography/Typography.component';
+import { Course } from '../models';
+import { Notification } from '../../ui/components/Notification/Notification.component';
+import { ActionLink } from '../../common/components/ActionLink.component';
 
 type Props = {
-  course: Course;
-  onDelete?: () => void; // commented to simplify upgrade
-  ownerItems?: boolean;
-  links?: boolean;
-};
+  course: Course
+  onDelete?: () => void // commented to simplify upgrade
+  ownerItems?: boolean
+  links?: boolean
+}
 
 export const CourseListItem: React.FC<Props> = ({
   course,
@@ -32,7 +32,11 @@ export const CourseListItem: React.FC<Props> = ({
           <div className="col-span-10">
             <Alert type="error">
               <Typography bold as="span" className="text-sm">
-                {t("shared.common.actions.delete")} {course.title} ?
+                {t('shared.common.actions.delete')}
+                {' '}
+                {course.title}
+                {' '}
+                ?
               </Typography>
             </Alert>
           </div>
@@ -42,10 +46,10 @@ export const CourseListItem: React.FC<Props> = ({
                 as="span"
                 className="text-sm transition-all hover:underline"
               >
-                {t("shared.common.actions.cancel")}
+                {t('shared.common.actions.cancel')}
               </Typography>
             </div>
-            <div className="mx-3"></div>
+            <div className="mx-3" />
             {onDelete && (
               <div
                 className="cursor-pointer"
@@ -59,7 +63,7 @@ export const CourseListItem: React.FC<Props> = ({
                   className="text-nx-red text-sm transition-all hover:underline"
                   overrideDefaultClasses
                 >
-                  {t("shared.common.actions.delete")}
+                  {t('shared.common.actions.delete')}
                 </Typography>
               </div>
             )}
@@ -72,33 +76,33 @@ export const CourseListItem: React.FC<Props> = ({
         </Typography>
         <Paragraph className="mb-4">{course.shortDescription}</Paragraph>
         <Link
-          to={"/courses/" + course.slug}
+          to={`/courses/${course.slug}`}
           className="bg-nx-red px-4 py-2 rounded-md text-lg transition-colors w-fit inline-block text-white hover:bg-nx-red-dark"
         >
-          {t("courses.actions.goto")}
+          {t('courses.actions.goto')}
         </Link>
       </div>
       <div className="flex items-center">
         {ownerItems && (
           <ActionLink
             Icon={PencilIcon}
-            text={t("shared.common.actions.edit")}
+            text={t('shared.common.actions.edit')}
             to={course.getEditLink()}
-            className={"ml-4"}
+            className="ml-4"
           />
         )}
 
         {(ownerItems || !links) && (
           <ActionLink
             Icon={TrashIcon}
-            text={t("shared.common.actions.delete")}
+            text={t('shared.common.actions.delete')}
             onClick={() => setOpen(true)}
-            className={"ml-4"}
+            className="ml-4"
           />
         )}
         {ownerItems && (
           <span className="text-nx-gray opacity-80 px-4 text-sm">
-            {t("shared.common.createdAt", {
+            {t('shared.common.createdAt', {
               date: new Date(course.createdAt).toLocaleDateString(),
             })}
           </span>

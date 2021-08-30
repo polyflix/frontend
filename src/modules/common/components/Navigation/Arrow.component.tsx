@@ -1,27 +1,27 @@
-import React, { FC } from "react";
+import React, { FC } from 'react';
 import {
   ArrowDownIcon,
   ArrowLeftIcon,
   ArrowRightIcon,
   ArrowUpIcon,
-} from "@heroicons/react/solid";
+} from '@heroicons/react/solid';
 
 export type ArrowKind = {
-  arrow?: "down" | "right" | "left" | "up" | "none";
-};
+  arrow?: 'down' | 'right' | 'left' | 'up' | 'none'
+}
 
 const Arrow: FC<ArrowKind> = ({ arrow }) => {
   switch (arrow) {
-    case "down":
+    case 'down':
       return <ArrowDownIcon className="h-6" />;
-    case "left":
+    case 'left':
       return <ArrowLeftIcon className="h-6" />;
-    case "up":
+    case 'up':
       return <ArrowUpIcon className="h-6" />;
-    case "none":
+    case 'none':
       return null;
     default:
-    case "right":
+    case 'right':
       return <ArrowRightIcon className="h-6" />;
   }
 };

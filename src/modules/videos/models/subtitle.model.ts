@@ -1,17 +1,17 @@
-import { Block, VttFile } from "@polyflix/vtt-parser";
-import { Video } from ".";
-import { ISubtitle } from "../types/subtitle.type";
+import { Block, VttFile } from '@polyflix/vtt-parser'
+import { Video } from '.'
+import { ISubtitle } from '../types/subtitle.type'
 
 export enum SubtitleStatus {
-  IN_PROGRESS = "IN_PROGRESS",
-  COMPLETED = "COMPLETED",
-  FAILURE = "FAILURE",
-  NOT_FOUND = "NOT_FOUND",
+  IN_PROGRESS = 'IN_PROGRESS',
+  COMPLETED = 'COMPLETED',
+  FAILURE = 'FAILURE',
+  NOT_FOUND = 'NOT_FOUND',
 }
 
 export enum SubtitleLanguages {
-  FR = "fr-FR",
-  EN = "en-US",
+  FR = 'fr-FR',
+  EN = 'en-US',
 }
 
 /**
@@ -33,21 +33,21 @@ export class Subtitle {
    * @returns {Subtitle} an instance of Subtitle
    */
   static async fromJson(json: ISubtitle): Promise<Subtitle> {
-    let vttFile = null;
+    let vttFile = null
     try {
       if (json.status === SubtitleStatus.COMPLETED) {
-        vttFile = await VttFile.fromUrl(json.vttUrl);
+        vttFile = await VttFile.fromUrl(json.vttUrl)
       } else {
-        vttFile = new VttFile("");
+        vttFile = new VttFile('')
       }
-      return new Subtitle(json.lang, json.vttUrl, vttFile, json.id);
+      return new Subtitle(json.lang, json.vttUrl, vttFile, json.id)
     } catch (e) {
-      return new Subtitle(json.lang, json.vttUrl, new VttFile(""), json.id);
+      return new Subtitle(json.lang, json.vttUrl, new VttFile(''), json.id)
     }
   }
 
   get id(): string {
-    return this._id as string;
+    return this._id as string
   }
 
   /**
@@ -55,7 +55,7 @@ export class Subtitle {
    * @returns {SubtitleLanguages} the lang of the subtitles
    */
   get lang(): SubtitleLanguages {
-    return this._lang;
+    return this._lang
   }
 
   /**
@@ -63,7 +63,7 @@ export class Subtitle {
    * @returns {string} the VTT URL of the subtitles
    */
   get vttUrl(): string {
-    return this._vttUrl;
+    return this._vttUrl
   }
 
   /**
@@ -71,11 +71,11 @@ export class Subtitle {
    * @returns {VttFile} the vtt file of the subtitles
    */
   get vttFile(): VttFile {
-    return this._vttFile;
+    return this._vttFile
   }
 
   get video(): Video | undefined {
-    return this._video;
+    return this._video
   }
 
   /**
@@ -83,6 +83,6 @@ export class Subtitle {
    * @returns {Block[]} the blocks of subtitle
    */
   getBlocks(): Block[] | undefined {
-    return this.vttFile.getBlocks();
+    return this.vttFile.getBlocks()
   }
 }

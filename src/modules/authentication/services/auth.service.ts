@@ -1,9 +1,9 @@
-import { Injectable } from "@polyflix/di";
-import { StatusCodes } from "http-status-codes";
-import { HttpService } from "../../common/services/http.service";
-import { ReduxService } from "../../common/services/redux.service";
-import { User } from "../../users/models/user.model";
-import { Token } from "../models/token.model";
+import { Injectable } from '@polyflix/di'
+import { StatusCodes } from 'http-status-codes'
+import { HttpService } from '../../common/services/http.service'
+import { ReduxService } from '../../common/services/redux.service'
+import { User } from '../../users/models/user.model'
+import { Token } from '../models/token.model'
 import {
   LoginFailureAction,
   LoginInProgressAction,
@@ -15,8 +15,8 @@ import {
   RegisterFailureAction,
   RegisterInProgressAction,
   RegisterSuccessAction,
-} from "../redux/actions/auth.action";
-import { AuthAction, ILoginForm, IRegisterForm } from "../types/auth.type";
+} from '../redux/actions/auth.action'
+import { AuthAction, ILoginForm, IRegisterForm } from '../types/auth.type'
 
 @Injectable()
 export class AuthService {
@@ -30,53 +30,53 @@ export class AuthService {
    * @param {ILoginForm} loginForm
    */
   public async login(loginForm: ILoginForm) {
-    this.reduxService.dispatch(LoginInProgressAction());
+    this.reduxService.dispatch(LoginInProgressAction())
 
     const { status, response, error } = await this.httpService.post(
-      "/auth/login",
+      '/auth/login',
       {
         body: loginForm,
       }
-    );
+    )
 
     if (![StatusCodes.OK, StatusCodes.CREATED].includes(status)) {
-      return this.reduxService.dispatch(LoginFailureAction(error));
+      return this.reduxService.dispatch(LoginFailureAction(error))
     }
 
-    const { user, accessToken } = response;
+    const { user, accessToken } = response
 
-    const token = Token.decode(accessToken);
+    const token = Token.decode(accessToken)
 
     return this.reduxService.dispatch(
       LoginSuccessAction(User.fromJson(user), token)
-    );
+    )
   }
 
   /**
    * Refresh authentication
    */
   public async refreshAuth() {
-    this.reduxService.dispatch(RefreshAuthInProgress());
-    const { status, response } = await this.httpService.post("/auth/refresh");
+    this.reduxService.dispatch(RefreshAuthInProgress())
+    const { status, response } = await this.httpService.post('/auth/refresh')
     if (
       status !== StatusCodes.OK ||
       (status === StatusCodes.OK && !response.user)
     ) {
-      return this.reduxService.dispatch(RefreshAuthFailureAction());
+      return this.reduxService.dispatch(RefreshAuthFailureAction())
     }
-    const token = Token.decode(response.token);
+    const token = Token.decode(response.token)
 
     return this.reduxService.dispatch(
       RefreshAuthSuccessAction(User.fromJson(response.user), token)
-    );
+    )
   }
 
   /**
    * Log out the user
    */
   public async logout() {
-    await this.httpService.get("/auth/logout");
-    return this.reduxService.dispatch(LogoutAction());
+    await this.httpService.get('/auth/logout')
+    return this.reduxService.dispatch(LogoutAction())
   }
 
   /**
@@ -84,23 +84,23 @@ export class AuthService {
    * @param {IRegisterForm} registerForm
    */
   public async register(registerForm: IRegisterForm) {
-    this.reduxService.dispatch(RegisterInProgressAction());
+    this.reduxService.dispatch(RegisterInProgressAction())
 
     const { status, response, error } = await this.httpService.post(
-      "/auth/register",
+      '/auth/register',
       {
         body: registerForm,
       }
-    );
+    )
 
     if (![StatusCodes.OK, StatusCodes.CREATED].includes(status))
-      return this.reduxService.dispatch(RegisterFailureAction(error));
+      return this.reduxService.dispatch(RegisterFailureAction(error))
 
-    const { user, accessToken } = response;
-    const token = Token.decode(accessToken);
+    const { user, accessToken } = response
+    const token = Token.decode(accessToken)
 
     return this.reduxService.dispatch(
       RegisterSuccessAction(User.fromJson(user), token)
-    );
+    )
   }
 }

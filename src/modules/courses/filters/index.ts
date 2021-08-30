@@ -1,1 +1,1 @@
-export * from "./course.filter";
+export * from './course.filter'

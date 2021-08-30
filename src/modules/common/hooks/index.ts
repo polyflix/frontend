@@ -1,1 +1,1 @@
-export * from "./usePagination.hook";
+export * from './usePagination.hook'

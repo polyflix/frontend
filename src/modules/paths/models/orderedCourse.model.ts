@@ -1,5 +1,5 @@
-import { Course } from "../../courses/models";
-import { IOrderedCourse } from "../types";
+import { Course } from '../../courses/models'
+import { IOrderedCourse } from '../types'
 
 /**
  * Modelize the Path
@@ -18,7 +18,7 @@ export class OrderedCourse {
    * @returns {OrderedCourse} an instance of Path
    */
   static fromJson(json: IOrderedCourse): OrderedCourse {
-    return new OrderedCourse(json.id, json.order, Course.fromJson(json.course));
+    return new OrderedCourse(json.id, json.order, Course.fromJson(json.course))
   }
 
   /**
@@ -26,7 +26,7 @@ export class OrderedCourse {
    * @returns {string} the ordered course id
    */
   get id(): string {
-    return this._id;
+    return this._id
   }
 
   /**
@@ -34,7 +34,7 @@ export class OrderedCourse {
    * @returns {number}
    */
   get order(): number {
-    return this._order;
+    return this._order
   }
 
   /**
@@ -42,6 +42,6 @@ export class OrderedCourse {
    * @returns {Course} the course
    */
   get course(): Course {
-    return this._course;
+    return this._course
   }
 }

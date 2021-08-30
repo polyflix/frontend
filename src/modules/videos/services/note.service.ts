@@ -1,8 +1,8 @@
-import { Injectable } from "@polyflix/di";
-import { StatusCodes } from "http-status-codes";
-import { HttpService } from "../../common/services/http.service";
-import { Note } from "../models/note.model";
-import { INote } from "../types/note.type";
+import { Injectable } from '@polyflix/di'
+import { StatusCodes } from 'http-status-codes'
+import { HttpService } from '../../common/services/http.service'
+import { Note } from '../models/note.model'
+import { INote } from '../types/note.type'
 
 @Injectable()
 export class NoteService {
@@ -16,11 +16,11 @@ export class NoteService {
   public async getNote(videoId: string): Promise<Note> {
     const { status, response, error } = await this.httpService.get(
       `/notes?videoId=${videoId}`
-    );
+    )
     if (status !== StatusCodes.OK) {
-      throw error;
+      throw error
     }
-    return Note.fromJson(response);
+    return Note.fromJson(response)
   }
 
   /**
@@ -35,9 +35,9 @@ export class NoteService {
       {
         body: data,
       }
-    );
+    )
     if (status !== StatusCodes.OK) {
-      throw error;
+      throw error
     }
   }
 }

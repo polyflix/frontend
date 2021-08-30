@@ -1,6 +1,6 @@
-import { ICollection } from "../types";
-import { Video } from "../../videos/models/video.model";
-import { Publisher } from "../../common/models";
+import { ICollection } from '../types'
+import { Video } from '../../videos/models/video.model'
+import { Publisher } from '../../common/models'
 
 /**
  * Modelize the Collection
@@ -37,7 +37,7 @@ export class Collection {
       new Date(json.createdAt),
       new Date(json.updatedAt),
       json.videos && json.videos.map((video) => Video.fromJson(video))
-    );
+    )
   }
 
   /**
@@ -46,8 +46,8 @@ export class Collection {
    */
   get shortDescription(): string {
     return this._description.length > 150
-      ? this._description.slice(0, 150) + "..."
-      : this._description;
+      ? this._description.slice(0, 150) + '...'
+      : this._description
   }
 
   /**
@@ -55,7 +55,7 @@ export class Collection {
    * @returns {string} the collection id
    */
   get id(): string {
-    return this._id;
+    return this._id
   }
 
   /**
@@ -63,7 +63,7 @@ export class Collection {
    * @returns {string} the collection title
    */
   get title(): string {
-    return this._title;
+    return this._title
   }
 
   /**
@@ -71,7 +71,7 @@ export class Collection {
    * @returns {string} the collection slug
    */
   get slug(): string {
-    return this._slug;
+    return this._slug
   }
 
   /**
@@ -79,7 +79,7 @@ export class Collection {
    * @returns {string} the collection description
    */
   get description(): string {
-    return this._description;
+    return this._description
   }
 
   /**
@@ -87,7 +87,7 @@ export class Collection {
    * @returns {string} the collection availability
    */
   get availability(): string {
-    return this._availability;
+    return this._availability
   }
 
   /**
@@ -95,7 +95,7 @@ export class Collection {
    * @returns {Video[]} the collection videos
    */
   get videos(): Video[] {
-    return this._videos;
+    return this._videos
   }
 
   /**
@@ -103,11 +103,11 @@ export class Collection {
    * @returns {Publisher} the collection publisher
    */
   get publisher(): Publisher | null {
-    return this._publisher;
+    return this._publisher
   }
 
   private get link(): string {
-    return `/collections/${this._slug}`;
+    return `/collections/${this._slug}`
   }
 
   /**
@@ -115,7 +115,7 @@ export class Collection {
    * @returns {string} the Course info link
    */
   getInfoLink(): string {
-    return this.link;
+    return this.link
   }
 
   /**
@@ -123,10 +123,10 @@ export class Collection {
    * @returns {}
    */
   getEditLink(): string {
-    return `/collections/update/${this._slug}`;
+    return `/collections/update/${this._slug}`
   }
 
   get createdAt(): Date {
-    return new Date(this._createdAt);
+    return new Date(this._createdAt)
   }
 }

@@ -1,7 +1,7 @@
-import { useFetch } from "../../common/hooks/useFetch.hook";
-import { IVideoFilter } from "../filters/video.filter";
-import { VideoService } from "../services";
-import { VideosWithPagination } from "../types";
+import { useFetch } from '../../common/hooks/useFetch.hook'
+import { IVideoFilter } from '../filters/video.filter'
+import { VideoService } from '../services'
+import { VideosWithPagination } from '../types'
 
 export const useVideos = (
   filters: IVideoFilter,
@@ -9,7 +9,7 @@ export const useVideos = (
 ) => {
   return useFetch<VideosWithPagination, VideoService>(
     VideoService,
-    "getVideos",
+    'getVideos',
     [filters],
     {
       onComplete: onCollectionLoaded
@@ -17,5 +17,5 @@ export const useVideos = (
         : undefined,
       deps: [filters.page, filters.order, filters.pageSize],
     }
-  );
-};
+  )
+}

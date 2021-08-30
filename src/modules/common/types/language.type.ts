@@ -1,4 +1,4 @@
 export enum PolyflixLanguage {
-  FR = "fr",
-  EN = "en",
+  FR = 'fr',
+  EN = 'en',
 }

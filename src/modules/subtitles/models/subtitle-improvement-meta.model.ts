@@ -1,4 +1,4 @@
-import { ISubtitleImprovementMeta } from "../types/subtitle-improvement-meta.type";
+import { ISubtitleImprovementMeta } from '../types/subtitle-improvement-meta.type'
 
 /**
  * Modelize the Video
@@ -23,26 +23,26 @@ export class SubtitleImprovementMeta {
       json.isLiked,
       json.updatedAt,
       json.createdAt
-    );
+    )
   }
 
   get id(): string {
-    return this._id;
+    return this._id
   }
 
   get isLiked(): boolean {
-    return this._isLiked;
+    return this._isLiked
   }
 
   set isLiked(status: boolean) {
-    this._isLiked = status;
+    this._isLiked = status
   }
 
   get createdAt(): Date {
-    return this._createdAt;
+    return this._createdAt
   }
 
   get updatedAt(): Date {
-    return this._updatedAt;
+    return this._updatedAt
   }
 }

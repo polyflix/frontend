@@ -1,8 +1,8 @@
-import React from "react";
-import { Route, Switch, useRouteMatch } from "react-router-dom";
-import { PathsPage } from "./index.page";
-import { CreateUpdatePathPage } from "./[create-update].page";
-import { PathDetail } from "./[slug].page";
+import React from 'react';
+import { Route, Switch, useRouteMatch } from 'react-router-dom';
+import { PathsPage } from './index.page';
+import { CreateUpdatePathPage } from './[create-update].page';
+import { PathDetail } from './[slug].page';
 
 export const PathRouter: React.FC = () => {
   const { path } = useRouteMatch();

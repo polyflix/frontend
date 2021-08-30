@@ -1,7 +1,7 @@
-import { useFetch } from "../../common/hooks/useFetch.hook";
-import { ISubtitleImprovementFilter } from "../filters/subtitle-improvement.filter";
-import { SubtitleImprovement } from "../models/subtitle-improvement.model";
-import { SubtitleImprovementService } from "../services/subtitle-improvement.service";
+import { useFetch } from '../../common/hooks/useFetch.hook'
+import { ISubtitleImprovementFilter } from '../filters/subtitle-improvement.filter'
+import { SubtitleImprovement } from '../models/subtitle-improvement.model'
+import { SubtitleImprovementService } from '../services/subtitle-improvement.service'
 
 export const useSubtitlesImprovements = (
   filters: ISubtitleImprovementFilter,
@@ -10,11 +10,11 @@ export const useSubtitlesImprovements = (
 ) => {
   return useFetch<SubtitleImprovement[], SubtitleImprovementService>(
     SubtitleImprovementService,
-    "findAll",
+    'findAll',
     [filters],
     {
       onComplete,
       onStart,
     }
-  );
-};
+  )
+}

@@ -1,4 +1,4 @@
-import { IPublisher } from "../types";
+import { IPublisher } from '../types'
 
 /**
  * Modelize the VideoPublisher
@@ -17,7 +17,7 @@ export class Publisher {
    * @returns {VideoPublisher}
    */
   static fromJson(json: IPublisher): Publisher {
-    return new Publisher(json.id, json.firstName, json.lastName);
+    return new Publisher(json.id, json.firstName, json.lastName)
   }
 
   /**
@@ -25,7 +25,7 @@ export class Publisher {
    * @returns {string} the video publisher display name
    */
   get displayName(): string {
-    return `${this.firstName} ${this.lastName}`;
+    return `${this.firstName} ${this.lastName}`
   }
 
   /**
@@ -33,7 +33,7 @@ export class Publisher {
    * @returns {string} the video publisher first name
    */
   get firstName(): string {
-    return this._firstName;
+    return this._firstName
   }
 
   /**
@@ -41,7 +41,7 @@ export class Publisher {
    * @returns {string} the video publisher last name
    */
   get lastName(): string {
-    return this._lastName;
+    return this._lastName
   }
 
   /**
@@ -49,6 +49,6 @@ export class Publisher {
    * @returns {string} the video published id
    */
   get id(): string {
-    return this._id;
+    return this._id
   }
 }

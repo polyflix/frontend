@@ -2,8 +2,8 @@
  * The class Group represent a Group in the front-end.
  * @class Group
  */
-import { IGroup } from "../types/groups.type";
-import { Member } from "./member.model";
+import { IGroup } from '../types/groups.type'
+import { Member } from './member.model'
 
 export class Group {
   private constructor(
@@ -28,7 +28,7 @@ export class Group {
       json.slug,
       json.owner,
       json.members ? json.members.map(Member.fromJson) : []
-    );
+    )
   }
 
   /**
@@ -36,7 +36,7 @@ export class Group {
    * @returns {number} the id of the group
    */
   get id(): number {
-    return this._id;
+    return this._id
   }
 
   /**
@@ -44,7 +44,7 @@ export class Group {
    * @returns {string} the group title
    */
   get title(): string {
-    return this._title;
+    return this._title
   }
 
   /**
@@ -52,7 +52,7 @@ export class Group {
    * @returns {string} the group description
    */
   get description(): string {
-    return this._description;
+    return this._description
   }
 
   /**
@@ -60,7 +60,7 @@ export class Group {
    * @returns {string} the group slug
    */
   get slug(): string {
-    return this._slug;
+    return this._slug
   }
 
   /**
@@ -68,7 +68,7 @@ export class Group {
    * @returns {Group[]} the group members
    */
   get members(): Member[] {
-    return this._members;
+    return this._members
   }
 
   /**
@@ -76,6 +76,6 @@ export class Group {
    * @returns {string} the group link
    */
   get editLink(): string {
-    return `/groups/update/${this._slug}`;
+    return `/groups/update/${this._slug}`
   }
 }

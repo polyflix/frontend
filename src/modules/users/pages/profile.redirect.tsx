@@ -1,6 +1,6 @@
-import { Redirect, useParams } from "react-router-dom";
-import { useAuth } from "../../authentication/hooks/useAuth.hook";
-import { UserVideosPage } from "./videos/index.page";
+import { Redirect, useParams } from 'react-router-dom';
+import { useAuth } from '../../authentication/hooks/useAuth.hook';
+import { UserVideosPage } from './videos/index.page';
 
 export const ProfileRedirector: React.FC = () => {
   const { user } = useAuth();

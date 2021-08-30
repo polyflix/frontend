@@ -5,42 +5,41 @@ import {
   UserIcon,
   TranslateIcon,
   ArrowCircleLeftIcon,
-} from "@heroicons/react/outline";
-import { useInjection } from "@polyflix/di";
-import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import { useTranslation } from "react-i18next";
-import { useHistory, useLocation } from "react-router";
-import slugify from "slugify";
-import { useAuth } from "../../../authentication/hooks/useAuth.hook";
-import { fadeInDown } from "../../../ui/animations/fadeInDown";
-import { stagger } from "../../../ui/animations/stagger";
-import { Alert, AlertType } from "../../../ui/components/Alert/Alert.component";
-import { FilledButton } from "../../../ui/components/Buttons/FilledButton/FilledButton.component";
-import { Checkbox } from "../../../ui/components/Checkbox/Checkbox.component";
-import { Image as Img } from "../../../ui/components/Image/Image.component";
-import { Input } from "../../../ui/components/Input/Input.component";
-import { Spinner } from "../../../ui/components/Spinner/Spinner.component";
-import { Textarea } from "../../../ui/components/Textarea/Textarea.component";
-import { Paragraph } from "../../../ui/components/Typography/Paragraph/Paragraph.component";
-import { Title } from "../../../ui/components/Typography/Title/Title.component";
-import { Typography } from "../../../ui/components/Typography/Typography.component";
-import { Video } from "../../models/video.model";
-import { VideoService } from "../../services/video.service";
-import { IVideoForm } from "../../types/videos.type";
-import { UploadButton } from "../../../ui/components/Buttons/UploadButton/UploadButton.component";
-import { ImageFile } from "../../../upload/models/files/image.model";
-import { VideoFile } from "../../../upload/models/files/video.model";
-import { MinioService } from "../../../upload/services/minio.service";
-import { MinioFile } from "../../../upload/models/files/minio-file.model";
-import { SubtitleService } from "../../services";
-import urlRegex from "url-regex";
+} from '@heroicons/react/outline';
+import { useInjection } from '@polyflix/di';
+import { motion } from 'framer-motion';
+import { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
+import { useHistory, useLocation } from 'react-router';
+import slugify from 'slugify';
+import { useAuth } from '../../../authentication/hooks/useAuth.hook';
+import { fadeInDown } from '../../../ui/animations/fadeInDown';
+import { stagger } from '../../../ui/animations/stagger';
+import { Alert, AlertType } from '../../../ui/components/Alert/Alert.component';
+import { FilledButton } from '../../../ui/components/Buttons/FilledButton/FilledButton.component';
+import { Checkbox } from '../../../ui/components/Checkbox/Checkbox.component';
+import { Image as Img } from '../../../ui/components/Image/Image.component';
+import { Input } from '../../../ui/components/Input/Input.component';
+import { Spinner } from '../../../ui/components/Spinner/Spinner.component';
+import { Textarea } from '../../../ui/components/Textarea/Textarea.component';
+import { Paragraph } from '../../../ui/components/Typography/Paragraph/Paragraph.component';
+import { Title } from '../../../ui/components/Typography/Title/Title.component';
+import { Typography } from '../../../ui/components/Typography/Typography.component';
+import { Video } from '../../models/video.model';
+import { VideoService } from '../../services/video.service';
+import { IVideoForm } from '../../types/videos.type';
+import { UploadButton } from '../../../ui/components/Buttons/UploadButton/UploadButton.component';
+import { ImageFile } from '../../../upload/models/files/image.model';
+import { VideoFile } from '../../../upload/models/files/video.model';
+import { MinioService } from '../../../upload/services/minio.service';
+import { MinioFile } from '../../../upload/models/files/minio-file.model';
+import { SubtitleService } from '../../services';
 
 type Props = {
   /** If video exists, the form will be in update mode, otherwise in create mode. */
-  video?: Video | null;
-};
+  video?: Video | null
+}
 
 /**
  * The video form component
@@ -54,55 +53,53 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
 
   const { t } = useTranslation();
   const { user } = useAuth();
-  let history = useHistory();
-  const type = new URLSearchParams(useLocation().search).get("type");
+  const history = useHistory();
+  const type = new URLSearchParams(useLocation().search).get('type');
 
   const [loading, setLoading] = useState<boolean>(false);
   const [isSubmit, setIsSubmit] = useState<boolean>(false);
   const [subtitleExists, setSubtitleExists] = useState<boolean>(false);
-  const [alert, setAlert] =
-    useState<{
-      type: AlertType;
-      message: string;
+  const [alert, setAlert] = useState<{
+      type: AlertType
+      message: string
     } | null>(null);
   const [files, setFiles] = useState<MinioFile[]>([]);
 
-  const { register, handleSubmit, errors, watch, setValue } =
-    useForm<IVideoForm>({
-      defaultValues: {
-        title: video?.title,
-        description: video?.description,
-        isPublished: video?.isPublished || false,
-        isPublic: video?.isPublic || false,
-        thumbnail: video?.thumbnail,
-        src: video?.src,
-      },
-    });
+  const {
+    register, handleSubmit, errors, watch, setValue,
+  } = useForm<IVideoForm>({
+    defaultValues: {
+      title: video?.title,
+      description: video?.description,
+      isPublished: video?.isPublished || false,
+      isPublic: video?.isPublic || false,
+      thumbnail: video?.thumbnail,
+      src: video?.src,
+    },
+  });
 
-  const watchTitle = watch<"title", string>("title", "");
-  const watchPrivacy = watch<"isPublic", boolean>("isPublic");
-  const watchPublished = watch<"isPublished", boolean>("isPublished");
-  const watchHasSubtitle = watch<"hasSubtitle", boolean>("hasSubtitle");
-  const watchThumbnail = watch<"thumbnail", string>("thumbnail", "");
+  const watchTitle = watch<'title', string>('title', '');
+  const watchPrivacy = watch<'isPublic', boolean>('isPublic');
+  const watchPublished = watch<'isPublished', boolean>('isPublished');
+  const watchHasSubtitle = watch<'hasSubtitle', boolean>('hasSubtitle');
+  const watchThumbnail = watch<'thumbnail', string>('thumbnail', '');
 
   useEffect(() => {
     async function checkSubtitleExists() {
       if (isUpdate) {
         const sub = await subtitleService.getSubtitleUrlByVideoId(video?.id!);
-        setValue("hasSubtitle", sub.length > 0);
+        setValue('hasSubtitle', sub.length > 0);
         setSubtitleExists(sub.length > 0);
       }
     }
     checkSubtitleExists();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const getFile = (files: MinioFile[], field: keyof IVideoForm) => {
-    return files.find((file) => file.getField() === field);
-  };
+  const getFile = (files: MinioFile[], field: keyof IVideoForm) => files.find((file) => file.getField() === field);
 
   const uploadFiles = async (data: IVideoForm) => {
     const uploadedFiles = await minioService.upload(files);
-    const attributes: (keyof IVideoForm)[] = ["thumbnail", "src"];
+    const attributes: (keyof IVideoForm)[] = ['thumbnail', 'src'];
     attributes.forEach((attr) => {
       const url = getFile(uploadedFiles, attr)?.getFileURL();
       if (url) data = { ...data, [attr]: url };
@@ -110,12 +107,11 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
     return data;
   };
 
-  const thumbnailFile = getFile(files, "thumbnail");
-  const thumbnailPreview =
-    watchThumbnail ||
-    video?.thumbnail ||
-    (thumbnailFile as ImageFile)?.getPreview() ||
-    "https://i.stack.imgur.com/y9DpT.jpg";
+  const thumbnailFile = getFile(files, 'thumbnail');
+  const thumbnailPreview = watchThumbnail
+    || video?.thumbnail
+    || (thumbnailFile as ImageFile)?.getPreview()
+    || 'https://i.stack.imgur.com/y9DpT.jpg';
 
   const onGoBack = () => history.goBack();
 
@@ -123,25 +119,23 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
     setLoading(true);
     setIsSubmit(true);
     try {
-      if (type === "upload") data = await uploadFiles(data);
-      let result = await (isUpdate
+      if (type === 'upload') data = await uploadFiles(data);
+      const result = await (isUpdate
         ? videoService.updateVideo(video?.id as string, data)
         : videoService.createVideo(data));
-      if (data.hasSubtitle && !subtitleExists)
-        await subtitleService.createSubtitle(video || result);
-      else if (!data.hasSubtitle && subtitleExists)
-        await subtitleService.deleteSubtitle(video?.id!);
+      if (data.hasSubtitle && !subtitleExists) await subtitleService.createSubtitle(video || result);
+      else if (!data.hasSubtitle && subtitleExists) await subtitleService.deleteSubtitle(video?.id!);
       setAlert({
         message: isUpdate
-          ? `"${result.title}" ${t("videoManagement.updateVideo.success")}.`
-          : `"${result.title}" ${t("videoManagement.addVideo.success")}.`,
-        type: "success",
+          ? `"${result.title}" ${t('videoManagement.updateVideo.success')}.`
+          : `"${result.title}" ${t('videoManagement.addVideo.success')}.`,
+        type: 'success',
       });
       history.push(`/profile/videos/${user?.id}`);
     } catch (err) {
       setAlert({
-        message: `${t("videoManagement.addVideo.error")} "${data.title}"`,
-        type: "error",
+        message: `${t('videoManagement.addVideo.error')} "${data.title}"`,
+        type: 'error',
       });
     } finally {
       setLoading(false);
@@ -161,21 +155,23 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
           overrideDefaultClasses
         >
           <span className="inline-flex mx-2 cursor-pointer" onClick={onGoBack}>
-            <ArrowCircleLeftIcon className="w-6 mr-1" />{" "}
-            {t("shared.common.actions.back")}{" "}
+            <ArrowCircleLeftIcon className="w-6 mr-1" />
+            {' '}
+            {t('shared.common.actions.back')}
+            {' '}
           </span>
         </Typography>
         <div className="col-span-2 md:col-span-1">
           <Title variants={fadeInDown}>
             {isUpdate
               ? `${video?.title}`
-              : `${t("shared.common.actions.add")}
-							${t("videoManagement.video")}`}
+              : `${t('shared.common.actions.add')}
+							${t('videoManagement.video')}`}
           </Title>
           <Paragraph variants={fadeInDown} className="my-3 text-sm">
             {isUpdate
-              ? `${t("videoManagement.updateVideo.description")}`
-              : `${t("videoManagement.addVideo.description")}`}
+              ? `${t('videoManagement.updateVideo.description')}`
+              : `${t('videoManagement.addVideo.description')}`}
             .
           </Paragraph>
         </div>
@@ -194,25 +190,25 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
           name="title"
           error={errors.title}
           className="col-span-2 md:col-span-1"
-          placeholder={t("videoManagement.inputs.title.name")}
+          placeholder={t('videoManagement.inputs.title.name')}
           required
           variants={fadeInDown}
           hint={
             watchTitle
               ? `UID : ${slugify(watchTitle, {
-                  lower: true,
-                  remove: /[*+~.()'"!:@]/g,
-                })}`
-              : `${t("videoManagement.inputs.title.description")}.`
+                lower: true,
+                remove: /[*+~.()'"!:@]/g,
+              })}`
+              : `${t('videoManagement.inputs.title.description')}.`
           }
           ref={register({
             required: {
               value: true,
-              message: `${t("videoManagement.inputs.title.error")}.`,
+              message: `${t('videoManagement.inputs.title.error')}.`,
             },
           })}
         />
-        {type !== "upload" ? (
+        {type !== 'upload' ? (
           <>
             <Input
               error={errors.thumbnail}
@@ -220,15 +216,15 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
               required
               className="col-span-2 md:col-span-1"
               variants={fadeInDown}
-              placeholder={t("videoManagement.inputs.thumbnailURL.name")}
-              hint={`${t("videoManagement.inputs.thumbnailURL.name")}.`}
+              placeholder={t('videoManagement.inputs.thumbnailURL.name')}
+              hint={`${t('videoManagement.inputs.thumbnailURL.name')}.`}
               ref={register({
                 required: `${t(
-                  "videoManagement.inputs.thumbnailURL.missing"
+                  'videoManagement.inputs.thumbnailURL.missing',
                 )}.`,
                 pattern: {
                   value: urlRegex({ exact: true }),
-                  message: `${t("videoManagement.inputs.thumbnailURL.error")}.`,
+                  message: `${t('videoManagement.inputs.thumbnailURL.error')}.`,
                 },
               })}
             />
@@ -238,13 +234,13 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
               required
               className="col-span-2"
               variants={fadeInDown}
-              placeholder={t("videoManagement.inputs.videoURL.name")}
-              hint={`${t("videoManagement.inputs.videoURL.name")}.`}
+              placeholder={t('videoManagement.inputs.videoURL.name')}
+              hint={`${t('videoManagement.inputs.videoURL.name')}.`}
               ref={register({
-                required: `${t("videoManagement.inputs.videoURL.missing")}.`,
+                required: `${t('videoManagement.inputs.videoURL.missing')}.`,
                 pattern: {
                   value: urlRegex({ exact: true }),
-                  message: `${t("videoManagement.inputs.videoURL.error")}.`,
+                  message: `${t('videoManagement.inputs.videoURL.error')}.`,
                 },
               })}
             />
@@ -256,7 +252,7 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
               onFileUpload={(file) => setFiles([...files, file])}
               variants={fadeInDown}
               className="col-span-2 md:col-span-1"
-              placeholder={t("videoManagement.inputs.thumbnailUpload")}
+              placeholder={t('videoManagement.inputs.thumbnailUpload')}
               format="image/*"
               name="thumbnail"
             />
@@ -265,7 +261,7 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
               onFileUpload={(file) => setFiles([...files, file])}
               variants={fadeInDown}
               className="col-span-2"
-              placeholder={t("videoManagement.inputs.videoUpload")}
+              placeholder={t('videoManagement.inputs.videoUpload')}
               format="video/*"
               name="src"
             />
@@ -275,12 +271,12 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
           error={errors.description}
           className="col-span-2"
           minHeight={200}
-          placeholder={t("videoManagement.inputs.description.name")}
+          placeholder={t('videoManagement.inputs.description.name')}
           name="description"
           ref={register({
             required: {
               value: true,
-              message: `${t("videoManagement.inputs.description.error")}.`,
+              message: `${t('videoManagement.inputs.description.error')}.`,
             },
           })}
           variants={fadeInDown}
@@ -302,9 +298,10 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
             {watchPrivacy ? (
               <>
                 <Typography as="span" bold>
-                  {`${t("userVideos.visibility.public.name")}.`}
-                </Typography>{" "}
-                {`${t("userVideos.visibility.public.description")}.`}
+                  {`${t('userVideos.visibility.public.name')}.`}
+                </Typography>
+                {' '}
+                {`${t('userVideos.visibility.public.description')}.`}
                 <br />
                 <Typography
                   as="span"
@@ -312,15 +309,16 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
                   className="text-xs text-nx-red"
                   overrideDefaultClasses
                 >
-                  {`${t("videoManagement.actions.switching")}.`}
+                  {`${t('videoManagement.actions.switching')}.`}
                 </Typography>
               </>
             ) : (
               <>
                 <Typography as="span" bold>
-                  {`${t("userVideos.visibility.private.name")}.`}
-                </Typography>{" "}
-                {`${t("userVideos.visibility.private.description")}.`}
+                  {`${t('userVideos.visibility.private.name')}.`}
+                </Typography>
+                {' '}
+                {`${t('userVideos.visibility.private.description')}.`}
                 <br />
                 <Typography
                   as="span"
@@ -328,7 +326,7 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
                   className="text-xs text-nx-red"
                   overrideDefaultClasses
                 >
-                  {`${t("videoManagement.actions.switching")}.`}
+                  {`${t('videoManagement.actions.switching')}.`}
                 </Typography>
               </>
             )}
@@ -341,7 +339,7 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
           ref={register()}
           icon={
             watchPublished ? (
-              <EyeIcon className={"text-green-500 w-6 mr-2"} />
+              <EyeIcon className="text-green-500 w-6 mr-2" />
             ) : (
               <EyeOffIcon className="text-nx-red w-6 mr-2" />
             )
@@ -351,9 +349,10 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
             {watchPublished ? (
               <>
                 <Typography as="span" bold>
-                  {`${t("userVideos.status.published.name")}.`}
-                </Typography>{" "}
-                {`${t("userVideos.status.published.description")}.`}
+                  {`${t('userVideos.status.published.name')}.`}
+                </Typography>
+                {' '}
+                {`${t('userVideos.status.published.description')}.`}
                 <br />
                 <Typography
                   as="span"
@@ -361,15 +360,16 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
                   className="text-xs text-nx-red"
                   overrideDefaultClasses
                 >
-                  {`${t("videoManagement.actions.switching")}.`}
+                  {`${t('videoManagement.actions.switching')}.`}
                 </Typography>
               </>
             ) : (
               <>
                 <Typography as="span" bold>
-                  {`${t("userVideos.status.draft.name")}.`}
-                </Typography>{" "}
-                {`${t("userVideos.status.draft.description")}.`}
+                  {`${t('userVideos.status.draft.name')}.`}
+                </Typography>
+                {' '}
+                {`${t('userVideos.status.draft.description')}.`}
                 <br />
                 <Typography
                   as="span"
@@ -377,13 +377,13 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
                   className="text-xs text-nx-red"
                   overrideDefaultClasses
                 >
-                  {`${t("videoManagement.actions.switching")}.`}
+                  {`${t('videoManagement.actions.switching')}.`}
                 </Typography>
               </>
             )}
           </Typography>
         </Checkbox>
-        {type === "upload" && (
+        {type === 'upload' && (
           <Checkbox
             className="col-span-2"
             name="hasSubtitle"
@@ -400,9 +400,10 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
               {watchHasSubtitle ? (
                 <>
                   <Typography as="span" bold>
-                    {`${t("userVideos.subtitle.withSubtitle.name")}.`}
-                  </Typography>{" "}
-                  {`${t("userVideos.subtitle.withSubtitle.description")}.`}
+                    {`${t('userVideos.subtitle.withSubtitle.name')}.`}
+                  </Typography>
+                  {' '}
+                  {`${t('userVideos.subtitle.withSubtitle.description')}.`}
                   <br />
                   <Typography
                     as="span"
@@ -410,15 +411,16 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
                     className="text-xs text-nx-red"
                     overrideDefaultClasses
                   >
-                    {`${t("videoManagement.actions.switching")}.`}
+                    {`${t('videoManagement.actions.switching')}.`}
                   </Typography>
                 </>
               ) : (
                 <>
                   <Typography as="span" bold>
-                    {`${t("userVideos.subtitle.withoutSubtitle.name")}.`}
-                  </Typography>{" "}
-                  {`${t("userVideos.subtitle.withoutSubtitle.description")}.`}
+                    {`${t('userVideos.subtitle.withoutSubtitle.name')}.`}
+                  </Typography>
+                  {' '}
+                  {`${t('userVideos.subtitle.withoutSubtitle.description')}.`}
                   <br />
                   <Typography
                     as="span"
@@ -426,7 +428,7 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
                     className="text-xs text-nx-red"
                     overrideDefaultClasses
                   >
-                    {`${t("videoManagement.actions.switching")}.`}
+                    {`${t('videoManagement.actions.switching')}.`}
                   </Typography>
                 </>
               )}
@@ -435,9 +437,10 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
         )}
         {loading && (
           <div className="col-span-2 flex items-center">
-            <Spinner className="fill-current text-nx-dark"></Spinner>
+            <Spinner className="fill-current text-nx-dark" />
             <Typography as="span" className="text-sm ml-2">
-              {t("shared.common.wait")}..
+              {t('shared.common.wait')}
+              ..
             </Typography>
           </div>
         )}
@@ -451,8 +454,8 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
           as="input"
           inputValue={
             isUpdate
-              ? t("videoManagement.updateVideo.action")
-              : t("videoManagement.addVideo.action")
+              ? t('videoManagement.updateVideo.action')
+              : t('videoManagement.addVideo.action')
           }
           disabled={isSubmit}
           variants={fadeInDown}

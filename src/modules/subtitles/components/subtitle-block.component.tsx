@@ -1,24 +1,24 @@
-import { PencilIcon } from "@heroicons/react/outline";
-import { Block } from "@polyflix/vtt-parser";
-import { usePlayerContext } from "@vime/react";
-import React, { useState } from "react";
-import { useSelector } from "react-redux";
-import { WithClassname, RootState, cn } from "../../common";
-import { Typography } from "../../ui";
-import { Video } from "../../videos";
-import { SubtitleFetchingState } from "../pages/collaborative-subtitle-editing.page";
-import { SubtitleBlockContent } from "./subtitle-block-content.component";
+import { PencilIcon } from '@heroicons/react/outline';
+import { Block } from '@polyflix/vtt-parser';
+import { usePlayerContext } from '@vime/react';
+import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { WithClassname, RootState, cn } from '../../common';
+import { Typography } from '../../ui';
+import { Video } from '../../videos';
+import { SubtitleFetchingState } from '../pages/collaborative-subtitle-editing.page';
+import { SubtitleBlockContent } from './subtitle-block-content.component';
 
 type SubtitleBlockProps = WithClassname & {
-  playerRef: React.RefObject<HTMLVmPlayerElement>;
-  block: Block;
-  subtitles: SubtitleFetchingState;
-  video: Video;
-};
+  playerRef: React.RefObject<HTMLVmPlayerElement>
+  block: Block
+  subtitles: SubtitleFetchingState
+  video: Video
+}
 
 export const SubtitleBlock: React.FC<SubtitleBlockProps> = ({
   playerRef,
-  className = "",
+  className = '',
   block,
   subtitles,
   video,
@@ -27,14 +27,13 @@ export const SubtitleBlock: React.FC<SubtitleBlockProps> = ({
 
   const [currentTime, setCurrentTime] = usePlayerContext(
     playerRef,
-    "currentTime",
-    0
+    'currentTime',
+    0,
   );
 
   const blockText = useSelector(
-    (state: RootState) =>
-      state.subtitleImprovement.find((e) => e.timestamp === block.startTime)
-        ?.text
+    (state: RootState) => state.subtitleImprovement.find((e) => e.timestamp === block.startTime)
+      ?.text,
   );
 
   const goToMilis = (millis: number): void => {
@@ -59,33 +58,31 @@ export const SubtitleBlock: React.FC<SubtitleBlockProps> = ({
     return `${parsedMinutes}:${parsedSeconds}`;
   };
 
-  const isCurrent = (block: Block): boolean => {
-    return (
-      block.startTime / 1000 <= currentTime &&
-      block.endTime / 1000 > currentTime
-    );
-  };
+  const isCurrent = (block: Block): boolean => (
+    block.startTime / 1000 <= currentTime
+      && block.endTime / 1000 > currentTime
+  );
 
   return (
     <>
       <div
-        className={cn(className, "flex flex-row items-center justify-start")}
+        className={cn(className, 'flex flex-row items-center justify-start')}
       >
         <span
           onClick={() => setIsFromOpen(!isFromOpen)}
           className={cn(
-            "w-5 h-5 mr-2 text-nx-red hover:hidden cursor-pointer",
-            !isCurrent(block) && !isFromOpen && "text-opacity-50",
-            "hover:text-opacity-100"
+            'w-5 h-5 mr-2 text-nx-red hover:hidden cursor-pointer',
+            !isCurrent(block) && !isFromOpen && 'text-opacity-50',
+            'hover:text-opacity-100',
           )}
         >
           <PencilIcon />
         </span>
         <div
           className={cn(
-            "flex flex-row box-border items-center justify-start group cursor-pointer pt-2 pb-2 w-full",
-            isCurrent(block) &&
-              "border-l-2 border-nx-red pl-0 relative bg-gray-800 bg-opacity-30"
+            'flex flex-row box-border items-center justify-start group cursor-pointer pt-2 pb-2 w-full',
+            isCurrent(block)
+              && 'border-l-2 border-nx-red pl-0 relative bg-gray-800 bg-opacity-30',
           )}
           onClick={() => goToMilis(block.startTime)}
         >

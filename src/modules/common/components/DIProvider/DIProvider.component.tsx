@@ -1,11 +1,11 @@
-import React, { PropsWithChildren } from "react";
-import { useDispatch } from "react-redux";
-import { APP_DISPATCHER } from "../../constants/injection.constant";
-import { Container, Provider } from "@polyflix/di";
+import React, { PropsWithChildren } from 'react';
+import { useDispatch } from 'react-redux';
+import { Container, Provider } from '@polyflix/di';
+import { APP_DISPATCHER } from '../../constants/injection.constant';
 
 type DIProviderProps = {
-  providers?: Provider[];
-};
+  providers?: Provider[]
+}
 
 /**
  * A simple component that can accepts an array of providers in props in order
@@ -22,7 +22,7 @@ export const DIProvider: React.FC<PropsWithChildren<DIProviderProps>> = ({
   ];
 
   Container.provide(
-    providers ? [...providers, ...defaultProviders] : defaultProviders
+    providers ? [...providers, ...defaultProviders] : defaultProviders,
   );
 
   return <>{children}</>;

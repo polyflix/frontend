@@ -1,7 +1,7 @@
-import React from "react";
-import { Route, Switch, useRouteMatch } from "react-router-dom";
-import LoginPage from "./login.page";
-import RegisterPage from "./register.page";
+import React from 'react';
+import { Route, Switch, useRouteMatch } from 'react-router-dom';
+import LoginPage from './login.page';
+import RegisterPage from './register.page';
 
 export const AuthRouter: React.FC = () => {
   const { path } = useRouteMatch();

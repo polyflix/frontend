@@ -1,9 +1,9 @@
-import React from "react";
-import { Route, Switch, useRouteMatch } from "react-router-dom";
-import { NewVideoPage } from "./new-video.page";
-import { CreateUpdateVideoPage } from "./[create-update].page";
-import { VideoDetail } from "./[slug].page";
-import { StatsPage } from "./[slug]/stats.page";
+import React from 'react';
+import { Route, Switch, useRouteMatch } from 'react-router-dom';
+import { NewVideoPage } from './new-video.page';
+import { CreateUpdateVideoPage } from './[create-update].page';
+import { VideoDetail } from './[slug].page';
+import { StatsPage } from './[slug]/stats.page';
 
 export const VideoRouter: React.FC = () => {
   const { path } = useRouteMatch();

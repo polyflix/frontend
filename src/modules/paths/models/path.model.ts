@@ -1,6 +1,6 @@
-import { Publisher } from "../../common/models";
-import { IPath } from "../types";
-import { OrderedCourse } from "./orderedCourse.model";
+import { Publisher } from '../../common/models'
+import { IPath } from '../types'
+import { OrderedCourse } from './orderedCourse.model'
 
 /**
  * Modelize the Path
@@ -35,7 +35,7 @@ export class Path {
       json.courses?.map((course) => OrderedCourse.fromJson(course)),
       new Date(json.createdAt),
       new Date(json.updatedAt)
-    );
+    )
   }
 
   /**
@@ -44,8 +44,8 @@ export class Path {
    */
   get shortDescription(): string {
     return this._description.length > 150
-      ? this._description.slice(0, 150) + "..."
-      : this._description;
+      ? this._description.slice(0, 150) + '...'
+      : this._description
   }
 
   /**
@@ -53,7 +53,7 @@ export class Path {
    * @returns {string} the path id
    */
   get id(): string {
-    return this._id;
+    return this._id
   }
 
   /**
@@ -61,7 +61,7 @@ export class Path {
    * @returns {string} the path title
    */
   get title(): string {
-    return this._title;
+    return this._title
   }
 
   /**
@@ -69,7 +69,7 @@ export class Path {
    * @returns {string} the path slug
    */
   get slug(): string {
-    return this._slug;
+    return this._slug
   }
 
   /**
@@ -77,7 +77,7 @@ export class Path {
    * @returns {string} the path description
    */
   get description(): string {
-    return this._description;
+    return this._description
   }
 
   /**
@@ -85,15 +85,15 @@ export class Path {
    * @returns {pathPublisher} the path publisher
    */
   get publisher(): Publisher | null {
-    return this._publisher;
+    return this._publisher
   }
 
   private get link(): string {
-    return `/paths/${this._slug}`;
+    return `/paths/${this._slug}`
   }
 
   get createdAt(): Date {
-    return new Date(this._createdAt);
+    return new Date(this._createdAt)
   }
 
   /**
@@ -101,7 +101,7 @@ export class Path {
    * @returns {string} the path info link
    */
   getInfoLink(): string {
-    return this.link;
+    return this.link
   }
 
   /**
@@ -109,7 +109,7 @@ export class Path {
    * @returns {}
    */
   getEditLink(): string {
-    return `/paths/update/${this._slug}`;
+    return `/paths/update/${this._slug}`
   }
 
   /**
@@ -117,7 +117,7 @@ export class Path {
    * @returns {OrderedCourse[]}
    */
   getOrderedCourses(): OrderedCourse[] {
-    return this._courses;
+    return this._courses
   }
 
   /**
@@ -125,6 +125,6 @@ export class Path {
    * @returns {OrderedCourse[]}
    */
   get courses(): OrderedCourse[] {
-    return this._courses;
+    return this._courses
   }
 }

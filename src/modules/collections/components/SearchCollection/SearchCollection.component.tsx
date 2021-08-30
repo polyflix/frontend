@@ -1,13 +1,13 @@
-import React, { useState } from "react";
-import { VideoList } from "../VideoList/VideoList.component";
-import { motion } from "framer-motion";
-import { WithClassname, WithMotion } from "../../../common";
-import { useInjection } from "@polyflix/di";
-import { Video } from "../../../videos";
-import { VideoService } from "../../../videos/services";
+import React, { useState } from 'react';
+import { motion } from 'framer-motion';
+import { useInjection } from '@polyflix/di';
+import { VideoList } from '../VideoList/VideoList.component';
+import { WithClassname, WithMotion } from '../../../common';
+import { Video } from '../../../videos';
+import { VideoService } from '../../../videos/services';
 
 type Props = WithClassname &
-  WithMotion & { addVideo: (video: Video) => void; placeholder: string };
+  WithMotion & { addVideo: (video: Video) => void; placeholder: string }
 
 export const SearchCollection: React.FC<Props> = ({
   addVideo,
@@ -16,17 +16,17 @@ export const SearchCollection: React.FC<Props> = ({
 }) => {
   const videoService = useInjection<VideoService>(VideoService);
 
-  const [input, setInput] = useState<string>("");
+  const [input, setInput] = useState<string>('');
   const [videoList, setVideoList] = useState<Video[]>([]);
 
   const onClickVideo = (video: Video) => {
     addVideo(video);
-    setInput("");
+    setInput('');
     setVideoList([]);
   };
 
   const search = async (title: string) => {
-    let paginatedVideos = await videoService.getVideos({ title, exact: false });
+    const paginatedVideos = await videoService.getVideos({ title, exact: false });
     setInput(title);
     setVideoList(paginatedVideos.items);
   };

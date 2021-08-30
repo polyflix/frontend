@@ -7,25 +7,25 @@ import {
   ThumbUpIcon,
   TrashIcon,
   UserIcon,
-} from "@heroicons/react/outline";
-import React, { useState } from "react";
-import { useTranslation } from "react-i18next";
-import { cn } from "../../../common/utils/classes.util";
-import { Alert } from "../../../ui/components/Alert/Alert.component";
-import { Image } from "../../../ui/components/Image/Image.component";
-import { Notification } from "../../../ui/components/Notification/Notification.component";
-import { Paragraph } from "../../../ui/components/Typography/Paragraph/Paragraph.component";
-import { Typography } from "../../../ui/components/Typography/Typography.component";
-import { Video } from "../../models/video.model";
-import { VideoListItemOptions } from "./VideoListItemOptions.component";
-import { ActionLink } from "../../../common/components/ActionLink.component";
+} from '@heroicons/react/outline';
+import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { cn } from '../../../common/utils/classes.util';
+import { Alert } from '../../../ui/components/Alert/Alert.component';
+import { Image } from '../../../ui/components/Image/Image.component';
+import { Notification } from '../../../ui/components/Notification/Notification.component';
+import { Paragraph } from '../../../ui/components/Typography/Paragraph/Paragraph.component';
+import { Typography } from '../../../ui/components/Typography/Typography.component';
+import { Video } from '../../models/video.model';
+import { VideoListItemOptions } from './VideoListItemOptions.component';
+import { ActionLink } from '../../../common/components/ActionLink.component';
 
 type Props = {
-  video: Video;
-  onDelete?: () => void;
-  ownerItems?: boolean;
-  links?: boolean;
-};
+  video: Video
+  onDelete?: () => void
+  ownerItems?: boolean
+  links?: boolean
+}
 
 /**
  * Simple tile of a video, left is the thumbnail, right is composed
@@ -52,7 +52,11 @@ export const VideoListItem: React.FC<Props> = ({
           <div className="col-span-10">
             <Alert type="error">
               <Typography bold as="span" className="text-sm">
-                {t("shared.common.actions.delete")} {video.title} ?
+                {t('shared.common.actions.delete')}
+                {' '}
+                {video.title}
+                {' '}
+                ?
               </Typography>
             </Alert>
           </div>
@@ -62,10 +66,10 @@ export const VideoListItem: React.FC<Props> = ({
                 as="span"
                 className="text-sm transition-all hover:underline"
               >
-                {t("shared.common.actions.cancel")}
+                {t('shared.common.actions.cancel')}
               </Typography>
             </div>
-            <div className="mx-3"></div>
+            <div className="mx-3" />
             {onDelete && (
               <div
                 className="cursor-pointer"
@@ -79,7 +83,7 @@ export const VideoListItem: React.FC<Props> = ({
                   className="text-nx-red text-sm transition-all hover:underline"
                   overrideDefaultClasses
                 >
-                  {t("shared.common.actions.delete")}
+                  {t('shared.common.actions.delete')}
                 </Typography>
               </div>
             )}
@@ -96,7 +100,7 @@ export const VideoListItem: React.FC<Props> = ({
           <div
             className="bg-nx-red relative bottom-1 h-1 z-10"
             style={{
-              width: userMeta.watchedPercent * 100 + "%",
+              width: `${userMeta.watchedPercent * 100}%`,
             }}
           />
         )}
@@ -116,69 +120,77 @@ export const VideoListItem: React.FC<Props> = ({
             </div>
           )}
         </div>
-        <div className={`my-4 ${ownerItems ? "flex" : "hidden"} items-center`}>
+        <div className={`my-4 ${ownerItems ? 'flex' : 'hidden'} items-center`}>
           <Typography
             as="span"
             overrideDefaultClasses
             bold
             className={cn(
-              video.isPublished ? "text-green-500" : "text-nx-red",
-              "flex items-center text-sm md:text-base"
+              video.isPublished ? 'text-green-500' : 'text-nx-red',
+              'flex items-center text-sm md:text-base',
             )}
           >
             {video.isPublished ? (
               <>
-                <EyeIcon className="w-5 mr-2" />{" "}
-                {t("userVideos.status.published.name")}
+                <EyeIcon className="w-5 mr-2" />
+                {' '}
+                {t('userVideos.status.published.name')}
               </>
             ) : (
               <>
-                <EyeOffIcon className="w-5 mr-2" />{" "}
-                {t("userVideos.status.draft.name")}
+                <EyeOffIcon className="w-5 mr-2" />
+                {' '}
+                {t('userVideos.status.draft.name')}
               </>
             )}
           </Typography>
-          <div className="mx-2"></div>
+          <div className="mx-2" />
           <Typography
             as="span"
             overrideDefaultClasses
             bold
             className={cn(
-              video.isPublic ? "text-green-500" : "text-nx-red",
-              "flex items-center text-sm md:text-base"
+              video.isPublic ? 'text-green-500' : 'text-nx-red',
+              'flex items-center text-sm md:text-base',
             )}
           >
             {video.isPublic ? (
               <>
-                <GlobeIcon className="w-5 mr-2" />{" "}
-                {t("userVideos.visibility.public.name")}
+                <GlobeIcon className="w-5 mr-2" />
+                {' '}
+                {t('userVideos.visibility.public.name')}
               </>
             ) : (
               <>
-                <UserIcon className="w-5 mr-2" />{" "}
-                {t("userVideos.visibility.private.name")}
+                <UserIcon className="w-5 mr-2" />
+                {' '}
+                {t('userVideos.visibility.private.name')}
               </>
             )}
           </Typography>
         </div>
-        <div className={`flex items-center`}>
+        <div className="flex items-center">
           <Typography
             as="span"
             overrideDefaultClasses
             bold
             className="text-blue-500 flex items-center text-sm md:text-base"
           >
-            <EyeIcon className="w-5 mr-2" /> {video.views}
+            <EyeIcon className="w-5 mr-2" />
+            {' '}
+            {video.views}
           </Typography>
 
-          <div className="mx-2"></div>
+          <div className="mx-2" />
           <Typography
             as="span"
             overrideDefaultClasses
             bold
             className="text-blue-500 flex items-center text-sm md:text-base"
           >
-            <ThumbUpIcon className="w-5 mr-2" /> {video.likes}
+            <ThumbUpIcon className="w-5 mr-2" />
+            {' '}
+            {video.likes}
           </Typography>
         </div>
         <Paragraph className="mb-4">{video.shortDescription}</Paragraph>
@@ -187,35 +199,35 @@ export const VideoListItem: React.FC<Props> = ({
             <ActionLink
               Icon={PlayIcon}
               to={video.getStreamLink()}
-              text={t("shared.common.actions.play")}
+              text={t('shared.common.actions.play')}
             />
           )}
           {links && (
             <ActionLink
               Icon={InformationCircleIcon}
               to={video.getInfoLink()}
-              text={t("shared.common.actions.info")}
-              className={"ml-4"}
+              text={t('shared.common.actions.info')}
+              className="ml-4"
             />
           )}
           {!links && (
             <ActionLink
               Icon={TrashIcon}
               onClick={() => setOpen(true)}
-              text={t("shared.common.actions.delete")}
-              className={"ml-4"}
+              text={t('shared.common.actions.delete')}
+              className="ml-4"
             />
           )}
           {!ownerItems && userMeta && (
             <span className="text-nx-gray opacity-80 px-4 text-sm">
-              {t("shared.common.seen", {
+              {t('shared.common.seen', {
                 date: new Date(userMeta.updatedAt).toLocaleDateString(),
               })}
             </span>
           )}
           {ownerItems && (
             <span className="text-nx-gray opacity-80 px-4 text-sm">
-              {t("shared.common.createdAt", {
+              {t('shared.common.createdAt', {
                 date: new Date(video.createdAt).toLocaleDateString(),
               })}
             </span>

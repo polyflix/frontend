@@ -1,8 +1,8 @@
-import { Injectable } from "@polyflix/di";
-import { StatusCodes } from "http-status-codes";
-import { HttpService } from "../../common/services/http.service";
-import { Video } from "../models";
-import { Subtitle } from "../models/subtitle.model";
+import { Injectable } from '@polyflix/di'
+import { StatusCodes } from 'http-status-codes'
+import { HttpService } from '../../common/services/http.service'
+import { Video } from '../models'
+import { Subtitle } from '../models/subtitle.model'
 
 @Injectable()
 export class SubtitleService {
@@ -16,11 +16,11 @@ export class SubtitleService {
   public async getSubtitleUrlByVideoId(videoId: string): Promise<Subtitle[]> {
     const { status, response, error } = await this.httpService.get(
       `/subtitles?videoId=${videoId}`
-    );
+    )
     if (status !== StatusCodes.OK) {
-      throw error;
+      throw error
     }
-    return await Promise.all(response.map(Subtitle.fromJson));
+    return await Promise.all(response.map(Subtitle.fromJson))
   }
 
   /**
@@ -29,10 +29,10 @@ export class SubtitleService {
    */
   public async createSubtitle(video: Video): Promise<void> {
     const { status, error } = await this.httpService.post(`/subtitles`, {
-      body: { lang: "fr-FR", video: video },
-    });
+      body: { lang: 'fr-FR', video: video },
+    })
     if (status !== StatusCodes.CREATED) {
-      throw error;
+      throw error
     }
   }
 
@@ -43,9 +43,9 @@ export class SubtitleService {
   public async deleteSubtitle(videoId: string): Promise<void> {
     const { status, error } = await this.httpService.delete(`/subtitles`, {
       body: { videoId: videoId },
-    });
+    })
     if (status !== StatusCodes.NO_CONTENT) {
-      throw error;
+      throw error
     }
   }
 }

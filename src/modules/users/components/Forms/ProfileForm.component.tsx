@@ -1,9 +1,9 @@
-import { useInjection } from "@polyflix/di";
-import { motion } from "framer-motion";
-import React, { useState } from "react";
-import { useForm } from "react-hook-form";
-import { useTranslation } from "react-i18next";
-import { useAuth } from "../../../authentication";
+import { useInjection } from '@polyflix/di';
+import { motion } from 'framer-motion';
+import React, { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
+import { useAuth } from '../../../authentication';
 import {
   Alert,
   AlertType,
@@ -14,9 +14,9 @@ import {
   stagger,
   Title,
   Typography,
-} from "../../../ui";
-import { UserService } from "../../services";
-import { IUserProfileUpdate } from "../../types";
+} from '../../../ui';
+import { UserService } from '../../services';
+import { IUserProfileUpdate } from '../../types';
 
 /**
  * The profile form component
@@ -24,10 +24,9 @@ import { IUserProfileUpdate } from "../../types";
 export const ProfileForm: React.FC = () => {
   const userService = useInjection<UserService>(UserService);
   const { user, isLoading } = useAuth();
-  const [alert, setAlert] =
-    useState<{
-      type: AlertType;
-      message: string;
+  const [alert, setAlert] = useState<{
+      type: AlertType
+      message: string
     } | null>(null);
 
   const { register, handleSubmit, errors } = useForm<IUserProfileUpdate>({
@@ -44,20 +43,20 @@ export const ProfileForm: React.FC = () => {
     try {
       await userService.updateUser(user?.id!, data);
       setAlert({
-        message: t("userProfile.messages.successProfile"),
-        type: "success",
+        message: t('userProfile.messages.successProfile'),
+        type: 'success',
       });
     } catch (e) {
       setAlert({
         message: e,
-        type: "error",
+        type: 'error',
       });
     }
   };
 
   return (
     <motion.div variants={stagger(0.1)} className="py-5 w-full">
-      <Title variants={fadeInDown}>{t("userProfile.bigtitle")}</Title>
+      <Title variants={fadeInDown}>{t('userProfile.bigtitle')}</Title>
       <form
         className="mt-4 grid grid-cols-2 gap-4"
         onSubmit={handleSubmit(handleUpdate)}
@@ -66,13 +65,13 @@ export const ProfileForm: React.FC = () => {
           error={errors.firstName}
           name="firstName"
           className="col-span-1"
-          placeholder={t("auth.signUp.inputs.firstname.name")}
+          placeholder={t('auth.signUp.inputs.firstname.name')}
           required
           variants={fadeInDown}
           ref={register({
             required: {
               value: true,
-              message: `${t("auth.signUp.inputs.firstname.error")}.`,
+              message: `${t('auth.signUp.inputs.firstname.error')}.`,
             },
           })}
         />
@@ -81,12 +80,12 @@ export const ProfileForm: React.FC = () => {
           name="lastName"
           required
           className="col-span-1"
-          placeholder={t("auth.signUp.inputs.lastname.name")}
+          placeholder={t('auth.signUp.inputs.lastname.name')}
           variants={fadeInDown}
           ref={register({
             required: {
               value: true,
-              message: `${t("auth.signUp.inputs.lastname.error")}.`,
+              message: `${t('auth.signUp.inputs.lastname.error')}.`,
             },
           })}
         />
@@ -94,21 +93,22 @@ export const ProfileForm: React.FC = () => {
           name="email"
           error={errors.email}
           className="col-span-2"
-          placeholder={t("auth.inputs.email.name")}
+          placeholder={t('auth.inputs.email.name')}
           required
           variants={fadeInDown}
           ref={register({
             required: {
               value: true,
-              message: `${t("auth.inputs.email.error")}.`,
+              message: `${t('auth.inputs.email.error')}.`,
             },
           })}
         />
         {isLoading && (
           <div className="flex items-center">
-            <Spinner className="fill-current text-nx-dark"></Spinner>
+            <Spinner className="fill-current text-nx-dark" />
             <Typography as="span" className="text-sm ml-2">
-              {t("shared.common.wait")}..
+              {t('shared.common.wait')}
+              ..
             </Typography>
           </div>
         )}
@@ -120,7 +120,7 @@ export const ProfileForm: React.FC = () => {
         <FilledButton
           className="col-span-2"
           as="input"
-          inputValue={t("userProfile.form.submit")}
+          inputValue={t('userProfile.form.submit')}
           variants={fadeInDown}
         />
       </form>

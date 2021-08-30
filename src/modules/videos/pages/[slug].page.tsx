@@ -1,17 +1,7 @@
-import React, { useEffect, useRef, useState } from "react";
-import { Redirect } from "react-router";
-import { useTranslation } from "react-i18next";
-import { Link } from "react-router-dom";
-import { useAuth } from "../../authentication";
-import { fadeOpacity } from "../../ui/animations/fadeOpacity";
-
-import { GhostTile } from "../../ui/components/Ghost/GhostTile/GhostTile.component";
-import { GhostList, Paragraph, Typography } from "../../ui";
-import { Container } from "../../ui/components/Container/Container.component";
-import { Page } from "../../ui/components/Page/Page.component";
-import { Player } from "../../videos/components/Player/Player.component";
-import styles from "./slug.module.scss";
-import { cn } from "../../common/utils/classes.util";
+import React, { useEffect, useRef, useState } from 'react';
+import { Redirect } from 'react-router';
+import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 import {
   PencilIcon,
   ChevronRightIcon,
@@ -20,24 +10,34 @@ import {
   ExclamationIcon,
   EyeIcon,
   ThumbUpIcon,
-} from "@heroicons/react/outline";
-import { useMediaQuery } from "react-responsive";
-import { useVideo } from "../hooks/useVideo.hook";
-import { Subtitle } from "../models";
-import { Video } from "../models/video.model";
-import { SubtitleText } from "../components";
-import { GhostSlider } from "../../ui/components/Ghost/GhostSlider/GhostSlider.component";
-import { useCollections } from "../../collections/hooks";
-import { Collection } from "../../collections/models";
-import { useQuery } from "../../common/hooks/useQuery";
-import { CollectionSlider } from "../../collections/components/CollectionSlider/CollectionSlider.component";
-import { WatchtimeSyncService } from "../../stats/services/watchtime-sync.service";
-import { useInjection } from "@polyflix/di";
-import { GhostParagraph } from "../../ui/components/Ghost/GhostParagraph";
-import { MinioService } from "../../upload/services/minio.service";
-import { PolyflixLanguage } from "../../common/types/language.type";
-import { Block, VttFile } from "@polyflix/vtt-parser";
-import { VideoNote } from "../components/VideoNote/VideoNote.component";
+} from '@heroicons/react/outline';
+import { useMediaQuery } from 'react-responsive';
+import { useInjection } from '@polyflix/di';
+import { Block, VttFile } from '@polyflix/vtt-parser';
+import { useAuth } from '../../authentication';
+import { fadeOpacity } from '../../ui/animations/fadeOpacity';
+
+import { GhostTile } from '../../ui/components/Ghost/GhostTile/GhostTile.component';
+import { GhostList, Paragraph, Typography } from '../../ui';
+import { Container } from '../../ui/components/Container/Container.component';
+import { Page } from '../../ui/components/Page/Page.component';
+import { Player } from '../../videos/components/Player/Player.component';
+import styles from './slug.module.scss';
+import { cn } from '../../common/utils/classes.util';
+import { useVideo } from '../hooks/useVideo.hook';
+import { Subtitle } from '../models';
+import { Video } from '../models/video.model';
+import { SubtitleText } from '../components';
+import { GhostSlider } from '../../ui/components/Ghost/GhostSlider/GhostSlider.component';
+import { useCollections } from '../../collections/hooks';
+import { Collection } from '../../collections/models';
+import { useQuery } from '../../common/hooks/useQuery';
+import { CollectionSlider } from '../../collections/components/CollectionSlider/CollectionSlider.component';
+import { WatchtimeSyncService } from '../../stats/services/watchtime-sync.service';
+import { GhostParagraph } from '../../ui/components/Ghost/GhostParagraph';
+import { MinioService } from '../../upload/services/minio.service';
+import { PolyflixLanguage } from '../../common/types/language.type';
+import { VideoNote } from '../components/VideoNote/VideoNote.component';
 
 export const VideoDetail: React.FC = () => {
   const [pageTitle, setPageTitle] = useState<string>();
@@ -48,36 +48,33 @@ export const VideoDetail: React.FC = () => {
   const query = useQuery();
 
   useEffect(() => {
-    if (query.has("v") && !collectionLoaded) {
-      setVideoSlug(query.get("v") as string);
+    if (query.has('v') && !collectionLoaded) {
+      setVideoSlug(query.get('v') as string);
     }
   }, [query, collectionLoaded]);
 
   const onCollectionLoaded = (firstVideoSlug: string) => {
-    if (query.has("index") && +(query.get("index") as string) === 0)
-      setVideoSlug(firstVideoSlug);
+    if (query.has('index') && +(query.get('index') as string) === 0) setVideoSlug(firstVideoSlug);
     setCollectionLoaded(true);
   };
 
-  const buildContent = () => {
-    return (
-      <Container mxAuto fluid className="p-4 pb-8">
-        {videoSlug && (!query.has("c") || collectionLoaded) && (
-          <VideoContainer
-            onLoad={setPageTitle}
-            onError={setError}
-            slug={videoSlug}
-          />
-        )}
-        {query.has("c") && (
-          <CollectionComponent
-            onLoad={onCollectionLoaded}
-            slug={query.get("c") as string}
-          />
-        )}
-      </Container>
-    );
-  };
+  const buildContent = () => (
+    <Container mxAuto fluid className="p-4 pb-8">
+      {videoSlug && (!query.has('c') || collectionLoaded) && (
+      <VideoContainer
+        onLoad={setPageTitle}
+        onError={setError}
+        slug={videoSlug}
+      />
+      )}
+      {query.has('c') && (
+      <CollectionComponent
+        onLoad={onCollectionLoaded}
+        slug={query.get('c') as string}
+      />
+      )}
+    </Container>
+  );
 
   if (error) return <Redirect to="/not-found" />;
   return (
@@ -88,16 +85,16 @@ export const VideoDetail: React.FC = () => {
 };
 
 type VideoContainerProps = {
-  onLoad: (elm: string) => void;
-  onError: (error: any) => void;
-  slug: string;
-};
+  onLoad: (elm: string) => void
+  onError: (error: any) => void
+  slug: string
+}
 
 export type SubtitleFetchingState = {
-  state: "loading" | "error" | "idle" | "succeed";
-  subtitle?: Subtitle;
-  blocks?: Block[];
-};
+  state: 'loading' | 'error' | 'idle' | 'succeed'
+  subtitle?: Subtitle
+  blocks?: Block[]
+}
 
 const VideoContainer: React.FC<VideoContainerProps> = ({
   onLoad,
@@ -106,7 +103,7 @@ const VideoContainer: React.FC<VideoContainerProps> = ({
 }) => {
   const { data: video, isLoading: isVideoLoading, alert } = useVideo(slug);
 
-  const isLtMdScreen = useMediaQuery({ query: "(max-width: 767px)" });
+  const isLtMdScreen = useMediaQuery({ query: '(max-width: 767px)' });
 
   const playerRef = useRef<HTMLVmPlayerElement>(null);
 
@@ -121,15 +118,15 @@ const VideoContainer: React.FC<VideoContainerProps> = ({
   return (
     <div
       className={cn(
-        "flex flex-col md:flex-row gap-4 mb-8",
-        isLtMdScreen ? styles.container_mobile : styles.container_desktop
+        'flex flex-col md:flex-row gap-4 mb-8',
+        isLtMdScreen ? styles.container_mobile : styles.container_desktop,
       )}
     >
-      <div className={cn("flex-auto rounded-md")}>
+      <div className={cn('flex-auto rounded-md')}>
         {!isVideoLoading && video ? (
           <Player video={video} playerRef={playerRef} onVideoEnd={onVideoEnd} />
         ) : (
-          <GhostTile aspectRatio={true} />
+          <GhostTile aspectRatio />
         )}
       </div>
       <SidebarComponent video={video} playerRef={playerRef} />
@@ -138,9 +135,9 @@ const VideoContainer: React.FC<VideoContainerProps> = ({
 };
 
 type SidebarComponentProps = {
-  video?: Video;
-  playerRef: React.RefObject<HTMLVmPlayerElement>;
-};
+  video?: Video
+  playerRef: React.RefObject<HTMLVmPlayerElement>
+}
 
 const SidebarComponent: React.FC<SidebarComponentProps> = ({
   video,
@@ -149,11 +146,10 @@ const SidebarComponent: React.FC<SidebarComponentProps> = ({
   const { user } = useAuth();
   const { t, i18n } = useTranslation();
 
-  const watchtimeSyncService =
-    useInjection<WatchtimeSyncService>(WatchtimeSyncService);
+  const watchtimeSyncService = useInjection<WatchtimeSyncService>(WatchtimeSyncService);
 
   const [isContainerDataVisible, setContainerDataIsVisible] = useState(true);
-  const [visiblePanelElement, setVisiblePanelElement] = useState("description");
+  const [visiblePanelElement, setVisiblePanelElement] = useState('description');
   const [isLiked, setLiked] = useState<boolean | undefined>(undefined);
   const [subtitles, setSubtitles] = useState<SubtitleFetchingState>();
   const minioService = useInjection<MinioService>(MinioService);
@@ -161,16 +157,15 @@ const SidebarComponent: React.FC<SidebarComponentProps> = ({
   useEffect(() => {
     if (!video) return;
     const language = video.selectProperLanguage(
-      i18n.language as PolyflixLanguage
+      i18n.language as PolyflixLanguage,
     );
     if (
-      !language ||
-      (subtitles && subtitles.subtitle?.lang === language) ||
-      ["loading", "error"].indexOf(subtitles?.state ?? "") > -1
-    )
-      return;
+      !language
+      || (subtitles && subtitles.subtitle?.lang === language)
+      || ['loading', 'error'].indexOf(subtitles?.state ?? '') > -1
+    ) return;
     setSubtitles({
-      state: "loading",
+      state: 'loading',
     });
     minioService
       .getSubtitlePresignedUrl(video.id, language)
@@ -178,27 +173,25 @@ const SidebarComponent: React.FC<SidebarComponentProps> = ({
         const subtitles = new Subtitle(
           language,
           tokenAccess,
-          await VttFile.fromUrl(tokenAccess)
+          await VttFile.fromUrl(tokenAccess),
         );
         setSubtitles({
-          state: "succeed",
+          state: 'succeed',
           subtitle: subtitles,
           blocks: subtitles.getBlocks(),
         });
       })
       .catch((_) => {
         setSubtitles({
-          state: "error",
+          state: 'error',
         });
       });
   }, [i18n.language, minioService, subtitles, video]);
 
-  const isLtMdScreen = useMediaQuery({ query: "(max-width: 767px)" });
-  const isXlScreen = useMediaQuery({ query: "(min-width: 1280px)" });
+  const isLtMdScreen = useMediaQuery({ query: '(max-width: 767px)' });
+  const isXlScreen = useMediaQuery({ query: '(min-width: 1280px)' });
 
-  const calcDataContainerWidth = (): string => {
-    return isContainerDataVisible ? (isXlScreen ? "580px" : "400px") : "36px";
-  };
+  const calcDataContainerWidth = (): string => (isContainerDataVisible ? (isXlScreen ? '580px' : '400px') : '36px');
 
   const like = () => {
     if (video) {
@@ -219,17 +212,17 @@ const SidebarComponent: React.FC<SidebarComponentProps> = ({
     <div
       className={cn(styles.data_container)}
       style={{
-        width: isLtMdScreen ? "100%" : calcDataContainerWidth(),
+        width: isLtMdScreen ? '100%' : calcDataContainerWidth(),
       }}
     >
       <div className={cn(styles.data_container__sub1)}>
         <div className={cn(styles.data_container__sub2)}>
-          <div className={cn("md:min-h-0", styles.data_container__sub3)}>
+          <div className={cn('md:min-h-0', styles.data_container__sub3)}>
             <div
               className={cn(
-                "text-white",
-                isLtMdScreen && "m-0",
-                styles.data_container__content
+                'text-white',
+                isLtMdScreen && 'm-0',
+                styles.data_container__content,
               )}
             >
               {video ? (
@@ -239,12 +232,10 @@ const SidebarComponent: React.FC<SidebarComponentProps> = ({
                       {!isLtMdScreen && (
                         <ChevronRightIcon
                           className={cn(
-                            "w-4 md:w-5 mr-2 text-nx-red cursor-pointer",
-                            !isContainerDataVisible && "transform rotate-180"
+                            'w-4 md:w-5 mr-2 text-nx-red cursor-pointer',
+                            !isContainerDataVisible && 'transform rotate-180',
                           )}
-                          onClick={() =>
-                            setContainerDataIsVisible(!isContainerDataVisible)
-                          }
+                          onClick={() => setContainerDataIsVisible(!isContainerDataVisible)}
                         />
                       )}
                       {!isLtMdScreen && isContainerDataVisible && (
@@ -252,23 +243,23 @@ const SidebarComponent: React.FC<SidebarComponentProps> = ({
                           <li className="-mb-px mr-2 last:mr-0 flex-auto text-center">
                             <a
                               className={
-                                "flex rounded-lg font-bold uppercase px-5 py-3 cursor-pointer hover:bg-red-600 " +
-                                (visiblePanelElement === "description"
-                                  ? "text-white bg-red-600"
-                                  : "text-red-600 bg-black")
+                                `flex rounded-lg font-bold uppercase px-5 py-3 cursor-pointer hover:bg-red-600 ${
+                                  visiblePanelElement === 'description'
+                                    ? 'text-white bg-red-600'
+                                    : 'text-red-600 bg-black'}`
                               }
                               onClick={(e) => {
                                 e.preventDefault();
-                                setVisiblePanelElement("description");
+                                setVisiblePanelElement('description');
                               }}
                               href="#description"
                             >
                               <InformationCircleIcon className="w-4 md:w-5" />
                               <Typography as="p" className="text-sm ml-2">
-                                {t("video.view.label.description")}
+                                {t('video.view.label.description')}
                               </Typography>
                             </a>
-                            <span className="flex-1"></span>
+                            <span className="flex-1" />
                             {subtitles && subtitles.blocks && (
                               <Link to={`/subtitle-editing/${video.slug}`}>
                                 <PencilIcon className="w-4 md:w-5 mr-2 text-nx-red" />
@@ -278,40 +269,40 @@ const SidebarComponent: React.FC<SidebarComponentProps> = ({
                           <li className="-mb-px mr-2 last:mr-0 flex-auto text-center">
                             <a
                               className={
-                                "flex rounded-lg font-bold uppercase px-5 py-3 cursor-pointer hover:bg-red-600 " +
-                                (visiblePanelElement === "subtitle"
-                                  ? "text-white bg-red-600"
-                                  : "text-red-600 bg-black")
+                                `flex rounded-lg font-bold uppercase px-5 py-3 cursor-pointer hover:bg-red-600 ${
+                                  visiblePanelElement === 'subtitle'
+                                    ? 'text-white bg-red-600'
+                                    : 'text-red-600 bg-black'}`
                               }
                               onClick={(e) => {
                                 e.preventDefault();
-                                setVisiblePanelElement("subtitle");
+                                setVisiblePanelElement('subtitle');
                               }}
                               href="#subtitle"
                             >
                               <TranslateIcon className="w-4 md:w-5" />
                               <Typography as="p" className="text-sm ml-2">
-                                {t("video.view.label.subtitle")}
+                                {t('video.view.label.subtitle')}
                               </Typography>
                             </a>
                           </li>
                           <li className="-mb-px mr-2 last:mr-0 flex-auto text-center">
                             <a
                               className={
-                                "flex rounded-lg font-bold uppercase px-5 py-3 cursor-pointer hover:bg-red-600 " +
-                                (visiblePanelElement === "note"
-                                  ? "text-white bg-red-600"
-                                  : "text-red-600 bg-black")
+                                `flex rounded-lg font-bold uppercase px-5 py-3 cursor-pointer hover:bg-red-600 ${
+                                  visiblePanelElement === 'note'
+                                    ? 'text-white bg-red-600'
+                                    : 'text-red-600 bg-black'}`
                               }
                               onClick={(e) => {
                                 e.preventDefault();
-                                setVisiblePanelElement("note");
+                                setVisiblePanelElement('note');
                               }}
                               href="#note"
                             >
                               <PencilIcon className="w-4 md:w-5" />
                               <Typography as="p" className="text-sm ml-2">
-                                {t("video.view.label.note")}
+                                {t('video.view.label.note')}
                               </Typography>
                             </a>
                           </li>
@@ -320,39 +311,37 @@ const SidebarComponent: React.FC<SidebarComponentProps> = ({
                     </div>
                     <div
                       className="relative z-0"
-                      style={{ paddingBottom: "70px" }}
+                      style={{ paddingBottom: '70px' }}
                     >
                       {!isLtMdScreen ? (
-                        isContainerDataVisible &&
-                        ((visiblePanelElement === "subtitle" && (
+                        isContainerDataVisible
+                        && ((visiblePanelElement === 'subtitle' && (
                           <div>
                             {subtitles && subtitles.blocks ? (
-                              subtitles.blocks.map((block) => {
-                                return (
-                                  <SubtitleText
-                                    block={block}
-                                    key={block.sequence}
-                                    playerRef={playerRef}
-                                  />
-                                );
-                              })
+                              subtitles.blocks.map((block) => (
+                                <SubtitleText
+                                  block={block}
+                                  key={block.sequence}
+                                  playerRef={playerRef}
+                                />
+                              ))
                             ) : (
                               <Typography
                                 as="p"
                                 className="text-center text-sm py-4 md:pr-1 flex flex-col items-center absolute top-1/2 left-1/2 transform -translate-x-2/4 w-full"
                               >
                                 <ExclamationIcon className="w-6 md:w-7 text-nx-red mr-2" />
-                                {subtitles?.state === "loading" &&
-                                  t("video.view.content.generatingSubtitles")}
-                                {subtitles?.state === "error" &&
-                                  t("video.view.content.subtitleError")}
-                                {!subtitles?.state &&
-                                  t("video.view.content.noSubtitle")}
+                                {subtitles?.state === 'loading'
+                                  && t('video.view.content.generatingSubtitles')}
+                                {subtitles?.state === 'error'
+                                  && t('video.view.content.subtitleError')}
+                                {!subtitles?.state
+                                  && t('video.view.content.noSubtitle')}
                               </Typography>
                             )}
                           </div>
-                        )) ||
-                          (visiblePanelElement === "description" && (
+                        ))
+                          || (visiblePanelElement === 'description' && (
                             <div className="pt-2">
                               <Typography as="h4" bold className="text-2xl">
                                 {video?.title}
@@ -361,10 +350,10 @@ const SidebarComponent: React.FC<SidebarComponentProps> = ({
                                 {video?.description}
                               </Paragraph>
                             </div>
-                          )) ||
-                          (visiblePanelElement === "note" && (
+                          ))
+                          || (visiblePanelElement === 'note' && (
                             <div className="pt-2">
-                              <VideoNote video={video}></VideoNote>
+                              <VideoNote video={video} />
                             </div>
                           )))
                       ) : (
@@ -384,7 +373,7 @@ const SidebarComponent: React.FC<SidebarComponentProps> = ({
                       <>
                         <div
                           className="overflow-hidden"
-                          style={{ minWidth: "50px" }}
+                          style={{ minWidth: '50px' }}
                         >
                           <Typography
                             as="span"
@@ -392,7 +381,8 @@ const SidebarComponent: React.FC<SidebarComponentProps> = ({
                             bold
                             className="flex items-center text-sm md:text-base"
                           >
-                            <EyeIcon className="text-blue-500  w-5 mr-2" />{" "}
+                            <EyeIcon className="text-blue-500  w-5 mr-2" />
+                            {' '}
                             {video?.views}
                           </Typography>
 
@@ -404,7 +394,7 @@ const SidebarComponent: React.FC<SidebarComponentProps> = ({
                           >
                             <ThumbUpIcon
                               className={`${
-                                isLiked ? "text-blue-500" : "text-grey-500"
+                                isLiked ? 'text-blue-500' : 'text-grey-500'
                               } w-5 mr-2 cursor-pointer`}
                               onClick={() => like()}
                             />
@@ -443,7 +433,7 @@ const SidebarComponent: React.FC<SidebarComponentProps> = ({
                 </>
               ) : (
                 <div className="flex flex-col justify-between h-full">
-                  {" "}
+                  {' '}
                   <GhostParagraph count={5} />
                   <GhostList count={1} />
                 </div>
@@ -457,21 +447,20 @@ const SidebarComponent: React.FC<SidebarComponentProps> = ({
 };
 
 type CollectionComponentProps = {
-  onLoad: (elm: string) => void;
-  slug: string;
-};
+  onLoad: (elm: string) => void
+  slug: string
+}
 
 const CollectionComponent: React.FC<CollectionComponentProps> = ({
   onLoad,
   slug,
 }) => {
-  let query = useQuery();
+  const query = useQuery();
 
-  const { data: collection, isLoading: isCollectionLoading } =
-    useCollections<Collection>({
-      mode: "document",
-      slug,
-    });
+  const { data: collection, isLoading: isCollectionLoading } = useCollections<Collection>({
+    mode: 'document',
+    slug,
+  });
 
   useEffect(() => {
     if (collection) onLoad(collection.videos[0].slug);
@@ -483,7 +472,7 @@ const CollectionComponent: React.FC<CollectionComponentProps> = ({
         collection?.videos && (
           <CollectionSlider
             collection={collection}
-            startIndex={+(query.get("index") || 0)}
+            startIndex={+(query.get('index') || 0)}
           />
         )
       ) : (

@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 export const EnglishFlagIcon: React.FC = () => (
   <svg
@@ -24,7 +24,7 @@ export const EnglishFlagIcon: React.FC = () => (
     <g>
       <polygon
         fill="#FF4B55"
-        points="282.483,88.276 229.517,88.276 229.517,229.517 0,229.517 0,282.483 229.517,282.483 
+        points="282.483,88.276 229.517,88.276 229.517,229.517 0,229.517 0,282.483 229.517,282.483
 		229.517,423.724 282.483,423.724 282.483,282.483 512,282.483 512,229.517 282.483,229.517 	"
       />
       <path

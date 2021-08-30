@@ -1,20 +1,20 @@
-import { PencilIcon, TrashIcon } from "@heroicons/react/outline";
-import React, { useState } from "react";
-import { useTranslation } from "react-i18next";
-import { Link } from "react-router-dom";
-import { Alert } from "../../../ui/components";
-import { Paragraph } from "../../../ui/components/Typography/Paragraph/Paragraph.component";
-import { Typography } from "../../../ui/components/Typography/Typography.component";
-import { Notification } from "../../../ui/components/Notification/Notification.component";
-import { Collection } from "../../models";
-import { ActionLink } from "../../../common/components/ActionLink.component";
+import { PencilIcon, TrashIcon } from '@heroicons/react/outline';
+import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
+import { Alert } from '../../../ui/components';
+import { Paragraph } from '../../../ui/components/Typography/Paragraph/Paragraph.component';
+import { Typography } from '../../../ui/components/Typography/Typography.component';
+import { Notification } from '../../../ui/components/Notification/Notification.component';
+import { Collection } from '../../models';
+import { ActionLink } from '../../../common/components/ActionLink.component';
 
 type Props = {
-  collection: Collection;
-  onDelete?: () => void; // commented to simplify upgrade
-  ownerItems?: boolean;
-  links?: boolean;
-};
+  collection: Collection
+  onDelete?: () => void // commented to simplify upgrade
+  ownerItems?: boolean
+  links?: boolean
+}
 
 export const CollectionListItem: React.FC<Props> = ({
   collection,
@@ -32,7 +32,11 @@ export const CollectionListItem: React.FC<Props> = ({
           <div className="col-span-10">
             <Alert type="error">
               <Typography bold as="span" className="text-sm">
-                {t("shared.common.actions.delete")} {collection.title} ?
+                {t('shared.common.actions.delete')}
+                {' '}
+                {collection.title}
+                {' '}
+                ?
               </Typography>
             </Alert>
           </div>
@@ -42,10 +46,10 @@ export const CollectionListItem: React.FC<Props> = ({
                 as="span"
                 className="text-sm transition-all hover:underline"
               >
-                {t("shared.common.actions.cancel")}
+                {t('shared.common.actions.cancel')}
               </Typography>
             </div>
-            <div className="mx-3"></div>
+            <div className="mx-3" />
             {onDelete && (
               <div
                 className="cursor-pointer"
@@ -59,7 +63,7 @@ export const CollectionListItem: React.FC<Props> = ({
                   className="text-nx-red text-sm transition-all hover:underline"
                   overrideDefaultClasses
                 >
-                  {t("shared.common.actions.delete")}
+                  {t('shared.common.actions.delete')}
                 </Typography>
               </div>
             )}
@@ -71,7 +75,7 @@ export const CollectionListItem: React.FC<Props> = ({
           {collection.title}
           {ownerItems && (
             <span className="text-nx-gray opacity-80 px-4 text-sm font-normal">
-              {t("shared.common.createdAt", {
+              {t('shared.common.createdAt', {
                 date: new Date(collection.createdAt).toLocaleDateString(),
               })}
             </span>
@@ -82,24 +86,24 @@ export const CollectionListItem: React.FC<Props> = ({
           to={`/watch?v=0&c=${collection.slug}&index=0`}
           className="bg-nx-red px-4 py-2 rounded-md text-lg transition-colors w-fit inline-block text-white hover:bg-nx-red-dark"
         >
-          {t("collections.actions.goto")}
+          {t('collections.actions.goto')}
         </Link>
       </div>
       <div className="flex items-center flex-shrink flex-grow">
         {ownerItems && (
           <ActionLink
             Icon={PencilIcon}
-            text={t("shared.common.actions.edit")}
+            text={t('shared.common.actions.edit')}
             to={collection.getEditLink()}
-            className={"ml-4"}
+            className="ml-4"
           />
         )}
         {(ownerItems || !links) && (
           <ActionLink
             Icon={TrashIcon}
-            text={t("shared.common.actions.delete")}
+            text={t('shared.common.actions.delete')}
             onClick={() => setOpen(true)}
-            className={"ml-4"}
+            className="ml-4"
           />
         )}
       </div>

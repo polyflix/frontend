@@ -1,6 +1,6 @@
-import { ServerState, ServerStateAction } from "../../types/serverState.type";
+import { ServerState, ServerStateAction } from '../../types/serverState.type'
 
-const initialState: ServerState = ServerState.ONLINE;
+const initialState: ServerState = ServerState.ONLINE
 
 export const serverStateReducer = (
   state: ServerState = initialState,
@@ -8,10 +8,10 @@ export const serverStateReducer = (
 ): ServerState => {
   switch (action.type) {
     case ServerState.OFFLINE:
-      return ServerState.OFFLINE;
+      return ServerState.OFFLINE
     case ServerState.ONLINE:
-      return ServerState.ONLINE;
+      return ServerState.ONLINE
     default:
-      return state;
+      return state
   }
-};
+}

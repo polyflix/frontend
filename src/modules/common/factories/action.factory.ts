@@ -1,4 +1,4 @@
-import { GenericAction } from "../types/generic.type";
+import { GenericAction } from '../types/generic.type'
 
 /**
  * Factory used to create generic action.
@@ -13,5 +13,5 @@ export const actionFactory = <T>(
   return {
     type,
     payload,
-  };
-};
+  }
+}

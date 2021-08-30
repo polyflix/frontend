@@ -1,56 +1,59 @@
-import { forwardRef, useImperativeHandle, useRef, useState } from "react";
-import { Notification } from "../../ui/components/Notification/Notification.component";
-import { useTranslation } from "react-i18next";
-import { Alert } from "../../ui/components/Alert/Alert.component";
-import { Typography } from "../../ui/components/Typography/Typography.component";
-import { Paragraph } from "../../ui/components/Typography/Paragraph/Paragraph.component";
-import { TrashIcon } from "@heroicons/react/outline";
-import { cn } from "../../common/utils";
-import { Link } from "react-router-dom";
+import {
+  forwardRef, useImperativeHandle, useRef, useState,
+} from 'react';
+import { useTranslation } from 'react-i18next';
+import { TrashIcon } from '@heroicons/react/outline';
+import { Link } from 'react-router-dom';
 import {
   ConnectDropTarget,
   ConnectDragSource,
   DropTargetMonitor,
   DragSourceMonitor,
-} from "react-dnd";
-import {
+
   DragSource,
   DropTarget,
   DropTargetConnector,
   DragSourceConnector,
-} from "react-dnd";
-import { XYCoord } from "dnd-core";
-import { Course } from "../../courses/models/course.model";
+} from 'react-dnd';
+import { XYCoord } from 'dnd-core';
+import { cn } from '../../common/utils';
+import { Paragraph } from '../../ui/components/Typography/Paragraph/Paragraph.component';
+import { Typography } from '../../ui/components/Typography/Typography.component';
+import { Alert } from '../../ui/components/Alert/Alert.component';
+import { Notification } from '../../ui/components/Notification/Notification.component';
+import { Course } from '../../courses/models/course.model';
 
 export const ItemTypes = {
-  CARD: "card",
+  CARD: 'card',
 };
 
 export interface CardDragObject {
-  id: string;
-  index: number;
+  id: string
+  index: number
 }
 
 export interface DragableItemProps {
-  course: Course;
-  index: number;
-  onDelete?: (id: string) => void;
-  moveCard: (dragIndex: number, hoverIndex: number) => void;
+  course: Course
+  index: number
+  onDelete?: (id: string) => void
+  moveCard: (dragIndex: number, hoverIndex: number) => void
 
-  isDragging: boolean;
-  connectDragSource: ConnectDragSource;
-  connectDropTarget: ConnectDropTarget;
+  isDragging: boolean
+  connectDragSource: ConnectDragSource
+  connectDropTarget: ConnectDropTarget
 }
 
 interface DragableItemInstance {
-  getNode(): HTMLDivElement | null;
+  getNode(): HTMLDivElement | null
 }
 
 const DragableItem = forwardRef<HTMLDivElement, DragableItemProps>(
-  function Card(
-    { course, isDragging, connectDragSource, onDelete, connectDropTarget },
-    ref
-  ) {
+  (
+    {
+      course, isDragging, connectDragSource, onDelete, connectDropTarget,
+    },
+    ref,
+  ) => {
     const [open, setOpen] = useState<boolean>(false);
     const { t } = useTranslation();
 
@@ -62,18 +65,20 @@ const DragableItem = forwardRef<HTMLDivElement, DragableItemProps>(
       Icon: any,
       text: string,
       to: string,
-      className: string = "",
-      onClick?: () => void
+      className: string = '',
+      onClick?: () => void,
     ) => {
       const content = (
         <Typography
           as="span"
           className={cn(
-            "flex text-sm md:text-base hover:underline cursor-pointer hover:text-nx-red",
-            className
+            'flex text-sm md:text-base hover:underline cursor-pointer hover:text-nx-red',
+            className,
           )}
         >
-          <Icon className="w-4 md:w-5 mr-2 text-nx-red" /> {text}
+          <Icon className="w-4 md:w-5 mr-2 text-nx-red" />
+          {' '}
+          {text}
         </Typography>
       );
       return onClick ? (
@@ -101,7 +106,11 @@ const DragableItem = forwardRef<HTMLDivElement, DragableItemProps>(
             <div className="col-span-10">
               <Alert type="error">
                 <Typography bold as="span" className="text-sm">
-                  {t("shared.common.actions.delete")} {course.title} ?
+                  {t('shared.common.actions.delete')}
+                  {' '}
+                  {course.title}
+                  {' '}
+                  ?
                 </Typography>
               </Alert>
             </div>
@@ -111,10 +120,10 @@ const DragableItem = forwardRef<HTMLDivElement, DragableItemProps>(
                   as="span"
                   className="text-sm transition-all hover:underline"
                 >
-                  {t("shared.common.actions.cancel")}
+                  {t('shared.common.actions.cancel')}
                 </Typography>
               </div>
-              <div className="mx-3"></div>
+              <div className="mx-3" />
               {onDelete && (
                 <div
                   className="cursor-pointer"
@@ -128,7 +137,7 @@ const DragableItem = forwardRef<HTMLDivElement, DragableItemProps>(
                     className="text-nx-red text-sm transition-all hover:underline"
                     overrideDefaultClasses
                   >
-                    {t("shared.common.actions.delete")}
+                    {t('shared.common.actions.delete')}
                   </Typography>
                 </div>
               )}
@@ -144,15 +153,15 @@ const DragableItem = forwardRef<HTMLDivElement, DragableItemProps>(
         <div className="flex items-center">
           {buildActionLink(
             TrashIcon,
-            t("shared.common.actions.delete"),
-            "#",
-            "ml-4",
-            () => setOpen(true)
+            t('shared.common.actions.delete'),
+            '#',
+            'ml-4',
+            () => setOpen(true),
           )}
         </div>
       </div>
     );
-  }
+  },
 );
 
 export default DropTarget(
@@ -161,7 +170,7 @@ export default DropTarget(
     hover(
       props: DragableItemProps,
       monitor: DropTargetMonitor,
-      component: DragableItemInstance
+      component: DragableItemInstance,
     ) {
       if (!component) {
         return null;
@@ -184,8 +193,7 @@ export default DropTarget(
       const hoverBoundingRect = node.getBoundingClientRect();
 
       // Get vertical middle
-      const hoverMiddleY =
-        (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
+      const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
 
       // Determine mouse position
       const clientOffset = monitor.getClientOffset();
@@ -219,7 +227,7 @@ export default DropTarget(
   },
   (connect: DropTargetConnector) => ({
     connectDropTarget: connect.dropTarget(),
-  })
+  }),
 )(
   DragSource(
     ItemTypes.CARD,
@@ -232,6 +240,6 @@ export default DropTarget(
     (connect: DragSourceConnector, monitor: DragSourceMonitor) => ({
       connectDragSource: connect.dragSource(),
       isDragging: monitor.isDragging(),
-    })
-  )(DragableItem)
+    }),
+  )(DragableItem),
 );

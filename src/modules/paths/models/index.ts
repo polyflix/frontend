@@ -1,2 +1,2 @@
-export * from "./path.model";
-export * from "./orderedCourse.model";
+export * from './path.model'
+export * from './orderedCourse.model'

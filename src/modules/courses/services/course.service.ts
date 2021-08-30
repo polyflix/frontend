@@ -1,27 +1,27 @@
-import { Injectable } from "@polyflix/di";
-import { StatusCodes } from "http-status-codes";
-import { HttpService } from "../../common/services/http.service";
-import { CourseFilter, ICourseFilter } from "../filters";
-import { Course } from "../models";
-import { CoursesWithPagination, ICourseForm } from "../types";
+import { Injectable } from '@polyflix/di'
+import { StatusCodes } from 'http-status-codes'
+import { HttpService } from '../../common/services/http.service'
+import { CourseFilter, ICourseFilter } from '../filters'
+import { Course } from '../models'
+import { CoursesWithPagination, ICourseForm } from '../types'
 
 export type CourseParams = {
-  page?: number;
+  page?: number
 
-  pageSize?: number;
+  pageSize?: number
 
-  order?: string;
+  order?: string
 
-  slug?: string;
+  slug?: string
 
-  title?: string;
+  title?: string
 
-  publisherId?: string;
+  publisherId?: string
 
-  joinWithPublisher?: boolean;
+  joinWithPublisher?: boolean
 
-  exact?: boolean;
-};
+  exact?: boolean
+}
 
 @Injectable()
 export class CourseService {
@@ -42,21 +42,21 @@ export class CourseService {
   public async getCourses(
     filters: ICourseFilter
   ): Promise<CoursesWithPagination> {
-    const searchQuery = this.courseFilter.buildFilters(filters);
-    let url = "/courses";
-    if (searchQuery !== "" && searchQuery) {
-      url += `?${searchQuery}`;
+    const searchQuery = this.courseFilter.buildFilters(filters)
+    let url = '/courses'
+    if (searchQuery !== '' && searchQuery) {
+      url += `?${searchQuery}`
     }
 
-    const { status, response, error } = await this.httpService.get(url);
+    const { status, response, error } = await this.httpService.get(url)
     if (status !== 200) {
-      throw error;
+      throw error
     }
 
     return {
       totalCount: response.totalCount,
       items: response.items.map(Course.fromJson),
-    };
+    }
   }
   /**
    * Create a course
@@ -69,11 +69,11 @@ export class CourseService {
       {
         body: course,
       }
-    );
+    )
     if (status !== StatusCodes.CREATED) {
-      throw error;
+      throw error
     }
-    return response;
+    return response
   }
 
   /**
@@ -85,9 +85,9 @@ export class CourseService {
     const { status, error } = await this.httpService.delete(
       `/courses/${id}`,
       {}
-    );
+    )
     if (status !== StatusCodes.NO_CONTENT) {
-      throw error;
+      throw error
     }
   }
 
@@ -99,12 +99,12 @@ export class CourseService {
   public async getCourseBySlug(slug: string): Promise<Course> {
     const { status, response, error } = await this.httpService.get(
       `/courses/${slug}`
-    );
+    )
     if (status !== StatusCodes.OK) {
-      throw error;
+      throw error
     }
 
-    return Course.fromJson({ ...response });
+    return Course.fromJson({ ...response })
   }
 
   /**
@@ -119,10 +119,10 @@ export class CourseService {
       {
         body: data,
       }
-    );
+    )
     if (status !== StatusCodes.OK) {
-      throw error;
+      throw error
     }
-    return Course.fromJson(response);
+    return Course.fromJson(response)
   }
 }

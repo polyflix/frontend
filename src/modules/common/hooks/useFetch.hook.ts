@@ -1,21 +1,21 @@
-import { useInjection } from "@polyflix/di";
-import { Injectable } from "@polyflix/di/dist/types";
-import { DependencyList, useEffect, useState } from "react";
-import { useAuth } from "../../authentication";
-import { AlertType } from "../../ui";
+import { useInjection } from '@polyflix/di'
+import { Injectable } from '@polyflix/di/dist/types'
+import { DependencyList, useEffect, useState } from 'react'
+import { useAuth } from '../../authentication'
+import { AlertType } from '../../ui'
 
 type FetchReturn<T> = {
-  isLoading: boolean;
-  data?: T;
-  alert?: { type: AlertType; message: string };
-  refresh: () => void;
-};
+  isLoading: boolean
+  data?: T
+  alert?: { type: AlertType; message: string }
+  refresh: () => void
+}
 
 type FetchOptions<T> = {
-  onComplete?: (data: T) => any;
-  onStart?: () => any;
-  deps?: DependencyList;
-};
+  onComplete?: (data: T) => any
+  onStart?: () => any
+  deps?: DependencyList
+}
 
 /**
  * A custom hook for data fetching in components.
@@ -33,34 +33,34 @@ export const useFetch = <Type, Service>(
   args: any[] = [],
   options: FetchOptions<Type> = {}
 ): FetchReturn<Type> => {
-  const { isLoading: isAuthLoading } = useAuth();
+  const { isLoading: isAuthLoading } = useAuth()
 
-  const injectedService = useInjection<any>(service);
+  const injectedService = useInjection<any>(service)
 
-  const [data, setData] = useState<Type>();
-  const [refresh, setRefresh] = useState<boolean>(false);
-  const [isLoading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<{ type: AlertType; message: string }>();
+  const [data, setData] = useState<Type>()
+  const [refresh, setRefresh] = useState<boolean>(false)
+  const [isLoading, setLoading] = useState<boolean>(false)
+  const [error, setError] = useState<{ type: AlertType; message: string }>()
 
   const fetch = async () => {
     try {
-      setLoading(true);
+      setLoading(true)
 
-      const result = await injectedService[handler](...args);
-      setData(result);
+      const result = await injectedService[handler](...args)
+      setData(result)
     } catch (err) {
-      setError({ type: "error", message: err });
-      setData(undefined);
+      setError({ type: 'error', message: err })
+      setData(undefined)
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
-  };
+  }
 
   useEffect(() => {
-    if (isAuthLoading) return;
-    fetch();
+    if (isAuthLoading) return
+    fetch()
     // eslint-disable-next-line
-  }, [...(options.deps || []), refresh]);
+  }, [...(options.deps || []), refresh])
 
-  return { isLoading, data, alert: error, refresh: () => setRefresh(!refresh) };
-};
+  return { isLoading, data, alert: error, refresh: () => setRefresh(!refresh) }
+}

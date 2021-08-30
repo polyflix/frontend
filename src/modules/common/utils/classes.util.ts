@@ -5,7 +5,7 @@
  * @returns {string} the joined classes
  */
 export const cn = (...classes: Array<string | boolean>): string =>
-  classes.filter(Boolean).join(" ");
+  classes.filter(Boolean).join(' ')
 
 /**
  * Return style for background image.
@@ -13,6 +13,6 @@ export const cn = (...classes: Array<string | boolean>): string =>
  */
 export const applyBackgroundImage = (url: string) => ({
   backgroundImage: `url(${url})`,
-  backgroundSize: "cover",
-  backgroundPosition: "center",
-});
+  backgroundSize: 'cover',
+  backgroundPosition: 'center',
+})

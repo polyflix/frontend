@@ -1,18 +1,18 @@
-import React, { FC } from "react";
-import { WithClassname } from "../types";
-import { cn } from "../utils";
-import { Arrow, ArrowKind } from "./Navigation/Arrow.component";
-import { Link } from "react-router-dom";
+import React, { FC } from 'react';
+import { Link } from 'react-router-dom';
+import { WithClassname } from '../types';
+import { cn } from '../utils';
+import { Arrow, ArrowKind } from './Navigation/Arrow.component';
 
 type ShortCardProps = WithClassname &
   ArrowKind & {
-    onClick?: () => void;
-    redirect?: string;
-  };
+    onClick?: () => void
+    redirect?: string
+  }
 
 export const ShortCard: FC<ShortCardProps> = ({
   onClick,
-  className = "",
+  className = '',
   children,
   redirect,
   ...rest
@@ -20,9 +20,9 @@ export const ShortCard: FC<ShortCardProps> = ({
   const body = (
     <div
       className={cn(
-        "border-nx-red border-3 text-nx-white rounded-lg p-4 flex cursor-pointer hover:bg-nx-white" +
-          " hover:text-black hover:border-red-500 transition-all duration-200",
-        className
+        'border-nx-red border-3 text-nx-white rounded-lg p-4 flex cursor-pointer hover:bg-nx-white'
+          + ' hover:text-black hover:border-red-500 transition-all duration-200',
+        className,
       )}
       onClick={onClick}
     >
@@ -32,9 +32,7 @@ export const ShortCard: FC<ShortCardProps> = ({
     </div>
   );
   if (redirect) return <WithLink redirect={redirect}>{body}</WithLink>;
-  else return body;
+  return body;
 };
 
-const WithLink: FC<{ redirect: string }> = ({ redirect, children }) => {
-  return <Link to={redirect}>{children}</Link>;
-};
+const WithLink: FC<{ redirect: string }> = ({ redirect, children }) => <Link to={redirect}>{children}</Link>;
