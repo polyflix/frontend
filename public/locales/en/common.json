@@ -536,6 +536,10 @@
     }
   },
   "subtitleImprovement": {
+    "header": {
+      "title": "Subtitle improvements",
+      "description": "Here you can suggest improvements for the subtitles."
+    },
     "content": {
       "approve": "Approve",
       "disapprove": "Disapprove"

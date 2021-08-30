@@ -31,14 +31,14 @@ export const SubtitleEditorPanel: React.FC<SubtitleEditorPanelProps> = ({
   const dispatch = useDispatch();
 
   useEffect(() => {
+    setSubtitles({
+      state: "loading",
+    });
     if (!video) return;
     const language = video.selectProperLanguage(
       i18n.language as PolyflixLanguage
     );
     if (!language) return;
-    setSubtitles({
-      state: "loading",
-    });
     subtitleService
       .getSubtitleUrlByVideoId(video?.id)
       .then((s: Subtitle[]) => s)
@@ -118,12 +118,17 @@ export const SubtitleEditorPanel: React.FC<SubtitleEditorPanelProps> = ({
       ))}
     </div>
   ) : (
-    <>
+    <div
+      className={cn(
+        className,
+        "lg:ml-4 flex flex-col gap-2 pt-4 lg:p-2 box-border"
+      )}
+    >
       {subtitles?.state === "error" && (
         <Alert type="not-found" className="w-1/3">
           {t("shared.common.errors.common")}
         </Alert>
       )}
-    </>
+    </div>
   );
 };
