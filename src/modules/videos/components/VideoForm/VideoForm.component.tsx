@@ -70,7 +70,8 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
       type: AlertType;
       message: string;
     } | null>(null);
-  const [files, setFiles] = useState<MinioFile[]>([]);
+  const [imageFile, setImageFile] = useState<ImageFile | null>(null);
+  const [videoFile, setVideoFile] = useState<VideoFile | null>(null);
 
   const {
     register,
@@ -124,7 +125,10 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
   };
 
   const uploadFiles = async (data: IVideoForm) => {
-    const uploadedFiles = await minioService.upload(files);
+    const uploadedFiles = await minioService.upload([
+      imageFile as MinioFile,
+      videoFile as MinioFile,
+    ]);
     const attributes: (keyof IVideoForm)[] = ["thumbnail", "src"];
     attributes.forEach((attr) => {
       const url = getFile(uploadedFiles, attr)?.getFileURL();
@@ -133,15 +137,13 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
     return data;
   };
 
-  const thumbnailFile = getFile(files, "thumbnail");
-  const videolFile = getFile(files, "src");
   const thumbnailPreview =
     watchThumbnail ||
     video?.thumbnail ||
-    (thumbnailFile as ImageFile)?.getPreview() ||
+    imageFile?.getPreview() ||
     "https://i.stack.imgur.com/y9DpT.jpg";
 
-  const videoPreview = video?.src || (videolFile as VideoFile)?.getPreview();
+  const videoPreview = video?.src || videoFile?.getPreview();
 
   const onGoBack = () => history.goBack();
 
@@ -243,7 +245,7 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
       if (blob) {
         const file = new File([blob], `capture at ${video.currentTime}sec`);
         const minioFile = new ImageFile(file, "thumbnail");
-        setFiles([minioFile, ...files]);
+        setImageFile(minioFile);
       }
     });
   };
@@ -292,7 +294,7 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
               variants={fadeInDown}
               playerRef={player}
               getFrame={save}
-              videoPreview={videoPreview}
+              videoPreview={videoPreview as string}
             />
           </div>
         ) : null}
@@ -368,7 +370,7 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
           <>
             <UploadButton<ImageFile>
               uploadClass={ImageFile}
-              onFileUpload={(file) => setFiles([file, ...files])}
+              onFileUpload={(file) => setImageFile(file)}
               variants={fadeInDown}
               className="col-span-2 md:col-span-1"
               placeholder={t("videoManagement.inputs.thumbnailUpload")}
@@ -377,7 +379,7 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
             />
             <UploadButton<VideoFile>
               uploadClass={VideoFile}
-              onFileUpload={(file) => setFiles([file, ...files])}
+              onFileUpload={(file) => setVideoFile(file)}
               variants={fadeInDown}
               className="col-span-2"
               placeholder={t("videoManagement.inputs.videoUpload")}
