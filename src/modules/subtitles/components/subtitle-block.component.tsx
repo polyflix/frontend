@@ -90,7 +90,7 @@ export const SubtitleBlock: React.FC<SubtitleBlockProps> = ({
           className={cn(
             "flex flex-row box-border items-center justify-start group cursor-pointer pt-2 pb-2 w-full",
             isCurrent(block) &&
-              "border-l-2 border-nx-red pl-0 relative bg-light-black"
+              "border-l-2 border-nx-red pl-0 relative bg-darkgray"
           )}
           onClick={() => goToMilis(block.startTime)}
         >

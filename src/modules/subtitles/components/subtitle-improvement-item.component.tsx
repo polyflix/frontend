@@ -50,11 +50,12 @@ export const SubtitleImprovementItem: React.FC<SubtitleImprovementItemProps> =
     );
     const [isLiked, setIsLiked] = useState<boolean>(false);
 
-    const disableActions = useSelector(
-      (state: RootState) =>
-        state.subtitleImprovement.find((e) => e.timestamp === block.startTime)
-          ?.disableActions
-    );
+    const disableActions: boolean =
+      useSelector(
+        (state: RootState) =>
+          state.subtitleImprovement.find((e) => e.timestamp === block.startTime)
+            ?.disableActions
+      ) || false;
 
     const dispatch = useDispatch();
 
@@ -123,7 +124,7 @@ export const SubtitleImprovementItem: React.FC<SubtitleImprovementItemProps> =
     };
 
     return (
-      <div className="bg-light-black rounded w-full p-4 pb-6 box-border relative border-darkgray border-2">
+      <div className="bg-darkgray rounded w-full p-4 pb-6 box-border relative ">
         <Notification show={openDeleteConfirmation}>
           <div className="flex flex-col md:grid md:items-center md:grid-cols-12">
             <div className="col-span-10">
@@ -175,9 +176,10 @@ export const SubtitleImprovementItem: React.FC<SubtitleImprovementItemProps> =
                   <Menu.Button>
                     <Typography
                       as="span"
-                      className={
-                        "flex text-sm md:text-base hover:underline cursor-pointer hover:text-nx-red"
-                      }
+                      className={cn(
+                        "flex text-sm md:text-base hover:underline cursor-pointer hover:text-nx-red",
+                        disableActions && "opacity-50 pointer-events-none"
+                      )}
                     >
                       <DotsVerticalIcon className="w-4 md:w-5 mr-2 text-nx-red" />
                     </Typography>
@@ -194,7 +196,7 @@ export const SubtitleImprovementItem: React.FC<SubtitleImprovementItemProps> =
                   >
                     <Menu.Items
                       static
-                      className="absolute right-0 w-56 mt-2 p-1 origin-top-right bg-light-black border-darkgray border-2  divide-y divide-nx-dark rounded-md shadow-lg focus:outline-none z-10"
+                      className="absolute right-0 w-56 mt-2 p-1 origin-top-right bg-darkgray border-light-black border-2  divide-y divide-nx-dark rounded-md shadow-lg focus:outline-none z-10"
                     >
                       <div className="px-1 py-1 flex flex-col gap-4">
                         {user?.id === subtitleImprovement.createdBy?.id && (
@@ -209,7 +211,11 @@ export const SubtitleImprovementItem: React.FC<SubtitleImprovementItemProps> =
                                   )
                                 )
                               }
-                              className=" text-green-500 hover:text-green-700 p-2 w-full flex items-start gap-2"
+                              className={cn(
+                                " text-green-500 hover:text-green-700 p-2 w-full flex items-start gap-2",
+                                disableActions &&
+                                  "opacity-50 pointer-events-none"
+                              )}
                             >
                               <PencilIcon className="h-5 w-5" />
                               {t("shared.common.actions.edit")}
@@ -217,7 +223,11 @@ export const SubtitleImprovementItem: React.FC<SubtitleImprovementItemProps> =
                             <button
                               disabled={disableActions}
                               onClick={() => setOpenDeleteConfirmation(true)}
-                              className="text-nx-red-dark hover:text-nx-red p-2 w-full flex items-start gap-2"
+                              className={cn(
+                                "text-nx-red-dark hover:text-nx-red p-2 w-full flex items-start gap-2",
+                                disableActions &&
+                                  "opacity-50 pointer-events-none"
+                              )}
                             >
                               <TrashIcon className="h-5 w-5" />
                               {t("shared.common.actions.delete")}
@@ -229,7 +239,11 @@ export const SubtitleImprovementItem: React.FC<SubtitleImprovementItemProps> =
                             <Menu.Item>
                               <button
                                 disabled={disableActions}
-                                className="text-green-500 hover:text-green-700 p-2 w-full flex items-start gap-2"
+                                className={cn(
+                                  "text-green-500 hover:text-green-700 p-2 w-full flex items-start gap-2",
+                                  disableActions &&
+                                    "opacity-50 pointer-events-none"
+                                )}
                                 onClick={() => onApprove(true)}
                               >
                                 <CheckIcon className="h-5 w-5" />
@@ -239,7 +253,11 @@ export const SubtitleImprovementItem: React.FC<SubtitleImprovementItemProps> =
                             <Menu.Item>
                               <button
                                 disabled={disableActions}
-                                className="text-nx-red-dark hover:text-nx-red p-2 w-full flex items-start gap-2"
+                                className={cn(
+                                  "text-nx-red-dark hover:text-nx-red p-2 w-full flex items-start gap-2",
+                                  disableActions &&
+                                    "opacity-50 pointer-events-none"
+                                )}
                                 onClick={() => onApprove(false)}
                               >
                                 <XIcon className="h-5 w-5" />
@@ -264,7 +282,7 @@ export const SubtitleImprovementItem: React.FC<SubtitleImprovementItemProps> =
         <div className="flex flex-row gap-4 absolute -bottom-3 left-0 w-full px-4 box-border">
           <Button
             className={cn(
-              "bg-darkgray hover:bg-opacity-60",
+              "bg-light-black border-2 border-darkgray hover:bg-opacity-60",
               isLiked ? "text-blue-500" : "text-grey-500"
             )}
             disabled={disableActions}

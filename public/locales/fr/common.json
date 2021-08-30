@@ -55,10 +55,7 @@
     "navbar": {
       "signIn": "Se connecter",
       "signOut": "Se déconnecter",
-      "signUp": [
-        "Pas de compte ?",
-        "Inscrivez-vous dès maintenant"
-      ]
+      "signUp": ["Pas de compte ?", "Inscrivez-vous dès maintenant"]
     },
     "informations": {
       "publishedBy": "Publié par {{user}}"
@@ -133,10 +130,7 @@
         "description": "Entrez vos identifiants pour vous connecter à votre compte"
       },
       "action": "Se connecter",
-      "footer": [
-        "Nouveau sur Polyflix ?",
-        "Inscrivez-vous dès maintenant"
-      ],
+      "footer": ["Nouveau sur Polyflix ?", "Inscrivez-vous dès maintenant"],
       "error": "Adresse e-mail ou mot de passe invalide"
     },
     "signUp": {
@@ -159,10 +153,7 @@
         }
       },
       "action": "S'inscrire",
-      "footer": [
-        "Déjà inscrit sur Polyflix ?",
-        "Connectez-vous ici"
-      ],
+      "footer": ["Déjà inscrit sur Polyflix ?", "Connectez-vous ici"],
       "error": "Adresse e-mail déjà utilisée",
       "accountValidation": {
         "description": [
@@ -535,6 +526,10 @@
     }
   },
   "subtitleImprovement": {
+    "header": {
+      "title": "Amélioration colaboraire de sous-titres",
+      "description": "Ici vous pouvez proposer des améliorations pour les sous-titres."
+    },
     "content": {
       "approve": "Approver",
       "disapprove": "Désapprouver"
