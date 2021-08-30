@@ -17,7 +17,8 @@ export const FilledButton: React.FC<PropsWithChildren<ButtonProps>> = ({
         disabled
           ? "bg-nx-dark bg-opacity-40 cursor-not-allowed"
           : "bg-nx-red transition-colors hover:bg-nx-red-dark",
-        "text-white"
+        "text-white",
+        "border-2 border-nx-red hover:border-nx-red-dark"
       )}
       {...rest}
       as={as}

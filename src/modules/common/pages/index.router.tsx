@@ -1,24 +1,25 @@
+import { useInjection } from "@polyflix/di";
 import { AnimatePresence } from "framer-motion";
 import React from "react";
 import { Route, Switch, useLocation } from "react-router-dom";
 import { useAuth } from "../../authentication/hooks/useAuth.hook";
 import { AuthRouter } from "../../authentication/pages/auth.router";
 import { AuthService } from "../../authentication/services/auth.service";
-import { useInjection } from "@polyflix/di";
+import { CollectionRouter } from "../../collections/pages/collection.router";
+import { CourseRouter } from "../../courses/pages";
+import { GroupsRouter } from "../../groups/pages/groups.router";
+import { PathRouter } from "../../paths/pages";
+import { QuizzesRouter } from "../../quizzes/pages/quizzes.router";
+import { SubtitleRouter } from "../../subtitles/pages/subtitle.router";
 import { Spinner } from "../../ui/components/Spinner/Spinner.component";
 import { ProfileRouter } from "../../users/pages/profile.router";
 import { VideoRouter } from "../../videos/pages/video.router";
-import { CollectionRouter } from "../../collections/pages/collection.router";
 import { ProtectedRoute } from "../components/ProtectedRoute/ProtectedRoute.component";
-import { NotFoundPage } from "./404.page";
-import { HomePage } from "./home.page";
 import { useServerState } from "../hooks/useServerState.hook";
 import { ServerState } from "../types/serverState.type";
+import { NotFoundPage } from "./404.page";
 import { ServerUnavailablePage } from "./503.page";
-import { PathRouter } from "../../paths/pages";
-import { CourseRouter } from "../../courses/pages";
-import { GroupsRouter } from "../../groups/pages/groups.router";
-import { SubtitleRouter } from "../../subtitles/pages/subtitle.router";
+import { HomePage } from "./home.page";
 
 export const IndexRouter: React.FC = () => {
   const { isAuthenticated, isLoading, hasRefresh } = useAuth();
@@ -27,6 +28,7 @@ export const IndexRouter: React.FC = () => {
   const location = useLocation();
 
   const authService = useInjection<AuthService>(AuthService);
+
   if (!isAuthenticated && !hasRefresh) {
     authService.refreshAuth();
   }
@@ -93,6 +95,12 @@ export const IndexRouter: React.FC = () => {
             path="/courses"
             redirectPath="/auth/login"
             component={CourseRouter}
+          />
+          <ProtectedRoute
+            hasAccessIf={isAuthenticated}
+            path="/quizzes"
+            redirectPath="/auth/login"
+            component={QuizzesRouter}
           />
           <ProtectedRoute
             hasAccessIf={isAuthenticated}

@@ -1,0 +1,179 @@
+{
+  "actions": {
+    "create": "Create",
+    "update": "Update"
+  },
+  "status": {
+    "label": "Status",
+    "draft": {
+      "label": "Draft",
+      "description": "Your resource will not be accessible by other users."
+    },
+    "published": {
+      "label": "Published",
+      "description": "Your resource will be accessible by other users."
+    },
+    "actions": {
+      "switch": "Click to change"
+    }
+  },
+  "visibility": {
+    "label": "Visibility",
+    "public": {
+      "label": "Public",
+      "description": "Your resource will be accessible by everyone."
+    },
+    "private": {
+      "label": "Private",
+      "description": "Your resource will be accessible only by you."
+    },
+    "protected": {
+      "label": "Protected",
+      "description": "Your resource will be accessible by everyone who have the password."
+    }
+  },
+  "quizzes": {
+    "seo": {
+      "global": {
+        "title": "Quizzes"
+      },
+      "user": {
+        "title": "My quizzes"
+      },
+      "history": {
+        "title": "Quizzes - History"
+      },
+      "createUpdate": {
+        "create": "Create a quizz",
+        "update": "Update the quizz {{quizz}}"
+      }
+    },
+    "global": {
+      "search": "Search a quizz by name or author",
+      "description": "Find below all the quizzes. You can search for a quizz by its name or by the name of the person who published it."
+    },
+    "results": {
+      "title": "Results - {{quizzName}}",
+      "search": "Search by user",
+      "description": "Here are the results of your quizz. It is possible to search for a result by user by using the search bar below."
+    },
+    "attempts": {
+      "noData": "No attempts found."
+    },
+    "filters": {
+      "name": "Name",
+      "visibility": {
+        "label": "Visibility",
+        "public": "Public",
+        "private": "Private",
+        "protected": "Protected"
+      },
+      "status": {
+        "draft": "Draft",
+        "published": "Published"
+      }
+    },
+    "history": {
+      "description": "Below you will find the history of your attempts for a quizz. If you're the quizz creator, you will also have access to the attempts of other users.",
+      "attempt": {
+        "date": {
+          "format": "[the] MM/DD/YYYY [at] HH:mm A",
+          "text": {
+            "me": "You made an attempt",
+            "user": "{{user}} made an attempt"
+          }
+        }
+      }
+    },
+    "modal": {
+      "delete": {
+        "title": "Are you sure ?",
+        "description": "Your quizz will be deleted and attempts did by users also.",
+        "cancel": "Cancel",
+        "confirm": "Delete"
+      }
+    },
+    "jumbotron": {
+      "create": "Create a Quizz",
+      "import": "Import from file",
+      "history": "Go to my history",
+      "description": "Below the list of your quizzes. On this page you can create a brand new quizz from scratch, or import it from a file. You can access to your quizz history to see your latest attempts."
+    },
+    "card": {
+      "me": "you",
+      "new": "New",
+      "user": "Created by",
+      "date": {
+        "format": "[the] MM/DD/YYYY [at] HH:mm A",
+        "updatedAt": "Last updated"
+      },
+      "questions": "This quizz is composed  of {{questions}} question(s).",
+      "remainingAttempts": {
+        "no-more": "You have used up all your attempts for this quizz.",
+        "basic": "You have {{remainingAttempts}} remaining attempts for this quizz."
+      }
+    },
+    "import": {
+      "title": "Import a Quizz",
+      "subtitle": "Here you can import a Quizz from a file. See the example below for the file format. When you've selected your file, you'll have to validate that your file is correct (to avoid errors), and click on import. You'll be redirected on the Quizz form creation, with all fields pre-filled.",
+      "file": {
+        "label": "File",
+        "noFile": "You haven't uploaded your file yet.",
+        "validate": "Validate"
+      },
+      "example": {
+        "label": "Example",
+        "description": "Below an example of the accepted format for your Quizz file. There are some rules to respect :",
+        "rules": {
+          "delimiter": "Each question should be delimited by \"---\"",
+          "alternatives": "Each question can have up to 4 alternatives (A, B, C, D), but only 2 are required (A, B).",
+          "answers": "Your question can have multiple answers. Simply delimit them with a comma. (Answer: A,D)"
+        }
+      }
+    },
+    "form": {
+      "title": "Create a new quizz",
+      "subtitle": {
+        "create": "Fill the form below to create a new Quizz.",
+        "update": "Change values in the form below to update your quizz."
+      },
+      "placeholders": {
+        "name": "Name of the Quizz",
+        "allowedRetries": "Allowed retries",
+        "question": "Enter your question here",
+        "alternative": "Alternative",
+        "required": "required"
+      },
+      "hints": {
+        "name": "The Quizz name will be displayed in the application.",
+        "allowedRetries": "The number of attempts allowed per user. If the number of attempts is greater than 1, the user's score on the quizz will be the average of all those attempts."
+      },
+      "errors": {
+        "questions": {
+          "noCorrectAlternatives": "One or more questions are not valid. Please review your questions and re-submit the form. Each question should have at least 2 alternatives, with one correct."
+        },
+        "name": {
+          "empty": "The name of the Quizz cannot be empty."
+        },
+        "allowedRetries": {
+          "min": "The number of allowed retries must be greater than or equal to 1."
+        }
+      },
+      "questions": {
+        "add": "Add a question",
+        "description": "Below you can add questions to your quizz. To be valid, each question must have at least 2 alternatives, one of which must be correct. Each quizz must be composed of at least 1 question."
+      },
+      "keepHighestScore": {
+        "label": "Score",
+        "mean": {
+          "label": "Mean",
+          "description": "The score will be computed as the mean of the attempts score for a user."
+        },
+        "max": {
+          "label": "Maximum",
+          "description": "The score retained will be the maximum obtained on the various attempts for a user."
+        }
+      }
+    }
+  }
+}
