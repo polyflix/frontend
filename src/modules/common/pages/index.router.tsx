@@ -19,12 +19,12 @@ import { useServerState } from "../hooks/useServerState.hook";
 import { ServerState } from "../types/serverState.type";
 import { NotFoundPage } from "./404.page";
 import { ServerUnavailablePage } from "./503.page";
-import { HomePage } from "./home.page";
+import ValidatePage from "../../authentication/pages/validate.page";
+import { HomePage } from ".";
 
 export const IndexRouter: React.FC = () => {
-  const { isAuthenticated, isLoading, hasRefresh } = useAuth();
+  const { isAuthenticated, isLoading, hasRefresh, user } = useAuth();
   const serverState = useServerState();
-
   const location = useLocation();
 
   const authService = useInjection<AuthService>(AuthService);
@@ -35,6 +35,18 @@ export const IndexRouter: React.FC = () => {
 
   if (serverState === ServerState.OFFLINE) return <ServerUnavailablePage />;
 
+  const redirectPath = !isAuthenticated
+    ? "/auth/login"
+    : !user?.isAccountActivated
+    ? "/auth/validate"
+    : "/";
+  const hasAccessIf = isLoading
+    ? false
+    : isAuthenticated && (user?.isAccountActivated || false);
+  const commonProps = {
+    hasAccessIf,
+    redirectPath,
+  };
   return (
     <AnimatePresence exitBeforeEnter>
       {isLoading && (
@@ -46,66 +58,64 @@ export const IndexRouter: React.FC = () => {
           key={`${location.pathname}${location.search}`}
         >
           <ProtectedRoute
-            hasAccessIf={isAuthenticated}
+            path="/auth/:confirmUserAccountId?/validate"
+            {...{
+              ...commonProps,
+              hasAccessIf: isAuthenticated && !user?.isAccountActivated,
+            }}
+            component={ValidatePage}
+          />
+          <ProtectedRoute
             exact
             path="/"
-            redirectPath="/auth/login"
+            {...commonProps}
             component={HomePage}
           />
           <ProtectedRoute
-            hasAccessIf={!isAuthenticated}
-            redirectPath="/"
+            {...{ ...commonProps, hasAccessIf: !isAuthenticated }}
             path="/auth"
             component={AuthRouter}
           />
           <ProtectedRoute
-            hasAccessIf={isAuthenticated}
             path="/profile"
-            redirectPath="/auth/login"
+            {...commonProps}
             component={ProfileRouter}
           />
           <ProtectedRoute
-            hasAccessIf={isAuthenticated}
             path="/groups"
-            redirectPath="/auth/login"
+            {...commonProps}
             component={GroupsRouter}
           />
 
           <ProtectedRoute
-            hasAccessIf={isAuthenticated}
             path="/(watch|videos)"
-            redirectPath="/auth/login"
+            {...commonProps}
             component={VideoRouter}
           />
 
           <ProtectedRoute
-            hasAccessIf={isAuthenticated}
             path="/collections"
-            redirectPath="/auth/login"
+            {...commonProps}
             component={CollectionRouter}
           />
           <ProtectedRoute
-            hasAccessIf={isAuthenticated}
             path="/paths"
-            redirectPath="/auth/login"
+            {...commonProps}
             component={PathRouter}
           />
           <ProtectedRoute
-            hasAccessIf={isAuthenticated}
             path="/courses"
-            redirectPath="/auth/login"
+            {...commonProps}
             component={CourseRouter}
           />
           <ProtectedRoute
-            hasAccessIf={isAuthenticated}
+            {...commonProps}
             path="/quizzes"
-            redirectPath="/auth/login"
             component={QuizzesRouter}
           />
           <ProtectedRoute
-            hasAccessIf={isAuthenticated}
+            {...commonProps}
             path="/subtitle-editing"
-            redirectPath="/auth/login"
             component={SubtitleRouter}
           />
           <Route component={NotFoundPage} />

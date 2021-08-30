@@ -76,6 +76,12 @@ export const authReducer = (
         ...action.payload,
         isLoading: false,
       };
+    case AuthActions.VALIDATE_ACCOUNT:
+      return {
+        ...state,
+        ...action.payload,
+      };
+
     default:
       return state;
   }

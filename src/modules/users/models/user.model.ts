@@ -30,6 +30,17 @@ export class User {
     );
   }
 
+  public toJson(): IUser {
+    return {
+      id: this._id || "",
+      email: this._email,
+      firstName: this._firstName,
+      lastName: this._lastName,
+      isAccountActivated: this._isAccountActivated,
+      isAdmin: this._isAdmin,
+    };
+  }
+
   /**
    * Return the id of the user.
    * @returns {string} the id of the user

@@ -55,7 +55,10 @@
     "navbar": {
       "signIn": "Se connecter",
       "signOut": "Se déconnecter",
-      "signUp": ["Pas de compte ?", "Inscrivez-vous dès maintenant"]
+      "signUp": [
+        "Pas de compte ?",
+        "Inscrivez-vous dès maintenant"
+      ]
     },
     "informations": {
       "publishedBy": "Publié par {{user}}"
@@ -130,7 +133,10 @@
         "description": "Entrez vos identifiants pour vous connecter à votre compte"
       },
       "action": "Se connecter",
-      "footer": ["Nouveau sur Polyflix ?", "Inscrivez-vous dès maintenant"],
+      "footer": [
+        "Nouveau sur Polyflix ?",
+        "Inscrivez-vous dès maintenant"
+      ],
       "error": "Adresse e-mail ou mot de passe invalide"
     },
     "signUp": {
@@ -153,8 +159,24 @@
         }
       },
       "action": "S'inscrire",
-      "footer": ["Déjà inscrit sur Polyflix ?", "Connectez-vous ici"],
-      "error": "Adresse e-mail déjà utilisée"
+      "footer": [
+        "Déjà inscrit sur Polyflix ?",
+        "Connectez-vous ici"
+      ],
+      "error": "Adresse e-mail déjà utilisée",
+      "accountValidation": {
+        "description": [
+          "Votre compte n'a pas encore été activé",
+          "Un lien d'activation a été envoyé sur votre boîte mail",
+          "Si vous ne l'avez pas reçu, pensez à verifier vos spams"
+        ],
+        "title": "Activation du compte",
+        "action": "Renvoyer le mail d'activation",
+        "error": [
+          "Une erreur est survenue lors de l'activation de votre compte",
+          "Si le mail d'activation de votre compte ne fonctionne pas, nous pouvons vous en envoyer un nouveau"
+        ]
+      }
     }
   },
   "userProfile": {
