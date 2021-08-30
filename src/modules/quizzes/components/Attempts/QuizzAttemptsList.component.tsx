@@ -1,9 +1,9 @@
 import { AnimateSharedLayout, motion } from "framer-motion";
 import { isEmpty } from "lodash";
-import { useTranslation } from "react-i18next";
 import { useAuth } from "../../../authentication";
 import { Attempt } from "../../models/attempt.model";
 import { Quizz } from "../../models/quizz.model";
+import { QuizzNoData } from "../QuizzNoData/QuizzNoData.component";
 import { QuizzAttemptListItem } from "./QuizzAttemptListItem.component";
 
 type Props = {
@@ -12,16 +12,11 @@ type Props = {
 };
 
 export const QuizzAttemptsList = ({ attempts, quizz }: Props) => {
-  const { t } = useTranslation("resources");
   const { user } = useAuth();
   const data = attempts || [];
   return (
     <AnimateSharedLayout>
-      {isEmpty(data) && (
-        <div className="bg-darkgray mb-5 rounded-md p-5">
-          {t("quizzes.attempts.noData")}
-        </div>
-      )}
+      {isEmpty(data) && <QuizzNoData />}
       <motion.div layout>
         {data.map((attempt, idx) => {
           const isLast = idx === quizz!.attempts.length - 1;

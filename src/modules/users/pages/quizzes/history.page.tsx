@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../../../authentication";
 import { QuizzListItem } from "../../../quizzes/components/QuizzListItem/QuizzListItem.component";
+import { QuizzNoData } from "../../../quizzes/components/QuizzNoData/QuizzNoData.component";
 import { QuizzFilters } from "../../../quizzes/filters/quizz.filter";
 import { useQuizzes } from "../../../quizzes/hooks/useQuizzes.hook";
 import { Quizz } from "../../../quizzes/models/quizz.model";
@@ -57,19 +58,23 @@ export const QuizzesHistoryPage: React.FC = () => {
           />
         </div>
         <div className="text-nx-white">
-          {data?.data.map((quizz: Quizz, idx) => (
-            <span key={idx}>
-              <QuizzListItem
-                displayPublisher
-                displayAttempts
-                displayLastUpdate={false}
-                quizz={quizz}
-              />
-              {idx !== data.data.length - 1 && (
-                <div className="w-96 my-16 mx-auto h-1 bg-lightgray" />
-              )}
-            </span>
-          ))}
+          {data?.data && data.total > 0 ? (
+            data?.data.map((quizz: Quizz, idx) => (
+              <span key={idx}>
+                <QuizzListItem
+                  displayPublisher
+                  displayAttempts
+                  displayLastUpdate={false}
+                  quizz={quizz}
+                />
+                {idx !== data.data.length - 1 && (
+                  <div className="w-96 my-16 mx-auto h-1 bg-lightgray" />
+                )}
+              </span>
+            ))
+          ) : (
+            <QuizzNoData />
+          )}
         </div>
         <div className="flex justify-center mt-6">
           <Pagination

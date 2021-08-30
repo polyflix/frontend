@@ -10,6 +10,7 @@ import { Jumbotron } from "../../ui/components/Jumbotron/Jumbotron.component";
 import { Page } from "../../ui/components/Page/Page.component";
 import { SearchBar } from "../../ui/components/SearchBar/SearchBar.component";
 import { QuizzListItem } from "../components/QuizzListItem/QuizzListItem.component";
+import { QuizzNoData } from "../components/QuizzNoData/QuizzNoData.component";
 import { QuizzFilters } from "../filters/quizz.filter";
 import { useQuizzes } from "../hooks/useQuizzes.hook";
 import { Quizz } from "../models/quizz.model";
@@ -106,18 +107,24 @@ export const QuizzesPage: React.FC = () => {
         </div>
         <AnimateSharedLayout>
           <motion.div layout className="grid group grid-cols-12 gap-8">
-            {data?.data.map((quizz: Quizz) => (
-              <motion.div layout key={quizz.id} className="col-span-6">
-                <QuizzListItem
-                  displayTags
-                  displayNumberOfQuestions
-                  displayRemainingAttempts={false}
-                  displayScore={false}
-                  displayPublisher
-                  quizz={quizz}
-                />
+            {data?.data && data.total > 0 ? (
+              data.data.map((quizz: Quizz) => (
+                <motion.div layout key={quizz.id} className="col-span-6">
+                  <QuizzListItem
+                    displayTags
+                    displayNumberOfQuestions
+                    displayRemainingAttempts={false}
+                    displayScore={false}
+                    displayPublisher
+                    quizz={quizz}
+                  />
+                </motion.div>
+              ))
+            ) : (
+              <motion.div layout className="col-span-12">
+                <QuizzNoData />
               </motion.div>
-            ))}
+            )}
           </motion.div>
         </AnimateSharedLayout>
 

@@ -8,6 +8,7 @@ import { useAuth } from "../../../authentication";
 import { cn } from "../../../common";
 import { Visibility } from "../../../common/types/crud.type";
 import { QuizzListItem } from "../../../quizzes/components/QuizzListItem/QuizzListItem.component";
+import { QuizzNoData } from "../../../quizzes/components/QuizzNoData/QuizzNoData.component";
 import { QuizzFilters } from "../../../quizzes/filters/quizz.filter";
 import { useQuizzes } from "../../../quizzes/hooks/useQuizzes.hook";
 import { Quizz } from "../../../quizzes/models/quizz.model";
@@ -191,22 +192,26 @@ export const UserQuizzesPage: React.FC = () => {
             layout
             className="text-nx-white group col-span-12 md:col-span-9"
           >
-            {data?.data.map((quizz: Quizz) => (
-              <motion.div layout key={quizz.id}>
-                <QuizzListItem
-                  onDelete={() => refresh(false)}
-                  displayRemainingAttempts={false}
-                  displayScore={false}
-                  displayNumberOfQuestions
-                  displayCrudButtons={quizz.isCreator(user!)}
-                  quizz={quizz}
-                />
-                <div className="mt-6" />
-              </motion.div>
-            ))}
+            {data?.data && data.total > 0 ? (
+              data?.data.map((quizz: Quizz) => (
+                <motion.div layout key={quizz.id}>
+                  <QuizzListItem
+                    onDelete={() => refresh(false)}
+                    displayRemainingAttempts={false}
+                    displayScore={false}
+                    displayNumberOfQuestions
+                    displayCrudButtons={quizz.isCreator(user!)}
+                    quizz={quizz}
+                  />
+                  <div className="mt-6" />
+                </motion.div>
+              ))
+            ) : (
+              <QuizzNoData />
+            )}
           </motion.div>
         </AnimateSharedLayout>
-
+        )
         <div className="col-span-12 items-center flex justify-center">
           <Pagination
             limit={filters.limit}
