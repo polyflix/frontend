@@ -13,7 +13,11 @@ import { VideoTile } from "../../videos/components/VideoTile/VideoTile.component
 import { useVideos } from "../../videos/hooks/useVideos.hook";
 
 export const HomePage: React.FC = () => {
-  const { data, isLoading } = useVideos({ isPublic: true, isPublished: true });
+  const { data, isLoading } = useVideos({
+    isPublic: true,
+    isPublished: true,
+    order: "-views",
+  });
   let { data: watchedVideos, isLoading: isLoadingWatched } = useVideos({
     isWatched: true,
   });
