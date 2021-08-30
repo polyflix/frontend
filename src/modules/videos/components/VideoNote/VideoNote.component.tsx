@@ -1,7 +1,7 @@
-import { useInjection } from "@polyflix/di";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-import SimpleMdeReact from "react-simplemde-editor";
+import { useInjection } from "@polyflix/di";
 import { Video } from "../../models/video.model";
+import SimpleMdeReact from "react-simplemde-editor";
 import { NoteService } from "../../services/note.service";
 
 type Props = {
@@ -97,7 +97,7 @@ export const VideoNote: React.FC<Props> = ({ video }) => {
   return (
     <div id="FrameworkEditorContainer" className="relative prose max-w-none">
       <i
-        className={`absolute inset-y-4 right-4 fa fab fa-save ${
+        className={`absolute z-30 inset-y-4 right-4 fa fab fa-save ${
           isUnsavedChange ? "text-nx-red" : "text-grey-500"
         }`}
       ></i>
