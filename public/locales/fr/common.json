@@ -1,4 +1,11 @@
 {
+  "forbidden": {
+    "content": {
+      "title": "Accès refusé",
+      "description": "Vous n'êtes pas autorisé à consulter cette page.",
+      "goback": "Revenir en arrière"
+    }
+  },
   "shared": {
     "common": {
       "actions": {

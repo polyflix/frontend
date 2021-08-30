@@ -9,4 +9,4 @@ export const getColor = (scorePercentage: number) => {
 };
 
 export const asPercentage = (score: number, max: number): number =>
-  (score * 100) / max;
+  +((score * 100) / max).toFixed(2);

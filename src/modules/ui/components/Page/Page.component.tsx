@@ -1,10 +1,12 @@
 import { motion } from "framer-motion";
+import { isUndefined } from "lodash";
 import React, { PropsWithChildren } from "react";
 import { Helmet } from "react-helmet";
 import {
   Navigation,
   NAV_HEIGHT,
 } from "../../../common/components/Navigation/Navigation.component";
+import { ForbiddenPage } from "../../../common/pages/403.page";
 import {
   WithClassname,
   WithMotion,
@@ -24,6 +26,7 @@ type Props = WithMotion &
     withNavbar?: boolean;
     /** If true, the navbar will be animated on exit */
     animateNavbarExit?: boolean;
+    guard?: boolean;
   };
 
 /**
@@ -37,6 +40,7 @@ export const Page: React.FC<PropsWithChildren<Props>> = ({
   title,
   description = "",
   isLoading = false,
+  guard,
   ...rest
 }) => {
   window.scrollTo(0, 0);
@@ -60,6 +64,8 @@ export const Page: React.FC<PropsWithChildren<Props>> = ({
       >
         {isLoading ? (
           <Spinner page style={{ height: `calc(100vh - ${NAV_HEIGHT}px)` }} />
+        ) : !isUndefined(guard) && !guard ? (
+          <ForbiddenPage />
         ) : (
           children
         )}

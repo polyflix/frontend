@@ -12,6 +12,7 @@ import { QuizzAttemptsList } from "../components/Attempts/QuizzAttemptsList.comp
 import { useQuizz } from "../hooks/useQuizz.hook";
 import { useQuizzAttempts } from "../hooks/useQuizzAttempts.hook";
 import { CrudFilterService } from "../services/crud-filter.service";
+import { useAuth } from "../../authentication/hooks";
 
 const getSearchByName = (value: string) => [
   {
@@ -27,13 +28,14 @@ const getSearchByName = (value: string) => [
 ];
 
 export const QuizzResultsPage = () => {
+  const { user } = useAuth();
   const { id } = useParams<{ id: string }>();
   const { t } = useTranslation("resources");
 
   const [filters, setFilters] = useState<QueryFilter>({});
 
   const { data: quizz, isLoading: isQuizzLoading } = useQuizz(id, {
-    join: ["questions"],
+    join: ["questions", { field: "user", select: ["firstName", "lastName"] }],
   });
 
   // Fetch attempts for the quizz, we have to do another request in order to be able to paginate this.
@@ -60,6 +62,7 @@ export const QuizzResultsPage = () => {
     <Page
       isLoading={isQuizzLoading || isAttemptsLoading}
       variants={fadeOpacity}
+      guard={quizz && quizz.isCreator(user!)}
       title={t("quizzes.results.title", { quizzName: quizz?.name })}
     >
       <Container
@@ -108,7 +111,8 @@ export const QuizzResultsPage = () => {
         </div>
 
         <QuizzAttemptsList attempts={attempts?.data} quizz={quizz} />
-        <div className="flex items-center justify-center">
+
+        <div className="flex items-center justify-center mt-4">
           <Pagination
             limit={filters.limit || 10}
             totalRecords={attempts?.total || 1}
