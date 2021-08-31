@@ -16,7 +16,6 @@ import { useVideos } from "../../../videos/hooks/useVideos.hook";
 import { Video } from "../../../videos/models/video.model";
 import { VideoService } from "../../../videos/services/video.service";
 import { useUser } from "../../hooks/useUser.hook";
-import { Image } from "../../../ui";
 
 export const UserVideosPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
