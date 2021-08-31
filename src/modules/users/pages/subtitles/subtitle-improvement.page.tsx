@@ -148,7 +148,7 @@ export const UserSubtitleImprovement: React.FC = () => {
             )}
         </>
       ) : (
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-4 mt-5">
           <GhostTitle className="w-11/12 lg:w-1/3 mb-4 h-6" />
           <div className="flex flex-col lg:flex-row gap-4">
             <div className="flex flex-col gap-4 justify-start">
@@ -277,7 +277,7 @@ export const UserSubtitleImprovementVideo: React.FC = () => {
             )}
         </>
       ) : (
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-4 mt-16">
           <GhostTitle className="w-11/12 lg:w-1/3 mb-4 h-6" />
           <div className="flex flex-col lg:flex-row gap-4">
             <div className="flex flex-col gap-4 justify-start">

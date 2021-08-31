@@ -7,18 +7,17 @@ import {
   ThumbUpIcon,
   TrashIcon,
   UserIcon,
-} from '@heroicons/react/outline';
-import React, { useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { cn } from '../../../common/utils/classes.util';
-import { Alert } from '../../../ui/components/Alert/Alert.component';
-import { Image } from '../../../ui/components/Image/Image.component';
-import { Notification } from '../../../ui/components/Notification/Notification.component';
-import { Paragraph } from '../../../ui/components/Typography/Paragraph/Paragraph.component';
-import { Typography } from '../../../ui/components/Typography/Typography.component';
-import { Video } from '../../models/video.model';
-import { VideoListItemOptions } from './VideoListItemOptions.component';
-import { ActionLink } from '../../../common/components/ActionLink.component';
+} from "@heroicons/react/outline";
+import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
+import { cn } from "../../../common/utils/classes.util";
+import { Alert } from "../../../ui/components/Alert/Alert.component";
+import { Image } from "../../../ui/components/Image/Image.component";
+import { Notification } from "../../../ui/components/Notification/Notification.component";
+import { Typography } from "../../../ui/components/Typography/Typography.component";
+import { Video } from "../../models/video.model";
+import { VideoListItemOptions } from "./VideoListItemOptions.component";
+import { ActionLink } from "../../../common/components/ActionLink.component";
 
 type Props = {
   video: Video
@@ -120,7 +119,7 @@ export const VideoListItem: React.FC<Props> = ({
             </div>
           )}
         </div>
-        <div className={`my-4 ${ownerItems ? 'flex' : 'hidden'} items-center`}>
+        <div className={`my-2 ${ownerItems ? "flex" : "hidden"} items-center`}>
           <Typography
             as="span"
             overrideDefaultClasses
@@ -180,8 +179,8 @@ export const VideoListItem: React.FC<Props> = ({
             {' '}
             {video.views}
           </Typography>
+          <div className="mx-2"></div>
 
-          <div className="mx-2" />
           <Typography
             as="span"
             overrideDefaultClasses
@@ -193,8 +192,7 @@ export const VideoListItem: React.FC<Props> = ({
             {video.likes}
           </Typography>
         </div>
-        <Paragraph className="mb-4">{video.shortDescription}</Paragraph>
-        <div className="flex items-center">
+        <div className="flex items-center my-2">
           {links && (
             <ActionLink
               Icon={PlayIcon}

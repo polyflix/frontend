@@ -59,7 +59,7 @@ export const Alert: React.FC<PropsWithChildren<Props>> = ({
       {...rest}
       className={cn(className, 'flex items-center', classes)}
     >
-      <Icon className="w-7" />
+      <Icon className="w-12" />
       <Typography as="span" className="text-sm ml-2">
         {children}
       </Typography>

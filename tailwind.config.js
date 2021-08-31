@@ -3,6 +3,9 @@ module.exports = {
   purge: ["./src/**/*.{js,jsx,ts,tsx}", "./public/index.html"],
   darkMode: "class", // or 'media' or 'class'
   theme: {
+    minWidth: {
+      pagination: "3rem",
+    },
     fontFamily: {
       jakarta: ["Jakarta"],
     },
@@ -26,6 +29,8 @@ module.exports = {
         "nx-white": "#F5F5F1",
         "nx-gray": "#cdcaca",
         darkgray: "#161616",
+        lightgray: "#949495",
+        "light-black": "#0b0b0b",
       },
       screens: {
         portrait: { raw: "(orientation: portrait)" },
@@ -39,11 +44,14 @@ module.exports = {
   variants: {
     extend: {
       translate: ["group-hover"],
+      borderStyle: ["hover"],
+      width: ["hover"],
+      opacity: ["group-hover"],
     },
   },
   plugins: [
-    require("@tailwindcss/forms"),
     require("@tailwindcss/line-clamp"),
     require("@tailwindcss/typography"),
+    require('@tailwindcss/aspect-ratio'),
   ],
 };

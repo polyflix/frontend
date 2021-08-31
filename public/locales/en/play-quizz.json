@@ -1,0 +1,40 @@
+{
+  "noAttempts": {
+    "title": "This quizz is no longer available to you",
+    "description": "You have used all your attempts for this quiz. You can find your score in your history."
+  },
+  "questions": {
+    "next": "Next question",
+    "previous": "Previous question",
+    "terminate": "Terminate the quizz"
+  },
+  "onboarding": {
+    "title": "Ready ?",
+    "description": {
+      "head": "You're about to start an attempt for the following quizz : {{quizzName}}.",
+      "explanations": "This quiz is composed of {{questions}} question(s). Each question can have one or more correct answers. Wrong answers do not count as a penalty. When you have finished answering the questions, you will have access to a list of questions with your answers to check before validating.",
+      "score": "Once you have completed your attempt, you will be given a score. If the quiz accepts multiple attempts, your score will be the average of the scores from all your attempts.",
+      "limit": "This quiz is limited to {{retries}} attempt(s)."
+    },
+    "warning": "Be careful, if you leave or refresh the page, all your progress will be lost. Once the attempt is launched, it is not possible to go back."
+  },
+  "recap": {
+    "title": "Recap",
+    "description": "Below is a summary of your answers for this quizz. Take the time you need to review and correct if necessary. Once everything is ok, click on the submit button at the bottom of the page to submit your attempt and get your score.",
+    "validate": "Validate",
+    "updateAnswers": "Modify my answers",
+    "validationMessage": "By clicking on validate, your attempt will be saved. It will not be possible to go back."
+  },
+  "results": {
+    "title": {
+      "disappointing": "Disappointing...",
+      "good": "Good, but you can do better!",
+      "excellent": "Excellent !"
+    },
+    "description": "This attempt is now recorded and the quizz creator will be able to see your result. You will also be able to view your attempt(s) at any time in your profile or by clicking on the link below.",
+    "actions": {
+      "back-to-list": "Back to the quizzes's list",
+      "view-history": "Go to my history"
+    }
+  }
+}

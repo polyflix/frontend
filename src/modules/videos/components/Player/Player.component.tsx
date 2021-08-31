@@ -12,17 +12,17 @@ import {
   Poster,
   Ui,
   Youtube,
-} from '@vime/react';
-import { useInjection } from '@polyflix/di';
-import { VttFile } from '@polyflix/vtt-parser';
-import { Subtitle } from '../../models/subtitle.model';
-import { useAuth } from '../../../authentication';
-import { WatchtimeSyncService } from '../../../stats/services/watchtime-sync.service';
-import { VideoSource } from '../../types';
-import { MinioService } from '../../../upload/services/minio.service';
-import { ErrorCard } from '../../../common/components/ErrorCard/ErrorCard.component';
-import { Track } from '../../types/track.type';
-import { Video } from '../../models';
+} from "@vime/react";
+import { useAuth } from "../../../authentication";
+import { useInjection } from "@polyflix/di";
+import { WatchtimeSyncService } from "../../../stats/services/watchtime-sync.service";
+import { VideoSource } from "../../types";
+import { MinioService } from "../../../upload/services/minio.service";
+import { ErrorCard } from "../../../common/components/ErrorCard/ErrorCard.component";
+import { Track } from "../../types/track.type";
+import { Video } from "../../models";
+import { VttFile } from "@polyflix/vtt-parser";
+import { useStreamUrl } from "../../hooks/useStreamUrl.hook";
 
 type Props = {
   video: Video
@@ -40,58 +40,6 @@ const PLAYER_VOLUME_DOWN_STEP = 10;
 const PLAYER_VOLUME_UP_STEP = 10;
 const PLAYER_MOVE_FORWARD_STEP = 13;
 const PLAYER_MOVE_BACKWARD_STEP = 10;
-
-/**
- * Type used to fetch the stream Url
- */
-type streamUrlHookType = {
-  streamUrl?: string
-  error?: string
-  loading: boolean
-}
-
-/**
- * Inside hook in order to fetch a presigned URL for a video
- * @param {string} srcRaw -- Raw source of a video (youtube id, minio file path...)
- * @param {VideoSource} srcType -- KInd of video fetched (Youtube, internal...)
- * @param {src} src -- When youtube or unknown video, the streaming link can be formed instantly
- * @param {string} id -- Video ID
- */
-const useStreamUrl = ({
-  srcRaw,
-  srcType,
-  src,
-  id,
-}: Video): streamUrlHookType => {
-  const minioService = useInjection<MinioService>(MinioService);
-  const { isLoading: authLoading } = useAuth();
-  const [loading, setLoading] = useState<boolean>(true);
-  const [streamUrl, setStreamUrl] = useState<string | undefined>();
-  const [error, setError] = useState<string | undefined>();
-
-  /*
-   * Fetch a Presigned Url for a video
-   */
-  useEffect(() => {
-    if (authLoading || streamUrl) return;
-    if (srcType === VideoSource.YOUTUBE || srcType === VideoSource.UNKNOWN) {
-      setStreamUrl(src);
-      setLoading(false);
-      return;
-    }
-
-    minioService
-      .getVideoPresignedUrl(id)
-      .then(({ tokenAccess }) => {
-        setStreamUrl(tokenAccess);
-      })
-      .catch((err) => {
-        setError(err);
-      })
-      .finally(() => setLoading(false));
-  }, [authLoading, id, loading, streamUrl, minioService, srcType, src, srcRaw]);
-  return { streamUrl, error, loading };
-};
 
 type UseSubtitlesProps = {
   subtitles?: Subtitle[]

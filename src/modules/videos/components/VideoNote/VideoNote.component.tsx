@@ -1,11 +1,8 @@
-import React, {
-  useCallback, useEffect, useMemo, useState,
-} from 'react';
-import { useInjection } from '@polyflix/di';
-import SimpleMdeReact from 'react-simplemde-editor';
-import { Video } from '../../models/video.model';
-import 'easymde/dist/easymde.min.css';
-import { NoteService } from '../../services/note.service';
+import React, { useCallback, useEffect, useMemo, useState } from "react";
+import { useInjection } from "@polyflix/di";
+import { Video } from "../../models/video.model";
+import SimpleMdeReact from "react-simplemde-editor";
+import { NoteService } from "../../services/note.service";
 
 type Props = {
   video?: Video | null
@@ -28,7 +25,6 @@ export const VideoNote: React.FC<Props> = ({ video }) => {
     noteService
       .getNote(video!.id)
       .then((data: any) => {
-        console.log(data);
         setValue(data.content);
       })
       .catch((err) => {
@@ -69,41 +65,42 @@ export const VideoNote: React.FC<Props> = ({ video }) => {
     return () => document.removeEventListener('keydown', keyboardListener);
   }, [keyboardListener]);
 
-  // Editor Options
-  const MDOptions = useMemo(() => ({
-    autoSave: false,
-    // uploadImage: true,
-    spellChecker: false,
-    sideBySideFullscreen: false,
-    minHeight: '550px',
-    toolbar: [
-        'bold' as const,
-        'italic' as const,
-        'heading' as const,
-        'code' as const,
-        '|' as const,
-        'quote' as const,
-        'unordered-list' as const,
-        'ordered-list' as const,
-        'table' as const,
-        '|' as const,
-        'link' as const,
-        'image' as const,
-        '|' as const,
-        'preview' as const,
-        '|' as const,
-        'guide' as const,
-        '|' as const,
-    ],
-  }), []);
+  //Editor Options
+  const MDOptions = useMemo(() => {
+    return {
+      autoSave: false,
+      // uploadImage: true,
+      spellChecker: false,
+      sideBySideFullscreen: false,
+      minHeight: "550px",
+      toolbar: [
+        "bold" as const,
+        "italic" as const,
+        "heading" as const,
+        "code" as const,
+        "|" as const,
+        "quote" as const,
+        "unordered-list" as const,
+        "table" as const,
+        "|" as const,
+        "link" as const,
+        "image" as const,
+        "|" as const,
+        "preview" as const,
+        "|" as const,
+        "guide" as const,
+        "|" as const,
+      ],
+    };
+  }, []);
 
   return (
     <div id="FrameworkEditorContainer" className="relative prose max-w-none">
       <i
-        className={`absolute inset-y-4 right-4 fa fab fa-save text-${
-          isUnsavedChange ? 'red' : 'grey'
-        }-500`}
-      />
+        className={`absolute z-30 inset-y-4 right-4 fa fab fa-save ${
+          isUnsavedChange ? "text-nx-red" : "text-grey-500"
+        }`}
+      ></i>
       <SimpleMdeReact
         id="note"
         value={value}

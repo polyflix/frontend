@@ -98,6 +98,13 @@ export const LoginForm: React.FC = () => {
           </Typography>
         </Link>
       </Paragraph>
+      <Paragraph variants={fadeInDown} className="mt-2">
+        <Link to="/auth/forgotten-password">
+          <Typography as="span" bold>
+            {t("auth.resetPassword.footer")}
+          </Typography>
+        </Link>
+      </Paragraph>
     </motion.div>
   );
 };

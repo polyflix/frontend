@@ -15,6 +15,18 @@
   }
 }
 
+@layer utilities {
+  @variants hover {
+    .opacity-important {
+      opacity: 1 !important;
+    }
+  }
+}
+
+@import "./fonts";
+@import "~@vime/core/themes/default.css";
+@import url("https://unpkg.com/easymde/dist/easymde.min.css");
+
 html {
   scroll-behavior: smooth;
 }
@@ -23,4 +35,8 @@ video {
   &:focus {
     outline: none;
   }
+}
+
+.editor-toolbar {
+  @apply bg-nx-white;
 }

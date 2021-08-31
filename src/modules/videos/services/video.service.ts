@@ -1,10 +1,11 @@
-import { Injectable } from '@polyflix/di'
-import { StatusCodes } from 'http-status-codes'
-import { HttpService } from '../../common/services/http.service'
-import { IVideoFilter, VideoFilter } from '../filters/video.filter'
-import { Video } from '../models/video.model'
-import { IVideoForm, VideosWithPagination } from '../types/videos.type'
-import { SubtitleService } from './subtitle.service'
+import { Injectable } from "@polyflix/di";
+import { StatusCodes } from "http-status-codes";
+import { HttpService } from "../../common/services/http.service";
+import { IVideoFilter, VideoFilter } from "../filters/video.filter";
+import { Video } from "../models/video.model";
+import { IVideoForm, VideosWithPagination } from "../types/videos.type";
+import { SubtitleService } from "./subtitle.service";
+import { youtube_v3 } from "googleapis";
 
 @Injectable()
 export class VideoService {
@@ -97,5 +98,21 @@ export class VideoService {
     }
 
     return Video.fromJson(response)
+  }
+
+  /**
+   * Find youtube video metadata.
+   * @param {string} id the youtube video id
+   * @returns {Promise<youtube_v3.Schema$Video>}
+   */
+  public async getVideoMetadata(id: string): Promise<youtube_v3.Schema$Video> {
+    const { status, response, error } = await this.httpService.get(
+      `/videos/metadata/${id}`
+    );
+    if (status !== StatusCodes.OK) {
+      throw error;
+    }
+
+    return response;
   }
 }

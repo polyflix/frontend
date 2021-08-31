@@ -15,8 +15,18 @@ import {
   RegisterFailureAction,
   RegisterInProgressAction,
   RegisterSuccessAction,
-} from '../redux/actions/auth.action'
-import { AuthAction, ILoginForm, IRegisterForm } from '../types/auth.type'
+  ValidateAccountAction,
+  ResetPasswordFailureAction,
+  ResetPasswordInProgressAction,
+  ResetPasswordSuccessAction,
+} from "../redux/actions/auth.action";
+import {
+  AuthAction,
+  ILoginForm,
+  IRegisterForm,
+  IResetPasswordForm,
+  IResetRequestForm,
+} from "../types/auth.type";
 
 @Injectable()
 export class AuthService {
@@ -84,7 +94,9 @@ export class AuthService {
    * @param {IRegisterForm} registerForm
    */
   public async register(registerForm: IRegisterForm) {
-    this.reduxService.dispatch(RegisterInProgressAction())
+    this.reduxService.dispatch(RegisterInProgressAction());
+    registerForm.redirect =
+      window.location.protocol + "//" + window.location.host + "/auth/";
 
     const { status, response, error } = await this.httpService.post(
       '/auth/register',
@@ -102,5 +114,57 @@ export class AuthService {
     return this.reduxService.dispatch(
       RegisterSuccessAction(User.fromJson(user), token)
     )
+  }
+
+  /**
+   * Send reset password email
+   * @param {IResetRequestForm} resetRequestForm
+   */
+  public async sendResetEmail(resetRequestForm: IResetRequestForm) {
+    resetRequestForm.redirect =
+      window.location.protocol + "//" + window.location.host + "/auth/";
+    await this.httpService.post("/auth/forgotPassword", {
+      body: resetRequestForm,
+    });
+  }
+
+  /**
+   * Reset password
+   * @param {IResetPasswordForm} resetRequestForm
+   */
+  public async resetPassword(
+    resetPasswordForm: IResetPasswordForm
+  ): Promise<boolean> {
+    this.reduxService.dispatch(ResetPasswordInProgressAction());
+    const { status } = await this.httpService.post("/auth/resetPassword", {
+      body: resetPasswordForm,
+    });
+    if (![StatusCodes.OK, StatusCodes.CREATED].includes(status)) {
+      this.reduxService.dispatch(ResetPasswordFailureAction());
+      return false;
+    }
+    this.reduxService.dispatch(ResetPasswordSuccessAction());
+    return true;
+  }
+
+  public async activateAccount(userId: string) {
+    const { response } = await this.httpService.post("/auth/activateAccount", {
+      body: {
+        userId,
+      },
+    });
+    if (response) {
+      this.reduxService.dispatch(ValidateAccountAction(response));
+    }
+  }
+
+  public async sendValidationEmail(email: string) {
+    await this.httpService.post("/auth/validationEmail", {
+      body: {
+        email,
+        redirect:
+          window.location.protocol + "//" + window.location.host + "/auth/",
+      },
+    });
   }
 }

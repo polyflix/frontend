@@ -3,18 +3,25 @@ import { WithClassname, WithMotion } from '../../../../common/types/props.type';
 import { cn } from '../../../../common/utils/classes.util';
 import { Typography } from '../Typography.component';
 
-type Props = WithClassname & WithMotion
+type Props = WithClassname & WithMotion & { overrideDefaultClasses?: boolean };
 
 export const Title: React.FC<PropsWithChildren<Props>> = ({
   children,
-  className = '',
+  className = "",
+  overrideDefaultClasses = false,
   ...rest
-}) => (
-  <Typography
-    {...rest}
-    as="h1"
-    className={cn(className, 'font-black text-2xl md:text-3xl')}
-  >
-    {children}
-  </Typography>
-);
+}) => {
+  return (
+    <Typography
+      {...rest}
+      as="h1"
+      overrideDefaultClasses={overrideDefaultClasses}
+      className={cn(
+        className,
+        !overrideDefaultClasses && "font-black text-xl md:text-2xl lg:text-3xl"
+      )}
+    >
+      {children}
+    </Typography>
+  );
+};

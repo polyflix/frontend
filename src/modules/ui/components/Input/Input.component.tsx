@@ -21,8 +21,10 @@ type Props = WithClassname &
     /** If true, the field will be required */
     required?: boolean
     /** If true, the field will be disabled */
-    disabled?: boolean
-  }
+    disabled?: boolean;
+    /** onChange event for input tag */
+    onChange?: () => void;
+  };
 
 /**
  * A simple HTML input component compatible with the react-hook-form API.
@@ -38,20 +40,25 @@ export const Input = forwardRef<HTMLInputElement, Props>(
       required = false,
       error,
       hint,
+      onChange,
       ...rest
     },
     forwardRef,
   ) => (
     <motion.div {...rest} className={cn('flex flex-col', className)}>
       <input
+        onChange={onChange}
         name={name}
         type={type}
         disabled={disabled}
-        className="border dark:bg-nx-white focus:outline-none py-3 px-5 rounded-md font-display"
-        placeholder={`${placeholder} ${required ? '*' : ''}`}
+        className={cn(
+          "border dark:bg-nx-white focus:outline-none py-2 px-5 rounded-md font-display",
+          disabled && "dark:bg-nx-gray opacity-80"
+        )}
+        placeholder={`${placeholder} ${required ? "*" : ""}`}
         ref={forwardRef}
       />
-      {!error && hint && <small className="text-gray-400">{hint}</small>}
+      {!error && hint && <small className="text-gray-400 mt-2">{hint}</small>}
       {error && <small className="text-red-400">{error.message}</small>}
     </motion.div>
   ),

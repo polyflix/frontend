@@ -1,4 +1,11 @@
 {
+  "forbidden": {
+    "content": {
+      "title": "Forbidden",
+      "description": "You're not allowed to consult this page.",
+      "goback": "Go back"
+    }
+  },
   "shared": {
     "common": {
       "actions": {
@@ -41,7 +48,9 @@
       "updatedAt": "Updated {{date}}",
       "views": "View(s)",
       "likes": "Like(s)",
-      "comments": "Comment(s)"
+      "comments": "Comment(s)",
+      "all": "All",
+      "filtersLabel": "Filters"
     },
     "navbar": {
       "signIn": "Sign in",
@@ -102,6 +111,19 @@
         "error": "A password is required"
       }
     },
+    "resetPassword": {
+      "seo": {
+        "title": "Forgot password",
+        "description": [
+          "Enter the email address linked to your account",
+          "If the address exists, an email containing a reset link will be sent",
+          "Enter new password"
+        ]
+      },
+      "footer": "Forgot password ?",
+      "action": "Reset password",
+      "error": "Token expired or invalid"
+    },
     "signIn": {
       "seo": {
         "title": "Sign in",
@@ -132,7 +154,20 @@
       },
       "action": "Sign up",
       "footer": ["Already registered to Polyflix ?", "Sign in here"],
-      "error": "Email already in use"
+      "error": "Email already in use",
+      "accountValidation": {
+        "description": [
+          "Your account has not been activated yet",
+          "An activation link has been sent to your mailbox",
+          "If you have not received it, check your spam"
+        ],
+        "title": "Account activation",
+        "action": "Send activation mail again",
+        "error": [
+          "An error occurred while activating your account",
+          "If your account activation email does not work, we can send you a new one"
+        ]
+      }
     }
   },
   "userProfile": {
@@ -501,6 +536,10 @@
     }
   },
   "subtitleImprovement": {
+    "header": {
+      "title": "Subtitle improvements",
+      "description": "Here you can suggest improvements for the subtitles."
+    },
     "content": {
       "approve": "Approve",
       "disapprove": "Disapprove"

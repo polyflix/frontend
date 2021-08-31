@@ -7,6 +7,17 @@ export interface ILoginForm {
   password: string
 }
 
+export interface IResetRequestForm {
+  email: string;
+  redirect: string;
+}
+
+export interface IResetPasswordForm {
+  newPassword: string;
+  passwordConfirm: string;
+  token: string;
+  email: string;
+}
 export interface IUser {
   id: string
   email: string
@@ -17,9 +28,10 @@ export interface IUser {
 }
 
 export interface IRegisterForm extends ILoginForm {
-  firstName: string
-  lastName: string
-  passwordConfirm: string
+  firstName: string;
+  lastName: string;
+  passwordConfirm: string;
+  redirect: string;
 }
 
 export type AuthState = {

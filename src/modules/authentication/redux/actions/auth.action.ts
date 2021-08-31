@@ -7,19 +7,23 @@ import { AuthAction, AuthState } from '../../types/auth.type'
  * AuthActions enumeration.
  */
 export enum AuthActions {
-  LOGOUT = 'LOGOUT',
-  LOGIN_SUCCESS = 'LOGIN_SUCCESS',
-  LOGIN_IN_PROGRESS = 'LOGIN_IN_PROGRESS',
-  LOGIN_FAILURE = 'LOGIN_FAILURE',
-  REGISTER_SUCCESS = 'REGISTER_SUCCESS',
-  REGISTER_IN_PROGRESS = 'REGISTER_IN_PROGRESS',
-  REGISTER_FAILURE = 'REGISTER_FAILURE',
-  REFRESH_AUTH_SUCCESS = 'REFRESH_AUTH_SUCCESS',
-  REFRESH_AUTH_IN_PROGRESS = 'REFRESH_AUTH_IN_PROGRESS',
-  REFRESH_AUTH_FAILURE = 'REFRESH_AUTH_FAILURE',
-  UPDATE_USER_SUCCESS = 'UPDATE_USER_SUCCESS',
-  UPDATE_USER_FAILURE = 'UPDATE_USER_FAILURE',
-  UPDATE_USER_IN_PROGRESS = 'UPDATE_USER_IN_PROGRESS',
+  LOGOUT = "LOGOUT",
+  LOGIN_SUCCESS = "LOGIN_SUCCESS",
+  LOGIN_IN_PROGRESS = "LOGIN_IN_PROGRESS",
+  LOGIN_FAILURE = "LOGIN_FAILURE",
+  REGISTER_SUCCESS = "REGISTER_SUCCESS",
+  REGISTER_IN_PROGRESS = "REGISTER_IN_PROGRESS",
+  REGISTER_FAILURE = "REGISTER_FAILURE",
+  RESET_PASSWORD_SUCCESS = "RESET_PASSWORD_SUCESS",
+  RESET_PASSWORD_IN_PROGRESS = "RESET_PASSWORD_IN_PROGRESS",
+  RESET_PASSWORD_FAILURE = "RESET_PASSWORD_FAILURE",
+  REFRESH_AUTH_SUCCESS = "REFRESH_AUTH_SUCCESS",
+  REFRESH_AUTH_IN_PROGRESS = "REFRESH_AUTH_IN_PROGRESS",
+  REFRESH_AUTH_FAILURE = "REFRESH_AUTH_FAILURE",
+  UPDATE_USER_SUCCESS = "UPDATE_USER_SUCCESS",
+  UPDATE_USER_FAILURE = "UPDATE_USER_FAILURE",
+  UPDATE_USER_IN_PROGRESS = "UPDATE_USER_IN_PROGRESS",
+  VALIDATE_ACCOUNT = "VALIDATE_ACCOUNT",
 }
 
 /**
@@ -85,6 +89,20 @@ export const RegisterFailureAction = (error: string): AuthAction => {
     authError: error,
   })
 }
+
+export const ResetPasswordFailureAction = (): AuthAction => {
+  return actionFactory<AuthState>(AuthActions.RESET_PASSWORD_FAILURE, {
+    authError: "Token expiré ou invalid.",
+  });
+};
+
+export const ResetPasswordSuccessAction = (): AuthAction => {
+  return actionFactory<AuthState>(AuthActions.RESET_PASSWORD_SUCCESS);
+};
+
+export const ResetPasswordInProgressAction = (): AuthAction => {
+  return actionFactory<AuthState>(AuthActions.RESET_PASSWORD_IN_PROGRESS);
+};
 
 /**
  * Create the logout action
@@ -154,5 +172,9 @@ export const UpdateUserInProgressAction = (): AuthAction => {
 export const UpdateUserFailureAction = (error: string): AuthAction => {
   return actionFactory<AuthState>(AuthActions.UPDATE_USER_FAILURE, {
     authError: error,
-  })
-}
+  });
+};
+
+export const ValidateAccountAction = (user: User): AuthAction => {
+  return actionFactory<AuthState>(AuthActions.VALIDATE_ACCOUNT, { user });
+};

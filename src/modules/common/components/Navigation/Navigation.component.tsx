@@ -1,49 +1,50 @@
-import { Menu, Transition } from '@headlessui/react';
+import { Menu, Transition } from '@headlessui/react'
 import {
+  AcademicCapIcon,
+  AnnotationIcon,
   BookOpenIcon,
   ChevronDownIcon,
+  CollectionIcon,
   LogoutIcon,
   UserIcon,
   VideoCameraIcon,
-  CollectionIcon,
-  AcademicCapIcon,
-} from '@heroicons/react/outline';
-import { LoginIcon, UserAddIcon, ViewListIcon } from '@heroicons/react/solid';
-import { useInjection } from '@polyflix/di';
-import { motion } from 'framer-motion';
-import { Fragment, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
-import logo from '../../../../assets/images/polyflix-logo.png';
-import { useAuth } from '../../../authentication/hooks/useAuth.hook';
-import { AuthService } from '../../../authentication/services/auth.service';
-import { Avatar } from '../../../ui/components/Avatar/Avatar.component';
-import LanguageButton from '../../../ui/components/Buttons/LanguageButton/LanguageButton.component';
-import { OutlineButton } from '../../../ui/components/Buttons/OutlineButton/OutlineButton.component';
-import { Container } from '../../../ui/components/Container/Container.component';
-import { Image } from '../../../ui/components/Image/Image.component';
-import { Typography } from '../../../ui/components/Typography/Typography.component';
-import { cn } from '../../utils/classes.util';
-import { Url } from '../../utils/url.util';
-import Hamburger from './Hamburger/Hamburger.component';
+} from '@heroicons/react/outline'
+import { LoginIcon, UserAddIcon, ViewListIcon } from '@heroicons/react/solid'
+import { useInjection } from '@polyflix/di'
+import { motion } from 'framer-motion'
+import { Fragment, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { Link } from 'react-router-dom'
+import logo from '../../../../assets/images/polyflix-logo.png'
+import { useAuth } from '../../../authentication/hooks/useAuth.hook'
+import { AuthService } from '../../../authentication/services/auth.service'
+import { Avatar } from '../../../ui/components/Avatar/Avatar.component'
+import LanguageButton from '../../../ui/components/Buttons/LanguageButton/LanguageButton.component'
+import { OutlineButton } from '../../../ui/components/Buttons/OutlineButton/OutlineButton.component'
+import { Container } from '../../../ui/components/Container/Container.component'
+import { Image } from '../../../ui/components/Image/Image.component'
+import { Typography } from '../../../ui/components/Typography/Typography.component'
+import { cn } from '../../utils/classes.util'
+import { Url } from '../../utils/url.util'
+import Hamburger from './Hamburger/Hamburger.component'
 
 type Props = {
   /** If false, the navigation will be hidden */
   visible: boolean
 }
 
-export const NAV_HEIGHT = 65;
+export const NAV_HEIGHT = 65
 
 /**
  * The navigation component
  */
 export const Navigation: React.FC<Props> = ({ visible }) => {
-  const authService = useInjection<AuthService>(AuthService);
-  const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
-  const { isAuthenticated, user } = useAuth();
-  const { t } = useTranslation();
+  const authService = useInjection<AuthService>(AuthService)
+  const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false)
+  const { isAuthenticated, user } = useAuth()
+  const { t } = useTranslation()
 
-  const isNavbarExited = Boolean(Url.hasParameter('play')) === true;
+  const isNavbarExited = Boolean(Url.hasParameter('play')) === true
 
   const getAuthenticatedContent = () => (
     <div className="flex items-center ">
@@ -78,61 +79,69 @@ export const Navigation: React.FC<Props> = ({ visible }) => {
                 <div className="px-1 py-1">
                   <Menu.Item>
                     <Link to={`/profile/videos/${user?.id}`}>
-                        <span className="cursor-pointer text-nx-white flex rounded-md items-center w-full px-2 py-2 text-sm">
-                          <VideoCameraIcon className="text-nx-red w-5 mr-3" />
-                          {t('userVideos.seo.ownTitle')}
-                        </span>
-                      </Link>
+                      <span className="cursor-pointer text-nx-white flex rounded-md items-center w-full px-2 py-2 text-sm">
+                        <VideoCameraIcon className="text-nx-red w-5 mr-3" />
+                        {t('userVideos.seo.ownTitle')}
+                      </span>
+                    </Link>
                   </Menu.Item>
                   <Menu.Item>
                     <Link to={`/profile/collections/${user?.id}`}>
-                        <span className="cursor-pointer text-nx-white flex rounded-md items-center w-full px-2 py-2 text-sm">
-                          <CollectionIcon className="text-nx-red w-5 mr-3" />
-                          {t('userCollections.seo.ownTitle')}
-                        </span>
-                      </Link>
+                      <span className="cursor-pointer text-nx-white flex rounded-md items-center w-full px-2 py-2 text-sm">
+                        <CollectionIcon className="text-nx-red w-5 mr-3" />
+                        {t('userCollections.seo.ownTitle')}
+                      </span>
+                    </Link>
                   </Menu.Item>
                   <Menu.Item>
                     <Link to={`/profile/courses/${user?.id}`}>
-                        <span className="cursor-pointer text-nx-white flex rounded-md items-center w-full px-2 py-2 text-sm">
-                          <BookOpenIcon className="text-nx-red w-5 mr-3" />
-                          {t('userCourses.seo.ownTitle')}
-                        </span>
-                      </Link>
+                      <span className="cursor-pointer text-nx-white flex rounded-md items-center w-full px-2 py-2 text-sm">
+                        <BookOpenIcon className="text-nx-red w-5 mr-3" />
+                        {t('userCourses.seo.ownTitle')}
+                      </span>
+                    </Link>
                   </Menu.Item>
                   <Menu.Item>
                     <Link to={`/profile/paths/${user?.id}`}>
-                        <span className="cursor-pointer text-nx-white flex rounded-md items-center w-full px-2 py-2 text-sm">
-                          <AcademicCapIcon className="text-nx-red w-5 mr-3" />
-                          {t('userPaths.seo.ownTitle')}
-                        </span>
-                      </Link>
+                      <span className="cursor-pointer text-nx-white flex rounded-md items-center w-full px-2 py-2 text-sm">
+                        <AcademicCapIcon className="text-nx-red w-5 mr-3" />
+                        {t('userPaths.seo.ownTitle')}
+                      </span>
+                    </Link>
+                  </Menu.Item>
+                  <Menu.Item>
+                    <Link to={`/profile/quizzes/${user?.id}`}>
+                      <span className="cursor-pointer text-nx-white flex rounded-md items-center w-full px-2 py-2 text-sm">
+                        <AnnotationIcon className="text-nx-red w-5 mr-3" />
+                        {t('quizzes.seo.user.title', { ns: 'resources' })}
+                      </span>
+                    </Link>
                   </Menu.Item>
                   <Menu.Item>
                     <Link to={`/profile/subtitles/${user?.id}`}>
-                        <span className="cursor-pointer text-nx-white flex rounded-md items-center w-full px-2 py-2 text-sm">
-                          <ViewListIcon className="text-nx-red w-5 mr-3" />
-                          {t('userSubtitleImprovement.seo.ownTitle')}
-                        </span>
-                      </Link>
+                      <span className="cursor-pointer text-nx-white flex rounded-md items-center w-full px-2 py-2 text-sm">
+                        <ViewListIcon className="text-nx-red w-5 mr-3" />
+                        {t('userSubtitleImprovement.seo.ownTitle')}
+                      </span>
+                    </Link>
                   </Menu.Item>
                 </div>
                 <div className="px-1 py-1">
                   <Menu.Item>
                     <Link to="/profile">
-                        <span className="cursor-pointer text-nx-white flex rounded-md items-center w-full px-2 py-2 text-sm">
-                          <UserIcon className="text-nx-red w-5 mr-3" />
-                          {t('userProfile.seo.title')}
-                        </span>
-                      </Link>
+                      <span className="cursor-pointer text-nx-white flex rounded-md items-center w-full px-2 py-2 text-sm">
+                        <UserIcon className="text-nx-red w-5 mr-3" />
+                        {t('userProfile.seo.title')}
+                      </span>
+                    </Link>
                   </Menu.Item>
                   <Menu.Item>
                     <Link to="/groups">
-                        <span className="cursor-pointer text-nx-white flex rounded-md items-center w-full px-2 py-2 text-sm">
-                          <UserIcon className="text-nx-red w-5 mr-3" />
-                          {t('groupManagement.seo.title')}
-                        </span>
-                      </Link>
+                      <span className="cursor-pointer text-nx-white flex rounded-md items-center w-full px-2 py-2 text-sm">
+                        <UserIcon className="text-nx-red w-5 mr-3" />
+                        {t('groupManagement.seo.title')}
+                      </span>
+                    </Link>
                   </Menu.Item>
                 </div>
                 <Menu.Item>
@@ -150,18 +159,16 @@ export const Navigation: React.FC<Props> = ({ visible }) => {
         )}
       </Menu>
     </div>
-  );
+  )
 
   const getPublicContent = () => (
     <div className="flex items-center">
       <Link to="/auth/register">
         <UserAddIcon className="text-nx-white w-6 md:hidden" />
         <Typography className="hidden md:block" as="span">
-          {t('shared.navbar.signUp.0')}
-          {' '}
+          {t('shared.navbar.signUp.0')}{' '}
           <Typography bold as="span">
-            {t('shared.navbar.signUp.1')}
-            .
+            {t('shared.navbar.signUp.1')}.
           </Typography>
         </Typography>
       </Link>
@@ -174,7 +181,7 @@ export const Navigation: React.FC<Props> = ({ visible }) => {
         </OutlineButton>
       </Link>
     </div>
-  );
+  )
 
   const getCommonContent = () => (
     <div className="flex items-center flex-row-reverse md:flex-row relative">
@@ -186,27 +193,54 @@ export const Navigation: React.FC<Props> = ({ visible }) => {
       <div
         className={cn(
           isMenuOpen ? 'top-nav' : '-top-full',
-          'fixed rounded-b-md p-4 md:p-0 bg-black transition-all left-0 w-full md:relative gap-2 md:gap-4 flex flex-col md:flex-row md:w-4/5',
+          'fixed rounded-b-md p-4 md:p-0 bg-black transition-all left-0 w-full md:relative gap-2 md:gap-4 flex flex-col md:flex-row md:w-4/5'
         )}
       >
         {isAuthenticated && (
-        <Link to="/">
-          <Typography as="span">{t('home.seo.title')}</Typography>
-        </Link>
+          <Link to="/">
+            <Typography as="span">{t('home.seo.title')}</Typography>
+          </Link>
         )}
         {isAuthenticated && (
-        <Link to="/courses">
-          <Typography as="span">{t('courses.seo.title')}</Typography>
-        </Link>
+          <Link to="/courses">
+            <Typography as="span">{t('courses.seo.title')}</Typography>
+          </Link>
         )}
         {isAuthenticated && (
-        <Link to="/paths">
-          <Typography as="span">{t('paths.seo.title')}</Typography>
-        </Link>
+          <Link to="/paths">
+            <Typography as="span">{t('paths.seo.title')}</Typography>
+          </Link>
         )}
+        <div className="mx-2"></div>
+        <Hamburger onToggle={setIsMenuOpen} />
+        <div
+          className={cn(
+            isMenuOpen ? 'top-nav' : '-top-full',
+            'fixed rounded-b-md p-4 md:p-0 bg-black transition-all left-0 w-full md:relative gap-2 md:gap-4 flex flex-col md:flex-row md:w-4/5'
+          )}
+        >
+          {isAuthenticated && (
+            <>
+              <Link to="/">
+                <Typography as="span">{t('home.seo.title')}</Typography>
+              </Link>
+              <Link to="/courses">
+                <Typography as="span">{t('courses.seo.title')}</Typography>
+              </Link>
+              <Link to="/paths">
+                <Typography as="span">{t('paths.seo.title')}</Typography>
+              </Link>
+              <Link to="/quizzes">
+                <Typography as="span">
+                  {t('quizzes.seo.global.title', { ns: 'resources' })}
+                </Typography>
+              </Link>
+            </>
+          )}
+        </div>
       </div>
     </div>
-  );
+  )
 
   return (
     <>
@@ -229,5 +263,5 @@ export const Navigation: React.FC<Props> = ({ visible }) => {
         </motion.nav>
       )}
     </>
-  );
-};
+  )
+}

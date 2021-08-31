@@ -1,0 +1,10 @@
+{
+  "single": {
+    "dnd": "Glissez déposer votre fichier ici, ou cliquez pour sélectionner un fichier",
+    "dragActive": "Déposez votre fichier ici"
+  },
+  "multiple": {
+    "dnd": "Glissez déposer vos fichiers ici, ou cliquez pour sélectionner des fichiers",
+    "dragActive": "Déposez vos fichiers ici"
+  }
+}

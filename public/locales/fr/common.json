@@ -1,4 +1,11 @@
 {
+  "forbidden": {
+    "content": {
+      "title": "Accès refusé",
+      "description": "Vous n'êtes pas autorisé à consulter cette page.",
+      "goback": "Revenir en arrière"
+    }
+  },
   "shared": {
     "common": {
       "actions": {
@@ -33,6 +40,8 @@
       "views": "Vue(s)",
       "likes": "Retour(s) positif(s)",
       "comments": "Commentaire(s)",
+      "all": "Tous",
+      "filtersLabel": "Filtres",
       "form": {
         "errors": {
           "required": "Ce champ est obligatoire"
@@ -102,6 +111,19 @@
         "error": "Un mot de passe est requis"
       }
     },
+    "resetPassword": {
+      "seo": {
+        "title": "Mot de passe oublié",
+        "description": [
+          "Entrez l'adresse email liée à votre compte",
+          "Si l'adresse existe, un email contenant un lien de réinitialisation sera envoyé",
+          "Entrez votre nouveau mot de passe"
+        ]
+      },
+      "footer": "Mot de passe oublié ?",
+      "action": "Réinitialiser le mot de passe",
+      "error": "Token expiré ou invalide"
+    },
     "signIn": {
       "seo": {
         "title": "Se connecter",
@@ -114,7 +136,7 @@
     "signUp": {
       "seo": {
         "title": "S'inscrire",
-        "description": "Remplissez le formulaire ci-dessous pour créer un comtpe sur Polyflix"
+        "description": "Remplissez le formulaire ci-dessous pour créer un compte sur Polyflix"
       },
       "inputs": {
         "firstname": {
@@ -132,7 +154,20 @@
       },
       "action": "S'inscrire",
       "footer": ["Déjà inscrit sur Polyflix ?", "Connectez-vous ici"],
-      "error": "Adresse e-mail déjà utilisée"
+      "error": "Adresse e-mail déjà utilisée",
+      "accountValidation": {
+        "description": [
+          "Votre compte n'a pas encore été activé",
+          "Un lien d'activation a été envoyé sur votre boîte mail",
+          "Si vous ne l'avez pas reçu, pensez à verifier vos spams"
+        ],
+        "title": "Activation du compte",
+        "action": "Renvoyer le mail d'activation",
+        "error": [
+          "Une erreur est survenue lors de l'activation de votre compte",
+          "Si le mail d'activation de votre compte ne fonctionne pas, nous pouvons vous en envoyer un nouveau"
+        ]
+      }
     }
   },
   "userProfile": {
@@ -491,6 +526,10 @@
     }
   },
   "subtitleImprovement": {
+    "header": {
+      "title": "Amélioration colaboraire de sous-titres",
+      "description": "Ici vous pouvez proposer des améliorations pour les sous-titres."
+    },
     "content": {
       "approve": "Approver",
       "disapprove": "Désapprouver"

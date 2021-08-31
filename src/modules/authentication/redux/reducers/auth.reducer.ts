@@ -31,10 +31,16 @@ export const authReducer = (
         isAuthenticated: true,
         isLoading: false,
         authError: null,
-      }
-
+      };
+    case AuthActions.RESET_PASSWORD_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        authError: null,
+      };
     case AuthActions.LOGIN_IN_PROGRESS:
     case AuthActions.REGISTER_IN_PROGRESS:
+    case AuthActions.RESET_PASSWORD_IN_PROGRESS:
       return {
         ...state,
         authError: null,
@@ -50,6 +56,7 @@ export const authReducer = (
     case AuthActions.LOGIN_FAILURE:
     case AuthActions.REGISTER_FAILURE:
     case AuthActions.REFRESH_AUTH_FAILURE:
+    case AuthActions.RESET_PASSWORD_FAILURE:
       return {
         ...state,
         ...action.payload,
@@ -68,7 +75,13 @@ export const authReducer = (
         ...state,
         ...action.payload,
         isLoading: false,
-      }
+      };
+    case AuthActions.VALIDATE_ACCOUNT:
+      return {
+        ...state,
+        ...action.payload,
+      };
+
     default:
       return state
   }

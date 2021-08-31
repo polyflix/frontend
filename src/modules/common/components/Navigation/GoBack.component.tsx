@@ -1,8 +1,8 @@
-import { ArrowCircleLeftIcon } from '@heroicons/react/outline';
-import React from 'react';
-import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router';
-import { Typography } from '../../../ui';
+import { ArrowCircleLeftIcon } from "@heroicons/react/outline";
+import React from "react";
+import { useTranslation } from "react-i18next";
+import { useHistory } from "react-router";
+import { Typography } from "../../../ui";
 
 export const GoBack: React.FC = () => {
   const { t } = useTranslation();
@@ -16,7 +16,7 @@ export const GoBack: React.FC = () => {
         overrideDefaultClasses
       >
         <span
-          className="inline-flex mx-2 cursor-pointer"
+          className="inline-flex cursor-pointer"
           onClick={() => history.goBack()}
         >
           <ArrowCircleLeftIcon className="w-6 mr-1" />

@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { useParams } from 'react-router';
-import { Block } from '@polyflix/vtt-parser';
-import { Container, Page, Typography } from '../../ui';
-import { ISubtitle, Subtitle, Video } from '../../videos';
-import { VideoContainer } from '../components/VideoContainer.component';
-import { SubtitleEditorPanel } from '../components/subtitle-editor-panel.component';
+import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
+import { useParams } from "react-router";
+import { Container, Page } from "../../ui";
+import { ISubtitle, Subtitle, Video } from "../../videos";
+import { Block } from "@polyflix/vtt-parser";
+import { VideoContainer } from "../components/VideoContainer.component";
+import { SubtitleEditorPanel } from "../components/subtitle-editor-panel.component";
+import { Jumbotron } from "../../ui/components/Jumbotron/Jumbotron.component";
 
 export type SubtitleFetchingState = {
   state: 'loading' | 'error' | 'idle' | 'succeed'
@@ -32,9 +33,11 @@ export const CollaborativeSubtitleEditingPage: React.FC = () => {
       } ${t('videoManagement.video')}`}
     >
       <Container mxAuto fluid className="flex flex-col p-4 box-border">
-        <Typography as="h1" className="text-2xl">
-          {video?.title}
-        </Typography>
+        <Jumbotron
+          withGoBack
+          content={t("subtitleImprovement.header.description")}
+          title={video?.title || t("subtitleImprovement.header.title")}
+        />
       </Container>
       <Container
         mxAuto
