@@ -2,7 +2,7 @@ import React from "react";
 import { WithClassname } from "../../../common/types/props.type";
 import { cn } from "../../../common/utils/classes.util";
 import { User } from "../../../users/models/user.model";
-import { Typography } from "../Typography/Typography.component";
+import { Image } from "../Image/Image.component";
 
 type Props = WithClassname & {
   /** The user we want to display the avatar */
@@ -21,14 +21,15 @@ export const Avatar: React.FC<Props> = ({ user, className = "" }) => {
         className
       )}
     >
-      <Typography
-        as="span"
-        bold
-        overrideDefaultClasses
-        className="text-sm text-nx-white"
-      >
-        {user.initials}
-      </Typography>
+      <Image
+        src={
+          user.profilePicture && user.profilePicture !== ""
+            ? user.profilePicture
+            : "https://i.imgur.com/tdi3NGa.png"
+        }
+        className="text-sm text-nx-white rounded-3xl"
+        alt={`Profile Picture`}
+      />
     </div>
   );
 };

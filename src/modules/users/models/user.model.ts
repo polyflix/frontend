@@ -10,6 +10,7 @@ export class User {
     private readonly _email: string,
     private readonly _firstName: string,
     private readonly _lastName: string,
+    private readonly _profilePicture: string,
     private readonly _isAccountActivated: boolean,
     private readonly _isAdmin: boolean
   ) {}
@@ -25,6 +26,7 @@ export class User {
       json.email,
       json.firstName,
       json.lastName,
+      json.profilePicture,
       json.isAccountActivated,
       json.isAdmin
     );
@@ -36,6 +38,7 @@ export class User {
       email: this._email,
       firstName: this._firstName,
       lastName: this._lastName,
+      profilePicture: this._profilePicture,
       isAccountActivated: this._isAccountActivated,
       isAdmin: this._isAdmin,
     };
@@ -87,6 +90,14 @@ export class User {
    */
   get lastName(): string {
     return this._lastName;
+  }
+
+  /**
+   * Return the profile picture of the user
+   * @returns {string} the user profile picture
+   */
+  get profilePicture(): string {
+    return this._profilePicture;
   }
 
   /**

@@ -11,6 +11,7 @@ export interface IUserProfileUpdate {
   email: string;
   firstName: string;
   lastName: string;
+  profilePicture: string | null;
   isAccountActivated: boolean;
   isAdmin: boolean;
 }

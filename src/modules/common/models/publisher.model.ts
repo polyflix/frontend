@@ -8,7 +8,8 @@ export class Publisher {
   private constructor(
     private readonly _id: string,
     private readonly _firstName: string,
-    private readonly _lastName: string
+    private readonly _lastName: string,
+    private readonly _profilePicture: string
   ) {}
 
   /**
@@ -17,7 +18,12 @@ export class Publisher {
    * @returns {VideoPublisher}
    */
   static fromJson(json: IPublisher): Publisher {
-    return new Publisher(json.id, json.firstName, json.lastName);
+    return new Publisher(
+      json.id,
+      json.firstName,
+      json.lastName,
+      json.profilePicture
+    );
   }
 
   /**
@@ -42,6 +48,14 @@ export class Publisher {
    */
   get lastName(): string {
     return this._lastName;
+  }
+
+  /**
+   * Return the profile picture of the video publisher.
+   * @returns {string} the video publisher profile picture
+   */
+  get profilePicture(): string {
+    return this._profilePicture;
   }
 
   /**

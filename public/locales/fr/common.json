@@ -150,7 +150,8 @@
         "passwordConfirm": {
           "name": "Confirmation du mot de passe",
           "error": "Les mot de passe ne correspondent pas"
-        }
+        },
+        "profilePicture": "Uploader un avatar"
       },
       "action": "S'inscrire",
       "footer": ["Déjà inscrit sur Polyflix ?", "Connectez-vous ici"],

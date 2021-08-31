@@ -150,7 +150,8 @@
         "passwordConfirm": {
           "name": "Password confirm",
           "error": "The passwords do not match"
-        }
+        },
+        "profilePicture": "Upload profile picture"
       },
       "action": "Sign up",
       "footer": ["Already registered to Polyflix ?", "Sign in here"],
