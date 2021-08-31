@@ -78,16 +78,6 @@ export const UserVideosPage: React.FC = () => {
               : t("userVideos.seo.userTitle", {
                   user: fetchedUser?.displayName,
                 })}
-            <Image
-              className="cursor-pointer w-10 h-10 rounded-3xl mr-3"
-              src={
-                fetchedUser?.profilePicture &&
-                fetchedUser?.profilePicture !== ""
-                  ? fetchedUser?.profilePicture
-                  : "https://i.imgur.com/tdi3NGa.png"
-              }
-              alt={"profilePicture"}
-            />
           </Title>
           {isOwnPage && (
             <Typography
