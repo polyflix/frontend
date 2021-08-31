@@ -285,7 +285,8 @@
   "videoManagement": {
     "video": "une vidéo",
     "actions": {
-      "switching": "Cliquez pour changer"
+      "switching": "Cliquez pour changer",
+      "getThumbnail": "Utiliser cette image en tant que miniature"
     },
     "inputs": {
       "noFile": "Aucun fichier choisi",

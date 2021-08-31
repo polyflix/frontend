@@ -7,10 +7,13 @@ import {
   Control,
   ScrubberControl,
   LoadingScreen,
+  Tooltip,
 } from "@vime/react";
 import { UploadIcon } from "@heroicons/react/outline";
 import { WithMotion } from "../../../common";
 import { motion } from "framer-motion";
+import Placeholder from "../../../../assets/images/videoPlaceholder.png";
+import { useTranslation } from "react-i18next";
 
 type Props = WithMotion & {
   getFrame: () => void;
@@ -24,6 +27,8 @@ export const FrameSelector: React.FC<Props> = ({
   playerRef,
   ...rest
 }) => {
+  const { t } = useTranslation();
+
   return (
     <motion.div {...rest}>
       <Player ref={playerRef} id="vm-player">
@@ -37,12 +42,15 @@ export const FrameSelector: React.FC<Props> = ({
           <Controls pin="topRight">
             <Control label="upload" onClick={getFrame}>
               <UploadIcon className="w-6 h-6 m-1" />
+              <Tooltip position="bottom" direction="right">
+                {t("videoManagement.actions.getThumbnail")}
+              </Tooltip>
             </Control>
           </Controls>
           <ClickToPlay />
           <LoadingScreen hideDots>
             <img
-              src="https://i.stack.imgur.com/y9DpT.jpg"
+              src={Placeholder}
               alt=""
               className="rounded-md object-cover h-full"
             />
