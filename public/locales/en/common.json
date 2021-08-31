@@ -296,7 +296,8 @@
   "videoManagement": {
     "video": "a video",
     "actions": {
-      "switching": "Click to change"
+      "switching": "Click to change",
+      "getThumbnail": "Use this image as a thumbnail"
     },
     "inputs": {
       "noFile": "No file chosen",
