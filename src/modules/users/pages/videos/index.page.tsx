@@ -16,6 +16,7 @@ import { useVideos } from "../../../videos/hooks/useVideos.hook";
 import { Video } from "../../../videos/models/video.model";
 import { VideoService } from "../../../videos/services/video.service";
 import { useUser } from "../../hooks/useUser.hook";
+import { Image } from "../../../ui";
 
 export const UserVideosPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -77,6 +78,16 @@ export const UserVideosPage: React.FC = () => {
               : t("userVideos.seo.userTitle", {
                   user: fetchedUser?.displayName,
                 })}
+            <Image
+              className="cursor-pointer w-10 h-10 rounded-3xl mr-3"
+              src={
+                fetchedUser?.profilePicture &&
+                fetchedUser?.profilePicture !== ""
+                  ? fetchedUser?.profilePicture
+                  : "https://i.imgur.com/tdi3NGa.png"
+              }
+              alt={"profilePicture"}
+            />
           </Title>
           {isOwnPage && (
             <Typography

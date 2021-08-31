@@ -482,7 +482,12 @@ const SidebarComponent: React.FC<SidebarComponentProps> = ({
                         <div className="flex items-center flex-1">
                           <img
                             className="cursor-pointer w-10 h-10 rounded-3xl mr-3"
-                            src="https://picsum.photos/50"
+                            src={
+                              video?.publisher?.profilePicture &&
+                              video?.publisher?.profilePicture !== ""
+                                ? video?.publisher?.profilePicture
+                                : "https://i.imgur.com/tdi3NGa.png"
+                            }
                             alt="avatar"
                           />
                           <div className="overflow-hidden">

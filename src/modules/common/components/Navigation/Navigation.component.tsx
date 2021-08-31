@@ -55,8 +55,7 @@ export const Navigation: React.FC<Props> = ({ visible }) => {
             <>
               <div>
                 <Menu.Button className="outline-none hover:text-nx-red inline-flex items-center transition-all justify-center w-full px-4 py-2 font-medium text-white bg-black rounded-md bg-opacity-20 hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
-                  <span className="hidden md:block">{user?.displayName}</span>
-                  {user && <Avatar className="md:hidden" user={user} />}
+                  {user && <Avatar user={user} />}
                   <ChevronDownIcon
                     className="w-5 h-5 ml-2 -mr-1 text-nx-red"
                     aria-hidden="true"

@@ -253,7 +253,15 @@ export const UserSubtitleImprovementVideo: React.FC = () => {
                           >
                             <img
                               className="cursor-pointer w-6 h-6 rounded-3xl mr-3"
-                              src="https://picsum.photos/50"
+                              src={
+                                subtitleImprovement?.createdBy
+                                  ?.profilePicture &&
+                                subtitleImprovement?.createdBy
+                                  ?.profilePicture !== ""
+                                  ? subtitleImprovement?.createdBy
+                                      ?.profilePicture
+                                  : "https://i.imgur.com/tdi3NGa.png"
+                              }
                               alt="avatar"
                             />
                           </Link>

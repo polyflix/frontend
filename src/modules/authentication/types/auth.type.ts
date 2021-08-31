@@ -23,6 +23,7 @@ export interface IUser {
   email: string;
   firstName: string;
   lastName: string;
+  profilePicture: string;
   isAccountActivated: boolean;
   isAdmin: boolean;
 }

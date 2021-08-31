@@ -10,7 +10,12 @@ export const Avatar: React.FC<AvatarProps> = ({ subtitleImprovement }) => {
     <div className="flex items-center flex-1">
       <img
         className="cursor-pointer w-10 h-10 rounded-3xl mr-3"
-        src="https://picsum.photos/50"
+        src={
+          subtitleImprovement?.createdBy?.profilePicture &&
+          subtitleImprovement?.createdBy?.profilePicture !== ""
+            ? subtitleImprovement?.createdBy?.profilePicture
+            : "https://i.imgur.com/tdi3NGa.png"
+        }
         alt="avatar"
       />
       <div className="overflow-hidden">
