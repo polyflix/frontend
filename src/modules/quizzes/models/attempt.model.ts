@@ -35,7 +35,7 @@ export class Attempt {
   }
 
   get score(): number {
-    return this._score;
+    return +this._score.toFixed(2);
   }
 
   get createdAt(): Dayjs {
