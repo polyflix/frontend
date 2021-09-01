@@ -46,6 +46,7 @@ export const UserCollectionsPage: React.FC = () => {
     await collectionService.deleteCollection(id);
     refresh();
   };
+
   if (alert && alert.type === "not-found") return <Redirect to="/not-found" />;
   return (
     <Page

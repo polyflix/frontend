@@ -101,10 +101,19 @@ export class CollectionService {
    * @param {string} slug the video slug
    * @returns {Promise<Video>}
    */
-  public async getCollectionBySlug(slug: string): Promise<Collection> {
-    const { status, response, error } = await this.httpService.get(
-      `/collections/${slug}`
-    );
+  public async getCollectionBySlug(
+    slug: string,
+    password?: string | null,
+    availability?: string
+  ): Promise<Collection> {
+    let url = `/collections/${slug}`;
+
+    if (password) url = `/collections/${slug}?password=${password}`;
+    if (availability && availability === "protected") {
+      return Promise.reject("Wrong password");
+    }
+
+    const { status, response, error } = await this.httpService.get(url);
     if (status !== StatusCodes.OK) {
       throw error;
     }

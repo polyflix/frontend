@@ -1,8 +1,8 @@
-import { ArrowCircleLeftIcon } from "@heroicons/react/outline";
+import { ArrowCircleLeftIcon, PlusIcon, XIcon } from "@heroicons/react/outline";
 import { useInjection } from "@polyflix/di";
 import { motion } from "framer-motion";
 import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router";
 import slugify from "slugify";
@@ -24,8 +24,15 @@ import { VideoListItem } from "../../../videos/components/VideoListItem/VideoLis
 import { Video } from "../../../videos/models/video.model";
 import { Select } from "../../../ui/components/Select/select.component";
 import { useAuth } from "../../../authentication/hooks/useAuth.hook";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { registerLocale } from "react-datepicker";
+import fr from "date-fns/locale/fr";
+import { range } from "lodash";
+import "react-datepicker/dist/react-datepicker.css";
 import { Tag } from "../../../tags/models/tag.model";
 import { TagSelect } from "../../../tags/components/TagSelect.component";
+registerLocale("fr", fr);
 
 type Props = {
   /** If collection exists, the form will be in update mode, otherwise in create mode. */
@@ -36,6 +43,8 @@ type Props = {
  * The collection form component
  */
 export const CollectionForm: React.FC<Props> = ({ collection }) => {
+  const locale = localStorage.getItem("i18nextLng") || "fr";
+
   const isUpdate = collection instanceof Collection;
 
   const collectionService = useInjection<CollectionService>(CollectionService);
@@ -44,13 +53,15 @@ export const CollectionForm: React.FC<Props> = ({ collection }) => {
   const { user } = useAuth();
   let history = useHistory();
 
-  const { register, handleSubmit, errors, watch } = useForm<ICollectionForm>({
-    defaultValues: {
-      title: collection?.title,
-      description: collection?.description,
-      availability: collection?.availability,
-    },
-  });
+  const { register, handleSubmit, errors, watch, control } =
+    useForm<ICollectionForm>({
+      defaultValues: {
+        title: collection?.title,
+        description: collection?.description,
+        availability: collection?.availability,
+        passwords: collection?.passwords,
+      },
+    });
 
   const watchTitle = watch<"title", string>("title", "");
 
@@ -63,6 +74,11 @@ export const CollectionForm: React.FC<Props> = ({ collection }) => {
       type: AlertType;
       message: string;
     } | null>(null);
+  const [numberOfPasswords, setNumberOfPasswords] = useState<number>(
+    collection?.passwords.length || 0
+  );
+
+  const passwordsPlaceholders = range(0, numberOfPasswords);
 
   const onVideoDelete = (id: string) => {
     setVideos(videos.filter((video) => video.id !== id));
@@ -79,6 +95,10 @@ export const CollectionForm: React.FC<Props> = ({ collection }) => {
     setLoading(true);
     setIsSubmit(true);
     try {
+      if (collection && collection.id && data.passwords)
+        data.passwords.forEach((pwd) => {
+          pwd.collectionId = collection.id;
+        });
       let result = await (isUpdate
         ? collectionService.updateCollection(collection?.id as string, {
             ...data,
@@ -141,12 +161,11 @@ export const CollectionForm: React.FC<Props> = ({ collection }) => {
             {isUpdate
               ? `${t("collectionManagement.updateCollection.description")}`
               : `${t("collectionManagement.addCollection.description")}`}
-            .
           </Paragraph>
         </div>
       </div>
       <form
-        className="grid items-center grid-cols-2 gap-4"
+        className="grid items-center grid-cols-1 gap-y-4"
         onSubmit={handleSubmit(onSubmit)}
         id="collectionForm"
       >
@@ -172,6 +191,88 @@ export const CollectionForm: React.FC<Props> = ({ collection }) => {
             },
           })}
         />
+        <motion.div className="bg-darkgray p-8 rounded" variants={fadeInDown}>
+          <Typography as="h2" className="col-span-12 pb-4">
+            Mot de passe(s)
+          </Typography>
+
+          {passwordsPlaceholders.map((i) => {
+            const name = `passwords[${i}].name`;
+            const password = `passwords[${i}].password`;
+            const expiration = `passwords[${i}].expiration`;
+
+            return (
+              <div className="grid grid-cols-12 gap-4 py-4" key={i}>
+                <Input
+                  error={errors.passwords && errors.passwords[i]?.name}
+                  type="text"
+                  name={name}
+                  placeholder="Nom"
+                  variants={fadeInDown}
+                  ref={register({
+                    required: "Le nom du mot de passe est requis",
+                  })}
+                  hint="Nom"
+                  className="col-span-4"
+                  defaultValue={new Date().toISOString()}
+                />
+                <Input
+                  error={errors.passwords && errors.passwords[i]?.password}
+                  type="password"
+                  name={password}
+                  placeholder="Mot de passe"
+                  variants={fadeInDown}
+                  ref={register({
+                    required: "Le mot de passe est requis",
+                  })}
+                  hint="Mot de passe"
+                  className="col-span-3"
+                />
+                <motion.div
+                  className="flex flex-col col-span-4"
+                  variants={fadeInDown}
+                >
+                  <Controller
+                    name={expiration}
+                    control={control}
+                    render={({ onChange, value }) => (
+                      <DatePicker
+                        selected={value && new Date(value)}
+                        minDate={new Date()}
+                        onChange={onChange}
+                        showTimeSelect
+                        timeFormat="p"
+                        dateFormat="Pp"
+                        className="w-full py-3 px-5 rounded-md dark:bg-nx-white focus:outline-none"
+                        locale={locale}
+                        isClearable
+                      />
+                    )}
+                  />
+                  <small className="text-gray-400">Date d'expiration</small>
+                </motion.div>
+                <XIcon
+                  onClick={() => setNumberOfPasswords(numberOfPasswords - 1)}
+                  className="w-6 transition-all transform hover:scale-125 cursor-pointer text-nx-red col-span-1 py-3"
+                />
+              </div>
+            );
+          })}
+
+          <motion.div
+            onClick={() => setNumberOfPasswords(numberOfPasswords + 1)}
+            className="col-span-12 hover:text-nx-red cursor-pointer transition-all flex-col flex items-center justify-center border-dashed border-2 rounded-md border-lightgray p-4 text-lightgray"
+          >
+            <PlusIcon className="w-8 transition-all" />
+            <Typography
+              overrideDefaultClasses
+              className="transition-all"
+              as="h6"
+            >
+              Ajouter un mot de passe
+            </Typography>
+          </motion.div>
+        </motion.div>
         <Textarea
           error={errors.description}
           className="col-span-2"
@@ -197,8 +298,10 @@ export const CollectionForm: React.FC<Props> = ({ collection }) => {
           />
         </div>
         <Select
+          options={
+            numberOfPasswords > 0 ? ["protected"] : ["public", "private"]
+          }
           form="collectionForm"
-          options={["public", "private", "protected"]}
           className="col-span-2"
           name="availability"
           hint={`${t("collectionManagement.inputs.select.description")}.`}
@@ -218,11 +321,7 @@ export const CollectionForm: React.FC<Props> = ({ collection }) => {
             </Typography>
           </div>
         )}
-        {alert && (
-          <Alert type={alert.type} variants={fadeInDown} className="col-span-2">
-            {alert.message}
-          </Alert>
-        )}
+
         <FilledButton
           form="collectionForm"
           className="col-span-2"
@@ -235,8 +334,11 @@ export const CollectionForm: React.FC<Props> = ({ collection }) => {
           disabled={isSubmit}
           variants={fadeInDown}
         />
-      </div>
-      <div className="mt-4">
+        {alert && (
+          <Alert type={alert.type} variants={fadeInDown} className="col-span-2">
+            {alert.message}
+          </Alert>
+        )}
         <SearchCollection
           variants={fadeInDown}
           placeholder={t("collectionManagement.inputs.search.name")}

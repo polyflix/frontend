@@ -2,13 +2,14 @@ import { PencilIcon, TrashIcon } from "@heroicons/react/outline";
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import { Alert } from "../../../ui/components";
+import { Alert, Button } from "../../../ui/components";
 import { Paragraph } from "../../../ui/components/Typography/Paragraph/Paragraph.component";
 import { Typography } from "../../../ui/components/Typography/Typography.component";
 import { Notification } from "../../../ui/components/Notification/Notification.component";
 import { Collection } from "../../models";
 import { ActionLink } from "../../../common/components/ActionLink.component";
 import { Tag } from "../../../tags/models/tag.model";
+import { cn } from "../../../common";
 
 type Props = {
   collection: Collection;
@@ -27,6 +28,8 @@ export const CollectionListItem: React.FC<Props> = ({
 }) => {
   const [open, setOpen] = useState<boolean>(false);
   const { t } = useTranslation();
+
+  console.log(collection.videos.length === 0);
 
   return (
     <div className="grid grid-cols-12 gap-5 my-5">
@@ -83,10 +86,20 @@ export const CollectionListItem: React.FC<Props> = ({
         <Paragraph className="mb-4">{collection.shortDescription}</Paragraph>
         <div className="flex items-center">
           <Link
-            to={`/watch?v=0&c=${collection.slug}&index=0`}
-            className="bg-nx-red px-4 py-2 rounded-md text-lg transition-colors w-fit inline-block text-white hover:bg-nx-red-dark"
+            to={`/watch?v=0&c=${collection.slug}&index=0&availability=${collection.availability}`}
           >
-            {t("collections.actions.goto")}
+            <Button
+              as="button"
+              disabled={collection.videos.length === 0}
+              className={cn(
+                collection.videos.length === 0
+                  ? "bg-lightgray hover:bg-lightgray"
+                  : "bg-nx-red hover:bg-nx-red-dark",
+                " px-4 py-2 rounded-md text-lg transition-colors w-fit inline-block text-white "
+              )}
+            >
+              {t("collections.actions.goto")}
+            </Button>
           </Link>
 
           {tags.length !== 0 && (

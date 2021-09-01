@@ -10,8 +10,16 @@ export interface ICollectionForm {
   description: string;
   videos: videoLite[];
   availability: string;
+  passwords: AccessPassword[];
   tags: tagLite[];
 }
+
+export type AccessPassword = {
+  name: string;
+  password: string;
+  expiration: string;
+  collectionId: string;
+};
 
 type videoLite = {
   id: string;
@@ -44,6 +52,10 @@ export type CollectionParams = {
 
   joinWithPublisher?: boolean;
 
+  password?: string;
+
+  availability?: string;
+
   tags?: string;
 };
 
@@ -58,5 +70,6 @@ export interface ICollection {
   slug: string;
   availability: string;
   videos: IVideo[];
+  passwords: AccessPassword[];
   tags: Tag[];
 }
