@@ -304,6 +304,11 @@
       "title": {
         "name": "Title",
         "description": "The title of the video",
+        "attachment": {
+          "title": "Attachment(s)",
+          "label": "Your attachment name",
+          "url": "Your attachment URL"
+        },
         "error": "A title is required"
       },
       "thumbnailURL": {
@@ -323,7 +328,8 @@
         "error": "The video URL is invalid"
       },
       "thumbnailUpload": "Upload thumbnail",
-      "videoUpload": "Upload video"
+      "videoUpload": "Upload video",
+      "addAttachment": "Add an attachment"
     },
     "addVideo": {
       "description": "Fill the form below to create your video",

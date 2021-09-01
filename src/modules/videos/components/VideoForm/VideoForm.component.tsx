@@ -1,4 +1,5 @@
 import {
+  TrashIcon,
   EyeIcon,
   EyeOffIcon,
   GlobeIcon,
@@ -8,8 +9,8 @@ import {
 } from "@heroicons/react/outline";
 import { useInjection } from "@polyflix/di";
 import { motion } from "framer-motion";
+import { Controller, useFieldArray, useForm } from "react-hook-form";
 import { useEffect, useState, useRef, useMemo } from "react";
-import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useHistory, useLocation } from "react-router";
 import slugify from "slugify";
@@ -37,6 +38,7 @@ import { SubtitleService } from "../../services";
 import { FrameSelector } from "../FrameSelector/FrameSelector.component";
 import urlRegex from "url-regex";
 import SimpleMdeReact from "react-simplemde-editor";
+import { OutlineButton } from "../../../ui";
 
 type Props = {
   /** If video exists, the form will be in update mode, otherwise in create mode. */
@@ -75,6 +77,7 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
 
   const {
     register,
+    control,
     handleSubmit,
     errors,
     watch,
@@ -89,6 +92,7 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
       isPublic: video?.isPublic || false,
       thumbnail: video?.thumbnail,
       src: video?.src,
+      attachments: video?.attachments,
     },
   });
 
@@ -101,6 +105,7 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
     "description",
     t("videoManagement.inputs.description.name")
   );
+  const watchAttachments = watch("attachments", []);
 
   // We need to do this to get the value of textarea that isn't working with only description in useForm
   const [desc, setDesc] = useState<string | undefined>(video?.description);
@@ -143,6 +148,10 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
     imageFile?.getPreview() ||
     "https://i.stack.imgur.com/y9DpT.jpg";
 
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: "attachments",
+  });
   const [videoPreview, setVideoPreview] = useState(
     video?.src || videoFile?.getPreview()
   );
@@ -394,8 +403,61 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
             />
           </>
         )}
+        <div className="flex flex-col text-center mb-4 col-span-2">
+          <ul className="w-full">
+            {watchAttachments &&
+              fields.map((item, index) => {
+                return (
+                  <li
+                    key={item.id}
+                    className="grid grid-cols-4 w-full gap-2 my-2"
+                  >
+                    <div className="grid grid-flow-row lg:grid-flow-col col-span-3 gap-2">
+                      <Controller
+                        as={<input />}
+                        className="border dark:bg-nx-white focus:outline-none py-2 px-5 rounded-md font-display"
+                        name={`attachments[${index}].label`}
+                        placeholder={t(
+                          "videoManagement.inputs.title.attachment.label"
+                        )}
+                        control={control}
+                        defaultValue={item.label} // make sure to set up defaultValue
+                      />
+                      <Controller
+                        className="border dark:bg-nx-white focus:outline-none py-2 px-5 rounded-md font-display"
+                        as={<input />}
+                        placeholder={t(
+                          "videoManagement.inputs.title.attachment.url"
+                        )}
+                        name={`attachments[${index}].url`}
+                        control={control}
+                        defaultValue={item.url} // make sure to set up defaultValue
+                      />
+                    </div>
+                    <OutlineButton
+                      as="button"
+                      className="col-span-1"
+                      onClick={() => remove(index)}
+                    >
+                      <TrashIcon className="w-6 m-auto" />
+                    </OutlineButton>
+                  </li>
+                );
+              })}
+          </ul>
+          <FilledButton
+            className="font-normal-i"
+            as="button"
+            onClick={(e) => {
+              e.preventDefault();
+              append({ label: "", url: "" }, false);
+            }}
+          >
+            {t("videoManagement.inputs.addAttachment")}
+          </FilledButton>
+        </div>
         <SimpleMdeReact
-          className="col-span-2 prose"
+          className="col-span-2 prose mb-4 max-w-full"
           value={watchDescription}
           onChange={onChange}
           options={MDOptions}

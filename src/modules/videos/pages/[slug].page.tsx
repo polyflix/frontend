@@ -19,6 +19,7 @@ import { CollectionSlider } from "../../collections/components/CollectionSlider/
 import { useCollections } from "../../collections/hooks";
 import { Collection } from "../../collections/models";
 import { useQuery } from "../../common/hooks/useQuery";
+import { Attachment } from "../../common/models/attachments.model";
 import { PolyflixLanguage } from "../../common/types/language.type";
 import { cn } from "../../common/utils/classes.util";
 import { WatchtimeSyncService } from "../../stats/services/watchtime-sync.service";
@@ -113,6 +114,8 @@ const VideoContainer: React.FC<VideoContainerProps> = ({
     // TODO: For when the reader is less buggy
   };
 
+  const { t } = useTranslation();
+
   useEffect(() => {
     onError(alert);
     if (video) onLoad(video?.title);
@@ -139,6 +142,25 @@ const VideoContainer: React.FC<VideoContainerProps> = ({
         <SidebarComponent video={video} playerRef={playerRef} />
       </div>
       <Title className="text-4xl">{video?.title}</Title>
+      {video?.attachments[0] && (
+        <div className="rounded-lg bg-gray-100 bg-opacity-5 px-3 py-1 my-2">
+          <Typography as="span" className="font-bold pr-2">
+            {t("videoManagement.inputs.title.attachment.title")}:
+          </Typography>
+          {video?.attachments.map((attachment: Attachment) => {
+            return (
+              <a
+                href={attachment.url}
+                target="_blank"
+                rel="noreferrer"
+                className="text-white underline pr-2 py-1"
+              >
+                {attachment.label}
+              </a>
+            );
+          })}
+        </div>
+      )}
       {video?.description && (
         <ReactMarkdown
           components={{

@@ -3,6 +3,8 @@ import { Video } from "../models/video.model";
 import { IWatchMetadata } from "../../stats/types/userMeta.type";
 import { SubtitleLanguages } from "../models";
 import { IPublisher } from "../../common/types";
+import { Attachment } from "../../common/models/attachments.model";
+import { IAttachment } from "../../common/types/attachments.type";
 
 export enum VideoSource {
   YOUTUBE = "youtube",
@@ -18,6 +20,7 @@ export interface IVideoForm {
   isPublic: boolean;
   isPublished: boolean;
   src: string;
+  attachments: Attachment[];
 }
 
 export type VideoState<T> = {
@@ -50,6 +53,7 @@ export interface IVideo {
   slug: string;
   thumbnail: string;
   availableLanguages: SubtitleLanguages[];
+  attachments: IAttachment[];
 }
 
 export enum ProviderType {
