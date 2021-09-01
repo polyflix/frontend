@@ -21,7 +21,7 @@ export const VideoHero: React.FC<Props> = ({ video }) => {
         style={applyBackgroundImage(video.thumbnail)}
         className="relative flex items-center justify-center h-screen mb-12 overflow-hidden"
       >
-        <div className="absolute z-30 p-5 text-2xl text-white left-4">
+        <div className="absolute z-30 p-5 text-2xl text-white h-full flex flex-col justify-center left-0 items-start bg-gradient-to-r from-black">
           <Typography as="h1" className="text-4xl md:text-6xl" bold>
             {video.shortTitle}
           </Typography>

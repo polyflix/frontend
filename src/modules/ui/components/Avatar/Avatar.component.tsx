@@ -27,7 +27,7 @@ export const Avatar: React.FC<Props> = ({ user, className = "" }) => {
             ? user.profilePicture
             : "https://i.imgur.com/tdi3NGa.png"
         }
-        className="text-sm text-nx-white rounded-3xl"
+        className="text-sm w-10 h-10 rounded-3xl"
         alt={`Profile Picture`}
       />
     </div>
