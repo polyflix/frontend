@@ -1,4 +1,4 @@
-import { ICollection } from "../types";
+import { AccessPassword, ICollection } from "../types";
 import { Video } from "../../videos/models/video.model";
 import { Publisher } from "../../common/models";
 import { Tag } from "../../tags/models/tag.model";
@@ -19,6 +19,7 @@ export class Collection {
     private readonly _createdAt: Date,
     private readonly _updatedAt: Date,
     private readonly _videos: Video[],
+    private readonly _passwords: AccessPassword[],
     private readonly _tags: Tag[]
   ) {}
 
@@ -39,6 +40,7 @@ export class Collection {
       new Date(json.createdAt),
       new Date(json.updatedAt),
       json.videos && json.videos.map((video) => Video.fromJson(video)),
+      json.passwords,
       json.tags && json.tags.map(Tag.fromJson)
     );
   }
@@ -115,6 +117,14 @@ export class Collection {
    */
   get publisher(): Publisher | null {
     return this._publisher;
+  }
+
+  /**
+   * Return the collection passwords
+   * @returns {AccessPassword[]} the collection passwords
+   */
+  get passwords(): AccessPassword[] {
+    return this._passwords;
   }
 
   private get link(): string {

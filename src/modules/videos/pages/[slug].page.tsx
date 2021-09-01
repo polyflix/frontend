@@ -20,7 +20,6 @@ import { useCollections } from "../../collections/hooks";
 import { Collection } from "../../collections/models";
 import { useQuery } from "../../common/hooks/useQuery";
 import { Attachment } from "../../common/models/attachments.model";
-import { PolyflixLanguage } from "../../common/types/language.type";
 import { cn } from "../../common/utils/classes.util";
 import { WatchtimeSyncService } from "../../stats/services/watchtime-sync.service";
 import { GhostList, Title, Typography } from "../../ui";
@@ -38,6 +37,8 @@ import { useVideo } from "../hooks/useVideo.hook";
 import { Subtitle } from "../models";
 import { Video } from "../models/video.model";
 import styles from "./slug.module.scss";
+import { PolyflixLanguage } from "../../common/types/language.type";
+import { CollectionPassword } from "../../collections/components/CollectionPassword/CollectionPassword.component";
 
 export const VideoDetail: React.FC = () => {
   const [pageTitle, setPageTitle] = useState<string>();
@@ -75,6 +76,13 @@ export const VideoDetail: React.FC = () => {
             slug={query.get("c") as string}
           />
         )}
+        {query.has("c") && query.has("password") && (
+          <CollectionComponent
+            onLoad={onCollectionLoaded}
+            slug={query.get("c") as string}
+            password={query.get("password") as string}
+          />
+        )}
       </Container>
     );
   };
@@ -82,7 +90,16 @@ export const VideoDetail: React.FC = () => {
   if (error) return <Redirect to="/not-found" />;
   return (
     <Page variants={fadeOpacity} title={pageTitle}>
-      {buildContent()}
+      {query.has("availability") &&
+      query.get("availability") === "protected" ? (
+        <CollectionPassword
+          redirection={`watch?v=0&c=${query.get(
+            "c"
+          )}&index=0&avaibility=protected&password=`}
+        />
+      ) : (
+        buildContent()
+      )}
     </Page>
   );
 };
@@ -553,11 +570,15 @@ const SidebarComponent: React.FC<SidebarComponentProps> = ({
 type CollectionComponentProps = {
   onLoad: (elm: string) => void;
   slug: string;
+  password?: string;
+  availability?: string;
 };
 
 const CollectionComponent: React.FC<CollectionComponentProps> = ({
   onLoad,
   slug,
+  password,
+  availability,
 }) => {
   let query = useQuery() as URLSearchParams;
 
@@ -565,10 +586,12 @@ const CollectionComponent: React.FC<CollectionComponentProps> = ({
     useCollections<Collection>({
       mode: "document",
       slug,
+      password,
+      availability,
     });
 
   useEffect(() => {
-    if (collection) onLoad(collection.videos[0].slug);
+    if (collection && collection.videos) onLoad(collection.videos[0]?.slug);
   }, [collection, onLoad]);
 
   return (
@@ -583,6 +606,14 @@ const CollectionComponent: React.FC<CollectionComponentProps> = ({
       ) : (
         <GhostSlider count={5} />
       )}
+      {/* ?
+      {alert?.message === "Forbidden" ? (
+        <CollectionPassword
+          redirection={`watch?v=0&c=${query.get(
+            "c"
+          )}&index=0&avaibility=protected&password=`}
+        />
+      ) : null} */}
     </>
   );
 };
