@@ -1,11 +1,4 @@
 {
-  "forbidden": {
-    "content": {
-      "title": "Accès refusé",
-      "description": "Vous n'êtes pas autorisé à consulter cette page.",
-      "goback": "Revenir en arrière"
-    }
-  },
   "shared": {
     "common": {
       "actions": {
@@ -520,6 +513,16 @@
       "home": "Retourner à l'accueil"
     }
   },
+  "forbidden": {
+    "seo": {
+      "title": "Accès non autorisé"
+    },
+    "content": {
+      "title": "Oops, accès non autorisé",
+      "description": "Vous n'avez pas accès à cette page. Si c'est une erreur, merci de contacter un admin",
+      "home": "Retourner à l'accueil"
+    }
+  },
   "serverUnavailable": {
     "seo": {
       "title": "Service indisponible"
@@ -529,6 +532,39 @@
       "description": "Nous ne sommes pas en mesure de vous proposer ce service tout de suite, ré-essayez plus tard.",
       "redirect": "Découvrir un site incroyable",
       "link": "https://lapin.fr"
+    }
+  },
+  "admin": {
+    "seo": {
+      "ownTitle": "Espace administrateur",
+      "title": "Mon espace administrateur"
+    },
+    "onBoarding":{
+      "collections": {
+        "description": "Gérer les collections", 
+        "title": "Collections"
+      },
+      "courses": {
+        "description": "Gérer les cours", 
+        "title": "Cours"
+      },
+      "paths": {
+        "description": "Gérer les parcours", 
+        "title": "Parcours"
+      },
+      "question": "Quel élément voulez-vous gérer ?",
+      "tags": {
+        "description": "Gérer les étiquettes",
+        "title": "Étiquettes"
+      },
+      "users": {
+        "description": "Gérer les utilisateurs", 
+        "title": "Utilisateurs"
+      },
+      "videos": {
+        "description": "Gérer les vidéos", 
+        "title": "Vidéos"
+      }
     }
   },
   "video": {
@@ -569,18 +605,5 @@
     "title": "Résultats de la recherche",
     "description": "Voici les vidéos et collections correspondant à votre recherche.",
     "descriptionNoData": "Aucun résultats trouvés, merci d'essayer d'autres étiquettes."
-  },
-  "admin": {
-    "seo": {
-      "ownTitle": "Espace administrateur",
-      "title": "Mon espace administrateur"
-    },
-    "onBoarding": {
-      "tags": {
-        "description": "Gérer les étiquettes",
-        "title": "Étiquettes"
-      },
-      "question": "Quel élément voulez-vous gérer ?"
-    }
   }
 }

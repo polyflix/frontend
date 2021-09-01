@@ -20,9 +20,10 @@ import { useServerState } from "../hooks/useServerState.hook";
 import { ServerState } from "../types/serverState.type";
 import { NotFoundPage } from "./404.page";
 import { ServerUnavailablePage } from "./503.page";
-import ValidatePage from "../../authentication/pages/validate.page";
-import { HomePage } from ".";
+import { HomePage } from "./home.page";
 import { AdminRouter } from "../../admin/pages/admin.router";
+import { ForbiddenPage } from "./403.page";
+import ValidatePage from "../../authentication/pages/validate.page";
 
 export const IndexRouter: React.FC = () => {
   const { isAuthenticated, isLoading, hasRefresh, user } = useAuth();
@@ -109,6 +110,12 @@ export const IndexRouter: React.FC = () => {
             path="/courses"
             {...commonProps}
             component={CourseRouter}
+          />
+          <ProtectedRoute
+            hasAccessIf={isAuthenticated}
+            path="/403"
+            redirectPath="/auth/login"
+            component={ForbiddenPage}
           />
           <ProtectedRoute
             {...commonProps}
