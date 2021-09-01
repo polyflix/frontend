@@ -22,7 +22,7 @@ const ValidatePage: React.FC = () => {
   }, [authService, userId]);
   return !userId ? (
     <Page
-      title={t("auth.signIn.accountValidation.title")}
+      title={t("auth.signUp.accountValidation.title")}
       className="flex items-center justify-center h-full"
     >
       <Container mxAuto>
