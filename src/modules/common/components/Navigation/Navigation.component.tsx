@@ -9,7 +9,12 @@ import {
   UserIcon,
   VideoCameraIcon,
 } from "@heroicons/react/outline";
-import { LoginIcon, UserAddIcon, ViewListIcon } from "@heroicons/react/solid";
+import {
+  AdjustmentsIcon,
+  LoginIcon,
+  UserAddIcon,
+  ViewListIcon,
+} from "@heroicons/react/solid";
 import { useInjection } from "@polyflix/di";
 import { motion } from "framer-motion";
 import { Fragment, useState } from "react";
@@ -27,6 +32,7 @@ import { Typography } from "../../../ui/components/Typography/Typography.compone
 import { cn } from "../../utils/classes.util";
 import { Url } from "../../utils/url.util";
 import Hamburger from "./Hamburger/Hamburger.component";
+import { TagSearchBar } from "./TagSearchBar.component";
 
 type Props = {
   /** If false, the navigation will be hidden */
@@ -76,6 +82,18 @@ export const Navigation: React.FC<Props> = ({ visible }) => {
                   static
                   className="absolute border-nx-red right-0 w-56 mt-2 origin-top-right bg-black divide-y divide-nx-dark rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
                 >
+                  {user?.isAdmin && (
+                    <div className="px-1 py-1">
+                      <Menu.Item>
+                        <Link to={`/admin`}>
+                          <span className="cursor-pointer text-nx-white flex rounded-md items-center w-full px-2 py-2 text-sm">
+                            <AdjustmentsIcon className="text-nx-red w-5 mr-3" />
+                            {t("admin.seo.ownTitle")}
+                          </span>
+                        </Link>
+                      </Menu.Item>
+                    </div>
+                  )}
                   <div className="px-1 py-1">
                     <Menu.Item>
                       <Link to={`/profile/videos/${user?.id}`}>
@@ -188,7 +206,7 @@ export const Navigation: React.FC<Props> = ({ visible }) => {
 
   const getCommonContent = () => {
     return (
-      <div className="flex items-center flex-row-reverse md:flex-row relative">
+      <div className="flex items-center flex-row-reverse md:flex-row relative md:w-full">
         <Link to={isAuthenticated ? "/" : "#"}>
           <Image className="h-10 md:h-12" alt="Polyflix logo" src={logo} />
         </Link>
@@ -197,7 +215,7 @@ export const Navigation: React.FC<Props> = ({ visible }) => {
         <div
           className={cn(
             isMenuOpen ? "top-nav" : "-top-full",
-            "fixed rounded-b-md p-4 md:p-0 bg-black transition-all left-0 w-full md:relative gap-2 md:gap-4 flex flex-col md:flex-row md:w-4/5"
+            "fixed rounded-b-md p-4 md:p-0 bg-black transition-all left-0 w-full md:relative gap-2 md:gap-4 flex flex-col md:flex-row md:w-4/5 items-center"
           )}
         >
           {isAuthenticated && (
@@ -216,6 +234,7 @@ export const Navigation: React.FC<Props> = ({ visible }) => {
                   {t("quizzes.seo.global.title", { ns: "resources" })}
                 </Typography>
               </Link>
+              <TagSearchBar className="flex w-full" />
             </>
           )}
         </div>

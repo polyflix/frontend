@@ -49,13 +49,26 @@
         "actions": {
           "create": "Créer",
           "update": "Mis à jour"
+        },
+        "tags": {
+          "name": "Étiquettes",
+          "description": "Ajoutez des étiquettes pour aider les utilisateurs à trouver votre contenu",
+          "noOptionsMessage": "Aucune étiquette ne correspond, mais vous pouvez en créer une nouvelle",
+          "createTag": "Créer une nouvelle étiquette",
+          "adminDescription": "Une étiquette vérifiée est publique et peut être recherchée. Une étiquette non vérifiée n'est pas visible et ne peut pas être recherchée.\nCliquez sur \"Vérifiée\" ou \"Non vérifiée\" pour inverser la visibilité de l'étiquette.",
+          "reviewed": "Vérifiée",
+          "notReviewed": "Non vérifiée"
         }
       }
     },
     "navbar": {
       "signIn": "Se connecter",
       "signOut": "Se déconnecter",
-      "signUp": ["Pas de compte ?", "Inscrivez-vous dès maintenant"]
+      "signUp": ["Pas de compte ?", "Inscrivez-vous dès maintenant"],
+      "search": {
+        "placeholder": "Rechercher des vidéos et des collections par étiquette...",
+        "noOptionsMessage": "Aucune étiquette ne correspond"
+      }
     },
     "informations": {
       "publishedBy": "Publié par {{user}}"
@@ -550,6 +563,24 @@
       "errors": {
         "common": "Une erreur s'est produite"
       }
+    }
+  },
+  "search": {
+    "title": "Résultats de la recherche",
+    "description": "Voici les vidéos et collections correspondant à votre recherche.",
+    "descriptionNoData": "Aucun résultats trouvés, merci d'essayer d'autres étiquettes."
+  },
+  "admin": {
+    "seo": {
+      "ownTitle": "Espace administrateur",
+      "title": "Mon espace administrateur"
+    },
+    "onBoarding": {
+      "tags": {
+        "description": "Gérer les étiquettes",
+        "title": "Étiquettes"
+      },
+      "question": "Quel élément voulez-vous gérer ?"
     }
   }
 }

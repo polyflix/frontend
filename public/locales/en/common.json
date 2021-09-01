@@ -40,6 +40,15 @@
         "actions": {
           "create": "Create",
           "update": "Update"
+        },
+        "tags": {
+          "name": "Tags",
+          "description": "Add tags to help viewers find your content",
+          "noOptionsMessage": "No tags available, but you can create a new one",
+          "createTag": "Create a new tag",
+          "adminDescription": "A reviewed tag is public and can be searched. A not reviewed tag is not visible and can not be searched.\nClick on \"Reviewed\" or \"Not reviewed\" to switch tag visibility",
+          "reviewed": "Reviewed",
+          "notReviewed": "Not reviewed"
         }
       },
       "wait": "Please wait",
@@ -55,7 +64,11 @@
     "navbar": {
       "signIn": "Sign in",
       "signOut": "Sign out",
-      "signUp": ["No account ?", "Sign up now"]
+      "signUp": ["No account ?", "Sign up now"],
+      "search": {
+        "placeholder": "Search videos and collections by tag...",
+        "noOptionsMessage": "No more tags available"
+      }
     },
     "informations": {
       "publishedBy": "Published by {{user}}"
@@ -560,6 +573,24 @@
       "errors": {
         "common": "An error has occurred"
       }
+    }
+  },
+  "search": {
+    "title": "Search results",
+    "description": "Here are videos and collections related to your search.",
+    "descriptionNoData": "Your search returned no collections or videos, please try other tags."
+  },
+  "admin": {
+    "seo": {
+      "ownTitle": "Administrator space",
+      "title": "My administrator space"
+    },
+    "onBoarding": {
+      "tags": {
+        "description": "Manage tags",
+        "title": "Tags"
+      },
+      "question": "Which element do you want to manage ?"
     }
   }
 }

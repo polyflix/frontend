@@ -7,6 +7,7 @@ export const FilledButton: React.FC<PropsWithChildren<ButtonProps>> = ({
   children,
   className = "",
   disabled = false,
+  form = "",
   ...rest
 }) => {
   return (
@@ -22,6 +23,7 @@ export const FilledButton: React.FC<PropsWithChildren<ButtonProps>> = ({
       )}
       {...rest}
       as={as}
+      form={form}
     >
       {children}
     </Button>

@@ -8,6 +8,7 @@ export interface ICollectionFilter extends PaginationFilter {
   title?: string;
   publisherId?: string;
   exact?: boolean;
+  tags?: string;
 }
 
 @Injectable()
@@ -17,8 +18,15 @@ export class CollectionFilter extends AbstractFilter<ICollectionFilter> {
   ): string {
     this.clear();
     Object.entries(filters).forEach(([key, value]) => {
-      this.queryBuilder.set(key, value);
+      if (key !== "tags") this.queryBuilder.set(key, value);
     });
-    return this.queryBuilder.toString();
+    let qb = this.queryBuilder.toString();
+    if (filters.tags) {
+      if (qb[qb.length - 1] === "?") qb.substring(0, qb.length);
+      for (const tag of filters.tags.split("&")) {
+        qb += `&tags[]=${tag}`;
+      }
+    }
+    return qb;
   }
 }

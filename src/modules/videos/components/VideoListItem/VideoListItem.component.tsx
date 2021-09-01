@@ -18,12 +18,15 @@ import { Typography } from "../../../ui/components/Typography/Typography.compone
 import { Video } from "../../models/video.model";
 import { VideoListItemOptions } from "./VideoListItemOptions.component";
 import { ActionLink } from "../../../common/components/ActionLink.component";
+import { Tag } from "../../../tags/models/tag.model";
+import { Link } from "react-router-dom";
 
 type Props = {
   video: Video;
   onDelete?: () => void;
   ownerItems?: boolean;
   links?: boolean;
+  tags?: Tag[];
 };
 
 /**
@@ -39,6 +42,7 @@ export const VideoListItem: React.FC<Props> = ({
   onDelete,
   ownerItems = true,
   links = true,
+  tags = [],
 }) => {
   const [open, setOpen] = useState<boolean>(false);
   const { t } = useTranslation();
@@ -219,6 +223,18 @@ export const VideoListItem: React.FC<Props> = ({
             </span>
           )}
         </div>
+        {tags.length !== 0 && (
+          <div className="mt-4">
+            {tags.map((tag) => (
+              <Link
+                to={"/search/" + tag.label}
+                className="bg-nx-red px-2 mr-2 rounded-sm text-lg transition-colors w-fit inline-block text-white hover:bg-nx-red-dark"
+              >
+                {tag.label}
+              </Link>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

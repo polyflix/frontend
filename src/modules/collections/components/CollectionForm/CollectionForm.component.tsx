@@ -6,7 +6,6 @@ import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router";
 import slugify from "slugify";
-// import { useAuth } from "../../../authentication/hooks/useAuth.hook";
 import { fadeInDown } from "../../../ui/animations/fadeInDown";
 import { stagger } from "../../../ui/animations/stagger";
 import { Alert, AlertType } from "../../../ui/components/Alert/Alert.component";
@@ -25,6 +24,9 @@ import { VideoListItem } from "../../../videos/components/VideoListItem/VideoLis
 import { Video } from "../../../videos/models/video.model";
 import { Select } from "../../../ui/components/Select/select.component";
 import { useAuth } from "../../../authentication/hooks/useAuth.hook";
+import { Tag } from "../../../tags/models/tag.model";
+import { TagSelect } from "../../../tags/components/TagSelect.component";
+
 type Props = {
   /** If collection exists, the form will be in update mode, otherwise in create mode. */
   collection?: Collection | null;
@@ -53,6 +55,7 @@ export const CollectionForm: React.FC<Props> = ({ collection }) => {
   const watchTitle = watch<"title", string>("title", "");
 
   const [videos, setVideos] = useState<Video[]>(collection?.videos ?? []);
+  const [tags, setTags] = useState<Tag[]>(collection?.tags || []);
   const [loading, setLoading] = useState<boolean>(false);
   const [isSubmit, setIsSubmit] = useState<boolean>(false);
   const [alert, setAlert] =
@@ -80,10 +83,12 @@ export const CollectionForm: React.FC<Props> = ({ collection }) => {
         ? collectionService.updateCollection(collection?.id as string, {
             ...data,
             videos: videos.map((v) => ({ id: v.id })),
+            tags: tags?.map((tag) => ({ id: tag.id })),
           })
         : collectionService.createCollection({
             ...data,
             videos: videos.map((v) => ({ id: v.id })),
+            tags: tags?.map((tag) => ({ id: tag.id })),
           }));
       setAlert({
         message: isUpdate
@@ -143,6 +148,7 @@ export const CollectionForm: React.FC<Props> = ({ collection }) => {
       <form
         className="grid items-center grid-cols-2 gap-4"
         onSubmit={handleSubmit(onSubmit)}
+        id="collectionForm"
       >
         <Input
           name="title"
@@ -180,7 +186,18 @@ export const CollectionForm: React.FC<Props> = ({ collection }) => {
           })}
           variants={fadeInDown}
         />
+      </form>
+      <div className="grid items-center grid-cols-2 gap-4 py-4">
+        <div className="col-span-2">
+          <TagSelect
+            defaultTags={collection?.tags || []}
+            onChange={setTags}
+            tags={tags}
+            variants={fadeInDown}
+          />
+        </div>
         <Select
+          form="collectionForm"
           options={["public", "private", "protected"]}
           className="col-span-2"
           name="availability"
@@ -191,17 +208,6 @@ export const CollectionForm: React.FC<Props> = ({ collection }) => {
               message: `${t("collectionManagement.inputs.description.error")}.`,
             },
           })}
-          variants={fadeInDown}
-        />
-        <FilledButton
-          className="col-span-2"
-          as="input"
-          inputValue={
-            isUpdate
-              ? t("collectionManagement.updateCollection.action")
-              : t("collectionManagement.addCollection.action")
-          }
-          disabled={isSubmit}
           variants={fadeInDown}
         />
         {loading && (
@@ -217,7 +223,19 @@ export const CollectionForm: React.FC<Props> = ({ collection }) => {
             {alert.message}
           </Alert>
         )}
-      </form>
+        <FilledButton
+          form="collectionForm"
+          className="col-span-2"
+          as="input"
+          inputValue={
+            isUpdate
+              ? t("collectionManagement.updateCollection.action")
+              : t("collectionManagement.addCollection.action")
+          }
+          disabled={isSubmit}
+          variants={fadeInDown}
+        />
+      </div>
       <div className="mt-4">
         <SearchCollection
           variants={fadeInDown}

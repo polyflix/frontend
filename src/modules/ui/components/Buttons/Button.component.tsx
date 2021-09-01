@@ -8,6 +8,7 @@ export type ButtonProps = WithClassname &
     as: "button" | "input";
     inputValue?: string;
     disabled?: boolean;
+    form?: string;
     onClick?: (
       e: React.MouseEvent<HTMLButtonElement | HTMLInputElement, MouseEvent>
     ) => void;
@@ -19,6 +20,7 @@ export const Button: React.FC<PropsWithChildren<ButtonProps>> = ({
   inputValue = "",
   className = "",
   disabled = false,
+  form = "",
   ...rest
 }) => {
   const As = motion[as];
@@ -34,6 +36,7 @@ export const Button: React.FC<PropsWithChildren<ButtonProps>> = ({
         className={classes}
         type="submit"
         value={inputValue}
+        {...(form && { form })}
       ></As>
     );
   } else {
