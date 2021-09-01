@@ -1,11 +1,4 @@
 {
-  "forbidden": {
-    "content": {
-      "title": "Forbidden",
-      "description": "You're not allowed to consult this page.",
-      "goback": "Go back"
-    }
-  },
   "shared": {
     "common": {
       "actions": {
@@ -425,7 +418,7 @@
     }
   },
   "collectionManagement": {
-    "collection": "Collection",
+    "collection": "a collection",
     "actions": {
       "switching": "Click to change"
     },
@@ -530,6 +523,16 @@
       "home": "Go home"
     }
   },
+  "forbidden": {
+    "seo": {
+      "title": "Page unauthorized"
+    },
+    "content": {
+      "title": "Oops, page unauthorized",
+      "description": "You don't have access to this page. If it's an error, please, contact an admin",
+      "home": "Go home"
+    }
+  },
   "serverUnavailable": {
     "seo": {
       "title": "Server unavailable"
@@ -539,6 +542,39 @@
       "description": "We cannot serve you this page, please try again.",
       "redirect": "Discover something new",
       "link": "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+    }
+  },
+  "admin": {
+    "seo": {
+      "ownTitle": "Administrator space",
+      "title": "My administrator space"      
+    },
+    "onBoarding":{
+      "collections": {
+        "description": "Manage collections", 
+        "title": "Collections"
+      },
+      "courses": {
+        "description": "Manage courses", 
+        "title": "Courses"
+      },
+      "paths": {
+        "description": "Manage paths", 
+        "title": "Paths"
+      },
+      "question": "Which element do you want to manage ?",
+      "tags": {
+        "description": "Manage tags",
+        "title": "Tags"
+      },
+      "users": {
+        "description": "Manage users", 
+        "title": "Users"
+      },
+      "videos": {
+        "description": "Manage videos", 
+        "title": "Videos"
+      }
     }
   },
   "video": {
@@ -579,18 +615,5 @@
     "title": "Search results",
     "description": "Here are videos and collections related to your search.",
     "descriptionNoData": "Your search returned no collections or videos, please try other tags."
-  },
-  "admin": {
-    "seo": {
-      "ownTitle": "Administrator space",
-      "title": "My administrator space"
-    },
-    "onBoarding": {
-      "tags": {
-        "description": "Manage tags",
-        "title": "Tags"
-      },
-      "question": "Which element do you want to manage ?"
-    }
   }
 }

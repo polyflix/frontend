@@ -19,6 +19,22 @@ export class UserService {
   ) {}
 
   /**
+   * Gets array of users
+   * @param {Token} token the access token
+   * @param {string} id the id of the user requested
+   * @returns {Promise<User>}
+   */
+  public async getUsers(): Promise<User[]> {
+    const { status, response, error } = await this.httpService.get(`/users`);
+    if (status !== StatusCodes.OK) {
+      // eslint-disable-next-line
+      throw { error, status };
+    }
+
+    return response.map(User.fromJson);
+  }
+
+  /**
    * Gets a user by his id
    * @param {Token} token the access token
    * @param {string} id the id of the user requested
