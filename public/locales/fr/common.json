@@ -294,6 +294,11 @@
       "title": {
         "name": "Titre",
         "description": "Le titre de la vidéo",
+        "attachment": {
+          "title": "Pièce(s) jointe(s)",
+          "label": "Le nom de la pièce jointe",
+          "url": "URL de la pièce jointe"
+        },
         "error": "Le titre de la vidéo est requis"
       },
       "thumbnailURL": {
@@ -313,7 +318,8 @@
         "error": "Le lien de la vidéo est invalide"
       },
       "thumbnailUpload": "Uploader la miniature",
-      "videoUpload": "Uploader la vidéo"
+      "videoUpload": "Uploader la vidéo",
+      "addAttachment": "Ajouter une pièce jointe"
     },
     "addVideo": {
       "description": "Remplissez le formulaire ci-dessous pour créer votre vidéo",
