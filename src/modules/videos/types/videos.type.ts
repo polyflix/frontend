@@ -3,6 +3,8 @@ import { Video } from "../models/video.model";
 import { IWatchMetadata } from "../../stats/types/userMeta.type";
 import { SubtitleLanguages } from "../models";
 import { IPublisher } from "../../common/types";
+import { Tag } from "../../tags/models/tag.model";
+import { tagLite } from "../../tags/types/tag.type";
 import { Attachment } from "../../common/models/attachments.model";
 import { IAttachment } from "../../common/types/attachments.type";
 
@@ -20,6 +22,7 @@ export interface IVideoForm {
   isPublic: boolean;
   isPublished: boolean;
   src: string;
+  tags: tagLite[];
   attachments: Attachment[];
 }
 
@@ -53,6 +56,7 @@ export interface IVideo {
   slug: string;
   thumbnail: string;
   availableLanguages: SubtitleLanguages[];
+  tags: Tag[];
   attachments: IAttachment[];
 }
 

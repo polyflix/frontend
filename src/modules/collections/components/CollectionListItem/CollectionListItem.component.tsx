@@ -8,12 +8,14 @@ import { Typography } from "../../../ui/components/Typography/Typography.compone
 import { Notification } from "../../../ui/components/Notification/Notification.component";
 import { Collection } from "../../models";
 import { ActionLink } from "../../../common/components/ActionLink.component";
+import { Tag } from "../../../tags/models/tag.model";
 
 type Props = {
   collection: Collection;
   onDelete?: () => void; // commented to simplify upgrade
   ownerItems?: boolean;
   links?: boolean;
+  tags?: Tag[];
 };
 
 export const CollectionListItem: React.FC<Props> = ({
@@ -21,6 +23,7 @@ export const CollectionListItem: React.FC<Props> = ({
   onDelete,
   ownerItems = true,
   links = true,
+  tags = [],
 }) => {
   const [open, setOpen] = useState<boolean>(false);
   const { t } = useTranslation();
@@ -78,12 +81,27 @@ export const CollectionListItem: React.FC<Props> = ({
           )}
         </Typography>
         <Paragraph className="mb-4">{collection.shortDescription}</Paragraph>
-        <Link
-          to={`/watch?v=0&c=${collection.slug}&index=0`}
-          className="bg-nx-red px-4 py-2 rounded-md text-lg transition-colors w-fit inline-block text-white hover:bg-nx-red-dark"
-        >
-          {t("collections.actions.goto")}
-        </Link>
+        <div className="flex items-center">
+          <Link
+            to={`/watch?v=0&c=${collection.slug}&index=0`}
+            className="bg-nx-red px-4 py-2 rounded-md text-lg transition-colors w-fit inline-block text-white hover:bg-nx-red-dark"
+          >
+            {t("collections.actions.goto")}
+          </Link>
+
+          {tags.length !== 0 && (
+            <div className="flex items-center mx-4">
+              {tags.map((tag) => (
+                <Link
+                  to={"/search/" + tag.label}
+                  className="bg-nx-red px-2 mr-2 rounded-sm text-lg transition-colors w-fit inline-block text-white hover:bg-nx-red-dark"
+                >
+                  {tag.label}
+                </Link>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
       <div className="flex items-center flex-shrink flex-grow">
         {ownerItems && (

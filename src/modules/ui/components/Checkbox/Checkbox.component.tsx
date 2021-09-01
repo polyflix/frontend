@@ -15,6 +15,8 @@ type Props = WithClassname &
     /** The icon for the checkbox */
     icon?: any;
     checked?: boolean;
+    /** The form id */
+    form?: string;
   };
 
 /**
@@ -22,7 +24,16 @@ type Props = WithClassname &
  */
 export const Checkbox = forwardRef<HTMLInputElement, PropsWithChildren<Props>>(
   (
-    { className = "", name, error, children, icon, checked, ...rest },
+    {
+      className = "",
+      name,
+      error,
+      children,
+      icon,
+      checked,
+      form = "",
+      ...rest
+    },
     forwardRef
   ) => (
     <motion.div
@@ -37,6 +48,7 @@ export const Checkbox = forwardRef<HTMLInputElement, PropsWithChildren<Props>>(
         type="checkbox"
         checked={checked}
         name={name}
+        form={form}
       />
       <label
         className="cursor-pointer transition-all hover:underline"

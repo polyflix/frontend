@@ -46,11 +46,12 @@ module.exports = {
       borderStyle: ["hover"],
       width: ["hover"],
       opacity: ["group-hover"],
+      fontWeight: ["hover"],
     },
   },
   plugins: [
     require("@tailwindcss/line-clamp"),
     require("@tailwindcss/typography"),
-    require('@tailwindcss/aspect-ratio'),
+    require("@tailwindcss/aspect-ratio"),
   ],
 };

@@ -2,12 +2,15 @@ import { AlertType } from "../../ui/components/Alert/Alert.component";
 import { Collection } from "../models/collections.model";
 import { IVideo } from "../../videos/types/videos.type";
 import { IPublisher } from "../../common/types";
+import { Tag } from "../../tags/models/tag.model";
+import { tagLite } from "../../tags/types/tag.type";
 
 export interface ICollectionForm {
   title: string;
   description: string;
   videos: videoLite[];
   availability: string;
+  tags: tagLite[];
 }
 
 type videoLite = {
@@ -40,6 +43,8 @@ export type CollectionParams = {
   publisherId?: string;
 
   joinWithPublisher?: boolean;
+
+  tags?: string;
 };
 
 export interface ICollection {
@@ -53,4 +58,5 @@ export interface ICollection {
   slug: string;
   availability: string;
   videos: IVideo[];
+  tags: Tag[];
 }

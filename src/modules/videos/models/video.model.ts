@@ -4,6 +4,7 @@ import { SubtitleLanguages } from "./subtitle.model";
 import { Publisher } from "../../common/models";
 import { PolyflixLanguage } from "../../common/types/language.type";
 import { getSubtitleLanguageFromPolyflix } from "../../common/utils/language.util";
+import { Tag } from "../../tags/models/tag.model";
 import { Attachment } from "../../common/models/attachments.model";
 
 /**
@@ -29,6 +30,7 @@ export class Video {
     private readonly _views: number,
     private _likes: number,
     private readonly _availableLanguages: SubtitleLanguages[],
+    private readonly _tags: Tag[],
     private readonly _attachments: Attachment[]
   ) {}
 
@@ -56,6 +58,7 @@ export class Video {
       json.views,
       json.likes,
       json.availableLanguages,
+      json.tags && json.tags.map(Tag.fromJson),
       json.attachments.map((attachment) => Attachment.fromJson(attachment))
     );
   }
@@ -194,6 +197,10 @@ export class Video {
 
   get createdAt(): Date {
     return new Date(this._createdAt);
+  }
+
+  get tags(): Tag[] {
+    return this._tags;
   }
 
   /**

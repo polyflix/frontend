@@ -17,6 +17,8 @@ type Props = WithClassname &
     disabled?: boolean;
     /** The list to display for the select */
     options?: string[];
+    /** The id of the linked form */
+    form?: string;
   };
 
 /**
@@ -31,6 +33,7 @@ export const Select = forwardRef<HTMLSelectElement, Props>(
       required = false,
       hint,
       options = [],
+      form = "",
       ...rest
     },
     forwardRef
@@ -42,6 +45,7 @@ export const Select = forwardRef<HTMLSelectElement, Props>(
         disabled={disabled}
         required={required}
         ref={forwardRef}
+        form={form}
       >
         {options.map((option: string) => (
           <option value={option}>{option}</option>

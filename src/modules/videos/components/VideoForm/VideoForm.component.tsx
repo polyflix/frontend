@@ -38,6 +38,8 @@ import { SubtitleService } from "../../services";
 import { FrameSelector } from "../FrameSelector/FrameSelector.component";
 import urlRegex from "url-regex";
 import SimpleMdeReact from "react-simplemde-editor";
+import { TagSelect } from "../../../tags/components/TagSelect.component";
+import { Tag } from "../../../tags/models/tag.model";
 import { OutlineButton } from "../../../ui";
 
 type Props = {
@@ -74,6 +76,7 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
     } | null>(null);
   const [imageFile, setImageFile] = useState<ImageFile | null>(null);
   const [videoFile, setVideoFile] = useState<VideoFile | null>(null);
+  const [tags, setTags] = useState<Tag[]>(video?.tags || []);
 
   const {
     register,
@@ -91,7 +94,7 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
       isPublished: video?.isPublished || false,
       isPublic: video?.isPublic || false,
       thumbnail: video?.thumbnail,
-      src: video?.src,
+      src: video?.src.replace("-nocookie", ""),
       attachments: video?.attachments,
     },
   });
@@ -194,8 +197,14 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
       if (type === "upload") data = await uploadFiles(data);
       data.description = desc || "";
       let result = await (isUpdate
-        ? videoService.updateVideo(video?.id as string, data)
-        : videoService.createVideo(data));
+        ? videoService.updateVideo(video?.id as string, {
+            ...data,
+            tags: tags?.map((tag) => ({ id: tag.id })),
+          })
+        : videoService.createVideo({
+            ...data,
+            tags: tags?.map((tag) => ({ id: tag.id })),
+          }));
       if (data.hasSubtitle && !subtitleExists)
         await subtitleService.createSubtitle(video || result);
       else if (!data.hasSubtitle && subtitleExists)
@@ -317,6 +326,7 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
       <form
         className="grid items-center grid-cols-2 gap-4"
         onSubmit={handleSubmit(onSubmit)}
+        id="videoForm"
       >
         <Input
           disabled={!autocompleted}
@@ -477,8 +487,20 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
             },
           })}
           variants={fadeInDown}
-        /> */}
+        />
+      /> */}
+      </form>
+      <div className="grid items-center grid-cols-2 gap-4 py-4">
+        <div className="col-span-2">
+          <TagSelect
+            defaultTags={video?.tags || []}
+            onChange={setTags}
+            tags={tags}
+            variants={fadeInDown}
+          />
+        </div>
         <Checkbox
+          form="videoForm"
           className="col-span-2"
           error={errors.isPublic}
           name="isPublic"
@@ -528,6 +550,7 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
           </Typography>
         </Checkbox>
         <Checkbox
+          form="videoForm"
           className="col-span-2"
           error={errors.isPublished}
           name="isPublished"
@@ -578,6 +601,7 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
         </Checkbox>
         {type === "upload" && (
           <Checkbox
+            form="videoForm"
             className="col-span-2"
             name="hasSubtitle"
             ref={register()}
@@ -640,6 +664,7 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
           </Alert>
         )}
         <FilledButton
+          form="videoForm"
           className="col-span-2"
           as="input"
           inputValue={
@@ -650,7 +675,7 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
           disabled={isSubmit}
           variants={fadeInDown}
         />
-      </form>
+      </div>
     </motion.div>
   );
 };

@@ -14,6 +14,7 @@ import { SubtitleRouter } from "../../subtitles/pages/subtitle.router";
 import { Spinner } from "../../ui/components/Spinner/Spinner.component";
 import { ProfileRouter } from "../../users/pages/profile.router";
 import { VideoRouter } from "../../videos/pages/video.router";
+import { TagsRouter } from "../../tags/pages/tags.router";
 import { ProtectedRoute } from "../components/ProtectedRoute/ProtectedRoute.component";
 import { useServerState } from "../hooks/useServerState.hook";
 import { ServerState } from "../types/serverState.type";
@@ -21,6 +22,7 @@ import { NotFoundPage } from "./404.page";
 import { ServerUnavailablePage } from "./503.page";
 import ValidatePage from "../../authentication/pages/validate.page";
 import { HomePage } from ".";
+import { AdminRouter } from "../../admin/pages/admin.router";
 
 export const IndexRouter: React.FC = () => {
   const { isAuthenticated, isLoading, hasRefresh, user } = useAuth();
@@ -117,6 +119,17 @@ export const IndexRouter: React.FC = () => {
             {...commonProps}
             path="/subtitle-editing"
             component={SubtitleRouter}
+          />
+          <ProtectedRoute
+            {...commonProps}
+            path="/search"
+            component={TagsRouter}
+          />
+          <ProtectedRoute
+            hasAccessIf={isAuthenticated && (user?.isAdmin || false)}
+            path="/admin"
+            redirectPath="/403"
+            component={AdminRouter}
           />
           <Route component={NotFoundPage} />
         </Switch>

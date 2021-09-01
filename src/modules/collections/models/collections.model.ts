@@ -1,6 +1,7 @@
 import { ICollection } from "../types";
 import { Video } from "../../videos/models/video.model";
 import { Publisher } from "../../common/models";
+import { Tag } from "../../tags/models/tag.model";
 
 /**
  * Modelize the Collection
@@ -17,7 +18,8 @@ export class Collection {
     private readonly _publisher: Publisher | null,
     private readonly _createdAt: Date,
     private readonly _updatedAt: Date,
-    private readonly _videos: Video[]
+    private readonly _videos: Video[],
+    private readonly _tags: Tag[]
   ) {}
 
   /**
@@ -36,7 +38,8 @@ export class Collection {
       json.publishedBy && Publisher.fromJson(json.publishedBy),
       new Date(json.createdAt),
       new Date(json.updatedAt),
-      json.videos && json.videos.map((video) => Video.fromJson(video))
+      json.videos && json.videos.map((video) => Video.fromJson(video)),
+      json.tags && json.tags.map(Tag.fromJson)
     );
   }
 
@@ -96,6 +99,14 @@ export class Collection {
    */
   get videos(): Video[] {
     return this._videos;
+  }
+
+  /**
+   * Return the collection videos.
+   * @returns {Video[]} the collection videos
+   */
+  get tags(): Tag[] {
+    return this._tags;
   }
 
   /**
