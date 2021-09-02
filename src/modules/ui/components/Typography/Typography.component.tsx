@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { PropsWithChildren } from "react";
 import { WithClassname, WithMotion } from "../../../common/types/props.type";
 import { cn } from "../../../common/utils/classes.util";
+import { FieldError } from "react-hook-form";
 
 type Props = WithClassname &
   WithMotion & {
@@ -13,6 +14,7 @@ type Props = WithClassname &
     bold?: boolean;
     /** Light version of the font-family, if available */
     light?: boolean;
+    error?: FieldError;
   };
 
 /**
@@ -22,6 +24,7 @@ export const Typography: React.FC<PropsWithChildren<Props>> = ({
   children,
   as = "p",
   overrideDefaultClasses = false,
+  error,
   className = "",
   bold = false,
   light = false,
@@ -39,6 +42,7 @@ export const Typography: React.FC<PropsWithChildren<Props>> = ({
       )}
     >
       {children}
+      {error && <small className="text-red-400">{error.message}</small>}
     </Component>
   );
 };

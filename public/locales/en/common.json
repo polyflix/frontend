@@ -57,7 +57,10 @@
     "navbar": {
       "signIn": "Sign in",
       "signOut": "Sign out",
-      "signUp": ["No account ?", "Sign up now"],
+      "signUp": [
+        "No account ?",
+        "Sign up now"
+      ],
       "search": {
         "placeholder": "Search videos and collections by tag...",
         "noOptionsMessage": "No more tags available"
@@ -136,7 +139,10 @@
         "description": "Enter your credentials to log in into your account"
       },
       "action": "Sign in",
-      "footer": ["New to Polyflix ?", "Sign up now"],
+      "footer": [
+        "New to Polyflix ?",
+        "Sign up now"
+      ],
       "error": "Bad credentials"
     },
     "signUp": {
@@ -157,24 +163,36 @@
           "name": "Password confirm",
           "error": "The passwords do not match"
         },
-        "profilePicture": "Upload profile picture"
+        "termsOfService": {
+          "verb": "I agree to",
+          "subject": "the Terms of Service",
+          "error": "The agreement of the Terms of Service is required"
+        }
       },
-      "action": "Sign up",
-      "footer": ["Already registered to Polyflix ?", "Sign in here"],
-      "error": "Email already in use",
-      "accountValidation": {
-        "description": [
-          "Your account has not been activated yet",
-          "An activation link has been sent to your mailbox",
-          "If you have not received it, check your spam"
-        ],
-        "title": "Account activation",
-        "action": "Send activation mail again",
-        "error": [
-          "An error occurred while activating your account",
-          "If your account activation email does not work, we can send you a new one"
-        ]
-      }
+      "profilePicture": "Upload profile picture"
+    },
+    "action": "Sign up",
+    "footer": [
+      "Already registered to Polyflix ?",
+      "Sign in here"
+    ],
+    "error": "Email already in use",
+    "accountValidation": {
+      "description": [
+        "Your account has not been activated yet",
+        "An activation link has been sent to your mailbox",
+        "If you have not received it, check your spam"
+      ],
+      "title": "Account activation",
+      "action": "Send activation mail again",
+      "error": [
+        "An error occurred while activating your account",
+        "If your account activation email does not work, we can send you a new one"
+      ]
+    },
+    "cookies": {
+      "consent": "I constent",
+      "explanation": "This website uses cookies to allow to avoid continuous re-loging"
     }
   },
   "userProfile": {
