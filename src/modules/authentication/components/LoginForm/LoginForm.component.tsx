@@ -72,7 +72,7 @@ export const LoginForm: React.FC = () => {
         />
         {isLoading && (
           <div className="flex items-center">
-            <Spinner className="fill-current text-nx-dark"></Spinner>
+            <Spinner className="fill-current text-nx-dark" />
             <Typography as="span" className="text-sm ml-2">
               {t("shared.common.wait")}..
             </Typography>

@@ -116,9 +116,44 @@ export const RegisterForm: React.FC = () => {
               `${t("auth.signUp.inputs.passwordConfirm.error")}.`,
           })}
         />
+        <div className="flex items-center col-span-2 ">
+          <Input
+            placeholder=""
+            type="checkbox"
+            className="form-checkbox"
+            name="termsOfService"
+            variants={fadeInDown}
+            ref={register({
+              required: {
+                value: true,
+                message: `${t("auth.signUp.inputs.termsOfService.error")}.`,
+              },
+            })}
+          />
+          <div className="px-1 py-1" />
+
+          <Paragraph variants={fadeInDown}>
+            {t("auth.signUp.inputs.termsOfService.verb")}{" "}
+            <Typography bold as="span" variants={fadeInDown}>
+              <a
+                href="https://www.umontpellier.fr/mentions-legales"
+                target="_blank"
+                rel="noreferrer"
+              >
+                {t("auth.signUp.inputs.termsOfService.subject")}
+              </a>
+            </Typography>
+          </Paragraph>
+        </div>
+        <Typography
+          error={errors.termsOfService}
+          as="span"
+          className="col-span-2 "
+        />
+
         {isLoading && (
           <div className="flex items-center">
-            <Spinner className="fill-current text-nx-dark"></Spinner>
+            <Spinner className="fill-current text-nx-dark" />
             <Typography as="span" className="text-sm ml-2">
               {t("shared.common.wait")}..
             </Typography>

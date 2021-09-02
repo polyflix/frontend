@@ -57,7 +57,10 @@
     "navbar": {
       "signIn": "Se connecter",
       "signOut": "Se déconnecter",
-      "signUp": ["Pas de compte ?", "Inscrivez-vous dès maintenant"],
+      "signUp": [
+        "Pas de compte ?",
+        "Inscrivez-vous dès maintenant"
+      ],
       "search": {
         "placeholder": "Rechercher des vidéos et des collections par étiquette...",
         "noOptionsMessage": "Aucune étiquette ne correspond"
@@ -136,7 +139,10 @@
         "description": "Entrez vos identifiants pour vous connecter à votre compte"
       },
       "action": "Se connecter",
-      "footer": ["Nouveau sur Polyflix ?", "Inscrivez-vous dès maintenant"],
+      "footer": [
+        "Nouveau sur Polyflix ?",
+        "Inscrivez-vous dès maintenant"
+      ],
       "error": "Adresse e-mail ou mot de passe invalide"
     },
     "signUp": {
@@ -157,24 +163,38 @@
           "name": "Confirmation du mot de passe",
           "error": "Les mot de passe ne correspondent pas"
         },
-        "profilePicture": "Uploader un avatar"
+        "profilePicture": "Uploader un avatar",
+        "termsOfService": {
+          "verb": "J'accepte les",
+          "subject": "conditions générales d'utilisation",
+          "error": "L'acceptation des conditions générales d'utilisation est requise"
+        }
       },
       "action": "S'inscrire",
-      "footer": ["Déjà inscrit sur Polyflix ?", "Connectez-vous ici"],
-      "error": "Adresse e-mail déjà utilisée",
-      "accountValidation": {
-        "description": [
-          "Votre compte n'a pas encore été activé",
-          "Un lien d'activation a été envoyé sur votre boîte mail",
-          "Si vous ne l'avez pas reçu, pensez à verifier vos spams"
-        ],
-        "title": "Activation du compte",
-        "action": "Renvoyer le mail d'activation",
-        "error": [
-          "Une erreur est survenue lors de l'activation de votre compte",
-          "Si le mail d'activation de votre compte ne fonctionne pas, nous pouvons vous en envoyer un nouveau"
-        ]
-      }
+      "footer": [
+        "Déjà inscrit sur Polyflix ?",
+        "Connectez-vous ici"
+      ]
+
+
+    },
+    "error": "Adresse e-mail déjà utilisée",
+    "accountValidation": {
+      "description": [
+        "Votre compte n'a pas encore été activé",
+        "Un lien d'activation a été envoyé sur votre boîte mail",
+        "Si vous ne l'avez pas reçu, pensez à verifier vos spams"
+      ],
+      "title": "Activation du compte",
+      "action": "Renvoyer le mail d'activation",
+      "error": [
+        "Une erreur est survenue lors de l'activation de votre compte",
+        "Si le mail d'activation de votre compte ne fonctionne pas, nous pouvons vous en envoyer un nouveau"
+      ]
+    },
+    "cookies": {
+      "consent": "J'accepte",
+      "explanation": "Ce site web utilise des cookies pour vous permettre d'éviter de devoir vous reconnecter continuellement"
     }
   },
   "userProfile": {
