@@ -22,7 +22,7 @@ const ValidatePage: React.FC = () => {
   }, [authService, userId]);
   return !userId ? (
     <Page
-      title={t("auth.signUp.accountValidation.title")}
+      title={t("auth.accountValidation.title")}
       className="flex items-center justify-center h-full"
     >
       <Container mxAuto>
@@ -31,9 +31,9 @@ const ValidatePage: React.FC = () => {
           className="px-5 w-full md:w-8/12 lg:w-5/12 mx-auto"
         >
           <Paragraph variants={fadeInDown} className="my-3">
-            {t("auth.signUp.accountValidation.description.0")}. <br />
-            {t("auth.signUp.accountValidation.description.1")}. <br />
-            {t("auth.signUp.accountValidation.description.2")}.
+            {t("auth.accountValidation.description.0")}. <br />
+            {t("auth.accountValidation.description.1")}. <br />
+            {t("auth.accountValidation.description.2")}.
           </Paragraph>
           <FilledButton
             variants={fadeInDown}
@@ -41,7 +41,7 @@ const ValidatePage: React.FC = () => {
             className="col-span-2"
             onClick={() => authService.sendValidationEmail(user?.email || "")}
           >
-            {t("auth.signUp.accountValidation.action")}
+            {t("auth.accountValidation.action")}
           </FilledButton>
         </motion.div>
       </Container>
