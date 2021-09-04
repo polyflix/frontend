@@ -244,6 +244,11 @@ type SidebarComponentProps = {
   playerRef: React.RefObject<HTMLVmPlayerElement>;
 };
 
+enum SelectedTab {
+  SUBTITLES,
+  NOTES,
+}
+
 const SidebarComponent: React.FC<SidebarComponentProps> = ({
   video,
   playerRef,
@@ -255,7 +260,9 @@ const SidebarComponent: React.FC<SidebarComponentProps> = ({
     useInjection<WatchtimeSyncService>(WatchtimeSyncService);
 
   const [isContainerDataVisible, setContainerDataIsVisible] = useState(true);
-  const [visiblePanelElement, setVisiblePanelElement] = useState("description");
+  const [visiblePanelElement, setVisiblePanelElement] = useState(
+    SelectedTab.SUBTITLES
+  );
   const [isLiked, setLiked] = useState<boolean | undefined>(undefined);
   const [subtitles, setSubtitles] = useState<SubtitleFetchingState>();
   const minioService = useInjection<MinioService>(MinioService);
@@ -377,14 +384,14 @@ const SidebarComponent: React.FC<SidebarComponentProps> = ({
                             <a
                               className={cn(
                                 "flex rounded-lg font-bold uppercase px-5 py-3 cursor-pointer",
-                                visiblePanelElement === "subtitle"
+                                visiblePanelElement === SelectedTab.SUBTITLES
                                   ? "text-white bg-red-600"
                                   : "text-red-600 bg-black",
                                 "hover:bg-red-600 hover:text-white"
                               )}
                               onClick={(e) => {
                                 e.preventDefault();
-                                setVisiblePanelElement("subtitle");
+                                setVisiblePanelElement(SelectedTab.SUBTITLES);
                               }}
                               href="#subtitle"
                             >
@@ -398,14 +405,14 @@ const SidebarComponent: React.FC<SidebarComponentProps> = ({
                             <a
                               className={cn(
                                 "flex rounded-lg font-bold uppercase px-5 py-3 cursor-pointer",
-                                visiblePanelElement === "note"
+                                visiblePanelElement === SelectedTab.NOTES
                                   ? "text-white bg-red-600"
                                   : "text-red-600 bg-black",
                                 "hover:bg-red-600 hover:text-white"
                               )}
                               onClick={(e) => {
                                 e.preventDefault();
-                                setVisiblePanelElement("note");
+                                setVisiblePanelElement(SelectedTab.NOTES);
                               }}
                               href="#note"
                             >
@@ -424,7 +431,7 @@ const SidebarComponent: React.FC<SidebarComponentProps> = ({
                     >
                       {!isLtMdScreen ? (
                         isContainerDataVisible &&
-                        ((visiblePanelElement === "subtitle" && (
+                        ((visiblePanelElement === SelectedTab.SUBTITLES && (
                           <div>
                             {subtitles && subtitles.blocks && (
                               <Link to={`/subtitle-editing/${video.slug}`}>
@@ -457,18 +464,7 @@ const SidebarComponent: React.FC<SidebarComponentProps> = ({
                             )}
                           </div>
                         )) ||
-                          (visiblePanelElement === "description" && (
-                            <div className="pt-2">
-                              {/* Volontary let description old code to facilitate future rewords on description and short resume. Issues opened */}
-                              {/* <Typography as="h4" bold className="text-2xl">
-                                {video?.title}
-                              </Typography>
-                              <Paragraph className="text-xs py-4 md:pr-1 ">
-                                {video?.description}
-                              </Paragraph> */}
-                            </div>
-                          )) ||
-                          (visiblePanelElement === "note" && (
+                          (visiblePanelElement === SelectedTab.NOTES && (
                             <div className="pt-2">
                               <VideoNote video={video}></VideoNote>
                             </div>
