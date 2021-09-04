@@ -78,7 +78,11 @@ export const LoginForm: React.FC = () => {
             </Typography>
           </div>
         )}
-        {authError && <Alert type="error">{t("auth.signIn.error")}</Alert>}
+        {authError && (
+          <Alert variants={fadeInDown} type="error">
+            {t("auth.signIn.error")}
+          </Alert>
+        )}
         <FilledButton
           className="col-span-2"
           as="input"
