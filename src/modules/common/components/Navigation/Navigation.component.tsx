@@ -18,7 +18,7 @@ import {
 import { useInjection } from "@polyflix/di";
 import { motion } from "framer-motion";
 import { Fragment, useState } from "react";
-import { useTranslation } from "react-i18next";
+import { Trans, useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import logo from "../../../../assets/images/polyflix-logo.png";
 import { useAuth } from "../../../authentication/hooks/useAuth.hook";
@@ -33,6 +33,8 @@ import { cn } from "../../utils/classes.util";
 import { Url } from "../../utils/url.util";
 import Hamburger from "./Hamburger/Hamburger.component";
 import { TagSearchBar } from "./TagSearchBar.component";
+import { useLocation } from "react-router";
+import { fadeInUp } from "../../../ui";
 
 type Props = {
   /** If false, the navigation will be hidden */
@@ -45,12 +47,14 @@ export const NAV_HEIGHT = 65;
  * The navigation component
  */
 export const Navigation: React.FC<Props> = ({ visible }) => {
+  const { pathname } = useLocation();
   const authService = useInjection<AuthService>(AuthService);
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const { isAuthenticated, user } = useAuth();
   const { t } = useTranslation();
 
   const isNavbarExited = Boolean(Url.hasParameter("play")) === true;
+  const isRegistrationPage = pathname === "/auth/register";
 
   const getAuthenticatedContent = () => {
     return (
@@ -183,18 +187,31 @@ export const Navigation: React.FC<Props> = ({ visible }) => {
   const getPublicContent = () => {
     return (
       <div className="flex items-center">
-        <Link to="/auth/register">
+        <Link
+          to={isRegistrationPage ? "/auth/login" : "/auth/register"}
+          title={
+            isRegistrationPage
+              ? t("auth.signIn.seo.title")
+              : t("auth.signUp.seo.title")
+          }
+        >
           <UserAddIcon className="text-nx-white w-6 md:hidden" />
-          <Typography className="hidden md:block" as="span">
-            {t("shared.navbar.signUp.0")}{" "}
-            <Typography bold as="span">
-              {t("shared.navbar.signUp.1")}.
-            </Typography>
+          <Typography className="hidden md:block" as="span" variants={fadeInUp}>
+            <Trans
+              i18nKey={
+                isRegistrationPage
+                  ? "shared.navbar.haveAccountSignIn"
+                  : "shared.navbar.noAccountSignUp"
+              }
+              components={{ bold: <strong /> }}
+            >
+              No account ? <strong> Sign up now</strong>
+            </Trans>
           </Typography>
         </Link>
         <LanguageButton />
         <div className="mx-2"></div>
-        <Link to="/auth/login">
+        <Link to="/auth/login" title={t("auth.signIn.seo.title")}>
           <LoginIcon className="text-nx-white w-6 md:hidden" />
           <OutlineButton className="hidden md:block" as="button">
             {t("shared.navbar.signIn")}
@@ -206,38 +223,44 @@ export const Navigation: React.FC<Props> = ({ visible }) => {
 
   const getCommonContent = () => {
     return (
-      <div className="flex items-center flex-row-reverse md:flex-row relative md:w-full">
-        <Link to={isAuthenticated ? "/" : "#"}>
-          <Image className="h-10 md:h-12" alt="Polyflix logo" src={logo} />
-        </Link>
-        <div className="mx-2"></div>
-        <Hamburger onToggle={setIsMenuOpen} />
-        <div
-          className={cn(
-            isMenuOpen ? "top-nav" : "-top-full",
-            "fixed rounded-b-md p-4 md:p-0 bg-black transition-all left-0 w-full md:relative gap-2 md:gap-4 flex flex-col md:flex-row md:w-4/5 items-center"
-          )}
+      <div className="flex items-center flex-row-reverse md:flex-row relative md:w-auto flex-shrink-0">
+        <Link
+          to={isAuthenticated ? "/" : "/auth/login"}
+          title={
+            isAuthenticated ? t("home.seo.title") : t("auth.signIn.seo.title")
+          }
+          className="mx-2"
         >
-          {isAuthenticated && (
-            <>
-              <Link to="/">
-                <Typography as="span">{t("home.seo.title")}</Typography>
-              </Link>
-              <Link to="/courses">
-                <Typography as="span">{t("courses.seo.title")}</Typography>
-              </Link>
-              <Link to="/paths">
-                <Typography as="span">{t("paths.seo.title")}</Typography>
-              </Link>
-              <Link to="/quizzes">
-                <Typography as="span">
-                  {t("quizzes.seo.global.title", { ns: "resources" })}
-                </Typography>
-              </Link>
-              <TagSearchBar className="flex w-full" />
-            </>
-          )}
-        </div>
+          <Image
+            className="h-10 md:h-12 md:w-auto"
+            alt="Polyflix logo"
+            src={logo}
+          />
+        </Link>
+        {isAuthenticated && <Hamburger onToggle={setIsMenuOpen} />}
+        {isAuthenticated && (
+          <div
+            className={cn(
+              isMenuOpen ? "top-nav" : "-top-full",
+              "fixed rounded-b-md p-4 md:p-0 bg-black transition-all left-0 w-full md:relative gap-2 md:gap-4 flex flex-col md:flex-row md:w-4/5 items-center"
+            )}
+          >
+            <Link to="/">
+              <Typography as="span">{t("home.seo.title")}</Typography>
+            </Link>
+            <Link to="/courses">
+              <Typography as="span">{t("courses.seo.title")}</Typography>
+            </Link>
+            <Link to="/paths">
+              <Typography as="span">{t("paths.seo.title")}</Typography>
+            </Link>
+            <Link to="/quizzes">
+              <Typography as="span">
+                {t("quizzes.seo.global.title", { ns: "resources" })}
+              </Typography>
+            </Link>
+          </div>
+        )}
       </div>
     );
   };
@@ -257,6 +280,7 @@ export const Navigation: React.FC<Props> = ({ visible }) => {
           <Container mxAuto fluid className="w-full">
             <div className="flex justify-between items-center w-full border-t-0 border-r-0 border-l-0">
               {getCommonContent()}
+              {user && <TagSearchBar className="w-96" />}
               {user ? getAuthenticatedContent() : getPublicContent()}
             </div>
           </Container>

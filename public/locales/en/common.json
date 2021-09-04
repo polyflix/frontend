@@ -57,10 +57,8 @@
     "navbar": {
       "signIn": "Sign in",
       "signOut": "Sign out",
-      "signUp": [
-        "No account ?",
-        "Sign up now"
-      ],
+      "noAccountSignUp": "No account ? <bold>Sign up now</bold>",
+      "haveAccountSignIn": "No account ? <bold>Sign up now</bold>",
       "search": {
         "placeholder": "Search videos and collections by tag...",
         "noOptionsMessage": "No more tags available"
@@ -565,19 +563,19 @@
   "admin": {
     "seo": {
       "ownTitle": "Administrator space",
-      "title": "My administrator space"      
+      "title": "My administrator space"
     },
     "onBoarding":{
       "collections": {
-        "description": "Manage collections", 
+        "description": "Manage collections",
         "title": "Collections"
       },
       "courses": {
-        "description": "Manage courses", 
+        "description": "Manage courses",
         "title": "Courses"
       },
       "paths": {
-        "description": "Manage paths", 
+        "description": "Manage paths",
         "title": "Paths"
       },
       "question": "Which element do you want to manage ?",
@@ -586,11 +584,11 @@
         "title": "Tags"
       },
       "users": {
-        "description": "Manage users", 
+        "description": "Manage users",
         "title": "Users"
       },
       "videos": {
-        "description": "Manage videos", 
+        "description": "Manage videos",
         "title": "Videos"
       }
     }
@@ -633,5 +631,7 @@
     "title": "Search results",
     "description": "Here are videos and collections related to your search.",
     "descriptionNoData": "Your search returned no collections or videos, please try other tags."
-  }
+  },
+  "switchLanguage": "Switch language",
+  "switchLanguageTo": "Change language to {{ lang }}"
 }

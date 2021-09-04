@@ -6,7 +6,7 @@ import { Button } from "../Button.component";
 import { PolyflixLanguage } from "../../../../common/types/language.type";
 
 export const LanguageButton: React.FC = () => {
-  const { i18n } = useTranslation();
+  const { i18n, t } = useTranslation();
 
   let currentLanguage = localStorage.getItem("i18nextLng");
 
@@ -26,7 +26,11 @@ export const LanguageButton: React.FC = () => {
   };
 
   return (
-    <Button as="button" onClick={() => changeLanguage(otherLanguage)}>
+    <Button
+      as="button"
+      onClick={() => changeLanguage(otherLanguage)}
+      title={t("switchLanguage")}
+    >
       {currentLanguage === PolyflixLanguage.FR ? (
         <FrenchFlagIcon />
       ) : (

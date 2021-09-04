@@ -12,6 +12,7 @@ export type ButtonProps = WithClassname &
     onClick?: (
       e: React.MouseEvent<HTMLButtonElement | HTMLInputElement, MouseEvent>
     ) => void;
+    title?: string;
   };
 
 export const Button: React.FC<PropsWithChildren<ButtonProps>> = ({
