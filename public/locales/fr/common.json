@@ -57,10 +57,8 @@
     "navbar": {
       "signIn": "Se connecter",
       "signOut": "Se déconnecter",
-      "signUp": [
-        "Pas de compte ?",
-        "Inscrivez-vous dès maintenant"
-      ],
+      "noAccountSignUp": "Pas de compte ? <bold>Enregistrez-vous dès maintenant</bold>",
+      "haveAccountSignIn": "Vous avez déjà un compte ? <bold>Se connecter</bold>",
       "search": {
         "placeholder": "Rechercher des vidéos et des collections par étiquette...",
         "noOptionsMessage": "Aucune étiquette ne correspond"
@@ -561,15 +559,15 @@
     },
     "onBoarding":{
       "collections": {
-        "description": "Gérer les collections", 
+        "description": "Gérer les collections",
         "title": "Collections"
       },
       "courses": {
-        "description": "Gérer les cours", 
+        "description": "Gérer les cours",
         "title": "Cours"
       },
       "paths": {
-        "description": "Gérer les parcours", 
+        "description": "Gérer les parcours",
         "title": "Parcours"
       },
       "question": "Quel élément voulez-vous gérer ?",
@@ -578,11 +576,11 @@
         "title": "Étiquettes"
       },
       "users": {
-        "description": "Gérer les utilisateurs", 
+        "description": "Gérer les utilisateurs",
         "title": "Utilisateurs"
       },
       "videos": {
-        "description": "Gérer les vidéos", 
+        "description": "Gérer les vidéos",
         "title": "Vidéos"
       }
     }
@@ -625,5 +623,7 @@
     "title": "Résultats de la recherche",
     "description": "Voici les vidéos et collections correspondant à votre recherche.",
     "descriptionNoData": "Aucun résultats trouvés, merci d'essayer d'autres étiquettes."
-  }
+  },
+  "switchLanguage": "Changer de langue",
+  "switchLanguageTo": "Modifier la langue vers {{ lang }}"
 }
