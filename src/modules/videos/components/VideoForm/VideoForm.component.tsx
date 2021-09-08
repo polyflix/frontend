@@ -104,16 +104,13 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
   const watchPublished = watch<"isPublished", boolean>("isPublished");
   const watchHasSubtitle = watch<"hasSubtitle", boolean>("hasSubtitle");
   const watchThumbnail = watch<"thumbnail", string>("thumbnail", "");
-  const watchDescription = watch<"description", string>(
-    "description",
-    t("videoManagement.inputs.description.name")
-  );
   const watchAttachments = watch("attachments", []);
 
   // We need to do this to get the value of textarea that isn't working with only description in useForm
-  const [desc, setDesc] = useState<string | undefined>(video?.description);
+  const [desc, setDesc] = useState<string | undefined>(
+    video?.description ?? t("videoManagement.inputs.description.name")
+  );
   const onChange = (value: string) => {
-    setValue("description", value);
     setDesc(value);
   };
 
@@ -175,7 +172,7 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
         if (id) {
           const metadata = await videoService.getVideoMetadata(id[0]);
           setValue("thumbnail", metadata.snippet?.thumbnails?.high?.url);
-          setValue("description", metadata.snippet?.description);
+          setDesc(metadata.snippet?.description as string);
           setValue("title", metadata.snippet?.title);
         }
       }
@@ -468,7 +465,7 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
         </div>
         <SimpleMdeReact
           className="col-span-2 prose mb-4 max-w-full"
-          value={watchDescription}
+          value={desc}
           onChange={onChange}
           options={MDOptions}
         />
