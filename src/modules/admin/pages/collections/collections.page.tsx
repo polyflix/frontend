@@ -59,7 +59,7 @@ export const AdminCollectionPage: React.FC = () => {
           >
             <Link to="/collections/create">
               <span className="inline-flex mx-2">
-                <PlusIcon className="w-6" /> {t("shared.common.actions.add")}
+                <PlusIcon className="w-6" /> {t("shared.common.actions.add")}{" "}
                 {t("collectionManagement.collection")}
               </span>
             </Link>

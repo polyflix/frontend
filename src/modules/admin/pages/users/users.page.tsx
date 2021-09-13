@@ -11,13 +11,12 @@ import { useUsers } from "../../hooks/users/use-users.hook";
 export const AdminUserPage: React.FC = () => {
   const { t } = useTranslation();
 
-  const { data, isLoading: isLoadingUser, alert } = useUsers();
-  if (isLoadingUser) console.log(data);
+  const { data, isLoading, alert } = useUsers();
 
   if (alert && alert.type === "not-found") return <Redirect to="/not-found" />;
 
   return (
-    <Page title={t("admin.onBoarding.users.title")}>
+    <Page title={t("admin.onBoarding.users.title")} isLoading={isLoading}>
       <Container mxAuto className="mt-5">
         <Jumbotron
           withGoBack={true}
