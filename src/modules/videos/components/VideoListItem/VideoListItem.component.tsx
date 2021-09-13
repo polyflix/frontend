@@ -19,7 +19,7 @@ import { Video } from "../../models/video.model";
 import { VideoListItemOptions } from "./VideoListItemOptions.component";
 import { ActionLink } from "../../../common/components/ActionLink.component";
 import { Tag } from "../../../tags/models/tag.model";
-import { Link } from "react-router-dom";
+import { TagBadge } from "../../../tags/components/TagBadge.component";
 
 type Props = {
   video: Video;
@@ -226,12 +226,7 @@ export const VideoListItem: React.FC<Props> = ({
         {tags.length !== 0 && (
           <div className="mt-4">
             {tags.map((tag) => (
-              <Link
-                to={"/search/" + tag.label}
-                className="bg-nx-red px-2 mr-2 rounded-sm text-lg transition-colors w-fit inline-block text-white hover:bg-nx-red-dark"
-              >
-                {tag.label}
-              </Link>
+              <TagBadge key={tag.id} tag={tag} />
             ))}
           </div>
         )}

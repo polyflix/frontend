@@ -2,6 +2,7 @@ export interface ITag {
   id: string;
   label: string;
   isReviewed: boolean;
+  color: string;
 }
 
 export interface ITagForm {

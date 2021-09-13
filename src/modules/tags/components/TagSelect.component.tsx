@@ -60,6 +60,7 @@ export const TagSelect: React.FC<Props> = ({
                 id: e,
                 isReviewed: false,
                 label: create.option.label,
+                color: "#000000",
               }),
             ]);
         }
@@ -78,6 +79,7 @@ export const TagSelect: React.FC<Props> = ({
               id: actionMeta.option.value,
               label: actionMeta.option.label,
               isReviewed: false,
+              color: "#000000",
             }),
           ]);
         break;

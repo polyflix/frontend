@@ -41,7 +41,7 @@ export const TagSearchPage: React.FC = () => {
       <Container
         mxAuto
         fluid
-        className="flex flex-col  p-4 box-border text-nx-white"
+        className="flex flex-col p-4 box-border text-nx-white"
       >
         {videos &&
           collections &&
@@ -51,6 +51,7 @@ export const TagSearchPage: React.FC = () => {
               if (e instanceof Video) {
                 return (
                   <VideoListItem
+                    key={e.id}
                     video={e}
                     onDelete={undefined}
                     ownerItems={false}
@@ -61,6 +62,7 @@ export const TagSearchPage: React.FC = () => {
               } else {
                 return (
                   <CollectionListItem
+                    key={e.id}
                     collection={e}
                     ownerItems={false}
                     tags={e.tags}

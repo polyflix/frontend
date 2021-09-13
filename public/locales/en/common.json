@@ -38,8 +38,8 @@
           "name": "Tags",
           "description": "Add tags to help viewers find your content",
           "noOptionsMessage": "No tags available, but you can create a new one",
-          "createTag": "Create a new tag",
-          "adminDescription": "A reviewed tag is public and can be searched. A not reviewed tag is not visible and can not be searched.\nClick on \"Reviewed\" or \"Not reviewed\" to switch tag visibility",
+          "createTag": "Create a new tag...",
+          "adminDescription": "A reviewed tag is public and can be searched. A not reviewed tag is not visible and can not be searched.\nClick on \"Reviewed\" or \"Not reviewed\" to switch tag visibility.",
           "reviewed": "Reviewed",
           "notReviewed": "Not reviewed"
         }
@@ -137,10 +137,7 @@
         "description": "Enter your credentials to log in into your account"
       },
       "action": "Sign in",
-      "footer": [
-        "New to Polyflix ?",
-        "Sign up now"
-      ],
+      "footer": ["New to Polyflix ?", "Sign up now"],
       "error": "Bad credentials"
     },
     "signUp": {
@@ -170,10 +167,7 @@
       "profilePicture": "Upload profile picture"
     },
     "action": "Sign up",
-    "footer": [
-      "Already registered to Polyflix ?",
-      "Sign in here"
-    ],
+    "footer": ["Already registered to Polyflix ?", "Sign in here"],
     "error": "Email already in use",
     "accountValidation": {
       "description": [
@@ -565,7 +559,7 @@
       "ownTitle": "Administrator space",
       "title": "My administrator space"
     },
-    "onBoarding":{
+    "onBoarding": {
       "collections": {
         "description": "Manage collections",
         "title": "Collections"

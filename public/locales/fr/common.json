@@ -47,7 +47,7 @@
           "name": "Étiquettes",
           "description": "Ajoutez des étiquettes pour aider les utilisateurs à trouver votre contenu",
           "noOptionsMessage": "Aucune étiquette ne correspond, mais vous pouvez en créer une nouvelle",
-          "createTag": "Créer une nouvelle étiquette",
+          "createTag": "Créer une nouvelle étiquette...",
           "adminDescription": "Une étiquette vérifiée est publique et peut être recherchée. Une étiquette non vérifiée n'est pas visible et ne peut pas être recherchée.\nCliquez sur \"Vérifiée\" ou \"Non vérifiée\" pour inverser la visibilité de l'étiquette.",
           "reviewed": "Vérifiée",
           "notReviewed": "Non vérifiée"
@@ -137,10 +137,7 @@
         "description": "Entrez vos identifiants pour vous connecter à votre compte"
       },
       "action": "Se connecter",
-      "footer": [
-        "Nouveau sur Polyflix ?",
-        "Inscrivez-vous dès maintenant"
-      ],
+      "footer": ["Nouveau sur Polyflix ?", "Inscrivez-vous dès maintenant"],
       "error": "Adresse e-mail ou mot de passe invalide"
     },
     "signUp": {
@@ -169,12 +166,7 @@
         }
       },
       "action": "S'inscrire",
-      "footer": [
-        "Déjà inscrit sur Polyflix ?",
-        "Connectez-vous ici"
-      ]
-
-
+      "footer": ["Déjà inscrit sur Polyflix ?", "Connectez-vous ici"]
     },
     "error": "Adresse e-mail déjà utilisée",
     "accountValidation": {
@@ -557,7 +549,7 @@
       "ownTitle": "Espace administrateur",
       "title": "Mon espace administrateur"
     },
-    "onBoarding":{
+    "onBoarding": {
       "collections": {
         "description": "Gérer les collections",
         "title": "Collections"

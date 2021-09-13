@@ -10,6 +10,7 @@ import { Collection } from "../../models";
 import { ActionLink } from "../../../common/components/ActionLink.component";
 import { Tag } from "../../../tags/models/tag.model";
 import { cn } from "../../../common";
+import { TagBadge } from "../../../tags/components/TagBadge.component";
 
 type Props = {
   collection: Collection;
@@ -28,8 +29,6 @@ export const CollectionListItem: React.FC<Props> = ({
 }) => {
   const [open, setOpen] = useState<boolean>(false);
   const { t } = useTranslation();
-
-  console.log(collection.videos.length === 0);
 
   return (
     <div className="grid grid-cols-12 gap-5 my-5">
@@ -88,29 +87,25 @@ export const CollectionListItem: React.FC<Props> = ({
           <Link
             to={`/watch?v=0&c=${collection.slug}&index=0&availability=${collection.availability}`}
           >
-            <Button
-              as="button"
-              disabled={collection.videos.length === 0}
-              className={cn(
-                collection.videos.length === 0
-                  ? "bg-lightgray hover:bg-lightgray"
-                  : "bg-nx-red hover:bg-nx-red-dark",
-                " px-4 py-2 rounded-md text-lg transition-colors w-fit inline-block text-white "
-              )}
-            >
-              {t("collections.actions.goto")}
-            </Button>
+            {collection.videos && (
+              <Button
+                as="button"
+                disabled={collection.videos.length === 0}
+                className={cn(
+                  collection.videos.length === 0
+                    ? "bg-lightgray hover:bg-lightgray"
+                    : "bg-nx-red hover:bg-nx-red-dark",
+                  " px-4 py-2 rounded-md text-lg transition-colors w-fit inline-block text-white "
+                )}
+              >
+                {t("collections.actions.goto")}
+              </Button>
+            )}
           </Link>
-
           {tags.length !== 0 && (
             <div className="flex items-center mx-4">
               {tags.map((tag) => (
-                <Link
-                  to={"/search/" + tag.label}
-                  className="bg-nx-red px-2 mr-2 rounded-sm text-lg transition-colors w-fit inline-block text-white hover:bg-nx-red-dark"
-                >
-                  {tag.label}
-                </Link>
+                <TagBadge key={tag.id} tag={tag} />
               ))}
             </div>
           )}

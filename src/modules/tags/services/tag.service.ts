@@ -96,6 +96,8 @@ export class TagService {
   public static URLToTags(url: string): Tag[] {
     return url
       .split("&")
-      .map((label) => Tag.fromJson({ id: "", label, isReviewed: false }));
+      .map((label) =>
+        Tag.fromJson({ id: "", label, isReviewed: false, color: "#000000" })
+      );
   }
 }
