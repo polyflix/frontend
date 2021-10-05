@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
+import { useAuth } from "../../authentication/hooks";
 import { QueryFilter } from "../../common/types/crud.type";
 import { Container, fadeOpacity, Page } from "../../ui";
 import { ItemsPerPage } from "../../ui/components/Filters/ItemsPerPage.component";
@@ -12,17 +13,16 @@ import { QuizzAttemptsList } from "../components/Attempts/QuizzAttemptsList.comp
 import { useQuizz } from "../hooks/useQuizz.hook";
 import { useQuizzAttempts } from "../hooks/useQuizzAttempts.hook";
 import { CrudFilterService } from "../services/crud-filter.service";
-import { useAuth } from "../../authentication/hooks";
 
 const getSearchByName = (value: string) => [
   {
     "user.firstName": {
-      $cont: value,
+      $contL: value,
     },
   },
   {
     "user.lastName": {
-      $cont: value,
+      $contL: value,
     },
   },
 ];
