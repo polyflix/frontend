@@ -5,7 +5,6 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router";
-import slugify from "slugify";
 import { useAuth } from "../../../authentication/hooks/useAuth.hook";
 import { fadeInDown } from "../../../ui/animations/fadeInDown";
 import { stagger } from "../../../ui/animations/stagger";
@@ -30,6 +29,7 @@ import Card from "../Card.component";
 import update from "immutability-helper";
 import { VisibilitySelector } from "../../../common/components/VisibilitySelector/VisibilitySelector.component";
 import { StatusSelector } from "../../../common/components/StatusSelector/StatusSelector.component";
+import { slugify } from "../../../common/utils/slugify.util";
 
 type Props = {
   /** If path exists, the form will be in update mode, otherwise in create mode. */
@@ -174,10 +174,7 @@ export const PathForm: React.FC<Props> = ({ path }) => {
           variants={fadeInDown}
           hint={
             watchTitle
-              ? `UID : ${slugify(watchTitle, {
-                  lower: true,
-                  remove: /[*+~.()'"!:@]/g,
-                })}`
+              ? `UID : ${slugify(watchTitle)}`
               : `${t("pathManagement.inputs.title.description")}.`
           }
           ref={register({
