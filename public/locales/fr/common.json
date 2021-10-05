@@ -66,6 +66,11 @@
     },
     "informations": {
       "publishedBy": "Publié par {{user}}"
+    },
+    "footer": {
+      "legalNotices": "Mentions légales",
+      "reportBug": "Signaler un bug",
+      "copyright": "© 2021 Polyflix - Fait avec ❤️ par les DO4"
     }
   },
   "courses": {
@@ -137,10 +142,7 @@
         "description": "Entrez vos identifiants pour vous connecter à votre compte"
       },
       "action": "Se connecter",
-      "footer": [
-        "Nouveau sur Polyflix ?",
-        "Inscrivez-vous dès maintenant"
-      ],
+      "footer": ["Nouveau sur Polyflix ?", "Inscrivez-vous dès maintenant"],
       "error": "Adresse e-mail ou mot de passe invalide"
     },
     "signUp": {
@@ -169,12 +171,7 @@
         }
       },
       "action": "S'inscrire",
-      "footer": [
-        "Déjà inscrit sur Polyflix ?",
-        "Connectez-vous ici"
-      ]
-
-
+      "footer": ["Déjà inscrit sur Polyflix ?", "Connectez-vous ici"]
     },
     "error": "Adresse e-mail déjà utilisée",
     "accountValidation": {
@@ -557,7 +554,7 @@
       "ownTitle": "Espace administrateur",
       "title": "Mon espace administrateur"
     },
-    "onBoarding":{
+    "onBoarding": {
       "collections": {
         "description": "Gérer les collections",
         "title": "Collections"
