@@ -5,7 +5,6 @@ import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router";
-import slugify from "slugify";
 import { fadeInDown } from "../../../ui/animations/fadeInDown";
 import { stagger } from "../../../ui/animations/stagger";
 import { Alert, AlertType } from "../../../ui/components/Alert/Alert.component";
@@ -33,6 +32,8 @@ import { Tag } from "../../../tags/models/tag.model";
 import { TagSelect } from "../../../tags/components/TagSelect.component";
 import { VisibilitySelector } from "../../../common/components/VisibilitySelector/VisibilitySelector.component";
 import { StatusSelector } from "../../../common/components/StatusSelector/StatusSelector.component";
+import { slugify } from "../../../common/utils/slugify.util";
+
 registerLocale("fr", fr);
 
 type Props = {
@@ -180,10 +181,7 @@ export const CollectionForm: React.FC<Props> = ({ collection }) => {
           variants={fadeInDown}
           hint={
             watchTitle
-              ? `UID : ${slugify(watchTitle, {
-                  lower: true,
-                  remove: /[*+~.()'"!:@]/g,
-                })}`
+              ? `UID : ${slugify(watchTitle)}`
               : `${t("collectionManagement.inputs.title.description")}.`
           }
           ref={register({
