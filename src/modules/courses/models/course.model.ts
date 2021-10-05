@@ -1,5 +1,6 @@
 import { Collection } from "../../collections/models";
 import { Publisher } from "../../common/models";
+import { Visibility } from "../../common/types/crud.type";
 import { ICourse } from "../types";
 
 /**
@@ -11,6 +12,8 @@ export class Course {
     private readonly _id: string,
     private readonly _title: string,
     private readonly _content: string,
+    private readonly _draft: boolean,
+    private readonly _visibility: Visibility,
     private readonly _slug: string,
     private readonly _publisherId: string,
     private readonly _publisher: Publisher | null,
@@ -29,6 +32,8 @@ export class Course {
       json.id,
       json.title,
       json.content,
+      json.draft,
+      json.visibility,
       json.slug,
       json.publisherId,
       json.publishedBy && Publisher.fromJson(json.publishedBy),
@@ -62,6 +67,22 @@ export class Course {
    */
   get title(): string {
     return this._title;
+  }
+
+  /**
+   * return a string of the enum values
+   * @returns {Visibility} string of the value
+   */
+  get visibility(): Visibility {
+    return this._visibility;
+  }
+
+  /**
+   * Return true if the video is a draft, false otherwise
+   * @returns {boolean} true if the video is a draft, false otherwise
+   */
+  get draft(): boolean {
+    return this._draft;
   }
 
   /**

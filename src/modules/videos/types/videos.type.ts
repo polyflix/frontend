@@ -7,6 +7,7 @@ import { Tag } from "../../tags/models/tag.model";
 import { tagLite } from "../../tags/types/tag.type";
 import { Attachment } from "../../common/models/attachments.model";
 import { IAttachment } from "../../common/types/attachments.type";
+import { Visibility } from "../../common/types/crud.type";
 
 export enum VideoSource {
   YOUTUBE = "youtube",
@@ -19,8 +20,8 @@ export interface IVideoForm {
   title: string;
   description: string;
   thumbnail: string;
-  isPublic: boolean;
-  isPublished: boolean;
+  draft: boolean;
+  visibility: Visibility;
   src: string;
   tags: tagLite[];
   attachments: Attachment[];
@@ -41,8 +42,8 @@ export type VideosWithPagination = {
 export interface IVideo {
   source: string;
   sourceType: VideoSource;
-  isPublic: boolean;
-  isPublished: boolean;
+  draft: boolean;
+  visibility: Visibility;
   description: string;
   id: string;
   title: string;

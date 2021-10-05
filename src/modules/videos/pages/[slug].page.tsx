@@ -39,6 +39,7 @@ import { Video } from "../models/video.model";
 import styles from "./slug.module.scss";
 import { PolyflixLanguage } from "../../common/types/language.type";
 import { CollectionPassword } from "../../collections/components/CollectionPassword/CollectionPassword.component";
+import { Visibility } from "../../common/types/crud.type";
 
 export const VideoDetail: React.FC = () => {
   const [pageTitle, setPageTitle] = useState<string>();
@@ -567,14 +568,14 @@ type CollectionComponentProps = {
   onLoad: (elm: string) => void;
   slug: string;
   password?: string;
-  availability?: string;
+  visibility?: Visibility;
 };
 
 const CollectionComponent: React.FC<CollectionComponentProps> = ({
   onLoad,
   slug,
   password,
-  availability,
+  visibility,
 }) => {
   let query = useQuery() as URLSearchParams;
 
@@ -583,7 +584,7 @@ const CollectionComponent: React.FC<CollectionComponentProps> = ({
       mode: "document",
       slug,
       password,
-      availability,
+      visibility,
     });
 
   useEffect(() => {

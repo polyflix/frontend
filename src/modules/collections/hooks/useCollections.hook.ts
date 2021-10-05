@@ -30,7 +30,7 @@ export const useCollections = <T = Collection | CollectionsWithPagination>(
   const collectionService = useInjection<CollectionService>(CollectionService);
   const { isLoading: authLoading } = useAuth();
   // Configuration destructuration
-  const { page, pageSize, mode, slug, password, availability } = options || {};
+  const { page, pageSize, mode, slug, password, visibility } = options || {};
 
   // States definitions
   const [reload, setReload] = useState<boolean>(false);
@@ -59,13 +59,9 @@ export const useCollections = <T = Collection | CollectionsWithPagination>(
       ? collectionService.getCollectionBySlug(
           slug as string,
           password,
-          availability
+          visibility
         )
-      : collectionService.getCollectionBySlug(
-          slug as string,
-          null,
-          availability
-        )
+      : collectionService.getCollectionBySlug(slug as string, null, visibility)
     )
       .then((data: any) => {
         // if (isCollection && onCollectionLoaded) {

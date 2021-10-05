@@ -6,6 +6,7 @@ import { PolyflixLanguage } from "../../common/types/language.type";
 import { getSubtitleLanguageFromPolyflix } from "../../common/utils/language.util";
 import { Tag } from "../../tags/models/tag.model";
 import { Attachment } from "../../common/models/attachments.model";
+import { Visibility } from "../../common/types/crud.type";
 
 /**
  * Modelize the Video
@@ -15,11 +16,11 @@ export class Video {
   private constructor(
     private readonly _id: string,
     private readonly _title: string,
-    private readonly _isPublished: boolean,
     private readonly _description: string,
     private readonly _slug: string,
     private readonly _thumbnail: string,
-    private readonly _isPublic: boolean,
+    private readonly _draft: boolean,
+    private readonly _visibility: Visibility,
     private readonly _publisherId: string,
     private readonly _userMeta: WatchMetadata | undefined,
     private readonly _publisher: Publisher | null,
@@ -43,11 +44,11 @@ export class Video {
     return new Video(
       json.id,
       json.title,
-      json.isPublished,
       json.description,
       json.slug,
       json.thumbnail,
-      json.isPublic,
+      json.draft,
+      json.visibility,
       json.publisherId,
       json.userMeta && WatchMetadata.fromJson(json.userMeta),
       json.publishedBy && Publisher.fromJson(json.publishedBy),
@@ -101,14 +102,6 @@ export class Video {
   }
 
   /**
-   * Return true if the video is published, false otherwise
-   * @returns {boolean} true if the video is published, false otherwise
-   */
-  get isPublished(): boolean {
-    return this._isPublished;
-  }
-
-  /**
    * Return the slug (UID) of the video.
    * @returns {string} the video slug
    */
@@ -133,11 +126,19 @@ export class Video {
   }
 
   /**
-   * Return true if the video is public, false otherwise
-   * @returns {boolean} true if the video is public, false otherwise
+   * return a string of the enum values
+   * @returns {Visibility} string of the value
    */
-  get isPublic(): boolean {
-    return this._isPublic;
+  get visibility(): Visibility {
+    return this._visibility;
+  }
+
+  /**
+   * Return true if the video is a draft, false otherwise
+   * @returns {boolean} true if the video is a draft, false otherwise
+   */
+  get draft(): boolean {
+    return this._draft;
   }
 
   /**

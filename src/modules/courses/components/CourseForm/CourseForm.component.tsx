@@ -23,6 +23,8 @@ import { ICourseForm } from "../../types";
 import { CollectionListItem } from "../../../collections/components/CollectionListItem/CollectionListItem.component";
 import { Collection } from "../../../collections/models/collections.model";
 import { useAuth } from "../../../authentication/hooks/useAuth.hook";
+import { VisibilitySelector } from "../../../common/components/VisibilitySelector/VisibilitySelector.component";
+import { StatusSelector } from "../../../common/components/StatusSelector/StatusSelector.component";
 type Props = {
   /** If course exists, the form will be in update mode, otherwise in create mode. */
   course?: Course | null;
@@ -44,6 +46,8 @@ export const CourseForm: React.FC<Props> = ({ course }) => {
     defaultValues: {
       title: course?.title,
       content: course?.content,
+      draft: course?.draft || true,
+      visibility: course?.visibility || "public",
     },
   });
 
@@ -177,6 +181,29 @@ export const CourseForm: React.FC<Props> = ({ course }) => {
           })}
           variants={fadeInDown}
         />
+        <div className="my-4 col-span-2">
+          <Title
+            overrideDefaultClasses
+            className="text-xl font-bold text-nx-white"
+          >
+            {t("visibility.label", { ns: "resources" })}
+          </Title>
+          <VisibilitySelector
+            name="visibility"
+            value={watch("visibility")}
+            ref={register()}
+            className="mt-4"
+          />
+        </div>
+        <div className="col-span-2">
+          <Title
+            overrideDefaultClasses
+            className="text-xl font-bold text-nx-white mb-4"
+          >
+            Status
+          </Title>
+          <StatusSelector isChecked={watch("draft")} ref={register()} />
+        </div>
         <FilledButton
           className="col-span-2"
           as="input"

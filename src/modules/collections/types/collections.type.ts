@@ -4,12 +4,14 @@ import { IVideo } from "../../videos/types/videos.type";
 import { IPublisher } from "../../common/types";
 import { Tag } from "../../tags/models/tag.model";
 import { tagLite } from "../../tags/types/tag.type";
+import { Visibility } from "../../common/types/crud.type";
 
 export interface ICollectionForm {
   title: string;
   description: string;
   videos: videoLite[];
-  availability: string;
+  draft: boolean;
+  visibility: Visibility;
   passwords: AccessPassword[];
   tags: tagLite[];
 }
@@ -54,7 +56,9 @@ export type CollectionParams = {
 
   password?: string;
 
-  availability?: string;
+  draft?: boolean;
+
+  visibility?: Visibility;
 
   tags?: string;
 };
@@ -68,7 +72,8 @@ export interface ICollection {
   createdAt: string;
   updatedAt: string;
   slug: string;
-  availability: string;
+  draft: boolean;
+  visibility: Visibility;
   videos: IVideo[];
   passwords: AccessPassword[];
   tags: Tag[];

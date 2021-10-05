@@ -125,11 +125,11 @@ export const VideoListItem: React.FC<Props> = ({
             overrideDefaultClasses
             bold
             className={cn(
-              video.isPublished ? "text-green-500" : "text-nx-red",
+              !video.draft ? "text-green-500" : "text-nx-red",
               "flex items-center text-sm md:text-base"
             )}
           >
-            {video.isPublished ? (
+            {!video.draft ? (
               <>
                 <EyeIcon className="w-5 mr-2" />{" "}
                 {t("userVideos.status.published.name")}
@@ -147,11 +147,11 @@ export const VideoListItem: React.FC<Props> = ({
             overrideDefaultClasses
             bold
             className={cn(
-              video.isPublic ? "text-green-500" : "text-nx-red",
+              video.visibility === "public" ? "text-green-500" : "text-nx-red",
               "flex items-center text-sm md:text-base"
             )}
           >
-            {video.isPublic ? (
+            {video.visibility === "public" ? (
               <>
                 <GlobeIcon className="w-5 mr-2" />{" "}
                 {t("userVideos.visibility.public.name")}
