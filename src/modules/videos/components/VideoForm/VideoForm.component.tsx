@@ -1,9 +1,5 @@
 import {
   TrashIcon,
-  EyeIcon,
-  EyeOffIcon,
-  GlobeIcon,
-  UserIcon,
   TranslateIcon,
   ArrowCircleLeftIcon,
 } from "@heroicons/react/outline";
@@ -41,6 +37,8 @@ import SimpleMdeReact from "react-simplemde-editor";
 import { TagSelect } from "../../../tags/components/TagSelect.component";
 import { Tag } from "../../../tags/models/tag.model";
 import { OutlineButton } from "../../../ui";
+import { VisibilitySelector } from "../../../common/components/VisibilitySelector/VisibilitySelector.component";
+import { StatusSelector } from "../../../common/components/StatusSelector/StatusSelector.component";
 
 type Props = {
   /** If video exists, the form will be in update mode, otherwise in create mode. */
@@ -91,8 +89,8 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
     defaultValues: {
       title: video?.title,
       description: video?.description,
-      isPublished: video?.isPublished || false,
-      isPublic: video?.isPublic || false,
+      draft: video?.draft || true,
+      visibility: video?.visibility || "public",
       thumbnail: video?.thumbnail,
       src: video?.src.replace("-nocookie", ""),
       attachments: video?.attachments,
@@ -100,8 +98,6 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
   });
 
   const watchTitle = watch<"title", string>("title", "");
-  const watchPrivacy = watch<"isPublic", boolean>("isPublic");
-  const watchPublished = watch<"isPublished", boolean>("isPublished");
   const watchHasSubtitle = watch<"hasSubtitle", boolean>("hasSubtitle");
   const watchThumbnail = watch<"thumbnail", string>("thumbnail", "");
   const watchAttachments = watch("attachments", []);
@@ -496,106 +492,29 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
             variants={fadeInDown}
           />
         </div>
-        <Checkbox
-          form="videoForm"
-          className="col-span-2"
-          error={errors.isPublic}
-          name="isPublic"
-          ref={register()}
-          icon={
-            watchPrivacy ? (
-              <GlobeIcon className="text-green-500 w-6 mr-2" />
-            ) : (
-              <UserIcon className="text-nx-red w-6 mr-2" />
-            )
-          }
-        >
-          <Typography className="text-sm" as="span">
-            {watchPrivacy ? (
-              <>
-                <Typography as="span" bold>
-                  {`${t("userVideos.visibility.public.name")}.`}
-                </Typography>{" "}
-                {`${t("userVideos.visibility.public.description")}.`}
-                <br />
-                <Typography
-                  as="span"
-                  bold
-                  className="text-xs text-nx-red"
-                  overrideDefaultClasses
-                >
-                  {`${t("videoManagement.actions.switching")}.`}
-                </Typography>
-              </>
-            ) : (
-              <>
-                <Typography as="span" bold>
-                  {`${t("userVideos.visibility.private.name")}.`}
-                </Typography>{" "}
-                {`${t("userVideos.visibility.private.description")}.`}
-                <br />
-                <Typography
-                  as="span"
-                  bold
-                  className="text-xs text-nx-red"
-                  overrideDefaultClasses
-                >
-                  {`${t("videoManagement.actions.switching")}.`}
-                </Typography>
-              </>
-            )}
-          </Typography>
-        </Checkbox>
-        <Checkbox
-          form="videoForm"
-          className="col-span-2"
-          error={errors.isPublished}
-          name="isPublished"
-          ref={register()}
-          icon={
-            watchPublished ? (
-              <EyeIcon className={"text-green-500 w-6 mr-2"} />
-            ) : (
-              <EyeOffIcon className="text-nx-red w-6 mr-2" />
-            )
-          }
-        >
-          <Typography className="text-sm" as="span">
-            {watchPublished ? (
-              <>
-                <Typography as="span" bold>
-                  {`${t("userVideos.status.published.name")}.`}
-                </Typography>{" "}
-                {`${t("userVideos.status.published.description")}.`}
-                <br />
-                <Typography
-                  as="span"
-                  bold
-                  className="text-xs text-nx-red"
-                  overrideDefaultClasses
-                >
-                  {`${t("videoManagement.actions.switching")}.`}
-                </Typography>
-              </>
-            ) : (
-              <>
-                <Typography as="span" bold>
-                  {`${t("userVideos.status.draft.name")}.`}
-                </Typography>{" "}
-                {`${t("userVideos.status.draft.description")}.`}
-                <br />
-                <Typography
-                  as="span"
-                  bold
-                  className="text-xs text-nx-red"
-                  overrideDefaultClasses
-                >
-                  {`${t("videoManagement.actions.switching")}.`}
-                </Typography>
-              </>
-            )}
-          </Typography>
-        </Checkbox>
+        <div className="my-4 col-span-2">
+          <Title
+            overrideDefaultClasses
+            className="text-xl font-bold text-nx-white"
+          >
+            {t("visibility.label", { ns: "resources" })}
+          </Title>
+          <VisibilitySelector
+            name="visibility"
+            value={watch("visibility")}
+            ref={register()}
+            className="mt-4"
+          />
+        </div>
+        <div className="col-span-2">
+          <Title
+            overrideDefaultClasses
+            className="text-xl font-bold text-nx-white mb-4"
+          >
+            Status
+          </Title>
+          <StatusSelector isChecked={watch("draft")} ref={register()} />
+        </div>
         {type === "upload" && (
           <Checkbox
             form="videoForm"
