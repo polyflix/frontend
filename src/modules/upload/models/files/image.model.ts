@@ -1,9 +1,9 @@
-import { Bucket } from "../../types/upload.type";
+import { BUCKETS } from "../../types/upload.type";
 import { MinioFile } from "./minio-file.model";
 
 export class ImageFile extends MinioFile {
   constructor(file: File, field: string) {
-    super(Bucket.IMAGES, file, field);
+    super(BUCKETS.IMAGES, file, field);
   }
 
   /**

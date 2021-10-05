@@ -1,13 +1,13 @@
 import { v4 as uuidv4 } from "uuid";
 import { MINIO_URL } from "../../../common/constants/minio.constant";
-import { Bucket } from "../../types/upload.type";
+import { BUCKETS } from "../../types/upload.type";
 import * as path from "path";
 
 export class MinioFile {
   private minioFilename: string;
 
   constructor(
-    protected bucket: Bucket,
+    protected bucket: BUCKETS,
     protected file: File,
     protected field: string
   ) {
