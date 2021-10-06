@@ -60,7 +60,7 @@ export class Video {
       json.likes,
       json.availableLanguages,
       json.tags && json.tags.map(Tag.fromJson),
-      json.attachments.map((attachment) => Attachment.fromJson(attachment))
+      json.attachments?.map((attachment) => Attachment.fromJson(attachment))
     );
   }
 
