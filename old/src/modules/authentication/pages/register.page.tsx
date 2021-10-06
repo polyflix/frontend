@@ -9,10 +9,7 @@ const RegisterPage: React.FC = () => {
   const { t } = useTranslation();
 
   return (
-    <Page
-      title={t("auth.signUp.seo.title")}
-      className="flex items-center justify-center h-full"
-    >
+    <Page title={t("auth.signUp.seo.title")} className="items-center">
       <Container mxAuto>
         <RegisterForm />
 

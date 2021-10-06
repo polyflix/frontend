@@ -14,7 +14,6 @@ export const CreateUpdatePathPage: React.FC = () => {
   return (
     <Page
       isLoading={isLoading}
-      className="h-full flex items-center justify-center"
       title={`${
         slug ? t("shared.common.actions.edit") : t("shared.common.actions.add")
       } ${t("pathManagement.path")}`}
