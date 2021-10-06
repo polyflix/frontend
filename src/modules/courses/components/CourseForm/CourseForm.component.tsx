@@ -5,7 +5,6 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router";
-import slugify from "slugify";
 import { fadeInDown } from "../../../ui/animations/fadeInDown";
 import { stagger } from "../../../ui/animations/stagger";
 import { Alert, AlertType } from "../../../ui/components/Alert/Alert.component";
@@ -25,6 +24,7 @@ import { Collection } from "../../../collections/models/collections.model";
 import { useAuth } from "../../../authentication/hooks/useAuth.hook";
 import { VisibilitySelector } from "../../../common/components/VisibilitySelector/VisibilitySelector.component";
 import { StatusSelector } from "../../../common/components/StatusSelector/StatusSelector.component";
+import { slugify } from "../../../common/utils/slugify.util";
 type Props = {
   /** If course exists, the form will be in update mode, otherwise in create mode. */
   course?: Course | null;
@@ -154,10 +154,7 @@ export const CourseForm: React.FC<Props> = ({ course }) => {
           variants={fadeInDown}
           hint={
             watchTitle
-              ? `UID : ${slugify(watchTitle, {
-                  lower: true,
-                  remove: /[*+~.()'"!:@]/g,
-                })}`
+              ? `UID : ${slugify(watchTitle)}`
               : `${t("courseManagement.inputs.title.description")}.`
           }
           ref={register({

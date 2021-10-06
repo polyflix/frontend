@@ -9,7 +9,6 @@ import { Controller, useFieldArray, useForm } from "react-hook-form";
 import { useEffect, useState, useRef, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { useHistory, useLocation } from "react-router";
-import slugify from "slugify";
 import { useAuth } from "../../../authentication/hooks/useAuth.hook";
 import { fadeInDown } from "../../../ui/animations/fadeInDown";
 import { stagger } from "../../../ui/animations/stagger";
@@ -39,6 +38,7 @@ import { Tag } from "../../../tags/models/tag.model";
 import { OutlineButton } from "../../../ui";
 import { VisibilitySelector } from "../../../common/components/VisibilitySelector/VisibilitySelector.component";
 import { StatusSelector } from "../../../common/components/StatusSelector/StatusSelector.component";
+import { slugify } from "../../../common/utils/slugify.util";
 
 type Props = {
   /** If video exists, the form will be in update mode, otherwise in create mode. */
@@ -331,10 +331,7 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
           variants={fadeInDown}
           hint={
             watchTitle
-              ? `UID : ${slugify(watchTitle, {
-                  lower: true,
-                  remove: /[*+~.()'"!:@]/g,
-                })}`
+              ? `UID : ${slugify(watchTitle)}`
               : `${t("videoManagement.inputs.title.description")}.`
           }
           ref={register({

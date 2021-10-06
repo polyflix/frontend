@@ -169,7 +169,8 @@
           "error": "The agreement of the Terms of Service is required"
         }
       },
-      "profilePicture": "Upload profile picture"
+      "profilePicture": "Upload profile picture",
+      "error": "Signup failed, try again later"
     },
     "action": "Sign up",
     "footer": ["Already registered to Polyflix ?", "Sign in here"],
