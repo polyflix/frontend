@@ -47,7 +47,7 @@ export const ProfileForm: React.FC = () => {
     },
   });
   const { t } = useTranslation();
-  const [imageFile, setImageFile] = useState<ImageFile>();
+  const [imageFile, setImageFile] = useState<ImageFile | undefined>();
   const [deleteImage, setDeleteImage] = useState<boolean>(false);
   const handleUpdate = async (data: IUserProfileUpdate) => {
     setAlert(null);
@@ -74,12 +74,17 @@ export const ProfileForm: React.FC = () => {
     if (deleteImage) {
       return { ...data, profilePicture: null };
     }
-    const uploadedFiles = await minioService.upload([imageFile as MinioFile]);
-    const attributes: (keyof IUserProfileUpdate)[] = ["profilePicture"];
-    attributes.forEach((attr) => {
-      const url = getFile(uploadedFiles, attr)?.getFileURL();
-      if (url) data = { ...data, [attr]: url };
-    });
+
+    if (imageFile) {
+      const uploadedFiles = await minioService.upload([imageFile as MinioFile]);
+
+      const attributes: (keyof IUserProfileUpdate)[] = ["profilePicture"];
+      attributes.forEach((attr) => {
+        const url = getFile(uploadedFiles, attr)?.getFileURL();
+        if (url) data = { ...data, [attr]: url };
+      });
+    }
+
     return data;
   };
 
