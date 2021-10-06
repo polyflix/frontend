@@ -9,10 +9,7 @@ const LoginPage: React.FC = () => {
   const { t } = useTranslation();
 
   return (
-    <Page
-      title={t("auth.signIn.seo.title")}
-      className="flex items-center justify-center h-full"
-    >
+    <Page title={t("auth.signIn.seo.title")} className="items-center">
       <Container mxAuto>
         <LoginForm />
       </Container>
