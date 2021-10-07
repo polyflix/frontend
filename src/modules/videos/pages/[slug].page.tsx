@@ -265,6 +265,7 @@ const SidebarComponent: React.FC<SidebarComponentProps> = ({
     SelectedTab.SUBTITLES
   );
   const [isLiked, setLiked] = useState<boolean | undefined>(undefined);
+  const [likeDisabled, setLikeDisabled] = useState(false);
   const [subtitles, setSubtitles] = useState<SubtitleFetchingState>();
   const minioService = useInjection<MinioService>(MinioService);
 
@@ -310,15 +311,17 @@ const SidebarComponent: React.FC<SidebarComponentProps> = ({
     return isContainerDataVisible ? (isXlScreen ? "580px" : "400px") : "36px";
   };
 
-  const like = () => {
+  const like = async () => {
     if (video) {
-      watchtimeSyncService.likeVideo(video.id);
+      setLikeDisabled(true);
+      await watchtimeSyncService.likeVideo(video.id);
       if (!isLiked) {
         video.likes += 1;
       } else {
         video.likes -= 1;
       }
       setLiked(!isLiked);
+      setLikeDisabled(false);
     }
   };
 
@@ -509,7 +512,9 @@ const SidebarComponent: React.FC<SidebarComponentProps> = ({
                               className={`${
                                 isLiked ? "text-blue-500" : "text-grey-500"
                               } w-5 mr-2 cursor-pointer`}
-                              onClick={() => like()}
+                              onClick={() => {
+                                if (!likeDisabled) like();
+                              }}
                             />
                             {video?.likes}
                           </Typography>
