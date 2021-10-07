@@ -37,7 +37,11 @@ export const HomePage: React.FC = () => {
       withPadding={false}
       title={t("home.seo.title")}
     >
-      {data && !isLoading && !isLoadingWatched && !isLoadingWatching ? (
+      {data &&
+      data.items.length > 0 &&
+      !isLoading &&
+      !isLoadingWatched &&
+      !isLoadingWatching ? (
         <>
           <VideoHero video={data.items[0]} />
           <div className="pb-8" />
