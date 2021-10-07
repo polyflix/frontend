@@ -1,12 +1,12 @@
 import React from "react";
-import { cn } from "../../utils/classes.util";
+import { useTranslation } from "react-i18next";
 import { WithClassname } from "../../../common/types/props.type";
 import { Typography } from "../../../ui/components/Typography/Typography.component";
-import { useTranslation } from "react-i18next";
 import {
   LEGAL_NOTICES_URL,
   REPORT_BUG_URL,
 } from "../../constants/footer.constant";
+import { cn } from "../../utils/classes.util";
 
 type Props = WithClassname;
 
@@ -23,7 +23,7 @@ export const Footer: React.FC<Props> = ({ className = "" }) => {
         "flex flex-col w-full items-center text-nx-gray text-xs p-4"
       )}
     >
-      <ul className="mb-3">
+      <ul className="mb-3 text-center">
         <li className="mb-1">
           <a href={LEGAL_NOTICES_URL} target="_blank" rel="noopener noreferrer">
             <Typography

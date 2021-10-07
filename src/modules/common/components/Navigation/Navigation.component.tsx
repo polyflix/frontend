@@ -19,10 +19,13 @@ import { useInjection } from "@polyflix/di";
 import { motion } from "framer-motion";
 import { Fragment, useState } from "react";
 import { Trans, useTranslation } from "react-i18next";
+import { useLocation } from "react-router";
 import { Link } from "react-router-dom";
 import logo from "../../../../assets/images/polyflix-logo.png";
 import { useAuth } from "../../../authentication/hooks/useAuth.hook";
 import { AuthService } from "../../../authentication/services/auth.service";
+import { WithClassname } from "../../../common/types/props.type";
+import { fadeInUp } from "../../../ui/animations/fadeInUp";
 import { Avatar } from "../../../ui/components/Avatar/Avatar.component";
 import LanguageButton from "../../../ui/components/Buttons/LanguageButton/LanguageButton.component";
 import { OutlineButton } from "../../../ui/components/Buttons/OutlineButton/OutlineButton.component";
@@ -33,9 +36,6 @@ import { cn } from "../../utils/classes.util";
 import { Url } from "../../utils/url.util";
 import Hamburger from "./Hamburger/Hamburger.component";
 import { TagSearchBar } from "./TagSearchBar.component";
-import { useLocation } from "react-router";
-import { fadeInUp } from "../../../ui/animations/fadeInUp";
-import { WithClassname } from "../../../common/types/props.type";
 
 type Props = WithClassname & {
   /** If false, the navigation will be hidden */
@@ -167,15 +167,17 @@ export const Navigation: React.FC<Props> = ({ visible, className = "" }) => {
                       </Link>
                     </Menu.Item>
                   </div>
-                  <Menu.Item>
-                    <span
-                      onClick={() => authService.logout()}
-                      className="cursor-pointer text-nx-white flex rounded-md items-center w-full px-2 py-2 text-sm"
-                    >
-                      <LogoutIcon className="text-nx-red w-5 mr-3" />
-                      {t("shared.navbar.signOut")}
-                    </span>
-                  </Menu.Item>
+                  <div className="p-1">
+                    <Menu.Item>
+                      <span
+                        onClick={() => authService.logout()}
+                        className="cursor-pointer text-nx-white flex rounded-md items-center w-full px-2 py-2 text-sm"
+                      >
+                        <LogoutIcon className="text-nx-red w-5 mr-3" />
+                        {t("shared.navbar.signOut")}
+                      </span>
+                    </Menu.Item>
+                  </div>
                 </Menu.Items>
               </Transition>
             </>
