@@ -5,7 +5,6 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router";
-import slugify from "slugify";
 import { useAuth } from "../../../authentication/hooks/useAuth.hook";
 import { fadeInDown } from "../../../ui/animations/fadeInDown";
 import { stagger } from "../../../ui/animations/stagger";
@@ -28,6 +27,9 @@ import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import Card from "../Card.component";
 import update from "immutability-helper";
+import { VisibilitySelector } from "../../../common/components/VisibilitySelector/VisibilitySelector.component";
+import { StatusSelector } from "../../../common/components/StatusSelector/StatusSelector.component";
+import { slugify } from "../../../common/utils/slugify.util";
 
 type Props = {
   /** If path exists, the form will be in update mode, otherwise in create mode. */
@@ -62,6 +64,8 @@ export const PathForm: React.FC<Props> = ({ path }) => {
     defaultValues: {
       title: path?.title,
       description: path?.description,
+      draft: path?.draft || true,
+      visibility: path?.visibility || "public",
     },
   });
 
@@ -170,10 +174,7 @@ export const PathForm: React.FC<Props> = ({ path }) => {
           variants={fadeInDown}
           hint={
             watchTitle
-              ? `UID : ${slugify(watchTitle, {
-                  lower: true,
-                  remove: /[*+~.()'"!:@]/g,
-                })}`
+              ? `UID : ${slugify(watchTitle)}`
               : `${t("pathManagement.inputs.title.description")}.`
           }
           ref={register({
@@ -197,6 +198,29 @@ export const PathForm: React.FC<Props> = ({ path }) => {
           })}
           variants={fadeInDown}
         />
+        <div className="my-4 col-span-2">
+          <Title
+            overrideDefaultClasses
+            className="text-xl font-bold text-nx-white"
+          >
+            {t("visibility.label", { ns: "resources" })}
+          </Title>
+          <VisibilitySelector
+            name="visibility"
+            value={watch("visibility")}
+            ref={register()}
+            className="mt-4"
+          />
+        </div>
+        <div className="col-span-2">
+          <Title
+            overrideDefaultClasses
+            className="text-xl font-bold text-nx-white mb-4"
+          >
+            Status
+          </Title>
+          <StatusSelector isChecked={watch("draft")} ref={register()} />
+        </div>
         <FilledButton
           className="col-span-2"
           as="input"

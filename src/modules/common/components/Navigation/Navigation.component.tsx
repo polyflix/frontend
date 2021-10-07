@@ -34,9 +34,10 @@ import { Url } from "../../utils/url.util";
 import Hamburger from "./Hamburger/Hamburger.component";
 import { TagSearchBar } from "./TagSearchBar.component";
 import { useLocation } from "react-router";
-import { fadeInUp } from "../../../ui";
+import { fadeInUp } from "../../../ui/animations/fadeInUp";
+import { WithClassname } from "../../../common/types/props.type";
 
-type Props = {
+type Props = WithClassname & {
   /** If false, the navigation will be hidden */
   visible: boolean;
 };
@@ -46,7 +47,7 @@ export const NAV_HEIGHT = 65;
 /**
  * The navigation component
  */
-export const Navigation: React.FC<Props> = ({ visible }) => {
+export const Navigation: React.FC<Props> = ({ visible, className = "" }) => {
   const { pathname } = useLocation();
   const authService = useInjection<AuthService>(AuthService);
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
@@ -58,7 +59,7 @@ export const Navigation: React.FC<Props> = ({ visible }) => {
 
   const getAuthenticatedContent = () => {
     return (
-      <div className="flex items-center ">
+      <div className={cn(className, "flex items-center")}>
         <LanguageButton />
         <Menu as="div" className="relative inline-block text-left">
           {({ open }) => (

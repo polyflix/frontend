@@ -8,10 +8,7 @@ const ResetPasswordPage: React.FC = () => {
   const { t } = useTranslation();
 
   return (
-    <Page
-      title={t("auth.resetPassword.seo.title")}
-      className="flex items-center justify-center h-full"
-    >
+    <Page title={t("auth.resetPassword.seo.title")} className="items-center">
       <Container mxAuto>
         <ResetPasswordForm />
       </Container>

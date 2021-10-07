@@ -85,7 +85,7 @@ export const CollectionListItem: React.FC<Props> = ({
         <Paragraph className="mb-4">{collection.shortDescription}</Paragraph>
         <div className="flex items-center">
           <Link
-            to={`/watch?v=0&c=${collection.slug}&index=0&availability=${collection.availability}`}
+            to={`/watch?v=0&c=${collection.slug}&index=0&visibility=${collection.visibility}`}
           >
             {collection.videos && (
               <Button

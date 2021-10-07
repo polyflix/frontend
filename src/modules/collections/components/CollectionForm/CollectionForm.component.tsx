@@ -5,7 +5,6 @@ import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router";
-import slugify from "slugify";
 import { fadeInDown } from "../../../ui/animations/fadeInDown";
 import { stagger } from "../../../ui/animations/stagger";
 import { Alert, AlertType } from "../../../ui/components/Alert/Alert.component";
@@ -22,7 +21,6 @@ import { CollectionService } from "../../services";
 import { ICollectionForm } from "../../types";
 import { VideoListItem } from "../../../videos/components/VideoListItem/VideoListItem.component";
 import { Video } from "../../../videos/models/video.model";
-import { Select } from "../../../ui/components/Select/select.component";
 import { useAuth } from "../../../authentication/hooks/useAuth.hook";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -32,6 +30,10 @@ import { range } from "lodash";
 import "react-datepicker/dist/react-datepicker.css";
 import { Tag } from "../../../tags/models/tag.model";
 import { TagSelect } from "../../../tags/components/TagSelect.component";
+import { VisibilitySelector } from "../../../common/components/VisibilitySelector/VisibilitySelector.component";
+import { StatusSelector } from "../../../common/components/StatusSelector/StatusSelector.component";
+import { slugify } from "../../../common/utils/slugify.util";
+
 registerLocale("fr", fr);
 
 type Props = {
@@ -58,7 +60,8 @@ export const CollectionForm: React.FC<Props> = ({ collection }) => {
       defaultValues: {
         title: collection?.title,
         description: collection?.description,
-        availability: collection?.availability,
+        draft: collection?.draft || true,
+        visibility: collection?.visibility || "public",
         passwords: collection?.passwords,
       },
     });
@@ -178,10 +181,7 @@ export const CollectionForm: React.FC<Props> = ({ collection }) => {
           variants={fadeInDown}
           hint={
             watchTitle
-              ? `UID : ${slugify(watchTitle, {
-                  lower: true,
-                  remove: /[*+~.()'"!:@]/g,
-                })}`
+              ? `UID : ${slugify(watchTitle)}`
               : `${t("collectionManagement.inputs.title.description")}.`
           }
           ref={register({
@@ -297,22 +297,29 @@ export const CollectionForm: React.FC<Props> = ({ collection }) => {
             variants={fadeInDown}
           />
         </div>
-        <Select
-          options={
-            numberOfPasswords > 0 ? ["protected"] : ["public", "private"]
-          }
-          form="collectionForm"
-          className="col-span-2"
-          name="availability"
-          hint={`${t("collectionManagement.inputs.select.description")}.`}
-          ref={register({
-            required: {
-              value: true,
-              message: `${t("collectionManagement.inputs.description.error")}.`,
-            },
-          })}
-          variants={fadeInDown}
-        />
+        <div className="my-4 col-span-2">
+          <Title
+            overrideDefaultClasses
+            className="text-xl font-bold text-nx-white"
+          >
+            {t("visibility.label", { ns: "resources" })}
+          </Title>
+          <VisibilitySelector
+            name="visibility"
+            value={watch("visibility")}
+            ref={register()}
+            className="mt-4"
+          />
+        </div>
+        <div className="col-span-2">
+          <Title
+            overrideDefaultClasses
+            className="text-xl font-bold text-nx-white mb-4"
+          >
+            Status
+          </Title>
+          <StatusSelector isChecked={watch("draft")} ref={register()} />
+        </div>
         {loading && (
           <div className="col-span-2 flex items-center">
             <Spinner className="fill-current text-nx-dark"></Spinner>

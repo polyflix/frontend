@@ -66,6 +66,11 @@
     },
     "informations": {
       "publishedBy": "Publié par {{user}}"
+    },
+    "footer": {
+      "legalNotices": "Mentions légales",
+      "reportBug": "Signaler un bug",
+      "copyright": "© 2021 Polyflix - Fait avec ❤️ par les DO4"
     }
   },
   "courses": {
@@ -166,7 +171,8 @@
         }
       },
       "action": "S'inscrire",
-      "footer": ["Déjà inscrit sur Polyflix ?", "Connectez-vous ici"]
+      "footer": ["Déjà inscrit sur Polyflix ?", "Connectez-vous ici"],
+      "error": "Echec d'inscription, veuillez réessayer plus tard"
     },
     "error": "Adresse e-mail déjà utilisée",
     "accountValidation": {

@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { isUndefined } from "lodash";
 import React, { PropsWithChildren } from "react";
 import { Helmet } from "react-helmet";
+import { Footer } from "../../../common/components/Footer/Footer.component";
 import {
   Navigation,
   NAV_HEIGHT,
@@ -14,6 +15,7 @@ import {
 } from "../../../common/types/props.type";
 import { cn } from "../../../common/utils/classes.util";
 import { Spinner } from "../Spinner/Spinner.component";
+import styles from "./Page.module.scss";
 
 type Props = WithMotion &
   WithClassname &
@@ -49,18 +51,18 @@ export const Page: React.FC<PropsWithChildren<Props>> = ({
       animate="animate"
       initial="initial"
       exit="exit"
-      className={cn(className, "dark:bg-black min-h-screen")}
+      className={cn(className, styles.container, "dark:bg-black min-h-screen")}
     >
       <Helmet>
         <title>
           {title && !isLoading ? `${title} | Polyflix` : "Polyflix"}
         </title>
       </Helmet>
-      <Navigation visible={withNavbar} />
+      <Navigation visible={withNavbar} className={styles.header} />
       <motion.div
         {...rest}
         style={isLoading || withPadding ? { paddingTop: NAV_HEIGHT } : {}}
-        className="w-full h-full"
+        className={cn(styles.main, "w-full")}
       >
         {isLoading ? (
           <Spinner page style={{ height: `calc(100vh - ${NAV_HEIGHT}px)` }} />
@@ -70,6 +72,7 @@ export const Page: React.FC<PropsWithChildren<Props>> = ({
           children
         )}
       </motion.div>
+      <Footer className={styles.footer} />
     </motion.div>
   );
 };

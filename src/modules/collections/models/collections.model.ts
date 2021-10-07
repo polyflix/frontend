@@ -2,6 +2,7 @@ import { AccessPassword, ICollection } from "../types";
 import { Video } from "../../videos/models/video.model";
 import { Publisher } from "../../common/models";
 import { Tag } from "../../tags/models/tag.model";
+import { Visibility } from "../../common/types/crud.type";
 
 /**
  * Modelize the Collection
@@ -14,7 +15,8 @@ export class Collection {
     private readonly _description: string,
     private readonly _slug: string,
     private readonly _publisherId: string,
-    private readonly _availability: string,
+    private readonly _draft: boolean,
+    private readonly _visibility: Visibility,
     private readonly _publisher: Publisher | null,
     private readonly _createdAt: Date,
     private readonly _updatedAt: Date,
@@ -35,7 +37,8 @@ export class Collection {
       json.description,
       json.slug,
       json.publisherId,
-      json.availability,
+      json.draft,
+      json.visibility,
       json.publishedBy && Publisher.fromJson(json.publishedBy),
       new Date(json.createdAt),
       new Date(json.updatedAt),
@@ -88,11 +91,19 @@ export class Collection {
   }
 
   /**
-   * Return the collection availability.
-   * @returns {string} the collection availability
+   * return a string of the enum values
+   * @returns {Visibility} string of the value
    */
-  get availability(): string {
-    return this._availability;
+  get visibility(): Visibility {
+    return this._visibility;
+  }
+
+  /**
+   * Return true if the video is a draft, false otherwise
+   * @returns {boolean} true if the video is a draft, false otherwise
+   */
+  get draft(): boolean {
+    return this._draft;
   }
 
   /**

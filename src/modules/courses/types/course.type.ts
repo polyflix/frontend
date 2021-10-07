@@ -2,11 +2,14 @@ import { AlertType } from "../../ui/components/Alert/Alert.component";
 import { Course } from "../models";
 import { IPublisher } from "../../common/types";
 import { ICollection } from "../../collections/types";
+import { Visibility } from "../../common/types/crud.type";
 
 export interface ICourseForm {
   title: string;
   content: string;
   collections: collectionLite[];
+  draft: boolean;
+  visibility: Visibility;
 }
 
 type collectionLite = {
@@ -35,4 +38,6 @@ export interface ICourse {
   createdAt: string;
   updatedAt: string;
   slug: string;
+  draft: boolean;
+  visibility: Visibility;
 }

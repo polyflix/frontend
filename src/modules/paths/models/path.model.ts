@@ -1,4 +1,5 @@
 import { Publisher } from "../../common/models";
+import { Visibility } from "../../common/types/crud.type";
 import { IPath } from "../types";
 import { OrderedCourse } from "./orderedCourse.model";
 
@@ -11,6 +12,8 @@ export class Path {
     private readonly _id: string,
     private readonly _title: string,
     private readonly _description: string,
+    private readonly _draft: boolean,
+    private readonly _visibility: Visibility,
     private readonly _slug: string,
     private readonly _publisherId: string,
     private readonly _publisher: Publisher | null,
@@ -29,6 +32,8 @@ export class Path {
       json.id,
       json.title,
       json.description,
+      json.draft,
+      json.visibility,
       json.slug,
       json.publisherId,
       json.publishedBy && Publisher.fromJson(json.publishedBy),
@@ -78,6 +83,22 @@ export class Path {
    */
   get description(): string {
     return this._description;
+  }
+
+  /**
+   * return a string of the enum values
+   * @returns {Visibility} string of the value
+   */
+  get visibility(): Visibility {
+    return this._visibility;
+  }
+
+  /**
+   * Return true if the video is a draft, false otherwise
+   * @returns {boolean} true if the video is a draft, false otherwise
+   */
+  get draft(): boolean {
+    return this._draft;
   }
 
   /**

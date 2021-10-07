@@ -10,10 +10,7 @@ export const ForbiddenPage: React.FC = () => {
   const { t } = useTranslation();
 
   return (
-    <Page
-      title={t("forbidden.seo.title")}
-      className="flex items-center justify-center flex-col"
-    >
+    <Page title={t("forbidden.seo.title")} className="items-center">
       <div className="flex flex-col items-center justify-center">
         <Typography
           as="h1"

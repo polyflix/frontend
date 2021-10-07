@@ -19,17 +19,17 @@ import { CrudFilterService } from "../services/crud-filter.service";
 const getQuizzSearch = (value: string) => [
   {
     name: {
-      $cont: value,
+      $contL: value,
     },
   },
   {
     "user.firstName": {
-      $cont: value,
+      $contL: value,
     },
   },
   {
     "user.lastName": {
-      $cont: value,
+      $contL: value,
     },
   },
 ];
