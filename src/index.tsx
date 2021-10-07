@@ -13,6 +13,8 @@ import { IndexRouter } from "./modules/common/pages/index.router";
 import { store } from "./modules/common/redux/index.store";
 import "./modules/common/styles/index.scss";
 import { Spinner } from "./modules/ui/components/Spinner/Spinner.component";
+import { ThemeConfig } from "./theme";
+import { GlobalStyles } from "./theme/globalStyles";
 
 ReactDOM.render(
   <React.StrictMode>
@@ -25,15 +27,18 @@ ReactDOM.render(
           },
         ]}
       >
-        <Router>
-          <Suspense
-            fallback={
-              <Spinner page className="w-screen h-screen dark:bg-red" />
-            }
-          >
-            <IndexRouter />
-          </Suspense>
-        </Router>
+        <ThemeConfig>
+          <GlobalStyles />
+          <Router>
+            <Suspense
+              fallback={
+                <Spinner page className="w-screen h-screen dark:bg-red" />
+              }
+            >
+              <IndexRouter />
+            </Suspense>
+          </Router>
+        </ThemeConfig>
       </DIProvider>
     </Provider>
   </React.StrictMode>,
