@@ -521,16 +521,18 @@ const SidebarComponent: React.FC<SidebarComponentProps> = ({
                         </div>
 
                         <div className="flex items-center flex-1">
-                          <img
-                            className="cursor-pointer w-10 h-10 rounded-3xl mr-3"
-                            src={
-                              video?.publisher?.profilePicture &&
-                              video?.publisher?.profilePicture !== ""
-                                ? video?.publisher?.profilePicture
-                                : "https://i.imgur.com/tdi3NGa.png"
-                            }
-                            alt="avatar"
-                          />
+                          <Link to={`/profile/videos/${video?.publisher?.id}`}>
+                            <img
+                              className="cursor-pointer w-10 h-10 rounded-3xl mr-3"
+                              src={
+                                video?.publisher?.profilePicture &&
+                                video?.publisher?.profilePicture !== ""
+                                  ? video?.publisher?.profilePicture
+                                  : "https://i.imgur.com/tdi3NGa.png"
+                              }
+                              alt="avatar"
+                            />
+                          </Link>
                           <div className="overflow-hidden">
                             <div>
                               <Link
