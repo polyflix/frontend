@@ -40,6 +40,8 @@ import styles from "./slug.module.scss";
 import { PolyflixLanguage } from "../../common/types/language.type";
 import { CollectionPassword } from "../../collections/components/CollectionPassword/CollectionPassword.component";
 import { Visibility } from "../../common/types/crud.type";
+import { ProfileAvatar } from "../../users/components/ProfileAvatar/ProfileAvatar.component";
+import { ProfileUsername } from "../../users/components/ProfileUsername/ProfileUsername.component";
 
 export const VideoDetail: React.FC = () => {
   const [pageTitle, setPageTitle] = useState<string>();
@@ -362,28 +364,6 @@ const SidebarComponent: React.FC<SidebarComponentProps> = ({
                       )}
                       {!isLtMdScreen && isContainerDataVisible && (
                         <ul className="flex mb-1 list-none flex-wrap pb-1 flex-row">
-                          {/* <li className="-mb-px mr-2 last:mr-0 flex-auto text-center">
-                            <a
-                              className={cn(
-                                "flex rounded-lg font-bold uppercase px-5 py-3 cursor-pointer",
-                                visiblePanelElement === "description"
-                                  ? "text-white bg-red-600"
-                                  : "text-red-600 bg-black",
-                                "hover:bg-red-600 hover:text-white"
-                              )}
-                              onClick={(e) => {
-                                e.preventDefault();
-                                setVisiblePanelElement("description");
-                              }}
-                              href="#description"
-                            >
-                              <InformationCircleIcon className="w-4 md:w-5" />
-                              <Typography as="p" className="text-sm ml-2">
-                                {t("video.view.label.description")}
-                              </Typography>
-                            </a>
-                            <span className="flex-1"></span>
-                          </li> */}
                           <li className="-mb-px mr-2 last:mr-0 flex-auto text-center">
                             <a
                               className={cn(
@@ -470,7 +450,7 @@ const SidebarComponent: React.FC<SidebarComponentProps> = ({
                         )) ||
                           (visiblePanelElement === SelectedTab.NOTES && (
                             <div className="pt-2">
-                              <VideoNote video={video}></VideoNote>
+                              <VideoNote video={video} />
                             </div>
                           )))
                       ) : (
@@ -521,26 +501,16 @@ const SidebarComponent: React.FC<SidebarComponentProps> = ({
                         </div>
 
                         <div className="flex items-center flex-1">
-                          <Link to={`/profile/videos/${video?.publisher?.id}`}>
-                            <img
-                              className="cursor-pointer w-10 h-10 rounded-3xl mr-3"
-                              src={
-                                video?.publisher?.profilePicture &&
-                                video?.publisher?.profilePicture !== ""
-                                  ? video?.publisher?.profilePicture
-                                  : "https://i.imgur.com/tdi3NGa.png"
-                              }
-                              alt="avatar"
-                            />
-                          </Link>
+                          <ProfileAvatar
+                            pictureUrl={video?.publisher?.profilePicture}
+                            username={video?.publisher?.displayName}
+                          />
                           <div className="overflow-hidden">
                             <div>
-                              <Link
-                                to={`/profile/videos/${video?.publisher?.id}`}
-                                className="font-bold text-red-300 cursor-pointer hover:underline"
-                              >
-                                {` ${video?.publisher?.displayName}`}
-                              </Link>
+                              <ProfileUsername
+                                username={video?.publisher?.displayName}
+                                link={video?.publisher?.userVideosPageUrl}
+                              />
                             </div>
                             <p className="text-white leading-normal">
                               {video?.createdAt.toLocaleDateString()}

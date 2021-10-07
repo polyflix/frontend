@@ -1,4 +1,6 @@
 import { IPublisher } from "../types";
+import { DEFAULT_AVATAR_URL } from "../constants/app.constant";
+import i18n from "i18next";
 
 /**
  * Modelize the VideoPublisher
@@ -28,10 +30,18 @@ export class Publisher {
 
   /**
    * Return the display name of the video publisher.
+   *
+   * If no firstName or LastName then will returns undefined
    * @returns {string} the video publisher display name
    */
-  get displayName(): string {
-    return `${this.firstName} ${this.lastName}`;
+  get displayName(): string | undefined {
+    return this.firstName && this.lastName
+      ? `${this.firstName} ${this.lastName}`
+      : undefined;
+  }
+
+  get displayNameOrDeleted(): string {
+    return this.displayName || i18n.t("common:deletedAccount");
   }
 
   /**
@@ -55,7 +65,11 @@ export class Publisher {
    * @returns {string} the video publisher profile picture
    */
   get profilePicture(): string {
-    return this._profilePicture;
+    return this._profilePicture ?? DEFAULT_AVATAR_URL;
+  }
+
+  get userVideosPageUrl(): string {
+    return `/profile/videos/${this.id}`;
   }
 
   /**
