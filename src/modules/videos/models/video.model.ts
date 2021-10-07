@@ -159,17 +159,11 @@ export class Video {
   }
 
   /**
-   * Return the video streaming URL when it is a youtube URL or
-   * unknown source
+   * Return the video streaming URL
    * @returns {string} the video URL
    */
   get src(): string {
-    switch (this._sourceType) {
-      case VideoSource.YOUTUBE:
-        return `https://www.youtube-nocookie.com/embed/${this._source}`;
-      default:
-        return this._source;
-    }
+    return this._source;
   }
 
   get srcRaw(): string {
