@@ -21,10 +21,7 @@ export const TagSearchPage: React.FC = () => {
   });
 
   return (
-    <Page
-      className="h-full flex items-start justify-center"
-      title={t("search.title")}
-    >
+    <Page title={t("search.title")}>
       <Container mxAuto fluid className="flex flex-col p-4 box-border">
         <Jumbotron
           withGoBack
