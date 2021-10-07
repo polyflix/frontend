@@ -11,7 +11,11 @@ export const NewVideoPage: React.FC = () => {
   const { t } = useTranslation();
 
   return (
-    <Page title="Nouvelle video">
+    <Page
+      title={
+        t("videoManagement.addVideo.action") + " " + t("videoManagement.video")
+      }
+    >
       <Container mxAuto className="my-5">
         <GoBack />
         <div className="flex flex-col items-center my-5">
