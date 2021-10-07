@@ -28,7 +28,6 @@ export const CollaborativeSubtitleEditingPage: React.FC = () => {
 
   return (
     <Page
-      className="h-full flex items-start justify-center"
       title={`${
         slug ? t("shared.common.actions.edit") : t("shared.common.actions.add")
       } ${t("videoManagement.video")}`}
