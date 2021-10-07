@@ -4,23 +4,42 @@ import SwiperCore, { Mousewheel, Navigation } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { NoData } from "../../../ui/components/NoData/NoData.component";
 import { Typography } from "../../../ui/components/Typography/Typography.component";
-import { Video } from "../../models/video.model";
 import { VideoSliderItem } from "../VideoSliderItem/VideoSliderItem.component";
 import SliderControl from "./SliderControl.component";
+import { IVideoFilter } from "../../filters/video.filter";
+import { useVideos } from "../../hooks/useVideos.hook";
+import { GhostHeroTile } from "../../../ui";
+import { GhostSlider } from "../../../ui/components/Ghost/GhostSlider/GhostSlider.component";
 
 type Props = {
   title: string;
-  videos: Video[];
+  videosFilter: IVideoFilter;
   hideIfNothing?: boolean;
 };
 
 SwiperCore.use([Navigation, Mousewheel]);
+
+/**
+ * This behavior of having `useVideos` call is to anticipate
+ * Redux arrival & behavior
+ */
 export const VideoSlider: React.FC<Props> = ({
-  videos,
+  videosFilter,
   title,
   hideIfNothing = true,
 }) => {
-  return videos.length !== 0 ? (
+  const { data, isLoading } = useVideos(videosFilter);
+
+  if (isLoading) {
+    return (
+      <>
+        <GhostHeroTile />
+        <GhostSlider count={5} />
+      </>
+    );
+  }
+
+  return data && data.totalCount > 0 ? (
     <div>
       <span className="group flex items-center mb-6 w-fit">
         <Typography as="h4" className="text-xl pl-3" bold>
@@ -53,7 +72,7 @@ export const VideoSlider: React.FC<Props> = ({
         <SliderControl direction="previous">
           <ChevronLeftIcon className="w-10" />
         </SliderControl>
-        {videos.map((video) => (
+        {data.items.map((video) => (
           <SwiperSlide key={video.id}>
             <VideoSliderItem video={video} />
           </SwiperSlide>
