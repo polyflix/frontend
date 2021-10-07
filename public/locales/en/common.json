@@ -163,6 +163,7 @@
           "name": "Password confirm",
           "error": "The passwords do not match"
         },
+        "profilePicture": "Upload an avatar",
         "termsOfService": {
           "verb": "I agree to",
           "subject": "the Terms of Service",
