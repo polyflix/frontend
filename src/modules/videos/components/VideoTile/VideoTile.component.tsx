@@ -1,14 +1,19 @@
-import React from "react";
-import { applyBackgroundImage } from "../../../common/utils/classes.util";
-import { Image } from "../../../ui/components/Image/Image.component";
-import { NoData } from "../../../ui/components/NoData/NoData.component";
-import { Typography } from "../../../ui/components/Typography/Typography.component";
-import { Video } from "../../models/video.model";
-import { VideoButtons } from "../VideoButtons/VideoButton.component";
+import { applyBackgroundImage } from '../../../common/utils/classes.util'
+import { Paragraph } from '../../../ui'
+import { Image } from '../../../ui/components/Image/Image.component'
+import { NoData } from '../../../ui/components/NoData/NoData.component'
+import { Typography } from '../../../ui/components/Typography/Typography.component'
+import { Video } from '../../models/video.model'
+import { VideoButtons } from '../VideoButtons/VideoButton.component'
+import React from 'react'
 
 type Props = {
   video: Video
 }
+
+const Overlay: React.FC = () => (
+  <div className="bg-black bg-opacity-70 w-full h-full absolute" />
+)
 
 export const VideoTile: React.FC<Props> = ({ video }) => {
   return video ? (
@@ -45,13 +50,9 @@ export const VideoTile: React.FC<Props> = ({ video }) => {
         </div>
       </div>
     </div>
-  </div>
-) : (
-  <div className="flex flex-col items-center justify-center">
-    <NoData />
-  </div>
-));
-
-const Overlay: React.FC = () => (
-  <div className="bg-black bg-opacity-70 w-full h-full absolute" />
-);
+  ) : (
+    <div className="flex flex-col items-center justify-center">
+      <NoData />
+    </div>
+  )
+}

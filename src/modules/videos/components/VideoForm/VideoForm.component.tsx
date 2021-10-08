@@ -1,42 +1,42 @@
+import { useAuth } from '../../../authentication/hooks/useAuth.hook'
+import { fadeInDown } from '../../../ui/animations/fadeInDown'
+import { stagger } from '../../../ui/animations/stagger'
+import { Alert, AlertType } from '../../../ui/components/Alert/Alert.component'
+import { FilledButton } from '../../../ui/components/Buttons/FilledButton/FilledButton.component'
+import { UploadButton } from '../../../ui/components/Buttons/UploadButton/UploadButton.component'
+import { Checkbox } from '../../../ui/components/Checkbox/Checkbox.component'
+import { Image as Img } from '../../../ui/components/Image/Image.component'
+import { Input } from '../../../ui/components/Input/Input.component'
+import { Spinner } from '../../../ui/components/Spinner/Spinner.component'
+import { Paragraph } from '../../../ui/components/Typography/Paragraph/Paragraph.component'
+import { Title } from '../../../ui/components/Typography/Title/Title.component'
+import { Typography } from '../../../ui/components/Typography/Typography.component'
+import { ImageFile } from '../../../upload/models/files/image.model'
+import { MinioFile } from '../../../upload/models/files/minio-file.model'
+import { VideoFile } from '../../../upload/models/files/video.model'
+import { MinioService } from '../../../upload/services/minio.service'
+import { Video } from '../../models/video.model'
+import { SubtitleService } from '../../services'
+import { VideoService } from '../../services/video.service'
+import { IVideoForm } from '../../types/videos.type'
+import { FrameSelector } from '../FrameSelector/FrameSelector.component'
 import {
+  ArrowCircleLeftIcon,
   EyeIcon,
   EyeOffIcon,
   GlobeIcon,
-  UserIcon,
   TranslateIcon,
-  ArrowCircleLeftIcon,
-} from "@heroicons/react/outline";
-import { useInjection } from "@polyflix/di";
-import { motion } from "framer-motion";
-import { useEffect, useState, useRef, useMemo } from "react";
-import { useForm } from "react-hook-form";
-import { useTranslation } from "react-i18next";
-import { useHistory, useLocation } from "react-router";
-import slugify from "slugify";
-import { useAuth } from "../../../authentication/hooks/useAuth.hook";
-import { fadeInDown } from "../../../ui/animations/fadeInDown";
-import { stagger } from "../../../ui/animations/stagger";
-import { Alert, AlertType } from "../../../ui/components/Alert/Alert.component";
-import { FilledButton } from "../../../ui/components/Buttons/FilledButton/FilledButton.component";
-import { Checkbox } from "../../../ui/components/Checkbox/Checkbox.component";
-import { Image as Img } from "../../../ui/components/Image/Image.component";
-import { Input } from "../../../ui/components/Input/Input.component";
-import { Spinner } from "../../../ui/components/Spinner/Spinner.component";
-import { Paragraph } from "../../../ui/components/Typography/Paragraph/Paragraph.component";
-import { Title } from "../../../ui/components/Typography/Title/Title.component";
-import { Typography } from "../../../ui/components/Typography/Typography.component";
-import { Video } from "../../models/video.model";
-import { VideoService } from "../../services/video.service";
-import { IVideoForm } from "../../types/videos.type";
-import { UploadButton } from "../../../ui/components/Buttons/UploadButton/UploadButton.component";
-import { ImageFile } from "../../../upload/models/files/image.model";
-import { VideoFile } from "../../../upload/models/files/video.model";
-import { MinioService } from "../../../upload/services/minio.service";
-import { MinioFile } from "../../../upload/models/files/minio-file.model";
-import { SubtitleService } from "../../services";
-import { FrameSelector } from "../FrameSelector/FrameSelector.component";
-import urlRegex from "url-regex";
-import SimpleMdeReact from "react-simplemde-editor";
+  UserIcon,
+} from '@heroicons/react/outline'
+import { useInjection } from '@polyflix/di'
+import { motion } from 'framer-motion'
+import { useEffect, useMemo, useRef, useState } from 'react'
+import { useForm } from 'react-hook-form'
+import { useTranslation } from 'react-i18next'
+import { useHistory, useLocation } from 'react-router'
+import SimpleMdeReact from 'react-simplemde-editor'
+import slugify from 'slugify'
+import urlRegex from 'url-regex-safe'
 
 type Props = {
   /** If video exists, the form will be in update mode, otherwise in create mode. */
@@ -47,30 +47,31 @@ type Props = {
  * The video form component
  */
 export const VideoForm: React.FC<Props> = ({ video }) => {
-  const player = useRef<HTMLVmPlayerElement>(null);
-  const isUpdate = video instanceof Video;
+  const player = useRef<HTMLVmPlayerElement>(null)
+  const isUpdate = video instanceof Video
 
-  const videoService = useInjection<VideoService>(VideoService);
-  const subtitleService = useInjection<SubtitleService>(SubtitleService);
-  const minioService = useInjection<MinioService>(MinioService);
+  const videoService = useInjection<VideoService>(VideoService)
+  const subtitleService = useInjection<SubtitleService>(SubtitleService)
+  const minioService = useInjection<MinioService>(MinioService)
 
-  const { t } = useTranslation();
-  const { user } = useAuth();
-  const history = useHistory();
-  const type = new URLSearchParams(useLocation().search).get('type');
+  const { t } = useTranslation()
+  const { user } = useAuth()
+  const history = useHistory()
+  const type = new URLSearchParams(useLocation().search).get('type')
 
   const [autocompleted, setAutocompleted] = useState<boolean>(
-    isUpdate || type === "upload"
-  );
-  const [loading, setLoading] = useState<boolean>(false);
-  const [isSubmit, setIsSubmit] = useState<boolean>(false);
-  const [subtitleExists, setSubtitleExists] = useState<boolean>(false);
-  const [alert, setAlert] = useState<{
+    isUpdate || type === 'upload'
+  )
+  const [loading, setLoading] = useState<boolean>(false)
+  const [isSubmit, setIsSubmit] = useState<boolean>(false)
+  const [subtitleExists, setSubtitleExists] = useState<boolean>(false)
+  const [alert, setAlert] =
+    useState<{
       type: AlertType
       message: string
-    } | null>(null);
-  const [imageFile, setImageFile] = useState<ImageFile | null>(null);
-  const [videoFile, setVideoFile] = useState<VideoFile | null>(null);
+    } | null>(null)
+  const [imageFile, setImageFile] = useState<ImageFile | null>(null)
+  const [videoFile, setVideoFile] = useState<VideoFile | null>(null)
 
   const {
     register,
@@ -89,120 +90,123 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
       thumbnail: video?.thumbnail,
       src: video?.src,
     },
-  });
+  })
 
-  const watchTitle = watch<"title", string>("title", "");
-  const watchPrivacy = watch<"isPublic", boolean>("isPublic");
-  const watchPublished = watch<"isPublished", boolean>("isPublished");
-  const watchHasSubtitle = watch<"hasSubtitle", boolean>("hasSubtitle");
-  const watchThumbnail = watch<"thumbnail", string>("thumbnail", "");
-  const watchDescription = watch<"description", string>(
-    "description",
-    t("videoManagement.inputs.description.name")
-  );
+  const watchTitle = watch<'title', string>('title', '')
+  const watchPrivacy = watch<'isPublic', boolean>('isPublic')
+  const watchPublished = watch<'isPublished', boolean>('isPublished')
+  const watchHasSubtitle = watch<'hasSubtitle', boolean>('hasSubtitle')
+  const watchThumbnail = watch<'thumbnail', string>('thumbnail', '')
+  const watchDescription = watch<'description', string>(
+    'description',
+    t('videoManagement.inputs.description.name')
+  )
 
   // We need to do this to get the value of textarea that isn't working with only description in useForm
-  const [desc, setDesc] = useState<string | undefined>(video?.description);
+  const [desc, setDesc] = useState<string | undefined>(video?.description)
   const onChange = (value: string) => {
-    setValue("description", value);
-    setDesc(value);
-  };
+    setValue('description', value)
+    setDesc(value)
+  }
 
   useEffect(() => {
     async function checkSubtitleExists() {
       if (isUpdate) {
-        const sub = await subtitleService.getSubtitleUrlByVideoId(video?.id!);
-        setValue('hasSubtitle', sub.length > 0);
-        setSubtitleExists(sub.length > 0);
+        const sub = await subtitleService.getSubtitleUrlByVideoId(video?.id!)
+        setValue('hasSubtitle', sub.length > 0)
+        setSubtitleExists(sub.length > 0)
       }
     }
-    checkSubtitleExists();
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+    checkSubtitleExists()
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
-  const getFile = (files: MinioFile[], field: keyof IVideoForm) => files.find((file) => file.getField() === field);
+  const getFile = (files: MinioFile[], field: keyof IVideoForm) =>
+    files.find((file) => file.getField() === field)
 
   const uploadFiles = async (data: IVideoForm) => {
     const uploadedFiles = await minioService.upload([
       imageFile as MinioFile,
       videoFile as MinioFile,
-    ]);
-    const attributes: (keyof IVideoForm)[] = ["thumbnail", "src"];
+    ])
+    const attributes: (keyof IVideoForm)[] = ['thumbnail', 'src']
     attributes.forEach((attr) => {
-      const url = getFile(uploadedFiles, attr)?.getFileURL();
-      if (url) data = { ...data, [attr]: url };
-    });
-    return data;
-  };
+      const url = getFile(uploadedFiles, attr)?.getFileURL()
+      if (url) data = { ...data, [attr]: url }
+    })
+    return data
+  }
 
   const thumbnailPreview =
     watchThumbnail ||
     video?.thumbnail ||
     imageFile?.getPreview() ||
-    "https://i.stack.imgur.com/y9DpT.jpg";
+    'https://i.stack.imgur.com/y9DpT.jpg'
 
   const [videoPreview, setVideoPreview] = useState(
     video?.src || videoFile?.getPreview()
-  );
+  )
 
   useEffect(() => {
-    setVideoPreview(video?.src || videoFile?.getPreview());
-  }, [video, videoFile]);
+    setVideoPreview(video?.src || videoFile?.getPreview())
+  }, [video, videoFile])
 
-  const onGoBack = () => history.goBack();
+  const onGoBack = () => history.goBack()
 
   const autocomplete = async () => {
-    setLoading(true);
+    setLoading(true)
     try {
-      const valid = await trigger("src");
+      const valid = await trigger('src')
       if (valid) {
-        const src = getValues("src");
-        const id = src.match(/[a-zA-Z0-9_-]{11}/);
+        const src = getValues('src')
+        const id = src.match(/[a-zA-Z0-9_-]{11}/)
         if (id) {
-          const metadata = await videoService.getVideoMetadata(id[0]);
-          setValue("thumbnail", metadata.snippet?.thumbnails?.high?.url);
-          setValue("description", metadata.snippet?.description);
-          setValue("title", metadata.snippet?.title);
+          const metadata = await videoService.getVideoMetadata(id[0])
+          setValue('thumbnail', metadata.snippet?.thumbnails?.high?.url)
+          setValue('description', metadata.snippet?.description)
+          setValue('title', metadata.snippet?.title)
         }
       }
     } catch (e) {
       setAlert({
-        message: `${t("videoManagement.addVideo.error")}`,
-        type: "error",
-      });
+        message: `${t('videoManagement.addVideo.error')}`,
+        type: 'error',
+      })
     } finally {
-      setAutocompleted(true);
-      setLoading(false);
+      setAutocompleted(true)
+      setLoading(false)
     }
-  };
+  }
 
   const onSubmit = async (data: IVideoForm) => {
-    setLoading(true);
-    setIsSubmit(true);
+    setLoading(true)
+    setIsSubmit(true)
     try {
-      if (type === "upload") data = await uploadFiles(data);
-      data.description = desc || "";
+      if (type === 'upload') data = await uploadFiles(data)
+      data.description = desc || ''
       let result = await (isUpdate
         ? videoService.updateVideo(video?.id as string, data)
-        : videoService.createVideo(data));
-      if (data.hasSubtitle && !subtitleExists) await subtitleService.createSubtitle(video || result);
-      else if (!data.hasSubtitle && subtitleExists) await subtitleService.deleteSubtitle(video?.id!);
+        : videoService.createVideo(data))
+      if (data.hasSubtitle && !subtitleExists)
+        await subtitleService.createSubtitle(video || result)
+      else if (!data.hasSubtitle && subtitleExists)
+        await subtitleService.deleteSubtitle(video?.id!)
       setAlert({
         message: isUpdate
           ? `"${result.title}" ${t('videoManagement.updateVideo.success')}.`
           : `"${result.title}" ${t('videoManagement.addVideo.success')}.`,
         type: 'success',
-      });
-      history.push(`/profile/videos/${user?.id}`);
+      })
+      history.push(`/profile/videos/${user?.id}`)
     } catch (err) {
       setAlert({
         message: `${t('videoManagement.addVideo.error')} "${data.title}"`,
         type: 'error',
-      });
+      })
     } finally {
-      setLoading(false);
-      setIsSubmit(false);
+      setLoading(false)
+      setIsSubmit(false)
     }
-  };
+  }
 
   //Editor Options
   const MDOptions = useMemo(() => {
@@ -211,45 +215,45 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
       // uploadImage: true,
       spellChecker: false,
       sideBySideFullscreen: false,
-      minHeight: "550px",
+      minHeight: '550px',
       toolbar: [
-        "bold" as const,
-        "italic" as const,
-        "heading" as const,
-        "code" as const,
-        "|" as const,
-        "quote" as const,
-        "unordered-list" as const,
-        "table" as const,
-        "|" as const,
-        "link" as const,
-        "image" as const,
-        "|" as const,
-        "preview" as const,
-        "|" as const,
-        "guide" as const,
-        "|" as const,
+        'bold' as const,
+        'italic' as const,
+        'heading' as const,
+        'code' as const,
+        '|' as const,
+        'quote' as const,
+        'unordered-list' as const,
+        'table' as const,
+        '|' as const,
+        'link' as const,
+        'image' as const,
+        '|' as const,
+        'preview' as const,
+        '|' as const,
+        'guide' as const,
+        '|' as const,
       ],
-    };
-  }, []);
+    }
+  }, [])
 
   const save = async () => {
-    const provider = await player.current?.getProvider();
-    const video = provider?.lastChild?.lastChild as HTMLVideoElement;
+    const provider = await player.current?.getProvider()
+    const video = provider?.lastChild?.lastChild as HTMLVideoElement
 
-    let canvas = document.createElement("canvas");
-    let context = canvas.getContext("2d");
-    [canvas.height, canvas.width] = [720, 1280];
+    let canvas = document.createElement('canvas')
+    let context = canvas.getContext('2d')
+    ;[canvas.height, canvas.width] = [720, 1280]
 
-    context?.drawImage(video as CanvasImageSource, 0, 0, 1280, 720);
+    context?.drawImage(video as CanvasImageSource, 0, 0, 1280, 720)
     canvas.toBlob((blob) => {
       if (blob) {
-        const file = new File([blob], `capture_at_${video.currentTime}sec`);
-        const minioFile = new ImageFile(file, "thumbnail");
-        setImageFile(minioFile);
+        const file = new File([blob], `capture_at_${video.currentTime}sec`)
+        const minioFile = new ImageFile(file, 'thumbnail')
+        setImageFile(minioFile)
       }
-    });
-  };
+    })
+  }
 
   return (
     <motion.div
@@ -263,10 +267,8 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
           overrideDefaultClasses
         >
           <span className="inline-flex mx-2 cursor-pointer" onClick={onGoBack}>
-            <ArrowCircleLeftIcon className="w-6 mr-1" />
-            {' '}
-            {t('shared.common.actions.back')}
-            {' '}
+            <ArrowCircleLeftIcon className="w-6 mr-1" />{' '}
+            {t('shared.common.actions.back')}{' '}
           </span>
         </Typography>
         <div className="col-span-2 md:col-span-1">
@@ -291,7 +293,7 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
           className="w-full col-span-2 lg:col-span-1 rounded-md"
           alt={`${watchTitle} thumbnail`}
         />
-        {type === "upload" ? (
+        {type === 'upload' ? (
           <div className="w-full col-span-2 lg:col-span-1 rounded-md overflow-hidden">
             <FrameSelector
               variants={fadeInDown}
@@ -317,9 +319,9 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
           hint={
             watchTitle
               ? `UID : ${slugify(watchTitle, {
-                lower: true,
-                remove: /[*+~.()'"!:@]/g,
-              })}`
+                  lower: true,
+                  remove: /[*+~.()'"!:@]/g,
+                })}`
               : `${t('videoManagement.inputs.title.description')}.`
           }
           ref={register({
@@ -342,7 +344,7 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
               hint={`${t('videoManagement.inputs.thumbnailURL.name')}.`}
               ref={register({
                 required: `${t(
-                  'videoManagement.inputs.thumbnailURL.missing',
+                  'videoManagement.inputs.thumbnailURL.missing'
                 )}.`,
                 pattern: {
                   value: urlRegex({ exact: true }),
@@ -364,7 +366,7 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
                 pattern: {
                   value:
                     /^((?:https?:)?\/\/)?((?:www|m)\.)?((?:youtube\.com|youtu.be|youtube-nocookie.com))(\/(?:[\w-]+\?v=|embed\/|v\/)?)([\w-]+)(\S+)?$/gm,
-                  message: `${t("videoManagement.inputs.videoURL.error")}.`,
+                  message: `${t('videoManagement.inputs.videoURL.error')}.`,
                 },
               })}
             />
@@ -431,8 +433,7 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
               <>
                 <Typography as="span" bold>
                   {`${t('userVideos.visibility.public.name')}.`}
-                </Typography>
-                {' '}
+                </Typography>{' '}
                 {`${t('userVideos.visibility.public.description')}.`}
                 <br />
                 <Typography
@@ -448,8 +449,7 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
               <>
                 <Typography as="span" bold>
                   {`${t('userVideos.visibility.private.name')}.`}
-                </Typography>
-                {' '}
+                </Typography>{' '}
                 {`${t('userVideos.visibility.private.description')}.`}
                 <br />
                 <Typography
@@ -482,8 +482,7 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
               <>
                 <Typography as="span" bold>
                   {`${t('userVideos.status.published.name')}.`}
-                </Typography>
-                {' '}
+                </Typography>{' '}
                 {`${t('userVideos.status.published.description')}.`}
                 <br />
                 <Typography
@@ -499,8 +498,7 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
               <>
                 <Typography as="span" bold>
                   {`${t('userVideos.status.draft.name')}.`}
-                </Typography>
-                {' '}
+                </Typography>{' '}
                 {`${t('userVideos.status.draft.description')}.`}
                 <br />
                 <Typography
@@ -533,8 +531,7 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
                 <>
                   <Typography as="span" bold>
                     {`${t('userVideos.subtitle.withSubtitle.name')}.`}
-                  </Typography>
-                  {' '}
+                  </Typography>{' '}
                   {`${t('userVideos.subtitle.withSubtitle.description')}.`}
                   <br />
                   <Typography
@@ -550,8 +547,7 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
                 <>
                   <Typography as="span" bold>
                     {`${t('userVideos.subtitle.withoutSubtitle.name')}.`}
-                  </Typography>
-                  {' '}
+                  </Typography>{' '}
                   {`${t('userVideos.subtitle.withoutSubtitle.description')}.`}
                   <br />
                   <Typography
@@ -594,5 +590,5 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
         />
       </form>
     </motion.div>
-  );
-};
+  )
+}
