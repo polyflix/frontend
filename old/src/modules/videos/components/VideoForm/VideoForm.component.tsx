@@ -142,9 +142,9 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
   };
 
   const thumbnailPreview =
+    imageFile?.getPreview() ||
     watchThumbnail ||
     video?.thumbnail ||
-    imageFile?.getPreview() ||
     "https://i.stack.imgur.com/y9DpT.jpg";
 
   const { fields, append, remove } = useFieldArray({
