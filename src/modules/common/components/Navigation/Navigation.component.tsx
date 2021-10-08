@@ -248,9 +248,6 @@ export const Navigation: React.FC<Props> = ({ visible, className = "" }) => {
               "fixed rounded-b-md p-4 md:p-0 bg-black transition-all left-0 w-full md:relative gap-2 md:gap-4 flex flex-col md:flex-row md:w-4/5 items-center"
             )}
           >
-            <Link to="/">
-              <Typography as="span">{t("home.seo.title")}</Typography>
-            </Link>
             <Link to="/courses">
               <Typography as="span">{t("courses.seo.title")}</Typography>
             </Link>
