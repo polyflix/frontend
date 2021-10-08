@@ -1,12 +1,12 @@
-import { MotionProps } from "framer-motion";
+import { MotionProps } from 'framer-motion'
 
 export type WithClassname = {
-  className?: string;
-};
+  className?: string
+}
 
-export type WithMotion = MotionProps;
+export type WithMotion = MotionProps
 
 export type WithSEO = {
-  title?: string;
-  description?: string;
-};
+  title?: string
+  description?: string
+}

@@ -1,47 +1,82 @@
-import { useInjection } from "@polyflix/di";
-import { ArrowCircleLeftIcon } from "@heroicons/react/outline";
-import { motion } from "framer-motion";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { useTranslation } from "react-i18next";
-import { useHistory } from "react-router";
-import slugify from "slugify";
-import { useAuth } from "../../../authentication/hooks/useAuth.hook";
-import { fadeInDown } from "../../../ui/animations/fadeInDown";
-import { stagger } from "../../../ui/animations/stagger";
-import { Alert, AlertType } from "../../../ui/components/Alert/Alert.component";
-import { FilledButton } from "../../../ui/components/Buttons/FilledButton/FilledButton.component";
-import { Input } from "../../../ui/components/Input/Input.component";
-import { Spinner } from "../../../ui/components/Spinner/Spinner.component";
-import { Textarea } from "../../../ui/components/Textarea/Textarea.component";
-import { Paragraph } from "../../../ui/components/Typography/Paragraph/Paragraph.component";
-import { Title } from "../../../ui/components/Typography/Title/Title.component";
-import { Typography } from "../../../ui/components/Typography/Typography.component";
-import { Path } from "../../models/path.model";
-import { SearchPath } from "../SearchPath/SearchPath.component";
-import { PathService } from "../../services/path.service";
-import { IPathForm } from "../../types/path.type";
-import { OrderedCourse } from "../../models";
-import { Course } from "../../../courses/models/course.model";
-import { ICourse } from "../../../courses/types/course.type";
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
-import Card from "../Card.component";
-import update from "immutability-helper";
-import { VisibilitySelector } from "../../../common/components/VisibilitySelector/VisibilitySelector.component";
-import { StatusSelector } from "../../../common/components/StatusSelector/StatusSelector.component";
+import { ArrowCircleLeftIcon } from '@heroicons/react/outline'
+import { useInjection } from '@polyflix/di'
+import { motion } from 'framer-motion'
+import update from 'immutability-helper'
+import { useState } from 'react'
+import { DndProvider } from 'react-dnd'
+import { HTML5Backend } from 'react-dnd-html5-backend'
+import { useForm } from 'react-hook-form'
+import { useTranslation } from 'react-i18next'
+import { useHistory } from 'react-router'
+import slugify from 'slugify'
+
+import { useAuth } from '../../../authentication/hooks/useAuth.hook'
+import { StatusSelector } from '../../../common/components/StatusSelector/StatusSelector.component'
+import { VisibilitySelector } from '../../../common/components/VisibilitySelector/VisibilitySelector.component'
+import { Course } from '../../../courses/models/course.model'
+import { ICourse } from '../../../courses/types/course.type'
+import { fadeInDown } from '../../../ui/animations/fadeInDown'
+import { stagger } from '../../../ui/animations/stagger'
+import { Alert, AlertType } from '../../../ui/components/Alert/Alert.component'
+import { FilledButton } from '../../../ui/components/Buttons/FilledButton/FilledButton.component'
+import { Input } from '../../../ui/components/Input/Input.component'
+import { Spinner } from '../../../ui/components/Spinner/Spinner.component'
+import { Textarea } from '../../../ui/components/Textarea/Textarea.component'
+import { Paragraph } from '../../../ui/components/Typography/Paragraph/Paragraph.component'
+import { Title } from '../../../ui/components/Typography/Title/Title.component'
+import { Typography } from '../../../ui/components/Typography/Typography.component'
+import { OrderedCourse } from '../../models'
+import { Path } from '../../models/path.model'
+import { PathService } from '../../services/path.service'
+import { IPathForm } from '../../types/path.type'
+import Card from '../Card.component'
+import { SearchPath } from '../SearchPath/SearchPath.component'
 
 type Props = {
   /** If path exists, the form will be in update mode, otherwise in create mode. */
-  path?: Path | null;
-};
+  path?: Path | null
+}
 
 /**
  * The path form component
  */
 export const PathForm: React.FC<Props> = ({ path }) => {
+  const isUpdate = path instanceof Path
+
+  const pathService = useInjection<PathService>(PathService)
+
+  const { t } = useTranslation()
+  const { user } = useAuth()
+  let history = useHistory()
+
+  const { register, handleSubmit, errors, watch } = useForm<IPathForm>({
+    defaultValues: {
+      title: path?.title,
+      description: path?.description,
+      draft: path?.draft || true,
+      visibility: path?.visibility || 'public',
+    },
+  })
+
+  const watchTitle = watch<'title', string>('title', '')
+
+  const [courses, setCourses] = useState<Course[]>(
+    path?.courses.map((c: OrderedCourse) => c.course) ?? []
+  )
+  const [loading, setLoading] = useState<boolean>(false)
+  const [isSubmit, setIsSubmit] = useState<boolean>(false)
+  const [alert, setAlert] =
+    useState<{
+      type: AlertType
+      message: string
+    } | null>(null)
+
+  const onCourseDelete = (id: string) => {
+    setCourses(courses.filter((course) => course.id !== id))
+  }
+
   const moveCourse = (dragIndex: number, hoverIndex: number) => {
-    const dragCourse = courses[dragIndex];
+    const dragCourse = courses[dragIndex]
     setCourses(
       update(courses, {
         $splice: [
@@ -49,53 +84,19 @@ export const PathForm: React.FC<Props> = ({ path }) => {
           [hoverIndex, 0, dragCourse],
         ],
       })
-    );
-  };
-
-  const isUpdate = path instanceof Path;
-
-  const pathService = useInjection<PathService>(PathService);
-
-  const { t } = useTranslation();
-  const { user } = useAuth();
-  let history = useHistory();
-
-  const { register, handleSubmit, errors, watch } = useForm<IPathForm>({
-    defaultValues: {
-      title: path?.title,
-      description: path?.description,
-      draft: path?.draft || true,
-      visibility: path?.visibility || "public",
-    },
-  });
-
-  const watchTitle = watch<"title", string>("title", "");
-
-  const [courses, setCourses] = useState<Course[]>(
-    path?.courses.map((c: OrderedCourse) => c.course) ?? []
-  );
-  const [loading, setLoading] = useState<boolean>(false);
-  const [isSubmit, setIsSubmit] = useState<boolean>(false);
-  const [alert, setAlert] =
-    useState<{
-      type: AlertType;
-      message: string;
-    } | null>(null);
-
-  const onCourseDelete = (id: string) => {
-    setCourses(courses.filter((course) => course.id !== id));
-  };
+    )
+  }
 
   const addCourse = (course: Course) => {
-    const contain = courses.some((el: Course) => el.id === course.id);
-    if (!contain) setCourses([...courses, course]);
-  };
+    const contain = courses.some((el: Course) => el.id === course.id)
+    if (!contain) setCourses([...courses, course])
+  }
 
-  const onGoBack = () => history.goBack();
+  const onGoBack = () => history.goBack()
 
   const onSubmit = async (data: IPathForm) => {
-    setLoading(true);
-    setIsSubmit(true);
+    setLoading(true)
+    setIsSubmit(true)
     try {
       let result = await (isUpdate
         ? pathService.updatePath(path?.id as string, {
@@ -111,24 +112,24 @@ export const PathForm: React.FC<Props> = ({ path }) => {
               order: courses.findIndex((el: Course) => el.id === p.id),
               course: { id: p.id } as ICourse,
             })),
-          }));
+          }))
       setAlert({
         message: isUpdate
-          ? `"${result.title}" ${t("pathManagement.updatePath.success")}.TOTO`
-          : `"${result.title}" ${t("pathManagement.addPath.success")}.`,
-        type: "success",
-      });
-      history.push(`/profile/paths/${user?.id}`);
+          ? `"${result.title}" ${t('pathManagement.updatePath.success')}.TOTO`
+          : `"${result.title}" ${t('pathManagement.addPath.success')}.`,
+        type: 'success',
+      })
+      history.push(`/profile/paths/${user?.id}`)
     } catch (err) {
       setAlert({
-        message: `${t("pathManagement.addPath.error")} "${data.title}"`,
-        type: "error",
-      });
+        message: `${t('pathManagement.addPath.error')} "${data.title}"`,
+        type: 'error',
+      })
     } finally {
-      setLoading(false);
-      setIsSubmit(false);
+      setLoading(false)
+      setIsSubmit(false)
     }
-  };
+  }
 
   return (
     <motion.div
@@ -142,21 +143,21 @@ export const PathForm: React.FC<Props> = ({ path }) => {
           overrideDefaultClasses
         >
           <span className="inline-flex mx-2 cursor-pointer" onClick={onGoBack}>
-            <ArrowCircleLeftIcon className="w-6 mr-1" />{" "}
-            {t("shared.common.actions.back")}{" "}
+            <ArrowCircleLeftIcon className="w-6 mr-1" />{' '}
+            {t('shared.common.actions.back')}{' '}
           </span>
         </Typography>
         <div className="col-span-2 md:col-span-1">
           <Title variants={fadeInDown}>
             {isUpdate
               ? `${path?.title}`
-              : `${t("shared.common.actions.add")}
-							${t("pathManagement.path")}`}
+              : `${t('shared.common.actions.add')}
+							${t('pathManagement.path')}`}
           </Title>
           <Paragraph variants={fadeInDown} className="my-3 text-sm">
             {isUpdate
-              ? `${t("pathManagement.updatePath.description")}`
-              : `${t("pathManagement.addPath.description")}`}
+              ? `${t('pathManagement.updatePath.description')}`
+              : `${t('pathManagement.addPath.description')}`}
             .
           </Paragraph>
         </div>
@@ -169,7 +170,7 @@ export const PathForm: React.FC<Props> = ({ path }) => {
           name="title"
           error={errors.title}
           className="col-span-2"
-          placeholder={t("pathManagement.inputs.title.name")}
+          placeholder={t('pathManagement.inputs.title.name')}
           required
           variants={fadeInDown}
           hint={
@@ -178,12 +179,12 @@ export const PathForm: React.FC<Props> = ({ path }) => {
                   lower: true,
                   remove: /[*+~.()'"!:@]/g,
                 })}`
-              : `${t("pathManagement.inputs.title.description")}.`
+              : `${t('pathManagement.inputs.title.description')}.`
           }
           ref={register({
             required: {
               value: true,
-              message: `${t("pathManagement.inputs.title.error")}.`,
+              message: `${t('pathManagement.inputs.title.error')}.`,
             },
           })}
         />
@@ -191,12 +192,12 @@ export const PathForm: React.FC<Props> = ({ path }) => {
           error={errors.description}
           className="col-span-2"
           minHeight={200}
-          placeholder={t("pathManagement.inputs.description.name")}
+          placeholder={t('pathManagement.inputs.description.name')}
           name="description"
           ref={register({
             required: {
               value: true,
-              message: `${t("pathManagement.inputs.description.error")}.`,
+              message: `${t('pathManagement.inputs.description.error')}.`,
             },
           })}
           variants={fadeInDown}
@@ -206,11 +207,11 @@ export const PathForm: React.FC<Props> = ({ path }) => {
             overrideDefaultClasses
             className="text-xl font-bold text-nx-white"
           >
-            {t("visibility.label", { ns: "resources" })}
+            {t('visibility.label', { ns: 'resources' })}
           </Title>
           <VisibilitySelector
             name="visibility"
-            value={watch("visibility")}
+            value={watch('visibility')}
             ref={register()}
             className="mt-4"
           />
@@ -222,15 +223,15 @@ export const PathForm: React.FC<Props> = ({ path }) => {
           >
             Status
           </Title>
-          <StatusSelector isChecked={watch("draft")} ref={register()} />
+          <StatusSelector isChecked={watch('draft')} ref={register()} />
         </div>
         <FilledButton
           className="col-span-2"
           as="input"
           inputValue={
             isUpdate
-              ? t("pathManagement.updatePath.action")
-              : t("pathManagement.addPath.action")
+              ? t('pathManagement.updatePath.action')
+              : t('pathManagement.addPath.action')
           }
           disabled={isSubmit}
           variants={fadeInDown}
@@ -239,7 +240,7 @@ export const PathForm: React.FC<Props> = ({ path }) => {
           <div className="col-span-2 flex items-center">
             <Spinner className="fill-current text-nx-dark"></Spinner>
             <Typography as="span" className="text-sm ml-2">
-              {t("shared.common.wait")}..
+              {t('shared.common.wait')}..
             </Typography>
           </div>
         )}
@@ -252,7 +253,7 @@ export const PathForm: React.FC<Props> = ({ path }) => {
       <div className="mt-4">
         <SearchPath
           variants={fadeInDown}
-          placeholder={t("pathManagement.inputs.search.name")}
+          placeholder={t('pathManagement.inputs.search.name')}
           addCourse={addCourse}
         />
         <DndProvider backend={HTML5Backend}>
@@ -280,5 +281,5 @@ export const PathForm: React.FC<Props> = ({ path }) => {
         </> */}
       </div>
     </motion.div>
-  );
-};
+  )
+}

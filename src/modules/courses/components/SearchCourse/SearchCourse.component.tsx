@@ -1,41 +1,42 @@
-import React, { useState } from "react";
-import { CollectionList } from "../CollectionList/CollectionList.component";
-import { motion } from "framer-motion";
-import { WithClassname, WithMotion } from "../../../common";
-import { useInjection } from "@polyflix/di";
-import { Collection } from "../../../collections/models/collections.model";
-import { CollectionService } from "../../../collections/services/collection.service";
+import { useInjection } from '@polyflix/di'
+import { motion } from 'framer-motion'
+import React, { useState } from 'react'
+
+import { Collection } from '../../../collections/models/collections.model'
+import { CollectionService } from '../../../collections/services/collection.service'
+import { WithClassname, WithMotion } from '../../../common'
+import { CollectionList } from '../CollectionList/CollectionList.component'
 
 type Props = WithClassname &
   WithMotion & {
-    addCollection: (collection: Collection) => void;
-    placeholder: string;
-  };
+    addCollection: (collection: Collection) => void
+    placeholder: string
+  }
 
 export const SearchCourse: React.FC<Props> = ({
   addCollection,
   placeholder,
   ...rest
 }) => {
-  const collectionService = useInjection<CollectionService>(CollectionService);
+  const collectionService = useInjection<CollectionService>(CollectionService)
 
-  const [input, setInput] = useState<string>("");
-  const [collectionList, setCollectionList] = useState<Collection[]>([]);
+  const [input, setInput] = useState<string>('')
+  const [collectionList, setCollectionList] = useState<Collection[]>([])
 
   const onClickCollection = (collection: Collection) => {
-    addCollection(collection);
-    setInput("");
-    setCollectionList([]);
-  };
+    addCollection(collection)
+    setInput('')
+    setCollectionList([])
+  }
 
   const search = async (title: string) => {
     let paginatedCollections = await collectionService.getCollections({
       title,
       exact: false,
-    });
-    setInput(title);
-    setCollectionList(paginatedCollections.items);
-  };
+    })
+    setInput(title)
+    setCollectionList(paginatedCollections.items)
+  }
 
   return (
     <motion.div
@@ -57,5 +58,5 @@ export const SearchCourse: React.FC<Props> = ({
         />
       ) : null}
     </motion.div>
-  );
-};
+  )
+}

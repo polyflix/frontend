@@ -1,42 +1,43 @@
-import { useState } from "react";
-import { useTranslation } from "react-i18next";
-import { useParams } from "react-router-dom";
-import { useAuth } from "../../authentication/hooks";
-import { QueryFilter } from "../../common/types/crud.type";
-import { Container, fadeOpacity, Page } from "../../ui";
-import { ItemsPerPage } from "../../ui/components/Filters/ItemsPerPage.component";
-import { Pagination } from "../../ui/components/Filters/Pagination.component";
-import { SortBy } from "../../ui/components/Filters/SortBy.component";
-import { Jumbotron } from "../../ui/components/Jumbotron/Jumbotron.component";
-import { SearchBar } from "../../ui/components/SearchBar/SearchBar.component";
-import { QuizzAttemptsList } from "../components/Attempts/QuizzAttemptsList.component";
-import { useQuizz } from "../hooks/useQuizz.hook";
-import { useQuizzAttempts } from "../hooks/useQuizzAttempts.hook";
-import { CrudFilterService } from "../services/crud-filter.service";
+import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { useParams } from 'react-router-dom'
+
+import { useAuth } from '../../authentication/hooks'
+import { QueryFilter } from '../../common/types/crud.type'
+import { Container, fadeOpacity, Page } from '../../ui'
+import { ItemsPerPage } from '../../ui/components/Filters/ItemsPerPage.component'
+import { Pagination } from '../../ui/components/Filters/Pagination.component'
+import { SortBy } from '../../ui/components/Filters/SortBy.component'
+import { Jumbotron } from '../../ui/components/Jumbotron/Jumbotron.component'
+import { SearchBar } from '../../ui/components/SearchBar/SearchBar.component'
+import { QuizzAttemptsList } from '../components/Attempts/QuizzAttemptsList.component'
+import { useQuizz } from '../hooks/useQuizz.hook'
+import { useQuizzAttempts } from '../hooks/useQuizzAttempts.hook'
+import { CrudFilterService } from '../services/crud-filter.service'
 
 const getSearchByName = (value: string) => [
   {
-    "user.firstName": {
+    'user.firstName': {
       $contL: value,
     },
   },
   {
-    "user.lastName": {
+    'user.lastName': {
       $contL: value,
     },
   },
-];
+]
 
 export const QuizzResultsPage = () => {
-  const { user } = useAuth();
-  const { id } = useParams<{ id: string }>();
-  const { t } = useTranslation("resources");
+  const { user } = useAuth()
+  const { id } = useParams<{ id: string }>()
+  const { t } = useTranslation('resources')
 
-  const [filters, setFilters] = useState<QueryFilter>({});
+  const [filters, setFilters] = useState<QueryFilter>({})
 
   const { data: quizz, isLoading: isQuizzLoading } = useQuizz(id, {
-    join: ["questions", { field: "user", select: ["firstName", "lastName"] }],
-  });
+    join: ['questions', { field: 'user', select: ['firstName', 'lastName'] }],
+  })
 
   // Fetch attempts for the quizz, we have to do another request in order to be able to paginate this.
   const {
@@ -46,24 +47,24 @@ export const QuizzResultsPage = () => {
   } = useQuizzAttempts(id, {
     join: [
       {
-        field: "user",
-        select: ["firstName", "lastName"],
+        field: 'user',
+        select: ['firstName', 'lastName'],
       },
     ],
     ...filters,
-  });
+  })
 
   const updateFilters = (updatedFilters: Partial<QueryFilter>): void => {
-    setFilters(updatedFilters);
-    refresh(false);
-  };
+    setFilters(updatedFilters)
+    refresh(false)
+  }
 
   return (
     <Page
       isLoading={isQuizzLoading || isAttemptsLoading}
       variants={fadeOpacity}
       guard={quizz && quizz.isCreator(user!)}
-      title={t("quizzes.results.title", { quizzName: quizz?.name })}
+      title={t('quizzes.results.title', { quizzName: quizz?.name })}
     >
       <Container
         mxAuto
@@ -71,8 +72,8 @@ export const QuizzResultsPage = () => {
       >
         <Jumbotron
           withGoBack
-          content={t("quizzes.results.description")}
-          title={t("quizzes.results.title", { quizzName: quizz?.name })}
+          content={t('quizzes.results.description')}
+          title={t('quizzes.results.title', { quizzName: quizz?.name })}
         />
         <div className="items-center flex my-5 flex-wrap md:flex-nowrap">
           <div className="w-full">
@@ -83,13 +84,13 @@ export const QuizzResultsPage = () => {
                   search: { $or: [...getSearchByName(value)] },
                 })
               }
-              placeholder={t("quizzes.results.search")}
+              placeholder={t('quizzes.results.search')}
             />
           </div>
           <div className="md:mx-2" />
           <SortBy
             onSort={CrudFilterService.buildSort(
-              "createdAt",
+              'createdAt',
               filters.sort,
               (sort) => updateFilters({ ...filters, sort })
             )}
@@ -98,7 +99,7 @@ export const QuizzResultsPage = () => {
           />
           <div className="mx-2" />
           <SortBy
-            onSort={CrudFilterService.buildSort("score", filters.sort, (sort) =>
+            onSort={CrudFilterService.buildSort('score', filters.sort, (sort) =>
               updateFilters({ ...filters, sort })
             )}
             label="Score"
@@ -121,5 +122,5 @@ export const QuizzResultsPage = () => {
         </div>
       </Container>
     </Page>
-  );
-};
+  )
+}

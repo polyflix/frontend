@@ -1,15 +1,15 @@
-import { Dialog, Transition } from "@headlessui/react";
-import { Fragment } from "react";
-import { useTranslation } from "react-i18next";
+import { Dialog, Transition } from '@headlessui/react'
+import { Fragment } from 'react'
+import { useTranslation } from 'react-i18next'
 
 type Props = {
-  isOpen: boolean;
-  onClose: () => void;
-  onDelete: () => void;
-};
+  isOpen: boolean
+  onClose: () => void
+  onDelete: () => void
+}
 
 export const DeleteQuizzModal = ({ onClose, isOpen, onDelete }: Props) => {
-  const { t } = useTranslation("resources");
+  const { t } = useTranslation('resources')
   return (
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog
@@ -50,11 +50,11 @@ export const DeleteQuizzModal = ({ onClose, isOpen, onDelete }: Props) => {
                 as="h3"
                 className="text-lg leading-6 text-nx-white font-bold"
               >
-                {t("quizzes.modal.delete.title")}
+                {t('quizzes.modal.delete.title')}
               </Dialog.Title>
               <div className="my-6">
                 <p className="text-sm text-nx-white">
-                  {t("quizzes.modal.delete.description")}
+                  {t('quizzes.modal.delete.description')}
                 </p>
               </div>
 
@@ -64,7 +64,7 @@ export const DeleteQuizzModal = ({ onClose, isOpen, onDelete }: Props) => {
                   className="inline-flex justify-center px-4 py-2 text-sm font-medium text-gray-900 bg-gray-100 border border-transparent rounded-md hover:bg-gray-200"
                   onClick={onClose}
                 >
-                  {t("quizzes.modal.delete.cancel")}
+                  {t('quizzes.modal.delete.cancel')}
                 </button>
                 <div className="mx-2"></div>
                 <button
@@ -72,7 +72,7 @@ export const DeleteQuizzModal = ({ onClose, isOpen, onDelete }: Props) => {
                   className="inline-flex justify-center px-4 py-2 text-sm font-medium text-red-900 bg-red-100 border border-transparent rounded-md hover:bg-red-200 focus:outline-none"
                   onClick={onDelete}
                 >
-                  {t("quizzes.modal.delete.confirm")}
+                  {t('quizzes.modal.delete.confirm')}
                 </button>
               </div>
             </div>
@@ -80,5 +80,5 @@ export const DeleteQuizzModal = ({ onClose, isOpen, onDelete }: Props) => {
         </div>
       </Dialog>
     </Transition>
-  );
-};
+  )
+}

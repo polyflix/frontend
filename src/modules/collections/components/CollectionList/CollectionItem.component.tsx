@@ -1,12 +1,13 @@
-import { motion } from "framer-motion";
-import React from "react";
-import { Link } from "react-router-dom";
-import { NoData } from "../../../ui/components/NoData/NoData.component";
-import { Collection } from "../../models";
+import { motion } from 'framer-motion'
+import React from 'react'
+import { Link } from 'react-router-dom'
+
+import { NoData } from '../../../ui/components/NoData/NoData.component'
+import { Collection } from '../../models'
 
 type Props = {
-  collection: Collection;
-};
+  collection: Collection
+}
 
 export const CollectionItem: React.FC<Props> = ({ collection }) => {
   return collection ? (
@@ -17,11 +18,11 @@ export const CollectionItem: React.FC<Props> = ({ collection }) => {
             {/* // TODO: update link to collection */}
             <Link
               to={
-                "/watch/" +
+                '/watch/' +
                 collection.videos[0].slug +
-                "?c=" +
+                '?c=' +
                 collection.slug +
-                "&index=0"
+                '&index=0'
               }
               href="e"
               className="grid md:grid-cols-8 xl:grid-cols-9 items-start relative rounded-xl p-3 sm:p-5 xl:p-6 overflow-hidden hover:bg-gray-100 hover:bg-opacity-5"
@@ -47,5 +48,5 @@ export const CollectionItem: React.FC<Props> = ({ collection }) => {
     </>
   ) : (
     <NoData />
-  );
-};
+  )
+}

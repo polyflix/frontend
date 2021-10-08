@@ -1,16 +1,17 @@
-import { Block } from "@polyflix/vtt-parser";
-import React from "react";
-import { WithClassname } from "../../common";
-import { Subtitle, Video } from "../../videos";
-import { SubtitleFetchingState } from "../pages/collaborative-subtitle-editing.page";
-import { SubtitleBlockForm } from "./subtitle-block-from.component";
-import { SubtitleImprovementList } from "./subtitle-improvement-list.component";
+import { Block } from '@polyflix/vtt-parser'
+import React from 'react'
+
+import { WithClassname } from '../../common'
+import { Subtitle, Video } from '../../videos'
+import { SubtitleFetchingState } from '../pages/collaborative-subtitle-editing.page'
+import { SubtitleBlockForm } from './subtitle-block-from.component'
+import { SubtitleImprovementList } from './subtitle-improvement-list.component'
 
 type SubtitleBlockContentProps = WithClassname & {
-  subtitles: SubtitleFetchingState;
-  block: Block;
-  video: Video;
-};
+  subtitles: SubtitleFetchingState
+  block: Block
+  video: Video
+}
 export const SubtitleBlockContent: React.FC<SubtitleBlockContentProps> = ({
   block,
   subtitles,
@@ -25,5 +26,5 @@ export const SubtitleBlockContent: React.FC<SubtitleBlockContentProps> = ({
         subtitle={subtitles.subtitle as Subtitle}
       />
     </>
-  );
-};
+  )
+}

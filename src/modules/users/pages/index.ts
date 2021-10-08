@@ -1,2 +1,2 @@
-export * from "./profile/index.page";
-export * from "./profile.router";
+export * from './profile/index.page'
+export * from './profile.router'

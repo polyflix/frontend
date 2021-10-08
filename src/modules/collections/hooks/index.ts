@@ -1,1 +1,1 @@
-export * from "./useCollections.hook";
+export * from './useCollections.hook'

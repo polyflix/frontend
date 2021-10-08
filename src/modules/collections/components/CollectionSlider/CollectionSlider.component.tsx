@@ -1,38 +1,39 @@
-import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/outline";
-import React, { useState } from "react";
-import SwiperCore, { Mousewheel, Navigation } from "swiper";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { NoData } from "../../../ui/components/NoData/NoData.component";
-import { Typography } from "../../../ui/components/Typography/Typography.component";
-import SliderControl from "./CollectionControl.component";
-import { CollectionSliderItem } from "../CollectionSliderItem/CollectionSliderItem.component";
-import { Collection } from "../../models/collections.model";
-import { useEffect } from "react";
+import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/outline'
+import React, { useState } from 'react'
+import { useEffect } from 'react'
+import SwiperCore, { Mousewheel, Navigation } from 'swiper'
+import { Swiper, SwiperSlide } from 'swiper/react'
+
+import { NoData } from '../../../ui/components/NoData/NoData.component'
+import { Typography } from '../../../ui/components/Typography/Typography.component'
+import { Collection } from '../../models/collections.model'
+import { CollectionSliderItem } from '../CollectionSliderItem/CollectionSliderItem.component'
+import SliderControl from './CollectionControl.component'
 
 type Props = {
-  collection: Collection;
-  hideIfNothing?: boolean;
-  startIndex: number;
-};
+  collection: Collection
+  hideIfNothing?: boolean
+  startIndex: number
+}
 
-SwiperCore.use([Navigation, Mousewheel]);
+SwiperCore.use([Navigation, Mousewheel])
 export const CollectionSlider: React.FC<Props> = ({
   collection,
   hideIfNothing = true,
   startIndex,
 }) => {
-  const [playlistIndex, setPlaylistIndex] = useState(startIndex);
+  const [playlistIndex, setPlaylistIndex] = useState(startIndex)
 
   useEffect(() => {
-    setPlaylistIndex(startIndex);
-  }, [startIndex]);
+    setPlaylistIndex(startIndex)
+  }, [startIndex])
 
   const buildQuery = (index: number): URLSearchParams => {
-    const query = new URLSearchParams();
-    query.append("c", `${collection.slug}`);
-    query.append("index", `${index}`);
-    return query;
-  };
+    const query = new URLSearchParams()
+    query.append('c', `${collection.slug}`)
+    query.append('index', `${index}`)
+    return query
+  }
 
   return collection?.videos?.length !== 0 ? (
     <div>
@@ -43,7 +44,7 @@ export const CollectionSlider: React.FC<Props> = ({
         <ChevronRightIcon className="w-5 pt-1 text-nx-white" />
       </div>
       <Swiper
-        navigation={{ nextEl: ".control-next", prevEl: ".control-previous" }}
+        navigation={{ nextEl: '.control-next', prevEl: '.control-previous' }}
         breakpoints={{
           550: {
             slidesPerView: 1,
@@ -85,5 +86,5 @@ export const CollectionSlider: React.FC<Props> = ({
     </div>
   ) : hideIfNothing ? null : (
     <NoData />
-  );
-};
+  )
+}

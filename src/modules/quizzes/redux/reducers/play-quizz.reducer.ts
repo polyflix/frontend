@@ -2,8 +2,8 @@ import {
   PlayQuizzAction,
   PlayQuizzState,
   PlayQuizzStep,
-} from "../../types/play-quizz.type";
-import { PlayQuizzActions } from "../actions/play-quizz.action";
+} from '../../types/play-quizz.type'
+import { PlayQuizzActions } from '../actions/play-quizz.action'
 
 const initialState: PlayQuizzState = {
   step: PlayQuizzStep.Onboard,
@@ -11,7 +11,7 @@ const initialState: PlayQuizzState = {
   answers: {},
   isSubmitting: false,
   isInitialState: true,
-};
+}
 
 /**
  * Quizz play state reducer
@@ -30,46 +30,46 @@ export const playQuizzReducer = (
         ...state,
         ...action.payload,
         isInitialState: false,
-      };
+      }
     case PlayQuizzActions.SET_ANSWER:
-      const actualAnswers = state.answers || {};
-      const newAnswers = action.payload?.answers || {};
+      const actualAnswers = state.answers || {}
+      const newAnswers = action.payload?.answers || {}
 
       Object.entries(newAnswers).forEach(([questionId, [answer]]) => {
-        const questionAnswers = actualAnswers[questionId];
+        const questionAnswers = actualAnswers[questionId]
         if (questionAnswers) {
           // If the answer is already into the array, we should remove it.
           actualAnswers[questionId] = questionAnswers.includes(answer)
             ? questionAnswers.filter((v) => v !== answer)
-            : [...questionAnswers, answer];
+            : [...questionAnswers, answer]
         } else {
-          actualAnswers[questionId] = [answer];
+          actualAnswers[questionId] = [answer]
         }
-      });
+      })
 
       return {
         ...state,
         isInitialState: false,
         answers: { ...actualAnswers },
-      };
+      }
     case PlayQuizzActions.SUBMIT_IN_PROGRESS:
       return {
         ...state,
         isInitialState: false,
         isSubmitting: true,
-      };
+      }
     case PlayQuizzActions.SUBMIT_SUCCESS:
       return {
         ...state,
         ...action.payload,
         isInitialState: false,
         isSubmitting: false,
-      };
+      }
     case PlayQuizzActions.RESET:
       return {
         ...initialState,
-      };
+      }
     default:
-      return state;
+      return state
   }
-};
+}

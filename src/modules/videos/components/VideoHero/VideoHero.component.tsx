@@ -1,19 +1,20 @@
-import React from "react";
-import { applyBackgroundImage } from "../../../common/utils/classes.util";
-import { NoData } from "../../../ui/components/NoData/NoData.component";
-import { Typography } from "../../../ui/components/Typography/Typography.component";
-import { Video } from "../../models/video.model";
-import { VideoSource } from "../../types";
-import { VideoButtons } from "../VideoButtons/VideoButton.component";
-import { useStreamUrl } from "../../hooks/useStreamUrl.hook";
-import { Paragraph } from "../../../ui";
+import React from 'react'
+
+import { applyBackgroundImage } from '../../../common/utils/classes.util'
+import { Paragraph } from '../../../ui'
+import { NoData } from '../../../ui/components/NoData/NoData.component'
+import { Typography } from '../../../ui/components/Typography/Typography.component'
+import { useStreamUrl } from '../../hooks/useStreamUrl.hook'
+import { Video } from '../../models/video.model'
+import { VideoSource } from '../../types'
+import { VideoButtons } from '../VideoButtons/VideoButton.component'
 
 type Props = {
-  video: Video;
-};
+  video: Video
+}
 
 export const VideoHero: React.FC<Props> = ({ video }) => {
-  const { streamUrl, error, loading } = useStreamUrl(video);
+  const { streamUrl, error, loading } = useStreamUrl(video)
 
   return video ? (
     <>
@@ -43,12 +44,12 @@ export const VideoHero: React.FC<Props> = ({ video }) => {
   ) : (
     <div
       style={{
-        minHeight: "200px",
-        height: "80vh",
+        minHeight: '200px',
+        height: '80vh',
       }}
       className="flex items-center justify-center border-b-2 border-nx-dark"
     >
       <NoData />
     </div>
-  );
-};
+  )
+}

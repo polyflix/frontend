@@ -1,32 +1,33 @@
-import { motion } from "framer-motion";
-import { forwardRef } from "react";
-import { FieldError } from "react-hook-form";
-import { WithClassname, WithMotion } from "../../../common/types/props.type";
-import { cn } from "../../../common/utils/classes.util";
+import { motion } from 'framer-motion'
+import { forwardRef } from 'react'
+import { FieldError } from 'react-hook-form'
+
+import { WithClassname, WithMotion } from '../../../common/types/props.type'
+import { cn } from '../../../common/utils/classes.util'
 
 type Props = WithClassname &
   WithMotion & {
     /** The name of the HTML input */
-    name: string;
+    name: string
     /** The type of the HTML input */
-    type?: string;
+    type?: string
     /** The hint to display below the field */
-    hint?: string;
+    hint?: string
     /** The placeholder to display in the field */
-    placeholder: string;
+    placeholder: string
     /** The ref of the component */
-    ref: any;
+    ref: any
     /** The error for the field */
-    error?: FieldError;
+    error?: FieldError
     /** If true, the field will be required */
-    required?: boolean;
+    required?: boolean
     /** If true, the field will be disabled */
-    disabled?: boolean;
+    disabled?: boolean
     /** Define a default value */
-    defaultValue?: string;
+    defaultValue?: string
     /** onChange event for input tag */
-    onChange?: () => void;
-  };
+    onChange?: () => void
+  }
 
 /**
  * A simple HTML input component compatible with the react-hook-form API.
@@ -34,9 +35,9 @@ type Props = WithClassname &
 export const Input = forwardRef<HTMLInputElement, Props>(
   (
     {
-      className = "",
+      className = '',
       name,
-      type = "text",
+      type = 'text',
       disabled = false,
       placeholder,
       required = false,
@@ -46,9 +47,9 @@ export const Input = forwardRef<HTMLInputElement, Props>(
       onChange,
       ...rest
     },
-    forwardRef
+    forwardedRef
   ) => (
-    <motion.div {...rest} className={cn("flex flex-col", className)}>
+    <motion.div {...rest} className={cn('flex flex-col', className)}>
       <input
         defaultValue={defaultValue}
         onChange={onChange}
@@ -56,14 +57,14 @@ export const Input = forwardRef<HTMLInputElement, Props>(
         type={type}
         disabled={disabled}
         className={cn(
-          "border dark:bg-nx-white focus:outline-none py-2 px-5 rounded-md font-display",
-          disabled && "dark:bg-nx-gray opacity-80"
+          'border dark:bg-nx-white focus:outline-none py-2 px-5 rounded-md font-display',
+          disabled && 'dark:bg-nx-gray opacity-80'
         )}
-        placeholder={`${placeholder} ${required ? "*" : ""}`}
-        ref={forwardRef}
+        placeholder={`${placeholder} ${required ? '*' : ''}`}
+        ref={forwardedRef}
       />
       {!error && hint && <small className="text-gray-400 mt-2">{hint}</small>}
       {error && <small className="text-red-400">{error.message}</small>}
     </motion.div>
   )
-);
+)

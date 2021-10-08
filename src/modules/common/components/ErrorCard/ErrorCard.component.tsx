@@ -1,34 +1,35 @@
-import React from "react";
-import Stitch from "../../../../assets/images/stitch.png";
-import { ExclamationCircleIcon } from "@heroicons/react/outline";
-import { Typography } from "../../../ui";
-import { useTranslation } from "react-i18next";
+import { ExclamationCircleIcon } from '@heroicons/react/outline'
+import React from 'react'
+import { useTranslation } from 'react-i18next'
+
+import Stitch from '../../../../assets/images/stitch.png'
+import { Typography } from '../../../ui'
 
 type Props = {
-  content?: string;
-};
+  content?: string
+}
 
-export const ErrorCard: React.FC<Props> = ({ children }) => {
-  const { t } = useTranslation("mediaPlayer");
+export const ErrorCard: React.FC<Props> = ({}) => {
+  const { t } = useTranslation('mediaPlayer')
   return (
     <div className="flex justify-center w-full h-full">
       <div
-        style={{ backgroundColor: "#151515" }}
+        style={{ backgroundColor: '#151515' }}
         className="relative w-80 h-60 md:w-96 md:h-64 pt-8 rounded-2xl m-auto"
       >
         <div className="w-64 mx-auto">
           <div className="absolute">
-            <img src={Stitch} alt={""} className="w-16 md:w-32 mx-auto" />
+            <img src={Stitch} alt={''} className="w-16 md:w-32 mx-auto" />
             <ExclamationCircleIcon
-              style={{ color: "#FF0000" }}
+              style={{ color: '#FF0000' }}
               className="w-9 pt-4 mx-auto"
             />
             <Typography
-              as={"p"}
+              as={'p'}
               className="text-center font-jakarta w-64 mx-auto pt-2"
               bold
             >
-              {t("mediaError")}
+              {t('mediaError')}
             </Typography>
           </div>
         </div>
@@ -47,5 +48,5 @@ export const ErrorCard: React.FC<Props> = ({ children }) => {
         </svg>
       </div>
     </div>
-  );
-};
+  )
+}

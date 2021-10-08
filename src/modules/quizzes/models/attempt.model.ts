@@ -1,14 +1,15 @@
-import dayjs, { Dayjs } from "dayjs";
-import { IPublisher } from "../../common";
-import { Publisher } from "../../common/models";
-import { QuizzAnswers } from "../types/play-quizz.type";
+import dayjs, { Dayjs } from 'dayjs'
+
+import { IPublisher } from '../../common'
+import { Publisher } from '../../common/models'
+import { QuizzAnswers } from '../types/play-quizz.type'
 
 export interface IAttempt {
-  id: string;
-  score: number;
-  answers: QuizzAnswers;
-  createdAt?: string;
-  user?: IPublisher;
+  id: string
+  score: number
+  answers: QuizzAnswers
+  createdAt?: string
+  user?: IPublisher
 }
 
 export class Attempt {
@@ -27,30 +28,30 @@ export class Attempt {
       json.answers,
       dayjs(json.createdAt),
       json.user && Publisher.fromJson(json.user)
-    );
+    )
   }
 
   get id(): string {
-    return this._id;
+    return this._id
   }
 
   get score(): number {
-    return +this._score.toFixed(2);
+    return +this._score.toFixed(2)
   }
 
   get createdAt(): Dayjs {
-    return this._createdAt;
+    return this._createdAt
   }
 
   get answers(): QuizzAnswers {
-    return this._answers;
+    return this._answers
   }
 
   get user(): Publisher | undefined {
-    return this._user;
+    return this._user
   }
 
   getColor(): string {
-    return "#FF0000";
+    return '#FF0000'
   }
 }

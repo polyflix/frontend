@@ -1,35 +1,36 @@
-import React, { useState } from "react";
-import { VideoList } from "../VideoList/VideoList.component";
-import { motion } from "framer-motion";
-import { WithClassname, WithMotion } from "../../../common";
-import { useInjection } from "@polyflix/di";
-import { Video } from "../../../videos";
-import { VideoService } from "../../../videos/services";
+import { useInjection } from '@polyflix/di'
+import { motion } from 'framer-motion'
+import React, { useState } from 'react'
+
+import { WithClassname, WithMotion } from '../../../common'
+import { Video } from '../../../videos'
+import { VideoService } from '../../../videos/services'
+import { VideoList } from '../VideoList/VideoList.component'
 
 type Props = WithClassname &
-  WithMotion & { addVideo: (video: Video) => void; placeholder: string };
+  WithMotion & { addVideo: (video: Video) => void; placeholder: string }
 
 export const SearchCollection: React.FC<Props> = ({
   addVideo,
   placeholder,
   ...rest
 }) => {
-  const videoService = useInjection<VideoService>(VideoService);
+  const videoService = useInjection<VideoService>(VideoService)
 
-  const [input, setInput] = useState<string>("");
-  const [videoList, setVideoList] = useState<Video[]>([]);
+  const [input, setInput] = useState<string>('')
+  const [videoList, setVideoList] = useState<Video[]>([])
 
   const onClickVideo = (video: Video) => {
-    addVideo(video);
-    setInput("");
-    setVideoList([]);
-  };
+    addVideo(video)
+    setInput('')
+    setVideoList([])
+  }
 
   const search = async (title: string) => {
-    let paginatedVideos = await videoService.getVideos({ title, exact: false });
-    setInput(title);
-    setVideoList(paginatedVideos.items);
-  };
+    let paginatedVideos = await videoService.getVideos({ title, exact: false })
+    setInput(title)
+    setVideoList(paginatedVideos.items)
+  }
 
   return (
     <motion.div
@@ -51,5 +52,5 @@ export const SearchCollection: React.FC<Props> = ({
         />
       ) : null}
     </motion.div>
-  );
-};
+  )
+}

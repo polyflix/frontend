@@ -1,5 +1,5 @@
-import { PolyflixLanguage } from "../types/language.type";
-import { SubtitleLanguages } from "../../videos";
+import { SubtitleLanguages } from '../../videos'
+import { PolyflixLanguage } from '../types/language.type'
 
 /**
  * As the format of i18n and subtitleLanguage isn't the same
@@ -11,11 +11,11 @@ export const getSubtitleLanguageFromPolyflix = (
 ): SubtitleLanguages => {
   switch (polyLang) {
     case PolyflixLanguage.FR:
-      return SubtitleLanguages.FR;
+      return SubtitleLanguages.FR
     case PolyflixLanguage.EN:
-      return SubtitleLanguages.EN;
+      return SubtitleLanguages.EN
   }
-};
+}
 
 /**
  * As the format of i18n and subtitleLanguage isn't the same
@@ -27,8 +27,8 @@ export const getPolyflixLanguageFromSubtitle = (
 ): PolyflixLanguage => {
   switch (subtitleLang) {
     case SubtitleLanguages.FR:
-      return PolyflixLanguage.FR;
+      return PolyflixLanguage.FR
     case SubtitleLanguages.EN:
-      return PolyflixLanguage.EN;
+      return PolyflixLanguage.EN
   }
-};
+}

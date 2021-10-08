@@ -1,4 +1,4 @@
-import { IWatchMetadata } from "../types/userMeta.type";
+import { IWatchMetadata } from '../types/userMeta.type'
 
 export default class WatchMetadata {
   /**
@@ -26,30 +26,30 @@ export default class WatchMetadata {
       json.isLiked,
       json.updatedAt,
       json.createdAt
-    );
+    )
   }
 
   get watchedSeconds(): number {
-    return this._watchedSeconds;
+    return this._watchedSeconds
   }
 
   get watchedPercent(): number {
-    return this._watchedPercent;
+    return this._watchedPercent
   }
 
   get isWatched(): boolean {
-    return this._isWatched;
+    return this._isWatched
   }
 
   get isLiked(): boolean {
-    return this._isLiked;
+    return this._isLiked
   }
 
   get updatedAt(): string {
-    return this._updatedAt;
+    return this._updatedAt
   }
 
   get createdAt(): string {
-    return this._createdAt;
+    return this._createdAt
   }
 }

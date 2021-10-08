@@ -1,4 +1,4 @@
-import { IUser } from "../../authentication/types/auth.type";
+import { IUser } from '../../authentication/types/auth.type'
 
 /**
  * The class User represent a User in the front-end.
@@ -29,19 +29,19 @@ export class User {
       json.profilePicture,
       json.isAccountActivated,
       json.isAdmin
-    );
+    )
   }
 
   public toJson(): IUser {
     return {
-      id: this._id || "",
+      id: this._id || '',
       email: this._email,
       firstName: this._firstName,
       lastName: this._lastName,
       profilePicture: this._profilePicture,
       isAccountActivated: this._isAccountActivated,
       isAdmin: this._isAdmin,
-    };
+    }
   }
 
   /**
@@ -49,7 +49,7 @@ export class User {
    * @returns {string} the id of the user
    */
   get id(): string {
-    return this._id;
+    return this._id
   }
 
   /**
@@ -57,7 +57,7 @@ export class User {
    * @returns {string} the email of the user
    */
   get email(): string {
-    return this._email;
+    return this._email
   }
 
   /**
@@ -65,7 +65,7 @@ export class User {
    * @returns {boolean} true if account is activated, false otherwise.
    */
   get isAccountActivated(): boolean {
-    return this._isAccountActivated;
+    return this._isAccountActivated
   }
 
   /**
@@ -73,7 +73,7 @@ export class User {
    * @returns {boolean} true if user is admin, false otherwise.
    */
   get isAdmin(): boolean {
-    return this._isAdmin;
+    return this._isAdmin
   }
 
   /**
@@ -81,7 +81,7 @@ export class User {
    * @returns {string} the user first name
    */
   get firstName(): string {
-    return this._firstName;
+    return this._firstName
   }
 
   /**
@@ -89,7 +89,7 @@ export class User {
    * @returns {string} the user last name
    */
   get lastName(): string {
-    return this._lastName;
+    return this._lastName
   }
 
   /**
@@ -97,7 +97,7 @@ export class User {
    * @returns {string} the user profile picture
    */
   get profilePicture(): string {
-    return this._profilePicture;
+    return this._profilePicture
   }
 
   /**
@@ -105,7 +105,7 @@ export class User {
    * @returns {string} the display name of the user.
    */
   get displayName(): string {
-    return `${this._firstName} ${this._lastName}`;
+    return `${this._firstName} ${this._lastName}`
   }
 
   /**
@@ -113,6 +113,6 @@ export class User {
    * @returns {string} the user initials
    */
   get initials(): string {
-    return `${this._firstName[0]}${this._lastName[0]}`;
+    return `${this._firstName[0]}${this._lastName[0]}`
   }
 }

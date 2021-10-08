@@ -1,28 +1,29 @@
-import React from "react";
-import { useTranslation } from "react-i18next";
-import { Redirect } from "react-router-dom";
-import { Container } from "../../../ui/components/Container/Container.component";
-import { Jumbotron } from "../../../ui/components/Jumbotron/Jumbotron.component";
-import { Page } from "../../../ui/components/Page/Page.component";
-import { User } from "../../../users";
-import { UsersListItem } from "../../components/users/UserListItem.component";
-import { useUsers } from "../../hooks/users/use-users.hook";
+import React from 'react'
+import { useTranslation } from 'react-i18next'
+import { Redirect } from 'react-router-dom'
+
+import { Container } from '../../../ui/components/Container/Container.component'
+import { Jumbotron } from '../../../ui/components/Jumbotron/Jumbotron.component'
+import { Page } from '../../../ui/components/Page/Page.component'
+import { User } from '../../../users'
+import { UsersListItem } from '../../components/users/UserListItem.component'
+import { useUsers } from '../../hooks/users/use-users.hook'
 
 export const AdminUserPage: React.FC = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslation()
 
-  const { data, isLoading: isLoadingUser, alert } = useUsers();
-  if (isLoadingUser) console.log(data);
+  const { data, isLoading: isLoadingUser, alert } = useUsers()
+  if (isLoadingUser) console.log(data)
 
-  if (alert && alert.type === "not-found") return <Redirect to="/not-found" />;
+  if (alert && alert.type === 'not-found') return <Redirect to="/not-found" />
 
   return (
-    <Page title={t("admin.onBoarding.users.title")}>
+    <Page title={t('admin.onBoarding.users.title')}>
       <Container mxAuto className="mt-5">
         <Jumbotron
           withGoBack={true}
-          title={t("admin.onBoarding.users.title")}
-          content={t("admin.onBoarding.question")}
+          title={t('admin.onBoarding.users.title')}
+          content={t('admin.onBoarding.question')}
         />
         <div className="mt-5 col-span-12 rounded-md p-8">
           {data && (
@@ -37,7 +38,7 @@ export const AdminUserPage: React.FC = () => {
               </thead>
               <tbody>
                 {data.map((user: User) => (
-                  <UsersListItem user={user} ownerItems={false}></UsersListItem>
+                  <UsersListItem key={user.id} user={user} ownerItems={false} />
                 ))}
               </tbody>
             </table>
@@ -45,5 +46,5 @@ export const AdminUserPage: React.FC = () => {
         </div>
       </Container>
     </Page>
-  );
-};
+  )
+}

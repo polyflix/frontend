@@ -1,29 +1,30 @@
-import React from "react";
-import { useTranslation } from "react-i18next";
-import { useParams } from "react-router";
-import { Container, Page } from "../../ui";
-import { Video, VideoListItem } from "../../videos";
-import { Jumbotron } from "../../ui/components/Jumbotron/Jumbotron.component";
-import { useVideos } from "../../videos/hooks/useVideos.hook";
+import React from 'react'
+import { useTranslation } from 'react-i18next'
+import { useParams } from 'react-router'
+
 import {
   CollectionListItem,
   CollectionsWithPagination,
   useCollections,
-} from "../../collections";
+} from '../../collections'
+import { Container, Page } from '../../ui'
+import { Jumbotron } from '../../ui/components/Jumbotron/Jumbotron.component'
+import { Video, VideoListItem } from '../../videos'
+import { useVideos } from '../../videos/hooks/useVideos.hook'
 
 export const TagSearchPage: React.FC = () => {
-  const { tags } = useParams<{ tags: string }>();
-  const { t } = useTranslation();
-  const { data: videos } = useVideos({ tags });
+  const { tags } = useParams<{ tags: string }>()
+  const { t } = useTranslation()
+  const { data: videos } = useVideos({ tags })
   const { data: collections } = useCollections<CollectionsWithPagination>({
-    mode: "collection",
+    mode: 'collection',
     tags,
-  });
+  })
 
   return (
     <Page
       className="h-full flex items-start justify-center"
-      title={t("search.title")}
+      title={t('search.title')}
     >
       <Container mxAuto fluid className="flex flex-col p-4 box-border">
         <Jumbotron
@@ -32,10 +33,10 @@ export const TagSearchPage: React.FC = () => {
             videos &&
             collections &&
             [...videos.items, ...collections.items].length === 0
-              ? t("search.descriptionNoData")
-              : t("search.description")
+              ? t('search.descriptionNoData')
+              : t('search.description')
           }
-          title={t("search.title")}
+          title={t('search.title')}
         />
       </Container>
       <Container
@@ -57,7 +58,7 @@ export const TagSearchPage: React.FC = () => {
                     links={true}
                     tags={e.tags}
                   />
-                );
+                )
               } else {
                 return (
                   <CollectionListItem
@@ -65,10 +66,10 @@ export const TagSearchPage: React.FC = () => {
                     ownerItems={false}
                     tags={e.tags}
                   />
-                );
+                )
               }
             })}
       </Container>
     </Page>
-  );
-};
+  )
+}

@@ -1,55 +1,56 @@
-import { PlusIcon } from "@heroicons/react/solid";
-import { useInjection } from "@polyflix/di/dist/hooks/useInjection.hook";
-import React from "react";
-import { useTranslation } from "react-i18next";
-import { Link } from "react-router-dom";
-import { useAuth } from "../../../authentication/hooks/useAuth.hook";
-import { Paginator } from "../../../common/components/Paginator/Paginator.component";
-import { usePagination } from "../../../common/hooks/usePagination.hook";
-import { fadeOpacity } from "../../../ui/animations/fadeOpacity";
-import { Container } from "../../../ui/components/Container/Container.component";
-import { Jumbotron } from "../../../ui/components/Jumbotron/Jumbotron.component";
-import { Page } from "../../../ui/components/Page/Page.component";
-import { Typography } from "../../../ui/components/Typography/Typography.component";
-import { useUser } from "../../../users/hooks/useUser.hook";
-import { VideoListItem } from "../../../videos/components/VideoListItem/VideoListItem.component";
-import { useVideos } from "../../../videos/hooks/useVideos.hook";
-import { Video } from "../../../videos/models/video.model";
-import { VideoService } from "../../../videos/services/video.service";
+import { PlusIcon } from '@heroicons/react/solid'
+import { useInjection } from '@polyflix/di/dist/hooks/useInjection.hook'
+import React from 'react'
+import { useTranslation } from 'react-i18next'
+import { Link } from 'react-router-dom'
+
+import { useAuth } from '../../../authentication/hooks/useAuth.hook'
+import { Paginator } from '../../../common/components/Paginator/Paginator.component'
+import { usePagination } from '../../../common/hooks/usePagination.hook'
+import { fadeOpacity } from '../../../ui/animations/fadeOpacity'
+import { Container } from '../../../ui/components/Container/Container.component'
+import { Jumbotron } from '../../../ui/components/Jumbotron/Jumbotron.component'
+import { Page } from '../../../ui/components/Page/Page.component'
+import { Typography } from '../../../ui/components/Typography/Typography.component'
+import { useUser } from '../../../users/hooks/useUser.hook'
+import { VideoListItem } from '../../../videos/components/VideoListItem/VideoListItem.component'
+import { useVideos } from '../../../videos/hooks/useVideos.hook'
+import { Video } from '../../../videos/models/video.model'
+import { VideoService } from '../../../videos/services/video.service'
 
 export const AdminVideoPage: React.FC = () => {
-  const { user } = useAuth();
-  const id = user?.id;
-  const { t } = useTranslation();
+  const { user } = useAuth()
+  const id = user?.id
+  const { t } = useTranslation()
 
-  const videoService = useInjection<VideoService>(VideoService);
-  const { setFinalPage, page, to, limit } = usePagination();
+  const videoService = useInjection<VideoService>(VideoService)
+  const { setFinalPage, page, to, limit } = usePagination()
 
   const { data: fetchedUser } = useUser({
     id,
-  });
+  })
 
   const { data, refresh } = useVideos(
     {
       page,
       pageSize: limit,
-      order: "-createdAt",
+      order: '-createdAt',
     },
     setFinalPage
-  );
+  )
 
-  const onVideoDelete = async (id: string) => {
-    await videoService.deleteVideo(id);
-    refresh();
-  };
+  const onVideoDelete = async (videoId: string) => {
+    await videoService.deleteVideo(videoId)
+    refresh()
+  }
 
   return (
-    <Page title={t("admin.onBoarding.videos.title")} variants={fadeOpacity}>
+    <Page title={t('admin.onBoarding.videos.title')} variants={fadeOpacity}>
       <Container mxAuto className="mt-5">
         <Jumbotron
           withGoBack={true}
-          title={t("admin.onBoarding.videos.title")}
-          content={t("admin.onBoarding.question")}
+          title={t('admin.onBoarding.videos.title')}
+          content={t('admin.onBoarding.question')}
         />
         <div className="mt-5">
           <Typography
@@ -59,8 +60,8 @@ export const AdminVideoPage: React.FC = () => {
           >
             <Link to="/videos/new">
               <span className="inline-flex mx-2">
-                <PlusIcon className="w-6" /> {t("shared.common.actions.add")}
-                {t("videoManagement.video")}
+                <PlusIcon className="w-6" /> {t('shared.common.actions.add')}
+                {t('videoManagement.video')}
               </span>
             </Link>
           </Typography>
@@ -85,7 +86,7 @@ export const AdminVideoPage: React.FC = () => {
                 />
               ) : (
                 <div className="text-white">
-                  {t("userVideos.list.userNoVideos", {
+                  {t('userVideos.list.userNoVideos', {
                     user: fetchedUser?.displayName,
                   })}
                 </div>
@@ -95,5 +96,5 @@ export const AdminVideoPage: React.FC = () => {
         </div>
       </Container>
     </Page>
-  );
-};
+  )
+}

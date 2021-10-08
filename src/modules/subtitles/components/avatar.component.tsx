@@ -1,10 +1,11 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import { SubtitleImprovement } from "../models/subtitle-improvement.model";
+import React from 'react'
+import { Link } from 'react-router-dom'
+
+import { SubtitleImprovement } from '../models/subtitle-improvement.model'
 
 type AvatarProps = {
-  subtitleImprovement: SubtitleImprovement;
-};
+  subtitleImprovement: SubtitleImprovement
+}
 export const Avatar: React.FC<AvatarProps> = ({ subtitleImprovement }) => {
   return (
     <div className="flex items-center flex-1">
@@ -12,9 +13,9 @@ export const Avatar: React.FC<AvatarProps> = ({ subtitleImprovement }) => {
         className="cursor-pointer w-10 h-10 rounded-3xl mr-3"
         src={
           subtitleImprovement?.createdBy?.profilePicture &&
-          subtitleImprovement?.createdBy?.profilePicture !== ""
+          subtitleImprovement?.createdBy?.profilePicture !== ''
             ? subtitleImprovement?.createdBy?.profilePicture
-            : "https://i.imgur.com/tdi3NGa.png"
+            : 'https://i.imgur.com/tdi3NGa.png'
         }
         alt="avatar"
       />
@@ -32,5 +33,5 @@ export const Avatar: React.FC<AvatarProps> = ({ subtitleImprovement }) => {
         </p>
       </div>
     </div>
-  );
-};
+  )
+}

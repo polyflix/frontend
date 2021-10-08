@@ -1,4 +1,4 @@
-import { ITag } from "../types/tag.type";
+import { ITag } from '../types/tag.type'
 
 export class Tag {
   private constructor(
@@ -8,18 +8,18 @@ export class Tag {
   ) {}
 
   static fromJson(json: ITag): Tag {
-    return new Tag(json.id, json.label, json.isReviewed);
+    return new Tag(json.id, json.label, json.isReviewed)
   }
 
   get id(): string {
-    return this._id;
+    return this._id
   }
 
   get label(): string {
-    return this._label;
+    return this._label
   }
 
   get isReviewed(): boolean {
-    return this._isReviewed;
+    return this._isReviewed
   }
 }

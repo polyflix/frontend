@@ -1,1 +1,1 @@
-export * from "./collections.type";
+export * from './collections.type'

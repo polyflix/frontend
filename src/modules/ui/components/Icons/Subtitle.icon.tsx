@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react'
 
 export const Subtitle: React.FC = () => (
   <svg
@@ -13,4 +13,4 @@ export const Subtitle: React.FC = () => (
       fill="#FFF"
     />
   </svg>
-);
+)

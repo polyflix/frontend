@@ -1,16 +1,16 @@
-import { PropsWithChildren, useMemo } from "react";
-import CssBaseline from "@mui/material/CssBaseline";
+import CssBaseline from '@mui/material/CssBaseline'
 import {
   createTheme,
+  StyledEngineProvider,
   ThemeOptions,
   ThemeProvider,
-  StyledEngineProvider,
-} from "@mui/material/styles";
+} from '@mui/material/styles'
+import React, { PropsWithChildren, useMemo } from 'react'
 
 export const ThemeConfig = ({ children }: PropsWithChildren<{}>) => {
-  const themeOptions = useMemo<ThemeOptions>(() => ({}), []);
+  const themeOptions = useMemo<ThemeOptions>(() => ({}), [])
 
-  const theme = createTheme(themeOptions);
+  const theme = createTheme(themeOptions)
 
   return (
     <StyledEngineProvider injectFirst>
@@ -19,5 +19,5 @@ export const ThemeConfig = ({ children }: PropsWithChildren<{}>) => {
         {children}
       </ThemeProvider>
     </StyledEngineProvider>
-  );
-};
+  )
+}

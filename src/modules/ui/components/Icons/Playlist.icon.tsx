@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react'
 
 export const Playlist: React.FC = () => (
   <svg
@@ -13,4 +13,4 @@ export const Playlist: React.FC = () => (
       fill="#FFF"
     />
   </svg>
-);
+)

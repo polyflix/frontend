@@ -1,28 +1,28 @@
-import { useInjection } from "@polyflix/di";
-import { motion } from "framer-motion";
-import { useTranslation } from "react-i18next";
-import CreatableSelect from "react-select/creatable";
-import Select from "react-select";
-import { ActionMeta, OptionsType } from "react-select/src/types";
+import { useInjection } from '@polyflix/di'
+import { motion } from 'framer-motion'
+import { useTranslation } from 'react-i18next'
+import Select from 'react-select'
+import CreatableSelect from 'react-select/creatable'
+import { ActionMeta, OptionsType } from 'react-select/src/types'
 
-import { Tag } from "../models/tag.model";
-import { ITagForm } from "../types/tag.type";
-import { useTags } from "../hooks/useTag.hook";
-import { TagService } from "../services/tag.service";
-import { WithClassname, WithMotion } from "../../common";
+import { WithClassname, WithMotion } from '../../common'
+import { useTags } from '../hooks/useTag.hook'
+import { Tag } from '../models/tag.model'
+import { TagService } from '../services/tag.service'
+import { ITagForm } from '../types/tag.type'
 
 type Props = WithMotion &
   WithClassname & {
-    defaultTags?: Tag[];
-    onChange: (tags: Tag[]) => void;
-    tags: Tag[];
-    isForm?: boolean;
-  };
+    defaultTags?: Tag[]
+    onChange: (tags: Tag[]) => void
+    tags: Tag[]
+    isForm?: boolean
+  }
 
 type FormattedTag = {
-  value: string;
-  label: string;
-};
+  value: string
+  label: string
+}
 
 export const TagSelect: React.FC<Props> = ({
   defaultTags = [],
@@ -31,29 +31,30 @@ export const TagSelect: React.FC<Props> = ({
   isForm = true,
   ...props
 }) => {
-  const { t } = useTranslation();
-  const { data: allTags } = useTags({});
+  const { t } = useTranslation()
+  const { data: allTags } = useTags({})
 
-  const formatTags = (tags: Tag[]): FormattedTag[] => {
-    return tags.map((tag) => ({ value: tag.id, label: tag.label }));
-  };
-  const tagService = useInjection<TagService>(TagService);
+  const formatTags = (items: Tag[]): FormattedTag[] => {
+    return items.map((tag) => ({ value: tag.id, label: tag.label }))
+  }
+
+  const tagService = useInjection<TagService>(TagService)
 
   const handleChange = async (
     _values: OptionsType<FormattedTag>,
     actionMeta: ActionMeta<FormattedTag>
   ) => {
     switch (actionMeta.action) {
-      case "create-option":
-        const create = actionMeta as any;
+      case 'create-option':
+        const create = actionMeta as any
         try {
           const newTag = await tagService.createTag({
             label: create.option.label,
             isReviewed: false,
-          } as ITagForm);
-          onChange([...tags, newTag]);
+          } as ITagForm)
+          onChange([...tags, newTag])
         } catch (e) {
-          typeof e === "string" &&
+          if (typeof e === 'string') {
             onChange([
               ...tags,
               Tag.fromJson({
@@ -61,16 +62,16 @@ export const TagSelect: React.FC<Props> = ({
                 isReviewed: false,
                 label: create.option.label,
               }),
-            ]);
+            ])
+          }
+          throw e
         }
-        break;
-      case "remove-value":
-      case "pop-value":
-        onChange(
-          tags.filter((tag) => tag.id !== actionMeta.removedValue.value)
-        );
-        break;
-      case "select-option":
+        break
+      case 'remove-value':
+      case 'pop-value':
+        onChange(tags.filter((tag) => tag.id !== actionMeta.removedValue.value))
+        break
+      case 'select-option':
         if (actionMeta.option)
           onChange([
             ...tags,
@@ -79,15 +80,15 @@ export const TagSelect: React.FC<Props> = ({
               label: actionMeta.option.label,
               isReviewed: false,
             }),
-          ]);
-        break;
-      case "clear":
-        onChange([]);
-        break;
+          ])
+        break
+      case 'clear':
+        onChange([])
+        break
       default:
-        break;
+        break
     }
-  };
+  }
 
   return (
     <motion.div {...props}>
@@ -99,13 +100,13 @@ export const TagSelect: React.FC<Props> = ({
             defaultValue={(() => formatTags(defaultTags))()}
             options={(() => formatTags(allTags || []))()}
             value={(() => formatTags(tags))()}
-            placeholder={t("shared.common.form.tags.description")}
+            placeholder={t('shared.common.form.tags.description')}
             noOptionsMessage={() =>
-              t("shared.common.form.tags.noOptionsMessage")
+              t('shared.common.form.tags.noOptionsMessage')
             }
           />
           <small className="text-gray-400">
-            {t("shared.common.form.tags.name")}
+            {t('shared.common.form.tags.name')}
           </small>
         </>
       ) : (
@@ -114,11 +115,11 @@ export const TagSelect: React.FC<Props> = ({
           onChange={handleChange}
           options={(() => formatTags(allTags || []))()}
           value={(() => formatTags(tags))()}
-          placeholder={t("shared.navbar.search.placeholder")}
-          noOptionsMessage={() => t("shared.navbar.search.noOptionsMessage")}
+          placeholder={t('shared.navbar.search.placeholder')}
+          noOptionsMessage={() => t('shared.navbar.search.noOptionsMessage')}
           className="whitespace-nowrap overflow-ellipsis"
         />
       )}
     </motion.div>
-  );
-};
+  )
+}

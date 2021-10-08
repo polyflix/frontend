@@ -1,24 +1,25 @@
-import dayjs, { Dayjs } from "dayjs";
-import { max } from "lodash";
-import { IPublisher } from "../../common";
-import { Publisher } from "../../common/models";
-import { Visibility } from "../../common/types/crud.type";
-import { User } from "../../users";
-import { Attempt, IAttempt } from "./attempt.model";
-import { IQuestion, Question } from "./question.model";
+import dayjs, { Dayjs } from 'dayjs'
+import { max } from 'lodash'
+
+import { IPublisher } from '../../common'
+import { Publisher } from '../../common/models'
+import { Visibility } from '../../common/types/crud.type'
+import { User } from '../../users'
+import { Attempt, IAttempt } from './attempt.model'
+import { IQuestion, Question } from './question.model'
 
 export interface IQuizz {
-  id?: string;
-  allowedRetries: number;
-  draft: boolean;
-  name: string;
-  keepHighestScore: boolean;
-  visibility: Visibility;
-  questions?: IQuestion[];
-  attempts?: IAttempt[];
-  user?: IPublisher;
-  createdAt?: string;
-  updatedAt?: string;
+  id?: string
+  allowedRetries: number
+  draft: boolean
+  name: string
+  keepHighestScore: boolean
+  visibility: Visibility
+  questions?: IQuestion[]
+  attempts?: IAttempt[]
+  user?: IPublisher
+  createdAt?: string
+  updatedAt?: string
 }
 
 export class Quizz {
@@ -40,10 +41,10 @@ export class Quizz {
     return {
       allowedRetries: 1,
       draft: false,
-      name: "My Super Quizz",
-      visibility: "public",
+      name: 'My Super Quizz',
+      visibility: 'public',
       keepHighestScore: false,
-    };
+    }
   }
 
   static fromJson(json: IQuizz): Quizz {
@@ -59,47 +60,47 @@ export class Quizz {
       dayjs(json.createdAt),
       dayjs(json.updatedAt),
       json.user && Publisher.fromJson(json.user)
-    );
+    )
   }
 
   public get id(): string {
-    return this._id;
+    return this._id
   }
 
   public get name(): string {
-    return this._name;
+    return this._name
   }
 
   public get questions(): Question[] {
-    return this._questions;
+    return this._questions
   }
 
   public get visibility(): Visibility {
-    return this._visibility;
+    return this._visibility
   }
 
   public get allowedRetries(): number {
-    return this._allowedRetries;
+    return this._allowedRetries
   }
 
   public get draft(): boolean {
-    return this._draft;
+    return this._draft
   }
 
   public get keepHighestScore(): boolean {
-    return this._keepHighestScore;
+    return this._keepHighestScore
   }
 
   public get link(): string {
-    return `/quizzes/${this.id}`;
+    return `/quizzes/${this.id}`
   }
 
   public get attempts(): Attempt[] {
-    return this._attempts;
+    return this._attempts
   }
 
   public get publisher(): Publisher | undefined {
-    return this._publisher;
+    return this._publisher
   }
 
   public toJson(): IQuizz {
@@ -110,50 +111,50 @@ export class Quizz {
       draft: this._draft,
       visibility: this._visibility,
       questions: this._questions.map((question) => question.toJson()),
-    };
+    }
   }
 
   public getQuestion(idx: number): Question {
     if (idx > this.questions.length) {
-      throw new Error("Question index out of range.");
+      throw new Error('Question index out of range.')
     }
-    return this.questions[idx];
+    return this.questions[idx]
   }
 
   public get score(): number {
-    if (this.attempts.length <= 0) return 0;
+    if (this.attempts.length <= 0) return 0
     if (this.keepHighestScore) {
-      return max(this.attempts.map((attempt) => attempt.score)) || 0;
+      return max(this.attempts.map((attempt) => attempt.score)) || 0
     } else {
       return +(
         this.attempts
           .map(({ score }) => score)
           .reduce((acc, value) => acc + value, 0) / this.attempts.length
-      ).toFixed(2);
+      ).toFixed(2)
     }
   }
 
   public get totalAttempts(): number {
-    return this.attempts.length;
+    return this.attempts.length
   }
 
   public get remainingAttempts(): number {
-    return this.allowedRetries - this.totalAttempts;
+    return this.allowedRetries - this.totalAttempts
   }
 
   public isCreator({ id }: User): boolean {
-    return this._publisher?.id === id;
+    return this._publisher?.id === id
   }
 
   public get createdAt(): Dayjs {
-    return this._createdAt;
+    return this._createdAt
   }
 
   public get updatedAt(): Dayjs {
-    return this._updatedAt;
+    return this._updatedAt
   }
 
   public isNew(): boolean {
-    return Math.abs(this.createdAt.diff(dayjs(), "day")) < 7;
+    return Math.abs(this.createdAt.diff(dayjs(), 'day')) < 7
   }
 }

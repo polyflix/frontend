@@ -1,4 +1,4 @@
-import { Injectable } from "@polyflix/di";
+import { Injectable } from '@polyflix/di'
 
 @Injectable()
 export class LocalFileService {
@@ -9,13 +9,13 @@ export class LocalFileService {
    */
   public readAsText(file: File): Promise<any> {
     return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onerror = reject;
+      const reader = new FileReader()
+      reader.onerror = reject
       reader.onload = () => {
-        if (reader.result) resolve(reader.result.toString());
-        else reject("Result is not a string");
-      };
-      reader.readAsText(file);
-    });
+        if (reader.result) resolve(reader.result.toString())
+        else reject('Result is not a string')
+      }
+      reader.readAsText(file)
+    })
   }
 }

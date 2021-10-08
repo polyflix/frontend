@@ -1,7 +1,8 @@
-import { CloudUploadIcon } from "@heroicons/react/outline";
-import { useDropzone } from "react-dropzone";
-import { useTranslation } from "react-i18next";
-import { cn, WithClassname } from "../../../common";
+import { CloudUploadIcon } from '@heroicons/react/outline'
+import { useDropzone } from 'react-dropzone'
+import { useTranslation } from 'react-i18next'
+
+import { cn, WithClassname } from '../../../common'
 
 type Props = WithClassname & {
   /**
@@ -9,20 +10,20 @@ type Props = WithClassname & {
    * @example
    * accept=".txt,.pdf"
    */
-  accept?: string | string[];
+  accept?: string | string[]
   /**
    * Set this to true if you want to disable the Dropzone.
    */
-  disabled?: boolean;
+  disabled?: boolean
   /**
    * Set this to true if you want to be able to drop multiple files.
    */
-  multiple?: boolean;
+  multiple?: boolean
   /**
    * A callback method to call when files are dropped.
    */
-  onDrop: (files: File[]) => void;
-};
+  onDrop: (files: File[]) => void
+}
 
 export const Dropzone = ({
   onDrop,
@@ -30,22 +31,22 @@ export const Dropzone = ({
   accept,
   disabled = false,
 }: Props) => {
-  const { t } = useTranslation("dropzone");
+  const { t } = useTranslation('dropzone')
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
     multiple,
     accept,
     disabled,
-  });
+  })
 
-  const key = multiple ? "multiple" : "single";
+  const key = multiple ? 'multiple' : 'single'
   return (
     <div
       className={cn(
-        "px-5 group py-8 transition-all border border-dashed rounded-md flex items-center justify-center cursor-pointer",
+        'px-5 group py-8 transition-all border border-dashed rounded-md flex items-center justify-center cursor-pointer',
         disabled
-          ? "cursor-not-allowed border-lightgray text-lightgray"
-          : "bg-transparent"
+          ? 'cursor-not-allowed border-lightgray text-lightgray'
+          : 'bg-transparent'
       )}
       {...getRootProps()}
     >
@@ -53,9 +54,9 @@ export const Dropzone = ({
       <div className="flex flex-col items-center text-center">
         <CloudUploadIcon
           className={cn(
-            "w-10 transition-all",
-            isDragActive && "text-nx-red",
-            !disabled && "group-hover:text-nx-red"
+            'w-10 transition-all',
+            isDragActive && 'text-nx-red',
+            !disabled && 'group-hover:text-nx-red'
           )}
         />
         <div className="text-sm mt-2">
@@ -67,5 +68,5 @@ export const Dropzone = ({
         </div>
       </div>
     </div>
-  );
-};
+  )
+}

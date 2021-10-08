@@ -1,1 +1,1 @@
-export * from "./[create-update].page";
+export * from './[create-update].page'

@@ -1,1 +1,1 @@
-export * from "./course.type";
+export * from './course.type'

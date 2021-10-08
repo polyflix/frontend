@@ -1,10 +1,11 @@
-import React from "react";
-import { Route, Switch, useRouteMatch } from "react-router-dom";
-import { CollectionsPage } from "./index.page";
-import { CreateUpdateCollectionPage } from "./[create-update].page";
+import React from 'react'
+import { Route, Switch, useRouteMatch } from 'react-router-dom'
+
+import { CreateUpdateCollectionPage } from './[create-update].page'
+import { CollectionsPage } from './index.page'
 
 export const CollectionRouter: React.FC = () => {
-  const { path } = useRouteMatch();
+  const { path } = useRouteMatch()
 
   return (
     <Switch>
@@ -15,5 +16,5 @@ export const CollectionRouter: React.FC = () => {
       />
       <Route path={`${path}`} exact component={CollectionsPage} />
     </Switch>
-  );
-};
+  )
+}

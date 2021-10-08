@@ -1,4 +1,4 @@
-import { QueryJoin, QuerySort, SCondition } from "@nestjsx/crud-request";
+import { QueryJoin, QuerySort, SCondition } from '@nestjsx/crud-request'
 
 /**
  * This file export some types required to interact with CRUD based on @nestjsx/crud micro-framework.
@@ -6,17 +6,17 @@ import { QueryJoin, QuerySort, SCondition } from "@nestjsx/crud-request";
  * @see https://github.com/nestjsx/crud/wiki/Requests
  */
 
-export type Visibility = "public" | "protected" | "private";
+export type Visibility = 'public' | 'protected' | 'private'
 
 /**
  * Paginated response of a specific type.
  */
 export interface Pagination<T> {
-  data: T[];
-  count: number;
-  page: number;
-  pageCount: number;
-  total: number;
+  data: T[]
+  count: number
+  page: number
+  pageCount: number
+  total: number
 }
 
 /**
@@ -24,15 +24,15 @@ export interface Pagination<T> {
  * @see https://github.com/nestjsx/crud/wiki/Requests#join
  */
 export interface JoinFilter {
-  join?: (string | QueryJoin)[];
+  join?: (string | QueryJoin)[]
 }
 
 export interface SortFilter {
-  sort?: QuerySort[];
+  sort?: QuerySort[]
 }
 
 export interface SearchFilter {
-  search?: SCondition;
+  search?: SCondition
 }
 
 /**
@@ -40,12 +40,12 @@ export interface SearchFilter {
  * @see https://github.com/nestjsx/crud/wiki/Requests
  */
 export interface PaginationFilter {
-  page?: number;
-  limit?: number;
-  offset?: number;
+  page?: number
+  limit?: number
+  offset?: number
 }
 
 export type QueryFilter = JoinFilter &
   PaginationFilter &
   SearchFilter &
-  SortFilter;
+  SortFilter

@@ -1,7 +1,7 @@
-import { Collection } from "../../collections/models";
-import { Publisher } from "../../common/models";
-import { Visibility } from "../../common/types/crud.type";
-import { ICourse } from "../types";
+import { Collection } from '../../collections/models'
+import { Publisher } from '../../common/models'
+import { Visibility } from '../../common/types/crud.type'
+import { ICourse } from '../types'
 
 /**
  * Modelize the Course
@@ -40,7 +40,7 @@ export class Course {
       json.collections?.map((collection) => Collection.fromJson(collection)),
       new Date(json.createdAt),
       new Date(json.updatedAt)
-    );
+    )
   }
 
   /**
@@ -49,8 +49,8 @@ export class Course {
    */
   get shortDescription(): string {
     return this._content.length > 150
-      ? this._content.slice(0, 150) + "..."
-      : this._content;
+      ? this._content.slice(0, 150) + '...'
+      : this._content
   }
 
   /**
@@ -58,7 +58,7 @@ export class Course {
    * @returns {string} the Course id
    */
   get id(): string {
-    return this._id;
+    return this._id
   }
 
   /**
@@ -66,7 +66,7 @@ export class Course {
    * @returns {string} the Course title
    */
   get title(): string {
-    return this._title;
+    return this._title
   }
 
   /**
@@ -74,7 +74,7 @@ export class Course {
    * @returns {Visibility} string of the value
    */
   get visibility(): Visibility {
-    return this._visibility;
+    return this._visibility
   }
 
   /**
@@ -82,7 +82,7 @@ export class Course {
    * @returns {boolean} true if the video is a draft, false otherwise
    */
   get draft(): boolean {
-    return this._draft;
+    return this._draft
   }
 
   /**
@@ -90,7 +90,7 @@ export class Course {
    * @returns {string} the Course slug
    */
   get slug(): string {
-    return this._slug;
+    return this._slug
   }
 
   /**
@@ -98,7 +98,7 @@ export class Course {
    * @returns {string} the Course content
    */
   get content(): string {
-    return this._content;
+    return this._content
   }
 
   /**
@@ -106,11 +106,11 @@ export class Course {
    * @returns {Publisher} the Course publisher
    */
   get publisher(): Publisher | null {
-    return this._publisher;
+    return this._publisher
   }
 
   private get link(): string {
-    return `/courses/${this._slug}`;
+    return `/courses/${this._slug}`
   }
 
   /**
@@ -118,7 +118,7 @@ export class Course {
    * @returns {string} the Course info link
    */
   getInfoLink(): string {
-    return this.link;
+    return this.link
   }
 
   /**
@@ -126,10 +126,11 @@ export class Course {
    * @returns {}
    */
   getEditLink(): string {
-    return `/courses/update/${this._slug}`;
+    return `/courses/update/${this._slug}`
   }
+
   get createdAt(): Date {
-    return new Date(this._createdAt);
+    return new Date(this._createdAt)
   }
 
   /**
@@ -137,6 +138,6 @@ export class Course {
    * @returns {}
    */
   get collections(): Collection[] {
-    return this._collections;
+    return this._collections
   }
 }

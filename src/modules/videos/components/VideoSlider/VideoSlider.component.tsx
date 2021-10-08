@@ -1,20 +1,21 @@
-import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/outline";
-import React from "react";
-import SwiperCore, { Mousewheel, Navigation } from "swiper";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { NoData } from "../../../ui/components/NoData/NoData.component";
-import { Typography } from "../../../ui/components/Typography/Typography.component";
-import { Video } from "../../models/video.model";
-import { VideoSliderItem } from "../VideoSliderItem/VideoSliderItem.component";
-import SliderControl from "./SliderControl.component";
+import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/outline'
+import React from 'react'
+import SwiperCore, { Mousewheel, Navigation } from 'swiper'
+import { Swiper, SwiperSlide } from 'swiper/react'
+
+import { NoData } from '../../../ui/components/NoData/NoData.component'
+import { Typography } from '../../../ui/components/Typography/Typography.component'
+import { Video } from '../../models/video.model'
+import { VideoSliderItem } from '../VideoSliderItem/VideoSliderItem.component'
+import SliderControl from './SliderControl.component'
 
 type Props = {
-  title: string;
-  videos: Video[];
-  hideIfNothing?: boolean;
-};
+  title: string
+  videos: Video[]
+  hideIfNothing?: boolean
+}
 
-SwiperCore.use([Navigation, Mousewheel]);
+SwiperCore.use([Navigation, Mousewheel])
 export const VideoSlider: React.FC<Props> = ({
   videos,
   title,
@@ -30,7 +31,7 @@ export const VideoSlider: React.FC<Props> = ({
         <ChevronRightIcon className="w-5 pt-1 text-nx-white transition-transform transform" />
       </span>
       <Swiper
-        navigation={{ nextEl: ".control-next", prevEl: ".control-previous" }}
+        navigation={{ nextEl: '.control-next', prevEl: '.control-previous' }}
         slidesPerView={1}
         breakpoints={{
           400: {
@@ -65,5 +66,5 @@ export const VideoSlider: React.FC<Props> = ({
     </div>
   ) : hideIfNothing ? null : (
     <NoData />
-  );
-};
+  )
+}

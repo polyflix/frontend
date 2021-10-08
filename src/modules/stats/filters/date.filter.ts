@@ -1,3 +1,3 @@
 export interface IVideoStatsFilter {
-  fromDate?: string;
+  fromDate?: string
 }

@@ -1,25 +1,26 @@
-import { motion } from "framer-motion";
-import { forwardRef } from "react";
-import { WithClassname, WithMotion } from "../../../common/types/props.type";
-import { cn } from "../../../common/utils/classes.util";
+import { motion } from 'framer-motion'
+import { forwardRef } from 'react'
+
+import { WithClassname, WithMotion } from '../../../common/types/props.type'
+import { cn } from '../../../common/utils/classes.util'
 
 type Props = WithClassname &
   WithMotion & {
     /** The name of the HTML input */
-    name: string;
+    name: string
     /** The hint to display below the field */
-    hint?: string;
+    hint?: string
     /** The ref for the component */
-    ref: any;
+    ref: any
     /** If true, the field will be required */
-    required?: boolean;
+    required?: boolean
     /** If true, the field will be disabled */
-    disabled?: boolean;
+    disabled?: boolean
     /** The list to display for the select */
-    options?: string[];
+    options?: string[]
     /** The id of the linked form */
-    form?: string;
-  };
+    form?: string
+  }
 
 /**
  * A simple HTML input component compatible with the react-hook-form API.
@@ -27,31 +28,33 @@ type Props = WithClassname &
 export const Select = forwardRef<HTMLSelectElement, Props>(
   (
     {
-      className = "",
+      className = '',
       name,
       disabled = false,
       required = false,
       hint,
       options = [],
-      form = "",
+      form = '',
       ...rest
     },
-    forwardRef
+    forwardedRef
   ) => (
-    <motion.div {...rest} className={cn("flex flex-col", className)}>
+    <motion.div {...rest} className={cn('flex flex-col', className)}>
       <select
         name={name}
         className="border dark:bg-nx-white focus:outline-none py-3 px-5 rounded-md font-display"
         disabled={disabled}
         required={required}
-        ref={forwardRef}
+        ref={forwardedRef}
         form={form}
       >
         {options.map((option: string) => (
-          <option value={option}>{option}</option>
+          <option key={option} value={option}>
+            {option}
+          </option>
         ))}
       </select>
       {hint && <small className="text-gray-400">{hint}</small>}
     </motion.div>
   )
-);
+)

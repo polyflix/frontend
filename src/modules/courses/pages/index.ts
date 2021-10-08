@@ -1,2 +1,2 @@
-export * from "./course.router";
-export * from "./[slug].page";
+export * from './course.router'
+export * from './[slug].page'

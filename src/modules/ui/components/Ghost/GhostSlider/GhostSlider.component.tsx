@@ -1,17 +1,18 @@
-import React from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { GhostTitle } from "../GhostTitle.component";
-import { GhostTile } from "../GhostTile/GhostTile.component";
-import styles from "./GhostSlider.module.scss";
+import React from 'react'
+import { Swiper, SwiperSlide } from 'swiper/react'
+
+import { GhostTile } from '../GhostTile/GhostTile.component'
+import { GhostTitle } from '../GhostTitle.component'
+import styles from './GhostSlider.module.scss'
 
 type Props = {
-  count: number;
-};
+  count: number
+}
 
 export const GhostSlider: React.FC<Props> = ({ count = 5 }) => {
   const ghosts = () => {
-    return new Array(count).fill(null);
-  };
+    return new Array(count).fill(null)
+  }
 
   return (
     <div className="mt-12">
@@ -47,5 +48,5 @@ export const GhostSlider: React.FC<Props> = ({ count = 5 }) => {
         ))}
       </Swiper>
     </div>
-  );
-};
+  )
+}

@@ -1,8 +1,8 @@
-import { useFetch } from "../../common/hooks/useFetch.hook";
-import { Pagination } from "../../common/types/crud.type";
-import { QuizzFilters } from "../filters/quizz.filter";
-import { Quizz } from "../models/quizz.model";
-import { QuizzService } from "../services/quizz.service";
+import { useFetch } from '../../common/hooks/useFetch.hook'
+import { Pagination } from '../../common/types/crud.type'
+import { QuizzFilters } from '../filters/quizz.filter'
+import { Quizz } from '../models/quizz.model'
+import { QuizzService } from '../services/quizz.service'
 
 export const useQuizzes = (
   filters: QuizzFilters,
@@ -10,7 +10,7 @@ export const useQuizzes = (
 ) => {
   return useFetch<Pagination<Quizz>, QuizzService>(
     QuizzService,
-    "getQuizzes",
+    'getQuizzes',
     [filters],
     {
       onComplete: onCollectionLoaded
@@ -18,5 +18,5 @@ export const useQuizzes = (
         : undefined,
       deps: [filters.page, filters.limit],
     }
-  );
-};
+  )
+}

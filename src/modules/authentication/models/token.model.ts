@@ -16,9 +16,9 @@ export class Token {
    * @returns {Token} an instance of Token
    */
   static decode(token: string): Token {
-    const [, payload] = token.split(".");
-    const { exp, iat, sub } = JSON.parse(atob(payload));
-    return new Token(token, exp, iat, parseInt(sub, 10));
+    const [, payload] = token.split('.')
+    const { exp, iat, sub } = JSON.parse(atob(payload))
+    return new Token(token, exp, iat, parseInt(sub, 10))
   }
 
   /**
@@ -26,7 +26,7 @@ export class Token {
    * @returns {number} the expiration in milliseconds
    */
   getExpirationInMillis(): number {
-    return (this.exp - this.iat) * 1000;
+    return (this.exp - this.iat) * 1000
   }
 
   /**
@@ -34,7 +34,7 @@ export class Token {
    * @returns {number} the subject
    */
   getSubject(): number {
-    return this.sub;
+    return this.sub
   }
 
   /**
@@ -42,7 +42,7 @@ export class Token {
    * @returns {string} the JWT access token
    */
   getJWT(): string {
-    return this.encoded;
+    return this.encoded
   }
 
   /**
@@ -50,6 +50,6 @@ export class Token {
    * @returns the authorization header
    */
   getAuthorizationHeader(): { Authorization: string } {
-    return { Authorization: `Bearer ${this.getJWT()}` };
+    return { Authorization: `Bearer ${this.getJWT()}` }
   }
 }

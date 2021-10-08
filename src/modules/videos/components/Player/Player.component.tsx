@@ -1,5 +1,5 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
-import { Subtitle } from "../../models/subtitle.model";
+import { useInjection } from '@polyflix/di'
+import { VttFile } from '@polyflix/vtt-parser'
 import {
   ClickToPlay,
   DblClickFullscreen,
@@ -7,118 +7,177 @@ import {
   DefaultSettings,
   LoadingScreen,
   Player as PlayerVime,
-  Video as VideoVime,
   Poster,
   Ui,
+  Video as VideoVime,
   Youtube,
-} from "@vime/react";
-import { useAuth } from "../../../authentication";
-import { useInjection } from "@polyflix/di";
-import { WatchtimeSyncService } from "../../../stats/services/watchtime-sync.service";
-import { VideoSource } from "../../types";
-import { MinioService } from "../../../upload/services/minio.service";
-import { ErrorCard } from "../../../common/components/ErrorCard/ErrorCard.component";
-import { Track } from "../../types/track.type";
-import { Video } from "../../models";
-import { VttFile } from "@polyflix/vtt-parser";
-import { useStreamUrl } from "../../hooks/useStreamUrl.hook";
+} from '@vime/react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
+
+import { useAuth } from '../../../authentication'
+import { ErrorCard } from '../../../common/components/ErrorCard/ErrorCard.component'
+import { WatchtimeSyncService } from '../../../stats/services/watchtime-sync.service'
+import { MinioService } from '../../../upload/services/minio.service'
+import { useStreamUrl } from '../../hooks/useStreamUrl.hook'
+import { Video } from '../../models'
+import { Subtitle } from '../../models/subtitle.model'
+import { VideoSource } from '../../types'
+import { Track } from '../../types/track.type'
 
 type Props = {
-  video: Video;
+  video: Video
   /**
    * Reference used for the player & sync of subtitles
    */
-  playerRef: React.RefObject<HTMLVmPlayerElement>;
+  playerRef: React.RefObject<HTMLVmPlayerElement>
   /**
    * ??
    */
-  onVideoEnd: () => void;
-};
+  onVideoEnd: () => void
+}
 
-const PLAYER_VOLUME_DOWN_STEP = 10;
-const PLAYER_VOLUME_UP_STEP = 10;
-const PLAYER_MOVE_FORWARD_STEP = 13;
-const PLAYER_MOVE_BACKWARD_STEP = 10;
+const PLAYER_VOLUME_DOWN_STEP = 10
+const PLAYER_VOLUME_UP_STEP = 10
+const PLAYER_MOVE_FORWARD_STEP = 13
+const PLAYER_MOVE_BACKWARD_STEP = 10
 
 type UseSubtitlesProps = {
-  subtitles?: Subtitle[];
-  loading: boolean;
-};
+  subtitles?: Subtitle[]
+  loading: boolean
+}
+
+type ProviderProps = {
+  rawVideoSource: string
+  videoSubtitles: Subtitle[]
+  videoSourceType: VideoSource
+}
+
+/**
+ * Format tracks in order to be imported properly
+ * @param videoSubtitles
+ */
+function getTracks(videoSubtitles: Subtitle[]) {
+  let tracks: Track[] = []
+  for (const subtitle of videoSubtitles) {
+    tracks.push({
+      kind: 'subtitles',
+      label: subtitle.lang,
+      srcLang: subtitle.lang,
+      src: subtitle.vttUrl,
+      default: tracks.length === 0, // 1st is default
+    })
+  }
+  return tracks
+}
+
+/**
+ * Depending on the video source we extend the proper video player
+ * @param videoUrl
+ * @param videoSubtitles
+ * @constructor
+ */
+const Provider: React.FC<ProviderProps> = ({
+  videoSubtitles,
+  videoSourceType,
+  rawVideoSource: streamUrl,
+}) => {
+  const tracks = getTracks(videoSubtitles ?? [])
+
+  switch (videoSourceType) {
+    case VideoSource.YOUTUBE:
+      return <Youtube videoId={streamUrl} cookies={false} />
+    case VideoSource.INTERNAL:
+      return (
+        <VideoVime crossOrigin="use-credentials">
+          <source data-src={streamUrl} type="video/mp4" />
+          {tracks.map((track, i) => (
+            <track {...track} key={i} />
+          ))}
+        </VideoVime>
+      )
+    case VideoSource.UNKNOWN:
+      return (
+        <VideoVime crossOrigin="use-credentials">
+          <source data-src={streamUrl} type="video/mp4" />
+        </VideoVime>
+      )
+  }
+}
 
 const useSubtitles = ({
   availableLanguages,
   id,
   srcType,
 }: Video): UseSubtitlesProps => {
-  const minioService = useInjection<MinioService>(MinioService);
-  const { isLoading: authLoading } = useAuth();
-  const [loading, setLoading] = useState<boolean>(true);
-  const [subtitles, setSubtitles] = useState<Subtitle[] | undefined>();
+  const minioService = useInjection<MinioService>(MinioService)
+  const { isLoading: authLoading } = useAuth()
+  const [loading, setLoading] = useState<boolean>(true)
+  const [subtitles, setSubtitles] = useState<Subtitle[] | undefined>()
 
   const fetchSubtitles = useCallback(async () => {
-    const fetchedSubtitles: Subtitle[] = [];
+    const fetchedSubtitles: Subtitle[] = []
     for (let i = 0; i < availableLanguages.length; i++) {
-      const lang = availableLanguages[i];
+      const lang = availableLanguages[i]
       try {
         const { tokenAccess } = await minioService.getSubtitlePresignedUrl(
           id,
           lang
-        );
+        )
         fetchedSubtitles.push(
           new Subtitle(lang, tokenAccess, await VttFile.fromUrl(tokenAccess))
-        );
+        )
       } catch (e) {
-        console.error("Failed to fetch subtitle ", lang);
-        console.error(e);
+        console.error('Failed to fetch subtitle ', lang)
+        console.error(e)
       }
     }
-    setLoading(false);
-    setSubtitles(fetchedSubtitles);
-  }, [minioService, availableLanguages, id]);
+    setLoading(false)
+    setSubtitles(fetchedSubtitles)
+  }, [minioService, availableLanguages, id])
 
   useEffect(() => {
-    if (authLoading || subtitles) return;
+    if (authLoading || subtitles) return
     if (srcType !== VideoSource.INTERNAL || availableLanguages.length === 0) {
-      setSubtitles([]);
-      setLoading(false);
-      return;
+      setSubtitles([])
+      setLoading(false)
+      return
     }
 
     // Add .finally to avoid warning about unprocessed promise
-    fetchSubtitles().finally();
+    fetchSubtitles().finally()
   }, [
     authLoading,
     fetchSubtitles,
     subtitles,
     availableLanguages.length,
     srcType,
-  ]);
+  ])
 
   return {
     loading,
     subtitles,
-  };
-};
+  }
+}
 
 export const Player: React.FC<Props> = ({ playerRef, onVideoEnd, video }) => {
-  const { token } = useAuth();
-  const hostRef = useRef<HTMLDivElement>(null);
-  const statsService = useInjection<WatchtimeSyncService>(WatchtimeSyncService);
+  const { token } = useAuth()
+  const hostRef = useRef<HTMLDivElement>(null)
+  const statsService = useInjection<WatchtimeSyncService>(WatchtimeSyncService)
   const {
     streamUrl,
     error: streamUrlError,
     loading: videoLoading,
-  } = useStreamUrl(video);
-  const { subtitles, loading: subtitlesLoading } = useSubtitles(video);
-  const [mediaError, setMediaError] = useState<string>();
+  } = useStreamUrl(video)
+  const { subtitles, loading: subtitlesLoading } = useSubtitles(video)
+  const [mediaError, setMediaError] = useState<string>()
 
   const {
     srcType: videoSourceType,
     thumbnail: videoThumbnail,
     id: videoId,
     userMeta,
-  } = video;
-  const loading = videoLoading || subtitlesLoading;
+  } = video
+  const loading = videoLoading || subtitlesLoading
 
   const onTriggerWatchtimeEvent = () => {
     if (
@@ -126,97 +185,97 @@ export const Player: React.FC<Props> = ({ playerRef, onVideoEnd, video }) => {
       !token ||
       [0, -1].indexOf(playerRef.current.duration) > -1
     )
-      return;
+      return
     statsService.updateSync({
       videoId: videoId,
       watchedSeconds: playerRef.current.currentTime,
       watchedPercent:
         playerRef.current.currentTime / playerRef.current.duration,
-    });
-  };
+    })
+  }
 
   const keyboardListener = (event: React.KeyboardEvent<HTMLDivElement>) => {
-    if (!playerRef?.current) return;
-    const player = playerRef?.current;
+    if (!playerRef?.current) return
+    const player = playerRef?.current
 
     // Play / Pause the video
-    if (event.key === "k" || event.key === " ") {
+    if (event.key === 'k' || event.key === ' ') {
       if (player?.paused) {
-        player?.play();
+        player?.play()
       } else {
-        player?.pause();
+        player?.pause()
       }
     }
 
     // Mute the video
-    if (event.key === "m") {
-      player.muted = !player?.muted;
+    if (event.key === 'm') {
+      player.muted = !player?.muted
     }
 
     // enter / exit fullscreen
-    if (event.key === "f") {
+    if (event.key === 'f') {
       if (player?.isFullscreenActive) {
-        player?.exitFullscreen();
+        player?.exitFullscreen()
       } else {
-        player?.enterFullscreen();
+        player?.enterFullscreen()
       }
     }
 
     // Volume up
-    if (event.key === "ArrowUp") {
-      let vol = player?.volume;
-      let nextVol = vol + PLAYER_VOLUME_UP_STEP;
-      if (nextVol > 100) nextVol = 100;
-      player.volume = nextVol;
+    if (event.key === 'ArrowUp') {
+      let vol = player?.volume
+      let nextVol = vol + PLAYER_VOLUME_UP_STEP
+      if (nextVol > 100) nextVol = 100
+      player.volume = nextVol
     }
 
     // Volume down
-    if (event.key === "ArrowDown") {
-      let vol = player?.volume;
-      let nextVol = vol - PLAYER_VOLUME_DOWN_STEP;
-      if (nextVol < 0) nextVol = 0;
-      player.volume = nextVol;
+    if (event.key === 'ArrowDown') {
+      let vol = player?.volume
+      let nextVol = vol - PLAYER_VOLUME_DOWN_STEP
+      if (nextVol < 0) nextVol = 0
+      player.volume = nextVol
     }
 
     // Move forward
-    if (event.key === "ArrowLeft") {
-      let time = player.currentTime;
-      let nextTime = time - PLAYER_MOVE_BACKWARD_STEP;
-      if (nextTime < 0) nextTime = 0;
-      player.currentTime = nextTime;
+    if (event.key === 'ArrowLeft') {
+      let time = player.currentTime
+      let nextTime = time - PLAYER_MOVE_BACKWARD_STEP
+      if (nextTime < 0) nextTime = 0
+      player.currentTime = nextTime
     }
 
     // Move backwark
-    if (event.key === "ArrowRight") {
-      let time = player.currentTime;
-      let nextTime = time + PLAYER_MOVE_FORWARD_STEP;
-      if (nextTime > player.duration) nextTime = player.duration;
-      player.currentTime = nextTime;
+    if (event.key === 'ArrowRight') {
+      let time = player.currentTime
+      let nextTime = time + PLAYER_MOVE_FORWARD_STEP
+      if (nextTime > player.duration) nextTime = player.duration
+      player.currentTime = nextTime
     }
 
     // toggle captions
-    if (event.key === "c") {
+    if (event.key === 'c') {
       if (player.isTextTrackVisible) {
-        player.setTextTrackVisibility(false);
+        player.setTextTrackVisibility(false)
       } else {
-        player.setTextTrackVisibility(true);
+        player.setTextTrackVisibility(true)
       }
     }
 
     // toggle captions
-    if (event.key === "p") {
+    if (event.key === 'p') {
       if (player.isPiPActive) {
-        player.exitPiP();
+        player.exitPiP()
       } else {
-        player.enterPiP();
+        player.enterPiP()
       }
     }
-  };
+  }
 
   const onPlaybackStart = () => {
     if (playerRef?.current && userMeta?.watchedSeconds)
-      playerRef.current.currentTime = userMeta.watchedSeconds;
-  };
+      playerRef.current.currentTime = userMeta.watchedSeconds
+  }
 
   useEffect(onTriggerWatchtimeEvent, [
     playerRef,
@@ -224,25 +283,25 @@ export const Player: React.FC<Props> = ({ playerRef, onVideoEnd, video }) => {
     token,
     videoId,
     onTriggerWatchtimeEvent,
-  ]);
+  ])
   useEffect(() => {
-    statsService.startTimer(onTriggerWatchtimeEvent);
+    statsService.startTimer(onTriggerWatchtimeEvent)
     return () => {
-      onTriggerWatchtimeEvent();
-      statsService.stopTimer();
-    };
+      onTriggerWatchtimeEvent()
+      statsService.stopTimer()
+    }
     // We disable eslint on the next line, else it would prompt a warning on
     // on the fact that onTriggerWatchTimeEvent is not in dependency array.
     // But we know tat it is a constant that won't move at all
     // eslint-disable-next-line
-  }, [statsService]);
+  }, [statsService])
 
   return (
     <div
       ref={hostRef}
       onKeyDown={keyboardListener}
       tabIndex={0}
-      style={{ position: "relative", paddingTop: "56.25%" }}
+      style={{ position: 'relative', paddingTop: '56.25%' }}
     >
       <div className="absolute top-0 left-0 w-full">
         {(mediaError || streamUrlError) && (
@@ -262,13 +321,13 @@ export const Player: React.FC<Props> = ({ playerRef, onVideoEnd, video }) => {
           currentPoster={videoThumbnail}
           onVmError={(e) => {
             if (e.detail instanceof MediaError) {
-              setMediaError(`${e.detail.message} - Code ${e.detail.code}`);
+              setMediaError(`${e.detail.message} - Code ${e.detail.code}`)
             }
           }}
         >
           {!subtitlesLoading && subtitles && (
             <Provider
-              rawVideoSource={streamUrl ?? ""}
+              rawVideoSource={streamUrl ?? ''}
               videoSourceType={videoSourceType}
               videoSubtitles={subtitles}
             />
@@ -288,63 +347,5 @@ export const Player: React.FC<Props> = ({ playerRef, onVideoEnd, video }) => {
         </PlayerVime>
       </div>
     </div>
-  );
-};
-
-type ProviderProps = {
-  rawVideoSource: string;
-  videoSubtitles: Subtitle[];
-  videoSourceType: VideoSource;
-};
-
-/**
- * Depending on the video source we extend the proper video player
- * @param videoUrl
- * @param videoSubtitles
- * @constructor
- */
-const Provider: React.FC<ProviderProps> = ({
-  videoSubtitles,
-  videoSourceType,
-  rawVideoSource: streamUrl,
-}) => {
-  const tracks = getTracks(videoSubtitles ?? []);
-
-  switch (videoSourceType) {
-    case VideoSource.YOUTUBE:
-      return <Youtube videoId={streamUrl} cookies={false} />;
-    case VideoSource.INTERNAL:
-      return (
-        <VideoVime crossOrigin="use-credentials">
-          <source data-src={streamUrl} type="video/mp4" />
-          {tracks.map((track, i) => (
-            <track {...track} key={i} />
-          ))}
-        </VideoVime>
-      );
-    case VideoSource.UNKNOWN:
-      return (
-        <VideoVime crossOrigin="use-credentials">
-          <source data-src={streamUrl} type="video/mp4" />
-        </VideoVime>
-      );
-  }
-};
-
-/**
- * Format tracks in order to be imported properly
- * @param videoSubtitles
- */
-function getTracks(videoSubtitles: Subtitle[]) {
-  let tracks: Track[] = [];
-  for (const subtitle of videoSubtitles) {
-    tracks.push({
-      kind: "subtitles",
-      label: subtitle.lang,
-      srcLang: subtitle.lang,
-      src: subtitle.vttUrl,
-      default: tracks.length === 0, // 1st is default
-    });
-  }
-  return tracks;
+  )
 }

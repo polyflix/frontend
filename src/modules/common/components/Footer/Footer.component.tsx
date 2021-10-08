@@ -1,26 +1,27 @@
-import React from "react";
-import { cn } from "../../utils/classes.util";
-import { WithClassname } from "../../../common/types/props.type";
-import { Typography } from "../../../ui/components/Typography/Typography.component";
-import { useTranslation } from "react-i18next";
+import React from 'react'
+import { useTranslation } from 'react-i18next'
+
+import { WithClassname } from '../../../common/types/props.type'
+import { Typography } from '../../../ui/components/Typography/Typography.component'
 import {
   LEGAL_NOTICES_URL,
   REPORT_BUG_URL,
-} from "../../constants/footer.constant";
+} from '../../constants/footer.constant'
+import { cn } from '../../utils/classes.util'
 
-type Props = WithClassname;
+type Props = WithClassname
 
 /**
  * The footer component
  */
-export const Footer: React.FC<Props> = ({ className = "" }) => {
-  const { t } = useTranslation();
+export const Footer: React.FC<Props> = ({ className = '' }) => {
+  const { t } = useTranslation()
 
   return (
     <footer
       className={cn(
         className,
-        "flex flex-col w-full items-center text-nx-gray text-xs p-4"
+        'flex flex-col w-full items-center text-nx-gray text-xs p-4'
       )}
     >
       <ul className="mb-3">
@@ -31,7 +32,7 @@ export const Footer: React.FC<Props> = ({ className = "" }) => {
               overrideDefaultClasses
               as="span"
             >
-              {t("shared.footer.legalNotices")}
+              {t('shared.footer.legalNotices')}
             </Typography>
           </a>
         </li>
@@ -42,14 +43,14 @@ export const Footer: React.FC<Props> = ({ className = "" }) => {
               overrideDefaultClasses
               as="span"
             >
-              {t("shared.footer.reportBug")}
+              {t('shared.footer.reportBug')}
             </Typography>
           </a>
         </li>
       </ul>
       <Typography overrideDefaultClasses as="span">
-        {t("shared.footer.copyright")}
+        {t('shared.footer.copyright')}
       </Typography>
     </footer>
-  );
-};
+  )
+}

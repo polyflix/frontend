@@ -1,11 +1,12 @@
-import { DocumentTextIcon, XIcon } from "@heroicons/react/outline";
-import { isUndefined } from "lodash";
-import { useTranslation } from "react-i18next";
-import { cn } from "../../../common";
-import { Alert, Paragraph, Title, Typography } from "../../../ui";
-import { Dropzone } from "../../../ui/components/Dropzone/Dropzone.component";
-import { useQuizzImport } from "../../hooks/useQuizzImport.hook";
-import { QuizzForm } from "../QuizzForm/QuizzForm.component";
+import { DocumentTextIcon, XIcon } from '@heroicons/react/outline'
+import { isUndefined } from 'lodash'
+import { useTranslation } from 'react-i18next'
+
+import { cn } from '../../../common'
+import { Alert, Paragraph, Title, Typography } from '../../../ui'
+import { Dropzone } from '../../../ui/components/Dropzone/Dropzone.component'
+import { useQuizzImport } from '../../hooks/useQuizzImport.hook'
+import { QuizzForm } from '../QuizzForm/QuizzForm.component'
 
 const FileExample = () => (
   <div className="bg-black p-5 rounded-md">
@@ -33,21 +34,20 @@ const FileExample = () => (
       Answer: A,D
     </Typography>
   </div>
-);
+)
 
 export const QuizzImport = () => {
-  const { t } = useTranslation("resources");
+  const { t } = useTranslation('resources')
 
-  const { isValid, data, importFile, clear, validate, error } =
-    useQuizzImport();
+  const { isValid, data, importFile, clear, validate, error } = useQuizzImport()
 
   const buildImportContent = () => {
-    const isValidationDisabled = !data;
+    const isValidationDisabled = !data
 
     return (
       <div className="text-nx-white w-10/12 mx-auto">
-        <Title>{t("quizzes.import.title")}</Title>
-        <Paragraph className="my-4">{t("quizzes.import.subtitle")}</Paragraph>
+        <Title>{t('quizzes.import.title')}</Title>
+        <Paragraph className="my-4">{t('quizzes.import.subtitle')}</Paragraph>
         <div className="grid grid-cols-2 gap-4 my-8">
           <Dropzone
             disabled={!isUndefined(data)}
@@ -56,7 +56,7 @@ export const QuizzImport = () => {
           />
           <div className="bg-darkgray flex flex-col justify-between rounded-md p-5">
             <Title overrideDefaultClasses className="font-bold text-lg">
-              {t("quizzes.import.file.label")}
+              {t('quizzes.import.file.label')}
             </Title>
             <div className="my-4">
               {data ? (
@@ -71,7 +71,7 @@ export const QuizzImport = () => {
                 </div>
               ) : (
                 <Typography as="p" className="text-sm">
-                  {t("quizzes.import.file.noFile")}
+                  {t('quizzes.import.file.noFile')}
                 </Typography>
               )}
             </div>
@@ -79,13 +79,13 @@ export const QuizzImport = () => {
               onClick={validate}
               disabled={isValidationDisabled}
               className={cn(
-                "w-min text-sm px-4 py-2 rounded-md",
+                'w-min text-sm px-4 py-2 rounded-md',
                 isValidationDisabled
-                  ? "bg-lightgray cursor-not-allowed"
-                  : "bg-green-500 cursor-pointer"
+                  ? 'bg-lightgray cursor-not-allowed'
+                  : 'bg-green-500 cursor-pointer'
               )}
             >
-              {t("quizzes.import.file.validate")}
+              {t('quizzes.import.file.validate')}
             </button>
           </div>
         </div>
@@ -96,15 +96,15 @@ export const QuizzImport = () => {
         )}
         <div className="bg-darkgray rounded-md p-5">
           <Title overrideDefaultClasses className="text-xl font-bold ">
-            {t("quizzes.import.example.label")}
+            {t('quizzes.import.example.label')}
           </Title>
           <Paragraph className="my-4 text-sm" overrideDefaultClasses>
-            {t("quizzes.import.example.description")}
+            {t('quizzes.import.example.description')}
             <ul className="px-8 my-4">
-              {["delimiter", "alternatives", "answers"].map((rule, index) => (
+              {['delimiter', 'alternatives', 'answers'].map((rule, index) => (
                 <li
                   key={index}
-                  className={cn("list-disc", index <= 2 && "my-4")}
+                  className={cn('list-disc', index <= 2 && 'my-4')}
                 >
                   {t(`quizzes.import.example.rules.${rule}`)}
                 </li>
@@ -114,13 +114,13 @@ export const QuizzImport = () => {
           <FileExample />
         </div>
       </div>
-    );
-  };
+    )
+  }
 
   return (
     <div>
       {!isValid && buildImportContent()}
       {data && isValid && <QuizzForm isUpdate={false} quizz={data.quizz} />}
     </div>
-  );
-};
+  )
+}

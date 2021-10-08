@@ -1,45 +1,45 @@
-import { GenericAction } from "../../../common";
-import { actionFactory } from "../../../common/factories/action.factory";
-import { SubtitleImprovement } from "../../models/subtitle-improvement.model";
+import { GenericAction } from '../../../common'
+import { actionFactory } from '../../../common/factories/action.factory'
+import { SubtitleImprovement } from '../../models/subtitle-improvement.model'
 
 export enum SubtitleImprovementListActions {
-  UPDATE_LIST_SUCCESS = "UPDATE_LIST_SUCCESS",
-  UPDATE_LIST_IN_PROGRESS = "UPDATE_LIST_IN_PROGRESS",
-  UPDATE_LIST_FAILURE = "UPDATE_LIST_FAILURE",
+  UPDATE_LIST_SUCCESS = 'UPDATE_LIST_SUCCESS',
+  UPDATE_LIST_IN_PROGRESS = 'UPDATE_LIST_IN_PROGRESS',
+  UPDATE_LIST_FAILURE = 'UPDATE_LIST_FAILURE',
 
-  ADD_ELEMENT_SUCCESS = "ADD_ELEMENT_SUCCESS",
-  ADD_ELEMENT_IN_PROGRESS = "ADD_ELEMENT_IN_PROGRESS",
-  ADD_ELEMENT_FAILURE = "ADD_ELEMENT_FAILURE",
+  ADD_ELEMENT_SUCCESS = 'ADD_ELEMENT_SUCCESS',
+  ADD_ELEMENT_IN_PROGRESS = 'ADD_ELEMENT_IN_PROGRESS',
+  ADD_ELEMENT_FAILURE = 'ADD_ELEMENT_FAILURE',
 
-  UPDATE_ELEMENT_SUCCESS = "UPDATE_ELEMENT_SUCCESS",
-  UPDATE_ELEMENT_IN_PROGRESS = "UPDATE_ELEMENT_IN_PROGRESS",
-  UPDATE_ELEMENT_FAILURE = "UPDATE_ELEMENT_FAILURE",
+  UPDATE_ELEMENT_SUCCESS = 'UPDATE_ELEMENT_SUCCESS',
+  UPDATE_ELEMENT_IN_PROGRESS = 'UPDATE_ELEMENT_IN_PROGRESS',
+  UPDATE_ELEMENT_FAILURE = 'UPDATE_ELEMENT_FAILURE',
 
-  UPDATE_FORM_ELEMENT_IN_PROGRESS = "UPDATE_FORM_ELEMENT_IN_PROGRESS",
-  UPDATE_FORM_ELEMENT_SUCCESS = "UPDATE_FORM_ELEMENT_SUCCESS",
+  UPDATE_FORM_ELEMENT_IN_PROGRESS = 'UPDATE_FORM_ELEMENT_IN_PROGRESS',
+  UPDATE_FORM_ELEMENT_SUCCESS = 'UPDATE_FORM_ELEMENT_SUCCESS',
 
-  SET_BLOCK_SUCCESS = "SET_BLOCK_SUCCESS",
+  SET_BLOCK_SUCCESS = 'SET_BLOCK_SUCCESS',
 
-  DELETE_ELEMENT_SUCCESS = "DELETE_ELEMENT_SUCCESS",
-  DELETE_ELEMENT_IN_PROGRESS = "DELETE_ELEMENT_IN_PROGRESS",
-  DELETE_ELEMENT_FAILURE = "DELETE_ELEMENT_FAILURE",
+  DELETE_ELEMENT_SUCCESS = 'DELETE_ELEMENT_SUCCESS',
+  DELETE_ELEMENT_IN_PROGRESS = 'DELETE_ELEMENT_IN_PROGRESS',
+  DELETE_ELEMENT_FAILURE = 'DELETE_ELEMENT_FAILURE',
 }
 
-export type SubtitleImprovementState = SubtitleImprovementItemState[];
+export type SubtitleImprovementState = SubtitleImprovementItemState[]
 
 export type SubtitleImprovementItemState = {
-  text: string;
-  timestamp: number;
-  isLoading: boolean;
-  isError: boolean;
-  disableActions: boolean;
-  item?: SubtitleImprovement;
-  editingItem?: SubtitleImprovement;
-  list: SubtitleImprovement[];
-};
+  text: string
+  timestamp: number
+  isLoading: boolean
+  isError: boolean
+  disableActions: boolean
+  item?: SubtitleImprovement
+  editingItem?: SubtitleImprovement
+  list: SubtitleImprovement[]
+}
 
 export type SubtitleImprovementItemAction =
-  GenericAction<SubtitleImprovementItemState>;
+  GenericAction<SubtitleImprovementItemState>
 
 export const UpdateListInProgress = (
   timestamp: number
@@ -49,8 +49,8 @@ export const UpdateListInProgress = (
     {
       timestamp,
     }
-  );
-};
+  )
+}
 
 export const UpdateListFailure = (
   timestamp: number
@@ -60,8 +60,8 @@ export const UpdateListFailure = (
     {
       timestamp,
     }
-  );
-};
+  )
+}
 
 export const UpdateListSuccess = (
   timestamp: number,
@@ -73,8 +73,8 @@ export const UpdateListSuccess = (
       timestamp,
       list,
     }
-  );
-};
+  )
+}
 
 export const UpdateElementSuccess = (
   timestamp: number,
@@ -86,8 +86,8 @@ export const UpdateElementSuccess = (
       timestamp,
       item,
     }
-  );
-};
+  )
+}
 
 export const UpdateElementFailure = (
   timestamp: number
@@ -97,8 +97,8 @@ export const UpdateElementFailure = (
     {
       timestamp,
     }
-  );
-};
+  )
+}
 
 export const UpdateElementInProgress = (
   timestamp: number
@@ -108,8 +108,8 @@ export const UpdateElementInProgress = (
     {
       timestamp,
     }
-  );
-};
+  )
+}
 
 export const AddElementSuccess = (
   timestamp: number,
@@ -121,8 +121,8 @@ export const AddElementSuccess = (
       timestamp,
       item,
     }
-  );
-};
+  )
+}
 
 export const AddElementFailure = (
   timestamp: number
@@ -132,8 +132,8 @@ export const AddElementFailure = (
     {
       timestamp,
     }
-  );
-};
+  )
+}
 
 export const AddElementInProgress = (
   timestamp: number
@@ -143,8 +143,8 @@ export const AddElementInProgress = (
     {
       timestamp,
     }
-  );
-};
+  )
+}
 
 export const DeleteElementSuccess = (
   timestamp: number,
@@ -156,8 +156,8 @@ export const DeleteElementSuccess = (
       timestamp,
       item,
     }
-  );
-};
+  )
+}
 
 export const DeleteElementFailure = (
   timestamp: number
@@ -167,8 +167,8 @@ export const DeleteElementFailure = (
     {
       timestamp,
     }
-  );
-};
+  )
+}
 
 export const DeleteElementInProgress = (
   timestamp: number
@@ -178,8 +178,8 @@ export const DeleteElementInProgress = (
     {
       timestamp,
     }
-  );
-};
+  )
+}
 
 export const UpdateFormElementInProgress = (
   timestamp: number,
@@ -191,8 +191,8 @@ export const UpdateFormElementInProgress = (
       timestamp,
       editingItem,
     }
-  );
-};
+  )
+}
 
 export const UpdateFormElementSuccess = (
   timestamp: number
@@ -202,8 +202,8 @@ export const UpdateFormElementSuccess = (
     {
       timestamp,
     }
-  );
-};
+  )
+}
 
 export const SetBlockSuccess = (
   timestamp: number,
@@ -215,5 +215,5 @@ export const SetBlockSuccess = (
       timestamp,
       text,
     }
-  );
-};
+  )
+}

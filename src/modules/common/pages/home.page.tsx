@@ -1,41 +1,42 @@
-import { PlusIcon } from "@heroicons/react/outline";
-import React from "react";
-import { useTranslation } from "react-i18next";
-import { Link } from "react-router-dom";
-import { Button, NoData, Typography } from "../../ui";
-import { fadeOpacity } from "../../ui/animations/fadeOpacity";
-import { GhostHeroTile } from "../../ui/components/Ghost/GhostHeroTile.component";
-import { GhostSlider } from "../../ui/components/Ghost/GhostSlider/GhostSlider.component";
-import { Page } from "../../ui/components/Page/Page.component";
-import { VideoHero } from "../../videos/components/VideoHero/VideoHero.component";
-import { VideoSlider } from "../../videos/components/VideoSlider/VideoSlider.component";
-import { VideoTile } from "../../videos/components/VideoTile/VideoTile.component";
-import { useVideos } from "../../videos/hooks/useVideos.hook";
+import { PlusIcon } from '@heroicons/react/outline'
+import React from 'react'
+import { useTranslation } from 'react-i18next'
+import { Link } from 'react-router-dom'
+
+import { Button, NoData, Typography } from '../../ui'
+import { fadeOpacity } from '../../ui/animations/fadeOpacity'
+import { GhostHeroTile } from '../../ui/components/Ghost/GhostHeroTile.component'
+import { GhostSlider } from '../../ui/components/Ghost/GhostSlider/GhostSlider.component'
+import { Page } from '../../ui/components/Page/Page.component'
+import { VideoHero } from '../../videos/components/VideoHero/VideoHero.component'
+import { VideoSlider } from '../../videos/components/VideoSlider/VideoSlider.component'
+import { VideoTile } from '../../videos/components/VideoTile/VideoTile.component'
+import { useVideos } from '../../videos/hooks/useVideos.hook'
 
 export const HomePage: React.FC = () => {
   const { data, isLoading } = useVideos({
     isPublic: true,
     isPublished: true,
-    order: "-views",
-  });
+    order: '-views',
+  })
   let { data: watchedVideos, isLoading: isLoadingWatched } = useVideos({
     isWatched: true,
-  });
+  })
 
   const { data: watchingVideos, isLoading: isLoadingWatching } = useVideos({
     isWatching: true,
-  });
-  const { t } = useTranslation();
+  })
+  const { t } = useTranslation()
 
   function getRandomRange(min: number, max: number): number {
-    return Math.floor(Math.random() * (max - min) + min);
+    return Math.floor(Math.random() * (max - min) + min)
   }
 
   return (
     <Page
       variants={fadeOpacity}
       withPadding={false}
-      title={t("home.seo.title")}
+      title={t('home.seo.title')}
     >
       {data && !isLoading && !isLoadingWatched && !isLoadingWatching ? (
         <>
@@ -49,7 +50,7 @@ export const HomePage: React.FC = () => {
             watchingVideos?.items.length) ? (
             <>
               <VideoSlider
-                title={t("home.sliders.continue_watching")}
+                title={t('home.sliders.continue_watching')}
                 videos={watchingVideos?.items}
               />
               <div className="pb-16" />
@@ -58,17 +59,17 @@ export const HomePage: React.FC = () => {
               />
               <div className="pb-16" />
               <VideoSlider
-                title={t("home.sliders.latest")}
+                title={t('home.sliders.latest')}
                 videos={data.items}
               />
               <div className="pb-16" />
               <VideoSlider
-                title={t("home.sliders.popular")}
+                title={t('home.sliders.popular')}
                 videos={data.items}
               />
               <div className="pb-16" />
               <VideoSlider
-                title={t("home.sliders.watch_again")}
+                title={t('home.sliders.watch_again')}
                 videos={watchedVideos?.items}
               />
               <div className="pb-8" />
@@ -81,13 +82,13 @@ export const HomePage: React.FC = () => {
                   as="button"
                   className="flex items-center bg-nx-white text-nx-dark mt-8"
                 >
-                  <PlusIcon className="w-6" />{" "}
+                  <PlusIcon className="w-6" />{' '}
                   <Typography
                     overrideDefaultClasses
                     className="ml-1 text-sm md:text-base"
                     as="span"
                   >
-                    {t("home.errors.createVideo")}
+                    {t('home.errors.createVideo')}
                   </Typography>
                 </Button>
               </Link>
@@ -102,5 +103,5 @@ export const HomePage: React.FC = () => {
         </>
       )}
     </Page>
-  );
-};
+  )
+}

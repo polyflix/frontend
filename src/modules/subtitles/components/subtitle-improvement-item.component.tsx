@@ -1,79 +1,78 @@
-import { Menu, Transition } from "@headlessui/react";
+import { Menu, Transition } from '@headlessui/react'
 import {
-  PencilIcon,
-  TrashIcon,
-  ThumbUpIcon,
   CheckIcon,
-  XIcon,
   DotsVerticalIcon,
-} from "@heroicons/react/outline";
-import { useInjection } from "@polyflix/di";
-import { Block } from "@polyflix/vtt-parser";
-import React, { Fragment, useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
-import { useSelector, useDispatch } from "react-redux";
-import { useAuth } from "../../authentication";
-import { WithClassname, RootState, cn } from "../../common";
-import { Alert, Typography } from "../../ui";
-import { Video } from "../../videos";
-import { SubtitleImprovement } from "../models/subtitle-improvement.model";
+  PencilIcon,
+  ThumbUpIcon,
+  TrashIcon,
+  XIcon,
+} from '@heroicons/react/outline'
+import { useInjection } from '@polyflix/di'
+import { Block } from '@polyflix/vtt-parser'
+import React, { Fragment, useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { useDispatch, useSelector } from 'react-redux'
+
+import { useAuth } from '../../authentication'
+import { cn, RootState, WithClassname } from '../../common'
+import { Alert, Typography } from '../../ui'
+import { Notification } from '../../ui/components/Notification/Notification.component'
+import { Video } from '../../videos'
+import { SubtitleImprovement } from '../models/subtitle-improvement.model'
 import {
-  UpdateElementInProgress,
-  UpdateElementSuccess,
-  UpdateElementFailure,
+  DeleteElementFailure,
   DeleteElementInProgress,
   DeleteElementSuccess,
-  DeleteElementFailure,
   SetBlockSuccess,
+  UpdateElementFailure,
+  UpdateElementInProgress,
+  UpdateElementSuccess,
   UpdateFormElementInProgress,
-} from "../redux/actions/subtitle-improvement.action";
-import { Notification } from "../../ui/components/Notification/Notification.component";
-import { SubtitleImprovementMetaService } from "../services/subtitle-improvement-meta.service";
-import { SubtitleImprovementService } from "../services/subtitle-improvement.service";
-import { Avatar } from "./avatar.component";
-import { Button } from "./button.component";
+} from '../redux/actions/subtitle-improvement.action'
+import { SubtitleImprovementMetaService } from '../services/subtitle-improvement-meta.service'
+import { SubtitleImprovementService } from '../services/subtitle-improvement.service'
+import { Avatar } from './avatar.component'
+import { Button } from './button.component'
 
 type SubtitleImprovementItemProps = WithClassname & {
-  subtitleImprovement: SubtitleImprovement;
-  block: Block;
-  video: Video;
-};
+  subtitleImprovement: SubtitleImprovement
+  block: Block
+  video: Video
+}
 
 export const SubtitleImprovementItem: React.FC<SubtitleImprovementItemProps> =
   ({ subtitleImprovement, block, video }) => {
-    const { t } = useTranslation();
+    const { t } = useTranslation()
     const [openDeleteConfirmation, setOpenDeleteConfirmation] =
-      useState<boolean>(false);
-    const { user } = useAuth();
+      useState<boolean>(false)
+    const { user } = useAuth()
     const subtitleImprovementService = useInjection<SubtitleImprovementService>(
       SubtitleImprovementService
-    );
-    const [isLiked, setIsLiked] = useState<boolean>(false);
+    )
+    const [isLiked, setIsLiked] = useState<boolean>(false)
 
     const disableActions: boolean =
       useSelector(
         (state: RootState) =>
           state.subtitleImprovement.find((e) => e.timestamp === block.startTime)
             ?.disableActions
-      ) || false;
+      ) || false
 
-    const dispatch = useDispatch();
+    const dispatch = useDispatch()
 
     const subtitleImprovementMetaService =
       useInjection<SubtitleImprovementMetaService>(
         SubtitleImprovementMetaService
-      );
+      )
 
     useEffect(() => {
-      setIsLiked(
-        subtitleImprovement?.subtitleImprovementMeta?.isLiked || false
-      );
-    }, [subtitleImprovement?.subtitleImprovementMeta?.isLiked]);
+      setIsLiked(subtitleImprovement?.subtitleImprovementMeta?.isLiked || false)
+    }, [subtitleImprovement?.subtitleImprovementMeta?.isLiked])
 
     const onLike = () => {
-      const likes = subtitleImprovement.likes;
-      dispatch(UpdateElementInProgress(block.startTime));
-      const newLikesCount = isLiked ? likes - 1 : likes + 1;
+      const likes = subtitleImprovement.likes
+      dispatch(UpdateElementInProgress(block.startTime))
+      const newLikesCount = isLiked ? likes - 1 : likes + 1
       subtitleImprovementMetaService
         .patchIsLiked(subtitleImprovement?.id, !isLiked)
         .then(() =>
@@ -92,36 +91,36 @@ export const SubtitleImprovementItem: React.FC<SubtitleImprovementItemProps> =
                 isLiked: !isLiked,
               },
             } as SubtitleImprovement)
-          );
+          )
         })
-        .catch((e) => dispatch(UpdateElementFailure(block.startTime)));
-    };
+        .catch(() => dispatch(UpdateElementFailure(block.startTime)))
+    }
 
     const handleDelete = () => {
-      dispatch(DeleteElementInProgress(block.startTime));
+      dispatch(DeleteElementInProgress(block.startTime))
       subtitleImprovementService
         .delete(subtitleImprovement.id)
         .then(() => {
-          dispatch(DeleteElementSuccess(block.startTime, subtitleImprovement));
+          dispatch(DeleteElementSuccess(block.startTime, subtitleImprovement))
         })
-        .catch((e) => dispatch(DeleteElementFailure(block.startTime)));
-    };
+        .catch(() => dispatch(DeleteElementFailure(block.startTime)))
+    }
 
     const onApprove = (status: boolean) => {
-      dispatch(DeleteElementInProgress(block.startTime));
+      dispatch(DeleteElementInProgress(block.startTime))
       subtitleImprovementService
         .patchApproved(subtitleImprovement.id, status)
         .then(() => {
-          subtitleImprovement.isApproved = status;
+          subtitleImprovement.isApproved = status
           if (status) {
             dispatch(
               SetBlockSuccess(block.startTime, subtitleImprovement.comment)
-            );
+            )
           }
-          dispatch(DeleteElementSuccess(block.startTime, subtitleImprovement));
+          dispatch(DeleteElementSuccess(block.startTime, subtitleImprovement))
         })
-        .catch((e) => dispatch(DeleteElementFailure(block.startTime)));
-    };
+        .catch(() => dispatch(DeleteElementFailure(block.startTime)))
+    }
 
     return (
       <div className="bg-darkgray rounded w-full p-4 pb-6 box-border relative ">
@@ -130,7 +129,7 @@ export const SubtitleImprovementItem: React.FC<SubtitleImprovementItemProps> =
             <div className="col-span-10">
               <Alert type="error">
                 <Typography bold as="span" className="text-sm">
-                  {t("shared.common.actions.delete")} "{block.text}" ?
+                  {t('shared.common.actions.delete')} "{block.text}" ?
                 </Typography>
               </Alert>
             </div>
@@ -143,7 +142,7 @@ export const SubtitleImprovementItem: React.FC<SubtitleImprovementItemProps> =
                   as="span"
                   className="text-sm transition-all hover:underline"
                 >
-                  {t("shared.common.actions.cancel")}
+                  {t('shared.common.actions.cancel')}
                 </Typography>
               </div>
               <div className="mx-3"></div>
@@ -151,8 +150,8 @@ export const SubtitleImprovementItem: React.FC<SubtitleImprovementItemProps> =
                 <div
                   className="cursor-pointer"
                   onClick={() => {
-                    setOpenDeleteConfirmation(false);
-                    handleDelete();
+                    setOpenDeleteConfirmation(false)
+                    handleDelete()
                   }}
                 >
                   <Typography
@@ -160,7 +159,7 @@ export const SubtitleImprovementItem: React.FC<SubtitleImprovementItemProps> =
                     className="text-nx-red text-sm transition-all hover:underline"
                     overrideDefaultClasses
                   >
-                    {t("shared.common.actions.delete")}
+                    {t('shared.common.actions.delete')}
                   </Typography>
                 </div>
               )}
@@ -177,8 +176,8 @@ export const SubtitleImprovementItem: React.FC<SubtitleImprovementItemProps> =
                     <Typography
                       as="span"
                       className={cn(
-                        "flex text-sm md:text-base hover:underline cursor-pointer hover:text-nx-red",
-                        disableActions && "opacity-50 pointer-events-none"
+                        'flex text-sm md:text-base hover:underline cursor-pointer hover:text-nx-red',
+                        disableActions && 'opacity-50 pointer-events-none'
                       )}
                     >
                       <DotsVerticalIcon className="w-4 md:w-5 mr-2 text-nx-red" />
@@ -212,25 +211,25 @@ export const SubtitleImprovementItem: React.FC<SubtitleImprovementItemProps> =
                                 )
                               }
                               className={cn(
-                                " text-green-500 hover:text-green-700 p-2 w-full flex items-start gap-2",
+                                ' text-green-500 hover:text-green-700 p-2 w-full flex items-start gap-2',
                                 disableActions &&
-                                  "opacity-50 pointer-events-none"
+                                  'opacity-50 pointer-events-none'
                               )}
                             >
                               <PencilIcon className="h-5 w-5" />
-                              {t("shared.common.actions.edit")}
+                              {t('shared.common.actions.edit')}
                             </button>
                             <button
                               disabled={disableActions}
                               onClick={() => setOpenDeleteConfirmation(true)}
                               className={cn(
-                                "text-nx-red-dark hover:text-nx-red p-2 w-full flex items-start gap-2",
+                                'text-nx-red-dark hover:text-nx-red p-2 w-full flex items-start gap-2',
                                 disableActions &&
-                                  "opacity-50 pointer-events-none"
+                                  'opacity-50 pointer-events-none'
                               )}
                             >
                               <TrashIcon className="h-5 w-5" />
-                              {t("shared.common.actions.delete")}
+                              {t('shared.common.actions.delete')}
                             </button>
                           </div>
                         )}
@@ -240,28 +239,28 @@ export const SubtitleImprovementItem: React.FC<SubtitleImprovementItemProps> =
                               <button
                                 disabled={disableActions}
                                 className={cn(
-                                  "text-green-500 hover:text-green-700 p-2 w-full flex items-start gap-2",
+                                  'text-green-500 hover:text-green-700 p-2 w-full flex items-start gap-2',
                                   disableActions &&
-                                    "opacity-50 pointer-events-none"
+                                    'opacity-50 pointer-events-none'
                                 )}
                                 onClick={() => onApprove(true)}
                               >
                                 <CheckIcon className="h-5 w-5" />
-                                {t("subtitleImprovement.content.approve")}
+                                {t('subtitleImprovement.content.approve')}
                               </button>
                             </Menu.Item>
                             <Menu.Item>
                               <button
                                 disabled={disableActions}
                                 className={cn(
-                                  "text-nx-red-dark hover:text-nx-red p-2 w-full flex items-start gap-2",
+                                  'text-nx-red-dark hover:text-nx-red p-2 w-full flex items-start gap-2',
                                   disableActions &&
-                                    "opacity-50 pointer-events-none"
+                                    'opacity-50 pointer-events-none'
                                 )}
                                 onClick={() => onApprove(false)}
                               >
                                 <XIcon className="h-5 w-5" />
-                                {t("subtitleImprovement.content.disapprove")}
+                                {t('subtitleImprovement.content.disapprove')}
                               </button>
                             </Menu.Item>
                           </div>
@@ -282,8 +281,8 @@ export const SubtitleImprovementItem: React.FC<SubtitleImprovementItemProps> =
         <div className="flex flex-row gap-4 absolute -bottom-3 left-0 w-full px-4 box-border">
           <Button
             className={cn(
-              "bg-light-black border-2 border-darkgray hover:bg-opacity-60",
-              isLiked ? "text-blue-500" : "text-grey-500"
+              'bg-light-black border-2 border-darkgray hover:bg-opacity-60',
+              isLiked ? 'text-blue-500' : 'text-grey-500'
             )}
             disabled={disableActions}
             onClick={() => onLike()}
@@ -295,5 +294,5 @@ export const SubtitleImprovementItem: React.FC<SubtitleImprovementItemProps> =
           </Button>
         </div>
       </div>
-    );
-  };
+    )
+  }

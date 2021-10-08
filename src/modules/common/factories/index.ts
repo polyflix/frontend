@@ -1,1 +1,1 @@
-export * from "./action.factory";
+export * from './action.factory'

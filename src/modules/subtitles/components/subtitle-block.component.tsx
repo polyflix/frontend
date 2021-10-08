@@ -1,96 +1,96 @@
-import { PencilIcon, XIcon } from "@heroicons/react/outline";
-import { Block } from "@polyflix/vtt-parser";
-import { usePlayerContext } from "@vime/react";
-import React, { useState } from "react";
-import { useSelector } from "react-redux";
-import { WithClassname, RootState, cn } from "../../common";
-import { Typography } from "../../ui";
-import { Video } from "../../videos";
-import { SubtitleFetchingState } from "../pages/collaborative-subtitle-editing.page";
-import { SubtitleBlockContent } from "./subtitle-block-content.component";
+import { PencilIcon, XIcon } from '@heroicons/react/outline'
+import { Block } from '@polyflix/vtt-parser'
+import { usePlayerContext } from '@vime/react'
+import React, { useState } from 'react'
+import { useSelector } from 'react-redux'
+
+import { cn, RootState, WithClassname } from '../../common'
+import { Typography } from '../../ui'
+import { Video } from '../../videos'
+import { SubtitleFetchingState } from '../pages/collaborative-subtitle-editing.page'
+import { SubtitleBlockContent } from './subtitle-block-content.component'
 
 type SubtitleBlockProps = WithClassname & {
-  playerRef: React.RefObject<HTMLVmPlayerElement>;
-  block: Block;
-  subtitles: SubtitleFetchingState;
-  video: Video;
-};
+  playerRef: React.RefObject<HTMLVmPlayerElement>
+  block: Block
+  subtitles: SubtitleFetchingState
+  video: Video
+}
 
 export const SubtitleBlock: React.FC<SubtitleBlockProps> = ({
   playerRef,
-  className = "",
+  className = '',
   block,
   subtitles,
   video,
 }) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false)
 
   const [currentTime, setCurrentTime] = usePlayerContext(
     playerRef,
-    "currentTime",
+    'currentTime',
     0
-  );
+  )
 
   const blockText = useSelector(
     (state: RootState) =>
       state.subtitleImprovement.find((e) => e.timestamp === block.startTime)
         ?.text
-  );
+  )
 
   const goToMilis = (millis: number): void => {
-    const player: HTMLVmPlayerElement | null = playerRef.current;
+    const player: HTMLVmPlayerElement | null = playerRef.current
 
     if (!player?.playing) {
       player?.play().then(() => {
-        player.currentTime = millis / 1000;
-      });
+        player.currentTime = millis / 1000
+      })
     } else {
-      setCurrentTime(millis / 1000);
+      setCurrentTime(millis / 1000)
     }
-  };
+  }
 
   const formatMilis = (milis: number): string => {
-    const minutes = Math.round(milis / 1000 / 60);
-    const secondes = Math.round((milis / 1000) % 60);
+    const minutes = Math.round(milis / 1000 / 60)
+    const secondes = Math.round((milis / 1000) % 60)
 
-    const parsedMinutes = minutes < 10 ? `0${minutes}` : `${minutes}`;
-    const parsedSeconds = secondes < 10 ? `0${secondes}` : `${secondes}`;
+    const parsedMinutes = minutes < 10 ? `0${minutes}` : `${minutes}`
+    const parsedSeconds = secondes < 10 ? `0${secondes}` : `${secondes}`
 
-    return `${parsedMinutes}:${parsedSeconds}`;
-  };
+    return `${parsedMinutes}:${parsedSeconds}`
+  }
 
-  const isCurrent = (block: Block): boolean => {
+  const isCurrent = (item: Block): boolean => {
     return (
-      block.startTime / 1000 <= currentTime &&
-      block.endTime / 1000 > currentTime
-    );
-  };
+      item.startTime / 1000 <= currentTime && item.endTime / 1000 > currentTime
+    )
+  }
 
   return (
     <>
       <div
         className={cn(
           className,
-          "flex flex-row items-center justify-start group"
+          'flex flex-row items-center justify-start group'
         )}
       >
         <span
           onClick={() => setIsOpen(!isOpen)}
           className={cn(
-            "w-5 h-5 mr-2 text-nx-red hover:hidden cursor-pointer group-hover:opacity-100",
-            !isOpen && "opacity-0",
-            !isCurrent(block) && !isOpen && "text-opacity-50",
-            isCurrent(block) && "opacity-100",
-            "hover:text-opacity-100"
+            'w-5 h-5 mr-2 text-nx-red hover:hidden cursor-pointer group-hover:opacity-100',
+            !isOpen && 'opacity-0',
+            !isCurrent(block) && !isOpen && 'text-opacity-50',
+            isCurrent(block) && 'opacity-100',
+            'hover:text-opacity-100'
           )}
         >
           {isOpen ? <XIcon /> : <PencilIcon />}
         </span>
         <div
           className={cn(
-            "flex flex-row box-border items-center justify-start group cursor-pointer pt-2 pb-2 w-full",
+            'flex flex-row box-border items-center justify-start group cursor-pointer pt-2 pb-2 w-full',
             isCurrent(block) &&
-              "border-l-2 border-nx-red pl-0 relative bg-darkgray"
+              'border-l-2 border-nx-red pl-0 relative bg-darkgray'
           )}
           onClick={() => goToMilis(block.startTime)}
         >
@@ -110,5 +110,5 @@ export const SubtitleBlock: React.FC<SubtitleBlockProps> = ({
         />
       )}
     </>
-  );
-};
+  )
+}

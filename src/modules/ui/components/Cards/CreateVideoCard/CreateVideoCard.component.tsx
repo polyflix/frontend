@@ -1,32 +1,33 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import { cn, WithClassname } from "../../../../common";
-import { Typography } from "../../Typography";
+import React from 'react'
+import { Link } from 'react-router-dom'
+
+import { cn, WithClassname } from '../../../../common'
+import { Typography } from '../../Typography'
 
 type Props = WithClassname & {
   // where the card redirects
-  route: string;
+  route: string
   // illustration on the left
-  image: React.SVGProps<SVGSVGElement>;
+  image: React.SVGProps<SVGSVGElement>
   // title of the card
-  title: string;
+  title: string
   // description of the card
-  description: string;
-};
+  description: string
+}
 
 export const CreateVideoCard: React.FC<Props> = ({
   route,
   image,
   title,
   description,
-  className = "",
+  className = '',
 }) => {
   return (
     <Link
       to={route}
       className={cn(
         className,
-        "h-60 flex items-center w-full xl:w-1/2 2xl:w-1/3 mb-10 lg:mb-0 border rounded-md border-white hover:bg-nx-dark"
+        'h-60 flex items-center w-full xl:w-1/2 2xl:w-1/3 mb-10 lg:mb-0 border rounded-md border-white hover:bg-nx-dark'
       )}
     >
       <div className="flex items-center justify-center mx-5 xl:mx-10 h-full flex-col md:flex-row">
@@ -50,5 +51,5 @@ export const CreateVideoCard: React.FC<Props> = ({
         </div>
       </div>
     </Link>
-  );
-};
+  )
+}

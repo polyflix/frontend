@@ -1,5 +1,15 @@
-import { useTranslation } from "react-i18next";
-import { useParams } from "react-router";
+import { EyeIcon } from '@heroicons/react/outline'
+import * as _ from 'lodash'
+import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { useParams } from 'react-router'
+import { Link } from 'react-router-dom'
+
+import { useAuth } from '../../../authentication/hooks'
+import { cn } from '../../../common'
+import { useSubtitlesImprovements } from '../../../subtitles/hooks/use-subtitles-improvements.hook'
+import { SubtitleImprovement } from '../../../subtitles/models/subtitle-improvement.model'
+import { SubtitleImprovementStatus } from '../../../subtitles/types/subtitle-improvement.type'
 import {
   Alert,
   fadeOpacity,
@@ -8,69 +18,49 @@ import {
   GhostTitle,
   Title,
   Typography,
-} from "../../../ui";
-import { Container } from "../../../ui/components/Container/Container.component";
-import { Page } from "../../../ui/components/Page/Page.component";
-import { useAuth } from "../../../authentication/hooks";
-import { useUser } from "../../hooks";
-import { useSubtitlesImprovements } from "../../../subtitles/hooks/use-subtitles-improvements.hook";
-import { SubtitleImprovement } from "../../../subtitles/models/subtitle-improvement.model";
-import * as _ from "lodash";
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { cn } from "../../../common";
-import { SubtitleImprovementStatus } from "../../../subtitles/types/subtitle-improvement.type";
-import { EyeIcon } from "@heroicons/react/outline";
+} from '../../../ui'
+import { Container } from '../../../ui/components/Container/Container.component'
+import { Page } from '../../../ui/components/Page/Page.component'
+import { useUser } from '../../hooks'
 
-export const UserSubtitleImprovementPage: React.FC = () => {
-  const { id } = useParams<{ id: string }>();
-  const { user } = useAuth();
-  const { t } = useTranslation();
-  const isOwnPage = user?.id === id;
+const setBorder = (subtitleImprovement: SubtitleImprovement): string => {
+  if (subtitleImprovement.status === SubtitleImprovementStatus.REVIEWED) {
+    return subtitleImprovement.isApproved
+      ? 'border-l-4 border-green-500'
+      : 'border-l-4 border-nx-red-dark'
+  }
+  return 'pl-3'
+}
 
-  const { data: fetchedUser, isLoading: isLoadingUser } = useUser({
-    id,
-  });
+const formatMilis = (milis: number): string => {
+  const minutes = Math.round(milis / 1000 / 60)
+  const secondes = Math.round((milis / 1000) % 60)
 
-  return (
-    <Page
-      isLoading={isLoadingUser}
-      variants={fadeOpacity}
-      title={
-        isOwnPage
-          ? t("userSubtitleImprovement.seo.ownTitle")
-          : t("userSubtitleImprovement.seo.userTitle", {
-              user: fetchedUser?.displayName,
-            })
-      }
-    >
-      <Container mxAuto className="px-5 flex flex-col pb-10">
-        <UserSubtitleImprovement />
-        {isOwnPage && <UserSubtitleImprovementVideo />}
-      </Container>
-    </Page>
-  );
-};
+  const parsedMinutes = minutes < 10 ? `0${minutes}` : `${minutes}`
+  const parsedSeconds = secondes < 10 ? `0${secondes}` : `${secondes}`
+
+  return `${parsedMinutes}:${parsedSeconds}`
+}
 
 export const UserSubtitleImprovement: React.FC = () => {
-  const { user } = useAuth();
-  const { id } = useParams<{ id: string }>();
-  const isOwnPage = user?.id === id;
+  const { user } = useAuth()
+  const { id } = useParams<{ id: string }>()
+  const isOwnPage = user?.id === id
   const { data: fetchedUser, isLoading: isLoadingUser } = useUser({
     id,
-  });
-  const [myImprovementsGroup, setMyImprovementsGroup] = useState<any>();
-  const { t } = useTranslation();
+  })
+  const [myImprovementsGroup, setMyImprovementsGroup] = useState<any>()
+  const { t } = useTranslation()
   const { data: myImprovements, isLoading: myImprovementsLoading } =
     useSubtitlesImprovements({
       userId: id,
-    });
+    })
 
   useEffect(() => {
     setMyImprovementsGroup(
       _.groupBy(myImprovements, (elm) => elm.subtitle.video?.slug)
-    );
-  }, [myImprovements]);
+    )
+  }, [myImprovements])
 
   return (
     <>
@@ -78,8 +68,8 @@ export const UserSubtitleImprovement: React.FC = () => {
         <>
           <Title className="my-5">
             {isOwnPage
-              ? t("userSubtitleImprovement.seo.ownTitle")
-              : t("userSubtitleImprovement.seo.userTitle", {
+              ? t('userSubtitleImprovement.seo.ownTitle')
+              : t('userSubtitleImprovement.seo.userTitle', {
                   user: fetchedUser?.displayName,
                 })}
           </Title>
@@ -101,23 +91,23 @@ export const UserSubtitleImprovement: React.FC = () => {
                   </Typography>
                   <Link
                     className={cn(
-                      " bg-nx-red-dark hover:bg-nx-red hover:bg-opacity-80 bg-opacity-90 px-2 py-1 box-border rounded flex flex-row gap-2 justify-center items-center"
+                      ' bg-nx-red-dark hover:bg-nx-red hover:bg-opacity-80 bg-opacity-90 px-2 py-1 box-border rounded flex flex-row gap-2 justify-center items-center'
                     )}
                     to={`/watch?v=${myImprovementsGroup[key][0]?.subtitle?.video.slug}`}
                   >
                     <EyeIcon className="h-5 w-5 text-white" />
                     <Typography as="p">
-                      {t("shared.common.actions.view")}
+                      {t('shared.common.actions.view')}
                     </Typography>
                   </Link>
                 </div>
                 <div className="flex flex-col  gap-4 w-full">
                   {myImprovementsGroup[key]?.map(
-                    (subtitleImprovement: SubtitleImprovement, i: number) => (
+                    (subtitleImprovement: SubtitleImprovement, idx: number) => (
                       <div
-                        key={i}
+                        key={idx}
                         className={cn(
-                          "p-2 flex gap-2 bg-darkgray rounded",
+                          'p-2 flex gap-2 bg-darkgray rounded',
                           setBorder(subtitleImprovement)
                         )}
                       >
@@ -144,7 +134,7 @@ export const UserSubtitleImprovement: React.FC = () => {
             ))
           ) : (
             <Alert type="info" className="w-1/3">
-              {t("shared.common.errors.noData")}
+              {t('shared.common.errors.noData')}
             </Alert>
           )}
         </>
@@ -160,7 +150,7 @@ export const UserSubtitleImprovement: React.FC = () => {
               <GhostText />
             </div>
             <div className="flex flex-col gap-4 w-full">
-              {new Array(3).fill(0).map((_, i: number) => (
+              {new Array(3).fill(0).map((i: number) => (
                 <div className="flex gap-4 items-center" key={i}>
                   <GhostText className="w-12" />
                   <GhostText className="w-full" />
@@ -171,31 +161,31 @@ export const UserSubtitleImprovement: React.FC = () => {
         </div>
       )}
     </>
-  );
-};
+  )
+}
 
 export const UserSubtitleImprovementVideo: React.FC = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslation()
   const { data: improvementOnMyVideo, isLoading: improvementOnMyVideoLoading } =
     useSubtitlesImprovements({
       myVideo: true,
-    });
+    })
 
   const [improvementOnMyVideoGroup, setImprovementOnMyVideoGroup] =
-    useState<any>();
+    useState<any>()
 
   useEffect(() => {
     setImprovementOnMyVideoGroup(
       _.groupBy(improvementOnMyVideo, (elm) => elm.subtitle.video?.slug)
-    );
-  }, [improvementOnMyVideo]);
+    )
+  }, [improvementOnMyVideo])
 
   return (
     <>
       {!improvementOnMyVideoLoading ? (
         <>
           <Title className="my-5 mt-16">
-            {t("userSubtitleImprovement.content.onMyVideo")}
+            {t('userSubtitleImprovement.content.onMyVideo')}
           </Title>
           {improvementOnMyVideoGroup &&
           Object.keys(improvementOnMyVideoGroup).length > 0 ? (
@@ -221,23 +211,23 @@ export const UserSubtitleImprovementVideo: React.FC = () => {
                     </Typography>
                     <Link
                       className={cn(
-                        " bg-nx-red-dark hover:bg-nx-red hover:bg-opacity-80 bg-opacity-90 px-2 py-1 box-border rounded flex flex-row gap-2 justify-center items-center"
+                        ' bg-nx-red-dark hover:bg-nx-red hover:bg-opacity-80 bg-opacity-90 px-2 py-1 box-border rounded flex flex-row gap-2 justify-center items-center'
                       )}
                       to={`/watch?v=${improvementOnMyVideoGroup[key][0]?.subtitle?.video.slug}`}
                     >
                       <EyeIcon className="h-5 w-5 text-white" />
                       <Typography as="p">
-                        {t("shared.common.actions.view")}
+                        {t('shared.common.actions.view')}
                       </Typography>
                     </Link>
                   </div>
                   <div className="flex flex-col gap-4 w-full">
                     {improvementOnMyVideoGroup[key]?.map(
-                      (subtitleImprovement: SubtitleImprovement, i: number) => (
+                      (subtitleImprovement: SubtitleImprovement, j: number) => (
                         <div
-                          key={i}
+                          key={j}
                           className={cn(
-                            "p-2 flex gap-2 bg-darkgray rounded",
+                            'p-2 flex gap-2 bg-darkgray rounded',
                             setBorder(subtitleImprovement)
                           )}
                         >
@@ -257,10 +247,10 @@ export const UserSubtitleImprovementVideo: React.FC = () => {
                                 subtitleImprovement?.createdBy
                                   ?.profilePicture &&
                                 subtitleImprovement?.createdBy
-                                  ?.profilePicture !== ""
+                                  ?.profilePicture !== ''
                                   ? subtitleImprovement?.createdBy
                                       ?.profilePicture
-                                  : "https://i.imgur.com/tdi3NGa.png"
+                                  : 'https://i.imgur.com/tdi3NGa.png'
                               }
                               alt="avatar"
                             />
@@ -283,7 +273,7 @@ export const UserSubtitleImprovementVideo: React.FC = () => {
             )
           ) : (
             <Alert type="info" className="w-1/3">
-              {t("shared.common.errors.noData")}
+              {t('shared.common.errors.noData')}
             </Alert>
           )}
         </>
@@ -299,7 +289,7 @@ export const UserSubtitleImprovementVideo: React.FC = () => {
               <GhostText />
             </div>
             <div className="flex flex-col gap-4 w-full">
-              {new Array(3).fill(0).map((_, i: number) => (
+              {new Array(3).fill(0).map((i: number) => (
                 <div className="flex gap-4 items-center" key={i}>
                   <GhostText className="w-12" />
                   <GhostText className="w-full" />
@@ -310,24 +300,35 @@ export const UserSubtitleImprovementVideo: React.FC = () => {
         </div>
       )}
     </>
-  );
-};
+  )
+}
 
-const setBorder = (subtitleImprovement: SubtitleImprovement): string => {
-  if (subtitleImprovement.status === SubtitleImprovementStatus.REVIEWED) {
-    return subtitleImprovement.isApproved
-      ? "border-l-4 border-green-500"
-      : "border-l-4 border-nx-red-dark";
-  }
-  return "pl-3";
-};
+export const UserSubtitleImprovementPage: React.FC = () => {
+  const { id } = useParams<{ id: string }>()
+  const { user } = useAuth()
+  const { t } = useTranslation()
+  const isOwnPage = user?.id === id
 
-const formatMilis = (milis: number): string => {
-  const minutes = Math.round(milis / 1000 / 60);
-  const secondes = Math.round((milis / 1000) % 60);
+  const { data: fetchedUser, isLoading: isLoadingUser } = useUser({
+    id,
+  })
 
-  const parsedMinutes = minutes < 10 ? `0${minutes}` : `${minutes}`;
-  const parsedSeconds = secondes < 10 ? `0${secondes}` : `${secondes}`;
-
-  return `${parsedMinutes}:${parsedSeconds}`;
-};
+  return (
+    <Page
+      isLoading={isLoadingUser}
+      variants={fadeOpacity}
+      title={
+        isOwnPage
+          ? t('userSubtitleImprovement.seo.ownTitle')
+          : t('userSubtitleImprovement.seo.userTitle', {
+              user: fetchedUser?.displayName,
+            })
+      }
+    >
+      <Container mxAuto className="px-5 flex flex-col pb-10">
+        <UserSubtitleImprovement />
+        {isOwnPage && <UserSubtitleImprovementVideo />}
+      </Container>
+    </Page>
+  )
+}

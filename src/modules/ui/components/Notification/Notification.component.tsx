@@ -1,22 +1,22 @@
-import { AnimatePresence, motion } from "framer-motion";
-import { Key, PropsWithChildren } from "react";
+import { AnimatePresence, motion } from 'framer-motion'
+import { Key, PropsWithChildren } from 'react'
 
 type Props = {
   /** The key of the component */
-  key?: Key;
+  key?: Key
   /** If true, the notification will appear, otherwise not. */
-  show?: boolean;
+  show?: boolean
   /** Define the timeout for the notification in milliseconds */
-  timeout?: number;
+  timeout?: number
   /** Callback called when timeout is reached */
-  onTimeout?: () => void;
-};
+  onTimeout?: () => void
+}
 
 const notificationAnimation = {
   initial: { y: 120, opacity: 0 },
   animate: { y: 0, opacity: 1 },
   exit: { y: 120, opacity: 0 },
-};
+}
 
 /**
  * Simple component to display a notification.
@@ -29,7 +29,7 @@ export const Notification: React.FC<PropsWithChildren<Props>> = ({
   children,
 }) => {
   if (timeout && onTimeout) {
-    setTimeout(() => onTimeout(), timeout);
+    setTimeout(() => onTimeout(), timeout)
   }
   return (
     <AnimatePresence exitBeforeEnter>
@@ -45,5 +45,5 @@ export const Notification: React.FC<PropsWithChildren<Props>> = ({
         </motion.div>
       )}
     </AnimatePresence>
-  );
-};
+  )
+}

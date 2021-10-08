@@ -1,12 +1,13 @@
-import { motion } from "framer-motion";
-import React from "react";
-import { NoData } from "../../../ui/components/NoData/NoData.component";
-import { Collection } from "../../models";
-import { CollectionItem } from "./CollectionItem.component";
+import { motion } from 'framer-motion'
+import React from 'react'
+
+import { NoData } from '../../../ui/components/NoData/NoData.component'
+import { Collection } from '../../models'
+import { CollectionItem } from './CollectionItem.component'
 
 type Props = {
-  collections: Collection[];
-};
+  collections: Collection[]
+}
 
 export const CollectionList: React.FC<Props> = ({ collections }) => {
   return collections ? (
@@ -19,12 +20,12 @@ export const CollectionList: React.FC<Props> = ({ collections }) => {
                 key={collection.id}
                 collection={collection}
               ></CollectionItem>
-            );
+            )
           })}
         </ul>
       </motion.div>
     </>
   ) : (
     <NoData />
-  );
-};
+  )
+}

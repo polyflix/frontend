@@ -9,4 +9,4 @@ export const stagger = (v: number) => ({
       staggerChildren: v - 0.03,
     },
   },
-});
+})

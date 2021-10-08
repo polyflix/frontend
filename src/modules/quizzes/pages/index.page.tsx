@@ -1,20 +1,21 @@
-import { AnimateSharedLayout, motion } from "framer-motion";
-import { useState } from "react";
-import { useTranslation } from "react-i18next";
-import { fadeOpacity } from "../../ui";
-import { Container } from "../../ui/components/Container/Container.component";
-import { ItemsPerPage } from "../../ui/components/Filters/ItemsPerPage.component";
-import { Pagination } from "../../ui/components/Filters/Pagination.component";
-import { SortBy } from "../../ui/components/Filters/SortBy.component";
-import { Jumbotron } from "../../ui/components/Jumbotron/Jumbotron.component";
-import { Page } from "../../ui/components/Page/Page.component";
-import { SearchBar } from "../../ui/components/SearchBar/SearchBar.component";
-import { QuizzListItem } from "../components/QuizzListItem/QuizzListItem.component";
-import { QuizzNoData } from "../components/QuizzNoData/QuizzNoData.component";
-import { QuizzFilters } from "../filters/quizz.filter";
-import { useQuizzes } from "../hooks/useQuizzes.hook";
-import { Quizz } from "../models/quizz.model";
-import { CrudFilterService } from "../services/crud-filter.service";
+import { AnimateSharedLayout, motion } from 'framer-motion'
+import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
+
+import { fadeOpacity } from '../../ui'
+import { Container } from '../../ui/components/Container/Container.component'
+import { ItemsPerPage } from '../../ui/components/Filters/ItemsPerPage.component'
+import { Pagination } from '../../ui/components/Filters/Pagination.component'
+import { SortBy } from '../../ui/components/Filters/SortBy.component'
+import { Jumbotron } from '../../ui/components/Jumbotron/Jumbotron.component'
+import { Page } from '../../ui/components/Page/Page.component'
+import { SearchBar } from '../../ui/components/SearchBar/SearchBar.component'
+import { QuizzListItem } from '../components/QuizzListItem/QuizzListItem.component'
+import { QuizzNoData } from '../components/QuizzNoData/QuizzNoData.component'
+import { QuizzFilters } from '../filters/quizz.filter'
+import { useQuizzes } from '../hooks/useQuizzes.hook'
+import { Quizz } from '../models/quizz.model'
+import { CrudFilterService } from '../services/crud-filter.service'
 
 const getQuizzSearch = (value: string) => [
   {
@@ -23,57 +24,57 @@ const getQuizzSearch = (value: string) => [
     },
   },
   {
-    "user.firstName": {
+    'user.firstName': {
       $contL: value,
     },
   },
   {
-    "user.lastName": {
+    'user.lastName': {
       $contL: value,
     },
   },
-];
+]
 
 export const QuizzesPage: React.FC = () => {
-  const { t } = useTranslation("resources");
+  const { t } = useTranslation('resources')
 
   const [filters, setFilters] = useState<Partial<QuizzFilters>>({
     page: 1,
     limit: 10,
-    sort: [{ field: "createdAt", order: "DESC" }],
-  });
+    sort: [{ field: 'createdAt', order: 'DESC' }],
+  })
 
   const { data, isLoading, refresh } = useQuizzes({
     join: [
-      { field: "user", select: ["firstName", "lastName"] },
-      { field: "questions", select: ["label"] },
+      { field: 'user', select: ['firstName', 'lastName'] },
+      { field: 'questions', select: ['label'] },
     ],
     draft: false,
-    visibility: "public",
+    visibility: 'public',
     ...filters,
-  });
+  })
 
   const updateFilters = (updatedFilters: Partial<QuizzFilters>): void => {
-    setFilters(updatedFilters);
-    refresh(false);
-  };
+    setFilters(updatedFilters)
+    refresh(false)
+  }
 
   return (
     <Page
       isLoading={isLoading}
       variants={fadeOpacity}
-      title={t("quizzes.seo.global.title")}
+      title={t('quizzes.seo.global.title')}
     >
       <Container mxAuto className="p-5">
         <Jumbotron
-          content={t("quizzes.global.description")}
-          title={t("quizzes.seo.global.title")}
+          content={t('quizzes.global.description')}
+          title={t('quizzes.seo.global.title')}
           withGoBack
         />
         <div className="flex items-center my-8">
           <div className="w-full">
             <SearchBar
-              placeholder={t("quizzes.global.search")}
+              placeholder={t('quizzes.global.search')}
               onChange={(search) =>
                 updateFilters({
                   ...filters,
@@ -84,9 +85,9 @@ export const QuizzesPage: React.FC = () => {
           </div>
           <div className="mx-2" />
           <SortBy
-            label={t("quizzes.filters.name")}
+            label={t('quizzes.filters.name')}
             property="name"
-            onSort={CrudFilterService.buildSort("name", filters.sort, (sort) =>
+            onSort={CrudFilterService.buildSort('name', filters.sort, (sort) =>
               updateFilters({ ...filters, sort })
             )}
           />
@@ -95,7 +96,7 @@ export const QuizzesPage: React.FC = () => {
             label="Date"
             property="createdAt"
             onSort={CrudFilterService.buildSort(
-              "createdAt",
+              'createdAt',
               filters.sort,
               (sort) => updateFilters({ ...filters, sort })
             )}
@@ -137,5 +138,5 @@ export const QuizzesPage: React.FC = () => {
         </div>
       </Container>
     </Page>
-  );
-};
+  )
+}

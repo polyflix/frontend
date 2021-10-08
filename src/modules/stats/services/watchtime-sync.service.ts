@@ -1,15 +1,17 @@
-import { Injectable } from "@polyflix/di";
+import { Injectable } from '@polyflix/di'
+
 import {
   SYNC_RATE_LIMITER_MAX,
   SYNC_RATE_LIMITER_MIN,
-} from "../../common/constants/stats.constant";
-import { HttpService } from "../../common/services";
-import { UpsertUserVideoMeta } from "../types/userMeta.type";
+} from '../../common/constants/stats.constant'
+import { HttpService } from '../../common/services'
+import { UpsertUserVideoMeta } from '../types/userMeta.type'
 
 @Injectable()
 export class WatchtimeSyncService {
-  private _lastSync: number | null = null;
-  private _timer: NodeJS.Timeout | null = null;
+  private _lastSync: number | null = null
+
+  private _timer: NodeJS.Timeout | null = null
 
   constructor(private readonly httpService: HttpService) {}
 
@@ -28,27 +30,27 @@ export class WatchtimeSyncService {
       !this._timer ||
       (this._lastSync && !this._timer)
     )
-      return;
+      return
 
     // Threshold to prevent too low data
-    if (updateData.watchedSeconds < 5) return;
+    if (updateData.watchedSeconds < 5) return
 
     // This update of value must be here, so we don't have multiple call at once
     // as it is an async method
-    this._lastSync = Date.now();
+    this._lastSync = Date.now()
 
     // We round the watched% to 2 digits
     updateData.watchedPercent =
-      Math.round(updateData.watchedPercent * 100) / 100;
+      Math.round(updateData.watchedPercent * 100) / 100
     updateData.watchedSeconds =
-      Math.round(updateData.watchedSeconds * 100) / 100;
+      Math.round(updateData.watchedSeconds * 100) / 100
 
     try {
-      await this.httpService.post("/stats/watchtime", {
+      await this.httpService.post('/stats/watchtime', {
         body: updateData,
-      });
+      })
     } catch (e) {
-      console.debug("Failed to send watchtime...");
+      console.debug('Failed to send watchtime...')
     }
   }
 
@@ -58,9 +60,9 @@ export class WatchtimeSyncService {
    * @param {function} callback
    */
   public startTimer(callback: () => void) {
-    if (this._timer) this.stopTimer();
+    if (this._timer) this.stopTimer()
 
-    this._timer = setInterval(callback, SYNC_RATE_LIMITER_MAX);
+    this._timer = setInterval(callback, SYNC_RATE_LIMITER_MAX)
   }
 
   /**
@@ -69,10 +71,10 @@ export class WatchtimeSyncService {
    */
   public stopTimer() {
     if (!this._timer)
-      throw new Error("[StatsService] Cannot stop a timer which isn't started");
+      throw new Error("[StatsService] Cannot stop a timer which isn't started")
 
-    clearInterval(this._timer);
-    this._timer = null;
+    clearInterval(this._timer)
+    this._timer = null
   }
 
   /**
@@ -80,10 +82,10 @@ export class WatchtimeSyncService {
    * with the id videoId
    */
   public async likeVideo(videoId: string) {
-    await this.httpService.patch("/stats/like", {
+    await this.httpService.patch('/stats/like', {
       body: {
         videoId,
       },
-    });
+    })
   }
 }

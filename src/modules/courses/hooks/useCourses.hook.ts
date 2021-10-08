@@ -1,7 +1,7 @@
-import { useFetch } from "../../common/hooks/useFetch.hook";
-import { ICourseFilter } from "../filters/course.filter";
-import { CourseService } from "../services";
-import { CoursesWithPagination } from "../types";
+import { useFetch } from '../../common/hooks/useFetch.hook'
+import { ICourseFilter } from '../filters/course.filter'
+import { CourseService } from '../services'
+import { CoursesWithPagination } from '../types'
 
 export const useCourses = (
   filters: ICourseFilter,
@@ -9,7 +9,7 @@ export const useCourses = (
 ) => {
   return useFetch<CoursesWithPagination, CourseService>(
     CourseService,
-    "getCourses",
+    'getCourses',
     [filters],
     {
       onComplete: onCourseLoaded
@@ -17,5 +17,5 @@ export const useCourses = (
         : undefined,
       deps: [filters.page, filters.order, filters.pageSize],
     }
-  );
-};
+  )
+}

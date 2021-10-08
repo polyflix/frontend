@@ -1,80 +1,80 @@
-import { AlertType } from "../../ui/components/Alert/Alert.component";
-import { Collection } from "../models/collections.model";
-import { IVideo } from "../../videos/types/videos.type";
-import { IPublisher } from "../../common/types";
-import { Tag } from "../../tags/models/tag.model";
-import { tagLite } from "../../tags/types/tag.type";
-import { Visibility } from "../../common/types/crud.type";
+import { IPublisher } from '../../common/types'
+import { Visibility } from '../../common/types/crud.type'
+import { Tag } from '../../tags/models/tag.model'
+import { TagLite } from '../../tags/types/tag.type'
+import { AlertType } from '../../ui/components/Alert/Alert.component'
+import { IVideo } from '../../videos/types/videos.type'
+import { Collection } from '../models/collections.model'
 
 export interface ICollectionForm {
-  title: string;
-  description: string;
-  videos: videoLite[];
-  draft: boolean;
-  visibility: Visibility;
-  passwords: AccessPassword[];
-  tags: tagLite[];
+  title: string
+  description: string
+  videos: VideoLite[]
+  draft: boolean
+  visibility: Visibility
+  passwords: AccessPassword[]
+  tags: TagLite[]
 }
 
 export type AccessPassword = {
-  name: string;
-  password: string;
-  expiration: string;
-  collectionId: string;
-};
+  name: string
+  password: string
+  expiration: string
+  collectionId: string
+}
 
-type videoLite = {
-  id: string;
-};
+type VideoLite = {
+  id: string
+}
 
 export type CollectionState<T> = {
-  isLoading: boolean;
-  data: T | null;
-  alert: { type: AlertType; message: string } | null;
-  refresh: () => void;
-};
+  isLoading: boolean
+  data: T | null
+  alert: { type: AlertType; message: string } | null
+  refresh: () => void
+}
 
 export type CollectionsWithPagination = {
-  totalCount: number;
-  items: Collection[];
-};
+  totalCount: number
+  items: Collection[]
+}
 
 export type CollectionParams = {
-  page?: number;
+  page?: number
 
-  pageSize?: number;
+  pageSize?: number
 
-  order?: string;
+  order?: string
 
-  slug?: string;
+  slug?: string
 
-  title?: string;
+  title?: string
 
-  publisherId?: string;
+  publisherId?: string
 
-  joinWithPublisher?: boolean;
+  joinWithPublisher?: boolean
 
-  password?: string;
+  password?: string
 
-  draft?: boolean;
+  draft?: boolean
 
-  visibility?: Visibility;
+  visibility?: Visibility
 
-  tags?: string;
-};
+  tags?: string
+}
 
 export interface ICollection {
-  id: string;
-  description: string;
-  title: string;
-  publisherId: string;
-  publishedBy: IPublisher | null;
-  createdAt: string;
-  updatedAt: string;
-  slug: string;
-  draft: boolean;
-  visibility: Visibility;
-  videos: IVideo[];
-  passwords: AccessPassword[];
-  tags: Tag[];
+  id: string
+  description: string
+  title: string
+  publisherId: string
+  publishedBy: IPublisher | null
+  createdAt: string
+  updatedAt: string
+  slug: string
+  draft: boolean
+  visibility: Visibility
+  videos: IVideo[]
+  passwords: AccessPassword[]
+  tags: Tag[]
 }

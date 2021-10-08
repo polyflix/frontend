@@ -1,30 +1,31 @@
-import { Injectable } from "@polyflix/di";
+import { Injectable } from '@polyflix/di'
 import axios, {
   AxiosInstance,
   AxiosRequestConfig,
   AxiosResponse,
   Method,
-} from "axios";
-import { StatusCodes } from "http-status-codes";
-import { API_URL, NETWORK_ERROR } from "../constants/api.constant";
-import { store } from "../redux";
+} from 'axios'
+import { StatusCodes } from 'http-status-codes'
+
+import { API_URL, NETWORK_ERROR } from '../constants/api.constant'
+import { store } from '../redux'
 import {
   serverStateOfflineAction,
   serverStateOnlineAction,
-} from "../redux/actions/serverState.action";
-import { IApiResponse, IRequestOptions } from "../types/http.type";
-import { ServerStateAction } from "../types/serverState.type";
-import { BaseHttpService } from "./abastract-http.service";
-import { ReduxService } from "./redux.service";
+} from '../redux/actions/serverState.action'
+import { IApiResponse, IRequestOptions } from '../types/http.type'
+import { ServerStateAction } from '../types/serverState.type'
+import { BaseHttpService } from './abastract-http.service'
+import { ReduxService } from './redux.service'
 
 @Injectable()
 export class HttpService implements BaseHttpService {
-  private _axios: AxiosInstance;
+  private _axios: AxiosInstance
 
   constructor(private readonly reduxService: ReduxService<ServerStateAction>) {
     this._axios = axios.create({
       withCredentials: true,
-    });
+    })
 
     /**
      * Interceptor used to send a refresh token reauest
@@ -35,29 +36,29 @@ export class HttpService implements BaseHttpService {
     this._axios.interceptors.response.use(
       (response: AxiosResponse) => response,
       async (error) => {
-        const originalRequest = error.config;
+        const originalRequest = error.config
 
-        if (error.message === NETWORK_ERROR) throw Error(NETWORK_ERROR);
+        if (error.message === NETWORK_ERROR) throw Error(NETWORK_ERROR)
         if (error?.response?.status === 401 && !originalRequest._retry) {
-          originalRequest._retry = true;
-          const res = await this.post("/auth/refresh");
+          originalRequest._retry = true
+          const res = await this.post('/auth/refresh')
 
-          const { error: error_1, response } = res;
+          const { error: error1, response } = res
 
-          if (error_1) return Promise.reject(error_1);
+          if (error1) return Promise.reject(error1)
 
-          const { token } = response;
+          const { token } = response
 
           originalRequest.headers = {
             ...originalRequest.headers,
             Authorization: `Bearer ${token}`,
-          };
-          return await axios(originalRequest);
+          }
+          return axios(originalRequest)
         }
 
-        return Promise.reject(error);
+        return Promise.reject(error)
       }
-    );
+    )
   }
 
   /**
@@ -67,7 +68,7 @@ export class HttpService implements BaseHttpService {
    * @returns {IApiResponse} the response
    */
   async get(path: string, options?: IRequestOptions): Promise<IApiResponse> {
-    return await this._fetch("GET", path, options);
+    return this._fetch('GET', path, options)
   }
 
   /**
@@ -77,7 +78,7 @@ export class HttpService implements BaseHttpService {
    * @returns {IApiResponse} the response
    */
   async post(path: string, options?: IRequestOptions): Promise<IApiResponse> {
-    return await this._fetch("POST", path, options);
+    return this._fetch('POST', path, options)
   }
 
   /**
@@ -87,7 +88,7 @@ export class HttpService implements BaseHttpService {
    * @returns {IApiResponse} the response
    */
   async put(path: string, options?: IRequestOptions): Promise<IApiResponse> {
-    return await this._fetch("PUT", path, options);
+    return this._fetch('PUT', path, options)
   }
 
   /**
@@ -97,7 +98,7 @@ export class HttpService implements BaseHttpService {
    * @returns {IApiResponse} the response
    */
   async patch(path: string, options?: IRequestOptions): Promise<IApiResponse> {
-    return await this._fetch("PATCH", path, options);
+    return this._fetch('PATCH', path, options)
   }
 
   /**
@@ -107,7 +108,7 @@ export class HttpService implements BaseHttpService {
    * @returns {IApiResponse} the response
    */
   async delete(path: string, options?: IRequestOptions): Promise<IApiResponse> {
-    return await this._fetch("DELETE", path, options);
+    return this._fetch('DELETE', path, options)
   }
 
   /**
@@ -122,32 +123,32 @@ export class HttpService implements BaseHttpService {
     path: string,
     options?: IRequestOptions
   ): Promise<IApiResponse> {
-    const config = this.getRequestConfiguration(method, path, options);
+    const config = this.getRequestConfiguration(method, path, options)
 
     try {
-      const { data, status } = await this._axios.request(config);
-      this.reduxService.dispatch(serverStateOnlineAction());
+      const { data, status } = await this._axios.request(config)
+      this.reduxService.dispatch(serverStateOnlineAction())
       return {
         status,
         response: data,
-      };
-    } catch (e) {
+      }
+    } catch (e: any) {
       if (
         (e instanceof Error && e.message === NETWORK_ERROR) ||
         e?.response === undefined
       ) {
-        this.reduxService.dispatch(serverStateOfflineAction());
+        this.reduxService.dispatch(serverStateOfflineAction())
         return {
           status: StatusCodes.SERVICE_UNAVAILABLE,
           error: e.message,
-        };
+        }
       }
 
-      const { status, data, statusText } = e.response;
+      const { status, data, statusText } = e.response
       return {
         status,
         error: data.message || statusText,
-      };
+      }
     }
   }
 
@@ -163,9 +164,9 @@ export class HttpService implements BaseHttpService {
     path: string,
     options?: IRequestOptions
   ): AxiosRequestConfig {
-    const isUrl = /^(http|https).+/.test(path);
-    const { auth } = store.getState();
-    const { body, headers } = options || {};
+    const isUrl = /^(http|https).+/.test(path)
+    const { auth } = store.getState()
+    const { body, headers } = options || {}
     const baseConfig: AxiosRequestConfig = {
       ...(!isUrl && { baseURL: API_URL }),
       method,
@@ -174,13 +175,13 @@ export class HttpService implements BaseHttpService {
       headers: {
         ...(auth.token && auth.token.getAuthorizationHeader()),
       },
-    };
-    if (body) baseConfig.data = body;
+    }
+    if (body) baseConfig.data = body
     if (headers)
       baseConfig.headers = {
         ...baseConfig.headers,
         ...headers,
-      };
-    return baseConfig;
+      }
+    return baseConfig
   }
 }

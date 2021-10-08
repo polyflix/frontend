@@ -1,10 +1,10 @@
-import { Alternative, IAlternative } from "./alternative.model";
+import { Alternative, IAlternative } from './alternative.model'
 
 export interface IQuestion {
-  id?: string;
-  index: number;
-  label: string;
-  alternatives?: IAlternative[];
+  id?: string
+  index: number
+  label: string
+  alternatives?: IAlternative[]
 }
 
 export class Question {
@@ -21,7 +21,7 @@ export class Question {
       json.index,
       json.label,
       json.alternatives?.map(Alternative.fromJson) || []
-    );
+    )
   }
 
   /**
@@ -32,8 +32,8 @@ export class Question {
   static clearAlternatives(questions: IQuestion[]): IQuestion[] {
     return questions.map((q) => ({
       ...q,
-      alternatives: q.alternatives?.filter((alt) => alt.label !== ""),
-    }));
+      alternatives: q.alternatives?.filter((alt) => alt.label !== ''),
+    }))
   }
 
   /**
@@ -45,27 +45,27 @@ export class Question {
     return (
       question.alternatives!.some((alt) => alt.isCorrect) &&
       question.alternatives!.length >= 2
-    );
+    )
   }
 
   get index(): number {
-    return this._index;
+    return this._index
   }
 
   get label(): string {
-    return this._label;
+    return this._label
   }
 
   get alternatives(): Alternative[] {
-    return this._alternatives;
+    return this._alternatives
   }
 
   get id(): string {
-    return this._id;
+    return this._id
   }
 
   public getAlternative(id: string): Alternative | undefined {
-    return this.alternatives.find((alt) => alt.id === id);
+    return this.alternatives.find((alt) => alt.id === id)
   }
 
   public toJson(): IQuestion {
@@ -73,6 +73,6 @@ export class Question {
       index: this._index,
       label: this._label,
       alternatives: this._alternatives.map((alt) => alt.toJson()),
-    };
+    }
   }
 }

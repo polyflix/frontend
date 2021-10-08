@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react'
 
 export const ChevronDown: React.FC = () => (
   <svg
@@ -16,4 +16,4 @@ export const ChevronDown: React.FC = () => (
       strokeLinejoin="round"
     />
   </svg>
-);
+)

@@ -1,18 +1,19 @@
-import { Route, Switch, useRouteMatch } from "react-router-dom";
-import { UserCollectionsPage } from "./collections/index.page";
-import { UserCoursesPage } from "./courses/index.page";
-import { UserPathsPage } from "./paths/index.page";
-import { DeleteAccountPage } from "./profile/delete.page";
-import { ProfilePage } from "./profile/index.page";
-import { PasswordUpdatePage } from "./profile/password.page";
-import { QuizzesHistoryPage } from "./quizzes/history.page";
-import { UserQuizzesPage } from "./quizzes/index.page";
-import { UserSubtitleImprovementPage } from "./subtitles/subtitle-improvement.page";
-import { UserVideosHistoryPage } from "./videos/history.page";
-import { UserVideosPage } from "./videos/index.page";
+import { Route, Switch, useRouteMatch } from 'react-router-dom'
+
+import { UserCollectionsPage } from './collections/index.page'
+import { UserCoursesPage } from './courses/index.page'
+import { UserPathsPage } from './paths/index.page'
+import { DeleteAccountPage } from './profile/delete.page'
+import { ProfilePage } from './profile/index.page'
+import { PasswordUpdatePage } from './profile/password.page'
+import { QuizzesHistoryPage } from './quizzes/history.page'
+import { UserQuizzesPage } from './quizzes/index.page'
+import { UserSubtitleImprovementPage } from './subtitles/subtitle-improvement.page'
+import { UserVideosHistoryPage } from './videos/history.page'
+import { UserVideosPage } from './videos/index.page'
 
 export const ProfileRouter = () => {
-  const { path } = useRouteMatch();
+  const { path } = useRouteMatch()
   return (
     <Switch>
       <Route exact path={path} component={ProfilePage} />
@@ -37,5 +38,5 @@ export const ProfileRouter = () => {
         component={UserSubtitleImprovementPage}
       />
     </Switch>
-  );
-};
+  )
+}

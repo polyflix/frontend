@@ -1,25 +1,27 @@
-import React, { Fragment } from "react";
-import { Typography } from "../../../ui";
+import { Menu, Transition } from '@headlessui/react'
 import {
   DotsVerticalIcon,
   PencilIcon,
   TrashIcon,
-} from "@heroicons/react/outline";
-import { useTranslation } from "react-i18next";
-import { Menu, Transition } from "@headlessui/react";
-import { ActionLink } from "../../../common/components/ActionLink.component";
-import { ChartPieIcon } from "@heroicons/react/solid";
+} from '@heroicons/react/outline'
+import { ChartPieIcon } from '@heroicons/react/solid'
+import React, { Fragment } from 'react'
+import { useTranslation } from 'react-i18next'
+
+import { ActionLink } from '../../../common/components/ActionLink.component'
+import { Typography } from '../../../ui'
+
 type Props = {
-  onTriggerDelete: () => void;
-  editLink: string;
-  statsLink?: string;
-};
+  onTriggerDelete: () => void
+  editLink: string
+  statsLink?: string
+}
 export const VideoListItemOptions: React.FC<Props> = ({
   onTriggerDelete,
   editLink,
   statsLink,
 }) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation()
 
   return (
     <Menu as="div" className="relative inline-block text-left">
@@ -29,7 +31,7 @@ export const VideoListItemOptions: React.FC<Props> = ({
             <Typography
               as="span"
               className={
-                "flex text-sm md:text-base hover:underline cursor-pointer hover:text-nx-red"
+                'flex text-sm md:text-base hover:underline cursor-pointer hover:text-nx-red'
               }
             >
               <DotsVerticalIcon className="w-4 md:w-5 mr-2 text-nx-red" />
@@ -53,10 +55,10 @@ export const VideoListItemOptions: React.FC<Props> = ({
                 <Menu.Item>
                   <ActionLink
                     Icon={TrashIcon}
-                    text={t("shared.common.actions.delete")}
+                    text={t('shared.common.actions.delete')}
                     onClick={onTriggerDelete}
                     className={
-                      "text-nx-white flex rounded-md items-center w-full px-2 py-2 text-sm"
+                      'text-nx-white flex rounded-md items-center w-full px-2 py-2 text-sm'
                     }
                   />
                 </Menu.Item>
@@ -64,9 +66,9 @@ export const VideoListItemOptions: React.FC<Props> = ({
                   <ActionLink
                     Icon={PencilIcon}
                     to={editLink}
-                    text={t("shared.common.actions.edit")}
+                    text={t('shared.common.actions.edit')}
                     className={
-                      "text-nx-white flex rounded-md items-center w-full px-2 py-2 text-sm"
+                      'text-nx-white flex rounded-md items-center w-full px-2 py-2 text-sm'
                     }
                   />
                 </Menu.Item>
@@ -75,9 +77,9 @@ export const VideoListItemOptions: React.FC<Props> = ({
                     <ActionLink
                       Icon={ChartPieIcon}
                       to={statsLink}
-                      text={"Stats"}
+                      text={'Stats'}
                       className={
-                        "text-nx-white flex rounded-md items-center w-full px-2 py-2 text-sm"
+                        'text-nx-white flex rounded-md items-center w-full px-2 py-2 text-sm'
                       }
                     />
                   </Menu.Item>
@@ -88,5 +90,5 @@ export const VideoListItemOptions: React.FC<Props> = ({
         </>
       )}
     </Menu>
-  );
-};
+  )
+}

@@ -1,12 +1,12 @@
-import { Injectable } from "@polyflix/di";
-import { StatusCodes } from "http-status-codes";
+import { Injectable } from '@polyflix/di'
+import { StatusCodes } from 'http-status-codes'
 
-import { Tag } from "../models/tag.model";
-import { ITagForm } from "../types/tag.type";
-import { HttpService } from "../../common/services";
-import { Collection, CollectionsWithPagination } from "../../collections";
-import { Video, VideosWithPagination } from "../../videos";
-import { ITagFilter, TagFilter } from "../filters/tag.filter";
+import { Collection, CollectionsWithPagination } from '../../collections'
+import { HttpService } from '../../common/services'
+import { Video, VideosWithPagination } from '../../videos'
+import { ITagFilter, TagFilter } from '../filters/tag.filter'
+import { Tag } from '../models/tag.model'
+import { ITagForm } from '../types/tag.type'
 
 @Injectable()
 export class TagService {
@@ -16,23 +16,23 @@ export class TagService {
   ) {}
 
   public async getTags(filters: ITagFilter): Promise<Tag[]> {
-    const searchQuery = this.tagFilter.buildFilters(filters);
-    let url = "/tags";
-    if (searchQuery !== "" && searchQuery) {
-      url += `?${searchQuery}`;
+    const searchQuery = this.tagFilter.buildFilters(filters)
+    let url = '/tags'
+    if (searchQuery !== '' && searchQuery) {
+      url += `?${searchQuery}`
     }
 
-    const { status, response, error } = await this.httpService.get(url);
-    if (status !== StatusCodes.OK) throw error;
-    return response.map(Tag.fromJson);
+    const { status, response, error } = await this.httpService.get(url)
+    if (status !== StatusCodes.OK) throw error
+    return response.map(Tag.fromJson)
   }
 
   public async createTag(tag: ITagForm): Promise<Tag> {
     const { status, response, error } = await this.httpService.post(`/tags`, {
       body: tag,
-    });
-    if (status !== StatusCodes.CREATED) throw error;
-    return Tag.fromJson(response);
+    })
+    if (status !== StatusCodes.CREATED) throw error
+    return Tag.fromJson(response)
   }
 
   public async updateTag(id: string, tag: ITagForm): Promise<Tag> {
@@ -41,61 +41,61 @@ export class TagService {
       {
         body: tag,
       }
-    );
-    if (status !== StatusCodes.OK) throw error;
-    return Tag.fromJson(response);
+    )
+    if (status !== StatusCodes.OK) throw error
+    return Tag.fromJson(response)
   }
 
   public async deleteTag(id: string): Promise<void> {
-    const { status, error } = await this.httpService.delete(`/tags/${id}`);
-    if (status !== StatusCodes.NO_CONTENT) throw error;
+    const { status, error } = await this.httpService.delete(`/tags/${id}`)
+    if (status !== StatusCodes.NO_CONTENT) throw error
   }
 
   public async searchCollectionsByTags(
     tags: Tag[]
   ): Promise<CollectionsWithPagination> {
-    const queryParams = TagService.buildQueryParams(tags);
+    const queryParams = TagService.buildQueryParams(tags)
     const { status, response, error } = await this.httpService.get(
       `/collections${queryParams}`
-    );
-    if (status !== StatusCodes.OK) throw error;
+    )
+    if (status !== StatusCodes.OK) throw error
     return {
       items: response.items.map(Collection.fromJson),
       totalCount: response.totalCount,
-    };
+    }
   }
 
   public async searchVideosByTags(tags: Tag[]): Promise<VideosWithPagination> {
-    const queryParams = TagService.buildQueryParams(tags);
+    const queryParams = TagService.buildQueryParams(tags)
     const { status, response, error } = await this.httpService.get(
       `/videos${queryParams}`
-    );
-    if (status !== StatusCodes.OK) throw error;
+    )
+    if (status !== StatusCodes.OK) throw error
     return {
       items: response.items.map(Video.fromJson),
       totalCount: response.totalCount,
-    };
+    }
   }
 
   public static buildQueryParams(tags: Tag[]): string {
-    let res = "?";
+    let res = '?'
     for (const tag of tags) {
-      res += `tags[]=${tag.label}&`;
+      res += `tags[]=${tag.label}&`
     }
-    return res.substring(0, res.length - 1);
+    return res.substring(0, res.length - 1)
   }
 
   public static TagsToURL(tags: Tag[]): string {
-    let res = "";
+    let res = ''
     for (const tag of tags) {
-      res += `${tag.label}&`;
+      res += `${tag.label}&`
     }
-    return res.substring(0, res.length - 1);
+    return res.substring(0, res.length - 1)
   }
 
   public static URLToTags(url: string): Tag[] {
     return url
-      .split("&")
-      .map((label) => Tag.fromJson({ id: "", label, isReviewed: false }));
+      .split('&')
+      .map((label) => Tag.fromJson({ id: '', label, isReviewed: false }))
   }
 }

@@ -1,15 +1,15 @@
-import { GenericAction } from "../../common";
-import { Attempt } from "../models/attempt.model";
-import { Quizz } from "../models/quizz.model";
-import { PlayQuizzService } from "../services/play.service";
+import { GenericAction } from '../../common'
+import { Attempt } from '../models/attempt.model'
+import { Quizz } from '../models/quizz.model'
+import { PlayQuizzService } from '../services/play.service'
 
 export interface QuizzAnswers {
-  [questionId: string]: string[];
+  [questionId: string]: string[]
 }
 
 export interface PlayComponentProps {
-  quizz: Quizz;
-  playService: PlayQuizzService;
+  quizz: Quizz
+  playService: PlayQuizzService
 }
 
 export enum PlayQuizzStep {
@@ -29,32 +29,32 @@ export type PlayQuizzState = {
    * - Recap : we should display the list of questions and the user answers to the user before validating
    * - End : display the user score with a custom message
    */
-  step: PlayQuizzStep;
+  step: PlayQuizzStep
 
   /**
    * The index of the current question
    */
-  questionIdx: number;
+  questionIdx: number
 
   /**
    * An object containg the user answers, indexed by the questionId and the answers ID as an array
    */
-  answers: QuizzAnswers;
+  answers: QuizzAnswers
 
   /**
    * The Quizz attempt once submitted
    */
-  attempt?: Attempt;
+  attempt?: Attempt
 
   /**
    * A boolean to control the attempt submission
    */
-  isSubmitting: boolean;
+  isSubmitting: boolean
 
   /**
    * A boolean to check if the current state is the initial
    */
-  isInitialState: boolean;
-};
+  isInitialState: boolean
+}
 
-export type PlayQuizzAction = GenericAction<PlayQuizzState>;
+export type PlayQuizzAction = GenericAction<PlayQuizzState>

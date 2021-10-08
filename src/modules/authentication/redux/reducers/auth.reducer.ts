@@ -1,5 +1,5 @@
-import { AuthAction, AuthState } from "../../types/auth.type";
-import { AuthActions } from "../actions/auth.action";
+import { AuthAction, AuthState } from '../../types/auth.type'
+import { AuthActions } from '../actions/auth.action'
 
 const initialState: AuthState = {
   isLoading: true,
@@ -8,7 +8,7 @@ const initialState: AuthState = {
   user: null,
   token: null,
   authError: null,
-};
+}
 
 /**
  * Authentication state reducer
@@ -31,13 +31,13 @@ export const authReducer = (
         isAuthenticated: true,
         isLoading: false,
         authError: null,
-      };
+      }
     case AuthActions.RESET_PASSWORD_SUCCESS:
       return {
         ...state,
         isLoading: false,
         authError: null,
-      };
+      }
     case AuthActions.LOGIN_IN_PROGRESS:
     case AuthActions.REGISTER_IN_PROGRESS:
     case AuthActions.RESET_PASSWORD_IN_PROGRESS:
@@ -45,14 +45,14 @@ export const authReducer = (
         ...state,
         authError: null,
         isLoading: true,
-      };
+      }
     case AuthActions.REFRESH_AUTH_IN_PROGRESS:
       return {
         ...state,
         authError: null,
         isLoading: true,
         hasRefresh: true,
-      };
+      }
     case AuthActions.LOGIN_FAILURE:
     case AuthActions.REGISTER_FAILURE:
     case AuthActions.REFRESH_AUTH_FAILURE:
@@ -62,27 +62,27 @@ export const authReducer = (
         ...action.payload,
         isLoading: false,
         isAuthenticated: false,
-      };
+      }
     case AuthActions.LOGOUT:
       return {
         ...state,
         isAuthenticated: false,
         user: null,
         token: null,
-      };
+      }
     case AuthActions.UPDATE_USER_FAILURE:
       return {
         ...state,
         ...action.payload,
         isLoading: false,
-      };
+      }
     case AuthActions.VALIDATE_ACCOUNT:
       return {
         ...state,
         ...action.payload,
-      };
+      }
 
     default:
-      return state;
+      return state
   }
-};
+}

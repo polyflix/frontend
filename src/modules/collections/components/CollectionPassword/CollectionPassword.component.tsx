@@ -1,9 +1,10 @@
-import { ArrowCircleLeftIcon } from "@heroicons/react/outline";
-import { motion } from "framer-motion";
-import React from "react";
-import { useForm } from "react-hook-form";
-import { useTranslation } from "react-i18next";
-import { useHistory } from "react-router";
+import { ArrowCircleLeftIcon } from '@heroicons/react/outline'
+import { motion } from 'framer-motion'
+import React from 'react'
+import { useForm } from 'react-hook-form'
+import { useTranslation } from 'react-i18next'
+import { useHistory } from 'react-router'
+
 import {
   fadeInDown,
   FilledButton,
@@ -12,26 +13,26 @@ import {
   stagger,
   Title,
   Typography,
-} from "../../../ui";
+} from '../../../ui'
 
 type Props = {
   /** Redirection when the form is submitted. */
-  redirection: string;
-};
+  redirection: string
+}
 
 export const CollectionPassword: React.FC<Props> = ({ redirection }) => {
-  const { t } = useTranslation();
-  let history = useHistory();
+  const { t } = useTranslation()
+  let history = useHistory()
 
-  const onGoBack = () => history.goBack();
+  const onGoBack = () => history.goBack()
 
   const { register, handleSubmit, errors } = useForm<{
-    password: string;
-  }>({});
+    password: string
+  }>({})
 
   const onSubmit = async (data: { password: string }) => {
-    history.push(`${redirection}${data.password}`);
-  };
+    history.push(`${redirection}${data.password}`)
+  }
 
   return (
     <motion.div
@@ -45,8 +46,8 @@ export const CollectionPassword: React.FC<Props> = ({ redirection }) => {
           overrideDefaultClasses
         >
           <span className="inline-flex mx-2 cursor-pointer" onClick={onGoBack}>
-            <ArrowCircleLeftIcon className="w-6 mr-1" />{" "}
-            {t("shared.common.actions.back")}{" "}
+            <ArrowCircleLeftIcon className="w-6 mr-1" />{' '}
+            {t('shared.common.actions.back')}{' '}
           </span>
         </Typography>
         <div className="col-span-2 md:col-span-1">
@@ -67,12 +68,12 @@ export const CollectionPassword: React.FC<Props> = ({ redirection }) => {
           type="password"
           name="password"
           className="col-span-2"
-          placeholder={t("auth.inputs.password.name")}
+          placeholder={t('auth.inputs.password.name')}
           variants={fadeInDown}
           ref={register({
             required: {
               value: true,
-              message: `${t("auth.inputs.password.error")}.`,
+              message: `${t('auth.inputs.password.error')}.`,
             },
           })}
         />
@@ -84,5 +85,5 @@ export const CollectionPassword: React.FC<Props> = ({ redirection }) => {
         />
       </form>
     </motion.div>
-  );
-};
+  )
+}

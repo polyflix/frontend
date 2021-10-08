@@ -1,2 +1,2 @@
-export * from "./http.service";
-export * from "./redux.service";
+export * from './http.service'
+export * from './redux.service'

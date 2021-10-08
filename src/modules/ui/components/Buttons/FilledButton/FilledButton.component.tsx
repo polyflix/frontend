@@ -1,13 +1,14 @@
-import { PropsWithChildren } from "react";
-import { cn } from "../../../../common/utils/classes.util";
-import { Button, ButtonProps } from "../Button.component";
+import { PropsWithChildren } from 'react'
+
+import { cn } from '../../../../common/utils/classes.util'
+import { Button, ButtonProps } from '../Button.component'
 
 export const FilledButton: React.FC<PropsWithChildren<ButtonProps>> = ({
   as,
   children,
-  className = "",
+  className = '',
   disabled = false,
-  form = "",
+  form = '',
   ...rest
 }) => {
   return (
@@ -16,10 +17,10 @@ export const FilledButton: React.FC<PropsWithChildren<ButtonProps>> = ({
       className={cn(
         className,
         disabled
-          ? "bg-nx-dark bg-opacity-40 cursor-not-allowed"
-          : "bg-nx-red transition-colors hover:bg-nx-red-dark",
-        "text-white",
-        "border-2 border-nx-red hover:border-nx-red-dark"
+          ? 'bg-nx-dark bg-opacity-40 cursor-not-allowed'
+          : 'bg-nx-red transition-colors hover:bg-nx-red-dark',
+        'text-white',
+        'border-2 border-nx-red hover:border-nx-red-dark'
       )}
       {...rest}
       as={as}
@@ -27,5 +28,5 @@ export const FilledButton: React.FC<PropsWithChildren<ButtonProps>> = ({
     >
       {children}
     </Button>
-  );
-};
+  )
+}

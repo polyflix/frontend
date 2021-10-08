@@ -1,3 +1,4 @@
+import { UploadIcon } from '@heroicons/react/outline'
 import {
   Player,
   Video as Provider,
@@ -8,18 +9,18 @@ import {
   ScrubberControl,
   LoadingScreen,
   Tooltip,
-} from "@vime/react";
-import { UploadIcon } from "@heroicons/react/outline";
-import { WithMotion } from "../../../common";
-import { motion } from "framer-motion";
-import Placeholder from "../../../../assets/images/videoPlaceholder.png";
-import { useTranslation } from "react-i18next";
+} from '@vime/react'
+import { motion } from 'framer-motion'
+import { useTranslation } from 'react-i18next'
+
+import Placeholder from '../../../../assets/images/videoPlaceholder.png'
+import { WithMotion } from '../../../common'
 
 type Props = WithMotion & {
-  getFrame: () => void;
-  videoPreview: string;
-  playerRef: any;
-};
+  getFrame: () => void
+  videoPreview: string
+  playerRef: any
+}
 
 export const FrameSelector: React.FC<Props> = ({
   getFrame,
@@ -27,7 +28,7 @@ export const FrameSelector: React.FC<Props> = ({
   playerRef,
   ...rest
 }) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation()
 
   return (
     <motion.div {...rest}>
@@ -43,7 +44,7 @@ export const FrameSelector: React.FC<Props> = ({
             <Control label="upload" onClick={getFrame}>
               <UploadIcon className="w-6 h-6 m-1" />
               <Tooltip position="bottom" direction="right">
-                {t("videoManagement.actions.getThumbnail")}
+                {t('videoManagement.actions.getThumbnail')}
               </Tooltip>
             </Control>
           </Controls>
@@ -58,5 +59,5 @@ export const FrameSelector: React.FC<Props> = ({
         </Ui>
       </Player>
     </motion.div>
-  );
-};
+  )
+}

@@ -1,15 +1,16 @@
-import { Injectable } from "@polyflix/di";
-import { StatusCodes } from "http-status-codes";
+import { Injectable } from '@polyflix/di'
+import { StatusCodes } from 'http-status-codes'
+
 import {
   AuthAction,
   LogoutAction,
   UpdateUserFailureAction,
   UpdateUserSuccessAction,
-} from "../../authentication";
-import { ReduxService } from "../../common/services";
-import { HttpService } from "../../common/services/http.service";
-import { User } from "../models/user.model";
-import { IUserPasswordForm, IUserProfileUpdate } from "../types";
+} from '../../authentication'
+import { ReduxService } from '../../common/services'
+import { HttpService } from '../../common/services/http.service'
+import { User } from '../models/user.model'
+import { IUserPasswordForm, IUserProfileUpdate } from '../types'
 
 @Injectable()
 export class UserService {
@@ -25,13 +26,13 @@ export class UserService {
    * @returns {Promise<User>}
    */
   public async getUsers(): Promise<User[]> {
-    const { status, response, error } = await this.httpService.get(`/users`);
+    const { status, response, error } = await this.httpService.get(`/users`)
     if (status !== StatusCodes.OK) {
       // eslint-disable-next-line
-      throw { error, status };
+      throw { error, status }
     }
 
-    return response.map(User.fromJson);
+    return response.map(User.fromJson)
   }
 
   /**
@@ -43,12 +44,12 @@ export class UserService {
   public async getUser(id: string): Promise<User> {
     const { status, response, error } = await this.httpService.get(
       `/users/${id}`
-    );
+    )
     if (status !== StatusCodes.OK) {
       // eslint-disable-next-line
-      throw { error, status };
+      throw { error, status }
     }
-    return User.fromJson(response);
+    return User.fromJson(response)
   }
 
   /**
@@ -65,19 +66,19 @@ export class UserService {
     const { status: updateStatus, error: updateError } =
       await this.httpService.put(`/users/${id}`, {
         body: data,
-      });
-    const { status, response, error } = await this.httpService.get(`/users/me`);
+      })
+    const { status, response, error } = await this.httpService.get(`/users/me`)
 
     if (updateStatus !== StatusCodes.OK) {
-      return this.reduxService.dispatch(UpdateUserFailureAction(updateError));
+      return this.reduxService.dispatch(UpdateUserFailureAction(updateError))
     }
     if (status !== StatusCodes.OK) {
-      return this.reduxService.dispatch(UpdateUserFailureAction(error));
+      return this.reduxService.dispatch(UpdateUserFailureAction(error))
     }
 
     return this.reduxService.dispatch(
       UpdateUserSuccessAction(User.fromJson(response))
-    );
+    )
   }
 
   /**
@@ -87,11 +88,11 @@ export class UserService {
    * @returns {Promise<void>}
    */
   public async deleteUser(id: string): Promise<void> {
-    const { status, error } = await this.httpService.delete(`/users/${id}`);
+    const { status, error } = await this.httpService.delete(`/users/${id}`)
     if (status !== StatusCodes.OK) {
-      return this.reduxService.dispatch(UpdateUserFailureAction(error));
+      return this.reduxService.dispatch(UpdateUserFailureAction(error))
     }
-    await this.httpService.get("/auth/logout");
-    return this.reduxService.dispatch(LogoutAction());
+    await this.httpService.get('/auth/logout')
+    return this.reduxService.dispatch(LogoutAction())
   }
 }

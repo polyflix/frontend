@@ -1,16 +1,17 @@
-import React from "react";
-import { useTranslation } from "react-i18next";
-import { Container } from "../../ui/components/Container/Container.component";
-import { Page } from "../../ui/components/Page/Page.component";
-import { LoginForm } from "../components/LoginForm/LoginForm.component";
-import CookieConsent from "react-cookie-consent";
+import React from 'react'
+import CookieConsent from 'react-cookie-consent'
+import { useTranslation } from 'react-i18next'
+
+import { Container } from '../../ui/components/Container/Container.component'
+import { Page } from '../../ui/components/Page/Page.component'
+import { LoginForm } from '../components/LoginForm/LoginForm.component'
 
 const LoginPage: React.FC = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslation()
 
   return (
     <Page
-      title={t("auth.signIn.seo.title")}
+      title={t('auth.signIn.seo.title')}
       className="flex items-center justify-center h-full"
     >
       <Container mxAuto>
@@ -19,17 +20,17 @@ const LoginPage: React.FC = () => {
       <CookieConsent
         disableStyles={true}
         location="bottom"
-        buttonText={t("auth.cookies.consent")}
+        buttonText={t('auth.cookies.consent')}
         cookieName="consent-cookie"
         overlayClasses="fixed top-0	left-0 w-full "
         buttonClasses="p-1.5 m-0.5 bg-nx-white border-2  hover:bg-nx-red-dark border-nx-red hover:border-nx-red-dark cursor-pointer"
         containerClasses="pl-1 p-0.5 bg-nx-red transition-colors text-black flex-initial items-baseline	flex-wrap flex left-0 fixed w-full justify-between"
         expires={150} // in days
       >
-        {t("auth.cookies.explanation")}
+        {t('auth.cookies.explanation')}
       </CookieConsent>
     </Page>
-  );
-};
+  )
+}
 
-export default LoginPage;
+export default LoginPage

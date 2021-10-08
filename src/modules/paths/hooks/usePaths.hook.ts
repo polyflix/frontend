@@ -1,7 +1,7 @@
-import { useFetch } from "../../common/hooks/useFetch.hook";
-import { IPathFilter } from "../filters/path.filter";
-import { PathService } from "../services";
-import { PathsWithPagination } from "../types";
+import { useFetch } from '../../common/hooks/useFetch.hook'
+import { IPathFilter } from '../filters/path.filter'
+import { PathService } from '../services'
+import { PathsWithPagination } from '../types'
 
 export const usePaths = (
   filters: IPathFilter,
@@ -9,7 +9,7 @@ export const usePaths = (
 ) => {
   return useFetch<PathsWithPagination, PathService>(
     PathService,
-    "getPaths",
+    'getPaths',
     [filters],
     {
       onComplete: onCollectionLoaded
@@ -17,5 +17,5 @@ export const usePaths = (
         : undefined,
       deps: [filters.page, filters.order, filters.pageSize],
     }
-  );
-};
+  )
+}

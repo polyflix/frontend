@@ -1,21 +1,22 @@
-import { Injectable } from "@polyflix/di";
-import { AbstractFilter } from "../../common/filters/abtract.filter";
-import { PaginationFilter } from "../../common/types/filter.type";
+import { Injectable } from '@polyflix/di'
+
+import { AbstractFilter } from '../../common/filters/abtract.filter'
+import { PaginationFilter } from '../../common/types/filter.type'
 
 export interface IPathFilter extends PaginationFilter {
-  order?: string;
-  slug?: string;
-  title?: string;
-  publisherId?: string;
+  order?: string
+  slug?: string
+  title?: string
+  publisherId?: string
 }
 
 @Injectable()
 export class PathFilter extends AbstractFilter<IPathFilter> {
   public buildFilters(filters: IPathFilter | Partial<IPathFilter>): string {
-    this.clear();
+    this.clear()
     Object.entries(filters).forEach(([key, value]) => {
-      this.queryBuilder.set(key, value);
-    });
-    return this.queryBuilder.toString();
+      this.queryBuilder.set(key, value)
+    })
+    return this.queryBuilder.toString()
   }
 }

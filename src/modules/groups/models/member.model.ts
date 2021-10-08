@@ -1,4 +1,4 @@
-import { User } from "../../users";
+import { User } from '../../users'
 
 export class Member {
   private constructor(
@@ -10,6 +10,6 @@ export class Member {
   ) {}
 
   static fromJson(json: Member): Member {
-    return new Member(json.id, json.role, json.userId, json.groupId, json.user);
+    return new Member(json.id, json.role, json.userId, json.groupId, json.user)
   }
 }

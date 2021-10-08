@@ -1,14 +1,15 @@
-import { PropsWithChildren } from "react";
-import { WithClassname, WithMotion } from "../../../../common/types/props.type";
-import { cn } from "../../../../common/utils/classes.util";
-import { Typography } from "../Typography.component";
+import { PropsWithChildren } from 'react'
 
-type Props = WithClassname & WithMotion & { overrideDefaultClasses?: boolean };
+import { WithClassname, WithMotion } from '../../../../common/types/props.type'
+import { cn } from '../../../../common/utils/classes.util'
+import { Typography } from '../Typography.component'
+
+type Props = WithClassname & WithMotion & { overrideDefaultClasses?: boolean }
 
 export const Paragraph: React.FC<PropsWithChildren<Props>> = ({
   overrideDefaultClasses = false,
   children,
-  className = "",
+  className = '',
   ...rest
 }) => {
   return (
@@ -17,11 +18,11 @@ export const Paragraph: React.FC<PropsWithChildren<Props>> = ({
       overrideDefaultClasses={overrideDefaultClasses}
       className={cn(
         className,
-        !overrideDefaultClasses && "font-light leading-6 md:text-base"
+        !overrideDefaultClasses && 'font-light leading-6 md:text-base'
       )}
       as="p"
     >
       {children}
     </Typography>
-  );
-};
+  )
+}

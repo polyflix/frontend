@@ -1,17 +1,18 @@
-import { v4 as uuidv4 } from "uuid";
-import { MINIO_URL } from "../../../common/constants/minio.constant";
-import { Bucket } from "../../types/upload.type";
-import * as path from "path";
+import * as path from 'path'
+import { v4 as uuidv4 } from 'uuid'
+
+import { MINIO_URL } from '../../../common/constants/minio.constant'
+import { Bucket } from '../../types/upload.type'
 
 export class MinioFile {
-  private minioFilename: string;
+  private minioFilename: string
 
   constructor(
     protected bucket: Bucket,
     protected file: File,
     protected field: string
   ) {
-    this.minioFilename = this.generateRandomName();
+    this.minioFilename = this.generateRandomName()
   }
 
   /**
@@ -20,7 +21,7 @@ export class MinioFile {
    * @returns {string}
    */
   getFilename(): string {
-    return this.file.name;
+    return this.file.name
   }
 
   /**
@@ -30,7 +31,7 @@ export class MinioFile {
    * @returns {string}
    */
   getBucketName(): string {
-    return this.bucket;
+    return this.bucket
   }
 
   /**
@@ -39,7 +40,7 @@ export class MinioFile {
    * @returns {string}
    */
   getMinioFilename(): string {
-    return this.minioFilename;
+    return this.minioFilename
   }
 
   /**
@@ -48,7 +49,7 @@ export class MinioFile {
    * @returns {string}
    */
   getBlob(): File {
-    return this.file;
+    return this.file
   }
 
   /**
@@ -57,7 +58,7 @@ export class MinioFile {
    * @returns {string}
    */
   getField(): string {
-    return this.field;
+    return this.field
   }
 
   /**
@@ -66,7 +67,7 @@ export class MinioFile {
    * @returns {string}
    */
   getFileURL(): string {
-    return `${MINIO_URL}/${this.bucket}/${this.minioFilename}`;
+    return `${MINIO_URL}/${this.bucket}/${this.minioFilename}`
   }
 
   /**
@@ -75,7 +76,7 @@ export class MinioFile {
    * @returns {string}
    */
   private getExtension(): string {
-    return path.extname(this.file.name);
+    return path.extname(this.file.name)
   }
 
   /**
@@ -85,6 +86,6 @@ export class MinioFile {
    * @returns {string}
    */
   private generateRandomName(): string {
-    return `${uuidv4()}${this.getExtension()}`;
+    return `${uuidv4()}${this.getExtension()}`
   }
 }

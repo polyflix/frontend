@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react'
 
 export const EnglishFlagIcon: React.FC = () => (
   <svg
@@ -46,4 +46,4 @@ export const EnglishFlagIcon: React.FC = () => (
       />
     </g>
   </svg>
-);
+)

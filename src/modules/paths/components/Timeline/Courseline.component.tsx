@@ -1,13 +1,14 @@
-import { motion } from "framer-motion";
-import React from "react";
-import { Link } from "react-router-dom";
-import { NoData } from "../../../ui/components/NoData/NoData.component";
-import { OrderedCourse } from "../../models";
+import { motion } from 'framer-motion'
+import React from 'react'
+import { Link } from 'react-router-dom'
+
+import { NoData } from '../../../ui/components/NoData/NoData.component'
+import { OrderedCourse } from '../../models'
 
 type Props = {
-  course: OrderedCourse;
-  position: string;
-};
+  course: OrderedCourse
+  position: string
+}
 
 export const Courseline: React.FC<Props> = ({ course, position }) => {
   return course ? (
@@ -16,7 +17,7 @@ export const Courseline: React.FC<Props> = ({ course, position }) => {
         <li>
           <article>
             <Link
-              to={"/courses/" + course.course.slug}
+              to={'/courses/' + course.course.slug}
               href="e"
               className="grid md:grid-cols-8 xl:grid-cols-9 items-start relative rounded-xl p-3 sm:p-5 xl:p-6 overflow-hidden hover:bg-gray-100 hover:bg-opacity-5"
             >
@@ -29,7 +30,7 @@ export const Courseline: React.FC<Props> = ({ course, position }) => {
                   className="w-3 h-3 mr-6 overflow-visible text-gray-300"
                 >
                   <circle cx="6" cy="6" r="6" fill="currentColor"></circle>
-                  {position !== "first" && position !== "single" ? (
+                  {position !== 'first' && position !== 'single' ? (
                     <path
                       d="M 6 -6 V -30"
                       fill="none"
@@ -38,7 +39,7 @@ export const Courseline: React.FC<Props> = ({ course, position }) => {
                       className="text-gray-200"
                     ></path>
                   ) : null}
-                  {position !== "last" && position !== "single" ? (
+                  {position !== 'last' && position !== 'single' ? (
                     <path
                       d="M 6 18 V 500"
                       fill="none"
@@ -60,5 +61,5 @@ export const Courseline: React.FC<Props> = ({ course, position }) => {
     </>
   ) : (
     <NoData />
-  );
-};
+  )
+}

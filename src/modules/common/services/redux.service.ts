@@ -1,6 +1,7 @@
-import { Inject, Injectable } from "@polyflix/di";
-import { Dispatch } from "react";
-import { APP_DISPATCHER } from "../constants/injection.constant";
+import { Inject, Injectable } from '@polyflix/di'
+import { Dispatch } from 'react'
+
+import { APP_DISPATCHER } from '../constants/injection.constant'
 
 @Injectable()
 export class ReduxService<T> {
@@ -15,6 +16,6 @@ export class ReduxService<T> {
    * @param {T} action the action to dispatch
    */
   public dispatch(action: T): void {
-    this.dispatcher(action);
+    this.dispatcher(action)
   }
 }

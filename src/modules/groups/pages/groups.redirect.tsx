@@ -1,3 +1,3 @@
-import { GroupsPage } from "./groups.page";
+import { GroupsPage } from './groups.page'
 
-export const GroupsRedirect: React.FC = () => <GroupsPage />;
+export const GroupsRedirect: React.FC = () => <GroupsPage />

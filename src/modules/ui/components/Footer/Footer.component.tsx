@@ -1,5 +1,5 @@
-import { Paragraph } from "../Typography/Paragraph/Paragraph.component";
-import { Typography } from "../Typography/Typography.component";
+import { Paragraph } from '../Typography/Paragraph/Paragraph.component'
+import { Typography } from '../Typography/Typography.component'
 
 /**
  * WIP
@@ -10,9 +10,9 @@ export const Footer: React.FC = () => {
       <Paragraph>
         <Typography as="span" bold>
           Polyflix
-        </Typography>{" "}
-        &copy; 2021 - Designed & Developed by Thomas Gouveia{" "}
+        </Typography>{' '}
+        &copy; 2021 - Designed & Developed by Thomas Gouveia{' '}
       </Paragraph>
     </footer>
-  );
-};
+  )
+}

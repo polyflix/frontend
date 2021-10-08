@@ -1,15 +1,15 @@
-import { SearchIcon } from "@heroicons/react/outline";
+import { SearchIcon } from '@heroicons/react/outline'
 
 type Props = {
-  placeholder?: string;
-  onChange?: (search: string) => void;
-};
+  placeholder?: string
+  onChange?: (search: string) => void
+}
 
-export const SearchBar = ({ placeholder = "Search", onChange }: Props) => {
+export const SearchBar = ({ placeholder = 'Search', onChange }: Props) => {
   const onSearch = ({ target }: any) => {
-    if (!onChange) return;
-    onChange(target.value);
-  };
+    if (!onChange) return
+    onChange(target.value)
+  }
   return (
     <div className="flex h-12 border-3 text-nx-white border-darkgray rounded-md">
       <span className="min-w-pagination p-2 bg-darkgray flex items-center justify-center">
@@ -22,5 +22,5 @@ export const SearchBar = ({ placeholder = "Search", onChange }: Props) => {
         type="text"
       />
     </div>
-  );
-};
+  )
+}

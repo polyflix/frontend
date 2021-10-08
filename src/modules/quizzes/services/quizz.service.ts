@@ -1,13 +1,14 @@
-import { Injectable } from "@polyflix/di";
-import { QuizzParser } from "@polyflix/quizz-parser";
-import { StatusCodes } from "http-status-codes";
-import { HttpService } from "../../common/services";
-import { Pagination } from "../../common/types/crud.type";
-import { IQuizzForm } from "../components/QuizzForm/QuizzForm.component";
-import { QuizzAttemptFilters, QuizzFilters } from "../filters/quizz.filter";
-import { Attempt } from "../models/attempt.model";
-import { Quizz } from "../models/quizz.model";
-import { CrudFilterService } from "./crud-filter.service";
+import { Injectable } from '@polyflix/di'
+import { QuizzParser } from '@polyflix/quizz-parser'
+import { StatusCodes } from 'http-status-codes'
+
+import { HttpService } from '../../common/services'
+import { Pagination } from '../../common/types/crud.type'
+import { IQuizzForm } from '../components/QuizzForm/QuizzForm.component'
+import { QuizzAttemptFilters, QuizzFilters } from '../filters/quizz.filter'
+import { Attempt } from '../models/attempt.model'
+import { Quizz } from '../models/quizz.model'
+import { CrudFilterService } from './crud-filter.service'
 
 @Injectable()
 export class QuizzService {
@@ -24,12 +25,12 @@ export class QuizzService {
   async getQuizzes(filters: QuizzFilters): Promise<Pagination<Quizz>> {
     const { status, response, error } = await this.httpService.get(
       `/quizzes${this.filterService.buildFilters(filters)}`
-    );
+    )
     if (status !== StatusCodes.OK) {
-      throw error;
+      throw error
     }
-    const { data, ...rest } = response;
-    return { ...rest, data: data.map(Quizz.fromJson) };
+    const { data, ...rest } = response
+    return { ...rest, data: data.map(Quizz.fromJson) }
   }
 
   /**
@@ -41,14 +42,14 @@ export class QuizzService {
   async getQuizz(id: string, filters?: QuizzFilters): Promise<Quizz> {
     const { status, response, error } = await this.httpService.get(
       `/quizzes/${id}${
-        filters ? `${this.filterService.buildFilters(filters)}` : ""
+        filters ? `${this.filterService.buildFilters(filters)}` : ''
       }`
-    );
+    )
     if (status !== StatusCodes.OK) {
-      throw error;
+      throw error
     }
 
-    return Quizz.fromJson(response);
+    return Quizz.fromJson(response)
   }
 
   /**
@@ -60,13 +61,13 @@ export class QuizzService {
     const { status, response, error } = await this.httpService.post(
       `/quizzes`,
       { body: data }
-    );
+    )
 
     if (status !== StatusCodes.CREATED) {
-      throw error;
+      throw error
     }
 
-    return Quizz.fromJson(response);
+    return Quizz.fromJson(response)
   }
 
   /**
@@ -79,33 +80,33 @@ export class QuizzService {
     const { status, response, error } = await this.httpService.put(
       `/quizzes/${id}`,
       { body: data }
-    );
+    )
 
     if (status !== StatusCodes.OK) {
-      throw error;
+      throw error
     }
 
-    return Quizz.fromJson(response);
+    return Quizz.fromJson(response)
   }
 
   async deleteQuizz(id: string): Promise<Quizz> {
     const { status, response, error } = await this.httpService.delete(
       `/quizzes/${id}`
-    );
+    )
 
     if (status !== StatusCodes.OK) {
-      throw error;
+      throw error
     }
 
-    return Quizz.fromJson(response);
+    return Quizz.fromJson(response)
   }
 
   importFromFile(fileContent: string): Quizz | undefined {
-    const { questions } = QuizzParser.parse(fileContent);
+    const { questions } = QuizzParser.parse(fileContent)
     return Quizz.fromJson({
       ...Quizz.default(),
       questions,
-    });
+    })
   }
 
   async getQuizzesAttempts(
@@ -116,13 +117,13 @@ export class QuizzService {
       `/quizzes/${quizzId}/attempts${this.filterService.buildFilters({
         ...filters,
       })}`
-    );
+    )
 
     if (status !== StatusCodes.OK) {
-      throw error;
+      throw error
     }
 
-    const { data, ...rest } = response;
-    return { ...rest, data: data.map(Attempt.fromJson) };
+    const { data, ...rest } = response
+    return { ...rest, data: data.map(Attempt.fromJson) }
   }
 }

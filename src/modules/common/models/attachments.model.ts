@@ -1,4 +1,4 @@
-import { IAttachment } from "../types/attachments.type";
+import { IAttachment } from '../types/attachments.type'
 
 export class Attachment {
   private constructor(
@@ -13,7 +13,7 @@ export class Attachment {
    * @returns {VideoAttachment}
    */
   static fromJson(json: IAttachment): Attachment {
-    return new Attachment(json.id, json.label, json.url);
+    return new Attachment(json.id, json.label, json.url)
   }
 
   /**
@@ -21,7 +21,7 @@ export class Attachment {
    * @returns {string} the attachment label
    */
   get label(): string {
-    return this._label;
+    return this._label
   }
 
   /**
@@ -29,7 +29,7 @@ export class Attachment {
    * @returns {string} the attachment url
    */
   get url(): string {
-    return this._url;
+    return this._url
   }
 
   /**
@@ -37,6 +37,6 @@ export class Attachment {
    * @returns {string} the attachment id
    */
   get id(): string {
-    return this._id;
+    return this._id
   }
 }

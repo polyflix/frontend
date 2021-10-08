@@ -1,15 +1,16 @@
-import { Inject, Injectable } from "@polyflix/di";
-import axios from "axios";
-import { StatusCodes } from "http-status-codes";
-import { HttpService } from "../../common/services";
-import { MinioFile } from "../models/files/minio-file.model";
-import { IUploadStrategy, PresignedUrl } from "../types/upload.type";
-import { SubtitleLanguages } from "../../videos";
+import { Inject, Injectable } from '@polyflix/di'
+import axios from 'axios'
+import { StatusCodes } from 'http-status-codes'
+
+import { HttpService } from '../../common/services'
+import { SubtitleLanguages } from '../../videos'
+import { MinioFile } from '../models/files/minio-file.model'
+import { IUploadStrategy, PresignedUrl } from '../types/upload.type'
 
 @Injectable()
 export class MinioService implements IUploadStrategy<MinioFile> {
   constructor(
-    @Inject("minio.url") private readonly minioUrl: string,
+    @Inject('minio.url') private readonly minioUrl: string,
     private readonly httpService: HttpService
   ) {}
 
@@ -26,12 +27,12 @@ export class MinioService implements IUploadStrategy<MinioFile> {
           await this.getVideoPutPresignedUrl(
             file.getMinioFilename(),
             file.getBucketName()
-          );
-        await axios.put(presignedUrl, file.getBlob());
+          )
+        await axios.put(presignedUrl, file.getBlob())
       }
-      return files;
+      return files
     } catch (error) {
-      throw error;
+      throw error
     }
   }
 
@@ -48,11 +49,11 @@ export class MinioService implements IUploadStrategy<MinioFile> {
   ): Promise<PresignedUrl> {
     const { status, response, error } = await this.httpService.get(
       `/token/video/upload?fileName=${fileName}&bucketName=${bucketName}`
-    );
+    )
     if (status !== StatusCodes.OK) {
-      throw error;
+      throw error
     }
-    return response;
+    return response
   }
 
   /**
@@ -64,11 +65,11 @@ export class MinioService implements IUploadStrategy<MinioFile> {
   public async getVideoPresignedUrl(videoId: string): Promise<PresignedUrl> {
     const { status, response, error } = await this.httpService.get(
       `/token/video/${videoId}`
-    );
+    )
     if (status !== StatusCodes.OK) {
-      throw error;
+      throw error
     }
-    return response;
+    return response
   }
 
   /**
@@ -84,10 +85,10 @@ export class MinioService implements IUploadStrategy<MinioFile> {
   ): Promise<PresignedUrl> {
     const { status, response, error } = await this.httpService.get(
       `/token/video/${videoId}/subtitle/${language}`
-    );
+    )
     if (status !== StatusCodes.OK) {
-      throw error;
+      throw error
     }
-    return response;
+    return response
   }
 }

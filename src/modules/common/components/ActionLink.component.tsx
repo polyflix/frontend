@@ -1,15 +1,16 @@
-import { Typography } from "../../ui";
-import { cn } from "../utils";
-import { Link } from "react-router-dom";
-import React from "react";
+import React from 'react'
+import { Link } from 'react-router-dom'
+
+import { Typography } from '../../ui'
+import { cn } from '../utils'
 
 type Props = {
-  Icon: any;
-  text: string;
-  to?: string;
-  className?: string;
-  onClick?: () => void;
-};
+  Icon: any
+  text: string
+  to?: string
+  className?: string
+  onClick?: () => void
+}
 
 /**
  * Generic link where there is an icon on left & a text on its right
@@ -26,23 +27,23 @@ export const ActionLink: React.FC<Props> = ({
   Icon,
   text,
   to,
-  className = "",
+  className = '',
   onClick,
 }) => {
   const content = (
     <Typography
       as="span"
       className={cn(
-        "flex text-sm md:text-base hover:underline cursor-pointer hover:text-nx-red",
+        'flex text-sm md:text-base hover:underline cursor-pointer hover:text-nx-red',
         className
       )}
     >
       <Icon className="w-4 md:w-5 mr-2 text-nx-red" /> {text}
     </Typography>
-  );
+  )
   return to ? (
     <Link to={to}>{content}</Link>
   ) : (
     <span onClick={onClick}>{content}</span>
-  );
-};
+  )
+}

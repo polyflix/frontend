@@ -1,12 +1,13 @@
-import React from "react";
-import { Route, Switch, useRouteMatch } from "react-router-dom";
-import LoginPage from "./login.page";
-import RegisterPage from "./register.page";
-import ValidatePage from "./validate.page";
-import ResetPasswordPage from "./resetPassword.page";
+import React from 'react'
+import { Route, Switch, useRouteMatch } from 'react-router-dom'
+
+import LoginPage from './login.page'
+import RegisterPage from './register.page'
+import ResetPasswordPage from './resetPassword.page'
+import ValidatePage from './validate.page'
 
 export const AuthRouter: React.FC = () => {
-  const { path } = useRouteMatch();
+  const { path } = useRouteMatch()
 
   return (
     <Switch>
@@ -19,5 +20,5 @@ export const AuthRouter: React.FC = () => {
         component={ResetPasswordPage}
       />
     </Switch>
-  );
-};
+  )
+}

@@ -1,12 +1,12 @@
-import { IVideo, VideoSource } from "../types";
-import WatchMetadata from "../../stats/models/userMeta.model";
-import { SubtitleLanguages } from "./subtitle.model";
-import { Publisher } from "../../common/models";
-import { PolyflixLanguage } from "../../common/types/language.type";
-import { getSubtitleLanguageFromPolyflix } from "../../common/utils/language.util";
-import { Tag } from "../../tags/models/tag.model";
-import { Attachment } from "../../common/models/attachments.model";
-import { Visibility } from "../../common/types/crud.type";
+import { Publisher } from '../../common/models'
+import { Attachment } from '../../common/models/attachments.model'
+import { Visibility } from '../../common/types/crud.type'
+import { PolyflixLanguage } from '../../common/types/language.type'
+import { getSubtitleLanguageFromPolyflix } from '../../common/utils/language.util'
+import WatchMetadata from '../../stats/models/userMeta.model'
+import { Tag } from '../../tags/models/tag.model'
+import { IVideo, VideoSource } from '../types'
+import { SubtitleLanguages } from './subtitle.model'
 
 /**
  * Modelize the Video
@@ -61,11 +61,11 @@ export class Video {
       json.availableLanguages,
       json.tags && json.tags.map(Tag.fromJson),
       json.attachments.map((attachment) => Attachment.fromJson(attachment))
-    );
+    )
   }
 
   get availableLanguages(): SubtitleLanguages[] {
-    return this._availableLanguages;
+    return this._availableLanguages
   }
 
   /**
@@ -74,8 +74,8 @@ export class Video {
    */
   get shortDescription(): string {
     return this._description.length > 150
-      ? this._description.slice(0, 150) + "..."
-      : this._description;
+      ? this._description.slice(0, 150) + '...'
+      : this._description
   }
 
   /**
@@ -83,7 +83,7 @@ export class Video {
    * @returns {string} the video id
    */
   get id(): string {
-    return this._id;
+    return this._id
   }
 
   /**
@@ -91,14 +91,14 @@ export class Video {
    * @returns {string} the video title
    */
   get title(): string {
-    return this._title;
+    return this._title
   }
 
   get shortTitle(): string {
-    const MAX_TITLE_LENGTH = 40;
+    const MAX_TITLE_LENGTH = 40
     return this._title.length > MAX_TITLE_LENGTH
-      ? this._title.slice(0, MAX_TITLE_LENGTH) + "..."
-      : this._title;
+      ? this._title.slice(0, MAX_TITLE_LENGTH) + '...'
+      : this._title
   }
 
   /**
@@ -106,7 +106,7 @@ export class Video {
    * @returns {string} the video slug
    */
   get slug(): string {
-    return this._slug;
+    return this._slug
   }
 
   /**
@@ -114,7 +114,7 @@ export class Video {
    * @returns {string} the video description
    */
   get description(): string {
-    return this._description;
+    return this._description
   }
 
   /**
@@ -122,7 +122,7 @@ export class Video {
    * @returns {string} the video thumbnail URL
    */
   get thumbnail(): string {
-    return this._thumbnail;
+    return this._thumbnail
   }
 
   /**
@@ -130,7 +130,7 @@ export class Video {
    * @returns {Visibility} string of the value
    */
   get visibility(): Visibility {
-    return this._visibility;
+    return this._visibility
   }
 
   /**
@@ -138,7 +138,7 @@ export class Video {
    * @returns {boolean} true if the video is a draft, false otherwise
    */
   get draft(): boolean {
-    return this._draft;
+    return this._draft
   }
 
   /**
@@ -147,7 +147,7 @@ export class Video {
    * @returns {null} Nothing stored so returns nothing
    */
   get userMeta(): WatchMetadata | undefined {
-    return this._userMeta;
+    return this._userMeta
   }
 
   /**
@@ -155,7 +155,7 @@ export class Video {
    * @returns {Publisher} the video publisher
    */
   get publisher(): Publisher | null {
-    return this._publisher;
+    return this._publisher
   }
 
   /**
@@ -166,42 +166,42 @@ export class Video {
   get src(): string {
     switch (this._sourceType) {
       case VideoSource.YOUTUBE:
-        return `https://www.youtube-nocookie.com/embed/${this._source}`;
+        return `https://www.youtube-nocookie.com/embed/${this._source}`
       default:
-        return this._source;
+        return this._source
     }
   }
 
   get srcRaw(): string {
-    return this._source;
+    return this._source
   }
 
   get srcType(): VideoSource {
-    return this._sourceType;
+    return this._sourceType
   }
 
   private get link(): string {
-    return `/watch?v=${this._slug}`;
+    return `/watch?v=${this._slug}`
   }
 
   get views(): number {
-    return this._views;
+    return this._views
   }
 
   get likes(): number {
-    return this._likes;
+    return this._likes
   }
 
   set likes(nbLike: number) {
-    this._likes = nbLike;
+    this._likes = nbLike
   }
 
   get createdAt(): Date {
-    return new Date(this._createdAt);
+    return new Date(this._createdAt)
   }
 
   get tags(): Tag[] {
-    return this._tags;
+    return this._tags
   }
 
   /**
@@ -209,7 +209,7 @@ export class Video {
    * @returns {Attachment[]} List of attachments
    */
   get attachments(): Attachment[] | [] {
-    return this._attachments;
+    return this._attachments
   }
 
   /**
@@ -217,7 +217,7 @@ export class Video {
    * @returns {string} the stream link for the video
    */
   getStreamLink(): string {
-    return `${this.link}`;
+    return `${this.link}`
   }
 
   /**
@@ -225,14 +225,14 @@ export class Video {
    * @returns {string} the video info link
    */
   getInfoLink(): string {
-    return this.link;
+    return this.link
   }
 
   /**
    * Returns a link to go to statistics page
    */
   getStatsLink(): string {
-    return `/videos/${this._slug}/statistics`;
+    return `/videos/${this._slug}/statistics`
   }
 
   /**
@@ -241,8 +241,8 @@ export class Video {
    */
   getEditLink(): string {
     if (this._sourceType === VideoSource.INTERNAL)
-      return `/videos/update/${this._slug}?type=upload`;
-    return `/videos/update/${this._slug}`;
+      return `/videos/update/${this._slug}?type=upload`
+    return `/videos/update/${this._slug}`
   }
 
   /**
@@ -250,7 +250,7 @@ export class Video {
    * @returns {SubtitleLanguages[]} List of available languages
    */
   getSubtitleLanguages(): SubtitleLanguages[] {
-    return this._availableLanguages;
+    return this._availableLanguages
   }
 
   /**
@@ -261,15 +261,15 @@ export class Video {
   selectProperLanguage(
     currentLang: PolyflixLanguage
   ): SubtitleLanguages | undefined {
-    const languages = this.getSubtitleLanguages();
-    if (languages.length === 0) return;
+    const languages = this.getSubtitleLanguages()
+    if (languages.length === 0) return
     // Can't use languages[0], as we don't want index error if it is not as 0
-    else if (languages.length === 1) return languages.find((_) => true);
+    else if (languages.length === 1) return languages.find(() => true)
 
     return (
       languages.find(
         (l) => l === getSubtitleLanguageFromPolyflix(currentLang)
-      ) ?? languages.find((_) => true)
-    );
+      ) ?? languages.find(() => true)
+    )
   }
 }

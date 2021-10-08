@@ -1,15 +1,16 @@
-import React from "react";
-import { useTranslation } from "react-i18next";
-import { Container, fadeOpacity, Page, stagger } from "../../../ui";
-import { ProfileForm } from "../../components/Forms/ProfileForm.component";
-import { motion } from "framer-motion";
-import { ProfileHeadButtons } from "../../components/ProfileHeadButtons.component";
+import { motion } from 'framer-motion'
+import React from 'react'
+import { useTranslation } from 'react-i18next'
+
+import { Container, fadeOpacity, Page, stagger } from '../../../ui'
+import { ProfileForm } from '../../components/Forms/ProfileForm.component'
+import { ProfileHeadButtons } from '../../components/ProfileHeadButtons.component'
 
 export const ProfilePage: React.FC = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslation()
 
   return (
-    <Page variants={fadeOpacity} title={t("userProfile.seo.title")}>
+    <Page variants={fadeOpacity} title={t('userProfile.seo.title')}>
       <Container mxAuto>
         <motion.div
           variants={stagger(0.1)}
@@ -21,5 +22,5 @@ export const ProfilePage: React.FC = () => {
         </motion.div>
       </Container>
     </Page>
-  );
-};
+  )
+}

@@ -1,44 +1,45 @@
-import { useInjection } from "@polyflix/di";
-import { VttFile, Block } from "@polyflix/vtt-parser";
-import React, { useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
-import { useDispatch } from "react-redux";
-import { WithClassname, cn } from "../../common";
-import { PolyflixLanguage } from "../../common/types/language.type";
-import { Alert, GhostText } from "../../ui";
-import { MinioService } from "../../upload/services/minio.service";
-import { Subtitle, Video } from "../../videos";
-import { SubtitleService } from "../../videos/services";
-import { SubtitleFetchingState } from "../pages/collaborative-subtitle-editing.page";
-import { SetBlockSuccess } from "../redux/actions/subtitle-improvement.action";
-import { SubtitleBlock } from "./subtitle-block.component";
+import { useInjection } from '@polyflix/di'
+import { Block, VttFile } from '@polyflix/vtt-parser'
+import React, { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { useDispatch } from 'react-redux'
+
+import { cn, WithClassname } from '../../common'
+import { PolyflixLanguage } from '../../common/types/language.type'
+import { Alert, GhostText } from '../../ui'
+import { MinioService } from '../../upload/services/minio.service'
+import { Subtitle, Video } from '../../videos'
+import { SubtitleService } from '../../videos/services'
+import { SubtitleFetchingState } from '../pages/collaborative-subtitle-editing.page'
+import { SetBlockSuccess } from '../redux/actions/subtitle-improvement.action'
+import { SubtitleBlock } from './subtitle-block.component'
 
 type SubtitleEditorPanelProps = WithClassname & {
-  video: Video | undefined;
-  playerRef: React.RefObject<HTMLVmPlayerElement> | undefined;
-};
+  video: Video | undefined
+  playerRef: React.RefObject<HTMLVmPlayerElement> | undefined
+}
 
 export const SubtitleEditorPanel: React.FC<SubtitleEditorPanelProps> = ({
   video,
   playerRef,
-  className = "",
+  className = '',
 }) => {
-  const { i18n, t } = useTranslation();
-  const [subtitles, setSubtitles] = useState<SubtitleFetchingState>();
-  const minioService = useInjection<MinioService>(MinioService);
-  const subtitleService = useInjection<SubtitleService>(SubtitleService);
+  const { i18n, t } = useTranslation()
+  const [subtitles, setSubtitles] = useState<SubtitleFetchingState>()
+  const minioService = useInjection<MinioService>(MinioService)
+  const subtitleService = useInjection<SubtitleService>(SubtitleService)
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
 
   useEffect(() => {
     setSubtitles({
-      state: "loading",
-    });
-    if (!video) return;
+      state: 'loading',
+    })
+    if (!video) return
     const language = video.selectProperLanguage(
       i18n.language as PolyflixLanguage
-    );
-    if (!language) return;
+    )
+    if (!language) return
     subtitleService
       .getSubtitleUrlByVideoId(video?.id)
       .then((s: Subtitle[]) => s)
@@ -46,43 +47,43 @@ export const SubtitleEditorPanel: React.FC<SubtitleEditorPanelProps> = ({
         minioService
           .getSubtitlePresignedUrl(video.id, language)
           .then(async ({ tokenAccess }) => {
-            const subtitles = new Subtitle(
+            const data = new Subtitle(
               language,
               tokenAccess,
               await VttFile.fromUrl(tokenAccess),
               s[0].id
-            );
+            )
             setSubtitles({
-              state: "succeed",
-              subtitle: subtitles,
-              blocks: subtitles.getBlocks(),
-            });
-            subtitles
+              state: 'succeed',
+              subtitle: data,
+              blocks: data.getBlocks(),
+            })
+            data
               .getBlocks()
               ?.map((block) =>
                 dispatch(SetBlockSuccess(block.startTime, block.text))
-              );
+              )
           })
-          .catch((_) => {
+          .catch(() => {
             setSubtitles({
-              state: "error",
-            });
+              state: 'error',
+            })
           })
       )
-      .catch((_) => {
+      .catch(() => {
         setSubtitles({
-          state: "error",
-        });
-      });
-  }, [dispatch, i18n, minioService, subtitleService, video]);
+          state: 'error',
+        })
+      })
+  }, [dispatch, i18n, minioService, subtitleService, video])
 
-  const blocks = subtitles?.blocks;
+  const blocks = subtitles?.blocks
 
   return playerRef && subtitles && blocks ? (
     <div
       className={cn(
         className,
-        "lg:ml-4 flex flex-col gap-2 pt-4 lg:p-2 box-border"
+        'lg:ml-4 flex flex-col gap-2 pt-4 lg:p-2 box-border'
       )}
     >
       {video && blocks.length > 0 ? (
@@ -98,16 +99,16 @@ export const SubtitleEditorPanel: React.FC<SubtitleEditorPanelProps> = ({
       ) : (
         <div className="w-full h-full flex items-center justify-center">
           <Alert type="not-found" className="col-span-2">
-            {t("shared.common.errors.noData")}
+            {t('shared.common.errors.noData')}
           </Alert>
         </div>
       )}
     </div>
-  ) : subtitles?.state === "loading" ? (
+  ) : subtitles?.state === 'loading' ? (
     <div
       className={cn(
         className,
-        "lg:ml-4 flex flex-col gap-6 pt-4 lg:p-2 box-border justify-between h-full"
+        'lg:ml-4 flex flex-col gap-6 pt-4 lg:p-2 box-border justify-between h-full'
       )}
     >
       {new Array(5).fill(0).map((_, i: number) => (
@@ -121,14 +122,14 @@ export const SubtitleEditorPanel: React.FC<SubtitleEditorPanelProps> = ({
     <div
       className={cn(
         className,
-        "lg:ml-4 flex flex-col gap-2 pt-4 lg:p-2 box-border"
+        'lg:ml-4 flex flex-col gap-2 pt-4 lg:p-2 box-border'
       )}
     >
-      {subtitles?.state === "error" && (
+      {subtitles?.state === 'error' && (
         <Alert type="not-found" className="w-1/3">
-          {t("shared.common.errors.common")}
+          {t('shared.common.errors.common')}
         </Alert>
       )}
     </div>
-  );
-};
+  )
+}

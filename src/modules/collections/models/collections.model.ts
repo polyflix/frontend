@@ -1,8 +1,8 @@
-import { AccessPassword, ICollection } from "../types";
-import { Video } from "../../videos/models/video.model";
-import { Publisher } from "../../common/models";
-import { Tag } from "../../tags/models/tag.model";
-import { Visibility } from "../../common/types/crud.type";
+import { Publisher } from '../../common/models'
+import { Visibility } from '../../common/types/crud.type'
+import { Tag } from '../../tags/models/tag.model'
+import { Video } from '../../videos/models/video.model'
+import { AccessPassword, ICollection } from '../types'
 
 /**
  * Modelize the Collection
@@ -45,7 +45,7 @@ export class Collection {
       json.videos && json.videos.map((video) => Video.fromJson(video)),
       json.passwords,
       json.tags && json.tags.map(Tag.fromJson)
-    );
+    )
   }
 
   /**
@@ -54,8 +54,8 @@ export class Collection {
    */
   get shortDescription(): string {
     return this._description.length > 150
-      ? this._description.slice(0, 150) + "..."
-      : this._description;
+      ? this._description.slice(0, 150) + '...'
+      : this._description
   }
 
   /**
@@ -63,7 +63,7 @@ export class Collection {
    * @returns {string} the collection id
    */
   get id(): string {
-    return this._id;
+    return this._id
   }
 
   /**
@@ -71,7 +71,7 @@ export class Collection {
    * @returns {string} the collection title
    */
   get title(): string {
-    return this._title;
+    return this._title
   }
 
   /**
@@ -79,7 +79,7 @@ export class Collection {
    * @returns {string} the collection slug
    */
   get slug(): string {
-    return this._slug;
+    return this._slug
   }
 
   /**
@@ -87,7 +87,7 @@ export class Collection {
    * @returns {string} the collection description
    */
   get description(): string {
-    return this._description;
+    return this._description
   }
 
   /**
@@ -95,7 +95,7 @@ export class Collection {
    * @returns {Visibility} string of the value
    */
   get visibility(): Visibility {
-    return this._visibility;
+    return this._visibility
   }
 
   /**
@@ -103,7 +103,7 @@ export class Collection {
    * @returns {boolean} true if the video is a draft, false otherwise
    */
   get draft(): boolean {
-    return this._draft;
+    return this._draft
   }
 
   /**
@@ -111,7 +111,7 @@ export class Collection {
    * @returns {Video[]} the collection videos
    */
   get videos(): Video[] {
-    return this._videos;
+    return this._videos
   }
 
   /**
@@ -119,7 +119,7 @@ export class Collection {
    * @returns {Video[]} the collection videos
    */
   get tags(): Tag[] {
-    return this._tags;
+    return this._tags
   }
 
   /**
@@ -127,7 +127,7 @@ export class Collection {
    * @returns {Publisher} the collection publisher
    */
   get publisher(): Publisher | null {
-    return this._publisher;
+    return this._publisher
   }
 
   /**
@@ -135,11 +135,11 @@ export class Collection {
    * @returns {AccessPassword[]} the collection passwords
    */
   get passwords(): AccessPassword[] {
-    return this._passwords;
+    return this._passwords
   }
 
   private get link(): string {
-    return `/collections/${this._slug}`;
+    return `/collections/${this._slug}`
   }
 
   /**
@@ -147,7 +147,7 @@ export class Collection {
    * @returns {string} the Course info link
    */
   getInfoLink(): string {
-    return this.link;
+    return this.link
   }
 
   /**
@@ -155,10 +155,10 @@ export class Collection {
    * @returns {}
    */
   getEditLink(): string {
-    return `/collections/update/${this._slug}`;
+    return `/collections/update/${this._slug}`
   }
 
   get createdAt(): Date {
-    return new Date(this._createdAt);
+    return new Date(this._createdAt)
   }
 }

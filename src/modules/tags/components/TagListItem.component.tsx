@@ -2,25 +2,26 @@ import {
   CheckCircleIcon,
   EyeOffIcon,
   TrashIcon,
-} from "@heroicons/react/outline";
-import React, { useState } from "react";
-import { useTranslation } from "react-i18next";
-import { Alert } from "../../ui/components";
-import { Typography } from "../../ui/components/Typography/Typography.component";
-import { Tag } from "../models/tag.model";
-import { Notification } from "../../ui/components/Notification/Notification.component";
-import { ActionLink } from "../../common/components/ActionLink.component";
-import { Link } from "react-router-dom";
+} from '@heroicons/react/outline'
+import React, { useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { Link } from 'react-router-dom'
+
+import { ActionLink } from '../../common/components/ActionLink.component'
+import { Alert } from '../../ui/components'
+import { Notification } from '../../ui/components/Notification/Notification.component'
+import { Typography } from '../../ui/components/Typography/Typography.component'
+import { Tag } from '../models/tag.model'
 
 type Props = {
-  tag: Tag;
-  onDelete: (tag: Tag) => void;
-  onReviewed: (tag: Tag) => void;
-};
+  tag: Tag
+  onDelete: (tag: Tag) => void
+  onReviewed: (tag: Tag) => void
+}
 
 export const TagListItem: React.FC<Props> = ({ tag, onDelete, onReviewed }) => {
-  const [open, setOpen] = useState<boolean>(false);
-  const { t } = useTranslation();
+  const [open, setOpen] = useState<boolean>(false)
+  const { t } = useTranslation()
 
   return (
     <div className="flex my-5 p-2 rounded transition hover:bg-nx-dark">
@@ -29,7 +30,7 @@ export const TagListItem: React.FC<Props> = ({ tag, onDelete, onReviewed }) => {
           <div className="col-span-10">
             <Alert type="error">
               <Typography bold as="span" className="text-sm">
-                {t("shared.common.actions.delete")} {tag.label} ?
+                {t('shared.common.actions.delete')} {tag.label} ?
               </Typography>
             </Alert>
           </div>
@@ -39,7 +40,7 @@ export const TagListItem: React.FC<Props> = ({ tag, onDelete, onReviewed }) => {
                 as="span"
                 className="text-sm transition-all hover:underline"
               >
-                {t("shared.common.actions.cancel")}
+                {t('shared.common.actions.cancel')}
               </Typography>
             </div>
             <div className="mx-3"></div>
@@ -47,8 +48,8 @@ export const TagListItem: React.FC<Props> = ({ tag, onDelete, onReviewed }) => {
               <div
                 className="cursor-pointer"
                 onClick={() => {
-                  setOpen(false);
-                  onDelete(tag);
+                  setOpen(false)
+                  onDelete(tag)
                 }}
               >
                 <Typography
@@ -56,7 +57,7 @@ export const TagListItem: React.FC<Props> = ({ tag, onDelete, onReviewed }) => {
                   className="text-nx-red text-sm transition-all hover:underline"
                   overrideDefaultClasses
                 >
-                  {t("shared.common.actions.delete")}
+                  {t('shared.common.actions.delete')}
                 </Typography>
               </div>
             )}
@@ -85,13 +86,13 @@ export const TagListItem: React.FC<Props> = ({ tag, onDelete, onReviewed }) => {
               {tag.isReviewed ? (
                 <>
                   <Typography as="span" className="hover:font-bold">
-                    {`${t("shared.common.form.tags.reviewed")}`}
+                    {`${t('shared.common.form.tags.reviewed')}`}
                   </Typography>
                 </>
               ) : (
                 <>
                   <Typography as="span" className="hover:font-bold">
-                    {`${t("shared.common.form.tags.notReviewed")}`}
+                    {`${t('shared.common.form.tags.notReviewed')}`}
                   </Typography>
                 </>
               )}
@@ -102,11 +103,11 @@ export const TagListItem: React.FC<Props> = ({ tag, onDelete, onReviewed }) => {
           <ActionLink
             Icon={TrashIcon}
             onClick={() => setOpen(true)}
-            text={t("shared.common.actions.delete")}
-            className={"ml-4"}
+            text={t('shared.common.actions.delete')}
+            className={'ml-4'}
           />
         </div>
       </div>
     </div>
-  );
-};
+  )
+}

@@ -1,10 +1,10 @@
-import { User } from "../../users";
-import { Subtitle } from "../../videos";
+import { User } from '../../users'
+import { Subtitle } from '../../videos'
 import {
   ISubtitleImprovement,
   SubtitleImprovementStatus,
-} from "../types/subtitle-improvement.type";
-import { SubtitleImprovementMeta } from "./subtitle-improvement-meta.model";
+} from '../types/subtitle-improvement.type'
+import { SubtitleImprovementMeta } from './subtitle-improvement-meta.model'
 
 /**
  * Modelize the Video
@@ -42,58 +42,58 @@ export class SubtitleImprovement {
       json.subtitleImprovementMeta,
       json.createdAt,
       json.updatedAt
-    );
+    )
   }
 
   get id(): string {
-    return this._id as string;
+    return this._id as string
   }
 
   get subtitle(): Subtitle {
-    return this._subtitle;
+    return this._subtitle
   }
 
   get comment(): string {
-    return this._comment;
+    return this._comment
   }
 
   get timestamp(): number {
-    return this._timestamp;
+    return this._timestamp
   }
 
   get likes(): number {
-    return this._likes as number;
+    return this._likes as number
   }
 
   set likes(count: number) {
-    this._likes = count;
+    this._likes = count
   }
 
   get isApproved(): boolean {
-    return this._isApproved as boolean;
+    return this._isApproved as boolean
   }
 
   set isApproved(status: boolean) {
-    this._isApproved = status;
+    this._isApproved = status
   }
 
   get createdBy(): User | undefined {
-    return this._createdBy;
+    return this._createdBy
   }
 
   get subtitleImprovementMeta(): SubtitleImprovementMeta {
-    return this._subtitleImprovementMeta as SubtitleImprovementMeta;
+    return this._subtitleImprovementMeta as SubtitleImprovementMeta
   }
 
   get createdAt(): Date {
-    return new Date(this._createdAt as Date);
+    return new Date(this._createdAt as Date)
   }
 
   get updatedAt(): Date {
-    return new Date(this._updatedAt as Date);
+    return new Date(this._updatedAt as Date)
   }
 
   get status(): SubtitleImprovementStatus {
-    return this._status as SubtitleImprovementStatus;
+    return this._status as SubtitleImprovementStatus
   }
 }

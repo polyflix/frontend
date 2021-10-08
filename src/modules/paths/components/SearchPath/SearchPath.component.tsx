@@ -1,37 +1,38 @@
-import React, { useState } from "react";
-import { CourseList } from "../CourseList/CourseList.component";
-import { motion } from "framer-motion";
-import { WithClassname, WithMotion } from "../../../common";
-import { useInjection } from "@polyflix/di";
-import { Course, CourseService } from "../../../courses";
+import { useInjection } from '@polyflix/di'
+import { motion } from 'framer-motion'
+import React, { useState } from 'react'
+
+import { WithClassname, WithMotion } from '../../../common'
+import { Course, CourseService } from '../../../courses'
+import { CourseList } from '../CourseList/CourseList.component'
 
 type Props = WithClassname &
-  WithMotion & { addCourse: (course: Course) => void; placeholder: string };
+  WithMotion & { addCourse: (course: Course) => void; placeholder: string }
 
 export const SearchPath: React.FC<Props> = ({
   addCourse,
   placeholder,
   ...rest
 }) => {
-  const courseService = useInjection<CourseService>(CourseService);
+  const courseService = useInjection<CourseService>(CourseService)
 
-  const [input, setInput] = useState<string>("");
-  const [courseList, setCourseList] = useState<Course[]>([]);
+  const [input, setInput] = useState<string>('')
+  const [courseList, setCourseList] = useState<Course[]>([])
 
   const onClickCourse = (course: Course) => {
-    addCourse(course);
-    setInput("");
-    setCourseList([]);
-  };
+    addCourse(course)
+    setInput('')
+    setCourseList([])
+  }
 
   const search = async (title: string) => {
     let paginatedCourses = await courseService.getCourses({
       title,
       exact: false,
-    });
-    setInput(title);
-    setCourseList(paginatedCourses.items);
-  };
+    })
+    setInput(title)
+    setCourseList(paginatedCourses.items)
+  }
 
   return (
     <motion.div
@@ -53,5 +54,5 @@ export const SearchPath: React.FC<Props> = ({
         />
       ) : null}
     </motion.div>
-  );
-};
+  )
+}
