@@ -104,7 +104,7 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
 
   // We need to do this to get the value of textarea that isn't working with only description in useForm
   const [desc, setDesc] = useState<string | undefined>(
-    video?.description ?? t("videoManagement.inputs.description.name")
+    video?.description ?? ""
   );
   const onChange = (value: string) => {
     setDesc(value);
@@ -225,6 +225,7 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
     return {
       autoSave: false,
       // uploadImage: true,
+      placeholder: t("videoManagement.inputs.description.name"),
       spellChecker: false,
       sideBySideFullscreen: false,
       minHeight: "550px",
@@ -247,7 +248,7 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
         "|" as const,
       ],
     };
-  }, []);
+  }, [t]);
 
   const save = async () => {
     const provider = await player.current?.getProvider();
