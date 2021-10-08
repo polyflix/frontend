@@ -18,13 +18,6 @@ export const HomePage: React.FC = () => {
     isPublished: true,
     order: "-views",
   });
-  let { data: watchedVideos, isLoading: isLoadingWatched } = useVideos({
-    isWatched: true,
-  });
-
-  const { data: watchingVideos, isLoading: isLoadingWatching } = useVideos({
-    isWatching: true,
-  });
   const { t } = useTranslation();
 
   function getRandomRange(min: number, max: number): number {
@@ -37,24 +30,15 @@ export const HomePage: React.FC = () => {
       withPadding={false}
       title={t("home.seo.title")}
     >
-      {data &&
-      data.items.length > 0 &&
-      !isLoading &&
-      !isLoadingWatched &&
-      !isLoadingWatching ? (
+      {data && !isLoading ? (
         <>
           <VideoHero video={data.items[0]} />
           <div className="pb-8" />
-          {data?.items &&
-          watchedVideos?.items &&
-          watchingVideos?.items &&
-          (data?.items.length ||
-            watchedVideos?.items.length ||
-            watchingVideos?.items.length) ? (
+          {data?.items && data?.items.length ? (
             <>
               <VideoSlider
                 title={t("home.sliders.continue_watching")}
-                videos={watchingVideos?.items}
+                videosFilter={{ isWatching: true }}
               />
               <div className="pb-16" />
               <VideoTile
@@ -63,17 +47,25 @@ export const HomePage: React.FC = () => {
               <div className="pb-16" />
               <VideoSlider
                 title={t("home.sliders.latest")}
-                videos={data.items}
+                videosFilter={{
+                  isPublic: true,
+                  isPublished: true,
+                  order: "-createdAt",
+                }}
               />
               <div className="pb-16" />
               <VideoSlider
                 title={t("home.sliders.popular")}
-                videos={data.items}
+                videosFilter={{
+                  isPublic: true,
+                  isPublished: true,
+                  order: "-views",
+                }}
               />
               <div className="pb-16" />
               <VideoSlider
                 title={t("home.sliders.watch_again")}
-                videos={watchedVideos?.items}
+                videosFilter={{ isWatched: true }}
               />
               <div className="pb-8" />
             </>
