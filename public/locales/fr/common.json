@@ -229,7 +229,7 @@
     "deleteAccountForm": {
       "submit": "Supprimer mon compte",
       "hint": "Veuillez confirmer la suppression de votre compte en renseignant votre adresse e-mail",
-      "warning": "Attention, cette action est définitive",
+      "warning": "Attention, cette action est définitive et ne supprimera pas le contenu publié par votre compte.",
       "wrongEmail": "Votre adresse e-mail est invalide"
     },
     "messages": {
@@ -629,5 +629,6 @@
     "descriptionNoData": "Aucun résultats trouvés, merci d'essayer d'autres étiquettes."
   },
   "switchLanguage": "Changer de langue",
-  "switchLanguageTo": "Modifier la langue vers {{ lang }}"
+  "switchLanguageTo": "Modifier la langue vers {{ lang }}",
+  "deletedAccount": "Compte supprimé"
 }

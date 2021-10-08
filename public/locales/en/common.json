@@ -223,7 +223,7 @@
     "deleteAccountForm": {
       "submit": "Delete my account",
       "hint": "Please enter your e-mail address to confirm the deletion of your account",
-      "warning": "Warning, this action cannot be reverted",
+      "warning": "Warning, this action cannot be reverted and won't delete content you already published.",
       "wrongEmail": "Your e-mail address is not valid"
     },
     "messages": {
@@ -633,5 +633,6 @@
     "descriptionNoData": "Your search returned no collections or videos, please try other tags."
   },
   "switchLanguage": "Switch language",
-  "switchLanguageTo": "Change language to {{ lang }}"
+  "switchLanguageTo": "Change language to {{ lang }}",
+  "deletedAccount": "Deleted account"
 }

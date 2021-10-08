@@ -12,6 +12,7 @@ import { QuizzService } from "../../services/quizz.service";
 import { asPercentage, getColor } from "../../util/quizz.util";
 import { QuizzAttemptListItem } from "../Attempts/QuizzAttemptListItem.component";
 import { DeleteQuizzModal } from "../DeleteQuizz/DeleteQuizz.component";
+import { ProfileUsername } from "../../../users/components/ProfileUsername/ProfileUsername.component";
 
 type Props = {
   quizz: Quizz;
@@ -75,9 +76,14 @@ export const QuizzListItem: React.FC<Props> = ({
               <Typography as="span" overrideDefaultClasses className="text-sm">
                 {t("quizzes.card.user")}{" "}
                 <Typography as="span" bold>
-                  {quizz.isCreator(user!)
-                    ? t("quizzes.card.me")
-                    : quizz.publisher?.displayName}
+                  {quizz.isCreator(user!) ? (
+                    t("quizzes.card.me")
+                  ) : (
+                    <ProfileUsername
+                      username={quizz.publisher?.displayName}
+                      lowercase
+                    />
+                  )}
                 </Typography>
               </Typography>
             </div>

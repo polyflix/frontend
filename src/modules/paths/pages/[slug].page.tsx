@@ -34,7 +34,7 @@ export const PathDetail: React.FC = () => {
           </Typography>
           <Typography as="h2" className="text-md italic">
             {t("shared.informations.publishedBy", {
-              user: _path.publisher?.displayName,
+              user: _path.publisher?.displayNameOrDeleted,
             })}
           </Typography>
           <Paragraph className="text-sm py-4 md:pr-1">

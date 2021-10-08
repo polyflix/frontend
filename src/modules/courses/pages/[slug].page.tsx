@@ -35,7 +35,7 @@ export const CourseDetail: React.FC = () => {
           </Typography>
           <Typography as="h2" className="text-md italic">
             {t("shared.informations.publishedBy", {
-              user: _course.publisher?.displayName,
+              user: _course.publisher?.displayNameOrDeleted,
             })}
           </Typography>
           <Paragraph className="text-sm py-4 md:pr-1">

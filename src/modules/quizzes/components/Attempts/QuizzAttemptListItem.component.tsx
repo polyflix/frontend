@@ -33,7 +33,7 @@ export const QuizzAttemptListItem = ({
         <Typography as="span" className="text-sm md:text-base">
           {t(
             `quizzes.history.attempt.date.text.${isLoggedUser ? "me" : "user"}`,
-            { user: attempt.user?.displayName }
+            { user: attempt.user?.displayNameOrDeleted }
           )}{" "}
           {attempt.createdAt.format(t("quizzes.history.attempt.date.format"))}
         </Typography>
