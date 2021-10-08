@@ -7,9 +7,5 @@ import { AuthState } from "../types/auth.type";
  * @returns {AuthState} the current AuthState
  */
 export const useAuth = (): AuthState => {
-  const state: AuthState = useSelector(
-    (state: RootState) => state.auth,
-    shallowEqual
-  );
-  return state;
+  return useSelector((rootState: RootState) => rootState.auth, shallowEqual);
 };

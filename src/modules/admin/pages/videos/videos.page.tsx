@@ -38,8 +38,8 @@ export const AdminVideoPage: React.FC = () => {
     setFinalPage
   );
 
-  const onVideoDelete = async (id: string) => {
-    await videoService.deleteVideo(id);
+  const onVideoDelete = async (videoId: string) => {
+    await videoService.deleteVideo(videoId);
     refresh();
   };
 

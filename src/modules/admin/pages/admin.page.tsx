@@ -3,8 +3,8 @@ import {
   BookOpenIcon,
   CollectionIcon,
   UserIcon,
+  TagIcon,
 } from "@heroicons/react/outline";
-import { TagIcon } from "@heroicons/react/outline";
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { CreateVideoCard } from "../../ui/components/Cards/CreateVideoCard/CreateVideoCard.component";
