@@ -23,7 +23,7 @@ import { Title } from "../../../ui/components/Typography/Title/Title.component";
 import { Typography } from "../../../ui/components/Typography/Typography.component";
 import { Video } from "../../models/video.model";
 import { VideoService } from "../../services/video.service";
-import { IVideoForm } from "../../types/videos.type";
+import { IVideoForm, VideoSource } from "../../types/videos.type";
 import { UploadButton } from "../../../ui/components/Buttons/UploadButton/UploadButton.component";
 import { ImageFile } from "../../../upload/models/files/image.model";
 import { VideoFile } from "../../../upload/models/files/video.model";
@@ -89,10 +89,13 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
     defaultValues: {
       title: video?.title,
       description: video?.description,
-      draft: video?.draft || true,
+      draft: video?.draft,
       visibility: video?.visibility || "public",
       thumbnail: video?.thumbnail,
-      src: video?.src.replace("-nocookie", ""),
+      src:
+        video?.srcType === VideoSource.YOUTUBE
+          ? "https://www.youtube.com/watch?v=" + video.src
+          : video?.src.replace("-nocookie", ""),
       attachments: video?.attachments,
     },
   });
@@ -127,8 +130,8 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
 
   const uploadFiles = async (data: IVideoForm) => {
     const uploadedFiles = await minioService.upload([
-      imageFile as MinioFile,
-      videoFile as MinioFile,
+      ...(imageFile ? [imageFile as MinioFile] : []),
+      ...(videoFile ? [videoFile as MinioFile] : []),
     ]);
     const attributes: (keyof IVideoForm)[] = ["thumbnail", "src"];
     attributes.forEach((attr) => {
@@ -139,9 +142,9 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
   };
 
   const thumbnailPreview =
+    imageFile?.getPreview() ||
     watchThumbnail ||
     video?.thumbnail ||
-    imageFile?.getPreview() ||
     "https://i.stack.imgur.com/y9DpT.jpg";
 
   const { fields, append, remove } = useFieldArray({
@@ -187,7 +190,8 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
     setLoading(true);
     setIsSubmit(true);
     try {
-      if (type === "upload") data = await uploadFiles(data);
+      if ((type === "upload" && imageFile) || videoFile)
+        data = await uploadFiles(data);
       data.description = desc || "";
       let result = await (isUpdate
         ? videoService.updateVideo(video?.id as string, {
