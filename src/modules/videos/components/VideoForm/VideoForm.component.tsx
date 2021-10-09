@@ -89,7 +89,7 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
     defaultValues: {
       title: video?.title,
       description: video?.description,
-      draft: video?.draft || true,
+      draft: video?.draft,
       visibility: video?.visibility || "public",
       thumbnail: video?.thumbnail,
       src:
