@@ -1,7 +1,6 @@
 import react from '@vitejs/plugin-react'
 import { resolve } from 'path'
 import { defineConfig } from 'vite'
-import eslintPlugin from 'vite-plugin-eslint'
 
 import replace from './.vite/replace.plugin'
 
@@ -24,6 +23,8 @@ export default defineConfig({
       '@theme': resolve(__dirname, './src/theme'),
       '@env': resolve(__dirname, './src/environments'),
       '@core': resolve(__dirname, './src/modules/core'),
+      '@auth': resolve(__dirname, './src/modules/authentication'),
+      '@users': resolve(__dirname, './src/modules/users'),
     },
   },
   plugins: [
@@ -36,7 +37,7 @@ export default defineConfig({
         ],
       },
     }),
-    eslintPlugin(),
+    // eslintPlugin(),
     replace(environmentReplacement),
   ],
 })
