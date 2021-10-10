@@ -3,6 +3,13 @@
   "tabWidth": 2,
   "semi": false,
   "singleQuote": true,
-  "importOrder": ["^@polyflix/(.*)$", "^@core/(.*)$", "^@theme/(.*)$", "^[./]"],
+  "importOrder": [
+    "^@polyflix/(.*)$",
+    "^@core/(.*)$",
+    "^@auth/(.*)$",
+    "^@users/(.*)$",
+    "^@theme/(.*)$",
+    "^[./]"
+  ],
   "importOrderSeparation": true
 }

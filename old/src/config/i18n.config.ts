@@ -1,7 +1,7 @@
-import i18n from "i18next";
-import LanguageDetector from "i18next-browser-languagedetector";
-import Backend from "i18next-http-backend";
-import { initReactI18next } from "react-i18next";
+import i18n from 'i18next'
+import LanguageDetector from 'i18next-browser-languagedetector'
+import Backend from 'i18next-http-backend'
+import { initReactI18next } from 'react-i18next'
 
 i18n
   // loads translations from your server
@@ -12,19 +12,20 @@ i18n
   .use(initReactI18next)
   // init i18next
   .init({
-    fallbackLng: "fr",
+    fallbackLng: 'fr',
     interpolation: {
       escapeValue: false, // not needed for react as it escapes by default
     },
     ns: [
-      "common",
-      "mediaPlayer",
-      "resources",
-      "dropzone",
-      "play-quizz",
-      "components",
+      'common',
+      'auth',
+      'mediaPlayer',
+      'resources',
+      'dropzone',
+      'play-quizz',
+      'components',
     ],
-    defaultNS: "common",
-  });
+    defaultNS: 'common',
+  })
 
-export default i18n;
+export default i18n

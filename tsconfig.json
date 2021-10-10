@@ -4,7 +4,9 @@
     "paths": {
       "@core/*": ["src/modules/core/*"],
       "@env/*": ["src/environments/*"],
-      "@theme/*": ["src/theme/*"]
+      "@theme/*": ["src/theme/*"],
+      "@auth/*": ["src/modules/authentication/*"],
+      "@users/*": ["src/modules/users/*"]
     },
     "target": "ESNext",
     "useDefineForClassFields": true,
