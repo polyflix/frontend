@@ -4,7 +4,7 @@ import { alpha, CSSObject, styled } from '@mui/system'
 import {
   MINIATURIZED_DRAWER_WIDTH,
   OPEN_DRAWER_WIDTH,
-} from '@core/layouts/Dashboardx/Dashboard.style'
+} from '@core/layouts/Dashboard/Dashboard.style'
 import { ease } from '@core/utils/transition'
 
 const AVATAR_WIDTH = 40

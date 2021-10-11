@@ -8,7 +8,7 @@ import { useSidebar } from '@core/hooks/useSidebar.hook'
 import {
   MINIATURIZED_DRAWER_WIDTH,
   OPEN_DRAWER_WIDTH,
-} from '@core/layouts/Dashboardx/Dashboard.style'
+} from '@core/layouts/Dashboard/Dashboard.style'
 import { ease } from '@core/utils/transition'
 
 import { Section } from './Section/Section.component'
