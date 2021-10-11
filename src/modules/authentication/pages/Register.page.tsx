@@ -1,35 +1,22 @@
-import { Box, Container, Link, Typography } from '@mui/material'
-import { styled } from '@mui/material/styles'
+import { Box, Button, Container, Link, Typography } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 import { Link as RouterLink } from 'react-router-dom'
 
 import { MHidden } from '@core/components/MHidden/MHidden.component'
-import { Page } from '@core/layouts/Page.layout'
 
 import { RegisterForm } from '@auth/components/Forms/RegisterForm.component'
 import { AuthLayout } from '@auth/components/Layouts/AuthLayout.component'
-
-const RootStyle = styled(Page)(({ theme }) => ({
-  [theme.breakpoints.up('md')]: {
-    display: 'flex',
-  },
-}))
-
-const ContentStyle = styled('div')(({ theme }) => ({
-  maxWidth: 480,
-  margin: 'auto',
-  display: 'flex',
-  minHeight: '100vh',
-  flexDirection: 'column',
-  justifyContent: 'center',
-  padding: theme.spacing(12, 0),
-}))
+import {
+  ContentAuthStyle,
+  RootAuthStyle,
+  SectionAuthStyle,
+} from '@auth/styles/Auth.style'
 
 export const RegisterPage = () => {
   const { t } = useTranslation('auth')
 
   return (
-    <RootStyle title={t('signUp.title')}>
+    <RootAuthStyle title={t('signUp.title')}>
       <AuthLayout>
         {t('signUp.header.links.login.label')}
         <Link
@@ -42,8 +29,20 @@ export const RegisterPage = () => {
         </Link>
       </AuthLayout>
 
-      <Container>
-        <ContentStyle>
+      <MHidden width="mdDown">
+        <SectionAuthStyle>
+          <Typography variant="h3">{t('signUp.sidebar.title')}</Typography>
+          <Typography sx={{ color: 'text.secondary', my: 3 }}>
+            {t('signUp.sidebar.description')}
+          </Typography>
+          <Button sx={{ py: 1 }} fullWidth variant="outlined">
+            {t('signUp.sidebar.cta')}
+          </Button>
+        </SectionAuthStyle>
+      </MHidden>
+
+      <Container maxWidth="sm">
+        <ContentAuthStyle>
           <Box sx={{ mb: 5 }}>
             <Typography variant="h4" gutterBottom>
               {t('signUp.title')}
@@ -74,14 +73,14 @@ export const RegisterPage = () => {
 
           <MHidden width="smUp">
             <Typography variant="subtitle2" sx={{ mt: 3, textAlign: 'center' }}>
-              Already have an account?&nbsp;
+              {t('signUp.header.links.login.label')}
               <Link to="/auth/login" component={RouterLink}>
-                Login
+                {t('signUp.header.links.login.link')}
               </Link>
             </Typography>
           </MHidden>
-        </ContentStyle>
+        </ContentAuthStyle>
       </Container>
-    </RootStyle>
+    </RootAuthStyle>
   )
 }

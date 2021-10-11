@@ -20,12 +20,12 @@ export const MHidden = ({ children, width }: PropsWithChildren<Props>) => {
   )
 
   if (width.includes('Down')) {
-    return hiddenDown ? null : children
+    return <>{hiddenDown ? null : children}</>
   }
 
   if (width.includes('Up')) {
-    return hiddenUp ? null : children
+    return <>{hiddenUp ? null : children}</>
   }
 
-  return null
+  return <></>
 }

@@ -7,11 +7,11 @@ import {
 } from '@mui/material/styles'
 import { PropsWithChildren, useMemo } from 'react'
 
-import breakpoints from './breakpoints.config'
+import { breakpoints } from './breakpoints'
 import { ComponentsOverrides } from './overrides'
 import palette from './palette.config'
 import shadows from './shadows.config'
-import shape from './shapes.config'
+import { shape } from './shapes'
 import { typography } from './typography.config'
 
 export const ThemeConfig: React.FC = ({ children }: PropsWithChildren<{}>) => {
@@ -22,7 +22,6 @@ export const ThemeConfig: React.FC = ({ children }: PropsWithChildren<{}>) => {
       shadows,
       typography,
       breakpoints,
-      spacing: 8,
     }),
     []
   )
