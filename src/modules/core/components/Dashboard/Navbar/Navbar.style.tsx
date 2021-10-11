@@ -1,11 +1,12 @@
 import { AppBar, Toolbar } from '@mui/material'
 import { alpha, styled } from '@mui/system'
 
+import { ease } from '@core/utils/transition'
+
 import {
   MINIATURIZED_DRAWER_WIDTH,
   OPEN_DRAWER_WIDTH,
-} from '@core/layouts/Dashboard/Dashboard.style'
-import { ease } from '@core/utils/transition'
+} from '../../../layouts/Dashboard/Dashboard.style'
 
 const APPBAR_MOBILE = 64
 const APPBAR_DESKTOP = 92
