@@ -6,7 +6,7 @@ import { ease } from '@core/utils/transition'
 import {
   MINIATURIZED_DRAWER_WIDTH,
   OPEN_DRAWER_WIDTH,
-} from '../../../layouts/Dashboard/Dashboard.style'
+} from '../../../layouts/Dashboardx/Dashboard.style'
 
 const APPBAR_MOBILE = 64
 const APPBAR_DESKTOP = 92

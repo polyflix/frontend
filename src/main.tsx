@@ -8,7 +8,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import 'simplebar/src/simplebar.css'
 
 import { DIProvider } from '@core/components/DIProvider/DIProvider'
-import { DashboardLayout } from '@core/layouts/Dashboard/Dashboard.layout'
+import { DashboardLayout } from '@core/layouts/Dashboardx/Dashboard.layout'
 import { store } from '@core/redux/store'
 
 import { AuthRouter } from '@auth/auth.router'
