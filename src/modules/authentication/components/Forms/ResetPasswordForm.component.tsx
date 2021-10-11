@@ -72,7 +72,6 @@ export const ResetPasswordForm = ({ onSuccess }: Props) => {
           error={!isUndefined(errors.email)}
           helperText={errors.email?.message}
           label="Email"
-          size="small"
           {...register('email', {
             required: {
               value: true,

@@ -8,7 +8,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import 'simplebar/src/simplebar.css'
 
 import { DIProvider } from '@core/components/DIProvider/DIProvider'
-import { DashBoardLayout } from '@core/layouts/DashBoard/DashBoard.layout'
+import { DashboardLayout } from '@core/layouts/Dashboard/Dashboard.layout'
 import { store } from '@core/redux/store'
 
 import { AuthRouter } from '@auth/auth.router'
@@ -34,7 +34,11 @@ const PolyflixApp = () => {
         {/* We want to add the auth router only if there is no user logged in */}
         {isUndefined(user) && <Route path="/auth" component={AuthRouter} />}
         <PrivateRoute exact condition={!isUndefined(user)} path="/">
-          <DashBoardLayout />
+          <DashboardLayout>
+            <Switch>
+              <Route path="/"></Route>
+            </Switch>
+          </DashboardLayout>
         </PrivateRoute>
       </Switch>
     </Router>

@@ -2,9 +2,9 @@ import { AppBar, Toolbar } from '@mui/material'
 import { alpha, styled } from '@mui/system'
 
 import {
-  OPEN_DRAWER_WIDTH,
   MINIATURIZED_DRAWER_WIDTH,
-} from '@core/layouts/DashBoard/DashBoard.style'
+  OPEN_DRAWER_WIDTH,
+} from '@core/layouts/Dashboard/Dashboard.style'
 import { ease } from '@core/utils/transition'
 
 const APPBAR_MOBILE = 64
@@ -27,6 +27,6 @@ export const ToolbarStyle = styled(Toolbar)(({ theme }) => ({
   minHeight: APPBAR_MOBILE,
   [theme.breakpoints.up('lg')]: {
     minHeight: APPBAR_DESKTOP,
-    padding: theme.spacing(0, 5),
+    padding: theme.spacing(1, 5),
   },
 }))

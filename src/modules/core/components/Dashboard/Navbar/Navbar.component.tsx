@@ -5,19 +5,16 @@ import React, { PropsWithChildren } from 'react'
 
 import { Icon } from '@core/components/Icon/Icon.component'
 import { Logo } from '@core/components/Logo/Logo.component'
+import { useSidebar } from '@core/hooks/useSidebar.hook'
 
 import { NotificationsPopover } from '../../NotificationPopOver/NotificationPopOver.component'
-import { RootStyle, ToolbarStyle } from './DashBoardNavbar.style'
+import { RootStyle, ToolbarStyle } from './Navbar.style'
 
-type DashBoardNavbarProps = {
-  isOpenSidebar: boolean
-}
+export const DashboardNavbar: React.FC<PropsWithChildren<{}>> = ({}) => {
+  const { open } = useSidebar()
 
-export const DashBoardNavbar: React.FC<
-  PropsWithChildren<DashBoardNavbarProps>
-> = ({ isOpenSidebar }) => {
   return (
-    <RootStyle open={isOpenSidebar}>
+    <RootStyle open={open}>
       <ToolbarStyle>
         <Logo />
         <Box sx={{ flexGrow: 1 }} />
