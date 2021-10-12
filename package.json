@@ -2,13 +2,13 @@
   "name": "polyflix",
   "version": "0.0.1",
   "scripts": {
-    "start": "NODE_ENV=local vite",
+    "start": "BUILD_MODE=local vite",
     "build": "tsc && vite build",
     "lint": "eslint src/",
     "lint:ci": "npm run lint",
     "lint:fix": "eslint --fix src/",
-    "test": "NODE_ENV=test cypress open-ct",
-    "test:ci": "NODE_ENV=test cypress run-ct",
+    "test": "BUILD_MODE=test cypress open-ct",
+    "test:ci": "BUILD_MODE=test cypress run-ct",
     "format": "prettier --write ./src",
     "format:check": "prettier --check ./src",
     "serve": "vite preview"
