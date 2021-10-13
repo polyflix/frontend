@@ -1,3 +1,8 @@
 {
-  "home": "Hello, Vite + React"
+  "home": "Hello, Vite + React",
+  "sidebar": {
+    "actions": {
+      "logout": "Log out"
+    }
+  }
 }
