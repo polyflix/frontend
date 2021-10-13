@@ -1,5 +1,5 @@
-import { Drawer, Fab, Link, Tooltip } from '@mui/material'
-import { Box } from '@mui/system'
+import { Box, Button, Drawer, Link, Tooltip } from '@mui/material'
+import { useTranslation } from 'react-i18next'
 import { Link as RouterLink } from 'react-router-dom'
 
 import { Icon } from '@core/components/Icon/Icon.component'
@@ -9,6 +9,7 @@ import {
   MINIATURIZED_DRAWER_WIDTH,
   OPEN_DRAWER_WIDTH,
 } from '@core/layouts/Dashboard/Dashboard.style'
+import { fadeInAnnimation } from '@core/utils/animation'
 import { ease } from '@core/utils/transition'
 
 import { Section } from './Section/Section.component'
@@ -18,6 +19,7 @@ import { UserAvatar } from './UserAvatar/UserAvatar.component'
 
 export const DashboardSidebar = () => {
   const { open, toggle } = useSidebar()
+  const { t } = useTranslation('common')
 
   return (
     <RootStyle open={open} onMouseEnter={toggle} onMouseLeave={toggle}>
@@ -37,6 +39,7 @@ export const DashboardSidebar = () => {
           <Scrollbar
             sx={{
               height: '100%',
+              overflowX: 'hidden',
               '& .simplebar-content': {
                 height: '100%',
                 display: 'flex',
@@ -73,11 +76,59 @@ export const DashboardSidebar = () => {
                 alignItems: 'center',
               }}
             >
-              <Tooltip title="Logout">
-                <Fab color="primary" aria-label="add" size="small">
-                  <Icon name="eva:log-in-fill" />
-                </Fab>
-              </Tooltip>
+              <Box
+                sx={{
+                  ...(open && {
+                    px: 4,
+                  }),
+                  width: '100%',
+                  display: 'flex',
+                  justifyContent: 'center',
+                }}
+              >
+                <Tooltip title="Logout">
+                  <Button
+                    variant="outlined"
+                    color="primary"
+                    aria-label="add"
+                    size="small"
+                    sx={{
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      overflow: 'hidden',
+                      minWidth: 40,
+                      ...(open && {
+                        width: '100%',
+                        height: 40,
+                      }),
+                      ...(!open && {
+                        borderRadius: '100%',
+                        width: 40,
+                        height: 40,
+                      }),
+                    }}
+                  >
+                    <Icon name="eva:log-in-fill" />
+                    <Box
+                      component="p"
+                      sx={{
+                        transition: (theme) => ease(theme, 'width'),
+                        ...(open && {
+                          ml: 1,
+                        }),
+                        ...(!open && {
+                          width: 0,
+                        }),
+                        whiteSpace: 'nowrap',
+                        ...fadeInAnnimation(open),
+                      }}
+                    >
+                      {t('sidebar.actions.logout')}
+                    </Box>
+                  </Button>
+                </Tooltip>
+              </Box>
             </Box>
           </Scrollbar>
         </Drawer>

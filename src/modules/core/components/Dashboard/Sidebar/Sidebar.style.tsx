@@ -54,11 +54,12 @@ export const ItemStyle = styled((props: any) => (
 }))
 
 export const ItemIconStyle = styled(ListItemIcon)<any>(() => ({
-  width: 22,
+  width: 52,
   height: 22,
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
+  minWidth: 0,
 }))
 
 export const ItemListStyle = styled('div')<any>(({ theme, open }) => ({
