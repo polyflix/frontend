@@ -43,7 +43,7 @@ const PolyflixApp = () => {
 
   // We consider that the user is authenticated when
   // the user value in the state is defined
-  const isAuthenticated = !isUndefined(user) || true
+  const isAuthenticated = !isUndefined(user)
 
   // If the user is not authenticated and we didn't try to refresh the authentication
   // we should try to automatically renew the authentication of the user.
