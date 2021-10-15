@@ -2,14 +2,13 @@
 
 This repository contains the source code of the Polyflix front-end.
 
-The application runs in production at : [https://polyflix.dokku.thomasgouveia.fr/](https://polyflix.dokku.thomasgouveia.fr/)
+The application runs in production at : [https://polyflix.dopolytech.fr/](https://polyflix.dopolytech.fr/)
 
 ## Technologies
 
 - [React](https://reactjs.org/)
 - [Redux](https://redux.js.org/)
-- [Framer Motion](https://www.framer.com/motion/)
-- [Tailwind CSS](https://tailwindcss.com/)
+- [Material UI](https://mui.com/)
 
 ## Configure your IDE
 
