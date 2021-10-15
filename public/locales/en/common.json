@@ -4,5 +4,13 @@
     "actions": {
       "logout": "Log out"
     }
+  },
+  "navbar": {
+    "actions": {
+      "search": {
+        "default": "Search for",
+        "fast": "Quick search"
+      }
+    }
   }
 }

@@ -5,6 +5,7 @@ import React, { PropsWithChildren } from 'react'
 
 import { Icon } from '@core/components/Icon/Icon.component'
 import { Logo } from '@core/components/Logo/Logo.component'
+import { SearchBar } from '@core/components/SearchBar/SearchBar.component'
 import { useSidebar } from '@core/hooks/useSidebar.hook'
 
 import { NotificationsPopover } from '../../NotificationPopOver/NotificationPopOver.component'
@@ -18,6 +19,7 @@ export const DashboardNavbar: React.FC<PropsWithChildren<{}>> = ({}) => {
       <ToolbarStyle>
         <Logo />
         <Box sx={{ flexGrow: 1 }} />
+        <SearchBar />
         <Stack
           direction="row"
           alignItems="center"
