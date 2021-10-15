@@ -7,9 +7,12 @@ import axios, {
 } from 'axios'
 import { StatusCodes } from 'http-status-codes'
 
-import { Injectable } from '@polyflix/di'
+import { Inject, Injectable } from '@polyflix/di'
 
-import { store } from '@core/redux/store'
+import { APP_DISPATCHER } from '@core/constants/app.constant'
+import { healthy, unhealthy } from '@core/reducers/server.reducer'
+import type { AppDispatch } from '@core/store'
+import { store } from '@core/store'
 
 import {
   BaseHttpService,
@@ -17,11 +20,13 @@ import {
   IRequestOptions,
 } from '../types/http.type'
 
+const NETWORK_ERROR = 'Network error'
+
 @Injectable()
 export class HttpService implements BaseHttpService {
   private _axios: AxiosInstance
 
-  constructor() {
+  constructor(@Inject(APP_DISPATCHER) private readonly dispatch: AppDispatch) {
     this._axios = axios.create({
       withCredentials: true,
     })
@@ -37,7 +42,7 @@ export class HttpService implements BaseHttpService {
       async (error) => {
         const originalRequest = error.config
 
-        // if (error.message === NETWORK_ERROR) throw Error(NETWORK_ERROR)
+        if (error.message === NETWORK_ERROR) throw Error(NETWORK_ERROR)
         if (error?.response?.status === 401 && !originalRequest._retry) {
           originalRequest._retry = true
           const res = await this.post('/auth/refresh')
@@ -126,17 +131,19 @@ export class HttpService implements BaseHttpService {
 
     try {
       const { data, status } = await this._axios.request(config)
-      // this.reduxService.dispatch(serverStateOnlineAction())
+
+      this.dispatch(healthy())
       return {
         status,
         response: data,
       }
     } catch (e: any) {
       if (
-        // (e instanceof Error && e.message === NETWORK_ERROR) ||
+        (e instanceof Error && e.message === NETWORK_ERROR) ||
         e?.response === undefined
       ) {
-        // this.reduxService.dispatch(serverStateOfflineAction())
+        this.dispatch(unhealthy())
+
         return {
           status: StatusCodes.SERVICE_UNAVAILABLE,
           error: e.message,

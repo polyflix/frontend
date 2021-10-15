@@ -1,0 +1,16 @@
+{
+  "503": {
+    "title": "Service indisponible",
+    "description": "Oops, le serveur ne peut pas traiter votre requête actuellement. Veuillez rafraîchir la page.",
+    "cta": "Rafraîchir la page"
+  },
+  "404": {
+    "title": "Page non trouvée",
+    "description": "La page à laquelle vous tentez d'accéder n'existe pas ou a été supprimée.",
+    "cta": "Aller à la page d'accueil"
+  },
+  "403": {
+    "title": "Forbidden",
+    "description": "Lorem ipsum"
+  }
+}

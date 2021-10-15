@@ -8,7 +8,7 @@ export const MINIATURIZED_DRAWER_WIDTH = 85
 
 export const RootStyle = styled('div')({
   display: 'flex',
-  minHeight: '100%',
+  minHeight: '100vh',
   overflow: 'hidden',
 })
 

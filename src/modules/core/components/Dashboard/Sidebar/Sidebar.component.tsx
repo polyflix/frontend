@@ -2,6 +2,8 @@ import { Box, Button, Drawer, Link, Tooltip } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 import { Link as RouterLink } from 'react-router-dom'
 
+import { useInjection } from '@polyflix/di'
+
 import { Icon } from '@core/components/Icon/Icon.component'
 import { Scrollbar } from '@core/components/Scrollbar/Scrollbar.component'
 import { useSidebar } from '@core/hooks/useSidebar.hook'
@@ -12,12 +14,16 @@ import {
 import { fadeInAnnimation } from '@core/utils/animation'
 import { ease } from '@core/utils/transition'
 
+import { AuthService } from '@auth/services/auth.service'
+
 import { Section } from './Section/Section.component'
 import { getSidebarSections } from './Sidebar.config'
 import { AccountStyle, RootStyle } from './Sidebar.style'
 import { UserAvatar } from './UserAvatar/UserAvatar.component'
 
 export const DashboardSidebar = () => {
+  const authService = useInjection<AuthService>(AuthService)
+
   const { open, toggle } = useSidebar()
   const { t } = useTranslation('common')
 
@@ -88,6 +94,7 @@ export const DashboardSidebar = () => {
               >
                 <Tooltip title="Logout">
                   <Button
+                    onClick={() => authService.logout()}
                     variant="outlined"
                     color="primary"
                     aria-label="add"

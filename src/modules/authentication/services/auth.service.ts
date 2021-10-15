@@ -3,11 +3,12 @@ import { StatusCodes } from 'http-status-codes'
 import { Inject, Injectable } from '@polyflix/di'
 
 import { APP_DISPATCHER } from '@core/constants/app.constant'
-import type { AppDispatch } from '@core/redux/store'
 import { HttpService } from '@core/services/http.service'
+import type { AppDispatch } from '@core/store'
 
 import {
   authenticateUser,
+  authenticationFailed,
   authenticationInProgress,
   logoutUser,
 } from '@auth/reducers/auth.slice'
@@ -23,6 +24,27 @@ export class AuthService {
     private readonly httpService: HttpService,
     @Inject(APP_DISPATCHER) private readonly dispatch: AppDispatch
   ) {}
+
+  public async refreshAuth() {
+    this.dispatch(authenticationInProgress())
+
+    const { status, response } = await this.httpService.post('/auth/refresh')
+    if (
+      status !== StatusCodes.OK ||
+      (status === StatusCodes.OK && !response.user)
+    ) {
+      return this.dispatch(authenticationFailed())
+    }
+
+    const { user, accessToken } = response
+
+    return this.dispatch(
+      authenticateUser({
+        token: accessToken,
+        user: user,
+      })
+    )
+  }
 
   /**
    * Login a user and authenticate it to the store.

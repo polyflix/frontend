@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux'
 
-import { RootState } from '@core/redux/store'
+import { RootState } from '@core/store'
 
 /**
  * A simple hook that returns the redux auth state
