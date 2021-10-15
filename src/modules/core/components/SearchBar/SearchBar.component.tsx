@@ -66,7 +66,7 @@ export const SearchBar: React.FC<PropsWithChildren<{}>> = ({}) => {
             endAdornment: (
               <InputAdornment position="end">
                 <Typography variant="body2">
-                  <kbd>Crtl</kbd> + <kbd>K</kbd>
+                  <kbd>Ctrl</kbd> + <kbd>K</kbd>
                 </Typography>
               </InputAdornment>
             ),
