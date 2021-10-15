@@ -2,7 +2,7 @@ import { Box, Container, Typography } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 
 import { ResetPasswordForm } from '@auth/components/Forms/ResetPasswordForm.component'
-import { AuthLayout } from '@auth/components/Layouts/AuthLayout.component'
+import { AuthLayout } from '@auth/layouts/Auth.layout'
 import { ContentAuthStyle, RootAuthStyle } from '@auth/styles/Auth.style'
 
 export const ResetPasswordPage = () => {
@@ -10,7 +10,7 @@ export const ResetPasswordPage = () => {
 
   return (
     <RootAuthStyle title="Reset password">
-      <AuthLayout></AuthLayout>
+      <AuthLayout />
       <Container>
         <ContentAuthStyle>
           <Box sx={{ mb: 5 }}>

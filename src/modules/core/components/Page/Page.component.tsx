@@ -7,9 +7,9 @@ interface Props {
 }
 
 // eslint-disable-next-line react/display-name
-export const Page = forwardRef(
+export const Page = forwardRef<typeof Box, PropsWithChildren<Props>>(
   ({ children, title = '', ...other }: PropsWithChildren<Props>, ref) => (
-    <Box ref={ref} {...other}>
+    <Box sx={{ height: '100%' }} ref={ref} {...other}>
       <Helmet>
         <title>{title === '' ? 'Polyflix' : `${title} | Polyflix`}</title>
       </Helmet>

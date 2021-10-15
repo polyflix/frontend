@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "scripts": {
     "start": "BUILD_MODE=local vite",
-    "build": "tsc && vite build",
+    "build": "vite build",
     "lint": "eslint src/",
     "lint:ci": "npm run lint",
     "lint:fix": "eslint --fix src/",

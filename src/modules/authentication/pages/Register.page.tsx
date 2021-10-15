@@ -5,7 +5,7 @@ import { Link as RouterLink } from 'react-router-dom'
 import { MHidden } from '@core/components/MHidden/MHidden.component'
 
 import { RegisterForm } from '@auth/components/Forms/RegisterForm.component'
-import { AuthLayout } from '@auth/components/Layouts/AuthLayout.component'
+import { AuthLayout } from '@auth/layouts/Auth.layout'
 import {
   ContentAuthStyle,
   RootAuthStyle,

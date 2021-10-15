@@ -13,10 +13,14 @@ export const AuthRouter = () => {
 
   return (
     <Switch>
-      <Route path={`${url}/login`} component={LoginPage} />
-      <Route path={`${url}/register`} component={RegisterPage} />
-      <Route path={`${url}/forgotten-password`} component={ResetPasswordPage} />
-      <Route path={`${url}/validate`} component={ValidatePage} />
+      <Route exact path={`${url}/login`} component={LoginPage} />
+      <Route exact path={`${url}/register`} component={RegisterPage} />
+      <Route
+        exact
+        path={`${url}/forgotten-password`}
+        component={ResetPasswordPage}
+      />
+      <Route exact path={`${url}/validate`} component={ValidatePage} />
     </Switch>
   )
 }
