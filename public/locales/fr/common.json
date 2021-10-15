@@ -1,3 +1,11 @@
 {
-  "home": "Salut, Vite + React"
+  "home": "Salut, Vite + React",
+  "navbar": {
+    "actions": {
+      "search": {
+        "default": "Rechercher",
+        "fast": "Recherche rapide"
+      }
+    }
+  }
 }
