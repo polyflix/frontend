@@ -3,7 +3,7 @@ import { alpha, styled } from '@mui/material/styles'
 export const ArrowStyle = styled('span')(({ theme }) => ({
   [theme.breakpoints.up('sm')]: {
     top: -7,
-    zIndex: 1,
+    zIndex: 0,
     width: 12,
     right: 20,
     height: 12,

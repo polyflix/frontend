@@ -92,7 +92,7 @@ export const DashboardSidebar = () => {
                   justifyContent: 'center',
                 }}
               >
-                <Tooltip title="Logout">
+                <Tooltip title={t<string>('sidebar.actions.logout')}>
                   <Button
                     onClick={() => authService.logout()}
                     variant="outlined"
@@ -110,7 +110,6 @@ export const DashboardSidebar = () => {
                         height: 40,
                       }),
                       ...(!open && {
-                        borderRadius: '100%',
                         width: 40,
                         height: 40,
                       }),
