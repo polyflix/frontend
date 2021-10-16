@@ -1,3 +1,5 @@
+import { Environment } from '@core/types/environement.type'
+
 /**
  * This is the default environment which will be used by our app.
  * The content of this file will be modified by the build when the NODE_ENV
@@ -5,7 +7,7 @@
  *
  * You should ALWAYS import only this file in the app in order to acces variables.
  */
-export const environment = {
-  api: 'http://localhost:5000/api/v1',
+export const environment: Environment = {
+  api: 'http://localhost:5000',
   minioUrl: 'http://localhost:9000',
 }

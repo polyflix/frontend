@@ -1,4 +1,6 @@
-export const environment = {
-  api: 'https://polyflix.dopolytech.fr/api/v1',
+import { Environment } from '@core/types/environement.type'
+
+export const environment: Environment = {
+  api: 'https://polyflix.dopolytech.fr',
   minioUrl: 'https://minio.polyflix.dopolytech.fr',
 }

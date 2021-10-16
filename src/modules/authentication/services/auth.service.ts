@@ -3,8 +3,10 @@ import { StatusCodes } from 'http-status-codes'
 import { Inject, Injectable } from '@polyflix/di'
 
 import { APP_DISPATCHER } from '@core/constants/app.constant'
+import { ApiService } from '@core/services/api.service'
 import { HttpService } from '@core/services/http.service'
 import type { AppDispatch } from '@core/store'
+import { ApiVersion } from '@core/types/http.type'
 
 import {
   authenticateUser,
@@ -20,15 +22,22 @@ import {
 
 @Injectable()
 export class AuthService {
+  protected endpoint: string
+
   constructor(
+    private readonly apiService: ApiService,
     private readonly httpService: HttpService,
     @Inject(APP_DISPATCHER) private readonly dispatch: AppDispatch
-  ) {}
+  ) {
+    this.endpoint = `${this.apiService.endpoint(ApiVersion.V1)}/auth`
+  }
 
   public async refreshAuth() {
     this.dispatch(authenticationInProgress())
 
-    const { status, response } = await this.httpService.post('/auth/refresh')
+    const { status, response } = await this.httpService.post(
+      `${this.endpoint}/refresh`
+    )
     if (
       status !== StatusCodes.OK ||
       (status === StatusCodes.OK && !response.user)
@@ -55,7 +64,7 @@ export class AuthService {
     this.dispatch(authenticationInProgress())
 
     const { status, response, error } = await this.httpService.post(
-      '/auth/login',
+      `${this.endpoint}/login`,
       {
         body,
       }
@@ -83,7 +92,7 @@ export class AuthService {
     this.dispatch(authenticationInProgress())
 
     const { status, response, error } = await this.httpService.post(
-      '/auth/register',
+      `${this.endpoint}/register`,
       {
         body: {
           ...registerForm,
@@ -110,7 +119,7 @@ export class AuthService {
     resetRequestForm: IResetPasswordForm
   ): Promise<any> {
     const { status, error, response } = await this.httpService.post(
-      '/auth/forgotPassword',
+      `${this.endpoint}/forgotPassword`,
       {
         body: {
           ...resetRequestForm,
@@ -131,7 +140,7 @@ export class AuthService {
    * Log out the current logged in user
    */
   public async logout() {
-    await this.httpService.get('/auth/logout')
+    await this.httpService.get(`${this.endpoint}/logout`)
     this.dispatch(logoutUser())
   }
 }

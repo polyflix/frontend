@@ -15,10 +15,12 @@ import type { AppDispatch } from '@core/store'
 import { store } from '@core/store'
 
 import {
+  ApiVersion,
   BaseHttpService,
   IApiResponse,
   IRequestOptions,
 } from '../types/http.type'
+import { ApiService } from './api.service'
 
 const NETWORK_ERROR = 'Network error'
 
@@ -26,7 +28,10 @@ const NETWORK_ERROR = 'Network error'
 export class HttpService implements BaseHttpService {
   private _axios: AxiosInstance
 
-  constructor(@Inject(APP_DISPATCHER) private readonly dispatch: AppDispatch) {
+  constructor(
+    private readonly apiService: ApiService,
+    @Inject(APP_DISPATCHER) private readonly dispatch: AppDispatch
+  ) {
     this._axios = axios.create({
       withCredentials: true,
     })
@@ -45,7 +50,8 @@ export class HttpService implements BaseHttpService {
         if (error.message === NETWORK_ERROR) throw Error(NETWORK_ERROR)
         if (error?.response?.status === 401 && !originalRequest._retry) {
           originalRequest._retry = true
-          const res = await this.post('/auth/refresh')
+          const endpoint = `${apiService.endpoint(ApiVersion.V1)}/auth`
+          const res = await this.post(`${endpoint}/refresh`)
 
           const { error: error1, response } = res
 
