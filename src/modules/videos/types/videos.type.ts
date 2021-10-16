@@ -8,6 +8,7 @@ import { tagLite } from "../../tags/types/tag.type";
 import { Attachment } from "../../common/models/attachments.model";
 import { IAttachment } from "../../common/types/attachments.type";
 import { Visibility } from "../../common/types/crud.type";
+import { PresignedUrl } from "../../upload/types/upload.type";
 
 export enum VideoSource {
   YOUTUBE = "youtube",
@@ -67,3 +68,8 @@ export enum ProviderType {
   VIDEO = "video",
   UNKNOWN = "unknown",
 }
+
+export type VideoPSU = {
+  thumbnailPutPsu?: PresignedUrl;
+  videoPutPsu?: PresignedUrl;
+};
