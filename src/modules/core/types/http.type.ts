@@ -1,7 +1,21 @@
-export interface IApiResponse {
+export interface IApiResponse<T = any> {
   status: number
   error?: any
-  response?: any
+  response?: T
+}
+
+export enum CrudAction {
+  CREATE = 'create',
+  UPDATE = 'update',
+  DELETE = 'delete',
+}
+
+export enum ApiType {
+  POLYFLIX = 'polyflix',
+}
+
+export enum ApiVersion {
+  V1 = 'v1',
 }
 
 export interface IRequestOptions {

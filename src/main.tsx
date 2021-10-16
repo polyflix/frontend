@@ -12,6 +12,7 @@ import { useInjection } from '@polyflix/di'
 import { DIProvider } from '@core/components/DIProvider/DIProvider'
 import { DashboardLayout } from '@core/layouts/Dashboard/Dashboard.layout'
 import { LoadingLayout } from '@core/layouts/Loading/Loading.layout'
+import { OverlayContainer } from '@core/layouts/OverlayContainer/OverlayContainer.layout'
 import { NotFoundPage } from '@core/pages/404.page'
 import { ServiceUnavailablePage } from '@core/pages/503.page'
 import { store } from '@core/store'
@@ -85,7 +86,9 @@ ReactDOM.render(
           <ThemeConfig>
             <GlobalStyles />
             <Suspense fallback={<LoadingLayout />}>
-              <PolyflixApp />
+              <OverlayContainer>
+                <PolyflixApp />
+              </OverlayContainer>
             </Suspense>
           </ThemeConfig>
         </HelmetProvider>
