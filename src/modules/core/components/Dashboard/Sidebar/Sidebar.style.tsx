@@ -1,5 +1,5 @@
 import { Box, ListItemButton, ListItemIcon, Theme } from '@mui/material'
-import { alpha, CSSObject, styled } from '@mui/system'
+import { CSSObject, styled } from '@mui/system'
 
 import {
   MINIATURIZED_DRAWER_WIDTH,
@@ -62,12 +62,6 @@ export const ItemIconStyle = styled(ListItemIcon)<any>(() => ({
   minWidth: 0,
 }))
 
-export const ItemListStyle = styled('div')<any>(({ theme, open }) => ({
+export const ItemListStyle = styled('div')<any>(({ theme }) => ({
   borderRadius: theme.shape.borderRadius,
-  ...(open && {
-    backgroundColor: alpha(
-      theme.palette.primary.main,
-      theme.palette.action.selectedOpacity
-    ),
-  }),
 }))

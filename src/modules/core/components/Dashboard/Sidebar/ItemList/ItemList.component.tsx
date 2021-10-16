@@ -19,7 +19,7 @@ export const ItemList = ({ item }: Props) => {
   const [menuOpen, setMenuOpen] = useState(false)
 
   return (
-    <ItemListStyle open={menuOpen}>
+    <ItemListStyle>
       <ItemStyle open={open} onClick={() => setMenuOpen(!menuOpen)}>
         <ItemIconStyle>
           <Icon name={item.icon} />
