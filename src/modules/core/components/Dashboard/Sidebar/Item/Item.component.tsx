@@ -1,4 +1,4 @@
-import { ListItemText, Theme } from '@mui/material'
+import { ListItemText, Box, Theme } from '@mui/material'
 import { alpha, CSSObject } from '@mui/system'
 import { Link as RouterLink } from 'react-router-dom'
 
@@ -6,6 +6,7 @@ import { Icon } from '@core/components/Icon/Icon.component'
 import { useActiveRoot } from '@core/hooks/useActiveRoot.hook'
 import { useSidebar } from '@core/hooks/useSidebar.hook'
 import { fadeInAnnimation } from '@core/utils/animation'
+import { ease } from '@core/utils/transition'
 
 import { SidebarItem } from '../Sidebar.config'
 import { ItemIconStyle, ItemStyle } from '../Sidebar.style'
@@ -43,15 +44,31 @@ export const Item = ({ item, isSubItem = false }: Props) => {
       }}
     >
       <ItemIconStyle
+        open={open}
         sx={{
           ...(isActiveRoot && { color: 'primary.main' }),
         }}
       >
-        {isSubItem ? (
-          <Icon name={item.icon} size={15} />
-        ) : (
-          <Icon name={item.icon} />
+        {isSubItem && (
+          <Box
+            component="span"
+            sx={{
+              width: 4,
+              height: 4,
+              display: 'flex',
+              borderRadius: '50%',
+              alignItems: 'center',
+              justifyContent: 'center',
+              bgcolor: 'text.disabled',
+              transition: (theme) => ease(theme, 'transform'),
+              ...(isActiveRoot && {
+                transform: 'scale(2)',
+                bgcolor: 'primary.main',
+              }),
+            }}
+          />
         )}
+        {!isSubItem && <Icon name={item.icon} />}
       </ItemIconStyle>
       <ListItemText
         primary={item.title}
