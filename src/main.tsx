@@ -36,7 +36,7 @@ import './styles/index.scss'
 const PolyflixApp = () => {
   const authService = useInjection<AuthService>(AuthService)
 
-  const { user, hasRefreshedAuth, isLoading } = useAuth()
+  const { user, hasRefreshedAuth, isAuthRefreshing } = useAuth()
   const { isUnhealthy } = useServerHealth()
 
   // If the server is unavailable, display the 503 page
@@ -50,7 +50,8 @@ const PolyflixApp = () => {
   // we should try to automatically renew the authentication of the user.
   if (!isAuthenticated && !hasRefreshedAuth) authService.refreshAuth()
 
-  if (isLoading) return <LoadingLayout />
+  // We want to return the loading screen only in the case of the refresh authenticaiton
+  if (isAuthRefreshing) return <LoadingLayout />
 
   return (
     <Router>

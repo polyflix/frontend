@@ -13,6 +13,8 @@ import {
   authenticationFailed,
   authenticationInProgress,
   logoutUser,
+  refreshAuthFailed,
+  refreshAuthInProgress,
 } from '@auth/reducers/auth.slice'
 import {
   ILoginForm,
@@ -33,7 +35,7 @@ export class AuthService {
   }
 
   public async refreshAuth() {
-    this.dispatch(authenticationInProgress())
+    this.dispatch(refreshAuthInProgress())
 
     const { status, response } = await this.httpService.post(
       `${this.endpoint}/refresh`
@@ -42,7 +44,7 @@ export class AuthService {
       status !== StatusCodes.OK ||
       (status === StatusCodes.OK && !response.user)
     ) {
-      return this.dispatch(authenticationFailed())
+      return this.dispatch(refreshAuthFailed())
     }
 
     const { user, accessToken } = response
@@ -71,6 +73,7 @@ export class AuthService {
     )
 
     if (status !== StatusCodes.OK) {
+      this.dispatch(authenticationFailed())
       throw error
     }
 
@@ -103,6 +106,7 @@ export class AuthService {
     )
 
     if (![StatusCodes.OK, StatusCodes.CREATED].includes(status)) {
+      this.dispatch(authenticationFailed())
       throw error
     }
 
