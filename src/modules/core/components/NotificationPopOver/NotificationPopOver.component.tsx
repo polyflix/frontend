@@ -16,6 +16,7 @@ import {
 import { alpha } from '@mui/material/styles'
 import { useRef, useState } from 'react'
 import React, { PropsWithChildren } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Link as RouterLink } from 'react-router-dom'
 
 import { Icon } from '@core/components/Icon/Icon.component'
@@ -119,6 +120,7 @@ const NotificationItem: React.FC<PropsWithChildren<NotificationItemProps>> = ({
 export const NotificationsPopover: React.FC = () => {
   const anchorRef = useRef(null)
   const [open, setOpen] = useState(false)
+  const { t } = useTranslation('common')
   const [notifications, setNotifications] = useState<Notification[] | []>([])
   const totalUnRead = notifications.filter(
     (item: Notification) => item.isUnRead === true
@@ -139,7 +141,7 @@ export const NotificationsPopover: React.FC = () => {
 
   return (
     <>
-      <Tooltip title="Notifications">
+      <Tooltip title={t<string>('navbar.actions.notifications')}>
         <IconButton
           ref={anchorRef}
           size="large"

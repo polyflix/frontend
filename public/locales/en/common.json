@@ -10,7 +10,12 @@
       "search": {
         "default": "Search for",
         "fast": "Quick search"
-      }
+      },
+      "language": "Language",
+      "notification": "Notifications",
+      "add": {
+        "media": "Add medias"
+      } 
     }
   }
 }

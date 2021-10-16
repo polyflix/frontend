@@ -1,11 +1,21 @@
 {
   "home": "Salut, Vite + React",
+  "sidebar": {
+    "actions": {
+      "logout": "Déconnexion"
+    }
+  },
   "navbar": {
     "actions": {
       "search": {
         "default": "Rechercher",
         "fast": "Recherche rapide"
-      }
+      },
+      "language": "Langue",
+      "notifications": "Notifications",
+      "add": {
+        "media": "Ajouter des médias"
+      } 
     }
   }
 }
