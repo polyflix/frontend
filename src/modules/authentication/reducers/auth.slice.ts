@@ -8,6 +8,10 @@ export interface AuthState {
    */
   isLoading: boolean
   /**
+   * A boolean to check if the auth is refreshing
+   */
+  isAuthRefreshing: boolean
+  /**
    * A boolean to control the refresh auth to avoid useless API calls
    */
   hasRefreshedAuth: boolean
@@ -23,6 +27,7 @@ export interface AuthState {
 
 const initialState: AuthState = {
   isLoading: false,
+  isAuthRefreshing: false,
   hasRefreshedAuth: false,
 }
 
@@ -30,12 +35,34 @@ export const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
+    /**
+     * Action called when the app tries to refresh the user authentication.
+     * @param state
+     */
+    refreshAuthInProgress: (state) => {
+      state.hasRefreshedAuth = true
+      state.isAuthRefreshing = true
+    },
+    /**
+     * Action called when the app failed to refresh the user authentication
+     * @param state
+     */
+    refreshAuthFailed: (state) => {
+      state.isAuthRefreshing = false
+    },
+    /**
+     * Action called when the app failed to authenticate the user
+     * @param state
+     */
     authenticationFailed: (state) => {
       state.isLoading = false
     },
+    /**
+     * Action called when the app is currently authenticating the user
+     * @param state
+     */
     authenticationInProgress: (state) => {
       state.isLoading = true
-      state.hasRefreshedAuth = true
     },
     /**
      * This method authenticate the user into the state.
@@ -49,6 +76,7 @@ export const authSlice = createSlice({
       state.user = action.payload.user
       state.token = action.payload.token
       state.isLoading = false
+      state.isAuthRefreshing = false
     },
     /**
      * This method log out the user from the state
@@ -66,6 +94,8 @@ export const {
   logoutUser,
   authenticationInProgress,
   authenticationFailed,
+  refreshAuthFailed,
+  refreshAuthInProgress,
 } = authSlice.actions
 
 export default authSlice.reducer
