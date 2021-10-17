@@ -1,9 +1,18 @@
 {
+  "snackbarExample": "Welcome back, {{user}}",
   "home": "Hello, Vite + React",
   "sidebar": {
     "actions": {
       "logout": "Log out"
     }
+  },
+  "snackbar": {
+    "crudMessage": "{{resource}} has been successfully {{action}} !"
+  },
+  "actions": {
+    "create": "created",
+    "update": "updated",
+    "delete": "deleted"
   },
   "navbar": {
     "actions": {
@@ -15,7 +24,7 @@
       "notification": "Notifications",
       "add": {
         "media": "Add medias"
-      } 
+      }
     }
   }
 }

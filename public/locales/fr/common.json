@@ -1,9 +1,18 @@
 {
+  "snackbarExample": "Ravi de vous revoir, {{user}}",
   "home": "Salut, Vite + React",
   "sidebar": {
     "actions": {
       "logout": "Déconnexion"
     }
+  },
+  "snackbar": {
+    "crudMessage": "{{resource}} à été {{action}} avec succès !"
+  },
+  "actions": {
+    "create": "créé",
+    "update": "actualisé",
+    "delete": "supprimé"
   },
   "navbar": {
     "actions": {
@@ -15,7 +24,7 @@
       "notifications": "Notifications",
       "add": {
         "media": "Ajouter des médias"
-      } 
+      }
     }
   }
 }

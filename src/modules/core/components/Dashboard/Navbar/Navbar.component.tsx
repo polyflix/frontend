@@ -1,8 +1,11 @@
 import AddIcon from '@mui/icons-material/Add'
 import { Fab, Stack, Tooltip } from '@mui/material'
 import { Box } from '@mui/system'
+import { VideoService } from '@videos/service/video.service'
 import React, { PropsWithChildren } from 'react'
 import { useTranslation } from 'react-i18next'
+
+import { useInjection } from '@polyflix/di'
 
 import { LanguageButton } from '@core/components/LanguageButton/LanguageButton.component'
 import { Logo } from '@core/components/Logo/Logo.component'
@@ -15,6 +18,8 @@ import { RootStyle, ToolbarStyle } from './Navbar.style'
 export const DashboardNavbar: React.FC<PropsWithChildren<{}>> = ({}) => {
   const { open } = useSidebar()
   const { t } = useTranslation('common')
+
+  const videoService = useInjection<VideoService>(VideoService)
 
   return (
     <RootStyle open={open}>
@@ -32,7 +37,10 @@ export const DashboardNavbar: React.FC<PropsWithChildren<{}>> = ({}) => {
         >
           <LanguageButton />
           <NotificationsPopover />
-          <Tooltip title={t<string>('navbar.actions.add.media')}>
+          <Tooltip
+            title={t<string>('navbar.actions.add.media')}
+            onClick={() => videoService.findAll().then()}
+          >
             <Fab color="primary" aria-label="add" size="small">
               <AddIcon />
             </Fab>
