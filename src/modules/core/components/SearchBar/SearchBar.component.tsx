@@ -7,6 +7,7 @@ import InputAdornment from '@mui/material/InputAdornment'
 import Modal from '@mui/material/Modal'
 import Typography from '@mui/material/Typography'
 import React, { PropsWithChildren, useEffect, useState } from 'react'
+import { isMacOs } from 'react-device-detect'
 import { useTranslation } from 'react-i18next'
 
 /** Importing search bar related styles */
@@ -35,7 +36,7 @@ export const SearchBar: React.FC<PropsWithChildren<{}>> = ({}) => {
    */
   function keydownHandler(e: KeyboardEvent) {
     // *keyCode look's like to be deprecated but no fix for the moment
-    if (e.keyCode === 75 && e.ctrlKey) {
+    if (e.keyCode === 75 && (isMacOs ? e.metaKey : e.ctrlKey)) {
       e.preventDefault() // disable default browser binding if triggered
       handleOpen()
     }
@@ -66,13 +67,13 @@ export const SearchBar: React.FC<PropsWithChildren<{}>> = ({}) => {
             endAdornment: (
               <InputAdornment position="end">
                 <Typography variant="body2">
-                  <kbd>Ctrl</kbd> + <kbd>K</kbd>
+                  {isMacOs ? '⌘' : 'Ctrl'}+K
                 </Typography>
               </InputAdornment>
             ),
             disableUnderline: true,
           }}
-          variant={'outlined'}
+          variant="outlined"
         />
       </Search>
 
@@ -100,14 +101,12 @@ export const SearchBar: React.FC<PropsWithChildren<{}>> = ({}) => {
                   'aria-label': 'search',
                   endAdornment: (
                     <InputAdornment position="end">
-                      <Typography variant="body2">
-                        <kbd>esc</kbd>
-                      </Typography>
+                      <Typography variant="body2">esc</Typography>
                     </InputAdornment>
                   ),
                   disableUnderline: true,
                 }}
-                variant={'outlined'}
+                variant="outlined"
               />
             </Search>
           </Box>
