@@ -11,8 +11,10 @@ const AVATAR_WIDTH = 40
 
 export const RootStyle = styled<any>('div')(({ theme, open }) => ({
   flexShrink: 0,
-  width: open ? OPEN_DRAWER_WIDTH : MINIATURIZED_DRAWER_WIDTH,
   transition: ease(theme, 'width'),
+  [theme.breakpoints.up('sm')]: {
+    width: open ? OPEN_DRAWER_WIDTH : MINIATURIZED_DRAWER_WIDTH,
+  },
 }))
 
 export const AccountStyle = styled('div')<any>(({ theme, open }) => ({

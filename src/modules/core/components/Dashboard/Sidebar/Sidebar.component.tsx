@@ -1,4 +1,12 @@
-import { Box, Button, Drawer, Link, Tooltip } from '@mui/material'
+import {
+  Box,
+  Button,
+  Drawer,
+  Link,
+  Tooltip,
+  useMediaQuery,
+  useTheme,
+} from '@mui/material'
 import { useTranslation } from 'react-i18next'
 import { Link as RouterLink } from 'react-router-dom'
 
@@ -24,21 +32,29 @@ import { UserAvatar } from './UserAvatar/UserAvatar.component'
 export const DashboardSidebar = () => {
   const authService = useInjection<AuthService>(AuthService)
 
+  const th = useTheme()
+  const ltsm: boolean = useMediaQuery(th.breakpoints.down('sm'))
+
   const { open, toggle } = useSidebar()
   const { t } = useTranslation('common')
 
+  const toggleSidebar = () => !ltsm && toggle()
+
   return (
-    <RootStyle open={open} onMouseEnter={toggle} onMouseLeave={toggle}>
+    <RootStyle
+      open={open}
+      onMouseEnter={toggleSidebar}
+      onMouseLeave={toggleSidebar}
+    >
       <Box>
         <Drawer
-          variant="persistent"
-          open={true}
+          variant={ltsm ? 'temporary' : 'persistent'}
+          open={!ltsm || open}
+          onClose={() => toggle()}
           PaperProps={{
             sx: {
-              width: open ? OPEN_DRAWER_WIDTH : MINIATURIZED_DRAWER_WIDTH,
               bgcolor: 'background.paper',
               boxShadow: (theme) => theme.shadows[24],
-              transition: (theme) => ease(theme, 'width'),
             },
           }}
         >
@@ -46,6 +62,13 @@ export const DashboardSidebar = () => {
             sx={{
               height: '100%',
               overflowX: 'hidden',
+              bgcolor: 'background.paper',
+              transition: (theme) => ease(theme, 'width'),
+              width: ltsm
+                ? OPEN_DRAWER_WIDTH
+                : open
+                ? OPEN_DRAWER_WIDTH
+                : MINIATURIZED_DRAWER_WIDTH,
               '& .simplebar-content': {
                 height: '100%',
                 display: 'flex',

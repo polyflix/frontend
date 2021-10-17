@@ -26,5 +26,9 @@
         "media": "Ajouter des médias"
       }
     }
+  },
+  "speedDial": {
+    "video": "Vidéo",
+    "quizz": "Quizz"
   }
 }
