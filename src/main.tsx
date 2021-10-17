@@ -1,4 +1,5 @@
 import { isUndefined } from 'lodash'
+import { SnackbarProvider } from 'notistack'
 import React, { Suspense } from 'react'
 import ReactDOM from 'react-dom'
 import { HelmetProvider } from 'react-helmet-async'
@@ -12,7 +13,6 @@ import { useInjection } from '@polyflix/di'
 import { DIProvider } from '@core/components/DIProvider/DIProvider'
 import { DashboardLayout } from '@core/layouts/Dashboard/Dashboard.layout'
 import { LoadingLayout } from '@core/layouts/Loading/Loading.layout'
-import { OverlayContainer } from '@core/layouts/OverlayContainer/OverlayContainer.layout'
 import { NotFoundPage } from '@core/pages/404.page'
 import { ServiceUnavailablePage } from '@core/pages/503.page'
 import { store } from '@core/store'
@@ -82,18 +82,18 @@ const PolyflixApp = () => {
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <DIProvider>
-        <HelmetProvider>
-          <ThemeConfig>
-            <GlobalStyles />
-            <Suspense fallback={<LoadingLayout />}>
-              <OverlayContainer>
+      <ThemeConfig>
+        <GlobalStyles />
+        <SnackbarProvider maxSnack={5}>
+          <Suspense fallback={<LoadingLayout />}>
+            <DIProvider>
+              <HelmetProvider>
                 <PolyflixApp />
-              </OverlayContainer>
-            </Suspense>
-          </ThemeConfig>
-        </HelmetProvider>
-      </DIProvider>
+              </HelmetProvider>
+            </DIProvider>
+          </Suspense>
+        </SnackbarProvider>
+      </ThemeConfig>
     </Provider>
   </React.StrictMode>,
   document.getElementById('application')

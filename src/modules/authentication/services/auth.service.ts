@@ -1,10 +1,12 @@
 import { StatusCodes } from 'http-status-codes'
+import type { TFunction } from 'i18next'
 
 import { Inject, Injectable } from '@polyflix/di'
 
-import { APP_DISPATCHER } from '@core/constants/app.constant'
+import { APP_DISPATCHER, APP_TRANSLATION } from '@core/constants/app.constant'
 import { ApiService } from '@core/services/api.service'
 import { HttpService } from '@core/services/http.service'
+import { SnackbarService } from '@core/services/snackbar.service'
 import type { AppDispatch } from '@core/store'
 import { ApiVersion } from '@core/types/http.type'
 
@@ -29,7 +31,9 @@ export class AuthService {
   constructor(
     private readonly apiService: ApiService,
     private readonly httpService: HttpService,
-    @Inject(APP_DISPATCHER) private readonly dispatch: AppDispatch
+    private readonly snackbarService: SnackbarService,
+    @Inject(APP_DISPATCHER) private readonly dispatch: AppDispatch,
+    @Inject(APP_TRANSLATION) private readonly translate: TFunction
   ) {
     this.endpoint = `${this.apiService.endpoint(ApiVersion.V1)}/auth`
   }
@@ -48,6 +52,14 @@ export class AuthService {
     }
 
     const { user, accessToken } = response
+
+    // Example for snackbar
+    this.snackbarService.createSnackbar(
+      this.translate('snackbarExample', { user: user.firstName }),
+      {
+        variant: 'success',
+      }
+    )
 
     return this.dispatch(
       authenticateUser({

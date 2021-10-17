@@ -2,7 +2,11 @@
  * Exposes the 5 methods needed to perform CRUD actions.
  * Also allows you to manage the display and modal or snackbar on certain raw actions
  */
+import { TFunction } from 'i18next'
+
 import { Container } from '@polyflix/di'
+
+import { APP_TRANSLATION } from '@core/constants/app.constant'
 
 import {
   ApiType,
@@ -13,21 +17,18 @@ import {
 import { HttpUtils } from '../utils/http-utils'
 import { ApiService } from './api.service'
 import { HttpService } from './http.service'
-import { SnackBarService } from './snackbar.service'
-import { TranslateService } from './translate.service'
+import { SnackbarService } from './snackbar.service'
 
 export abstract class CrudAbstractService<
   T extends { id?: string }
 > extends HttpUtils {
   protected apiService: ApiService
 
-  protected snackbarService: SnackBarService
+  protected snackbarService: SnackbarService
+
+  protected translate: TFunction
 
   protected endpoint: string
-
-  private readonly resource: string
-
-  private readonly translateService: TranslateService
 
   constructor(
     protected http: HttpService,
@@ -36,23 +37,26 @@ export abstract class CrudAbstractService<
     protected apiType?: ApiType
   ) {
     super()
+    // Get all of our services from the IoC container
     this.apiService = Container.get<ApiService>(ApiService)
+    this.snackbarService = Container.get<SnackbarService>(SnackbarService)
+    this.translate = Container.get<TFunction>(APP_TRANSLATION)
+
+    // Build the endpoint for the resource
     this.endpoint = `${this.apiService.endpoint(
       apiVersion,
       apiType
     )}/${apiEndpoint}`
-    this.snackbarService = Container.get<SnackBarService>(SnackBarService)
-    this.translateService = Container.get<TranslateService>(TranslateService)
-    this.resource = this.getResourceKeyFromEndpoint(this.apiEndpoint)
   }
 
   async delete(item: T): Promise<IApiResponse<void>> {
-    this.displaySnackbar(CrudAction.DELETE)
-    return this.http.delete(`${this.endpoint}/${item.id}`)
+    return this.http.delete(`${this.endpoint}/${item.id}`).then((res) => {
+      this.notify(CrudAction.DELETE)
+      return res
+    })
   }
 
   async findAll(): Promise<IApiResponse<T[]>> {
-    this.displaySnackbar(CrudAction.UPDATE)
     return this.http.get(`${this.endpoint}`)
   }
 
@@ -61,33 +65,49 @@ export abstract class CrudAbstractService<
   }
 
   async save(item: T, snackbar: boolean = true): Promise<IApiResponse<T>> {
-    if (snackbar) {
-      this.displaySnackbar(CrudAction.CREATE)
-    }
-    return this.http.post(`${this.endpoint}`, {
-      body: item,
-    })
+    return this.http
+      .post(`${this.endpoint}`, {
+        body: item,
+      })
+      .then((res) => {
+        if (snackbar) {
+          this.notify(CrudAction.CREATE)
+        }
+        return res
+      })
   }
 
   async update(
     item: T,
     snackbar: boolean = true
   ): Promise<IApiResponse<T | void>> {
-    if (snackbar) {
-      this.displaySnackbar(CrudAction.UPDATE)
-    }
-    return this.http.put(`${this.endpoint}/${item.id}`, {
-      body: item,
+    return this.http
+      .put(`${this.endpoint}/${item.id}`, {
+        body: item,
+      })
+      .then((res) => {
+        if (snackbar) {
+          this.notify(CrudAction.CREATE)
+        }
+        return res
+      })
+  }
+
+  /**
+   * Notify the user with snackbars of an action.
+   * @param action the action
+   */
+  private notify(action: CrudAction): void {
+    const translatedAction = this.translate(`snackbar.crudMessage`, {
+      action: this.translate(`actions.${action}`, {
+        ns: 'common',
+      }),
+      resource: this.translate(`${this.apiEndpoint}`, {
+        ns: 'resources',
+      }),
     })
-  }
-
-  private displaySnackbar(action: CrudAction): void {
-    // TODO translate ressource
-    this.snackbarService.displaySnackbar(this.resource, action)
-  }
-
-  private getResourceKeyFromEndpoint(endpoint: string): string {
-    // TODO
-    return endpoint
+    this.snackbarService.createSnackbar(translatedAction, {
+      variant: 'success',
+    })
   }
 }
