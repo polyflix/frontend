@@ -56,13 +56,13 @@ export const ErrorLayout = ({ code, isPage = false }: Props) => {
         </HeaderBaseStyle>
       )}
       <Stack direction="column" justifyContent="center" alignItems="center">
-        <Typography fontWeight="bold" fontSize="100px">
+        <Typography align="center" fontWeight="bold" fontSize="100px">
           {code}
         </Typography>
-        <Typography sx={{ my: 2 }} variant="h3">
+        <Typography align="center" sx={{ my: 2 }} variant="h3">
           {t(titleKey)}
         </Typography>
-        <Typography sx={{ color: 'text.secondary' }}>
+        <Typography align="center" sx={{ color: 'text.secondary' }}>
           {t(descriptionKey)}
         </Typography>
         <Box sx={{ py: 3 }}>{getCallToAction()}</Box>

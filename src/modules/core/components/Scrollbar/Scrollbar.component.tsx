@@ -1,6 +1,6 @@
-import { Box } from '@mui/material'
+import { Box, Theme } from '@mui/material'
 import { alpha, styled } from '@mui/material/styles'
-import { SxProps, Theme } from '@mui/system'
+import { SxProps } from '@mui/system'
 import React, { PropsWithChildren } from 'react'
 import SimpleBarReact from 'simplebar-react'
 

@@ -50,9 +50,28 @@ export const SearchBar: React.FC<PropsWithChildren<{}>> = ({}) => {
 
   return (
     <>
+      <Box
+        onClick={handleOpen}
+        sx={{
+          padding: 1,
+          display: {
+            lg: 'none',
+            xs: 'flex',
+          },
+          color: 'grey.600',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        <SearchIcon />
+      </Box>
       <Search
         sx={{
           marginRight: 4,
+          display: {
+            lg: 'block',
+            xs: 'none',
+          },
         }}
       >
         <SearchIconWrapper>

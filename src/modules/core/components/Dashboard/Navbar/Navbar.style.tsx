@@ -16,7 +16,7 @@ export const RootStyle = styled<any>(AppBar)(({ theme, open }) => ({
   WebkitBackdropFilter: 'blur(6px)',
   backgroundColor: alpha(theme.palette.background.default, 0.72),
   transition: ease(theme, 'width'),
-  [theme.breakpoints.up('lg')]: {
+  [theme.breakpoints.up('sm')]: {
     width: `calc(100% - ${
       open ? OPEN_DRAWER_WIDTH : MINIATURIZED_DRAWER_WIDTH + 1
     }px)`,
