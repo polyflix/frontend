@@ -3,7 +3,11 @@ import { StatusCodes } from "http-status-codes";
 import { HttpService } from "../../common/services/http.service";
 import { IVideoFilter, VideoFilter } from "../filters/video.filter";
 import { Video } from "../models/video.model";
-import { IVideoForm, VideosWithPagination } from "../types/videos.type";
+import {
+  IVideoForm,
+  VideoPSU,
+  VideosWithPagination,
+} from "../types/videos.type";
 import { SubtitleService } from "./subtitle.service";
 import { youtube_v3 } from "googleapis";
 
@@ -44,7 +48,7 @@ export class VideoService {
    * @param {IVideoForm} video the form data to post
    * @returns {Promise<Video>}
    */
-  public async createVideo(video: IVideoForm): Promise<Video> {
+  public async createVideo(video: IVideoForm): Promise<Video & VideoPSU> {
     const { status, response, error } = await this.httpService.post(`/videos`, {
       body: video,
     });
@@ -71,7 +75,10 @@ export class VideoService {
    * @param {IVideoForm} data the video form
    * @returns {Promise<Video>}
    */
-  public async updateVideo(id: string, data: IVideoForm): Promise<Video> {
+  public async updateVideo(
+    id: string,
+    data: IVideoForm
+  ): Promise<Video & VideoPSU> {
     const { status, response, error } = await this.httpService.put(
       `/videos/${id}`,
       {
@@ -81,7 +88,7 @@ export class VideoService {
     if (status !== StatusCodes.OK) {
       throw error;
     }
-    return Video.fromJson(response);
+    return response;
   }
 
   /**

@@ -1,12 +1,12 @@
 import {
-  TrashIcon,
-  TranslateIcon,
   ArrowCircleLeftIcon,
+  TranslateIcon,
+  TrashIcon,
 } from "@heroicons/react/outline";
 import { useInjection } from "@polyflix/di";
 import { motion } from "framer-motion";
 import { Controller, useFieldArray, useForm } from "react-hook-form";
-import { useEffect, useState, useRef, useMemo } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useHistory, useLocation } from "react-router";
 import { useAuth } from "../../../authentication/hooks/useAuth.hook";
@@ -27,8 +27,6 @@ import { IVideoForm, VideoSource } from "../../types/videos.type";
 import { UploadButton } from "../../../ui/components/Buttons/UploadButton/UploadButton.component";
 import { ImageFile } from "../../../upload/models/files/image.model";
 import { VideoFile } from "../../../upload/models/files/video.model";
-import { MinioService } from "../../../upload/services/minio.service";
-import { MinioFile } from "../../../upload/models/files/minio-file.model";
 import { SubtitleService } from "../../services";
 import { FrameSelector } from "../FrameSelector/FrameSelector.component";
 import urlRegex from "url-regex";
@@ -39,6 +37,7 @@ import { OutlineButton } from "../../../ui";
 import { VisibilitySelector } from "../../../common/components/VisibilitySelector/VisibilitySelector.component";
 import { StatusSelector } from "../../../common/components/StatusSelector/StatusSelector.component";
 import { slugify } from "../../../common/utils/slugify.util";
+import axios from "axios";
 
 type Props = {
   /** If video exists, the form will be in update mode, otherwise in create mode. */
@@ -54,7 +53,6 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
 
   const videoService = useInjection<VideoService>(VideoService);
   const subtitleService = useInjection<SubtitleService>(SubtitleService);
-  const minioService = useInjection<MinioService>(MinioService);
 
   const { t } = useTranslation();
   const { user } = useAuth();
@@ -124,23 +122,6 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
     checkSubtitleExists();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const getFile = (files: MinioFile[], field: keyof IVideoForm) => {
-    return files.find((file) => file.getField() === field);
-  };
-
-  const uploadFiles = async (data: IVideoForm) => {
-    const uploadedFiles = await minioService.upload([
-      ...(imageFile ? [imageFile as MinioFile] : []),
-      ...(videoFile ? [videoFile as MinioFile] : []),
-    ]);
-    const attributes: (keyof IVideoForm)[] = ["thumbnail", "src"];
-    attributes.forEach((attr) => {
-      const url = getFile(uploadedFiles, attr)?.getFileURL();
-      if (url) data = { ...data, [attr]: url };
-    });
-    return data;
-  };
-
   const thumbnailPreview =
     imageFile?.getPreview() ||
     watchThumbnail ||
@@ -190,9 +171,13 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
     setLoading(true);
     setIsSubmit(true);
     try {
-      if ((type === "upload" && imageFile) || videoFile)
-        data = await uploadFiles(data);
       data.description = desc || "";
+
+      if (type === "upload") {
+        if (videoFile) data.src = videoFile.getFilename();
+        if (imageFile) data.thumbnail = imageFile.getFilename();
+      }
+
       let result = await (isUpdate
         ? videoService.updateVideo(video?.id as string, {
             ...data,
@@ -206,12 +191,23 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
         await subtitleService.createSubtitle(video || result);
       else if (!data.hasSubtitle && subtitleExists)
         await subtitleService.deleteSubtitle(video?.id!);
+
+      if (type === "upload") {
+        if (videoFile && result.videoPutPsu)
+          await axios.put(result.videoPutPsu.tokenAccess, videoFile.getBlob());
+        if (imageFile && result.thumbnailPutPsu)
+          await axios.put(
+            result.thumbnailPutPsu.tokenAccess,
+            imageFile.getBlob()
+          );
+      }
       setAlert({
         message: isUpdate
           ? `"${result.title}" ${t("videoManagement.updateVideo.success")}.`
           : `"${result.title}" ${t("videoManagement.addVideo.success")}.`,
         type: "success",
       });
+
       history.push(`/profile/videos/${user?.id}`);
     } catch (err) {
       setAlert({
@@ -265,7 +261,7 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
     context?.drawImage(video as CanvasImageSource, 0, 0, 1280, 720);
     canvas.toBlob((blob) => {
       if (blob) {
-        const file = new File([blob], `capture_at_${video.currentTime}sec`);
+        const file = new File([blob], `capture_at_${video.currentTime}sec.png`);
         const minioFile = new ImageFile(file, "thumbnail");
         setImageFile(minioFile);
       }
