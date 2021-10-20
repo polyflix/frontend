@@ -187,10 +187,6 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
             ...data,
             tags: tags?.map((tag) => ({ id: tag.id })),
           }));
-      if (data.hasSubtitle && !subtitleExists)
-        await subtitleService.createSubtitle(video || result);
-      else if (!data.hasSubtitle && subtitleExists)
-        await subtitleService.deleteSubtitle(video?.id!);
 
       if (type === "upload") {
         if (videoFile && result.videoPutPsu)
@@ -201,6 +197,10 @@ export const VideoForm: React.FC<Props> = ({ video }) => {
             imageFile.getBlob()
           );
       }
+      if (data.hasSubtitle && !subtitleExists)
+        await subtitleService.createSubtitle(video || result);
+      else if (!data.hasSubtitle && subtitleExists)
+        await subtitleService.deleteSubtitle(video?.id!);
       setAlert({
         message: isUpdate
           ? `"${result.title}" ${t("videoManagement.updateVideo.success")}.`
