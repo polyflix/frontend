@@ -1,4 +1,4 @@
-import { ListItemText, Box, Theme } from '@mui/material'
+import { Box, ListItemText, Theme } from '@mui/material'
 import { alpha, CSSObject } from '@mui/system'
 import { Link as RouterLink } from 'react-router-dom'
 

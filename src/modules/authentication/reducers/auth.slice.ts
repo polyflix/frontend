@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-import { IUser } from '@users/models/user.model'
+import { User } from '@users/models/user.model'
 
 export interface AuthState {
   /**
@@ -18,7 +18,7 @@ export interface AuthState {
   /**
    * The logged in user. By default, this is undefined.
    */
-  user?: IUser
+  user?: User
   /**
    * The access token of the user used by the HttpService to authenticate requests.
    */
@@ -71,7 +71,7 @@ export const authSlice = createSlice({
      */
     authenticateUser: (
       state,
-      action: PayloadAction<{ user: IUser; token: string }>
+      action: PayloadAction<{ user: User; token: string }>
     ) => {
       state.user = action.payload.user
       state.token = action.payload.token

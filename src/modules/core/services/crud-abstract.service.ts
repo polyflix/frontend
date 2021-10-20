@@ -6,13 +6,16 @@ import { TFunction } from 'i18next'
 
 import { Container } from '@polyflix/di'
 
-import { APP_TRANSLATION } from '@core/constants/app.constant'
+import { APP_DISPATCHER, APP_TRANSLATION } from '@core/constants/app.constant'
+import { BaseModel } from '@core/models/base.model'
+import type { AppDispatch } from '@core/store'
 
 import {
   ApiType,
   ApiVersion,
   CrudAction,
   IApiResponse,
+  WithPagination,
 } from '../types/http.type'
 import { HttpUtils } from '../utils/http-utils'
 import { ApiService } from './api.service'
@@ -20,14 +23,13 @@ import { HttpService } from './http.service'
 import { SnackbarService } from './snackbar.service'
 
 export abstract class CrudAbstractService<
-  T extends { id?: string }
+  Type extends BaseModel,
+  DTO
 > extends HttpUtils {
   protected apiService: ApiService
-
   protected snackbarService: SnackbarService
-
   protected translate: TFunction
-
+  protected dispatch: AppDispatch
   protected endpoint: string
 
   constructor(
@@ -41,6 +43,7 @@ export abstract class CrudAbstractService<
     this.apiService = Container.get<ApiService>(ApiService)
     this.snackbarService = Container.get<SnackbarService>(SnackbarService)
     this.translate = Container.get<TFunction>(APP_TRANSLATION)
+    this.dispatch = Container.get<AppDispatch>(APP_DISPATCHER)
 
     // Build the endpoint for the resource
     this.endpoint = `${this.apiService.endpoint(
@@ -49,55 +52,17 @@ export abstract class CrudAbstractService<
     )}/${apiEndpoint}`
   }
 
-  async delete(item: T): Promise<IApiResponse<void>> {
-    return this.http.delete(`${this.endpoint}/${item.id}`).then((res) => {
-      this.notify(CrudAction.DELETE)
-      return res
-    })
-  }
-
-  async findAll(): Promise<IApiResponse<T[]>> {
-    return this.http.get(`${this.endpoint}`)
-  }
-
-  async get(id: string): Promise<IApiResponse<T>> {
-    return this.http.get(`${this.endpoint}/${id}`)
-  }
-
-  async save(item: T, snackbar: boolean = true): Promise<IApiResponse<T>> {
-    return this.http
-      .post(`${this.endpoint}`, {
-        body: item,
-      })
-      .then((res) => {
-        if (snackbar) {
-          this.notify(CrudAction.CREATE)
-        }
-        return res
-      })
-  }
-
-  async update(
-    item: T,
-    snackbar: boolean = true
-  ): Promise<IApiResponse<T | void>> {
-    return this.http
-      .put(`${this.endpoint}/${item.id}`, {
-        body: item,
-      })
-      .then((res) => {
-        if (snackbar) {
-          this.notify(CrudAction.CREATE)
-        }
-        return res
-      })
-  }
+  abstract delete(item: Type): Promise<IApiResponse<void>>
+  abstract findAll(): Promise<IApiResponse<WithPagination<Type[]>>>
+  abstract get(item: Type): Promise<IApiResponse<Type>>
+  abstract save(data: DTO): Promise<IApiResponse<Type>>
+  abstract update(data: DTO): Promise<IApiResponse<Type | void>>
 
   /**
    * Notify the user with snackbars of an action.
    * @param action the action
    */
-  private notify(action: CrudAction): void {
+  protected notify(action: CrudAction): void {
     const translatedAction = this.translate(`snackbar.crudMessage`, {
       action: this.translate(`actions.${action}`, {
         ns: 'common',
