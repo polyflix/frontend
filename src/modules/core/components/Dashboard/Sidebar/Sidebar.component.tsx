@@ -15,10 +15,7 @@ import { useInjection } from '@polyflix/di'
 import { Icon } from '@core/components/Icon/Icon.component'
 import { Scrollbar } from '@core/components/Scrollbar/Scrollbar.component'
 import { useSidebar } from '@core/hooks/useSidebar.hook'
-import {
-  MINIATURIZED_DRAWER_WIDTH,
-  OPEN_DRAWER_WIDTH,
-} from '@core/layouts/Dashboard/Dashboard.style'
+import { OPEN_DRAWER_WIDTH } from '@core/layouts/Dashboard/Dashboard.style'
 import { fadeInAnnimation } from '@core/utils/animation'
 import { ease } from '@core/utils/transition'
 
@@ -38,14 +35,8 @@ export const DashboardSidebar = () => {
   const { open, toggle } = useSidebar()
   const { t } = useTranslation('common')
 
-  const toggleSidebar = () => !ltsm && toggle()
-
   return (
-    <RootStyle
-      open={open}
-      onMouseEnter={toggleSidebar}
-      onMouseLeave={toggleSidebar}
-    >
+    <RootStyle open={open}>
       <Box>
         <Drawer
           variant={ltsm ? 'temporary' : 'persistent'}
@@ -64,11 +55,7 @@ export const DashboardSidebar = () => {
               overflowX: 'hidden',
               bgcolor: 'background.paper',
               transition: (theme) => ease(theme, 'width'),
-              width: ltsm
-                ? OPEN_DRAWER_WIDTH
-                : open
-                ? OPEN_DRAWER_WIDTH
-                : MINIATURIZED_DRAWER_WIDTH,
+              width: OPEN_DRAWER_WIDTH,
               '& .simplebar-content': {
                 height: '100%',
                 display: 'flex',
