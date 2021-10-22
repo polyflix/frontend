@@ -92,7 +92,7 @@ export const SearchBar: React.FC<PropsWithChildren<{}>> = ({}) => {
             ),
             disableUnderline: true,
           }}
-          variant="outlined"
+          variant="filled"
         />
       </Search>
 
@@ -125,7 +125,7 @@ export const SearchBar: React.FC<PropsWithChildren<{}>> = ({}) => {
                   ),
                   disableUnderline: true,
                 }}
-                variant="outlined"
+                variant="filled"
               />
             </Search>
           </Box>

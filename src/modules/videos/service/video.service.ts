@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Video } from '@videos/models/video.model'
 import { error, start, success } from '@videos/reducers/video.slice'
 import { IVideoForm } from '@videos/types/form.type'
