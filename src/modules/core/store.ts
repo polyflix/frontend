@@ -1,4 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit'
+import videosReducer from '@videos/reducers/video.slice'
 
 import snackBarReducer from '@core/reducers/snackbar.slice'
 
@@ -11,6 +12,7 @@ export const store = configureStore({
     auth: authReducer,
     server: serverReducer,
     snackbar: snackBarReducer,
+    videos: videosReducer,
   },
 })
 

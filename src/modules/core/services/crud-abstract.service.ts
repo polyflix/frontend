@@ -27,9 +27,13 @@ export abstract class CrudAbstractService<
   DTO
 > extends HttpUtils {
   protected apiService: ApiService
+
   protected snackbarService: SnackbarService
+
   protected translate: TFunction
+
   protected dispatch: AppDispatch
+
   protected endpoint: string
 
   constructor(

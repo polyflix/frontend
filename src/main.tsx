@@ -1,3 +1,4 @@
+import { VideoService } from '@videos/service/video.service'
 import { isUndefined } from 'lodash'
 import { SnackbarProvider } from 'notistack'
 import React, { Suspense } from 'react'
@@ -7,6 +8,8 @@ import { Provider } from 'react-redux'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 // eslint-disable-next-line import/no-extraneous-dependencies
 import 'simplebar/src/simplebar.css'
+// eslint-disable-next-line import/no-extraneous-dependencies
+import 'swiper/css'
 
 import { useInjection } from '@polyflix/di'
 
@@ -15,6 +18,7 @@ import { DashboardLayout } from '@core/layouts/Dashboard/Dashboard.layout'
 import { LoadingLayout } from '@core/layouts/Loading/Loading.layout'
 import { NotFoundPage } from '@core/pages/404.page'
 import { ServiceUnavailablePage } from '@core/pages/503.page'
+import { HomePage } from '@core/pages/Home.page'
 import { store } from '@core/store'
 
 import { AuthRouter } from '@auth/auth.router'
@@ -35,6 +39,7 @@ import './styles/index.scss'
  */
 const PolyflixApp = () => {
   const authService = useInjection<AuthService>(AuthService)
+  const videoService = useInjection<VideoService>(VideoService)
 
   const { user, hasRefreshedAuth, isAuthRefreshing } = useAuth()
   const { isUnhealthy } = useServerHealth()
@@ -53,6 +58,9 @@ const PolyflixApp = () => {
   // We want to return the loading screen only in the case of the refresh authenticaiton
   if (isAuthRefreshing) return <LoadingLayout />
 
+  // TO REMOVE
+  videoService.findAll()
+
   return (
     <Router>
       <Switch>
@@ -68,6 +76,7 @@ const PolyflixApp = () => {
         <PrivateRoute condition={isAuthenticated} path="/">
           <DashboardLayout>
             <Switch>
+              <Route exact path="/" component={HomePage} />
               <Route component={NotFoundPage} />
             </Switch>
           </DashboardLayout>

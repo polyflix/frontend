@@ -1,0 +1,16 @@
+{
+  "sliders": {
+    "titles": {
+      "continueWatching": "Continuer à regarder",
+      "latest": "Les plus récents",
+      "popular": "Populaire",
+      "watchAgain": "Regardez à nouveau"
+    },
+    "videoCard": {
+      "infoMenu": {
+        "info": "Info",
+        "addToPlayList": "Ajouter à la liste de lecture"
+      }
+    }
+  }
+}
