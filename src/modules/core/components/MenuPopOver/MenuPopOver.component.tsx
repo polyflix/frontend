@@ -29,7 +29,6 @@ export const MenuPopover: React.FC<PropsWithChildren<MenuPopoverProps>> = ({
           ml: 0.5,
           overflow: 'inherit',
           boxShadow: (theme) => theme.shadows[20],
-          border: (theme) => `solid 1px ${theme.palette.grey[300]}`,
           width: 200,
           ...sx,
         },

@@ -1,6 +1,6 @@
-import { styled } from '@mui/system'
+import { styled, Box } from '@mui/material'
 
-export const ErrorRootStyle = styled('div')<any>(({ theme, isPage }) => ({
+export const ErrorRootStyle = styled(Box)<any>(({ theme, isPage }) => ({
   display: 'flex',
   width: '100%',
   alignItems: 'center',

@@ -6,7 +6,7 @@ export const Search = styled('div')(({ theme }) => ({
   borderRadius: theme.shape.borderRadius,
   backgroundColor: theme.palette.grey[200],
   '&:hover': {
-    backgroundColor: alpha(theme.palette.grey[300], 0.5),
+    backgroundColor: alpha(theme.palette.grey[400], 0.5),
   },
   margin: theme.spacing(0, 0, 0, 0),
   width: '100%',
@@ -29,7 +29,7 @@ export const SearchIconWrapper = styled('div')(({ theme }) => ({
 
 export const SearchField = styled(TextField)(({ theme }) => ({
   color: theme.palette.grey[900],
-  '& .MuiInput-root': {
+  '& .MuiFilledInput-root': {
     borderRadius: theme.shape.borderRadius,
   },
   '& fieldset': {
@@ -49,7 +49,7 @@ export const SearchField = styled(TextField)(({ theme }) => ({
 
 export const SearchFieldInModal = styled(TextField)(({ theme }) => ({
   color: theme.palette.grey[900],
-  '& .MuiInput-root': {
+  '& .MuiFilledInput-root': {
     borderRadius: theme.shape.borderRadius,
   },
   '& fieldset': {
