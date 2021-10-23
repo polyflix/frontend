@@ -4,6 +4,11 @@ export interface IApiResponse<T = any> {
   response?: T
 }
 
+export interface WithPagination<T> {
+  items: T
+  totalCount: number
+}
+
 export enum CrudAction {
   CREATE = 'create',
   UPDATE = 'update',
