@@ -42,7 +42,6 @@ export const ThemeButton: React.FC = () => {
 
   return (
     <MUISwitch
-      defaultChecked
       onChange={handleChange}
       checked={mode === 'light' ? false : true}
     />

@@ -1,4 +1,6 @@
+import { SubtitleLanguages } from '@subtitles/types/subtitle.type'
 import axios from 'axios'
+import { StatusCodes } from 'http-status-codes'
 import type { TFunction } from 'react-i18next'
 
 import { Inject, Injectable } from '@polyflix/di'
@@ -12,16 +14,25 @@ import {
   start,
 } from '@core/reducers/file-upload.slice'
 import type { AppDispatch } from '@core/store'
+import { ApiVersion } from '@core/types/http.type'
 
+import { ApiService } from './api.service'
+import { HttpService } from './http.service'
 import { SnackbarService } from './snackbar.service'
 
 @Injectable()
 export class MinioService {
+  protected endpoint: string
+
   constructor(
     private snackbarService: SnackbarService,
     @Inject(APP_TRANSLATION) private readonly translate: TFunction,
-    @Inject(APP_DISPATCHER) private readonly dispatch: AppDispatch
-  ) {}
+    @Inject(APP_DISPATCHER) private readonly dispatch: AppDispatch,
+    private readonly apiService: ApiService,
+    private readonly httpService: HttpService
+  ) {
+    this.endpoint = `${this.apiService.endpoint(ApiVersion.V1)}/token`
+  }
 
   /**
    * Upload files on Minio.
@@ -58,5 +69,41 @@ export class MinioService {
         this.dispatch(end())
       }
     }
+  }
+
+  /**
+   *	Request a preSignedUrl to see video content
+   *
+   * @param {string} videoId -- ID of video
+   * @returns {Promise<PresignedUrl>}
+   */
+  public async getVideoPresignedUrl(videoId: string): Promise<PresignedURL> {
+    const { status, response, error } = await this.httpService.get(
+      `${this.endpoint}/video/${videoId}`
+    )
+    if (status !== StatusCodes.OK) {
+      throw error
+    }
+    return response
+  }
+
+  /**
+   *	Request a preSignedUrl to see subtitle content
+   *
+   * @param {string} videoId -- ID of video
+   * @param {SubtitleLanguages} language -- Language needed
+   * @returns {Promise<PresignedUrl>}
+   */
+  public async getSubtitlePresignedUrl(
+    videoId: string,
+    language: SubtitleLanguages
+  ): Promise<PresignedURL> {
+    const { status, response, error } = await this.httpService.get(
+      `${this.endpoint}/video/${videoId}/subtitle/${language}`
+    )
+    if (status !== StatusCodes.OK) {
+      throw error
+    }
+    return response
   }
 }

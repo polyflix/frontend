@@ -1,6 +1,6 @@
-import { styled } from '@mui/material'
+import { styled, Box } from '@mui/material'
 
-export const LoadingRootStyle = styled('div')<any>(({ isPage }) => ({
+export const LoadingRootStyle = styled(Box)<any>(({ isPage }) => ({
   display: 'flex',
   height: isPage ? '100vh' : '100%',
   alignItems: 'center',

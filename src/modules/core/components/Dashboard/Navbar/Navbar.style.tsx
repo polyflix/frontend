@@ -16,7 +16,7 @@ export const RootStyle = styled<any>(AppBar)(({ theme, open }) => ({
   backgroundColor: alpha(theme.palette.background.default, 0.72),
   backgroundImage: 'none',
   transition: ease(theme, 'width'),
-  [theme.breakpoints.up('sm')]: {
+  [theme.breakpoints.up('md')]: {
     width: `calc(100% - ${
       open ? OPEN_DRAWER_WIDTH : MINIATURIZED_DRAWER_WIDTH + 1
     }px)`,

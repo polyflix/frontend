@@ -16,7 +16,11 @@ export const RegisterPage = () => {
   const { t } = useTranslation('auth')
 
   return (
-    <RootAuthStyle container={false} title={t('signUp.title')}>
+    <RootAuthStyle
+      maxWidth={false}
+      disableGutters={true}
+      title={t('signUp.title')}
+    >
       <AuthLayout>
         {t('signUp.header.links.login.label')}
         <Link

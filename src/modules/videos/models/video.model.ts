@@ -1,5 +1,12 @@
+import { WatchMetadata } from '@stats/models/userMeta.model'
+import { SubtitleLanguages } from '@subtitles/types/subtitle.type'
+
 import { ContentModel } from '@core/models/content.model'
 import { PresignedURL } from '@core/models/presigned-url.model'
+
+import { PlayerVideoSource } from '@videos/types/video.type'
+
+import { User } from '@users/models/user.model'
 
 import { Attachment } from './attachment.model'
 
@@ -8,6 +15,7 @@ export interface Video extends ContentModel {
   description: string
   title: string
   publisherId: string
+  publishedBy?: User
   views: number
   likes: number
   slug: string
@@ -15,9 +23,12 @@ export interface Video extends ContentModel {
   videoPutPsu?: PresignedURL
   thumbnailPutPsu?: PresignedURL
   attachments: Attachment[]
-  //   sourceType: VideoSource
+
+  // TODO
+  sourceType: PlayerVideoSource
+  availableLanguages: SubtitleLanguages[]
+
   //   publishedBy: IPublisher | null
-  //   userMeta: IWatchMetadata | undefined
-  //   availableLanguages: SubtitleLanguages[]
+  userMeta?: WatchMetadata | undefined
   //   tags: Tag[]
 }
