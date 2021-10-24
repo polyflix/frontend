@@ -5,6 +5,7 @@ import { Link as RouterLink } from 'react-router-dom'
 import { LanguageButton } from '@core/components/LanguageButton/LanguageButton.component'
 import { Logo } from '@core/components/Logo/Logo.component'
 import { MHidden } from '@core/components/MHidden/MHidden.component'
+import { ThemeButton } from '@core/components/ThemeButton/ThemeButton.component'
 import { HeaderBaseStyle } from '@core/styles/HeaderBase.style'
 
 export const AuthLayout = ({ children }: PropsWithChildren<{}>) => {
@@ -14,14 +15,15 @@ export const AuthLayout = ({ children }: PropsWithChildren<{}>) => {
         <Logo />
       </RouterLink>
 
-      <MHidden width="smDown">
-        <Stack direction="row" alignItems="center">
+      <Stack direction="row" alignItems="center">
+        <MHidden width="smDown">
           <Typography variant="body1" sx={{ mr: 2 }}>
             {children}
           </Typography>
-          <LanguageButton />
-        </Stack>
-      </MHidden>
+        </MHidden>
+        <LanguageButton />
+        <ThemeButton />
+      </Stack>
     </HeaderBaseStyle>
   )
 }

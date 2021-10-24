@@ -1,4 +1,4 @@
-import { styled } from '@mui/system'
+import { styled } from '@mui/material'
 
 export const HeaderBaseStyle = styled('header')(({ theme }) => ({
   top: 0,

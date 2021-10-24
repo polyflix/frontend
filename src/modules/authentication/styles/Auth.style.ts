@@ -1,5 +1,4 @@
-import { Card } from '@mui/material'
-import { styled } from '@mui/material/styles'
+import { Card, styled } from '@mui/material'
 
 import { Page } from '@core/components/Page/Page.component'
 

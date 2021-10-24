@@ -1,5 +1,4 @@
-import { AppBar, Toolbar } from '@mui/material'
-import { alpha, styled } from '@mui/system'
+import { AppBar, Toolbar, alpha, styled } from '@mui/material'
 
 import {
   MINIATURIZED_DRAWER_WIDTH,
@@ -15,6 +14,7 @@ export const RootStyle = styled<any>(AppBar)(({ theme, open }) => ({
   backdropFilter: 'blur(6px)',
   WebkitBackdropFilter: 'blur(6px)',
   backgroundColor: alpha(theme.palette.background.default, 0.72),
+  backgroundImage: 'none',
   transition: ease(theme, 'width'),
   [theme.breakpoints.up('sm')]: {
     width: `calc(100% - ${
