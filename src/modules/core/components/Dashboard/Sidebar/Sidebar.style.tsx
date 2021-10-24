@@ -1,5 +1,11 @@
-import { Box, ListItemButton, ListItemIcon, Theme } from '@mui/material'
-import { CSSObject, styled } from '@mui/system'
+import {
+  Box,
+  ListItemButton,
+  ListItemIcon,
+  Theme,
+  CSSObject,
+  styled,
+} from '@mui/material'
 
 import {
   MINIATURIZED_DRAWER_WIDTH,

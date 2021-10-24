@@ -17,6 +17,7 @@ import { Icon } from '@core/components/Icon/Icon.component'
 import { LanguageButton } from '@core/components/LanguageButton/LanguageButton.component'
 import { Logo } from '@core/components/Logo/Logo.component'
 import { SearchBar } from '@core/components/SearchBar/SearchBar.component'
+import { ThemeButton } from '@core/components/ThemeButton/ThemeButton.component'
 import { useSidebar } from '@core/hooks/useSidebar.hook'
 
 import { NotificationsPopover } from '../../NotificationPopOver/NotificationPopOver.component'
@@ -66,6 +67,16 @@ export const DashboardNavbar: React.FC<PropsWithChildren<{}>> = ({}) => {
         >
           <LanguageButton />
           <NotificationsPopover />
+          <Box
+            sx={{
+              display: {
+                sm: 'block',
+                xs: 'none',
+              },
+            }}
+          >
+            <ThemeButton />
+          </Box>
           <Tooltip
             sx={{
               display: {

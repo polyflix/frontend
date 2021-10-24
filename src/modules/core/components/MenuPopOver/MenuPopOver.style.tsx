@@ -1,4 +1,4 @@
-import { alpha, styled } from '@mui/material/styles'
+import { alpha, styled } from '@mui/material'
 
 export const ArrowStyle = styled('span')(({ theme }) => ({
   [theme.breakpoints.up('sm')]: {

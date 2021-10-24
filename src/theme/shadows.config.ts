@@ -1,10 +1,12 @@
 // material
+import { PaletteMode } from '@mui/material'
 import { alpha } from '@mui/material/styles'
 import { Shadows } from '@mui/material/styles/shadows'
 
-import palette from './palette.config'
+import { GREY } from './palette.config'
 
-const LIGHT_MODE = palette.grey?.A700 as string
+const LIGHT_MODE = GREY.A700
+const DARK_MODE = GREY.A100
 
 const createShadow = (color: string): Shadows => {
   const transparent1 = alpha(color, 0.2)
@@ -39,6 +41,9 @@ const createShadow = (color: string): Shadows => {
   ]
 }
 
-const shadows: Shadows = createShadow(LIGHT_MODE)
+// const shadows: Shadows = createShadow(LIGHT_MODE)
 
-export default shadows
+const getShadows = (mode: PaletteMode) =>
+  mode === 'light' ? createShadow(LIGHT_MODE) : createShadow(DARK_MODE)
+
+export default getShadows

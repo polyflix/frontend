@@ -1,4 +1,10 @@
-import { Color, PaletteColor, PaletteOptions } from '@mui/material'
+import {
+  alpha,
+  Color,
+  PaletteColor,
+  PaletteOptions,
+  PaletteMode,
+} from '@mui/material'
 
 const GREY: Color = {
   50: '#fafafa',
@@ -54,7 +60,9 @@ const ERROR: PaletteColor = {
   contrastText: '#ffffff',
 }
 
-const palette: PaletteOptions = {
+const getPalette: (mode: PaletteMode) => PaletteOptions = (
+  mode: PaletteMode
+) => ({
   common: { black: '#000000', white: '#ffffff' },
   primary: { ...PRIMARY },
   secondary: { ...SECONDARY },
@@ -64,11 +72,29 @@ const palette: PaletteOptions = {
   error: { ...ERROR },
   grey: GREY,
   divider: GREY[200],
-  text: { primary: GREY[900], secondary: GREY[700], disabled: GREY[500] },
-  background: { paper: '#ffffff', default: '#fafafa' },
+  ...(mode === 'light'
+    ? {
+        background: { paper: '#ffffff', default: '#fafafa' },
+        text: { primary: GREY[900], secondary: GREY[700], disabled: GREY[500] },
+      }
+    : {
+        background: { paper: '#292929', default: '#121212' },
+        text: {
+          primary: '#FFFFFF',
+          secondary: alpha('#FFFFFF', 0.6),
+          disabled: alpha('#FFFFFF', 0.38),
+        },
+      }),
   action: {
-    active: '#0000008a',
-    hover: '#0000000a',
+    ...(mode === 'light'
+      ? {
+          active: '#0000008a',
+          hover: '#0000000a',
+        }
+      : {
+          active: GREY[400],
+          hover: '#363636',
+        }),
     hoverOpacity: 0.03,
     selected: '#00000014',
     selectedOpacity: 0.08,
@@ -79,9 +105,9 @@ const palette: PaletteOptions = {
     focusOpacity: 0.12,
     activatedOpacity: 0.12,
   },
-  mode: 'light',
+  mode,
   contrastThreshold: 2,
   tonalOffset: 0,
-}
+})
 
-export default palette
+export default getPalette

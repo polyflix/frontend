@@ -14,6 +14,7 @@ import { useInjection } from '@polyflix/di'
 
 import { Icon } from '@core/components/Icon/Icon.component'
 import { Scrollbar } from '@core/components/Scrollbar/Scrollbar.component'
+import { ThemeButton } from '@core/components/ThemeButton/ThemeButton.component'
 import { useSidebar } from '@core/hooks/useSidebar.hook'
 import { OPEN_DRAWER_WIDTH } from '@core/layouts/Dashboard/Dashboard.style'
 import { fadeInAnnimation } from '@core/utils/animation'
@@ -82,6 +83,27 @@ export const DashboardSidebar = () => {
             ))}
 
             <Box sx={{ flexGrow: 1 }} />
+
+            <Box
+              sx={{
+                pb: 3,
+                mt: 5,
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+            >
+              <Box
+                sx={{
+                  display: {
+                    sm: 'none',
+                    xs: 'block',
+                  },
+                }}
+              >
+                <ThemeButton />
+              </Box>
+            </Box>
 
             <Box
               sx={{
