@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux'
 
-import { ServerHealth } from '@core/reducers/server.reducer'
+import { ServerHealth } from '@core/reducers/server.slice'
 import { RootState } from '@core/store'
 
 /**

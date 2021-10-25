@@ -1,4 +1,4 @@
-import { Environment } from '@core/types/environement.type'
+import { Environment } from '@core/types/environment.type'
 
 export const environment: Environment = {
   api: 'https://dev.polyflix.dopolytech.fr',

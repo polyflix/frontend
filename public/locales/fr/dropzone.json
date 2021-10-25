@@ -1,0 +1,8 @@
+{
+  "hint": "Formats acceptés : {{accept}}",
+  "dragInactive": "Glissez-déposer vos fichiers ici, ou cliquez pour sélectionner vos fichiers.",
+  "dragActive": "Déposez vos fichiers ici",
+  "errors": {
+    "file-invalid-type": "Type du fichier invalide."
+  }
+}

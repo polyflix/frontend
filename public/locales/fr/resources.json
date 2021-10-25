@@ -1,3 +1,32 @@
 {
-  "videos": "Vidéo"
+  "videos": "Vidéo",
+  "status": {
+    "label": "Status",
+    "draft": {
+      "label": "Draft",
+      "description": "Your resource will not be accessible by other users."
+    },
+    "published": {
+      "label": "Published",
+      "description": "Your resource will be accessible by other users."
+    },
+    "actions": {
+      "switch": "Click to change"
+    }
+  },
+  "visibility": {
+    "label": "Visibility",
+    "public": {
+      "label": "Public",
+      "description": "Your resource will be accessible by everyone."
+    },
+    "private": {
+      "label": "Private",
+      "description": "Your resource will be accessible only by you."
+    },
+    "protected": {
+      "label": "Protected",
+      "description": "Your resource will be accessible by everyone who have the password."
+    }
+  }
 }

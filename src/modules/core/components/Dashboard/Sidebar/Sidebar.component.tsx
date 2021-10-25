@@ -46,7 +46,6 @@ export const DashboardSidebar = () => {
           PaperProps={{
             sx: {
               bgcolor: 'background.paper',
-              boxShadow: (theme) => theme.shadows[24],
             },
           }}
         >

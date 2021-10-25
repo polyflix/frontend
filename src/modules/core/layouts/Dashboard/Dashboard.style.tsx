@@ -21,7 +21,7 @@ export const MainStyle = styled<any>('div')(({ theme }) => ({
   paddingLeft: theme.spacing(2),
   [theme.breakpoints.up('lg')]: {
     paddingTop: APP_BAR_DESKTOP + 24,
-    paddingLeft: theme.spacing(2),
-    paddingRight: theme.spacing(2),
+    paddingLeft: theme.spacing(5),
+    paddingRight: theme.spacing(5),
   },
 }))

@@ -17,7 +17,7 @@ export const LoginPage = () => {
   const { t } = useTranslation('auth')
 
   return (
-    <RootAuthStyle title={t('signIn.title')}>
+    <RootAuthStyle container={false} title={t('signIn.title')}>
       <AuthLayout>
         {t('signIn.header.links.signUp.label')}
         <Link

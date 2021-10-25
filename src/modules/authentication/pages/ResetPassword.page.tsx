@@ -9,7 +9,7 @@ export const ResetPasswordPage = () => {
   const { t } = useTranslation('auth')
 
   return (
-    <RootAuthStyle title="Reset password">
+    <RootAuthStyle container={false} title={t('resetPassword.title')}>
       <AuthLayout />
       <Container>
         <ContentAuthStyle>

@@ -51,7 +51,7 @@ export class AuthService {
       return this.dispatch(refreshAuthFailed())
     }
 
-    const { user, accessToken } = response
+    const { user, token } = response
 
     // Example for snackbar
     this.snackbarService.createSnackbar(
@@ -63,8 +63,8 @@ export class AuthService {
 
     return this.dispatch(
       authenticateUser({
-        token: accessToken,
-        user: user,
+        user,
+        token,
       })
     )
   }

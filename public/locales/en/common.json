@@ -21,7 +21,7 @@
         "fast": "Quick search"
       },
       "language": "Language",
-      "notification": "Notifications",
+      "notifications": "Notifications",
       "add": {
         "media": "Add medias"
       }
@@ -30,5 +30,6 @@
   "speedDial": {
     "video": "Video",
     "quizz": "Quizz"
-  }
+  },
+  "uploadInProgress": "Please wait, your files are being uploaded..."
 }

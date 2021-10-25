@@ -30,5 +30,6 @@
   "speedDial": {
     "video": "Vidéo",
     "quizz": "Quizz"
-  }
+  },
+  "uploadInProgress": "Merci de patienter, vos fichiers sont entrain d'être envoyés..."
 }
