@@ -29,6 +29,8 @@ import { AuthService } from '@auth/services/auth.service'
 
 import { VideoRouter } from '@videos/video.router'
 
+import { UserRouter } from '@users/user.router'
+
 import { GlobalStyles } from '@theme/globalStyles'
 import { ThemeConfig } from '@theme/theme'
 
@@ -76,6 +78,7 @@ const PolyflixApp = () => {
           >
             <DashboardLayout>
               <Switch>
+                <Route path="/users" component={UserRouter} />
                 <Route path="/videos" component={VideoRouter} />
                 <Route exact path="/" component={HomePage} />
                 <Route component={NotFoundPage} />

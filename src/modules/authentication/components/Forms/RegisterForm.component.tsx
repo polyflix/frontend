@@ -8,11 +8,14 @@ import {
   Stack,
   TextField,
 } from '@mui/material'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { useTranslation } from 'react-i18next'
 import { useHistory } from 'react-router-dom'
 
 import { useInjection } from '@polyflix/di'
+
+import { Regex } from '@core/constants/regex.constant'
 
 import { AuthService } from '@auth/services/auth.service'
 import { IRegisterForm } from '@auth/types/form.type'
@@ -20,6 +23,7 @@ import { IRegisterForm } from '@auth/types/form.type'
 export const RegisterForm = () => {
   const authService = useInjection<AuthService>(AuthService)
   const history = useHistory()
+  const { t } = useTranslation('auth')
 
   // Some useful states for our component behavior
   const [showPassword, setShowPassword] = useState<boolean>(false)
@@ -30,7 +34,11 @@ export const RegisterForm = () => {
     handleSubmit,
     register,
     formState: { errors },
+    watch,
   } = useForm<IRegisterForm>()
+
+  const password = useRef({})
+  password.current = watch('password', '')
 
   const onRegister = async (data: IRegisterForm) => {
     setError(undefined)
@@ -50,32 +58,45 @@ export const RegisterForm = () => {
       <Stack spacing={3}>
         <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
           <TextField
-            {...register('firstName', {
-              required: 'The first name is required',
-            })}
             fullWidth
-            label="First Name"
+            label={t('fields.firstName.label')}
+            {...register('firstName', {
+              required: {
+                value: true,
+                message: t('fields.firstName.required'),
+              },
+            })}
             error={Boolean(errors.firstName)}
             helperText={errors.firstName?.message}
           />
 
           <TextField
-            {...register('lastName', {
-              required: 'The last name is required',
-            })}
             fullWidth
-            label="Last Name"
+            label={t('fields.lastName.label')}
+            {...register('lastName', {
+              required: {
+                value: true,
+                message: t('fields.lastName.required'),
+              },
+            })}
             error={Boolean(errors.firstName)}
             helperText={errors.firstName?.message}
           />
         </Stack>
 
         <TextField
-          {...register('email', {
-            required: 'The email is required',
-          })}
           fullWidth
-          label="Email"
+          label={t('fields.email.label')}
+          {...register('email', {
+            required: {
+              value: true,
+              message: t('fields.email.required'),
+            },
+            pattern: {
+              value: Regex.Email,
+              message: t('fields.email.invalid'),
+            },
+          })}
           error={Boolean(errors.email)}
           helperText={errors.email?.message}
         />
@@ -83,8 +104,13 @@ export const RegisterForm = () => {
         <TextField
           fullWidth
           type={showPassword ? 'text' : 'password'}
-          label="Password"
-          {...register('password')}
+          label={t('fields.password.label.new')}
+          {...register('password', {
+            required: {
+              value: true,
+              message: t('fields.password.required'),
+            },
+          })}
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
@@ -104,8 +130,16 @@ export const RegisterForm = () => {
         <TextField
           fullWidth
           type={showPassword ? 'text' : 'password'}
-          label="Password confirm"
-          {...register('passwordConfirm')}
+          label={t('fields.password.label.confirm')}
+          {...register('passwordConfirm', {
+            required: {
+              value: true,
+              message: t('fields.password.required'),
+            },
+            validate: (value) =>
+              value === password.current ||
+              (t('fields.password.noMatch') as string),
+          })}
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
@@ -118,8 +152,8 @@ export const RegisterForm = () => {
               </InputAdornment>
             ),
           }}
-          error={Boolean(errors.password)}
-          helperText={errors.password?.message}
+          error={Boolean(errors.passwordConfirm)}
+          helperText={errors.passwordConfirm?.message}
         />
 
         {error && <Alert severity="error">{error}</Alert>}
@@ -131,7 +165,7 @@ export const RegisterForm = () => {
           variant="contained"
           loading={isAction}
         >
-          Register
+          {t('signUp.confirm')}
         </LoadingButton>
       </Stack>
     </form>

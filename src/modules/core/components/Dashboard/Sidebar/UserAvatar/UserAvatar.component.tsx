@@ -1,12 +1,10 @@
 import { Avatar, Box, Stack, Typography } from '@mui/material'
 
+import { DEFAULT_AVATAR_PICTURE } from '@core/constants/defaultValue.constant'
 import { useSidebar } from '@core/hooks/useSidebar.hook'
 import { fadeInAnnimation } from '@core/utils/animation'
 
 import { useAuth } from '@auth/hooks/useAuth.hook'
-
-const DEFAULT_PICTURE =
-  'https://icatcare.org/app/uploads/2018/07/Thinking-of-getting-a-cat.png'
 
 export const UserAvatar = ({}) => {
   const { open } = useSidebar()
@@ -15,7 +13,7 @@ export const UserAvatar = ({}) => {
   return (
     <Stack direction="row" alignItems="center">
       <Avatar
-        src={user?.profilePicture || DEFAULT_PICTURE}
+        src={user?.profilePicture || DEFAULT_AVATAR_PICTURE}
         alt={`${user?.displayName} profile picture`}
       />
       <Box sx={{ ml: 2 }}>
@@ -37,7 +35,7 @@ export const UserAvatar = ({}) => {
             ...fadeInAnnimation(open),
           }}
         >
-          Admin
+          {user?.email}
         </Typography>
       </Box>
     </Stack>

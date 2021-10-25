@@ -79,6 +79,14 @@ export const authSlice = createSlice({
       state.isAuthRefreshing = false
     },
     /**
+     * This method set the user in payload as current user.
+     * @param state
+     * @param action
+     */
+    setUser: (state, action: PayloadAction<User>) => {
+      state.user = action.payload
+    },
+    /**
      * This method log out the user from the state
      * @param state
      */
@@ -96,6 +104,7 @@ export const {
   authenticationFailed,
   refreshAuthFailed,
   refreshAuthInProgress,
+  setUser,
 } = authSlice.actions
 
 export default authSlice.reducer

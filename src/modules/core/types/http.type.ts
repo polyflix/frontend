@@ -35,3 +35,8 @@ export interface BaseHttpService {
   patch: (path: string, options?: IRequestOptions) => Promise<IApiResponse>
   delete: (path: string, options?: IRequestOptions) => Promise<IApiResponse>
 }
+
+export interface WithPagination<T> {
+  items: T
+  totalCount: number
+}

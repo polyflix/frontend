@@ -70,7 +70,7 @@ export const DashboardSidebar = () => {
                 transition: 'margin ease 300ms',
               }}
             >
-              <Link underline="none" component={RouterLink} to="#">
+              <Link underline="none" component={RouterLink} to="/users/profile">
                 <AccountStyle open={open}>
                   <UserAvatar />
                 </AccountStyle>

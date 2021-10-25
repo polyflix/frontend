@@ -33,7 +33,7 @@ const sidebarConfig: SidebarItem[] = [
   },
   {
     title: 'user',
-    href: '/profile',
+    href: '/users/profile',
     icon: 'eva:people-fill',
   },
   {
