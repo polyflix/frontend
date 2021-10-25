@@ -1,9 +1,10 @@
-import { VideoService } from '@videos/service/video.service'
+import i18n from 'i18next'
 import { isUndefined } from 'lodash'
 import { SnackbarProvider } from 'notistack'
 import React, { Suspense } from 'react'
 import ReactDOM from 'react-dom'
 import { HelmetProvider } from 'react-helmet-async'
+import { I18nextProvider } from 'react-i18next'
 import { Provider } from 'react-redux'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 // eslint-disable-next-line import/no-extraneous-dependencies
@@ -39,7 +40,6 @@ import './styles/index.scss'
  */
 const PolyflixApp = () => {
   const authService = useInjection<AuthService>(AuthService)
-  const videoService = useInjection<VideoService>(VideoService)
 
   const { user, hasRefreshedAuth, isAuthRefreshing } = useAuth()
   const { isUnhealthy } = useServerHealth()
@@ -51,35 +51,34 @@ const PolyflixApp = () => {
   // the user value in the state is defined
   const isAuthenticated = !isUndefined(user)
 
+  const isAccountValidated = Boolean(user?.isAccountActivated)
+
   // If the user is not authenticated and we didn't try to refresh the authentication
   // we should try to automatically renew the authentication of the user.
   if (!isAuthenticated && !hasRefreshedAuth) authService.refreshAuth()
 
-  // We want to return the loading screen only in the case of the refresh authenticaiton
+  // We want to return the loading screen only in the case of the refresh authentication
+  // or if we are waiting for informations from the server
   if (isAuthRefreshing) return <LoadingLayout />
-
-  // TO REMOVE
-  videoService.findAll()
 
   return (
     <Router>
       <Switch>
-        {/* We want to add the auth router only if the user is currently not logged in */}
-        {!isAuthenticated && (
+        {/* We want the user to be redirected to home page if already logged in */}
+        <Route path="/auth" component={AuthRouter} />
+        {/* We restrict these route to an authenticated user*/}
+        <PrivateRoute condition={isAuthenticated}>
           <PrivateRoute
-            path="/auth"
-            redirectTo="/"
-            condition={!isAuthenticated}
-            component={AuthRouter}
-          />
-        )}
-        <PrivateRoute condition={isAuthenticated} path="/">
-          <DashboardLayout>
-            <Switch>
-              <Route exact path="/" component={HomePage} />
-              <Route component={NotFoundPage} />
-            </Switch>
-          </DashboardLayout>
+            condition={isAccountValidated}
+            redirectTo={'/auth/validate'}
+          >
+            <DashboardLayout>
+              <Switch>
+                <Route exact path="/" component={HomePage} />
+                <Route component={NotFoundPage} />
+              </Switch>
+            </DashboardLayout>
+          </PrivateRoute>
         </PrivateRoute>
       </Switch>
     </Router>
@@ -93,15 +92,17 @@ ReactDOM.render(
     <Provider store={store}>
       <ThemeConfig>
         <GlobalStyles />
-        <SnackbarProvider maxSnack={5}>
-          <Suspense fallback={<LoadingLayout />}>
-            <DIProvider>
-              <HelmetProvider>
-                <PolyflixApp />
-              </HelmetProvider>
-            </DIProvider>
-          </Suspense>
-        </SnackbarProvider>
+        <I18nextProvider i18n={i18n}>
+          <SnackbarProvider maxSnack={5}>
+            <Suspense fallback={<LoadingLayout />}>
+              <DIProvider>
+                <HelmetProvider>
+                  <PolyflixApp />
+                </HelmetProvider>
+              </DIProvider>
+            </Suspense>
+          </SnackbarProvider>
+        </I18nextProvider>
       </ThemeConfig>
     </Provider>
   </React.StrictMode>,
