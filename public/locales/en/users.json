@@ -1,0 +1,25 @@
+{
+  "profile": {
+    "alert": {
+      "update": "Your profile has been updated",
+      "delete": "Your profile was deleted"
+    },
+    "actions": {
+      "update": "Update profile",
+      "edit": "Edit your profile",
+      "delete": "Delete your account"
+    },
+    "hints": {
+      "delete": "Delete your account won't delete your videos. You must delete your videos before deleting your account if we want so."
+    },
+    "title": {
+      "view": "Profile page of ",
+      "edit": "Profil editor"
+    },
+    "tabs": {
+      "account": "Account",
+      "security": "Security",
+      "advanced": "Advanced"
+    }
+  }
+}

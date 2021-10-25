@@ -16,7 +16,16 @@ i18n
     interpolation: {
       escapeValue: false, // not needed for react as it escapes by default
     },
-    ns: ['common', 'resources', 'errors', 'videos', 'dropzone', 'home', 'auth'],
+    ns: [
+      'common',
+      'resources',
+      'errors',
+      'videos',
+      'dropzone',
+      'home',
+      'auth',
+      'users',
+    ],
     defaultNS: 'common',
   })
 

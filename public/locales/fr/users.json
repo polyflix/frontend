@@ -1,0 +1,25 @@
+{
+  "profile": {
+    "alert": {
+      "update": "Vous avez modifié votre profil",
+      "delete": "Vous avez supprimé votre profil"
+    },
+    "actions": {
+      "update": "Mettre à jour le profil",
+      "edit": "Modifier votre profil",
+      "delete": "Supprimer votre profil"
+    },
+    "hints": {
+      "delete": "Supprimer votre compte ne supprimera pas vos vidéos. Vous devez au préalable supprimer les vidéos manuellement."
+    },
+    "title": {
+      "view": "Profil de ",
+      "edit": "Editer le profil"
+    },
+    "tabs": {
+      "account": "Compte",
+      "security": "Sécurité",
+      "advanced": "Avancé"
+    }
+  }
+}
