@@ -1,4 +1,3 @@
-import i18n from 'i18next'
 import { isUndefined } from 'lodash'
 import { SnackbarProvider } from 'notistack'
 import React, { Suspense } from 'react'
@@ -28,10 +27,13 @@ import { useAuth } from '@auth/hooks/useAuth.hook'
 import { useServerHealth } from '@auth/hooks/useServerHealth.hook'
 import { AuthService } from '@auth/services/auth.service'
 
+import { VideoRouter } from '@videos/video.router'
+
 import { GlobalStyles } from '@theme/globalStyles'
 import { ThemeConfig } from '@theme/theme'
 
 import './i18n/config'
+import i18n from './i18n/config'
 import './styles/index.scss'
 
 /**
@@ -74,6 +76,7 @@ const PolyflixApp = () => {
           >
             <DashboardLayout>
               <Switch>
+                <Route path="/videos" component={VideoRouter} />
                 <Route exact path="/" component={HomePage} />
                 <Route component={NotFoundPage} />
               </Switch>

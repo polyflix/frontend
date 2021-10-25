@@ -1,0 +1,71 @@
+{
+  "providers": {
+    "youtube": "Vous voulez ajouter une vidéo YouTube ? Pas de problème, sélectionnez le lien, et choisissez le modèle pour ajouter votre vidéo !",
+    "file": "Téléchargez vos vidéos locales sur la plateforme. Votre vidéo sera stockée sur nos serveurs."
+  },
+  "preview": {
+    "title": "Titre",
+    "description": "Modifier la description de la vidéo afin de prévisualiser."
+  },
+  "forms": {
+    "create-update": {
+      "title": {
+        "default": "Choisissez votre fournisseur de vidéos",
+        "create": "Créer une nouvelle vidéo",
+        "update": "Modifier {{video}}",
+        "youtube": "Importer une vidéo depuis YouTube",
+        "file": "Ajouter une vidéo sur Polyflix",
+        "attachments": "Pièces jointes",
+        "metadata": "Métadonnées"
+      },
+      "description": {
+        "default": "Pour ajouter une vidéo sur la plateforme, vous devez choisir un fournisseur parmi ceux disponibles ci-dessous.",
+        "update": "Mettez à jour votre vidéo pour ajouter de nouvelles pièces jointes, ou modifiez simplement le titre ou la description de celle-ci.",
+        "youtube": "Vous avez trouvé une super vidéo sur YouTube et vous voulez la sauvegarder sur Polyflix ? Pas de problème, il suffit de prendre le lien de votre vidéo, et de le placer dans le champ de texte ci-dessous. Notre système ira chercher les métadonnées de la vidéo (titre, description, vignette) pour pré-remplir tous les champs.",
+        "file": "Vous souhaitez mettre en ligne votre vidéo sur la plateforme ? Personnalisez votre vidéo à l'aide du formulaire ci-dessous, et lancez le processus de téléchargement lorsque vous êtes prêt.",
+        "attachments": "Vous pouvez ajouter une ou plusieurs pièces jointes à votre vidéo, comme des fichiers PDF, des liens utiles, etc. Pour l'instant, vous ne pouvez ajouter que des pièces jointes avec une URL."
+      },
+      "placeholder": {
+        "title": "Titre",
+        "thumbnail": "Lien de la vignette",
+        "youtubeUrl": "Lien de la vidéo sur YouTube",
+        "description": "Description",
+        "upload": "Glissez déposer votre vidéo ici",
+        "attachments": {
+          "label": "Nom",
+          "url": "Lien de la pièce jointe",
+          "empty": "Votre vidéo n'a aucune pièces jointes."
+        },
+        "submit": {
+          "create": "Créer la vidéo",
+          "update": "Mettre à jour la vidéo"
+        }
+      },
+      "errors": {
+        "upload": "Une erreur est survenue lors de l'envoi de vos fichiers."
+      },
+      "validation": {
+        "video": {
+          "required": "Vous n'avez pas sélectionné de vidéo."
+        },
+        "title": {
+          "required": "Le titre est requis."
+        },
+        "thumbnail": {
+          "required": "Une vignette est requise."
+        },
+        "description": {
+          "required": "Une description est requise."
+        },
+        "attachments": {
+          "label": {
+            "required": "Un nom est requis pour votre pièce jointe."
+          },
+          "url": {
+            "required": "Un lien est requis pour votre pièce joinnte."
+          }
+        }
+      }
+    }
+  }
+}

@@ -15,9 +15,21 @@ export interface SidebarItem {
 
 const sidebarConfig: SidebarItem[] = [
   {
-    title: 'videos',
+    title: 'Home',
     href: '/',
+    icon: 'akar-icons:home',
+  },
+  {
+    title: 'videos',
+    href: '/videos',
     icon: 'eva:play-circle-outline',
+    items: [
+      {
+        title: 'Create',
+        icon: 'carbon:add',
+        href: '/videos/create',
+      },
+    ],
   },
   {
     title: 'user',

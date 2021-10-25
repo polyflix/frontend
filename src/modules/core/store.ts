@@ -1,18 +1,21 @@
 import { configureStore } from '@reduxjs/toolkit'
-import videosReducer from '@videos/reducers/video.slice'
 
 import snackBarReducer from '@core/reducers/snackbar.slice'
 
 import authReducer from '@auth/reducers/auth.slice'
 
-import serverReducer from './reducers/server.reducer'
+import videosReducer from '@videos/reducers/video.slice'
+
+import uploadReducer from './reducers/file-upload.slice'
+import serverReducer from './reducers/server.slice'
 
 export const store = configureStore({
   reducer: {
     auth: authReducer,
     server: serverReducer,
-    snackbar: snackBarReducer,
     videos: videosReducer,
+    snackbar: snackBarReducer,
+    upload: uploadReducer,
   },
 })
 

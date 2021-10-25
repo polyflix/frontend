@@ -1,16 +1,18 @@
 import { Grid, Typography } from '@mui/material'
-import { VideoSliderCard } from '@videos/components/VideoSliderCard/VideoSliderCard.component'
 import { useTranslation } from 'react-i18next'
+import { useSelector } from 'react-redux'
 
 import { Page } from '@core/components/Page/Page.component'
 import { Slider } from '@core/components/Slider/Slider.component'
-import { useResourceState } from '@core/hooks/useResourceState.hook'
+
+import { VideoSliderCard } from '@videos/components/VideoSliderCard/VideoSliderCard.component'
+import { videosSelectors } from '@videos/reducers/video.slice'
 
 export const HomePage = () => {
-  const { data: videosIds } = useResourceState('videos')
+  const videos = useSelector(videosSelectors.selectIds)
   const { t } = useTranslation('home')
   return (
-    <Page title="Home">
+    <Page title="Home" container={false}>
       <Grid container spacing={5}>
         <Grid item xs={12}>
           <Slider
@@ -21,8 +23,11 @@ export const HomePage = () => {
             }
             freeMode
           >
-            {videosIds.map((videoId: string) => (
-              <VideoSliderCard key={videoId} videoId={videoId} />
+            {videos.map((video) => (
+              <VideoSliderCard
+                key={video.toString()}
+                videoId={video.toString()}
+              />
             ))}
           </Slider>
         </Grid>
@@ -33,8 +38,11 @@ export const HomePage = () => {
             }
             freeMode
           >
-            {videosIds.map((videoId: string) => (
-              <VideoSliderCard key={videoId} videoId={videoId} />
+            {videos.map((video) => (
+              <VideoSliderCard
+                key={video.toString()}
+                videoId={video.toString()}
+              />
             ))}
           </Slider>
         </Grid>
@@ -47,8 +55,11 @@ export const HomePage = () => {
             }
             freeMode
           >
-            {videosIds.map((videoId: string) => (
-              <VideoSliderCard key={videoId} videoId={videoId} />
+            {videos.map((video) => (
+              <VideoSliderCard
+                key={video.toString()}
+                videoId={video.toString()}
+              />
             ))}
           </Slider>
         </Grid>
@@ -61,8 +72,11 @@ export const HomePage = () => {
             }
             freeMode
           >
-            {videosIds.map((videoId: string) => (
-              <VideoSliderCard key={videoId} videoId={videoId} />
+            {videos.map((video) => (
+              <VideoSliderCard
+                key={video.toString()}
+                videoId={video.toString()}
+              />
             ))}
           </Slider>
         </Grid>

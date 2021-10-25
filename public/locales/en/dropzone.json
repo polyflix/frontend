@@ -1,0 +1,8 @@
+{
+  "hint": "Allowed formats : {{accept}}",
+  "dragInactive": "Drag 'n' drop your file(s) here, or click to select file(s)",
+  "dragActive": "Drop your file(s) here",
+  "errors": {
+    "file-invalid-type": "Invalid file type."
+  }
+}

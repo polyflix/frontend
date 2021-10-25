@@ -55,6 +55,15 @@ export const createGenericResourceSlice = <
         state.error = action.payload
         state.isLoading = false
       },
+
+      /**
+       * An action which should be called when we want to add an item to our state.
+       * @param state
+       * @param action
+       */
+      addOne: (state: GenericResourceState<T>, action: PayloadAction<T>) => {
+        state.data = [action.payload, ...state.data]
+      },
     },
   })
 }

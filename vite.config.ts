@@ -1,5 +1,4 @@
 import react from '@vitejs/plugin-react'
-import { find } from 'lodash'
 import { resolve } from 'path'
 import { defineConfig } from 'vite'
 
@@ -48,6 +47,10 @@ export default defineConfig({
       {
         find: '@users',
         replacement: resolve(__dirname, './src/modules/users'),
+      },
+      {
+        find: '@videos',
+        replacement: resolve(__dirname, './src/modules/videos'),
       },
     ],
   },

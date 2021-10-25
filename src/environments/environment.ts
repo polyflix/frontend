@@ -1,4 +1,4 @@
-import { Environment } from '@core/types/environement.type'
+import { Environment } from '@core/types/environment.type'
 
 /**
  * This is the default environment which will be used by our app.

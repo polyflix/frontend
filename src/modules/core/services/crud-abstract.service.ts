@@ -2,6 +2,7 @@
  * Exposes the 5 methods needed to perform CRUD actions.
  * Also allows you to manage the display and modal or snackbar on certain raw actions
  */
+import { EntityId } from '@reduxjs/toolkit'
 import { TFunction } from 'i18next'
 
 import { Container } from '@polyflix/di'
@@ -26,6 +27,8 @@ export abstract class CrudAbstractService<
   Type extends BaseModel,
   DTO
 > extends HttpUtils {
+  protected httpService: HttpService
+
   protected apiService: ApiService
 
   protected snackbarService: SnackbarService
@@ -37,13 +40,13 @@ export abstract class CrudAbstractService<
   protected endpoint: string
 
   constructor(
-    protected http: HttpService,
     protected apiVersion: ApiVersion = ApiVersion.V1,
     protected apiEndpoint: string,
     protected apiType?: ApiType
   ) {
     super()
     // Get all of our services from the IoC container
+    this.httpService = Container.get<HttpService>(HttpService)
     this.apiService = Container.get<ApiService>(ApiService)
     this.snackbarService = Container.get<SnackbarService>(SnackbarService)
     this.translate = Container.get<TFunction>(APP_TRANSLATION)
@@ -56,11 +59,12 @@ export abstract class CrudAbstractService<
     )}/${apiEndpoint}`
   }
 
-  abstract delete(item: Type): Promise<IApiResponse<void>>
+  abstract delete(item: Type): Promise<void>
   abstract findAll(): Promise<IApiResponse<WithPagination<Type[]>>>
-  abstract get(item: Type): Promise<IApiResponse<Type>>
-  abstract save(data: DTO): Promise<IApiResponse<Type>>
-  abstract update(data: DTO): Promise<IApiResponse<Type | void>>
+  abstract get(item: Type): Promise<Type>
+  abstract getById(id: EntityId): Promise<Type>
+  abstract save(data: DTO): Promise<Type>
+  abstract update(id: EntityId, data: DTO): Promise<Type | void>
 
   /**
    * Notify the user with snackbars of an action.

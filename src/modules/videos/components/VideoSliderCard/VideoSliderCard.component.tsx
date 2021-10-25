@@ -5,6 +5,7 @@ import {
 } from '@mui/icons-material'
 import {
   Avatar,
+  Box,
   IconButton,
   ListItemIcon,
   ListItemText,
@@ -15,16 +16,17 @@ import {
   Typography,
   useMediaQuery,
   useTheme,
-  Box,
 } from '@mui/material'
-import { Video } from '@videos/models/video.model'
 import { abbreviateNumber } from 'js-abbreviation-number'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useSelector } from 'react-redux'
 
 import { AspectRatioBox } from '@core/components/AspectRatioBox/AspectRation.component'
 import { getPublishLabel } from '@core/helpers/date.helper'
-import { useResource } from '@core/hooks/useResource.hook'
+import { RootState } from '@core/store'
+
+import { videosSelectors } from '@videos/reducers/video.slice'
 
 import { VideoCardRootStyle, VideoCardThumbnail } from './VideoSliderCard.style'
 
@@ -84,7 +86,10 @@ interface Props {
 }
 
 export const VideoSliderCard = ({ videoId }: Props) => {
-  const video = useResource<Video>(videoId, 'videos')
+  const video = useSelector((state: RootState) =>
+    videosSelectors.selectById(state, videoId)
+  )
+
   const th = useTheme()
   const ltsm: boolean = useMediaQuery(th.breakpoints.down('sm'))
 
