@@ -1,7 +1,20 @@
+# NPM
 node_modules
+
+# MAC OS
 .DS_Store
+
+# BUILD OUTPUT
 dist
 dist-ssr
+build/
+
 *.local
+
+# TESTS OUTPUTS
 cypress/videos
 cypress/screenshots
+
+# IDE / Artifacts
+.husky/
+.idea/

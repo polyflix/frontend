@@ -159,4 +159,51 @@ export class AuthService {
     await this.httpService.get(`${this.endpoint}/logout`)
     this.dispatch(logoutUser())
   }
+
+  /**
+   * Request for a new email to validate an account
+   * @param email
+   */
+  public async sendAgainValidationEmail(email: string) {
+    const { status, error } = await this.httpService.post(
+      `${this.endpoint}/validate/send`,
+      {
+        body: {
+          email,
+        },
+      }
+    )
+
+    if (status !== StatusCodes.ACCEPTED) {
+      this.snackbarService.createSnackbar(error, {
+        variant: 'error',
+      })
+      throw error
+    }
+  }
+
+  /**
+   * Request to activate an account, is executed when  user accessed to
+   * validate page with an id in it
+   * @param userId
+   */
+  public async validateAccount(userId: string) {
+    const { status, error } = await this.httpService.post(
+      `${this.endpoint}/validate`,
+      {
+        body: {
+          userId,
+        },
+      }
+    )
+
+    if (status !== StatusCodes.ACCEPTED) {
+      this.snackbarService.createSnackbar(error, {
+        variant: 'error',
+      })
+      throw error
+    }
+
+    await this.refreshAuth()
+  }
 }
