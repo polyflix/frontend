@@ -16,6 +16,7 @@ import { useHistory } from 'react-router-dom'
 import { useInjection } from '@polyflix/di'
 
 import { Regex } from '@core/constants/regex.constant'
+import { buildPasswordValidation } from '@core/helpers/form.helper'
 
 import { AuthService } from '@auth/services/auth.service'
 import { IRegisterForm } from '@auth/types/form.type'
@@ -105,12 +106,7 @@ export const RegisterForm = () => {
           fullWidth
           type={showPassword ? 'text' : 'password'}
           label={t('fields.password.label.new')}
-          {...register('password', {
-            required: {
-              value: true,
-              message: t('fields.password.required'),
-            },
-          })}
+          {...register('password', buildPasswordValidation())}
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
@@ -132,10 +128,7 @@ export const RegisterForm = () => {
           type={showPassword ? 'text' : 'password'}
           label={t('fields.password.label.confirm')}
           {...register('passwordConfirm', {
-            required: {
-              value: true,
-              message: t('fields.password.required'),
-            },
+            ...buildPasswordValidation(),
             validate: (value) =>
               value === password.current ||
               (t('fields.password.noMatch') as string),
