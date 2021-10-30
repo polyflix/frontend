@@ -44,8 +44,8 @@ export const LoginForm = () => {
   const [isAction, setIsAction] = useState<boolean>(false)
 
   const {
-    handleSubmit,
     register,
+    handleSubmit,
     formState: { errors },
   } = useForm<ILoginForm>()
 
@@ -78,6 +78,7 @@ export const LoginForm = () => {
         {error && <Alert severity="error">{error}</Alert>}
         <TextField
           fullWidth
+          label={t('fields.email.label')}
           {...register('email', {
             required: {
               value: true,
@@ -88,17 +89,21 @@ export const LoginForm = () => {
               message: t('fields.email.invalid'),
             },
           })}
-          variant="outlined"
-          error={errors.email !== undefined}
+          error={Boolean(errors.email)}
           helperText={errors.email?.message}
-          label="Email"
+          variant="outlined"
         />
 
         <TextField
           fullWidth
           type={showPassword ? 'text' : 'password'}
-          label="Password"
-          {...register('password')}
+          label={t('fields.password.label.current')}
+          {...register('password', {
+            required: {
+              value: true,
+              message: t('fields.password.required'),
+            },
+          })}
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
