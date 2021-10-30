@@ -1,5 +1,5 @@
 export const shape = {
-  borderRadius: 8,
+  borderRadius: 9,
   borderRadiusSm: 12,
   borderRadiusMd: 16,
 }

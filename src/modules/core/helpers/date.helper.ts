@@ -31,3 +31,6 @@ export const getPublishLabel = (date?: string | Dayjs): string => {
 
   return `${diffInDays} day${diffInDays !== 1 && 's'} ago`
 }
+
+export const stringToDate = (date: string): string =>
+  dayjs(new Date(date)).format('DD MMM YYYY')

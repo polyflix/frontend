@@ -52,6 +52,14 @@ export default defineConfig({
         find: '@videos',
         replacement: resolve(__dirname, './src/modules/videos'),
       },
+      {
+        find: '@subtitles',
+        replacement: resolve(__dirname, './src/modules/subtitles'),
+      },
+      {
+        find: '@stats',
+        replacement: resolve(__dirname, './src/modules/stats'),
+      },
     ],
   },
   plugins: [

@@ -1,4 +1,7 @@
 {
+  "page": {
+    "title": "Home"
+  },
   "sliders": {
     "titles": {
       "continueWatching": "Continue watching",

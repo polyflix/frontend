@@ -31,7 +31,7 @@ export const DashboardSidebar = () => {
   const authService = useInjection<AuthService>(AuthService)
 
   const th = useTheme()
-  const ltsm: boolean = useMediaQuery(th.breakpoints.down('sm'))
+  const ltsm: boolean = useMediaQuery(th.breakpoints.down('md'))
 
   const { open, toggle } = useSidebar()
   const { t } = useTranslation('common')

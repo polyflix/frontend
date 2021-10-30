@@ -67,5 +67,13 @@
         }
       }
     }
+  },
+  "slug": {
+    "sidebar": {
+      "tabs": {
+        "subtitles": "Sous-titres",
+        "notes": "Notes"
+      }
+    }
   }
 }

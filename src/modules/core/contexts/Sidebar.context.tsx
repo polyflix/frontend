@@ -16,7 +16,7 @@ export const SidebarContext = createContext<ISidebarContext | undefined>(
 // useSidebar hook in the components hierarchy to access the Sidebar state.
 export const SidebarProvider = ({ children }: PropsWithChildren<{}>) => {
   const theme = useTheme()
-  const ltsm: boolean = useMediaQuery(theme.breakpoints.down('sm'))
+  const ltsm: boolean = useMediaQuery(theme.breakpoints.down('md'))
   const [open, setOpen] = useState<boolean>(!ltsm)
 
   useEffect(() => (ltsm ? setOpen(false) : setOpen(true)), [ltsm])

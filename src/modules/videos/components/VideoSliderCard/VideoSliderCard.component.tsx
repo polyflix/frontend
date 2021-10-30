@@ -16,14 +16,17 @@ import {
   Typography,
   useMediaQuery,
   useTheme,
+  Link,
 } from '@mui/material'
 import { abbreviateNumber } from 'js-abbreviation-number'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
+import { Link as RouterLink } from 'react-router-dom'
 
 import { AspectRatioBox } from '@core/components/AspectRatioBox/AspectRation.component'
 import { getPublishLabel } from '@core/helpers/date.helper'
+import { videoSlugLink } from '@core/helpers/video.helper'
 import { RootState } from '@core/store'
 
 import { videosSelectors } from '@videos/reducers/video.slice'
@@ -128,11 +131,18 @@ export const VideoSliderCard = ({ videoId }: Props) => {
             ratio={16 / 9}
             sx={{ bgcolor: 'grey.400', borderRadius: 1 }}
           >
-            <VideoCardThumbnail
-              loading="lazy"
-              src={video?.thumbnail}
-              alt={`${video?.title} thumbnail`}
-            />
+            <Link
+              underline="none"
+              color="inherit"
+              component={RouterLink}
+              to={videoSlugLink(video)}
+            >
+              <VideoCardThumbnail
+                loading="lazy"
+                src={video?.thumbnail}
+                alt={`${video?.title} thumbnail`}
+              />
+            </Link>
           </AspectRatioBox>
           <Stack
             sx={{
@@ -167,7 +177,11 @@ export const VideoSliderCard = ({ videoId }: Props) => {
                   })`,
               }}
             >
-              <Box
+              <Link
+                underline="none"
+                color="inherit"
+                component={RouterLink}
+                to={videoSlugLink(video)}
                 sx={{
                   display: 'flex',
                   justifyContent: 'space-between',
@@ -187,7 +201,7 @@ export const VideoSliderCard = ({ videoId }: Props) => {
                   {video?.title}
                 </Typography>
                 <VideoSliderOption />
-              </Box>
+              </Link>
 
               <Box>
                 <Typography

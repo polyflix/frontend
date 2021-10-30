@@ -59,7 +59,7 @@ export abstract class CrudAbstractService<
     )}/${apiEndpoint}`
   }
 
-  abstract delete(item: Type): Promise<void>
+  abstract delete(item: Type): Promise<IApiResponse<void>>
   abstract findAll(): Promise<IApiResponse<WithPagination<Type[]>>>
   abstract get(item: Type): Promise<Type>
   abstract getById(id: EntityId): Promise<Type>

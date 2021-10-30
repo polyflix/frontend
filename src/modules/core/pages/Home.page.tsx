@@ -12,7 +12,7 @@ export const HomePage = () => {
   const videos = useSelector(videosSelectors.selectIds)
   const { t } = useTranslation('home')
   return (
-    <Page title="Home" container={false}>
+    <Page title={t('page.title')} maxWidth={false} disableGutters={true}>
       <Grid container spacing={5}>
         <Grid item xs={12}>
           <Slider

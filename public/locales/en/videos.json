@@ -67,5 +67,31 @@
         }
       }
     }
+  },
+  "slug": {
+    "sidebar": {
+      "tabs": {
+        "subtitles": "Subtitles",
+        "notes": "Notes"
+      },
+      "tooltips": {
+        "collapse": "Collapse sidebar",
+        "expand": "Expand sidebar"
+      }
+    },
+    "details": {
+      "tooltips": {
+        "likes": "{{count}} like(s)",
+        "views": "{{count}} view(s)",
+        "seeProfile": "See profile"
+      },
+      "menu": {
+        "items": {
+          "delete": "Delete video",
+          "edit": "Edit video",
+          "addToPlaylist": "Add to playlist"
+        }
+      }
+    }
   }
 }
