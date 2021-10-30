@@ -152,7 +152,6 @@ export const VideoForm = ({ source, video, isUpdate }: Props) => {
     }
   }
 
-  console.log({ videoThumbnailFile, isUpdate })
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Typography sx={{ mb: 3 }} variant="h4">
