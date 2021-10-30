@@ -1,107 +1,165 @@
+import Visibility from '@mui/icons-material/Visibility'
+import VisibilityOff from '@mui/icons-material/VisibilityOff'
 import { LoadingButton } from '@mui/lab'
-import { Alert, Button, Stack, TextField } from '@mui/material'
-import { useState } from 'react'
+import {
+  Alert,
+  Box,
+  Button,
+  IconButton,
+  InputAdornment,
+  Stack,
+  TextField,
+  Typography,
+} from '@mui/material'
+import { isUndefined } from 'lodash'
+import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { useHistory } from 'react-router-dom'
 
 import { useInjection } from '@polyflix/di'
 
-import { Regex } from '@core/constants/regex.constant'
+import { buildPasswordValidation } from '@core/helpers/form.helper'
+import { SnackbarService } from '@core/services/snackbar.service'
 
 import { AuthService } from '@auth/services/auth.service'
 import { IResetPasswordForm } from '@auth/types/form.type'
 
-interface Props {
-  onSuccess?: () => void
+export type ResetPasswordFormProps = {
+  email: string
+  token: string
 }
 
-/**
- * This is the form used to reset the user password.
- * @returns
- */
-export const ResetPasswordForm = ({ onSuccess }: Props) => {
+export const ResetPasswordForm: React.FC<ResetPasswordFormProps> = ({
+  email,
+  token,
+}) => {
   const authService = useInjection<AuthService>(AuthService)
+  const snackbarService = useInjection<SnackbarService>(SnackbarService)
   const { t } = useTranslation('auth')
+  const [togglePasswordView, setTogglePasswordView] = useState(false)
 
   const history = useHistory()
 
   const {
     handleSubmit,
     register,
-    formState: { errors },
-  } = useForm<IResetPasswordForm>()
-
-  // Some useful states for our component behavior
-  // IsAction is used to control the disable of buttons to avoid multiple calls
-  const [isAction, setIsAction] = useState<boolean>(false)
+    getValues,
+    formState: { errors, isSubmitting },
+  } = useForm<IResetPasswordForm>({
+    defaultValues: {
+      email,
+      token,
+    },
+    reValidateMode: 'onChange',
+  })
   const [error, setError] = useState<string>()
 
-  /**
-   * Try to send the reset email.
-   * @param data
-   */
-  const onPasswordReset = async (data: IResetPasswordForm) => {
+  const onSubmitForm = async (data: IResetPasswordForm) => {
     setError(undefined)
-    setIsAction(true)
+    const returnedContent = await authService.resetPassword(data)
 
-    try {
-      await authService.sendResetEmail(data)
-      // If we have a callback, call it
-      if (onSuccess) {
-        onSuccess()
-      }
-    } catch (err: any) {
-      setError(err)
-    } finally {
-      setIsAction(false)
+    if (returnedContent) {
+      setError(returnedContent)
+    } else {
+      snackbarService.createSnackbar(t('fields.password.updated'), {
+        variant: 'success',
+      })
+      history.push('/auth/login')
     }
   }
-
-  const onBack = () => history.replace('/auth/login')
-
   return (
-    <form onSubmit={handleSubmit(onPasswordReset)}>
-      <Stack spacing={3}>
-        {error && <Alert severity="error">{error}</Alert>}
+    <>
+      <Box sx={{ mb: 5 }}>
+        <Typography variant="h4" gutterBottom>
+          {t('resetPassword.resetForm.title')}
+        </Typography>
+        <Typography sx={{ color: 'text.secondary' }}>
+          {t('resetPassword.resetForm.subtitle')}
+        </Typography>
+      </Box>
+      <form onSubmit={handleSubmit(onSubmitForm)}>
+        <Stack spacing={3}>
+          {error && <Alert severity="error">{error}</Alert>}
+          <TextField
+            disabled
+            style={{ display: 'none' }}
+            {...register('token')}
+          />
+          <TextField
+            fullWidth
+            variant="outlined"
+            error={!isUndefined(errors.email)}
+            helperText={errors.email?.message}
+            label="Email"
+            disabled
+            {...register('email')}
+          />
+          <TextField
+            fullWidth
+            variant="outlined"
+            type={togglePasswordView ? 'text' : 'password'}
+            error={!isUndefined(errors.password)}
+            helperText={errors.password?.message}
+            label={t('fields.password.label.new')}
+            {...register('password', buildPasswordValidation())}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    edge="end"
+                    onClick={() => setTogglePasswordView(!togglePasswordView)}
+                  >
+                    {togglePasswordView ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              ),
+              autoComplete: 'new-password',
+            }}
+            disabled={isSubmitting}
+          />
+          <TextField
+            fullWidth
+            variant="outlined"
+            error={!isUndefined(errors.passwordRepeat)}
+            helperText={errors.passwordRepeat?.message}
+            type={togglePasswordView ? 'text' : 'password'}
+            label={t('fields.password.label.confirm')}
+            {...register('passwordRepeat', {
+              ...buildPasswordValidation(),
+              validate: (value) =>
+                getValues('password') === value
+                  ? true
+                  : `${t('fields.password.noMatch')}`,
+            })}
+            InputProps={{
+              autoComplete: 'new-password',
+            }}
+            disabled={isSubmitting}
+          />
 
-        <TextField
-          fullWidth
-          label={t('fields.email.label')}
-          {...register('email', {
-            required: {
-              value: true,
-              message: t('fields.email.required'),
-            },
-            pattern: {
-              value: Regex.Email,
-              message: t('fields.email.invalid'),
-            },
-          })}
-          error={Boolean(errors.email)}
-          helperText={errors.email?.message}
-          variant="outlined"
-        />
+          <LoadingButton
+            fullWidth
+            size="large"
+            type="submit"
+            variant="contained"
+            loading={isSubmitting}
+          >
+            {t('resetPassword.resetForm.confirm')}
+          </LoadingButton>
+        </Stack>
+      </form>
 
-        <LoadingButton
-          fullWidth
-          size="large"
-          type="submit"
-          variant="contained"
-          loading={isAction}
-        >
-          {t('resetPassword.confirm')}
-        </LoadingButton>
-
-        <Button
-          onClick={onBack}
-          sx={{ marginTop: '10px' }}
-          fullWidth
-          size="large"
-        >
-          {t('resetPassword.back')}
-        </Button>
-      </Stack>
-    </form>
+      {/* FOOTER TEXT REDIRECTING TO LOG IN PAGE */}
+      <Button
+        onClick={() => history.push('/auth/login')}
+        sx={{ marginTop: '10px' }}
+        fullWidth
+        size="large"
+      >
+        {t('resetPassword.resetForm.footer')}
+      </Button>
+      {/* END FOOTER TEXT */}
+    </>
   )
 }

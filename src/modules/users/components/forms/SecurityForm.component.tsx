@@ -84,6 +84,7 @@ export const SecurityForm = ({ user, title }: Props) => {
                     </IconButton>
                   </InputAdornment>
                 ),
+                autoComplete: 'current-password',
               }}
               error={Boolean(errors.currentPassword)}
               helperText={errors.currentPassword?.message}
@@ -111,6 +112,7 @@ export const SecurityForm = ({ user, title }: Props) => {
                     </IconButton>
                   </InputAdornment>
                 ),
+                autoComplete: 'new-password',
               }}
               error={Boolean(errors.password)}
               helperText={errors.password?.message}

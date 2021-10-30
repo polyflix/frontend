@@ -19,6 +19,12 @@ interface Props {
   title: string
 }
 
+/**
+ * User deletion component form
+ * @param user
+ * @param title
+ * @constructor
+ */
 export const AdvancedForm = ({ user, title }: Props) => {
   const userService = useInjection<UserService>(UserService)
 

@@ -9,6 +9,13 @@ export interface IRegisterForm extends ILoginForm {
   passwordConfirm: string
 }
 
+export interface IRequestResetPasswordForm {
+  email: string
+}
+
 export interface IResetPasswordForm {
   email: string
+  token: string
+  password: string
+  passwordRepeat: string
 }

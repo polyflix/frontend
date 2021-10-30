@@ -21,6 +21,7 @@ import {
 import {
   ILoginForm,
   IRegisterForm,
+  IRequestResetPasswordForm,
   IResetPasswordForm,
 } from '@auth/types/form.type'
 
@@ -132,15 +133,13 @@ export class AuthService {
    * @param {IResetRequestForm} resetRequestForm
    */
   public async sendResetEmail(
-    resetRequestForm: IResetPasswordForm
+    resetRequestForm: IRequestResetPasswordForm
   ): Promise<any> {
     const { status, error, response } = await this.httpService.post(
       `${this.endpoint}/forgotPassword`,
       {
         body: {
           ...resetRequestForm,
-          redirect:
-            window.location.protocol + '//' + window.location.host + '/auth/',
         },
       }
     )
@@ -205,5 +204,24 @@ export class AuthService {
     }
 
     await this.refreshAuth()
+  }
+
+  /**
+   * Send a new password
+   * @param resetPasswordForm
+   */
+  public async resetPassword(
+    resetPasswordForm: IResetPasswordForm
+  ): Promise<void | string> {
+    const { status, error } = await this.httpService.post(
+      `${this.endpoint}/resetPassword`,
+      {
+        body: resetPasswordForm,
+      }
+    )
+
+    if (status !== StatusCodes.OK) {
+      return error
+    }
   }
 }

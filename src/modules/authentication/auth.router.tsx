@@ -18,7 +18,6 @@ export const AuthRouter = () => {
 
   const isAuthenticated = !isUndefined(user)
   const isAccountActivated = user?.isAccountActivated || false
-
   return (
     <Switch>
       <PrivateRoute
@@ -30,13 +29,13 @@ export const AuthRouter = () => {
       />
       <PrivateRoute condition={!isAuthenticated} redirectTo={'/'}>
         <Switch>
-          <Route exact path={`${url}/login`} component={LoginPage} />
-          <Route exact path={`${url}/register`} component={RegisterPage} />
           <Route
             exact
             path={`${url}/forgotten-password`}
             component={ResetPasswordPage}
           />
+          <Route exact path={`${url}/login`} component={LoginPage} />
+          <Route exact path={`${url}/register`} component={RegisterPage} />
         </Switch>
       </PrivateRoute>
     </Switch>
