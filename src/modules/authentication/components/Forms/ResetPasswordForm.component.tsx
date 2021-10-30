@@ -1,6 +1,5 @@
 import { LoadingButton } from '@mui/lab'
 import { Alert, Button, Stack, TextField } from '@mui/material'
-import { isUndefined } from 'lodash'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
@@ -68,20 +67,20 @@ export const ResetPasswordForm = ({ onSuccess }: Props) => {
 
         <TextField
           fullWidth
-          variant="outlined"
-          error={!isUndefined(errors.email)}
-          helperText={errors.email?.message}
-          label="Email"
+          label={t('fields.email.label')}
           {...register('email', {
             required: {
               value: true,
-              message: t('errors.email.required'),
+              message: t('fields.email.required'),
             },
             pattern: {
               value: Regex.Email,
-              message: t('errors.email.invalid'),
+              message: t('fields.email.invalid'),
             },
           })}
+          error={Boolean(errors.email)}
+          helperText={errors.email?.message}
+          variant="outlined"
         />
 
         <LoadingButton
