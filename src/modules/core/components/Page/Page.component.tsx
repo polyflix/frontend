@@ -5,6 +5,8 @@ import { Helmet } from 'react-helmet-async'
 
 import { LoadingLayout } from '@core/layouts/Loading/Loading.layout'
 
+import { SyncBreadcrumb } from '../SyncBreadcrumb/SyncBreadcrumb.component'
+
 type PageProps = {
   title?: string
   isLoading?: boolean
@@ -31,6 +33,7 @@ export const Page = forwardRef<typeof Box, PropsWithChildren<PageProps>>(
         <LoadingLayout isPage={false} />
       ) : (
         <Container sx={{ ...sx }} {...containerProps}>
+          <SyncBreadcrumb />
           {children}
         </Container>
       )}
