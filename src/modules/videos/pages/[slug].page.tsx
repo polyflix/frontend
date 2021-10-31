@@ -15,7 +15,7 @@ import { VideoService } from '@videos/services/video.service'
 
 export const SlugPage = () => {
   const { slug } = useParams<{ slug: string }>()
-  const { data: video } = useFetch<Video, VideoService>(
+  const { data: video, isLoading } = useFetch<Video, VideoService>(
     VideoService,
     'getById',
     [slug],
@@ -55,7 +55,7 @@ export const SlugPage = () => {
               margin: '0 auto',
             }}
           >
-            {video ? (
+            {!isLoading && video ? (
               <Player
                 video={video}
                 playerRef={playerRef}
