@@ -11,7 +11,6 @@ import {
   TextField,
   Typography,
 } from '@mui/material'
-import { isUndefined } from 'lodash'
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
@@ -89,7 +88,7 @@ export const ResetPasswordForm: React.FC<ResetPasswordFormProps> = ({
           <TextField
             fullWidth
             variant="outlined"
-            error={!isUndefined(errors.email)}
+            error={Boolean(errors.email)}
             helperText={errors.email?.message}
             label="Email"
             disabled
@@ -97,10 +96,7 @@ export const ResetPasswordForm: React.FC<ResetPasswordFormProps> = ({
           />
           <TextField
             fullWidth
-            variant="outlined"
             type={togglePasswordView ? 'text' : 'password'}
-            error={!isUndefined(errors.password)}
-            helperText={errors.password?.message}
             label={t('fields.password.label.new')}
             {...register('password', buildPasswordValidation())}
             InputProps={{
@@ -110,19 +106,19 @@ export const ResetPasswordForm: React.FC<ResetPasswordFormProps> = ({
                     edge="end"
                     onClick={() => setTogglePasswordView(!togglePasswordView)}
                   >
-                    {togglePasswordView ? <VisibilityOff /> : <Visibility />}
+                    {showCurrentPassword ? <VisibilityOff /> : <Visibility />}
                   </IconButton>
                 </InputAdornment>
               ),
               autoComplete: 'new-password',
             }}
+            error={Boolean(errors.password)}
+            helperText={errors.password?.message}
+            variant="outlined"
             disabled={isSubmitting}
           />
           <TextField
             fullWidth
-            variant="outlined"
-            error={!isUndefined(errors.passwordRepeat)}
-            helperText={errors.passwordRepeat?.message}
             type={togglePasswordView ? 'text' : 'password'}
             label={t('fields.password.label.confirm')}
             {...register('passwordRepeat', {
@@ -135,7 +131,10 @@ export const ResetPasswordForm: React.FC<ResetPasswordFormProps> = ({
             InputProps={{
               autoComplete: 'new-password',
             }}
+            error={Boolean(errors.passwordRepeat)}
+            helperText={errors.passwordRepeat?.message}
             disabled={isSubmitting}
+            variant="outlined"
           />
 
           <LoadingButton

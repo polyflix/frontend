@@ -78,11 +78,11 @@ export const RequestPasswordResetForm = () => {
             {...register('email', {
               required: {
                 value: true,
-                message: t('errors.email.required'),
+                message: t('fields.email.required'),
               },
               pattern: {
                 value: Regex.Email,
-                message: t('errors.email.invalid'),
+                message: t('fields.email.invalid'),
               },
             })}
             disabled={isSubmitting}
