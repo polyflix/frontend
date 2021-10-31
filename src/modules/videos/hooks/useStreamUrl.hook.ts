@@ -36,38 +36,33 @@ export const useStreamUrl = ({
   const [streamUrl, setStreamUrl] = useState<string | undefined>()
   const [error, setError] = useState<string | undefined>()
 
-  const source = (): string => {
-    switch (sourceType) {
-      case PlayerVideoSource.YOUTUBE:
-        return `https://www.youtube-nocookie.com/embed/${sourceRaw}`
-      default:
-        return sourceRaw
+  const getPresignedUrl = async (videoId: string) => {
+    try {
+      const { tokenAccess } = await minioService.getVideoPresignedUrl(videoId)
+      setStreamUrl(tokenAccess)
+    } catch (e: any) {
+      setError(e)
+    } finally {
+      setLoading(false)
     }
   }
 
-  /*
+  /**
    * Fetch a Presigned Url for a video
    */
   useEffect(() => {
     if (authLoading || streamUrl) return
+
     if (
       sourceType === PlayerVideoSource.YOUTUBE ||
       sourceType === PlayerVideoSource.UNKNOWN
     ) {
-      setStreamUrl(source)
+      setStreamUrl(sourceRaw)
       setLoading(false)
       return
     }
 
-    minioService
-      .getVideoPresignedUrl(id)
-      .then(({ tokenAccess }) => {
-        setStreamUrl(tokenAccess)
-      })
-      .catch((err) => {
-        setError(err)
-      })
-      .finally(() => setLoading(false))
-  }, [authLoading, id, loading, streamUrl, minioService, sourceType, sourceRaw])
+    getPresignedUrl(id)
+  }, [authLoading])
   return { streamUrl, error, loading }
 }
