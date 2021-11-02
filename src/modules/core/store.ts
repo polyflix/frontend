@@ -8,15 +8,19 @@ import videosReducer from '@videos/reducers/video.slice'
 
 import uploadReducer from './reducers/file-upload.slice'
 import serverReducer from './reducers/server.slice'
+import { api } from './services/api.service'
 
 export const store = configureStore({
   reducer: {
+    [api.reducerPath]: api.reducer,
     auth: authReducer,
     server: serverReducer,
     videos: videosReducer,
     snackbar: snackBarReducer,
     upload: uploadReducer,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(api.middleware),
 })
 
 export type RootState = ReturnType<typeof store.getState>

@@ -2,8 +2,8 @@ import {
   alpha,
   Color,
   PaletteColor,
-  PaletteOptions,
   PaletteMode,
+  PaletteOptions,
 } from '@mui/material'
 
 const GREY: Color = {
@@ -71,7 +71,7 @@ const getPalette: (mode: PaletteMode) => PaletteOptions = (
   warning: { ...WARNING },
   error: { ...ERROR },
   grey: GREY,
-  divider: GREY[300],
+  divider: mode === 'light' ? GREY[200] : '#121212',
   ...(mode === 'light'
     ? {
         background: { paper: '#ffffff', default: '#fafafa' },

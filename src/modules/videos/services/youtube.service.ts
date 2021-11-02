@@ -2,7 +2,7 @@ import { StatusCodes } from 'http-status-codes'
 
 import { Injectable } from '@polyflix/di'
 
-import { ApiService } from '@core/services/api.service'
+import { ApiService } from '@core/services/endpoint.service'
 import { HttpService } from '@core/services/http.service'
 import { SnackbarService } from '@core/services/snackbar.service'
 import { ApiVersion } from '@core/types/http.type'

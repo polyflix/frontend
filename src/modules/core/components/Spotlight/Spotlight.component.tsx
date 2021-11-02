@@ -17,9 +17,9 @@ import {
   SearchField,
   SearchFieldInModal,
   SearchIconWrapper,
-} from './SearchBar.style'
+} from './Spotlight.style'
 
-export const SearchBar: React.FC<PropsWithChildren<{}>> = ({}) => {
+export const Spotlight: React.FC<PropsWithChildren<{}>> = ({}) => {
   const theme = useTheme()
   const shortText = useMediaQuery(theme.breakpoints.down('sm'))
 
@@ -35,8 +35,7 @@ export const SearchBar: React.FC<PropsWithChildren<{}>> = ({}) => {
    * @param e event catched by keydown listener
    */
   function keydownHandler(e: KeyboardEvent) {
-    // *keyCode look's like to be deprecated but no fix for the moment
-    if (e.keyCode === 75 && (isMacOs ? e.metaKey : e.ctrlKey)) {
+    if (e.key === 'k' && (isMacOs ? e.metaKey : e.ctrlKey)) {
       e.preventDefault() // disable default browser binding if triggered
       handleOpen()
     }

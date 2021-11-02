@@ -14,6 +14,7 @@ import { useTranslation } from 'react-i18next'
 
 import { useInjection } from '@polyflix/di'
 
+import { Dropzone } from '@core/components/Dropzone/Dropzone.component'
 import { Icon } from '@core/components/Icon/Icon.component'
 import { MHidden } from '@core/components/MHidden/MHidden.component'
 import { StatusSelector } from '@core/components/StatusSelector/StatusSelector.component'
@@ -33,7 +34,6 @@ import { IVideoForm } from '@videos/types/form.type'
 import { VideoSource } from '@videos/types/video.type'
 
 import { FrameSelector } from '../FrameSelector/FrameSelector.component'
-import { VideoDropzone } from '../VideoDropzone/VideoDropzone.component'
 import { VideoPreview } from '../VideoPreview/VideoPreview.component'
 
 interface Props {
@@ -200,7 +200,7 @@ export const VideoForm = ({ source, video, isUpdate }: Props) => {
                       src={videoFileUrl}
                     />
                   ) : (
-                    <VideoDropzone
+                    <Dropzone
                       disabled={Boolean(videoFile)}
                       onAcceptedFiles={([file]) => setVideoFile(file)}
                       text={t('forms.create-update.placeholder.upload')}
@@ -349,7 +349,7 @@ export const VideoForm = ({ source, video, isUpdate }: Props) => {
         <Divider />
 
         <Typography sx={{ mb: 3 }} variant="h4">
-          Status
+          {t('forms.create-update.title.status')}
         </Typography>
 
         <VisibilitySelector

@@ -25,7 +25,6 @@ export const ItemList = ({ item }: Props) => {
           <Icon name={item.icon} />
         </ItemIconStyle>
         <ListItemText
-          disableTypography
           primary={item.title}
           sx={{
             ...fadeInAnnimation(open),

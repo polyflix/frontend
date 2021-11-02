@@ -8,7 +8,7 @@ export const Avatar = (
   return {
     MuiAvatar: {
       styleOverrides: {
-        root: {
+        rounded: {
           borderRadius: theme.shape.borderRadius,
         },
       },

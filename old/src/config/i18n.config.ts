@@ -24,6 +24,7 @@ i18n
       'dropzone',
       'play-quizz',
       'components',
+      'sidebar',
     ],
     defaultNS: 'common',
   })

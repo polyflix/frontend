@@ -1,11 +1,11 @@
 import {
   Backdrop,
+  Box,
   Fade,
   LinearProgress,
   LinearProgressProps,
   Modal,
   Typography,
-  Box,
 } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'

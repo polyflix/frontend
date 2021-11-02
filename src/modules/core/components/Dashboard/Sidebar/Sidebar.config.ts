@@ -1,3 +1,5 @@
+import i18n from '../../../../../i18n/config'
+
 export enum SidebarSection {
   GENERAL = 'general',
   MANAGEMENT = 'management',
@@ -5,7 +7,7 @@ export enum SidebarSection {
 
 export interface SidebarItem {
   title: string
-  icon: string
+  icon?: string
   badges?: number
   href?: string
   section?: SidebarSection
@@ -13,63 +15,43 @@ export interface SidebarItem {
   condition?: boolean
 }
 
-const sidebarConfig: SidebarItem[] = [
+const sidebarConfiguration: SidebarItem[] = [
   {
-    title: 'Home',
+    title: i18n.t('sidebar:items.home'),
     href: '/',
     icon: 'akar-icons:home',
   },
   {
-    title: 'videos',
+    title: i18n.t('sidebar:items.videos'),
     href: '/videos',
     icon: 'eva:play-circle-outline',
     items: [
       {
-        title: 'Create',
+        title: i18n.t('sidebar:actions.create'),
         icon: 'carbon:add',
         href: '/videos/create',
       },
     ],
   },
   {
-    title: 'user',
-    href: '/users/profile',
-    icon: 'eva:people-fill',
+    title: i18n.t('sidebar:items.quizzes'),
+    href: '/quizzes/explore',
+    icon: 'healthicons:i-exam-multiple-choice',
   },
   {
-    title: 'quizz',
-    icon: 'eva:question-mark-circle-outline',
+    title: i18n.t('sidebar:items.quizzes'),
+    section: SidebarSection.MANAGEMENT,
+    icon: 'healthicons:i-exam-multiple-choice',
     items: [
       {
-        title: 'List',
-        href: '/quizzes',
-        icon: 'eva:message-square-outline',
+        title: i18n.t('sidebar:actions.list'),
+        href: '/users/profile?tab=quizzes',
+      },
+      {
+        title: i18n.t('sidebar:actions.create'),
+        href: '/quizzes/create',
       },
     ],
-  },
-  {
-    title: 'subtitle',
-    href: '/login',
-    icon: 'eva:message-square-outline',
-  },
-  {
-    title: 'login',
-    href: '/register',
-    icon: 'eva:log-in-fill',
-  },
-  {
-    title: 'Videos',
-    href: '#',
-    section: SidebarSection.MANAGEMENT,
-    icon: 'majesticons:collection-line',
-    items: [],
-  },
-  {
-    title: 'Users',
-    href: '#',
-    section: SidebarSection.MANAGEMENT,
-    icon: 'eva:people-fill',
-    items: [],
   },
 ]
 
@@ -83,8 +65,10 @@ export interface SidebarConfiguration {
 export const getSidebarSections = (): SidebarConfiguration => {
   const config: SidebarConfiguration = {}
 
-  sidebarConfig.forEach((item) => {
-    const section: string = item.section || SidebarSection.GENERAL
+  sidebarConfiguration.forEach((item) => {
+    const section: string = i18n.t(
+      `sidebar:sections.${item.section || SidebarSection.GENERAL}`
+    )
     const list: SidebarItem[] = config[section] || []
     config[section] = [...list, item]
   })

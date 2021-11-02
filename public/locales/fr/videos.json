@@ -16,7 +16,8 @@
         "youtube": "Importer une vidéo depuis YouTube",
         "file": "Ajouter une vidéo sur Polyflix",
         "attachments": "Pièces jointes",
-        "metadata": "Métadonnées"
+        "metadata": "Métadonnées",
+        "status": "Status"
       },
       "description": {
         "default": "Pour ajouter une vidéo sur la plateforme, vous devez choisir un fournisseur parmi ceux disponibles ci-dessous.",

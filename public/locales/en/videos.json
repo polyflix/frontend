@@ -16,7 +16,8 @@
         "youtube": "Import a video from YouTube",
         "file": "Upload a video on Polyflix",
         "attachments": "Attachments",
-        "metadata": "Metadata"
+        "metadata": "Metadata",
+        "status": "Statut"
       },
       "description": {
         "default": "To add a video on the platform, you have to choose one provider among those available below.",

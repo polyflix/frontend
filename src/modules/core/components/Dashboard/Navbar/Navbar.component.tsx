@@ -5,7 +5,7 @@ import React, { PropsWithChildren } from 'react'
 import { Icon } from '@core/components/Icon/Icon.component'
 import { LanguageButton } from '@core/components/LanguageButton/LanguageButton.component'
 import { Logo } from '@core/components/Logo/Logo.component'
-import { SearchBar } from '@core/components/SearchBar/SearchBar.component'
+import { Spotlight } from '@core/components/Spotlight/Spotlight.component'
 import { ThemeButton } from '@core/components/ThemeButton/ThemeButton.component'
 import { useSidebar } from '@core/hooks/useSidebar.hook'
 
@@ -36,7 +36,7 @@ export const DashboardNavbar: React.FC<PropsWithChildren<{}>> = ({}) => {
         </Box>
         <Logo />
         <Box sx={{ flexGrow: 1 }} />
-        <SearchBar />
+        <Spotlight />
         <Stack
           direction="row"
           alignItems="center"

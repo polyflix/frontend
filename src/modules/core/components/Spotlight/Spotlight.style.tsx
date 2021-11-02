@@ -1,11 +1,12 @@
-import { styled } from '@mui/material'
 import TextField from '@mui/material/TextField'
+import { alpha, styled } from '@mui/system'
 
 export const Search = styled('div')(({ theme }) => ({
   position: 'relative',
   borderRadius: theme.shape.borderRadius,
+  backgroundColor: theme.palette.grey[200],
   '&:hover': {
-    backgroundColor: theme.palette.action.hover,
+    backgroundColor: alpha(theme.palette.grey[400], 0.5),
   },
   margin: theme.spacing(0, 0, 0, 0),
   width: '100%',
@@ -71,7 +72,7 @@ export const boxStyles = {
   left: '50%',
   transform: 'translate(-50%, -50%)',
   width: { xs: 350, md: 550 },
-  bgcolor: 'background.default',
+  bgcolor: 'background.paper',
   borderRadius: 2,
   boxShadow: 10,
   p: 4,

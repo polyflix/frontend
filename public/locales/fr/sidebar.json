@@ -1,0 +1,16 @@
+{
+  "actions": {
+    "list": "Lister",
+    "create": "Créer",
+    "logout": "Déconnexion"
+  },
+  "sections": {
+    "general": "Général",
+    "management": "Management"
+  },
+  "items": {
+    "home": "Accueil",
+    "videos": "Vidéos",
+    "quizzes": "Quizz"
+  }
+}

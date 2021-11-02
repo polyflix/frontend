@@ -24,6 +24,7 @@ i18n
       'dropzone',
       'home',
       'auth',
+      'quizzes',
       'users',
     ],
     defaultNS: 'common',

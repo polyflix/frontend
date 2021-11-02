@@ -6,13 +6,13 @@ export interface BaseModel {
   /**
    * The creation date of the resource
    */
-  createdAt: string
+  createdAt?: string
   /**
    * The last update date of the resource
    */
-  updatedAt: string
+  updatedAt?: string
   /**
    * The version of the resource
    */
-  __v: number
+  __v?: number
 }

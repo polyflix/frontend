@@ -28,8 +28,8 @@ interface Props {
   accept?: string | string[]
 }
 
-// Component used by the video form to upload videos
-export const VideoDropzone = ({
+// Component used by forms to upload files
+export const Dropzone = ({
   multiple = false,
   disabled = false,
   hint = false,

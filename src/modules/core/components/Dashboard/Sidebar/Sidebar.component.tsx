@@ -34,7 +34,7 @@ export const DashboardSidebar = () => {
   const ltsm: boolean = useMediaQuery(th.breakpoints.down('md'))
 
   const { open, toggle } = useSidebar()
-  const { t } = useTranslation('common')
+  const { t } = useTranslation('sidebar')
 
   return (
     <RootStyle open={open}>
@@ -123,7 +123,7 @@ export const DashboardSidebar = () => {
                   justifyContent: 'center',
                 }}
               >
-                <Tooltip title={t<string>('sidebar.actions.logout')}>
+                <Tooltip title={t<string>('actions.logout')}>
                   <Button
                     onClick={() => authService.logout()}
                     variant="outlined"
@@ -161,7 +161,7 @@ export const DashboardSidebar = () => {
                         ...fadeInAnnimation(open),
                       }}
                     >
-                      {t('sidebar.actions.logout')}
+                      {t('actions.logout')}
                     </Box>
                   </Button>
                 </Tooltip>

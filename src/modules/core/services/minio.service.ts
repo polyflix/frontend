@@ -16,7 +16,7 @@ import {
 import type { AppDispatch } from '@core/store'
 import { ApiVersion } from '@core/types/http.type'
 
-import { ApiService } from './api.service'
+import { ApiService } from './endpoint.service'
 import { HttpService } from './http.service'
 import { SnackbarService } from './snackbar.service'
 

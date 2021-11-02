@@ -8,6 +8,7 @@
       "@auth/*": ["src/modules/authentication/*"],
       "@users/*": ["src/modules/users/*"],
       "@videos/*": ["src/modules/videos/*"],
+      "@quizzes/*": ["src/modules/quizzes/*"],
       "@subtitles/*": ["src/modules/subtitles/*"],
       "@stats/*": ["src/modules/stats/*"]
     },
