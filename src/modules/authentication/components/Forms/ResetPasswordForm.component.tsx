@@ -106,7 +106,7 @@ export const ResetPasswordForm: React.FC<ResetPasswordFormProps> = ({
                     edge="end"
                     onClick={() => setTogglePasswordView(!togglePasswordView)}
                   >
-                    {showCurrentPassword ? <VisibilityOff /> : <Visibility />}
+                    {togglePasswordView ? <VisibilityOff /> : <Visibility />}
                   </IconButton>
                 </InputAdornment>
               ),
