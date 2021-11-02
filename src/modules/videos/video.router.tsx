@@ -1,5 +1,6 @@
 import { Route, Switch, useRouteMatch } from 'react-router-dom'
 
+import { SubtitleProvider } from './contexts/Subtitles.context'
 import { CreateUpdatePage } from './pages/[create-update].page'
 import { SlugPage } from './pages/[slug].page'
 
@@ -12,7 +13,11 @@ export const VideoRouter = () => {
         path={`${url}/:slug?/(create|update)`}
         component={CreateUpdatePage}
       />
-      <Route exact path={`${url}/:slug`} component={SlugPage} />
+      <Route exact path={`${url}/:slug`}>
+        <SubtitleProvider>
+          <SlugPage />
+        </SubtitleProvider>
+      </Route>
     </Switch>
   )
 }

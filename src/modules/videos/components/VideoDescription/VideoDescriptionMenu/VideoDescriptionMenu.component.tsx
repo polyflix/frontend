@@ -55,19 +55,19 @@ export const VideoDescriptionMenu = () => {
           'aria-labelledby': 'basic-button',
         }}
       >
-        <MenuItem onClick={handleClose}>
+        <MenuItem onClick={handleClose} disabled>
           <ListItemIcon sx={{ color: 'error.main' }}>
             <Delete fontSize="small" />
           </ListItemIcon>
           <ListItemText>{t('slug.details.menu.items.delete')}</ListItemText>
         </MenuItem>
-        <MenuItem onClick={handleClose}>
+        <MenuItem onClick={handleClose} disabled>
           <ListItemIcon>
             <Edit fontSize="small" />
           </ListItemIcon>
           <ListItemText>{t('slug.details.menu.items.edit')}</ListItemText>
         </MenuItem>
-        <MenuItem onClick={handleClose}>
+        <MenuItem onClick={handleClose} disabled>
           <ListItemIcon>
             <PlaylistAddOutlined fontSize="small" />
           </ListItemIcon>

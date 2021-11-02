@@ -39,6 +39,8 @@ const VideoSliderOption = () => {
 
   const open = Boolean(anchorEl)
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault()
+    event.stopPropagation()
     setAnchorEl(event.currentTarget)
   }
   const handleClose = () => {

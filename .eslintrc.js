@@ -1,34 +1,37 @@
 module.exports = {
-    parser: "@typescript-eslint/parser",
-    parserOptions: {
-        ecmaFeatures: {
-            jsx: true
-        },
-        ecmaVersion: 12,
-        sourceType: "module",
-        project: "./tsconfig.json"
+  parser: "@typescript-eslint/parser",
+  parserOptions: {
+    ecmaFeatures: {
+      jsx: true
     },
-    plugins: [
-        "@typescript-eslint/eslint-plugin",
-        "react",
-        "import"
-    ],
-    root: true,
-    env: {
-        browser: true,
-        es2021: true
-    },
-    extends: [
-        "plugin:react/recommended",
-        "plugin:react/jsx-runtime",
-        "airbnb-typescript",
-        'plugin:prettier/recommended',
-    ],
-    settings: {
-        react: {
-            version: 'detect'
-        }
-    },
-    ignorePatterns: [".eslintrc.js"],
-    rules: {}
+    ecmaVersion: 12,
+    sourceType: "module",
+    project: "./tsconfig.json"
+  },
+  plugins: [
+    "@typescript-eslint/eslint-plugin",
+    "react",
+    "import",
+    "react-hooks"
+  ],
+  root: true,
+  env: {
+    browser: true,
+    es2021: true
+  },
+  extends: [
+    "plugin:react/recommended",
+    "plugin:react/jsx-runtime",
+    "airbnb-typescript",
+    'plugin:prettier/recommended',
+  ],
+  settings: {
+    react: {
+      version: 'detect'
+    }
+  },
+  ignorePatterns: [".eslintrc.js"],
+  rules: {
+    "react-hooks/exhaustive-deps": "warn"
+  }
 }

@@ -16,9 +16,17 @@ import { useTranslation } from 'react-i18next'
 import { AutoScrollBox } from '@core/components/AutoScrollBox/AutoScrollBox.component'
 import { ease } from '@core/utils/transition'
 
-import { TabPanelStyle, RootStyle } from './PlayerSidebar.style'
+import { Video } from '@videos/models/video.model'
 
-export const PlayerSidebar = () => {
+import { TabPanelStyle, RootStyle } from './PlayerSidebar.style'
+import { SubtitlePanel } from './SubtitlesPanel/SubtitlesPanel.component'
+
+type PlayerSidebarProps = {
+  video: Video | undefined
+  playerRef: React.RefObject<HTMLVmPlayerElement>
+}
+
+export const PlayerSidebar = ({ video, playerRef }: PlayerSidebarProps) => {
   const [value, setValue] = useState('1')
 
   const [open, setOpen] = useState(true)
@@ -51,7 +59,7 @@ export const PlayerSidebar = () => {
             sx={{
               position: 'absolute',
               top: 5,
-              left: -40,
+              right: 5,
               zIndex: 1,
             }}
           >
@@ -75,18 +83,21 @@ export const PlayerSidebar = () => {
           <TabContext value={value}>
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
               <Tabs
-                variant="fullWidth"
                 value={value}
                 onChange={handleChange}
                 scrollButtons
                 aria-label="video sidebar tabs"
               >
-                <Tab label={t('slug.sidebar.tabs.subtitles')} value="1" />
-                <Tab label={t('slug.sidebar.tabs.notes')} value="2" />
+                <Tab label={t('slug.sidebar.tabs.subtitles.title')} value="1" />
+                <Tab
+                  label={t('slug.sidebar.tabs.notes.title')}
+                  value="2"
+                  disabled
+                />
               </Tabs>
             </Box>
             <TabPanelStyle value="1">
-              <AutoScrollBox></AutoScrollBox>
+              {video && <SubtitlePanel video={video} playerRef={playerRef} />}
             </TabPanelStyle>
             <TabPanelStyle value="2">
               <AutoScrollBox></AutoScrollBox>

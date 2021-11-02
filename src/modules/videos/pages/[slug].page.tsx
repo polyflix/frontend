@@ -51,7 +51,7 @@ export const SlugPage = () => {
           <AspectRatioBox
             ratio={16 / 9}
             sx={{
-              maxWidth: '1300px',
+              maxWidth: '2000px',
               margin: '0 auto',
             }}
           >
@@ -82,7 +82,7 @@ export const SlugPage = () => {
             },
           }}
         >
-          <PlayerSidebar />
+          <PlayerSidebar video={video} playerRef={playerRef} />
         </Grid>
         <Grid
           item

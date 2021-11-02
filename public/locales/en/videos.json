@@ -72,8 +72,16 @@
   "slug": {
     "sidebar": {
       "tabs": {
-        "subtitles": "Subtitles",
-        "notes": "Notes"
+        "subtitles": {
+          "title": "Subtitles",
+          "alertMessages": {
+            "error": "An error has occurred",
+            "info": "No subtitles for this video"
+          }
+        },
+        "notes": {
+          "title": "Notes"
+        }
       },
       "tooltips": {
         "collapse": "Collapse sidebar",
