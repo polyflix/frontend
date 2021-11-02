@@ -16,6 +16,7 @@ export const HomePage = () => {
       <Grid container spacing={5}>
         <Grid item xs={12}>
           <Slider
+            isLoading={!videos.length}
             heading={
               <Typography variant="h4">
                 {t('sliders.titles.continueWatching')}
@@ -33,6 +34,7 @@ export const HomePage = () => {
         </Grid>
         <Grid item xs={12}>
           <Slider
+            isLoading={!videos.length}
             heading={
               <Typography variant="h4">{t('sliders.titles.latest')}</Typography>
             }
@@ -48,6 +50,7 @@ export const HomePage = () => {
         </Grid>
         <Grid item xs={12}>
           <Slider
+            isLoading={!videos.length}
             heading={
               <Typography variant="h4">
                 {t('sliders.titles.popular')}
@@ -65,6 +68,7 @@ export const HomePage = () => {
         </Grid>
         <Grid item xs={12}>
           <Slider
+            isLoading={!videos.length}
             heading={
               <Typography variant="h4">
                 {t('sliders.titles.watchAgain')}

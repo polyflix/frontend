@@ -5,6 +5,7 @@ import { ease } from '@core/utils/transition'
 
 export const TabPanelStyle = styled(TabPanel)<any>(() => ({
   height: 'calc(100% - 49px)',
+  padding: 0,
 }))
 
 export const RootStyle = styled(Box)<any>(({ theme, open }) => ({
@@ -16,11 +17,14 @@ export const RootStyle = styled(Box)<any>(({ theme, open }) => ({
   }),
   ...(!open && {
     overflow: 'hidden',
-    width: '0px',
+    width: '30px',
     opacity: 0,
   }),
   [theme.breakpoints.down('lg')]: {
     height: '500px',
     width: '100%',
+  },
+  [theme.breakpoints.up('xl')]: {
+    width: '500px',
   },
 }))

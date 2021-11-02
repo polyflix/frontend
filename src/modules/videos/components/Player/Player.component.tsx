@@ -1,6 +1,7 @@
 import { Box } from '@mui/material'
 import { useSubtitles } from '@subtitles/hooks/useSubtitles.hook'
 import {
+  Captions,
   ClickToPlay,
   DblClickFullscreen,
   DefaultControls,
@@ -15,6 +16,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import { useAuth } from '@auth/hooks/useAuth.hook'
 
 import { useStreamUrl } from '@videos/hooks/useStreamUrl.hook'
+import { useSubtitlesContext } from '@videos/hooks/useSubtitlesContext.hook'
 import { Video } from '@videos/models/video.model'
 
 import { ErrorCard } from '../ErrorCard/ErrorCard.component'
@@ -47,7 +49,15 @@ export const Player: React.FC<Props> = ({ playerRef, onVideoEnd, video }) => {
     error: streamUrlError,
     loading: videoLoading,
   } = useStreamUrl(video)
-  const { subtitles, loading: subtitlesLoading } = useSubtitles(video)
+  const { setSubtitles, setState } = useSubtitlesContext()
+
+  const { subtitles, state: subtitleState } = useSubtitles(video)
+
+  useEffect(() => {
+    setSubtitles(subtitles)
+    setState(subtitleState)
+  }, [setState, setSubtitles, subtitles, subtitleState])
+
   const [mediaError, setMediaError] = useState<string>()
 
   const {
@@ -56,7 +66,7 @@ export const Player: React.FC<Props> = ({ playerRef, onVideoEnd, video }) => {
     id: videoId,
     userMeta,
   } = video
-  const loading = videoLoading || subtitlesLoading
+  const loading = videoLoading
 
   const onTriggerWatchtimeEvent = () => {
     if (
@@ -206,7 +216,7 @@ export const Player: React.FC<Props> = ({ playerRef, onVideoEnd, video }) => {
           }
         }}
       >
-        {!subtitlesLoading && subtitles && (
+        {subtitles && subtitleState !== 'loading' && (
           <Provider
             rawVideoSource={streamUrl ?? ''}
             videoSourceType={videoSourceType}
@@ -215,8 +225,7 @@ export const Player: React.FC<Props> = ({ playerRef, onVideoEnd, video }) => {
         )}
         <Ui>
           <DblClickFullscreen />
-          {/* Remove captions as they were creating double subtitles, so not needed */}
-          {/*<Captions />*/}
+          <Captions />
           <LoadingScreen hideDots={streamUrlError !== null} />
           <div>
             <Poster />

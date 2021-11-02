@@ -2,7 +2,13 @@ import { Box } from '@mui/material'
 import React, { PropsWithChildren, ReactNode } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react'
 
+import { buildSkeletons } from '@core/utils/gui.utils'
+
+import { VideoCardSkeleton } from '@videos/components/Skeleton/VideoCardSkeleton/VideoCardSkeleton.component'
+
 interface Props {
+  isLoading?: boolean
+  ghostsCount?: number
   freeMode?: boolean
   heading?: ReactNode
 }
@@ -11,7 +17,10 @@ export const Slider = ({
   children,
   freeMode = false,
   heading,
+  isLoading = false,
+  ghostsCount = 4,
 }: PropsWithChildren<Props>) => {
+  const ghosts = buildSkeletons(ghostsCount)
   return (
     <>
       {heading && <Box sx={{ mb: 2 }}>{heading}</Box>}
@@ -34,11 +43,17 @@ export const Slider = ({
           },
         }}
       >
-        {React.Children.map(children, (child, index) => (
-          <SwiperSlide style={{ width: '350px !important' }} key={index}>
-            {child}
-          </SwiperSlide>
-        ))}
+        {isLoading
+          ? ghosts.map((_, index) => (
+              <SwiperSlide style={{ width: '350px !important' }} key={index}>
+                <VideoCardSkeleton key={index} />
+              </SwiperSlide>
+            ))
+          : React.Children.map(children, (child, index) => (
+              <SwiperSlide style={{ width: '350px !important' }} key={index}>
+                {child}
+              </SwiperSlide>
+            ))}
       </Swiper>
     </>
   )

@@ -72,8 +72,34 @@
   "slug": {
     "sidebar": {
       "tabs": {
-        "subtitles": "Sous-titres",
-        "notes": "Notes"
+        "subtitles": {
+          "title": "Sous-titres",
+          "alertMessages": {
+            "error": "Une erreur s'est produite",
+            "info": "Pas de sous-titres pour cette vidéo"
+          }
+        },
+        "notes": {
+          "title": "Notes"
+        }
+      },
+      "tooltips": {
+        "collapse": "Réduire la barre latérale",
+        "expand": "Développer la barre latérale"
+      }
+    },
+    "details": {
+      "tooltips": {
+        "likes": "{{count}} j'aime(s)",
+        "views": "{{count}} vue(s)",
+        "seeProfile": "See profile"
+      },
+      "menu": {
+        "items": {
+          "delete": "Supprimer la vidéo",
+          "edit": "Editer la vidéo",
+          "addToPlaylist": "Ajouter à la liste de lecture"
+        }
       }
     }
   }

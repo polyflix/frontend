@@ -76,7 +76,11 @@ const ValidateAccountContent: React.FC<ValidatePageQueryParams> = ({
 const ValidatePage: React.FC<ValidatePageQueryParams> = ({ userId }) => {
   const { t } = useTranslation('auth')
   return (
-    <RootAuthStyle container={false} title={t('validate.title')}>
+    <RootAuthStyle
+      maxWidth={false}
+      disableGutters={true}
+      title={t('validate.title')}
+    >
       <AuthLayout>
         {t('signIn.header.links.signUp.label')}
         <Link
