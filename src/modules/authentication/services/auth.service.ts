@@ -4,7 +4,7 @@ import type { TFunction } from 'i18next'
 import { Inject, Injectable } from '@polyflix/di'
 
 import { APP_DISPATCHER, APP_TRANSLATION } from '@core/constants/app.constant'
-import { ApiService } from '@core/services/api.service'
+import { ApiService } from '@core/services/endpoint.service'
 import { HttpService } from '@core/services/http.service'
 import { SnackbarService } from '@core/services/snackbar.service'
 import type { AppDispatch } from '@core/store'

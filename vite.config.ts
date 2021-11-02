@@ -53,6 +53,10 @@ export default defineConfig({
         replacement: resolve(__dirname, './src/modules/videos'),
       },
       {
+        find: '@quizzes',
+        replacement: resolve(__dirname, './src/modules/quizzes'),
+      },
+      {
         find: '@subtitles',
         replacement: resolve(__dirname, './src/modules/subtitles'),
       },

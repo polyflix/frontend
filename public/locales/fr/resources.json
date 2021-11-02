@@ -1,32 +1,33 @@
 {
   "videos": "Vidéo",
+  "quizzes": "Quizz",
   "status": {
     "label": "Status",
     "draft": {
-      "label": "Draft",
-      "description": "Your resource will not be accessible by other users."
+      "label": "Brouillon",
+      "description": "Votre ressource ne sera pas accessible aux autres utilisateurs tant que vous ne l'aurez pas publiée."
     },
     "published": {
-      "label": "Published",
-      "description": "Your resource will be accessible by other users."
+      "label": "Publiée",
+      "description": "Votre ressource sera accessible aux autres utilisateurs."
     },
     "actions": {
-      "switch": "Click to change"
+      "switch": "Cliquez pour modifier"
     }
   },
   "visibility": {
-    "label": "Visibility",
+    "label": "Visibilité",
     "public": {
-      "label": "Public",
-      "description": "Your resource will be accessible by everyone."
+      "label": "Publique",
+      "description": "Votre ressource sera accessible par tout le monde."
     },
     "private": {
-      "label": "Private",
-      "description": "Your resource will be accessible only by you."
+      "label": "Privée",
+      "description": "Votre ressource sera accessible uniquement par vous."
     },
     "protected": {
-      "label": "Protected",
-      "description": "Your resource will be accessible by everyone who have the password."
+      "label": "Protégée",
+      "description": "Votre ressource sera accessible par quiconque possédant le mot de passe."
     }
   }
 }

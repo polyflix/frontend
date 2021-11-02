@@ -1,0 +1,125 @@
+{
+  "search": "Rechercher des quizzs par titre ou auteur",
+  "explore": {
+    "title": "Explorer les quizzs",
+    "description": "Retrouvez ci-dessous tous les quizz. Vous pouvez rechercher un quizz par son nom ou par le nom de la personne qui l'a publié."
+  },
+  "card": {
+    "tags": {
+      "new": "Nouveau"
+    },
+    "creationDateFormat": "DD/MM/YYYY"
+  },
+  "import": {
+    "title": "Importer un quizz",
+    "subtitle": "Ici, vous pouvez importer un Quizz à partir d'un fichier. Voir l'exemple dans l'onglet Aide.",
+    "success": "Votre fichier est valide et a été importé avec succès.",
+    "cta": "Importer depuis un fichier",
+    "example": {
+      "label": "Exemple",
+      "description": "Voici un exemple du format accepté pour votre fichier Quizz. Il y a quelques règles à respecter :",
+      "rules": {
+        "delimiter": "Chaque question doit être délimitée par \"---\".",
+        "alternatives": "Chaque question peut avoir jusqu'à 4 alternatives (A, B, C, D), mais seules 2 sont obligatoires (A, B).",
+        "answers": "Votre question peut avoir plusieurs réponses. Il suffit de les délimiter par une virgule. (Réponse : A,D)"
+      }
+    }
+  },
+  "forms": {
+    "create-update": {
+      "title": {
+        "metadata": "Métadonnées",
+        "status": "Status",
+        "create": "Créer un quizz",
+        "update": "Mise à jour du quizz {{quizz}}"
+      },
+      "description": {
+        "create": "Pour créer votre quizz, vous pouvez choisir de l'importer depuis un fichier texte en cliquant sur le bouton ci-dessous ou de remplir le formulaire avec vos valeurs. En important le fichier, le formulaire sera pré-rempli avec le contenu du fichier.",
+        "update": "Changez les valeurs dans le formulaire ci-dessous pour mettre à jour votre quizz.",
+        "questions": {
+          "create": "Ci-dessous, vous pouvez ajouter des questions à votre quizz. Pour être valide, chaque question doit comporter au moins <bold>2 alternatives</bold>, dont une doit être correcte. Chaque quizz doit être composé d'au moins <bold>1 question.</bold> <bold>Veuillez noter que vous ne pouvez pas ajouter d'autres questions ultérieurement à votre quizz.</bold>",
+          "update": "Vous pouvez mettre à jour vos questions ci-dessous en changeant la question ou en corrigeant les options."
+        }
+      },
+      "placeholder": {
+        "questions": {
+          "add": "Ajouter une question",
+          "empty": "Votre quizz n'a pas de questions. Ajoutez votre première question en cliquant sur le bouton ci-dessous !"
+        },
+        "alternatives": {
+          "description": "Vous pouvez ajouter ci-dessous les réponses à votre question. A et B sont obligatoires. Cochez la case lorsque la réponse est correcte.",
+          "option": {
+            "required": "Option (requise)",
+            "default": "Option"
+          }
+        },
+        "name": "Nom",
+        "allowedRetries": "Le nombre de tentatives autorisées par utilisateur. Selon la configuration de votre quizz, si le nombre de tentatives est supérieur à 1, le score de l'utilisateur sur le quizz sera la moyenne de toutes ces tentatives si vous avez configuré votre quizz en mode MOYENNE, sinon en mode MAXIMUM, le score de l'utilisateur sera le maximum de toutes ces tentatives.",
+        "modes": {
+          "mean": "MOYENNE",
+          "max": "MAXIMUM"
+        },
+        "submit": {
+          "create": "Créer le quizz",
+          "update": "Mettre à jour le quizz"
+        }
+      },
+      "errors": {
+        "question": {
+          "invalid": "La question n°{{index}} est invalide. Veuillez sélectionner au moins une bonne réponse."
+        }
+      },
+      "validation": {
+        "name": {
+          "required": "Un nom est requis."
+        },
+        "question": {
+          "required": "La question est requise."
+        },
+        "alternative": {
+          "required": "L'alternative {{alt}} est requise."
+        }
+      }
+    }
+  },
+  "play": {
+    "noAttempts": {
+      "title": "Ce quizz n'est plus disponible pour vous",
+      "description": "Vous avez utilisé toutes vos tentatives pour ce quizz. Vous pouvez retrouvez votre score dans votre historique."
+    },
+    "onboarding": {
+      "title": "Prêt ?",
+      "description": {
+        "head": "Vous êtes sur le point de démarrer une tentative pour le quizz : {{quizzName}}.",
+        "explanations": "Ce quizz est composé de {{questions}} question(s). Chaque question peut avoir une ou plusieurs bonnes réponses. Lorsque vous aurez terminé de répondre aux questions, vous aurez accès à une liste des questions avec vos réponses afin de vérifier avant de valider.",
+        "score": "Une fois que vous aurez valider votre tentative, un score vous sera attribué. Si le quizz accepte plusieurs tentatives, votre score sera la moyenne des scores de toutes vos tentatives.",
+        "limit": "Ce quizz est limité à {{retries}} tentative(s)."
+      },
+      "warning": "Attention, si vous quittez ou rafraîchissez la page, toute votre progression sera perdue. Une fois la tentative lancée, il n'est plus possible de revenir en arrière."
+    },
+    "recap": {
+      "title": "Récapitulatif",
+      "description": "Ci-dessous le récapitulatif de vos réponses pour ce quizz. Prenez le temps qu'il vous faut pour relire et corriger si besoin. Une fois que tout est ok, cliquez sur le bouton valider tout en bas de la page pour soumettre votre tentative et obtenir votre score.",
+      "validate": "Valider",
+      "updateAnswers": "Modifier mes réponses",
+      "validationMessage": "En cliquant sur valider, votre tentative sera enregistrée. Il ne sera pas possible de revenir en arrière."
+    },
+    "questions": {
+      "next": "Question suivante",
+      "previous": "Question précédente",
+      "terminate": "Terminer le quizz"
+    },
+    "results": {
+      "title": {
+        "disappointing": "Décevant...",
+        "good": "Bien, mais tu peux mieux faire !",
+        "excellent": "Excellent !"
+      },
+      "description": "Cette tentative est désormais enregistrée et le créateur du quizz pourra consulter votre résultat. Vous pourrez vous aussi consulter à tout moment votre ou vos tentatives dans votre profil ou en cliquant sur le lien ci-dessous.",
+      "actions": {
+        "back-to-list": "Revenir à la liste des Quizzs",
+        "view-history": "Accéder à mon historique"
+      }
+    }
+  }
+}

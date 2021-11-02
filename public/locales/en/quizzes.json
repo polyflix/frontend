@@ -1,0 +1,128 @@
+{
+  "search": "Search quizzes by name or author",
+  "explore": {
+    "title": "Explore quizzes",
+    "description": "Find below all the quizzes. You can search for a quizz by its name or by the name of the person who published it."
+  },
+  "card": {
+    "tags": {
+      "new": "New"
+    },
+    "creationDateFormat": "MM/DD/YYYY"
+  },
+  "import": {
+    "title": "Import a Quizz",
+    "subtitle": "Here you can import a Quizz from a file. See the example in the Help tab.",
+    "success": "Your file is valid and has been successfully imported.",
+    "cta": "Import from file",
+    "file": {
+      "validate": "Validate"
+    },
+    "example": {
+      "label": "Example",
+      "description": "Below an example of the accepted format for your Quizz file. There are some rules to respect :",
+      "rules": {
+        "delimiter": "Each question should be delimited by \"---\"",
+        "alternatives": "Each question can have up to 4 alternatives (A, B, C, D), but only 2 are required (A, B).",
+        "answers": "Your question can have multiple answers. Simply delimit them with a comma. (Answer: A,D)"
+      }
+    }
+  },
+  "forms": {
+    "create-update": {
+      "title": {
+        "metadata": "Metadata",
+        "status": "Statut",
+        "create": "Create a quizz",
+        "update": "Update the quizz {{quizz}}"
+      },
+      "description": {
+        "create": "To create your quizz, you can choose to import it from a text file by clicking on the button below or fill the form with your values. By importing the file, the form will be pre-filled with the content of the file.",
+        "update": "Change the values in the form below to update you quizz.",
+        "questions": {
+          "create": "Below you can add questions to your quizz. To be valid, each question must have at least <bold>2 alternatives</bold>, one of which must be correct. Each quizz must be composed of at least <bold>1 question.</bold> <bold>Please notice that you cannot add more questions later to your quizz.</bold>",
+          "update": "You can update your questions below by changing labels or correct options."
+        }
+      },
+      "placeholder": {
+        "questions": {
+          "add": "Add a question",
+          "empty": "Your quizz has no questions. Add your first question by clicking on the button below !"
+        },
+        "alternatives": {
+          "description": "Below you can add answers for your question. A and B are required. Tick the checkbox when the answer is correct.",
+          "option": {
+            "required": "Option (required)",
+            "default": "Option"
+          }
+        },
+        "name": "Name",
+        "allowedRetries": "The number of attempts allowed per user. Dependending of your quizz configuration, if the number of attempts is greater than 1, the user's score on the quizz will be the average of all those attempts if you've configured your quizz in MEAN mode, otherwise in MAX mode, the user's score will be the maximum of all those attempts.",
+        "modes": {
+          "mean": "MEAN",
+          "max": "MAXIMUM"
+        },
+        "submit": {
+          "create": "Create the quizz",
+          "update": "Update the quizz"
+        }
+      },
+      "errors": {
+        "question": {
+          "invalid": "Question n°{{index}} is invalid. You didn't select at least one good answer."
+        }
+      },
+      "validation": {
+        "name": {
+          "required": "The name is required."
+        },
+        "question": {
+          "required": "The question is required."
+        },
+        "alternative": {
+          "required": "The option {{alt}} is required."
+        }
+      }
+    }
+  },
+  "play": {
+    "noAttempts": {
+      "title": "This quizz is no longer available to you",
+      "description": "You have used all your attempts for this quiz. You can find your score in your history."
+    },
+    "questions": {
+      "next": "Next question",
+      "previous": "Previous question",
+      "terminate": "Terminate the quizz"
+    },
+    "onboarding": {
+      "title": "Ready ?",
+      "description": {
+        "head": "You're about to start an attempt for the following quizz : {{quizzName}}.",
+        "explanations": "This quiz is composed of {{questions}} question(s). Each question can have one or more correct answers. When you have finished answering the questions, you will have access to a list of questions with your answers to check before validating.",
+        "score": "Once you have completed your attempt, you will be given a score. If the quiz accepts multiple attempts, your score will be the average of the scores from all your attempts.",
+        "limit": "This quiz is limited to {{retries}} attempt(s)."
+      },
+      "warning": "Be careful, if you leave or refresh the page, all your progress will be lost. Once the attempt is launched, it is not possible to go back."
+    },
+    "recap": {
+      "title": "Recap",
+      "description": "Below is a summary of your answers for this quizz. Take the time you need to review and correct if necessary. Once everything is ok, click on the submit button at the bottom of the page to submit your attempt and get your score.",
+      "validate": "Validate",
+      "updateAnswers": "Modify my answers",
+      "validationMessage": "By clicking on validate, your attempt will be saved. It will not be possible to go back."
+    },
+    "results": {
+      "title": {
+        "disappointing": "Disappointing...",
+        "good": "Good, but you can do better!",
+        "excellent": "Excellent !"
+      },
+      "description": "This attempt is now recorded and the quizz creator will be able to see your result. You will also be able to view your attempt(s) at any time in your profile or by clicking on the link below.",
+      "actions": {
+        "back-to-list": "Back to the quizzes's list",
+        "view-history": "Go to my history"
+      }
+    }
+  }
+}

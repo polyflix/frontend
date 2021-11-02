@@ -1,5 +1,6 @@
 {
   "videos": "Video",
+  "quizzes": "Quizz",
   "status": {
     "label": "Status",
     "draft": {

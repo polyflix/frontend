@@ -2,6 +2,8 @@ import '@vime/core/themes/default.css'
 import { isUndefined } from 'lodash'
 import { SnackbarProvider } from 'notistack'
 import React, { Suspense } from 'react'
+// eslint-disable-next-line import/no-extraneous-dependencies
+import 'react-circular-progressbar/dist/styles.css'
 import ReactDOM from 'react-dom'
 import { HelmetProvider } from 'react-helmet-async'
 import { I18nextProvider } from 'react-i18next'
@@ -27,6 +29,8 @@ import { PrivateRoute } from '@auth/components/PrivateRoute/PrivateRoute.compone
 import { useAuth } from '@auth/hooks/useAuth.hook'
 import { useServerHealth } from '@auth/hooks/useServerHealth.hook'
 import { AuthService } from '@auth/services/auth.service'
+
+import { QuizzRouter } from '@quizzes/quizzes.router'
 
 import { VideoService } from '@videos/services/video.service'
 import { VideoRouter } from '@videos/video.router'
@@ -82,6 +86,7 @@ const PolyflixApp = () => {
           >
             <DashboardLayout>
               <Switch>
+                <Route path="/quizzes" component={QuizzRouter} />
                 <Route path="/users" component={UserRouter} />
                 <Route path="/videos" component={VideoRouter} />
                 <Route exact path="/" component={HomePage} />

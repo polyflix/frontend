@@ -20,7 +20,7 @@ import {
   IApiResponse,
   IRequestOptions,
 } from '../types/http.type'
-import { ApiService } from './api.service'
+import { ApiService } from './endpoint.service'
 
 const NETWORK_ERROR = 'Network error'
 

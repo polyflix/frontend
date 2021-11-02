@@ -15,11 +15,10 @@ import {
   ApiType,
   ApiVersion,
   CrudAction,
-  IApiResponse,
   WithPagination,
 } from '../types/http.type'
 import { HttpUtils } from '../utils/http-utils'
-import { ApiService } from './api.service'
+import { ApiService } from './endpoint.service'
 import { HttpService } from './http.service'
 import { SnackbarService } from './snackbar.service'
 
@@ -59,8 +58,8 @@ export abstract class CrudAbstractService<
     )}/${apiEndpoint}`
   }
 
-  abstract delete(item: Type): Promise<IApiResponse<void>>
-  abstract findAll(): Promise<IApiResponse<WithPagination<Type[]>>>
+  abstract delete(item: Type): Promise<void>
+  abstract findAll(): Promise<WithPagination<Type[]>>
   abstract get(item: Type): Promise<Type>
   abstract getById(id: EntityId): Promise<Type>
   abstract save(data: DTO): Promise<Type>

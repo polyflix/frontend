@@ -6,12 +6,7 @@ import { Injectable } from '@polyflix/di'
 import { generateFilename } from '@core/helpers/file.helper'
 import { CrudAbstractService } from '@core/services/crud-abstract.service'
 import { MinioService } from '@core/services/minio.service'
-import {
-  ApiVersion,
-  CrudAction,
-  IApiResponse,
-  WithPagination,
-} from '@core/types/http.type'
+import { ApiVersion, CrudAction, WithPagination } from '@core/types/http.type'
 
 import {
   videoAdded,
@@ -76,7 +71,7 @@ export class VideoService extends CrudAbstractService<Video, IVideoForm> {
     this.notify(CrudAction.CREATE)
   }
 
-  async findAll(): Promise<IApiResponse<WithPagination<Video[]>>> {
+  async findAll(): Promise<WithPagination<Video[]>> {
     this.dispatch(videosLoading())
 
     const { response, status, error } = await this.httpService.get(

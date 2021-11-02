@@ -1,0 +1,16 @@
+{
+  "actions": {
+    "list": "List",
+    "create": "Create",
+    "logout": "Log out"
+  },
+  "sections": {
+    "general": "General",
+    "management": "Management"
+  },
+  "items": {
+    "home": "Home",
+    "videos": "Videos",
+    "quizzes": "Quizzes"
+  }
+}
