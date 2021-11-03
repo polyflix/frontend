@@ -2,6 +2,7 @@ import { ContentModel } from '@core/models/content.model'
 
 import { User } from '@users/models/user.model'
 
+import { Attempt } from './attempt.model'
 import { Question } from './question.model'
 
 export interface Quizz extends ContentModel {
@@ -9,6 +10,6 @@ export interface Quizz extends ContentModel {
   name: string
   keepHighestScore: boolean
   questions?: Question[]
-  //   attempts?: IAttempt[],
+  attempts?: Attempt[]
   user?: Partial<User>
 }

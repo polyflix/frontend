@@ -124,5 +124,22 @@
         "view-history": "Go to my history"
       }
     }
+  },
+  "history": {
+    "title": "History - Quizzes",
+    "description": "Below you'll find the history of all quizzes you've done.",
+    "attempt": {
+      "date": {
+        "format": "[the] MM/DD/YYYY [at] HH:mm A",
+        "text": {
+          "me": "You've obtained",
+          "user": "{{user}} obtained"
+        }
+      }
+    }
+  },
+  "help": {
+    "max": "The score is the maximum score you've obtained.",
+    "mean": "The score is the mean of all your attempts."
   }
 }

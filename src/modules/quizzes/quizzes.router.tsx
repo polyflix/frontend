@@ -2,6 +2,7 @@ import { Route, Switch, useRouteMatch } from 'react-router-dom'
 
 import { PlayQuizzProvider } from './contexts/Play.context'
 import { ExploreQuizzesPage } from './pages/Explore.page'
+import { QuizzesHistoryPage } from './pages/History.page'
 import { PlayQuizzPage } from './pages/Play.page'
 import { CreateUpdateQuizzPage } from './pages/[create-update].page'
 
@@ -20,6 +21,7 @@ export const QuizzRouter = () => {
         component={CreateUpdateQuizzPage}
       />
       <Route path={`${url}/explore`} component={ExploreQuizzesPage} />
+      <Route path={`${url}/history`} component={QuizzesHistoryPage} />
     </Switch>
   )
 }

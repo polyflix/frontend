@@ -60,7 +60,7 @@ export const ExploreQuizzesPage = () => {
       <Grid sx={{ my: 3 }} container spacing={2}>
         {data?.data.map((item: Quizz) => (
           <Grid key={item.id} item xs={12} md={4}>
-            <QuizzCard quizz={item} />
+            <QuizzCard displayTags quizz={item} />
           </Grid>
         ))}
       </Grid>

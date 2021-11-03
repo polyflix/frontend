@@ -2,6 +2,7 @@
   "actions": {
     "list": "Lister",
     "create": "Créer",
+    "history": "Historique",
     "logout": "Déconnexion"
   },
   "sections": {
