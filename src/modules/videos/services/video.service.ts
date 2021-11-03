@@ -1,140 +1,86 @@
-import { EntityId } from '@reduxjs/toolkit'
-import { StatusCodes } from 'http-status-codes'
+import { Container } from '@polyflix/di'
 
-import { Injectable } from '@polyflix/di'
+import { Endpoint } from '@core/constants/endpoint.constant'
+import { RestCrudFilters } from '@core/filters/rest-crud.filter'
+import { api } from '@core/services/api.service'
 
-import { generateFilename } from '@core/helpers/file.helper'
-import { CrudAbstractService } from '@core/services/crud-abstract.service'
-import { MinioService } from '@core/services/minio.service'
-import { ApiVersion, CrudAction, WithPagination } from '@core/types/http.type'
-
-import {
-  videoAdded,
-  videosLoading,
-  videosReceived,
-} from '@videos/reducers/video.slice'
+import { Video } from '@videos/models/video.model'
+import { VideoFilters } from '@videos/types/filters.type'
 import { IVideoForm } from '@videos/types/form.type'
 
-import { Video } from '../models/video.model'
+const filterBuilder =
+  Container.get<RestCrudFilters<VideoFilters>>(RestCrudFilters)
 
-@Injectable()
-export class VideoService extends CrudAbstractService<Video, IVideoForm> {
-  constructor(private readonly minioService: MinioService) {
-    super(ApiVersion.V1, 'videos')
-  }
+// Inject videos endpoints to the core API
+export const videosApi = api.injectEndpoints({
+  endpoints: (builder) => ({
+    /**
+     * Get video by id query configuration.
+     */
+    getVideo: builder.query<Video, string>({
+      providesTags: (_0, _1, id) => [{ type: Endpoint.Videos, id }],
+      query: (id) => {
+        return `${Endpoint.Videos}/${id}`
+      },
+    }),
 
-  async create(
-    data: IVideoForm,
-    isYoutube: boolean,
-    videoFile?: File,
-    videoThumbnailFile?: File
-  ) {
-    if (!isYoutube) {
-      // If we have a video file, generate the a filename for it
-      if (videoFile) {
-        data.src = generateFilename(videoFile)
-      } else {
-        return this.snackbarService.createSnackbar(
-          this.translate('forms.create-update.validation.video.required', {
-            ns: 'videos',
-          }),
-          { variant: 'error' }
-        )
-      }
+    /**
+     * Get Videos query configuration
+     */
+    getVideos: builder.query<{ items: Video[] }, VideoFilters>({
+      query: (filters) => {
+        return `${Endpoint.Videos}${filterBuilder.createFilters(filters || {})}`
+      },
+      // Provides a list of Videos by id.
+      // If any mutation is executed that invalidate any of these tags, this query will re-run to be always up-to-date.
+      // The `LIST` id is a "virtual id" we just made up to be able to invalidate this query specifically if a new `Video` element was added.
+      providesTags: (result) =>
+        // Is result available ?
+        result
+          ? [
+              ...result.items.map(
+                ({ id }) => ({ type: Endpoint.Videos, id } as const)
+              ),
+              { type: Endpoint.Videos, id: 'LIST' },
+            ]
+          : // An error occured, but we still want to refetch this query when the tag is invalidated.
+            [{ type: Endpoint.Videos, id: 'LIST' }],
+    }),
 
-      // If we have a file for the thumbnail, generate a filename for it
-      if (videoThumbnailFile) {
-        data.thumbnail = generateFilename(videoThumbnailFile)
-      }
-    }
+    /**
+     * Add a video mutation
+     */
+    addVideo: builder.mutation<Video, IVideoForm>({
+      query: (body: IVideoForm) => ({
+        url: Endpoint.Videos,
+        method: 'POST',
+        body,
+      }),
+      // Invalidates all video-type queries providing the LIST id - after all, depending of the sort order
+      // that newly created video could show up in any lists.
+      invalidatesTags: [{ type: Endpoint.Videos, id: 'LIST' }],
+    }),
 
-    // Save the video and take the result
-    const { videoPutPsu, thumbnailPutPsu } = await this.save(data)
-    // If upload, we have to upload some files
-    // with the presigned url returned in the response
-    if (!isYoutube) {
-      const uploads = []
+    /**
+     * Update video mutation
+     */
+    updateVideo: builder.mutation<Video, { id: string; body: IVideoForm }>({
+      query: ({ id, body }) => ({
+        url: `${Endpoint.Videos}/${id}`,
+        method: 'PUT',
+        body,
+      }),
+      // Invalidates all queries that subscribe to this Video `id` only.
+      // In this case, `getVideo` will be re-run. `getVideos` *might*  rerun, if this id was under its results.
+      invalidatesTags: (result, _1, { id }) =>
+        result ? [{ type: Endpoint.Videos, id }] : [],
+    }),
+  }),
+})
 
-      if (videoFile && videoPutPsu) {
-        uploads.push({ file: videoFile, presignedUrl: videoPutPsu })
-      }
-
-      if (videoThumbnailFile && thumbnailPutPsu) {
-        uploads.push({
-          file: videoThumbnailFile,
-          presignedUrl: thumbnailPutPsu,
-        })
-      }
-      await this.minioService.upload(uploads)
-    }
-
-    this.notify(CrudAction.CREATE)
-  }
-
-  async findAll(): Promise<WithPagination<Video[]>> {
-    this.dispatch(videosLoading())
-
-    const { response, status, error } = await this.httpService.get(
-      this.endpoint
-    )
-
-    if (status !== StatusCodes.OK) {
-      throw error
-    }
-
-    this.dispatch(videosReceived(response.items))
-
-    return response
-  }
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  delete(item: Video): Promise<void> {
-    throw new Error('Method not implemented.')
-  }
-
-  async getById(id: EntityId): Promise<Video> {
-    const { response, error, status } = await this.httpService.get(
-      `${this.endpoint}/${id}`
-    )
-    if (status !== StatusCodes.OK) {
-      throw error
-    }
-    return response
-  }
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  get(item: Video): Promise<Video> {
-    throw new Error('Method not implemented.')
-  }
-
-  async save(data: IVideoForm): Promise<Video> {
-    const { response, error, status } = await this.httpService.post(
-      this.endpoint,
-      { body: data }
-    )
-
-    if (status !== StatusCodes.CREATED) {
-      this.snackbarService.createSnackbar(error, { variant: 'error' })
-      throw error
-    }
-
-    this.dispatch(videoAdded(response))
-
-    return response
-  }
-
-  async update(id: EntityId, data: IVideoForm): Promise<void | Video> {
-    const { response, error, status } = await this.httpService.put(
-      `${this.endpoint}/${id}`,
-      { body: data }
-    )
-
-    if (status !== StatusCodes.OK) {
-      this.snackbarService.createSnackbar(error, { variant: 'error' })
-      throw error
-    }
-
-    this.notify(CrudAction.UPDATE)
-    return response
-  }
-}
+export const {
+  useGetVideosQuery,
+  useGetVideoQuery,
+  useAddVideoMutation,
+  useUpdateVideoMutation,
+} = videosApi
