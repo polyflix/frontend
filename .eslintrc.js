@@ -12,7 +12,8 @@ module.exports = {
     "@typescript-eslint/eslint-plugin",
     "react",
     "import",
-    "react-hooks"
+    "react-hooks",
+    "json-format"
   ],
   root: true,
   env: {
