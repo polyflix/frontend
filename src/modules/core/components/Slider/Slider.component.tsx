@@ -1,5 +1,6 @@
 import { Box } from '@mui/material'
 import React, { PropsWithChildren, ReactNode } from 'react'
+import SwiperCore, { FreeMode, Mousewheel } from 'swiper'
 import { Swiper, SwiperSlide } from 'swiper/react'
 
 import { buildSkeletons } from '@core/utils/gui.utils'
@@ -10,12 +11,15 @@ interface Props {
   isLoading?: boolean
   ghostsCount?: number
   freeMode?: boolean
+  direction?: 'horizontal' | 'vertical'
   heading?: ReactNode
 }
 
+SwiperCore.use([Mousewheel, FreeMode])
 export const Slider = ({
   children,
   freeMode = false,
+  direction = 'horizontal',
   heading,
   isLoading = false,
   ghostsCount = 4,
@@ -27,7 +31,13 @@ export const Slider = ({
       <Swiper
         style={{ overflow: 'visible' }}
         spaceBetween={10}
-        freeMode={freeMode}
+        freeMode={{
+          enabled: freeMode,
+          sticky: false,
+          momentumVelocityRatio: 0.35,
+        }}
+        mousewheel={{ forceToAxis: true }}
+        direction={direction}
         breakpoints={{
           0: {
             slidesPerView: 2.25,
