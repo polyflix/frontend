@@ -24,6 +24,7 @@ import { useTranslation } from 'react-i18next'
 import { Link as RouterLink } from 'react-router-dom'
 
 import { AspectRatioBox } from '@core/components/AspectRatioBox/AspectRation.component'
+import { DEFAULT_AVATAR_PICTURE } from '@core/constants/defaultValue.constant'
 import { getPublishLabel } from '@core/helpers/date.helper'
 import { videoSlugLink } from '@core/helpers/video.helper'
 
@@ -150,6 +151,8 @@ export const VideoSliderCard = ({ video }: Props) => {
             direction="row"
           >
             <Avatar
+              src={video.publishedBy?.profilePicture || DEFAULT_AVATAR_PICTURE}
+              alt={video.publishedBy?.displayName + ' profile picture.'}
               sx={{
                 borderRadius: '100%',
                 width: {
@@ -161,7 +164,6 @@ export const VideoSliderCard = ({ video }: Props) => {
                   sm: 40,
                 },
               }}
-              src="https://mui.com/static/images/avatar/1.jpg"
             />
 
             <Box
@@ -213,7 +215,7 @@ export const VideoSliderCard = ({ video }: Props) => {
                   }}
                   variant="body2"
                 >
-                  John Smith
+                  {video.publishedBy?.displayName}
                 </Typography>
                 <Typography
                   sx={{
