@@ -23,20 +23,32 @@ const sidebarConfiguration: SidebarItem[] = [
   },
   {
     title: 'items.videos',
-    href: '/videos',
+    href: '/videos/explore',
     icon: 'eva:play-circle-outline',
-    items: [
-      {
-        title: 'actions.create',
-        icon: 'carbon:add',
-        href: '/videos/create',
-      },
-    ],
   },
   {
     title: 'items.quizzes',
     href: '/quizzes/explore',
     icon: 'healthicons:i-exam-multiple-choice',
+  },
+  {
+    title: 'items.videos',
+    section: SidebarSection.MANAGEMENT,
+    icon: 'healthicons:i-exam-multiple-choice',
+    items: [
+      {
+        title: 'actions.list',
+        href: '/users/profile?tab=videos',
+      },
+      {
+        title: 'actions.create',
+        href: '/videos/create',
+      },
+      {
+        title: 'actions.history',
+        href: '/videos/history',
+      },
+    ],
   },
   {
     title: 'items.quizzes',

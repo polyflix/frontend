@@ -11,6 +11,8 @@ import { useGetVideosQuery } from '@videos/services/video.service'
 import { VideoFilters } from '@videos/types/filters.type'
 
 export const HomePage = () => {
+  const { t } = useTranslation('home')
+
   const [filters] = useState<VideoFilters>({
     page: 1,
     pageSize: 10,
@@ -22,15 +24,12 @@ export const HomePage = () => {
     ...filters,
   })
 
-  const videos = data?.items || []
-
-  const { t } = useTranslation('home')
   return (
     <Page title={t('page.title')} maxWidth={false} disableGutters={true}>
       <Grid container spacing={5}>
         <Grid item xs={12}>
           <Slider
-            isLoading={!videos.length}
+            isLoading={!data?.items.length}
             heading={
               <Typography variant="h4">
                 {t('sliders.titles.continueWatching')}
@@ -38,27 +37,27 @@ export const HomePage = () => {
             }
             freeMode
           >
-            {videos.map((video) => (
+            {data?.items.map((video) => (
               <VideoSliderCard key={video.id} video={video} />
             ))}
           </Slider>
         </Grid>
         <Grid item xs={12}>
           <Slider
-            isLoading={!videos.length}
+            isLoading={!data?.items.length}
             heading={
               <Typography variant="h4">{t('sliders.titles.latest')}</Typography>
             }
             freeMode
           >
-            {videos.map((video) => (
+            {data?.items.map((video) => (
               <VideoSliderCard key={video.id} video={video} />
             ))}
           </Slider>
         </Grid>
         <Grid item xs={12}>
           <Slider
-            isLoading={!videos.length}
+            isLoading={!data?.items.length}
             heading={
               <Typography variant="h4">
                 {t('sliders.titles.popular')}
@@ -66,14 +65,14 @@ export const HomePage = () => {
             }
             freeMode
           >
-            {videos.map((video) => (
+            {data?.items.map((video) => (
               <VideoSliderCard key={video.id} video={video} />
             ))}
           </Slider>
         </Grid>
         <Grid item xs={12}>
           <Slider
-            isLoading={!videos.length}
+            isLoading={!data?.items.length}
             heading={
               <Typography variant="h4">
                 {t('sliders.titles.watchAgain')}
@@ -81,7 +80,7 @@ export const HomePage = () => {
             }
             freeMode
           >
-            {videos.map((video) => (
+            {data?.items.map((video) => (
               <VideoSliderCard key={video.id} video={video} />
             ))}
           </Slider>
