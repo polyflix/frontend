@@ -1,16 +1,16 @@
 {
-  "503": {
-    "title": "Service unavailable",
-    "description": "Oops, the server cannot treat your request right now. Please refresh the page.",
-    "cta": "refresh the page"
+  "403": {
+    "title": "Forbidden",
+    "description": "Lorem ipsum"
   },
   "404": {
     "title": "Page not found",
     "description": "The page you are trying to access does not exist or has been removed.",
     "cta": "Go to the homepage"
   },
-  "403": {
-    "title": "Forbidden",
-    "description": "Lorem ipsum"
+  "503": {
+    "title": "Service unavailable",
+    "description": "Oops, the server cannot treat your request right now. Please refresh the page.",
+    "cta": "refresh the page"
   }
 }
