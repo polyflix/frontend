@@ -1,5 +1,11 @@
 {
   "snackbarExample": "Ravi de vous revoir, {{user}}",
+  "sidebar": {
+    "actions": {
+      "explore": "Explorer",
+      "logout": "Déconnexion"
+    }
+  },
   "snackbar": {
     "crudMessage": "{{resource}} à été {{action}} avec succès !"
   },

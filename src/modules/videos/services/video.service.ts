@@ -27,7 +27,10 @@ export const videosApi = api.injectEndpoints({
     /**
      * Get Videos query configuration
      */
-    getVideos: builder.query<{ items: Video[] }, VideoFilters>({
+    getVideos: builder.query<
+      { items: Video[]; totalCount: number },
+      VideoFilters
+    >({
       query: (filters) => {
         return `${Endpoint.Videos}${filterBuilder.createFilters(filters || {})}`
       },

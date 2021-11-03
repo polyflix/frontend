@@ -1,5 +1,11 @@
 {
   "snackbarExample": "Welcome back, {{user}}",
+  "sidebar": {
+    "actions": {
+      "explore": "Explore",
+      "logout": "Log out"
+    }
+  },
   "snackbar": {
     "crudMessage": "{{resource}} has been successfully {{action}} !"
   },
