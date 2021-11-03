@@ -34,7 +34,7 @@ const sidebarConfiguration: SidebarItem[] = [
   {
     title: 'items.videos',
     section: SidebarSection.MANAGEMENT,
-    icon: 'healthicons:i-exam-multiple-choice',
+    icon: 'eva:play-circle-outline',
     items: [
       {
         title: 'actions.list',
