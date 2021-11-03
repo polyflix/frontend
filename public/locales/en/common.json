@@ -31,5 +31,10 @@
     "video": "Video",
     "quizz": "Quizz"
   },
-  "uploadInProgress": "Please wait, your files are being uploaded..."
+  "uploadInProgress": "Please wait, your files are being uploaded...",
+  "notImplemented": {
+    "title": "Not Implemented",
+    "content": "This page is not implemented at the moment",
+    "cta": "Go to the homepage"
+  }
 }

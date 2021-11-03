@@ -19,7 +19,23 @@
     "tabs": {
       "account": "Account",
       "security": "Security",
-      "advanced": "Advanced"
+      "advanced": "Advanced",
+      "profile": "Profile",
+      "videos": {
+        "title": "Videos",
+        "content": {
+          "title": "My videos"
+        }
+      },
+      "collections": {
+        "title": "Collections"
+      },
+      "groups": {
+        "title": "Groups"
+      },
+      "quizzes": {
+        "title": "Quizzes"
+      }
     }
   }
 }

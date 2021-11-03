@@ -19,8 +19,8 @@ export const LoginPage = () => {
   return (
     <RootAuthStyle
       maxWidth={false}
-      disableGutters={true}
       title={t('signIn.title')}
+      disableGutters={true}
     >
       <AuthLayout>
         {t('signIn.header.links.signUp.label')}

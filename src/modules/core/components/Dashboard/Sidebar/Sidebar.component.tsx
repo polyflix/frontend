@@ -70,14 +70,18 @@ export const DashboardSidebar = () => {
                 transition: 'margin ease 300ms',
               }}
             >
-              <Link underline="none" component={RouterLink} to="/users/profile">
+              <Link
+                underline="none"
+                component={RouterLink}
+                to="/users/profile/videos"
+              >
                 <AccountStyle open={open}>
                   <UserAvatar />
                 </AccountStyle>
               </Link>
             </Box>
 
-            {Object.entries(getSidebarSections(t)).map(([section, items]) => (
+            {Object.entries(getSidebarSections()).map(([section, items]) => (
               <Section key={section} title={section} items={items} />
             ))}
 

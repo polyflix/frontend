@@ -25,7 +25,6 @@ export const SlugPage = () => {
     <Page
       title={video?.slug}
       maxWidth={false}
-      disableGutters={true}
       sx={{
         maxWidth: '2000px',
       }}

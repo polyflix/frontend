@@ -33,7 +33,7 @@ export const UserForm = ({ user }: Props) => {
   }
 
   return (
-    <Paper elevation={6}>
+    <Paper variant="outlined">
       <TabContext value={selectedTab}>
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
           <TabList

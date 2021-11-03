@@ -4,7 +4,7 @@ import { Page } from '@core/components/Page/Page.component'
 
 import { useAuth } from '@auth/hooks/useAuth.hook'
 
-import { UserForm } from '@users/components/forms/UserForm.component'
+import { UserForm } from '@users/components/Forms/UserForm.component'
 
 export const EditProfilePage = () => {
   const { t } = useTranslation('users')
