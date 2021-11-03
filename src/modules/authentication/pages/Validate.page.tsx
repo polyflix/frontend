@@ -74,6 +74,7 @@ const ValidateAccountContent: React.FC<ValidatePageQueryParams> = ({
  * ValidationPage, it is not exported directly as we inject query params into it
  */
 const ValidatePage: React.FC<ValidatePageQueryParams> = ({ userId }) => {
+  const authService = useInjection<AuthService>(AuthService)
   const { t } = useTranslation('auth')
   return (
     <RootAuthStyle
@@ -82,14 +83,14 @@ const ValidatePage: React.FC<ValidatePageQueryParams> = ({ userId }) => {
       title={t('validate.title')}
     >
       <AuthLayout>
-        {t('signIn.header.links.signUp.label')}
+        {t('validate.header.links.signOut.label')}
         <Link
           underline="none"
           variant="body1"
-          component={RouterLink}
-          to="/auth/register"
+          style={{ cursor: 'pointer' }}
+          onClick={() => authService.logout()}
         >
-          {t('signIn.header.links.signUp.link')}
+          {t('validate.header.links.signOut.link')}
         </Link>
       </AuthLayout>
 
