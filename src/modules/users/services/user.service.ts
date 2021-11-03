@@ -68,12 +68,13 @@ export class UserService extends CrudAbstractService<
   }
 
   async updateUser(item: User | (IUserPasswordForm & User)) {
-    const { status, error } = await this.httpService.put(
-      `${this.endpoint}/${item.id}`,
-      {
-        body: item,
-      }
-    )
+    const {
+      response: user,
+      status,
+      error,
+    } = await this.httpService.put(`${this.endpoint}/${item.id}`, {
+      body: item,
+    })
 
     if (status !== StatusCodes.OK) {
       return this.snackbarService.createSnackbar(error, {
@@ -83,10 +84,6 @@ export class UserService extends CrudAbstractService<
 
     this.notify(CrudAction.UPDATE)
 
-    // TODO: When back will be updated, user will be returned, at this time, handle user from response and set it as new user.
-    // const { user } = response
-    // return this.dispatch(setUser(item))
-
-    return this.dispatch(setUser(item))
+    return this.dispatch(setUser(user))
   }
 }
