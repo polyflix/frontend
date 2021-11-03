@@ -11,6 +11,7 @@ import {
 import { useEffect, useMemo, useState } from 'react'
 import { useFieldArray, useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
+import { useHistory } from 'react-router-dom'
 
 import { useInjection } from '@polyflix/di'
 
@@ -20,15 +21,23 @@ import { MHidden } from '@core/components/MHidden/MHidden.component'
 import { StatusSelector } from '@core/components/StatusSelector/StatusSelector.component'
 import { UploadProgress } from '@core/components/UploadProgress/UploadProgress.component'
 import { VisibilitySelector } from '@core/components/VisibilitySelector/VisibilitySelector.component'
+import { Endpoint } from '@core/constants/endpoint.constant'
 import { Regex } from '@core/constants/regex.constant'
+import { generateFilename } from '@core/helpers/file.helper'
 import {
   getCommonSubmitButtonProps,
   getCommonTextFieldProps,
 } from '@core/helpers/form.helper'
 import { Visibility } from '@core/models/content.model'
+import { MinioService } from '@core/services/minio.service'
+import { SnackbarService } from '@core/services/snackbar.service'
+import { CrudAction } from '@core/types/http.type'
 
 import { Video } from '@videos/models/video.model'
-import { VideoService } from '@videos/services/video.service'
+import {
+  useAddVideoMutation,
+  useUpdateVideoMutation,
+} from '@videos/services/video.service'
 import { YoutubeService } from '@videos/services/youtube.service'
 import { IVideoForm } from '@videos/types/form.type'
 import { VideoSource } from '@videos/types/video.type'
@@ -45,17 +54,26 @@ interface Props {
 
 // The form used to create / update videos
 export const VideoForm = ({ source, video, isUpdate }: Props) => {
+  const snackbarService = useInjection<SnackbarService>(SnackbarService)
+  const minioService = useInjection<MinioService>(MinioService)
+
   const { t } = useTranslation('videos')
 
   // Useful services for our component
-  const videoService = useInjection<VideoService>(VideoService)
+  // const videoService = useInjection<VideoService>(VideoService)
   const youtubeService = useInjection<YoutubeService>(YoutubeService)
+
+  // Get our mutations
+  const [createVideo] = useAddVideoMutation()
+  const [updateVideo] = useUpdateVideoMutation()
+
+  const history = useHistory()
 
   const {
     control,
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
     setValue,
     watch,
   } = useForm<IVideoForm>({
@@ -79,8 +97,6 @@ export const VideoForm = ({ source, video, isUpdate }: Props) => {
   // Useful states for our compoennt
   // This boolean allow us to control when a video was autocompleted (YouTube for example)
   const [isAutocompleted, setIsAutocompleted] = useState<boolean>(false)
-  // This should be set to true when something happens on the component
-  const [isAction, setIsAction] = useState<boolean>(false)
   // This should contains our video file when the user upload a video
   const [videoFile, setVideoFile] = useState<File>()
   // This should contaisn our video thumbnail file when the user use the frame selector
@@ -110,8 +126,6 @@ export const VideoForm = ({ source, video, isUpdate }: Props) => {
   // Effect called when the videoSource change for a Youtube Video.
   useEffect(() => {
     const getYoutubeMeta = async (url: string) => {
-      setIsAction(true)
-
       const {
         description,
         thumbnail: ytbThumbnail,
@@ -123,32 +137,67 @@ export const VideoForm = ({ source, video, isUpdate }: Props) => {
       setValue('thumbnail', ytbThumbnail)
 
       setIsAutocompleted(true)
-      setIsAction(false)
     }
 
     if (videoSource && !isUpdate) {
       getYoutubeMeta(videoSource)
     }
-  }, [videoSource])
+  }, [videoSource, isUpdate, setValue, youtubeService])
 
   // Function called when the user submit the form without errors
   const onSubmit = async (data: IVideoForm) => {
-    setIsAction(true)
-    try {
-      if (isUpdate) {
-        delete data.src
-        delete data.thumbnail
-        await videoService.update(video!.id, data)
+    // Add data process if local video provided
+    if (!isYoutube) {
+      // If we have a video file, generate the a filename for it
+      if (videoFile) {
+        data.src = generateFilename(videoFile)
       } else {
-        await videoService.create(
-          data,
-          isYoutube,
-          videoFile,
-          videoThumbnailFile
+        return snackbarService.createSnackbar(
+          t('forms.create-update.validation.video.required', {
+            ns: 'videos',
+          }),
+          { variant: 'error' }
         )
       }
-    } finally {
-      setIsAction(false)
+
+      // If we have a file for the thumbnail, generate a filename for it
+      if (videoThumbnailFile) {
+        data.thumbnail = generateFilename(videoThumbnailFile)
+      }
+    }
+
+    try {
+      // handle response and get video and thumbnail psu url to upload them
+      const { videoPutPsu, thumbnailPutPsu } = await (isUpdate
+        ? updateVideo({ id: video!.id, body: data })
+        : createVideo(data)
+      ).unwrap()
+
+      if (!isYoutube) {
+        const uploads = [] // list of files to push on minio
+
+        if (videoFile && videoPutPsu) {
+          uploads.push({ file: videoFile, presignedUrl: videoPutPsu })
+        }
+
+        if (videoThumbnailFile && thumbnailPutPsu) {
+          uploads.push({
+            file: videoThumbnailFile,
+            presignedUrl: thumbnailPutPsu,
+          })
+        }
+        await minioService.upload(uploads)
+      }
+
+      // Display the success snackbar
+      snackbarService.notify(
+        isUpdate ? CrudAction.UPDATE : CrudAction.CREATE,
+        Endpoint.Videos
+      )
+
+      history.push('/videos/explore')
+    } catch (e: any) {
+      snackbarService.createSnackbar(e.data.statusText, { variant: 'error' })
     }
   }
 
@@ -362,7 +411,7 @@ export const VideoForm = ({ source, video, isUpdate }: Props) => {
           onChange={(value: boolean) => setValue('draft', value)}
         />
 
-        <LoadingButton {...getCommonSubmitButtonProps(isAction)}>
+        <LoadingButton {...getCommonSubmitButtonProps(isSubmitting)}>
           {t(
             `forms.create-update.placeholder.submit.${
               isUpdate ? 'update' : 'create'

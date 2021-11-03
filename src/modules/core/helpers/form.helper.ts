@@ -23,7 +23,6 @@ export const getMarks = (min: number = 0, max: number = 10) =>
     value: value + 1,
     label: value + 1,
   }))
-
 /**
  * Generate a validation schema for useFormHook password fields
  */

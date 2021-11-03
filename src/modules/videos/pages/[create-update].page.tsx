@@ -5,27 +5,18 @@ import { Link, useParams } from 'react-router-dom'
 
 import { Header } from '@core/components/Header/Header.component'
 import { Page } from '@core/components/Page/Page.component'
-import { useFetch } from '@core/hooks/useFetch.hook'
 import { useSearchQuery } from '@core/hooks/useSearchQuery.hook'
 
 import { VideoForm } from '@videos/components/Forms/VideoForm.component'
 import { VideoSourceCard } from '@videos/components/VideoSourceCard/VideoSourceCard.component'
-import { Video } from '@videos/models/video.model'
-import { VideoService } from '@videos/services/video.service'
+import { useGetVideoQuery } from '@videos/services/video.service'
 import { VideoSource } from '@videos/types/video.type'
 
 export const CreateUpdatePage = () => {
   const { slug } = useParams<{ slug: string }>()
 
   // We want to fetch the video only if the slug is defined, in case of update mode.
-  const { data: video, isLoading } = useFetch<Video, VideoService>(
-    VideoService,
-    'getById',
-    [slug],
-    {
-      if: !isUndefined(slug),
-    }
-  )
+  const { data: video, isLoading } = useGetVideoQuery(slug)
 
   const isUpdate = !isUndefined(video)
 

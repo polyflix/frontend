@@ -1,28 +1,19 @@
 import { Grid, Skeleton } from '@mui/material'
-import { isUndefined } from 'lodash'
 import { useRef } from 'react'
 import { useParams } from 'react-router-dom'
 
 import { AspectRatioBox } from '@core/components/AspectRatioBox/AspectRation.component'
 import { Page } from '@core/components/Page/Page.component'
-import { useFetch } from '@core/hooks/useFetch.hook'
 
 import { Player } from '@videos/components/Player/Player.component'
 import { PlayerSidebar } from '@videos/components/PlayerSidebar/PlayerSidebar.component'
 import { VideoDetails } from '@videos/components/VideoDescription/VideoDescription.component'
-import { Video } from '@videos/models/video.model'
-import { VideoService } from '@videos/services/video.service'
+import { useGetVideoQuery } from '@videos/services/video.service'
 
 export const SlugPage = () => {
   const { slug } = useParams<{ slug: string }>()
-  const { data: video, isLoading } = useFetch<Video, VideoService>(
-    VideoService,
-    'getById',
-    [slug],
-    {
-      if: !isUndefined(slug),
-    }
-  )
+
+  const { data: video, isLoading } = useGetVideoQuery(slug)
 
   const playerRef = useRef<HTMLVmPlayerElement>(null)
 

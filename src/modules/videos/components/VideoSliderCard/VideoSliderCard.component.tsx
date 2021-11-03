@@ -21,15 +21,13 @@ import {
 import { abbreviateNumber } from 'js-abbreviation-number'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useSelector } from 'react-redux'
 import { Link as RouterLink } from 'react-router-dom'
 
 import { AspectRatioBox } from '@core/components/AspectRatioBox/AspectRation.component'
 import { getPublishLabel } from '@core/helpers/date.helper'
 import { videoSlugLink } from '@core/helpers/video.helper'
-import { RootState } from '@core/store'
 
-import { videosSelectors } from '@videos/reducers/video.slice'
+import { Video } from '@videos/models/video.model'
 
 import { VideoCardRootStyle, VideoCardThumbnail } from './VideoSliderCard.style'
 
@@ -87,14 +85,10 @@ const VideoSliderOption = () => {
 }
 
 interface Props {
-  videoId: string
+  video: Video
 }
 
-export const VideoSliderCard = ({ videoId }: Props) => {
-  const video = useSelector((state: RootState) =>
-    videosSelectors.selectById(state, videoId)
-  )
-
+export const VideoSliderCard = ({ video }: Props) => {
   const th = useTheme()
   const ltsm: boolean = useMediaQuery(th.breakpoints.down('sm'))
 

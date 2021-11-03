@@ -32,7 +32,6 @@ import { AuthService } from '@auth/services/auth.service'
 
 import { QuizzRouter } from '@quizzes/quizzes.router'
 
-import { VideoService } from '@videos/services/video.service'
 import { VideoRouter } from '@videos/video.router'
 
 import { UserRouter } from '@users/user.router'
@@ -50,7 +49,6 @@ import './styles/index.scss'
  */
 const PolyflixApp = () => {
   const authService = useInjection<AuthService>(AuthService)
-  const videoService = useInjection<VideoService>(VideoService)
 
   const { user, hasRefreshedAuth, isAuthRefreshing } = useAuth()
   const { isUnhealthy } = useServerHealth()
@@ -72,7 +70,6 @@ const PolyflixApp = () => {
   // or if we are waiting for informations from the server
   if (isAuthRefreshing) return <LoadingLayout />
 
-  videoService.findAll()
   return (
     <Router>
       <Switch>
