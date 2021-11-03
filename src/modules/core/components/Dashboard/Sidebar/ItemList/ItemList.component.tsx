@@ -1,5 +1,6 @@
 import { Collapse, List, ListItemText } from '@mui/material'
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
 import { Icon } from '@core/components/Icon/Icon.component'
 import { useSidebar } from '@core/hooks/useSidebar.hook'
@@ -14,6 +15,7 @@ interface Props {
 }
 
 export const ItemList = ({ item }: Props) => {
+  const { t } = useTranslation('sidebar')
   const { open } = useSidebar()
 
   const [menuOpen, setMenuOpen] = useState(false)
@@ -25,7 +27,7 @@ export const ItemList = ({ item }: Props) => {
           <Icon name={item.icon} />
         </ItemIconStyle>
         <ListItemText
-          primary={item.title}
+          primary={t(item.title)}
           sx={{
             ...fadeInAnnimation(open),
           }}

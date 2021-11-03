@@ -1,5 +1,6 @@
 import { Box, ListItemText, Theme } from '@mui/material'
 import { alpha, CSSObject } from '@mui/system'
+import { useTranslation } from 'react-i18next'
 import { Link as RouterLink } from 'react-router-dom'
 
 import { Icon } from '@core/components/Icon/Icon.component'
@@ -21,6 +22,7 @@ interface Props {
  * @returns
  */
 export const Item = ({ item, isSubItem = false }: Props) => {
+  const { t } = useTranslation('sidebar')
   const { open } = useSidebar()
 
   const isActiveRoot = useActiveRoot(item.href)
@@ -68,10 +70,10 @@ export const Item = ({ item, isSubItem = false }: Props) => {
             }}
           />
         )}
-        {!isSubItem && <Icon name={item.icon} />}
+        {!isSubItem && item.icon && <Icon name={item.icon} />}
       </ItemIconStyle>
       <ListItemText
-        primary={item.title}
+        primary={t(item.title)}
         sx={{
           ...fadeInAnnimation(open),
         }}

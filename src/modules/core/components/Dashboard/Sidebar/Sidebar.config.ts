@@ -17,39 +17,43 @@ export interface SidebarItem {
 
 const sidebarConfiguration: SidebarItem[] = [
   {
-    title: i18n.t('sidebar:items.home'),
+    title: 'items.home',
     href: '/',
     icon: 'akar-icons:home',
   },
   {
-    title: i18n.t('sidebar:items.videos'),
+    title: 'items.videos',
     href: '/videos',
     icon: 'eva:play-circle-outline',
     items: [
       {
-        title: i18n.t('sidebar:actions.create'),
+        title: 'actions.create',
         icon: 'carbon:add',
         href: '/videos/create',
       },
     ],
   },
   {
-    title: i18n.t('sidebar:items.quizzes'),
+    title: 'items.quizzes',
     href: '/quizzes/explore',
     icon: 'healthicons:i-exam-multiple-choice',
   },
   {
-    title: i18n.t('sidebar:items.quizzes'),
+    title: 'items.quizzes',
     section: SidebarSection.MANAGEMENT,
     icon: 'healthicons:i-exam-multiple-choice',
     items: [
       {
-        title: i18n.t('sidebar:actions.list'),
+        title: 'actions.list',
         href: '/users/profile?tab=quizzes',
       },
       {
-        title: i18n.t('sidebar:actions.create'),
+        title: 'actions.create',
         href: '/quizzes/create',
+      },
+      {
+        title: 'actions.history',
+        href: '/quizzes/history',
       },
     ],
   },

@@ -3,7 +3,7 @@ import { buildStyles, CircularProgressbar } from 'react-circular-progressbar'
 import { useTranslation } from 'react-i18next'
 import { Link as RouterLink } from 'react-router-dom'
 
-import { getFeebackColor, percentage } from '@quizzes/helpers/score.helper'
+import { getFeedbackColor, percentage } from '@quizzes/helpers/score.helper'
 import { usePlayQuizz } from '@quizzes/hooks/usePlayQuizz.hook'
 import { PlayComponentProps } from '@quizzes/types/play.type'
 
@@ -25,7 +25,7 @@ export const End = ({ quizz }: PlayComponentProps) => {
   const questions = quizz.questions || []
   const score = attempt?.score || 0
   const scorePercentage = percentage(score, questions.length)
-  const color = getFeebackColor(scorePercentage, theme)
+  const color = getFeedbackColor(scorePercentage, theme)
 
   return (
     <Paper sx={{ p: 4 }} variant="outlined">

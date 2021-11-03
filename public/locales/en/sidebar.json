@@ -2,6 +2,7 @@
   "actions": {
     "list": "List",
     "create": "Create",
+    "history": "History",
     "logout": "Log out"
   },
   "sections": {
