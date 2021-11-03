@@ -184,6 +184,9 @@ export const VideoSliderCard = ({ video }: Props) => {
                   color="inherit"
                   component={RouterLink}
                   to={videoSlugLink(video)}
+                  sx={{
+                    width: '100%',
+                  }}
                 >
                   <Typography
                     fontWeight="bold"

@@ -38,7 +38,7 @@ const sidebarConfiguration: SidebarItem[] = [
     items: [
       {
         title: 'actions.list',
-        href: '/users/profile?tab=videos',
+        href: '/users/profile/videos',
       },
       {
         title: 'actions.create',
