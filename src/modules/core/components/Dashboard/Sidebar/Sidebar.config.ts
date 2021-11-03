@@ -57,7 +57,7 @@ const sidebarConfiguration: SidebarItem[] = [
     items: [
       {
         title: 'actions.list',
-        href: '/users/profile?tab=quizzes',
+        href: '/users/profile/quizzes',
       },
       {
         title: 'actions.create',

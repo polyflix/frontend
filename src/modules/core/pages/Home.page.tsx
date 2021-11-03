@@ -25,7 +25,7 @@ export const HomePage = () => {
   })
 
   return (
-    <Page title={t('page.title')} maxWidth={false} disableGutters={true}>
+    <Page title={t('page.title')} maxWidth={false}>
       <Grid container spacing={5}>
         <Grid item xs={12}>
           <Slider

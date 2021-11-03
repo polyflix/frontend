@@ -7,6 +7,8 @@ export const BannerHead = styled(Paper)(({ theme }) => ({
   flexDirection: 'column',
   alignItems: 'center',
   justifyContent: 'center',
-  borderRadius: 25,
-  padding: theme.spacing(8, 0, 0, 0),
+  alignSelf: 'center',
+  width: '100%',
+  borderRadius: theme.shape.borderRadius,
+  paddingTop: theme.spacing(8),
 }))
