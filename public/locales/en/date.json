@@ -1,0 +1,17 @@
+{
+  "date": {
+    "published": {
+      "now": "Just now",
+      "minute_one": "{{count}} minute ago",
+      "minute_other": "{{count}} minutes ago",
+      "hour_one": "{{count}} hour ago",
+      "hour_other": "{{count}} hours ago",
+      "day_one": "{{count}} day ago",
+      "day_other": "{{count}} days ago",
+      "month_one": "{{count}} month ago",
+      "month_other": "{{count}} months ago",
+      "year_one": "{{count}} year ago",
+      "year_other": "{{count}} years ago"
+    }
+  }
+}

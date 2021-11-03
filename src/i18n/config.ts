@@ -26,6 +26,7 @@ i18n
       'auth',
       'quizzes',
       'users',
+      'date',
     ],
     defaultNS: 'common',
   })
