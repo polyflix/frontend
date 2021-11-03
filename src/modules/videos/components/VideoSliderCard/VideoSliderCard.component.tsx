@@ -173,32 +173,34 @@ export const VideoSliderCard = ({ video }: Props) => {
                   })`,
               }}
             >
-              <Link
-                underline="none"
-                color="inherit"
-                component={RouterLink}
-                to={videoSlugLink(video)}
+              <Box
                 sx={{
                   display: 'flex',
                   justifyContent: 'space-between',
                 }}
               >
-                <Typography
-                  fontWeight="bold"
-                  variant="subtitle1"
-                  noWrap={true}
-                  sx={{
-                    fontSize: {
-                      xs: '0.8rem',
-                      md: '1rem',
-                    },
-                  }}
+                <Link
+                  underline="none"
+                  color="inherit"
+                  component={RouterLink}
+                  to={videoSlugLink(video)}
                 >
-                  {video?.title}
-                </Typography>
+                  <Typography
+                    fontWeight="bold"
+                    variant="subtitle1"
+                    noWrap={true}
+                    sx={{
+                      fontSize: {
+                        xs: '0.8rem',
+                        md: '1rem',
+                      },
+                    }}
+                  >
+                    {video?.title}
+                  </Typography>
+                </Link>
                 <VideoSliderOption />
-              </Link>
-
+              </Box>
               <Box>
                 <Typography
                   sx={{
