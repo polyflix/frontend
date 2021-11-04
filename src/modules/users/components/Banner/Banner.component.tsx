@@ -9,7 +9,6 @@ import { useTranslation } from 'react-i18next'
 import { Link as RouterLink, useRouteMatch } from 'react-router-dom'
 
 import { Icon } from '@core/components/Icon/Icon.component'
-import { DEFAULT_AVATAR_PICTURE } from '@core/constants/defaultValue.constant'
 
 import { User } from '@users/models/user.model'
 
@@ -105,7 +104,7 @@ export const ProfileBanner = ({ user }: Props) => {
           </IconButton>
         </Tooltip>
         <Avatar
-          src={user?.avatar || DEFAULT_AVATAR_PICTURE}
+          src={user?.profilePicture}
           alt={user.displayName + ' profile picture.'}
           sx={{ width: 100, height: 100, borderRadius: 10 }}
         />

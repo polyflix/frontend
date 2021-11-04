@@ -135,7 +135,6 @@ export const VideoDetails = ({ video }: VideoDetailsProps) => {
                     {/* TODO user */}
                     <Avatar
                       alt={video.publishedBy?.displayName}
-                      src="https://icatcare.org/app/uploads/2018/07/Thinking-of-getting-a-cat.png"
                     />
                     <Typography variant="caption">
                       {video.publishedBy?.displayName}

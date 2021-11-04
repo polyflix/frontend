@@ -2,6 +2,7 @@ import { Typography } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 
 import { Image } from '@core/styles/Image.style'
+import dumbThumbnail from '@core/assets/images/dumb_thumnail.jpg'
 
 interface Props {
   title?: string
@@ -14,7 +15,7 @@ export const VideoPreview = ({ title, description, thumbnail }: Props) => {
   const { t } = useTranslation('videos')
 
   const getThumbnail = () => {
-    if (!thumbnail) return 'https://i.stack.imgur.com/y9DpT.jpg'
+    if (!thumbnail) return dumbThumbnail
     if (typeof thumbnail === 'string') return thumbnail
 
     return URL.createObjectURL(thumbnail)

@@ -36,6 +36,8 @@ import {
   VideoCardThumbnailContainer,
 } from './VideoSliderCard.style'
 
+import dumbAvatar from '@assets/images/dumb_thumbnail.jpg'
+
 const VideoSliderOption = () => {
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null)
   const { t } = useTranslation('home')
