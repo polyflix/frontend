@@ -13,7 +13,7 @@ export const UserAvatar = ({}) => {
   return (
     <Stack direction="row" alignItems="center" sx={{ width: '100%' }}>
       <Avatar
-        src={user?.profilePicture || DEFAULT_AVATAR_PICTURE}
+        src={user?.avatar || DEFAULT_AVATAR_PICTURE}
         alt={`${user?.displayName} profile picture`}
       />
       <Box

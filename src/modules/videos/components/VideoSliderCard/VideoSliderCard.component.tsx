@@ -151,7 +151,7 @@ export const VideoSliderCard = ({ video }: Props) => {
             direction="row"
           >
             <Avatar
-              src={video.publishedBy?.profilePicture || DEFAULT_AVATAR_PICTURE}
+              src={video.publishedBy?.avatar || DEFAULT_AVATAR_PICTURE}
               alt={video.publishedBy?.displayName + ' profile picture.'}
               sx={{
                 borderRadius: '100%',

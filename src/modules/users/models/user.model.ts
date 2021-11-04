@@ -4,7 +4,7 @@ export interface User extends BaseModel {
   email: string
   firstName: string
   lastName: string
-  profilePicture: string
+  avatar: string
   isAccountActivated: boolean
   isAdmin: boolean
   displayName: string
