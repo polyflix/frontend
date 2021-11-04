@@ -70,7 +70,9 @@ export const QuizzForm = ({ quizz, isUpdate }: Props) => {
       name: quizz?.name,
       allowedRetries: quizz?.allowedRetries || 1,
       draft: quizz?.draft,
-      questions: quizz?.questions,
+      questions: isUpdate
+        ? quizz?.questions
+        : [{ index: 0, label: '', alternatives: [] }],
       keepHighestScore: quizz?.keepHighestScore || false,
     },
   })
@@ -82,7 +84,7 @@ export const QuizzForm = ({ quizz, isUpdate }: Props) => {
 
   /**
    * Validate if a quizz is well formed before sending it to the API.
-   * @param quizz the quizz form to validate
+   * @param quizzData the quizz form to validate
    * @returns true if valid, false otherwise
    */
   const validate = (quizzData: IQuizzForm) => {
