@@ -41,6 +41,7 @@ import { ThemeConfig } from '@theme/theme'
 
 import './i18n/config'
 import i18n from './i18n/config'
+import { CollectionRouter } from './modules/collections/collection.router'
 import './styles/index.scss'
 
 /**
@@ -86,6 +87,7 @@ const PolyflixApp = () => {
                 <Route path="/quizzes" component={QuizzRouter} />
                 <Route path="/users" component={UserRouter} />
                 <Route path="/videos" component={VideoRouter} />
+                <Route path="/collections" component={CollectionRouter} />
                 <Route exact path="/" component={HomePage} />
                 <Route component={NotFoundPage} />
               </Switch>
