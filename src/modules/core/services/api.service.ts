@@ -63,5 +63,5 @@ export const api = createApi({
   reducerPath: 'api',
   baseQuery: fetchWithRefresh,
   endpoints: () => ({}),
-  tagTypes: [Endpoint.Quizzes, Endpoint.Videos],
+  tagTypes: [Endpoint.Quizzes, Endpoint.Videos, Endpoint.Collections],
 })

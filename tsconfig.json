@@ -6,6 +6,7 @@
       "@env/*": ["src/environments/*"],
       "@theme/*": ["src/theme/*"],
       "@auth/*": ["src/modules/authentication/*"],
+      "@collections/*": ["src/modules/collections/*"],
       "@users/*": ["src/modules/users/*"],
       "@videos/*": ["src/modules/videos/*"],
       "@quizzes/*": ["src/modules/quizzes/*"],

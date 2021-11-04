@@ -45,6 +45,10 @@ export default defineConfig({
         replacement: resolve(__dirname, './src/modules/videos'),
       },
       {
+        find: '@collections',
+        replacement: resolve(__dirname, './src/modules/collections'),
+      },
+      {
         find: '@users',
         replacement: resolve(__dirname, './src/modules/users'),
       },

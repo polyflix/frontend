@@ -1,15 +1,11 @@
 import { Visibility } from '@core/models/content.model'
 import { PaginationFilter } from '@core/types/filters.type'
 
-export interface VideoFilters extends PaginationFilter {
+export interface CollectionFilters extends PaginationFilter {
   order?: string
   slug?: string
   title?: string
-  authorId?: string
-  isPublished?: boolean
-  isPublic?: boolean
-  isWatched?: boolean
-  isWatching?: boolean
+  publisherId?: string
   exact?: boolean
   tags?: string
   visibility?: Visibility
