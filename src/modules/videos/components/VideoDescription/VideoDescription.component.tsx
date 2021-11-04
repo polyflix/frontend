@@ -1,3 +1,4 @@
+import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined'
 import {
   Skeleton,
   Typography,
@@ -8,6 +9,7 @@ import {
   Divider,
   Link,
   Tooltip,
+  Box,
 } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 import { Link as RouterLink } from 'react-router-dom'
@@ -57,13 +59,28 @@ export const VideoDetails = ({ video }: VideoDetailsProps) => {
                   >
                     0 {/* TODO */}
                   </ActionButton>
-                  <ActionButton
-                    color="secondary"
-                    tooltip={t('slug.details.tooltips.views', { count: 0 })}
-                    startIcon={<Icon name="eva:eye-outline" />}
+                  <Tooltip
+                    title={t('slug.details.tooltips.views', {
+                      count: video?.views,
+                    })}
                   >
-                    0 {/* TODO */}
-                  </ActionButton>
+                    <Box
+                      component="span"
+                      sx={{
+                        p: 2,
+                        color: 'secondary.main',
+                        display: 'flex',
+                        alignItems: 'center',
+                      }}
+                    >
+                      <VisibilityOutlinedIcon
+                        sx={{
+                          mr: 0.8,
+                        }}
+                      />
+                      {video?.views}
+                    </Box>
+                  </Tooltip>
                   <VideoDescriptionMenu />
                 </Stack>
               </Stack>
