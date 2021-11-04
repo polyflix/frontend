@@ -1,5 +1,7 @@
 import dayjs, { Dayjs } from 'dayjs'
 
+import i18n from '../../../i18n/config'
+
 /**
  * A little helper to get the publish label for a date.
  *
@@ -17,19 +19,31 @@ export const getPublishLabel = (date?: string | Dayjs): string => {
 
   date = typeof date === 'string' ? dayjs(date) : date
 
-  const diffInDays = now.diff(date, 'days')
-  const diffInMonths = now.diff(date, 'months')
-  const diffInYears = now.diff(date, 'years')
+  const diffInMinutes = now.diff(date, 'minute')
+  const diffInHours = now.diff(date, 'hour')
+  const diffInDays = now.diff(date, 'day')
+  const diffInMonths = now.diff(date, 'month')
+  const diffInYears = now.diff(date, 'year')
 
   if (diffInYears > 0) {
-    return `${diffInYears} year${diffInYears !== 1 && 's'} ago`
+    return i18n.t('date:date.published.year', { count: diffInYears })
   }
-
   if (diffInMonths > 0) {
-    return `${diffInMonths} month${diffInMonths !== 1 && 's'} ago`
+    return i18n.t('date:date.published.month', { count: diffInMonths })
   }
-
-  return `${diffInDays} day${diffInDays !== 1 && 's'} ago`
+  if (diffInDays > 0) {
+    return i18n.t('date:date.published.day', { count: diffInDays })
+  }
+  if (diffInHours > 0) {
+    return i18n.t('date:date.published.hour', { count: diffInHours })
+  }
+  if (diffInMinutes > 0) {
+    return i18n.t('date:date.published.minute', { count: diffInMinutes })
+  }
+  if (diffInMinutes < 1) {
+    return i18n.t('date:date.published.now')
+  }
+  return 'N/A'
 }
 
 export const stringToDate = (date: string): string =>

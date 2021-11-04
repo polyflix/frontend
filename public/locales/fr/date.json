@@ -1,0 +1,17 @@
+{
+  "date": {
+    "published": {
+      "now": "A l'instant",
+      "minute_one": "Il y a {{count}} minute",
+      "minute_other": "Il y a {{count}} minutes",
+      "hour_one": "Il y a {{count}} heure",
+      "hour_other": "Il y a {{count}} heures",
+      "day_one": "Il y a {{count}} jour",
+      "day_other": "Il y a {{count}} jours",
+      "month_one": "Il y a {{count}} mois",
+      "month_other": "Il y a {{count}} mois",
+      "year_one": "Il y a {{count}} an",
+      "year_other": "Il y a {{count}} ans"
+    }
+  }
+}
