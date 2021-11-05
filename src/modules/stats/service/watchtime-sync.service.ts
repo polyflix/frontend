@@ -23,7 +23,6 @@ export const statsApi = api.injectEndpoints({
           videoId,
         },
       }),
-      invalidatesTags: (_, _1, videoId) => [{ type: Endpoint.Videos, videoId }],
     }),
   }),
 })
