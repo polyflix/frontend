@@ -12,7 +12,6 @@ module.exports = {
     "@typescript-eslint/eslint-plugin",
     "react",
     "import",
-    "react-hooks",
     "json-format"
   ],
   root: true,
@@ -32,7 +31,5 @@ module.exports = {
     }
   },
   ignorePatterns: [".eslintrc.js"],
-  rules: {
-    "react-hooks/exhaustive-deps": "warn"
-  }
+  rules: {}
 }

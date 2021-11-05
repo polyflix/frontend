@@ -13,13 +13,9 @@ import { useGetVideoQuery } from '@videos/services/video.service'
 export const SlugPage = () => {
   const { slug } = useParams<{ slug: string }>()
 
-  const { data: video, isLoading } = useGetVideoQuery(slug)
+  const { data: video } = useGetVideoQuery(slug)
 
   const playerRef = useRef<HTMLVmPlayerElement>(null)
-
-  const onVideoEnd = () => {
-    // TODO: For when the reader is less buggy
-  }
 
   return (
     <Page
@@ -29,7 +25,7 @@ export const SlugPage = () => {
         maxWidth: '2000px',
       }}
     >
-      <Grid container rowSpacing={2} columnSpacing={5}>
+      <Grid container spacing={2}>
         <Grid
           item
           xs={12}
@@ -45,12 +41,8 @@ export const SlugPage = () => {
               margin: '0 auto',
             }}
           >
-            {!isLoading && video ? (
-              <Player
-                video={video}
-                playerRef={playerRef}
-                onVideoEnd={onVideoEnd}
-              />
+            {video ? (
+              <Player video={video} playerRef={playerRef} />
             ) : (
               <Skeleton
                 variant="rectangular"
