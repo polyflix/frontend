@@ -105,7 +105,7 @@ export const ProfileBanner = ({ user }: Props) => {
           </IconButton>
         </Tooltip>
         <Avatar
-          src={user?.profilePicture || DEFAULT_AVATAR_PICTURE}
+          src={user?.avatar || DEFAULT_AVATAR_PICTURE}
           alt={user.displayName + ' profile picture.'}
           sx={{ width: 100, height: 100, borderRadius: 10 }}
         />
