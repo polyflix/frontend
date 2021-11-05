@@ -1,6 +1,6 @@
 import { Injectable } from '@polyflix/di'
 
-import { ApiService } from '@core/services/api.service'
+import { ApiService } from '@core/services/endpoint.service'
 import { HttpService } from '@core/services/http.service'
 import { ApiVersion } from '@core/types/http.type'
 
@@ -29,7 +29,6 @@ export class StatsService {
     })
     const searchQuery = urlParams.toString()
 
-    // TODO refaire les querry params
     let url = `${this.endpoint}/video/${slug}`
     if (searchQuery !== '' && searchQuery) {
       url += `?${searchQuery}`

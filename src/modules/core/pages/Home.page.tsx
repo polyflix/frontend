@@ -11,8 +11,6 @@ import { useGetVideosQuery } from '@videos/services/video.service'
 import { VideoFilters } from '@videos/types/filters.type'
 
 export const HomePage = () => {
-  const { t } = useTranslation('home')
-
   const [filters] = useState<VideoFilters>({
     page: 1,
     pageSize: 10,
@@ -23,6 +21,10 @@ export const HomePage = () => {
     draft: false,
     ...filters,
   })
+
+  const videos = data?.items || []
+
+  const { t } = useTranslation('home')
 
   return (
     <Page title={t('page.title')} maxWidth={false}>
@@ -37,7 +39,7 @@ export const HomePage = () => {
             }
             freeMode
           >
-            {data?.items.map((video) => (
+            {videos.map((video) => (
               <VideoSliderCard key={video.id} video={video} />
             ))}
           </Slider>
@@ -50,7 +52,7 @@ export const HomePage = () => {
             }
             freeMode
           >
-            {data?.items.map((video) => (
+            {videos.map((video) => (
               <VideoSliderCard key={video.id} video={video} />
             ))}
           </Slider>
@@ -65,7 +67,7 @@ export const HomePage = () => {
             }
             freeMode
           >
-            {data?.items.map((video) => (
+            {videos.map((video) => (
               <VideoSliderCard key={video.id} video={video} />
             ))}
           </Slider>
@@ -80,7 +82,7 @@ export const HomePage = () => {
             }
             freeMode
           >
-            {data?.items.map((video) => (
+            {videos.map((video) => (
               <VideoSliderCard key={video.id} video={video} />
             ))}
           </Slider>

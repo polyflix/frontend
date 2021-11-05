@@ -1,4 +1,9 @@
 import { Box } from '@mui/material'
+import {
+  SYNC_RATE_LIMITER_MAX,
+  SYNC_RATE_LIMITER_MIN,
+} from '@stats/constants/stats.constant'
+import { useUpdateWatchtimeMutation } from '@stats/service/watchtime-sync.service'
 import { useSubtitles } from '@subtitles/hooks/useSubtitles.hook'
 import {
   Captions,
@@ -12,6 +17,8 @@ import {
   Ui,
 } from '@vime/react'
 import React, { useEffect, useRef, useState } from 'react'
+
+import { useInterval } from '@core/hooks/useInterval.hook'
 
 import { useAuth } from '@auth/hooks/useAuth.hook'
 
@@ -28,10 +35,6 @@ type Props = {
    * Reference used for the player & sync of subtitles
    */
   playerRef: React.RefObject<HTMLVmPlayerElement>
-  /**
-   * ??
-   */
-  onVideoEnd: () => void
 }
 
 const PLAYER_VOLUME_DOWN_STEP = 10
@@ -39,19 +42,25 @@ const PLAYER_VOLUME_UP_STEP = 10
 const PLAYER_MOVE_FORWARD_STEP = 13
 const PLAYER_MOVE_BACKWARD_STEP = 10
 
-export const Player: React.FC<Props> = ({ playerRef, onVideoEnd, video }) => {
+export const Player: React.FC<Props> = ({ playerRef, video }) => {
   const { token } = useAuth()
   const hostRef = useRef<HTMLDivElement>(null)
 
-  // TODO const statsService = useInjection<WatchtimeSyncService>(WatchtimeSyncService)
+  const [updateWatchtime] = useUpdateWatchtimeMutation()
+
   const {
     streamUrl,
     error: streamUrlError,
     loading: videoLoading,
   } = useStreamUrl(video)
   const { setSubtitles, setState } = useSubtitlesContext()
-
   const { subtitles, state: subtitleState } = useSubtitles(video)
+
+  // last time the interval was executed
+  const [lastSync, setLastSync] = useState<number | undefined>()
+
+  // time from player to last sync
+  const [lastPlayerTime, setLastPlayerTime] = useState<number | undefined>()
 
   useEffect(() => {
     setSubtitles(subtitles)
@@ -76,14 +85,43 @@ export const Player: React.FC<Props> = ({ playerRef, onVideoEnd, video }) => {
     )
       return
 
-    // TODO
-    // statsService.updateSync({
-    //   videoId: videoId,
-    //   watchedSeconds: playerRef.current.currentTime,
-    //   watchedPercent:
-    //     playerRef.current.currentTime / playerRef.current.duration,
-    // })
+    if (lastSync && Date.now() - lastSync < SYNC_RATE_LIMITER_MIN) {
+      return
+    }
+
+    const currentTimeInMillis: number = +(
+      playerRef.current.currentTime * 1000
+    ).toFixed(0)
+
+    if (
+      lastPlayerTime &&
+      currentTimeInMillis - lastPlayerTime < SYNC_RATE_LIMITER_MIN
+    ) {
+      return
+    }
+
+    if (currentTimeInMillis < 5000) return
+
+    setLastSync(Date.now())
+
+    if (lastPlayerTime) {
+      if (currentTimeInMillis > lastPlayerTime!) {
+        setLastPlayerTime(currentTimeInMillis)
+      }
+    } else {
+      setLastPlayerTime(currentTimeInMillis)
+    }
+
+    updateWatchtime({
+      videoId: videoId,
+      watchedSeconds: +playerRef.current.currentTime.toFixed(2),
+      watchedPercent: +(
+        playerRef.current.currentTime / playerRef.current.duration
+      ).toFixed(2),
+    })
   }
+
+  useInterval(onTriggerWatchtimeEvent, SYNC_RATE_LIMITER_MAX)
 
   const keyboardListener = (event: React.KeyboardEvent<HTMLDivElement>) => {
     if (!playerRef?.current) return
@@ -168,26 +206,6 @@ export const Player: React.FC<Props> = ({ playerRef, onVideoEnd, video }) => {
       playerRef.current.currentTime = userMeta.watchedSeconds
   }
 
-  useEffect(onTriggerWatchtimeEvent, [
-    playerRef,
-    // statsService,
-    token,
-    videoId,
-    onTriggerWatchtimeEvent,
-  ])
-  useEffect(() => {
-    // statsService.startTimer(onTriggerWatchtimeEvent)
-    return () => {
-      onTriggerWatchtimeEvent()
-      // statsService.stopTimer()
-    }
-    // We disable eslint on the next line, else it would prompt a warning on
-    // on the fact that onTriggerWatchTimeEvent is not in dependency array.
-    // But we know tat it is a constant that won't move at all
-    // eslint-disable-next-line
-    // }, [statsService])
-  }, [])
-
   return (
     <Box
       sx={{
@@ -206,9 +224,9 @@ export const Player: React.FC<Props> = ({ playerRef, onVideoEnd, video }) => {
       <PlayerVime
         playsinline
         ref={playerRef}
-        onVmSeeked={onTriggerWatchtimeEvent}
+        onVmSeeked={onTriggerWatchtimeEvent.bind(this)}
         onVmPlaybackStarted={onPlaybackStart}
-        onVmPlaybackEnded={onVideoEnd}
+        onVmPlaybackEnded={onTriggerWatchtimeEvent.bind(this)}
         currentPoster={videoThumbnail}
         onVmError={(e) => {
           if (e.detail instanceof MediaError) {

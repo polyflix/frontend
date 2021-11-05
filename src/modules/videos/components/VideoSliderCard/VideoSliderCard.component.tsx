@@ -30,7 +30,11 @@ import { videoSlugLink } from '@core/helpers/video.helper'
 
 import { Video } from '@videos/models/video.model'
 
-import { VideoCardRootStyle, VideoCardThumbnail } from './VideoSliderCard.style'
+import {
+  VideoCardRootStyle,
+  VideoCardThumbnail,
+  VideoCardThumbnailContainer,
+} from './VideoSliderCard.style'
 
 const VideoSliderOption = () => {
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null)
@@ -134,11 +138,15 @@ export const VideoSliderCard = ({ video }: Props) => {
               component={RouterLink}
               to={videoSlugLink(video)}
             >
-              <VideoCardThumbnail
-                loading="lazy"
-                src={video?.thumbnail}
-                alt={`${video?.title} thumbnail`}
-              />
+              <VideoCardThumbnailContainer
+                watchedPercent={video.userMeta?.watchedPercent}
+              >
+                <VideoCardThumbnail
+                  loading="lazy"
+                  src={video?.thumbnail}
+                  alt={`${video?.title} thumbnail`}
+                />
+              </VideoCardThumbnailContainer>
             </Link>
           </AspectRatioBox>
           <Stack

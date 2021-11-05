@@ -23,12 +23,8 @@ export interface Video extends ContentModel {
   videoPutPsu?: PresignedURL
   thumbnailPutPsu?: PresignedURL
   attachments: Attachment[]
-
-  // TODO
   sourceType: PlayerVideoSource
   availableLanguages: SubtitleLanguages[]
-
-  //   publishedBy: IPublisher | null
   userMeta?: WatchMetadata | undefined
   //   tags: Tag[]
 }

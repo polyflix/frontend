@@ -11,8 +11,15 @@ export const TabPanelStyle = styled(TabPanel)<any>(() => ({
 export const RootStyle = styled(Box)<any>(({ theme, open }) => ({
   height: '100%',
   transition: ease(theme, 'width'),
+  [theme.breakpoints.down('lg')]: {
+    height: '500px',
+    width: '100%',
+  },
   ...(open && {
     width: '400px',
+    [theme.breakpoints.up('xl')]: {
+      width: '500px',
+    },
     opacity: 1,
   }),
   ...(!open && {
@@ -20,11 +27,4 @@ export const RootStyle = styled(Box)<any>(({ theme, open }) => ({
     width: '30px',
     opacity: 0,
   }),
-  [theme.breakpoints.down('lg')]: {
-    height: '500px',
-    width: '100%',
-  },
-  [theme.breakpoints.up('xl')]: {
-    width: '500px',
-  },
 }))
