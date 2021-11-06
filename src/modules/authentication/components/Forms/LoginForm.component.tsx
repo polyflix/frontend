@@ -3,14 +3,18 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff'
 import { LoadingButton } from '@mui/lab'
 import {
   Alert,
+  Box,
+  Button,
   IconButton,
   InputAdornment,
   Link,
   Stack,
   TextField,
+  Typography,
 } from '@mui/material'
+import * as React from 'react'
 import { useState } from 'react'
-import { useForm } from 'react-hook-form'
+import { useForm, UseFormSetValue } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { Link as RouterLink, useHistory, useLocation } from 'react-router-dom'
 
@@ -20,6 +24,40 @@ import { Regex } from '@core/constants/regex.constant'
 
 import { AuthService } from '@auth/services/auth.service'
 import { ILoginForm } from '@auth/types/form.type'
+
+import { EnvironmentService } from '../../../core/services/environment.service'
+
+const DebugFormComponent: React.FC<{ setValue: UseFormSetValue<ILoginForm> }> =
+  ({ setValue }) => {
+    const env = useInjection<EnvironmentService>(EnvironmentService).get()
+    if (!env.debugMode || !env.debugCredentials) return null
+    return (
+      <>
+        <Box sx={{ mt: 5, mb: 1 }}>
+          <Typography variant="h4" gutterBottom>
+            Debug mode is on
+          </Typography>
+          <Typography sx={{ color: 'text.secondary' }}>
+            Click on one of the buttons below to fill the form
+          </Typography>
+        </Box>
+
+        {env.debugCredentials.map((i, index) => (
+          <Button
+            onClick={() => {
+              setValue('email', i.email)
+              setValue('password', i.password)
+            }}
+            variant="contained"
+            key={index}
+            sx={{ mx: 1 }}
+          >
+            {i.name}
+          </Button>
+        ))}
+      </>
+    )
+  }
 
 /**
  * This is the Login form component.
@@ -45,6 +83,7 @@ export const LoginForm = () => {
 
   const {
     register,
+    setValue,
     handleSubmit,
     formState: { errors },
   } = useForm<ILoginForm>()
@@ -138,6 +177,7 @@ export const LoginForm = () => {
           {t('signIn.confirm')}
         </LoadingButton>
       </Stack>
+      <DebugFormComponent setValue={setValue} />
     </form>
   )
 }
