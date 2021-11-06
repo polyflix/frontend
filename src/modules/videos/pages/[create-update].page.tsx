@@ -16,7 +16,7 @@ export const CreateUpdatePage = () => {
   const { slug } = useParams<{ slug: string }>()
 
   // We want to fetch the video only if the slug is defined, in case of update mode.
-  const { data: video, isLoading } = useGetVideoQuery(slug)
+  const { data: video, isLoading } = useGetVideoQuery(slug, { skip: !slug })
 
   const isUpdate = !isUndefined(video)
 
