@@ -46,5 +46,8 @@ export const getPublishLabel = (date?: string | Dayjs): string => {
   return 'N/A'
 }
 
-export const stringToDate = (date: string): string =>
+export const stringToShortDate = (date: string): string =>
   dayjs(new Date(date)).format('DD MMM YYYY')
+
+export const stringToLongDate = (date: string): string =>
+  dayjs(new Date(date)).format('DD MMM YYYY HH:MM')

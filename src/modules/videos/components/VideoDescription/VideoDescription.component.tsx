@@ -16,7 +16,7 @@ import { Link as RouterLink } from 'react-router-dom'
 
 import { Icon } from '@core/components/Icon/Icon.component'
 import { MarkdownBox } from '@core/components/MarkdownBox/MarkdownBox.component'
-import { stringToDate } from '@core/helpers/date.helper'
+import { stringToLongDate, stringToShortDate } from '@core/helpers/date.helper'
 
 import { Video } from '@videos/models/video.model'
 
@@ -47,9 +47,11 @@ export const VideoDetails = ({ video }: VideoDetailsProps) => {
               >
                 <Stack spacing={0}>
                   <Typography variant="h4">{video?.title}</Typography>
-                  <Typography variant="caption">
-                    {stringToDate(video?.createdAt)}
-                  </Typography>
+                  <Tooltip title={stringToLongDate(video?.createdAt)}>
+                    <Typography variant="caption">
+                      {stringToShortDate(video?.createdAt)}
+                    </Typography>
+                  </Tooltip>
                 </Stack>
                 <Stack spacing={2} direction="row">
                   <ActionButton
