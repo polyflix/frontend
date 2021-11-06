@@ -64,6 +64,10 @@ export default defineConfig({
         find: '@stats',
         replacement: resolve(__dirname, './src/modules/stats'),
       },
+      {
+        find: '@courses',
+        replacement: resolve(__dirname, './src/modules/courses'),
+      },
     ],
   },
   plugins: [

@@ -1,3 +1,5 @@
+import { CollectionRouter } from '@collections/collection.router'
+import { CoursesRouter } from '@courses/courses.router'
 import '@vime/core/themes/default.css'
 import { isUndefined } from 'lodash'
 import { SnackbarProvider } from 'notistack'
@@ -41,7 +43,6 @@ import { ThemeConfig } from '@theme/theme'
 
 import './i18n/config'
 import i18n from './i18n/config'
-import { CollectionRouter } from './modules/collections/collection.router'
 import './styles/index.scss'
 
 /**
@@ -88,6 +89,7 @@ const PolyflixApp = () => {
                 <Route path="/users" component={UserRouter} />
                 <Route path="/videos" component={VideoRouter} />
                 <Route path="/collections" component={CollectionRouter} />
+                <Route path="/courses" component={CoursesRouter} />
                 <Route exact path="/" component={HomePage} />
                 <Route component={NotFoundPage} />
               </Switch>
