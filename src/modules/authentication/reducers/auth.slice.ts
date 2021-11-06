@@ -27,7 +27,7 @@ export interface AuthState {
 
 const initialState: AuthState = {
   isLoading: false,
-  isAuthRefreshing: false,
+  isAuthRefreshing: true,
   hasRefreshedAuth: false,
 }
 
