@@ -25,11 +25,15 @@ export const HomePage = () => {
   })
 
   const watchingVideosQuery = useGetVideosQuery({
+    visibility: Visibility.PUBLIC,
+    draft: false,
     ...filters,
     isWatching: true,
   })
 
   const watchedVideosQuery = useGetVideosQuery({
+    visibility: Visibility.PUBLIC,
+    draft: false,
     ...filters,
     isWatched: true,
   })
