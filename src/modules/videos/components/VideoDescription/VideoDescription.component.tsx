@@ -10,7 +10,10 @@ import {
   Link,
   Tooltip,
   Box,
+  Button,
 } from '@mui/material'
+import { useLikeVideoMutation } from '@stats/service/watchtime-sync.service'
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link as RouterLink } from 'react-router-dom'
 
@@ -20,7 +23,6 @@ import { stringToLongDate, stringToShortDate } from '@core/helpers/date.helper'
 
 import { Video } from '@videos/models/video.model'
 
-import { ActionButton } from './VideoDescriptionActionButton/VideoDescriptionActionButton.component'
 import { VideoDescriptionMenu } from './VideoDescriptionMenu/VideoDescriptionMenu.component'
 
 type VideoDetailsProps = {
@@ -29,6 +31,27 @@ type VideoDetailsProps = {
 
 export const VideoDetails = ({ video }: VideoDetailsProps) => {
   const { t } = useTranslation('videos')
+  const [isLiked, setIsLiked] = useState<boolean | undefined>(undefined)
+  const [likeDisabled, setLikeDisabled] = useState<boolean>(false)
+  const [likeVideo] = useLikeVideoMutation()
+  let [likeNumber, setLikeNumber] = useState<number>(video?.likes || 0)
+  const like = async () => {
+    if (video) {
+      setLikeDisabled(true)
+      await likeVideo(video.id)
+      if (!isLiked) {
+        setLikeNumber(likeNumber + 1)
+      } else {
+        setLikeNumber(likeNumber - 1)
+      }
+      setIsLiked(!isLiked)
+      setLikeDisabled(false)
+    }
+  }
+
+  if (video && isLiked === undefined) {
+    setIsLiked(video?.userMeta ? video?.userMeta.isLiked : false)
+  }
 
   return (
     <Paper variant="outlined" sx={{ padding: 2, position: 'relative' }}>
@@ -54,13 +77,23 @@ export const VideoDetails = ({ video }: VideoDetailsProps) => {
                   </Tooltip>
                 </Stack>
                 <Stack spacing={2} direction="row">
-                  <ActionButton
-                    startIcon={<Icon name="eva:heart-fill" />}
-                    tooltip={t('slug.details.tooltips.likes', { count: 0 })}
-                    color="primary"
+                  <Tooltip
+                    title={t('slug.details.tooltips.likes', {
+                      count: likeNumber,
+                    })}
                   >
-                    0 {/* TODO */}
-                  </ActionButton>
+                    <Button
+                      startIcon={<Icon name="eva:heart-fill" />}
+                      color="primary"
+                      onClick={() => {
+                        if (!likeDisabled) like()
+                      }}
+                      variant={isLiked ? 'outlined' : 'text'}
+                      size="small"
+                    >
+                      {likeNumber}
+                    </Button>
+                  </Tooltip>
                   <Tooltip
                     title={t('slug.details.tooltips.views', {
                       count: video?.views,
