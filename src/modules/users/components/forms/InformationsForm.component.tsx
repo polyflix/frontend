@@ -3,10 +3,9 @@ import Grid from '@mui/material/Grid'
 import Paper from '@mui/material/Paper'
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
-import { generateFilename } from '@core/helpers/file.helper'
 
 import { useInjection } from '@polyflix/di'
 
@@ -14,9 +13,6 @@ import { Regex } from '@core/constants/regex.constant'
 
 import { User } from '@users/models/user.model'
 import { UserService } from '@users/services/user.service'
-import { Dropzone } from '@core/components/Dropzone/Dropzone.component'
-import { MinioService } from '@core/services/minio.service'
-import { SnackbarService } from '@core/services/snackbar.service'
 
 interface Props {
   user: User
@@ -24,17 +20,14 @@ interface Props {
 }
 
 export const InformationsForm = ({ user, title }: Props) => {
-  const snackbarService = useInjection<SnackbarService>(SnackbarService)
   const userService = useInjection<UserService>(UserService)
-  const minioService = useInjection<MinioService>(MinioService)
 
   const { t } = useTranslation('auth')
 
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
-    watch
+    formState: { errors },
   } = useForm<User>({
     defaultValues: {
       email: user?.email,
@@ -44,62 +37,22 @@ export const InformationsForm = ({ user, title }: Props) => {
     },
   })
 
-  // This should contains our profile image file when the user upload the image
-  const [profilePictureFile, setProfilePictureFile] = useState<File>()
-
-  const profilePicture = watch('profilePicture')
-
-
-
-  // Here we define a simple effect which will
-  // clear the user profile picture file if the user put a link into it's
-  // picture URL field.
-  useEffect(() => {
-    if (profilePictureFile) {
-      setProfilePictureFile(undefined)
-    }
-  }, [profilePicture])
-
-  interface PresignedURL {
-    tokenAccess: string
-  }
-
-  type MinioFile = { presignedUrl: PresignedURL; file: File }
-
-  const getFile = (files: MinioFile[], field: keyof User) => {
-    return files.find((file) => file.getField() === field);
-  }
+  const [isAction, setIsAction] = useState<boolean>(false)
 
   /**
    * The method called when the form is submitted.
    * @param data
    */
   const onSubmit = async (data: User) => {
-
+    setIsAction(true)
     try {
       let u: User = data
       u.id = user.id
-
-        if (profilePictureFile) {
-          const profilePictureMinioFile: MinioFile = {
-            file: profilePictureFile,
-            presignedUrl:
-
-          }
-          const uploadedFiles = await minioService.upload([profilePictureMinioFile]);
-          const attributes: (keyof User)[] = ["profilePicture"];
-          attributes.forEach((attr) => {
-            const url = getFile(uploadedFiles, attr)?.getFileURL();
-            if (url) data = { ...data, [attr]: url };
-          })
-        }
-
       await userService.updateUser(u)
-    } catch (e: any) {
-      snackbarService.createSnackbar(e.data.statusText, { variant: 'error' })
+    } finally {
+      setIsAction(false)
     }
   }
-
 
   return (
     <Paper elevation={0}>
@@ -108,15 +61,6 @@ export const InformationsForm = ({ user, title }: Props) => {
       </Typography>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Grid container spacing={2}>
-          <Grid item xs={12}>
-            <Dropzone
-              disabled={Boolean(profilePictureFile)}
-               onAcceptedFiles={([file]) => setProfilePictureFile(file)}
-              text={t('fields.profilePicture.label.upload')}
-              hint
-              accept="image/*"
-            />
-          </Grid>
           <Grid item xs={12} md={6}>
             <TextField
               fullWidth
@@ -169,7 +113,7 @@ export const InformationsForm = ({ user, title }: Props) => {
               size="large"
               type="submit"
               variant="contained"
-              loading={isSubmitting}
+              loading={isAction}
             >
               {t('profile.actions.update', { ns: 'users' })}
             </LoadingButton>

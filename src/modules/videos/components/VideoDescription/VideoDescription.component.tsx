@@ -22,6 +22,9 @@ import { stringToLongDate, stringToShortDate } from '@core/helpers/date.helper'
 
 import { Video } from '@videos/models/video.model'
 
+import { UserAvatar } from '@users/components/UserAvatar/UserAvatar.component'
+
+import { ActionButton } from './VideoDescriptionActionButton/VideoDescriptionActionButton.component'
 import { VideoDescriptionMenu } from './VideoDescriptionMenu/VideoDescriptionMenu.component'
 
 type VideoDetailsProps = {
@@ -132,9 +135,7 @@ export const VideoDetails = ({ video }: VideoDetailsProps) => {
                 >
                   <Stack spacing={1} direction="row" alignItems="center">
                     {/* TODO user */}
-                    <Avatar
-        user={user}
-                    />
+                    <UserAvatar user={video.publishedBy} />
                     <Typography variant="caption">
                       {video.publishedBy?.displayName}
                     </Typography>

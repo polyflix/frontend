@@ -1,8 +1,8 @@
 import { Typography } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 
-import { Image } from '@core/styles/Image.style'
 import dumbThumbnail from '@core/assets/images/dumb_thumnail.jpg'
+import { Image } from '@core/styles/Image.style'
 
 interface Props {
   title?: string

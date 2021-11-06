@@ -23,20 +23,18 @@ import { useTranslation } from 'react-i18next'
 import { Link as RouterLink } from 'react-router-dom'
 
 import { AspectRatioBox } from '@core/components/AspectRatioBox/AspectRation.component'
-import { DEFAULT_AVATAR_PICTURE } from '@core/constants/defaultValue.constant'
 import { getPublishLabel } from '@core/helpers/date.helper'
 import { videoSlugLink } from '@core/helpers/video.helper'
 
 import { Video } from '@videos/models/video.model'
+
+import { UserAvatar } from '@users/components/UserAvatar/UserAvatar.component'
 
 import {
   VideoCardRootStyle,
   VideoCardThumbnail,
   VideoCardThumbnailContainer,
 } from './VideoSliderCard.style'
-
-import dumbAvatar from '@assets/images/dumb_thumbnail.jpg'
-import { UserAvatar } from '@users/components/UserAvatar/UserAvatar.component'
 
 const VideoSliderOption = () => {
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null)

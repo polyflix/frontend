@@ -1,4 +1,3 @@
-import Avatar from '@mui/material/Avatar'
 import Box from '@mui/material/Box'
 import IconButton from '@mui/material/IconButton'
 import Tab from '@mui/material/Tab'
@@ -12,6 +11,7 @@ import { Icon } from '@core/components/Icon/Icon.component'
 
 import { User } from '@users/models/user.model'
 
+import { UserAvatar } from '../UserAvatar/UserAvatar.component'
 import { BannerHead } from './Banner.style'
 
 const BannerTabs = () => {
@@ -104,7 +104,7 @@ export const ProfileBanner = ({ user }: Props) => {
           </IconButton>
         </Tooltip>
         <UserAvatar
-        user={user}
+          user={user}
           sx={{ width: 100, height: 100, borderRadius: 10 }}
         />
         <Box

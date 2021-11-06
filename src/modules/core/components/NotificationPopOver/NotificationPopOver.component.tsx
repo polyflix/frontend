@@ -22,6 +22,8 @@ import { Icon } from '@core/components/Icon/Icon.component'
 import { MenuPopover } from '@core/components/MenuPopOver/MenuPopOver.component'
 import { Scrollbar } from '@core/components/Scrollbar/Scrollbar.component'
 
+import { UserAvatar } from '@users/components/UserAvatar/UserAvatar.component'
+
 enum NotificationType {}
 // TODO
 
@@ -92,10 +94,9 @@ const NotificationItem: React.FC<PropsWithChildren<NotificationItemProps>> = ({
       }}
     >
       <ListItemAvatar>
-        <UserAvatar
-          sx={{ bgcolor: 'background.neutral' }}
-          user={user}
-        >{avatar}</UserAvatar>
+        <UserAvatar sx={{ bgcolor: 'background.neutral' }} user={user}>
+          {avatar}
+        </UserAvatar>
       </ListItemAvatar>
       <ListItemText
         primary={title}
