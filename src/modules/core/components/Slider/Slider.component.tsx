@@ -22,7 +22,7 @@ export const Slider = ({
   direction = 'horizontal',
   heading,
   isLoading = false,
-  ghostsCount = 4,
+  ghostsCount = 10,
 }: PropsWithChildren<Props>) => {
   const ghosts = buildSkeletons(ghostsCount)
   return (
