@@ -1,19 +1,19 @@
-import { Avatar, Box, Stack, Typography, Tooltip } from '@mui/material'
+import { Box, Stack, Typography, Tooltip } from '@mui/material'
 
 import { useSidebar } from '@core/hooks/useSidebar.hook'
 import { fadeInAnnimation } from '@core/utils/animation'
 
 import { useAuth } from '@auth/hooks/useAuth.hook'
+import { UserAvatar } from '@users/components/UserAvatar/UserAvatar.component'
 
-export const UserAvatar = ({}) => {
+export const UserMinimalCard = ({}) => {
   const { open } = useSidebar()
   const { user } = useAuth()
 
   return (
     <Stack direction="row" alignItems="center" sx={{ width: '100%' }}>
-      <Avatar
-        src={user?.profilePicture}
-        alt={`${user?.displayName} profile picture`}
+      <UserAvatar
+        user={user}
       />
       <Box
         sx={{

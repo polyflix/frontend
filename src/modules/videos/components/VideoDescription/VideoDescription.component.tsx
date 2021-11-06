@@ -2,7 +2,6 @@ import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined'
 import {
   Skeleton,
   Typography,
-  Avatar,
   Stack,
   Paper,
   Grid,
@@ -134,7 +133,7 @@ export const VideoDetails = ({ video }: VideoDetailsProps) => {
                   <Stack spacing={1} direction="row" alignItems="center">
                     {/* TODO user */}
                     <Avatar
-                      alt={video.publishedBy?.displayName}
+        user={user}
                     />
                     <Typography variant="caption">
                       {video.publishedBy?.displayName}

@@ -3,7 +3,6 @@ import {
   List,
   Badge,
   Button,
-  Avatar,
   Tooltip,
   Divider,
   IconButton,
@@ -93,7 +92,10 @@ const NotificationItem: React.FC<PropsWithChildren<NotificationItemProps>> = ({
       }}
     >
       <ListItemAvatar>
-        <Avatar sx={{ bgcolor: 'background.neutral' }}>{avatar}</Avatar>
+        <UserAvatar
+          sx={{ bgcolor: 'background.neutral' }}
+          user={user}
+        >{avatar}</UserAvatar>
       </ListItemAvatar>
       <ListItemText
         primary={title}

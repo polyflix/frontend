@@ -4,7 +4,6 @@ import {
   PlaylistAddOutlined,
 } from '@mui/icons-material'
 import {
-  Avatar,
   Box,
   IconButton,
   ListItemIcon,
@@ -37,6 +36,7 @@ import {
 } from './VideoSliderCard.style'
 
 import dumbAvatar from '@assets/images/dumb_thumbnail.jpg'
+import { UserAvatar } from '@users/components/UserAvatar/UserAvatar.component'
 
 const VideoSliderOption = () => {
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null)
@@ -160,9 +160,7 @@ export const VideoSliderCard = ({ video }: Props) => {
             }}
             direction="row"
           >
-            <Avatar
-              src={video.publishedBy?.avatar || DEFAULT_AVATAR_PICTURE}
-              alt={video.publishedBy?.displayName + ' profile picture.'}
+            <UserAvatar
               sx={{
                 borderRadius: '100%',
                 width: {
@@ -174,6 +172,7 @@ export const VideoSliderCard = ({ video }: Props) => {
                   sm: 40,
                 },
               }}
+              user={video.publishedBy}
             />
 
             <Box

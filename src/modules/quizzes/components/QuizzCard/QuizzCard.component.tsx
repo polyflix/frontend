@@ -2,7 +2,6 @@ import {
   Accordion,
   AccordionDetails,
   AccordionSummary,
-  Avatar,
   Box,
   Card,
   Chip,
@@ -65,7 +64,8 @@ export const QuizzCard = ({
    */
   const buildPublisher = () => (
     <Tooltip title={`${quizz.user?.firstName} ${quizz.user?.lastName}`}>
-      <Avatar variant="circular" src={quizz.user?.profilePicture} />
+      <UserAvatar variant="circular"
+        user={user}/>
     </Tooltip>
   )
 

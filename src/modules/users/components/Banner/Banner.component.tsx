@@ -103,9 +103,8 @@ export const ProfileBanner = ({ user }: Props) => {
             <Icon name="eva:edit-fill" />
           </IconButton>
         </Tooltip>
-        <Avatar
-          src={user?.profilePicture}
-          alt={user.displayName + ' profile picture.'}
+        <UserAvatar
+        user={user}
           sx={{ width: 100, height: 100, borderRadius: 10 }}
         />
         <Box
