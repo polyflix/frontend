@@ -13,7 +13,7 @@ import { useGetVideoQuery } from '@videos/services/video.service'
 export const SlugPage = () => {
   const { slug } = useParams<{ slug: string }>()
 
-  const { data: video } = useGetVideoQuery(slug)
+  const { data: video, isLoading } = useGetVideoQuery(slug)
 
   const playerRef = useRef<HTMLVmPlayerElement>(null)
 
@@ -41,7 +41,7 @@ export const SlugPage = () => {
               margin: '0 auto',
             }}
           >
-            {video ? (
+            {!isLoading && video ? (
               <Player video={video} playerRef={playerRef} />
             ) : (
               <Skeleton

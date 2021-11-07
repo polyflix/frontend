@@ -71,7 +71,7 @@ const getPalette: (mode: PaletteMode) => PaletteOptions = (
   warning: { ...WARNING },
   error: { ...ERROR },
   grey: GREY,
-  divider: mode === 'light' ? GREY[200] : '#121212',
+  divider: mode === 'light' ? GREY[200] : '#161c24',
   ...(mode === 'light'
     ? {
         background: { paper: '#ffffff', default: '#fafafa' },

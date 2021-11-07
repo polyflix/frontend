@@ -97,7 +97,7 @@ export const Spotlight: React.FC<PropsWithChildren<{}>> = ({}) => {
         <SearchIconWrapper>
           <SearchIcon />
         </SearchIconWrapper>
-        <Tooltip title={t('soon')}>
+        <Tooltip title={t<string>('soon')}>
           <SearchField
             onClick={handleOpen}
             disabled
