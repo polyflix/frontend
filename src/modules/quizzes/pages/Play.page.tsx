@@ -76,11 +76,11 @@ export const PlayQuizzPage = () => {
 
   // Is the user has remaining attempts for this quizz ?
   const hasRemainingAttempts =
-    (data?.allowedRetries || 1) - (userAttempts?.total || 1) > 0
+    (data?.allowedRetries || 1) - (userAttempts?.total || 0) > 0
   const commonProps: PlayComponentProps = { quizz: data! }
   return (
     <Page title={data?.name} isLoading={isLoading || isAttemptsLoading}>
-      {hasRemainingAttempts ? (
+      {hasRemainingAttempts || step === Step.End ? (
         <>
           {step === Step.Onboard && <Onboard {...commonProps} />}
           {step === Step.Questions && <Questions {...commonProps} />}
