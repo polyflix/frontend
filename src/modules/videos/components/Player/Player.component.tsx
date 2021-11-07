@@ -1,4 +1,5 @@
 import { Box } from '@mui/material'
+import zIndex from '@mui/material/styles/zIndex'
 import {
   SYNC_RATE_LIMITER_MAX,
   SYNC_RATE_LIMITER_MIN,
@@ -217,7 +218,15 @@ export const Player: React.FC<Props> = ({ playerRef, video }) => {
       tabIndex={0}
     >
       {(mediaError || streamUrlError) && (
-        <div>
+        <div
+          style={{
+            margin: 'auto',
+            position: 'absolute',
+            zIndex: zIndex.modal,
+            width: '100%',
+            height: '100%',
+          }}
+        >
           <ErrorCard />
         </div>
       )}

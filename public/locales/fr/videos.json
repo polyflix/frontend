@@ -107,5 +107,6 @@
         }
       }
     }
-  }
+  },
+  "playerFailed": "Une erreur s'est produite, ré-essayez plus tard"
 }

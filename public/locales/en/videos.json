@@ -107,5 +107,6 @@
         }
       }
     }
-  }
+  },
+  "playerFailed": "Failed to load, try again later"
 }
