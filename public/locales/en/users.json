@@ -34,7 +34,11 @@
         "title": "Groups"
       },
       "quizzes": {
-        "title": "Quizzes"
+        "title": "Quizzes",
+        "content": {
+          "title": "My quizzes",
+          "description": "Here is the list of your quizzes. On this page, you can edit them, delete them or consult their results."
+        }
       }
     }
   }
