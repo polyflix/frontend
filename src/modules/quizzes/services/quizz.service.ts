@@ -80,6 +80,19 @@ export const quizzesApi = api.injectEndpoints({
       invalidatesTags: (result, _1, { id }) =>
         result ? [{ type: Endpoint.Quizzes, id }] : [],
     }),
+
+    /**
+     * Delete quizz mutation
+     */
+    deleteQuizz: builder.mutation<Quizz, { id: string }>({
+      query: ({ id }) => ({
+        url: `${Endpoint.Quizzes}/${id}`,
+        method: 'DELETE',
+      }),
+      // Invalidates all queries that subscribe to this Quizz `id` only.
+      // In this case, `getQuizz` will be re-run. `getQuizzes` *might*  rerun, if this id was under its results.
+      invalidatesTags: (_, _1, { id }) => [{ type: Endpoint.Quizzes, id }],
+    }),
   }),
 })
 
@@ -88,4 +101,5 @@ export const {
   useGetQuizzQuery,
   useAddQuizzMutation,
   useUpdateQuizzMutation,
+  useDeleteQuizzMutation,
 } = quizzesApi
