@@ -1,9 +1,10 @@
 import { TabPanel } from '@mui/lab'
+import { TabPanelProps } from '@mui/lab/TabPanel/TabPanel'
 import { styled, Box } from '@mui/material'
 
 import { ease } from '@core/utils/transition'
 
-export const TabPanelStyle = styled(TabPanel)<any>(() => ({
+export const TabPanelStyle = styled(TabPanel)<TabPanelProps>(() => ({
   height: 'calc(100% - 49px)',
   padding: 0,
 }))

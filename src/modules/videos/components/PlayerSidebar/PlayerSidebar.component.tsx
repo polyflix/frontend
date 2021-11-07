@@ -100,7 +100,7 @@ export const PlayerSidebar = ({ video, playerRef }: PlayerSidebarProps) => {
               {video && <SubtitlePanel video={video} playerRef={playerRef} />}
             </TabPanelStyle>
             <TabPanelStyle value="2">
-              <AutoScrollBox></AutoScrollBox>
+              <AutoScrollBox />
             </TabPanelStyle>
           </TabContext>
         </Paper>
