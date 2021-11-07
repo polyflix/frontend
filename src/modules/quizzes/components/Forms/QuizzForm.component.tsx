@@ -132,7 +132,7 @@ export const QuizzForm = ({ quizz, isUpdate }: Props) => {
         Endpoint.Quizzes
       )
 
-      history.push('/quizzes/explore')
+      history.push('/users/profile/quizzes')
     } catch (e: any) {
       snackbarService.createSnackbar(e.data.statusText, { variant: 'error' })
     }

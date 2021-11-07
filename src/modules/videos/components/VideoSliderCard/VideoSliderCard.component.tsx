@@ -14,9 +14,8 @@ import {
   Skeleton,
   Stack,
   Typography,
-  useMediaQuery,
-  useTheme,
   Link,
+  Tooltip,
 } from '@mui/material'
 import { abbreviateNumber } from 'js-abbreviation-number'
 import React, { useState } from 'react'
@@ -58,6 +57,9 @@ const VideoSliderOption = () => {
         aria-haspopup="true"
         aria-expanded={open ? 'true' : undefined}
         onClick={handleClick}
+        sx={{
+          width: '100%',
+        }}
       >
         <MoreVertOutlined fontSize="inherit" />
       </IconButton>
@@ -94,9 +96,6 @@ interface Props {
 }
 
 export const VideoSliderCard = ({ video }: Props) => {
-  const th = useTheme()
-  const ltsm: boolean = useMediaQuery(th.breakpoints.down('sm'))
-
   return (
     <VideoCardRootStyle>
       {!video ? (
@@ -173,20 +172,16 @@ export const VideoSliderCard = ({ video }: Props) => {
                 },
               }}
             />
-
             <Box
               sx={{
                 pl: 1,
-                width: (theme) =>
-                  `calc(100% - ${ltsm ? 30 : 40}px - ${
-                    ltsm ? theme.spacing(1) : theme.spacing(2)
-                  })`,
+                width: '100%',
               }}
             >
               <Box
                 sx={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
+                  display: 'grid',
+                  gridTemplateColumns: '1fr 28px',
                 }}
               >
                 <Link
@@ -196,21 +191,24 @@ export const VideoSliderCard = ({ video }: Props) => {
                   to={videoSlugLink(video)}
                   sx={{
                     width: '100%',
+                    overflow: 'hidden',
                   }}
                 >
-                  <Typography
-                    fontWeight="bold"
-                    variant="subtitle1"
-                    noWrap={true}
-                    sx={{
-                      fontSize: {
-                        xs: '0.8rem',
-                        md: '1rem',
-                      },
-                    }}
-                  >
-                    {video?.title}
-                  </Typography>
+                  <Tooltip title={video?.title} followCursor>
+                    <Typography
+                      fontWeight="bold"
+                      variant="subtitle1"
+                      noWrap={true}
+                      sx={{
+                        fontSize: {
+                          xs: '0.8rem',
+                          md: '1rem',
+                        },
+                      }}
+                    >
+                      {video?.title}
+                    </Typography>
+                  </Tooltip>
                 </Link>
                 <VideoSliderOption />
               </Box>
