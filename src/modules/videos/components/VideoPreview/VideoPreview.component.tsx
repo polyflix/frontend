@@ -1,7 +1,7 @@
+import dumbThumbnail from '@assets/images/dumb_thumbnail.jpg'
 import { Typography } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 
-import dumbThumbnail from '@assets/images/dumb_thumbnail.jpg'
 import { Image } from '@core/styles/Image.style'
 
 interface Props {
