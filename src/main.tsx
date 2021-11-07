@@ -1,4 +1,3 @@
-import { CollectionRouter } from '@collections/collection.router'
 import { CoursesRouter } from '@courses/courses.router'
 import '@vime/core/themes/default.css'
 import { isUndefined } from 'lodash'
@@ -35,6 +34,8 @@ import { AuthService } from '@auth/services/auth.service'
 import { QuizzRouter } from '@quizzes/quizzes.router'
 
 import { VideoRouter } from '@videos/video.router'
+
+import { CollectionRouter } from '@collections/collection.router'
 
 import { UserRouter } from '@users/user.router'
 
