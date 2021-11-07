@@ -80,7 +80,7 @@ export const VideoForm = ({ source, video, isUpdate }: Props) => {
     defaultValues: {
       title: video?.title,
       description: video?.description,
-      draft: video?.draft || true,
+      draft: video?.draft,
       visibility: video?.visibility || Visibility.PUBLIC,
       thumbnail: video?.thumbnail,
       src: video?.source.replace('-nocookie', ''),
@@ -151,6 +151,10 @@ export const VideoForm = ({ source, video, isUpdate }: Props) => {
       // If we have a video file, generate the a filename for it
       if (videoFile) {
         data.src = generateFilename(videoFile)
+      } else if (isUpdate && !videoFile) {
+        // if video has not been changed on update
+        delete data.src
+        delete data.thumbnail
       } else {
         return snackbarService.createSnackbar(
           t('forms.create-update.validation.video.required', {
@@ -241,7 +245,7 @@ export const VideoForm = ({ source, video, isUpdate }: Props) => {
                 />
               )}
 
-              {!isYoutube && !isUpdate && (
+              {!isYoutube && (
                 <>
                   {videoFileUrl ? (
                     <FrameSelector
