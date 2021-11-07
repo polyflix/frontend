@@ -14,8 +14,6 @@ import {
   Skeleton,
   Stack,
   Typography,
-  useMediaQuery,
-  useTheme,
   Link,
   Tooltip,
 } from '@mui/material'
@@ -93,9 +91,6 @@ interface Props {
 }
 
 export const VideoSliderCard = ({ video }: Props) => {
-  const th = useTheme()
-  const ltsm: boolean = useMediaQuery(th.breakpoints.down('sm'))
-
   return (
     <VideoCardRootStyle>
       {!video ? (

@@ -87,7 +87,10 @@
       }
     },
     "delete": {
-      "action": { "cancel": "Annuler", "delete": "Supprimer" },
+      "action": {
+        "cancel": "Annuler",
+        "delete": "Supprimer"
+      },
       "modal": {
         "title": "Êtes-vous sûr ?",
         "description": "Votre quiz sera supprimé ainsi que toutes les tentatives des utilisateurs associés."

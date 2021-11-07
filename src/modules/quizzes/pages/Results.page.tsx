@@ -2,7 +2,7 @@ import { Divider, Pagination, Stack } from '@mui/material'
 import { Box } from '@mui/system'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useParams } from 'react-router'
+import { useParams } from 'react-router-dom'
 
 import { ItemsPerPage } from '@core/components/Filters/ItemsPerPage.component'
 import { Header } from '@core/components/Header/Header.component'
