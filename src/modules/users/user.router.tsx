@@ -1,4 +1,3 @@
-import { useEffect } from 'react'
 import { Route, Switch, useRouteMatch } from 'react-router-dom'
 
 import { NotFoundPage } from '@core/pages/404.page'
@@ -13,8 +12,6 @@ import { EditProfilePage } from './pages/UpdateProfile/UpdateProfile.page'
 
 const ProfileRouter = () => {
   const { url } = useRouteMatch()
-
-  useEffect(() => console.log('url', url), [url])
 
   return (
     <ProfilePage>

@@ -81,7 +81,7 @@ export const DashboardSidebar = () => {
               </Link>
             </Box>
 
-            {Object.entries(getSidebarSections(t)).map(([section, items]) => (
+            {Object.entries(getSidebarSections()).map(([section, items]) => (
               <Section key={section} title={section} items={items} />
             ))}
 
