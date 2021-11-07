@@ -63,7 +63,7 @@ export const Recap = ({ quizz }: PlayComponentProps) => {
                     <Icon
                       size={18}
                       name={
-                        isSelected ? 'bi:check-circle-fill' : 'bi:check-circle'
+                        isSelected ? 'bi:check-circle-fill' : 'bi:x-circle-fill'
                       }
                     />
                     <Typography
