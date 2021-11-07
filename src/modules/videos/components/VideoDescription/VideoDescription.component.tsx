@@ -84,7 +84,9 @@ export const VideoDetails = ({ video }: VideoDetailsProps) => {
                   >
                     <Button
                       startIcon={<Icon name="eva:heart-fill" />}
-                      color="primary"
+                      sx={{
+                        color: likeDisabled ? 'grey.700' : 'primary',
+                      }}
                       onClick={() => {
                         if (!likeDisabled) like()
                       }}
