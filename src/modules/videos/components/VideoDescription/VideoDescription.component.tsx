@@ -24,7 +24,6 @@ import { Video } from '@videos/models/video.model'
 
 import { UserAvatar } from '@users/components/UserAvatar/UserAvatar.component'
 
-import { ActionButton } from './VideoDescriptionActionButton/VideoDescriptionActionButton.component'
 import { VideoDescriptionMenu } from './VideoDescriptionMenu/VideoDescriptionMenu.component'
 
 type VideoDetailsProps = {
