@@ -23,9 +23,20 @@ export const quizzesAttemptsApi = api.injectEndpoints({
       { id: string; filters: QuizzAttemptFilters }
     >({
       query: ({ filters, id }) =>
-        `${Endpoint.Quizzes}/${id}/attempts${filterBuilder.createFilters(
-          filters
-        )}`,
+        `${Endpoint.Quizzes}/${id}/${
+          Endpoint.Attempts
+        }${filterBuilder.createFilters(filters)}`,
+      providesTags: (result) =>
+        // Is result available ?
+        result
+          ? [
+              ...result.data.map(
+                ({ id }) => ({ type: Endpoint.Attempts, id } as const)
+              ),
+              { type: Endpoint.Attempts, id: 'LIST' },
+            ]
+          : // An error occured, but we still want to refetch this query when the tag is invalidated.
+            [{ type: Endpoint.Attempts, id: 'LIST' }],
     }),
     /**
      * Submit an attempt mutation
@@ -41,7 +52,7 @@ export const quizzesAttemptsApi = api.injectEndpoints({
       }),
       // Invalidates all Quizz-type queries providing the LIST id - after all, depending of the sort order
       // that newly created quizz could show up in any lists.
-      invalidatesTags: [{ type: Endpoint.Quizzes, id: 'LIST' }],
+      invalidatesTags: [{ type: Endpoint.Attempts, id: 'LIST' }],
     }),
   }),
 })
