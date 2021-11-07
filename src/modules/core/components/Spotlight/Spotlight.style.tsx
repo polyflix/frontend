@@ -4,7 +4,6 @@ import { alpha, styled } from '@mui/system'
 export const Search = styled('div')(({ theme }) => ({
   position: 'relative',
   borderRadius: theme.shape.borderRadius,
-  backgroundColor: theme.palette.grey[200],
   '&:hover': {
     backgroundColor: alpha(theme.palette.grey[400], 0.5),
   },
@@ -28,6 +27,8 @@ export const SearchIconWrapper = styled('div')(({ theme }) => ({
 }))
 
 export const SearchField = styled(TextField)(({ theme }) => ({
+  border: `1px solid ${theme.palette.divider}`,
+  borderRadius: theme.shape.borderRadius,
   color: theme.palette.grey[900],
   '& .MuiFilledInput-root': {
     borderRadius: theme.shape.borderRadius,

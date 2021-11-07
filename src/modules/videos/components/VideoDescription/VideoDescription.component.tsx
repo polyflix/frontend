@@ -70,15 +70,23 @@ export const VideoDetails = ({ video }: VideoDetailsProps) => {
               >
                 <Stack spacing={0}>
                   <Typography variant="h4">{video?.title}</Typography>
-                  <Tooltip title={stringToLongDate(video?.createdAt)}>
+                  <Tooltip
+                    title={
+                      (video?.createdAt &&
+                        stringToLongDate(video?.createdAt)) ||
+                      ''
+                    }
+                  >
                     <Typography variant="caption">
-                      {stringToShortDate(video?.createdAt)}
+                      {(video?.createdAt &&
+                        stringToShortDate(video?.createdAt)) ||
+                        ''}
                     </Typography>
                   </Tooltip>
                 </Stack>
                 <Stack spacing={2} direction="row">
                   <Tooltip
-                    title={t('slug.details.tooltips.likes', {
+                    title={t<string>('slug.details.tooltips.likes', {
                       count: likeNumber,
                     })}
                   >
@@ -97,7 +105,7 @@ export const VideoDetails = ({ video }: VideoDetailsProps) => {
                     </Button>
                   </Tooltip>
                   <Tooltip
-                    title={t('slug.details.tooltips.views', {
+                    title={t<string>('slug.details.tooltips.views', {
                       count: video?.views,
                     })}
                   >
@@ -118,7 +126,17 @@ export const VideoDetails = ({ video }: VideoDetailsProps) => {
                       {video?.views}
                     </Box>
                   </Tooltip>
-                  <VideoDescriptionMenu />
+                  <Box
+                    component="span"
+                    sx={{
+                      p: 1,
+                      color: 'secondary.main',
+                      display: 'flex',
+                      alignItems: 'center',
+                    }}
+                  >
+                    <VideoDescriptionMenu />
+                  </Box>
                 </Stack>
               </Stack>
               <Divider variant="middle" />
@@ -132,10 +150,9 @@ export const VideoDetails = ({ video }: VideoDetailsProps) => {
                   to="#"
                 >
                   <Stack spacing={1} direction="row" alignItems="center">
-                    {/* TODO user */}
                     <Avatar
                       alt={video.publishedBy?.displayName}
-                      src="https://icatcare.org/app/uploads/2018/07/Thinking-of-getting-a-cat.png"
+                      src={video.publishedBy?.avatar}
                     />
                     <Typography variant="caption">
                       {video.publishedBy?.displayName}
