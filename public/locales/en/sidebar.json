@@ -12,6 +12,7 @@
   "items": {
     "home": "Home",
     "videos": "Videos",
-    "quizzes": "Quizzes"
+    "quizzes": "Quizzes",
+    "collections": "Collections"
   }
 }

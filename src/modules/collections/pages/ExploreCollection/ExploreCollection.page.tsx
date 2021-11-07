@@ -1,31 +1,24 @@
-import {
-  Divider,
-  Stack,
-  Grid,
-  Pagination,
-  Box,
-  Typography,
-} from '@mui/material'
+import { Divider, Stack, Grid, Pagination, Box } from '@mui/material'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { ItemsPerPage } from '@core/components/Filters/ItemsPerPage.component'
+import { Header } from '@core/components/Header/Header.component'
 import { Page } from '@core/components/Page/Page.component'
 import { Searchbar } from '@core/components/Searchbar/Searchbar.component'
+import { Visibility } from '@core/models/content.model'
 import { buildSkeletons } from '@core/utils/gui.utils'
 
-import { useAuth } from '@auth/hooks/useAuth.hook'
-
-import { CollectionCard } from '@collections/components/CollectionCard/CollectionCard.component'
-import { CollectionCardSkeleton } from '@collections/components/CollectionCardSkeleton/CollectionCardSkeleton.component'
 import { buildCollectionSearch } from '@collections/helpers/search.helper'
 import { Collection } from '@collections/models/collection.model'
 import { useGetCollectionsQuery } from '@collections/services/collection.service'
 import { CollectionFilters } from '@collections/types/filters.type'
 
-export const ProfileCollectionsPage = () => {
-  const { t } = useTranslation('users')
-  const { user } = useAuth()
+import { CollectionCard } from '../../components/CollectionCard/CollectionCard.component'
+import { CollectionCardSkeleton } from '../../components/CollectionCardSkeleton/CollectionCardSkeleton.component'
+
+export const ExploreCollectionPage = () => {
+  const { t } = useTranslation('collections')
   const [filters, setFilters] = useState<CollectionFilters>({
     sort: [{ field: 'createdAt', order: 'DESC' }],
     page: 1,
@@ -33,18 +26,20 @@ export const ProfileCollectionsPage = () => {
   })
 
   const { data, isLoading, isFetching } = useGetCollectionsQuery({
-    join: [{ field: 'elements', select: ['type'] }, { field: 'user' }],
-    'user.id': user!.id,
+    join: [{ field: 'elements', select: ['type'] }],
+    visibility: Visibility.PUBLIC,
+    draft: false,
     ...filters,
   })
 
   const skeletons = buildSkeletons(3)
 
   return (
-    <Page isLoading={isLoading} title={t('explore.title')} sx={{ mt: 3 }}>
-      <Typography variant="h4" sx={{ mb: 2 }}>
-        {t('profile.tabs.collections.content.title')}
-      </Typography>
+    <Page isLoading={isLoading} title={t('explore.title')}>
+      <Header
+        title={t('explore.title')}
+        description={t('explore.description')}
+      />
 
       <Divider sx={{ my: 3 }} />
 

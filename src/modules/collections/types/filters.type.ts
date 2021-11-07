@@ -1,13 +1,12 @@
-import { Visibility } from '@core/models/content.model'
-import { PaginationFilter } from '@core/types/filters.type'
+import { QueryFilter as NjxQueryFilter } from '@nestjsx/crud-request'
 
-export interface CollectionFilters extends PaginationFilter {
-  order?: string
-  slug?: string
-  title?: string
-  publisherId?: string
-  exact?: boolean
-  tags?: string
+import { Visibility } from '@core/models/content.model'
+import { QueryFilter } from '@core/types/nestjsx-crud.type'
+
+export interface CollectionFilters extends QueryFilter {
   visibility?: Visibility
+  keepHighestScore?: boolean
   draft?: boolean
+  name?: NjxQueryFilter
+  'user.id'?: string
 }
