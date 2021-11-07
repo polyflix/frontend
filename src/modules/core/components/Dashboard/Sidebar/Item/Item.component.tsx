@@ -40,9 +40,10 @@ export const Item = ({ item, isSubItem = false }: Props) => {
     <ItemStyle
       open={open}
       component={RouterLink}
-      to={item.href}
+      to={item.disabled ? '#' : item.href}
       sx={{
         ...(isActiveRoot && activeRootStyle),
+        ...(item.disabled && { color: 'text.disabled' }),
       }}
     >
       <ItemIconStyle

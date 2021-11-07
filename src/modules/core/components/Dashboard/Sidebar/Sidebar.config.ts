@@ -13,6 +13,7 @@ export interface SidebarItem {
   section?: SidebarSection
   items?: SidebarItem[]
   condition?: boolean
+  disabled?: boolean
 }
 
 const sidebarConfiguration: SidebarItem[] = [
@@ -44,10 +45,12 @@ const sidebarConfiguration: SidebarItem[] = [
         title: 'actions.create',
         href: '/videos/create',
       },
-      {
-        title: 'actions.history',
-        href: '/videos/history',
-      },
+      // Not implemented for the moment, but will be soon
+      // {
+      //   title: 'actions.history',
+      //   href: '/videos/history',
+      //   disabled: true,
+      // },
     ],
   },
   {
