@@ -1,5 +1,5 @@
-import { Button, Stack, Typography, useMediaQuery } from '@mui/material'
-import { Box, useTheme } from '@mui/system'
+import { Button, Stack, Typography } from '@mui/material'
+import { Box } from '@mui/system'
 import { useTranslation } from 'react-i18next'
 import Lottie from 'react-lottie'
 import { Link as RouterLink } from 'react-router-dom'
@@ -10,14 +10,12 @@ import { Role } from '@core/types/roles.type'
 import animationData from '../../../../assets/lotties/empty-box.json'
 
 interface Props {
-  variant?: 'videos' | 'quizzes' | 'collections'
+  variant?: 'videos' | 'quizzes' | 'collections' | 'links'
   link?: string
 }
 
 export const NoData = ({ link, variant }: Props) => {
   const { t } = useTranslation('common')
-  const th = useTheme()
-  const ltsm: boolean = useMediaQuery(th.breakpoints.down('md'))
   const { hasRoles } = useRoles()
   const requiredRoles = [Role.Teacher, Role.Admin]
 
@@ -32,7 +30,7 @@ export const NoData = ({ link, variant }: Props) => {
 
   return (
     <Stack
-      sx={{ width: ltsm ? '100vw' : `calc(100vw - 280px)` }}
+      sx={{ width: '100%' }}
       direction="column"
       justifyContent="center"
       alignItems="center"
@@ -61,7 +59,7 @@ export const NoData = ({ link, variant }: Props) => {
         </>
       )}
       <Box>
-        <Lottie options={defaultOptions} height={300} width={300} />
+        <Lottie options={defaultOptions} height={200} width={200} />
       </Box>
     </Stack>
   )

@@ -45,6 +45,20 @@
         "content": {
           "title": "Mes cours"
         }
+      },
+      "links": {
+        "title": "Liens",
+        "content": {
+          "list": {
+            "menu": {
+              "actions": {
+                "edit": "Editer le lien",
+                "delete": "Supprimer le link"
+              }
+            },
+            "clipboard": "URL copiée dans le presse-papiers !"
+          }
+        }
       }
     }
   }

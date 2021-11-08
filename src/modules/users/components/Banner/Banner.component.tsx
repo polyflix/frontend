@@ -24,6 +24,7 @@ const BannerTabs = () => {
       '/users/profile/collections',
       '/users/profile/groups',
       '/users/profile/quizzes',
+      '/users/profile/links',
     ],
     exact: true,
   })
@@ -78,6 +79,12 @@ const BannerTabs = () => {
         label={t('profile.tabs.quizzes.title')}
         value="/users/profile/quizzes"
         to="/users/profile/quizzes"
+        component={RouterLink}
+      />
+      <Tab
+        label={t('profile.tabs.links.title')}
+        value="/users/profile/links"
+        to="/users/profile/links"
         component={RouterLink}
       />
     </Tabs>
