@@ -1,2 +1,0 @@
-export const SYNC_RATE_LIMITER_MAX = 25000;
-export const SYNC_RATE_LIMITER_MIN = 10000;
