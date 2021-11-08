@@ -22,6 +22,7 @@ import { Element } from '@core/models/element.model'
 import { Quizz } from '@quizzes/models/quizz.model'
 
 import { UserAvatar } from '@users/components/UserAvatar/UserAvatar.component'
+import { User } from '@users/models/user.model'
 
 import {
   getFeedbackColor,
@@ -72,7 +73,7 @@ export const QuizzCard = ({
    */
   const buildPublisher = () => (
     <Tooltip title={`${quizz.user?.firstName} ${quizz.user?.lastName}`}>
-      <UserAvatar variant="circular" user={quizz.user!} />
+      <UserAvatar variant="circular" user={quizz.user as User} />
     </Tooltip>
   )
 
