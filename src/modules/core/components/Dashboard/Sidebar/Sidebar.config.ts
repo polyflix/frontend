@@ -102,7 +102,12 @@ const sidebarConfiguration: SidebarItem[] = [
     title: 'items.links',
     section: SidebarSection.MANAGEMENT,
     icon: 'eva:link-outline',
+    roles: [Role.Teacher, Role.Admin],
     items: [
+      {
+        title: 'actions.list',
+        href: '/users/profile/links',
+      },
       {
         title: 'actions.create',
         href: '/links/create',

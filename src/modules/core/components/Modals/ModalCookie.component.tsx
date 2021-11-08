@@ -2,20 +2,6 @@ import { Button, Modal, Paper, Typography } from '@mui/material'
 import * as React from 'react'
 import { useTranslation } from 'react-i18next'
 
-const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: { xs: '90%', md: '50%' },
-  p: 4,
-  outline: 'none',
-}
-
-const styleButton = {
-  textAlign: 'right',
-}
-
 function setCookie(cookieName: string, cookieValue: string, expDays: number) {
   const date = new Date()
   date.setTime(date.getTime() + expDays * 24 * 60 * 60 * 1000)
@@ -54,14 +40,35 @@ export default function ModalCookies() {
       aria-labelledby="modal-title"
       aria-describedby="modal-description"
     >
-      <Paper sx={style}>
+      <Paper
+        sx={{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          width: { xs: '90%', md: '50%' },
+          p: 4,
+          outline: 'none',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'flex-start',
+        }}
+        variant="outlined"
+      >
         <Typography id="modal-title" variant="h6" component="h2">
           Polyflix
         </Typography>
         <Typography id="modal-description" sx={{ mt: 2 }}>
           {t('description')}
         </Typography>
-        <Button sx={styleButton} onClick={handleClose}>
+        <Button
+          sx={{
+            textAlign: 'right',
+            alignSelf: 'end',
+            mt: 2,
+          }}
+          onClick={handleClose}
+        >
           {t('accept')}
         </Button>
       </Paper>

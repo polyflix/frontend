@@ -48,6 +48,20 @@
         "content": {
           "title": "My courses"
         }
+      },
+      "links": {
+        "title": "Links",
+        "content": {
+          "list": {
+            "menu": {
+              "actions": {
+                "edit": "Edit link",
+                "delete": "Delete link"
+              }
+            },
+            "clipboard": "URL copied to clipboard !"
+          }
+        }
       }
     }
   }

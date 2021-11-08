@@ -22,5 +22,9 @@
       },
       "errors": {}
     }
+  },
+  "noData": {
+    "description": "Si vous avez les droits nécessaires vous pouvez créer un lien ci-dessous",
+    "buttonText": "Créer un lien"
   }
 }

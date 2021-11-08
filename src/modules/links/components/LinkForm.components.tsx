@@ -1,5 +1,5 @@
 import { LoadingButton } from '@mui/lab'
-import { Stack, TextField, Typography } from '@mui/material'
+import { TextField, Typography, Grid } from '@mui/material'
 import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { useHistory } from 'react-router-dom'
@@ -12,6 +12,7 @@ import {
   getCommonTextFieldProps,
 } from '@core/helpers/form.helper'
 import { Visibility } from '@core/models/content.model'
+import { Element } from '@core/models/element.model'
 import { SnackbarService } from '@core/services/snackbar.service'
 import { CrudAction } from '@core/types/http.type'
 
@@ -23,7 +24,7 @@ import {
 import { ILinkForm } from '@links/types/form.type'
 
 interface Props {
-  link?: Link
+  link?: Element<Link>
   isUpdate: boolean
 }
 
@@ -46,8 +47,7 @@ export const LinkForm = ({ link, isUpdate }: Props) => {
     defaultValues: {
       visibility: link?.visibility || Visibility.PUBLIC,
       name: link?.name,
-      description: link?.description,
-      url: link?.url,
+      url: link?.data.url,
       draft: link?.draft || false,
     },
   })
@@ -70,7 +70,7 @@ export const LinkForm = ({ link, isUpdate }: Props) => {
         Endpoint.Links
       )
 
-      history.push('/users/profile')
+      history.push('/users/profile/links')
     } catch (e: any) {
       snackbarService.createSnackbar(e.data.statusText, { variant: 'error' })
     }
@@ -81,8 +81,8 @@ export const LinkForm = ({ link, isUpdate }: Props) => {
       <Typography sx={{ mb: 3 }} variant="h4">
         {t('forms.create-update.title.metadata')}
       </Typography>
-      <Stack spacing={4}>
-        <Stack direction="row" spacing={2}>
+      <Grid container spacing={2}>
+        <Grid item xs={12} sm={6}>
           <TextField
             error={Boolean(errors.name)}
             helperText={errors.name?.message}
@@ -95,6 +95,8 @@ export const LinkForm = ({ link, isUpdate }: Props) => {
               },
             })}
           />
+        </Grid>
+        <Grid item xs={12} sm={6}>
           <TextField
             error={Boolean(errors.url)}
             helperText={errors.url?.message}
@@ -107,33 +109,17 @@ export const LinkForm = ({ link, isUpdate }: Props) => {
               },
             })}
           />
-        </Stack>
-        <Stack>
-          <TextField
-            error={Boolean(errors.description)}
-            helperText={errors.description?.message}
-            multiline
-            label={t('forms.create-update.placeholder.description')}
-            {...getCommonTextFieldProps()}
-            {...register('description', {
-              required: {
-                value: true,
-                message: t(
-                  'forms.create-update.validation.description.required'
-                ),
-              },
-            })}
-          />
-        </Stack>
-
-        <LoadingButton {...getCommonSubmitButtonProps(isSubmitting)}>
-          {t(
-            `forms.create-update.placeholder.submit.${
-              isUpdate ? 'update' : 'create'
-            }`
-          )}
-        </LoadingButton>
-      </Stack>
+        </Grid>
+        <Grid item xs={12}>
+          <LoadingButton {...getCommonSubmitButtonProps(isSubmitting)}>
+            {t(
+              `forms.create-update.placeholder.submit.${
+                isUpdate ? 'update' : 'create'
+              }`
+            )}
+          </LoadingButton>
+        </Grid>
+      </Grid>
     </form>
   )
 }
