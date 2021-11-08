@@ -1,11 +1,9 @@
 import { Link, Paper, Stack, Typography } from '@mui/material'
-import { StatusCodes } from 'http-status-codes'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link as RouterLink, useParams } from 'react-router-dom'
 
 import { Page } from '@core/components/Page/Page.component'
-import { NotFoundPage } from '@core/pages/404.page'
 
 import { useAuth } from '@auth/hooks/useAuth.hook'
 
@@ -70,16 +68,17 @@ export const PlayQuizzPage = () => {
 
   // handle errors
   const error: any = quizzError || attemptsError
-  if (error && error.status === StatusCodes.NOT_FOUND) {
-    return <NotFoundPage isPage={false} />
-  }
 
   // Is the user has remaining attempts for this quizz ?
   const hasRemainingAttempts =
     (data?.data.allowedRetries || 1) - (userAttempts?.total || 0) > 0
   const commonProps: PlayComponentProps = { quizz: data! }
   return (
-    <Page title={data?.name} isLoading={isLoading || isAttemptsLoading}>
+    <Page
+      error={error}
+      title={data?.name}
+      isLoading={isLoading || isAttemptsLoading}
+    >
       {hasRemainingAttempts || step === Step.End ? (
         <>
           {step === Step.Onboard && <Onboard {...commonProps} />}
