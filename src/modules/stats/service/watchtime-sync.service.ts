@@ -11,9 +11,6 @@ export const statsApi = api.injectEndpoints({
         method: 'POST',
         body,
       }),
-      invalidatesTags: (_, _1, { videoId }) => [
-        { type: Endpoint.Videos, videoId },
-      ],
     }),
     likeVideo: builder.mutation<void, string>({
       query: (videoId: string) => ({
