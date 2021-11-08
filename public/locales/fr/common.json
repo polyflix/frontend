@@ -32,11 +32,5 @@
     "video": "Vidéo",
     "quizz": "Quizz"
   },
-  "uploadInProgress": "Merci de patienter, vos fichiers sont en train d'être envoyés...",
-  "notImplemented": {
-    "title": "Non implémentée",
-    "content": "Cette page n'est pas implémentée pour le moment",
-    "cta": "Aller à la page d'accueil"
-  },
-  "soon": "Cette fonctionnalité n'est pas encore disponible, revenez plus tard"
+  "uploadInProgress": "Merci de patienter, vos fichiers sont en train d'être envoyés..."
 }
