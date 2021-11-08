@@ -2,6 +2,7 @@ import { Stack, Typography } from '@mui/material'
 import { PropsWithChildren } from 'react'
 import { Link as RouterLink } from 'react-router-dom'
 
+import { BugReport } from '@core/components/BugReport/BugReport.component'
 import { LanguageButton } from '@core/components/LanguageButton/LanguageButton.component'
 import { Logo } from '@core/components/Logo/Logo.component'
 import { MHidden } from '@core/components/MHidden/MHidden.component'
@@ -22,6 +23,7 @@ export const AuthLayout = ({ children }: PropsWithChildren<{}>) => {
           </Typography>
         </MHidden>
         <LanguageButton />
+        <BugReport />
         <ThemeButton />
       </Stack>
     </HeaderBaseStyle>
