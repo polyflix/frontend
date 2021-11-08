@@ -25,7 +25,7 @@ export const ProfilePage: React.FC<PropsWithChildren<{}>> = ({ children }) => {
       <Typography sx={{ mb: 2 }} align="left" variant="h3">
         {t('profile.title.view') + user?.firstName}
       </Typography>
-      <ProfileBanner user={user!}></ProfileBanner>
+      <ProfileBanner user={user!} />
       {children}
     </Page>
   )

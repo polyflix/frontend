@@ -45,7 +45,7 @@ export const CollectionSlugPage = () => {
   )
 
   const { data, isLoading, error } = useGetCollectionQuery({
-    id: slug,
+    slug: slug,
     accessKey,
     filters,
   })

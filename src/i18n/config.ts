@@ -27,6 +27,7 @@ i18n
       'quizzes',
       'users',
       'date',
+      'courses',
       'links',
       'collections',
     ],

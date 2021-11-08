@@ -1,4 +1,4 @@
-import { Typography, Box, Stack, Link } from '@mui/material'
+import { Box, Link, Stack, Typography } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 import { Link as RouterLink } from 'react-router-dom'
 
@@ -9,7 +9,7 @@ import { useAuth } from '@auth/hooks/useAuth.hook'
 
 import { Collection } from '@collections/models/collection.model'
 
-import { RootStyle, CardFooterStyle } from './CollectionCard.style'
+import { CardFooterStyle, RootStyle } from './CollectionCard.style'
 import { CollectionCardMenu } from './CollectionCardMenu/CollectionCardMenu.component'
 
 type CollectionCardProps = {
@@ -25,7 +25,8 @@ export const CollectionCard = ({ collection }: CollectionCardProps) => {
   }
 
   return (
-    <RootStyle variant="outlined" draft={collection.draft}>
+    <RootStyle variant="outlined" draft={(!!collection.draft).toString()}>
+      {/** The thing with collection.draft is meant to be here because DOM cannot parse it if it's not a string **/}
       <Link
         component={RouterLink}
         to={`/collections/${collection.slug}`}
@@ -50,23 +51,25 @@ export const CollectionCard = ({ collection }: CollectionCardProps) => {
           </Box>
         </Stack>
       </Link>
-      <CardFooterStyle className="card-footer">
-        <Stack
-          direction="row"
-          justifyContent="space-between"
-          alignItems="center"
-          spacing={0}
-        >
-          <Typography variant="body2" sx={{ ...draftStyle }}>
-            {t('explore.collectionCard.footer.content', {
-              count: collection.elements.length,
-            })}
-          </Typography>
-          {collection?.user?.id === user?.id && (
-            <CollectionCardMenu collection={collection} />
-          )}
-        </Stack>
-      </CardFooterStyle>
+      {collection.elements && (
+        <CardFooterStyle className="card-footer">
+          <Stack
+            direction="row"
+            justifyContent="space-between"
+            alignItems="center"
+            spacing={0}
+          >
+            <Typography variant="body2" sx={{ ...draftStyle }}>
+              {t('explore.collectionCard.footer.content', {
+                count: collection.elements.length,
+              })}
+            </Typography>
+            {collection?.user?.id === user?.id && (
+              <CollectionCardMenu collection={collection} />
+            )}
+          </Stack>
+        </CardFooterStyle>
+      )}
     </RootStyle>
   )
 }

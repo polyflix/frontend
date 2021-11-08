@@ -8,7 +8,7 @@ export const CollectionPanel = () => {
   const query = useQuery() as URLSearchParams
 
   const { data: collection } = useGetCollectionQuery({
-    id: query.get('c')!,
+    slug: query.get('c')!,
     filters: {
       join: [{ field: 'elements' }],
     },

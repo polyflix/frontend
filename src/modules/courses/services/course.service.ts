@@ -13,15 +13,18 @@ import { ICourseForm } from '@courses/types/form.type'
 const filterBuilder = Container.get<CrudFilters<CoursesFilters>>(CrudFilters)
 
 // Inject Courses endpoints to the core API
-export const CoursesApi = api.injectEndpoints({
+export const coursesApi = api.injectEndpoints({
   endpoints: (builder) => ({
     /**
      * Get Course by id query configuration.
      */
-    getCourse: builder.query<Course, { id: string; filters?: CoursesFilters }>({
-      providesTags: (_0, _1, { id }) => [{ type: Endpoint.Courses, id }],
-      query: ({ id, filters }) => {
-        return `${Endpoint.Courses}/${id}${filterBuilder.createFilters(
+    getCourse: builder.query<
+      Course,
+      { slug: string; filters?: CoursesFilters }
+    >({
+      providesTags: (_0, _1, { slug }) => [{ type: Endpoint.Courses, slug }],
+      query: ({ slug, filters }) => {
+        return `${Endpoint.Courses}/${slug}${filterBuilder.createFilters(
           filters || {}
         )}`
       },
@@ -52,7 +55,6 @@ export const CoursesApi = api.injectEndpoints({
           : // An error occured, but we still want to refetch this query when the tag is invalidated.
             [{ type: Endpoint.Courses, id: 'LIST' }],
     }),
-
     /**
      * Add a Course mutation
      */
@@ -70,17 +72,19 @@ export const CoursesApi = api.injectEndpoints({
     /**
      * Update Course mutation
      */
-    updateCourse: builder.mutation<Course, { id: string; body: ICourseForm }>({
-      query: ({ id, body }) => ({
-        url: `${Endpoint.Courses}/${id}`,
-        method: 'PUT',
-        body,
-      }),
-      // Invalidates all queries that subscribe to this Course `id` only.
-      // In this case, `getCourse` will be re-run. `getCourses` *might*  rerun, if this id was under its results.
-      invalidatesTags: (result, _1, { id }) =>
-        result ? [{ type: Endpoint.Courses, id }] : [],
-    }),
+    updateCourse: builder.mutation<Course, { slug: string; body: ICourseForm }>(
+      {
+        query: ({ slug, body }) => ({
+          url: `${Endpoint.Courses}/${slug}`,
+          method: 'PUT',
+          body,
+        }),
+        // Invalidates all queries that subscribe to this Course `id` only.
+        // In this case, `getCourse` will be re-run. `getCourses` *might*  rerun, if this id was under its results.
+        invalidatesTags: (result, _1, { slug }) =>
+          result ? [{ type: Endpoint.Courses, slug }] : [],
+      }
+    ),
 
     /**
      * Delete Course mutation
@@ -103,4 +107,4 @@ export const {
   useAddCourseMutation,
   useUpdateCourseMutation,
   useDeleteCourseMutation,
-} = CoursesApi
+} = coursesApi

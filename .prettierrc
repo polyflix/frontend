@@ -13,6 +13,7 @@
     "^@collections/(.*)$",
     "^@courses/(.*)$",
     "^@users/(.*)$",
+    "^@courses/(.*)$",
     "^@theme/(.*)$",
     "^@assets/(.*)$",
     "^[./]"

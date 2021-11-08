@@ -1,0 +1,55 @@
+{
+  "explore": {
+    "title": "Explore our courses",
+    "bodyTitle": "Explore our <colored>courses</colored>",
+    "description": "Discover something new with our courses, through videos, quizzes and external resources."
+  },
+  "collections": "Collections",
+  "introduction": "Getting started",
+  "noData": "No data available here",
+  "courseCard": {
+    "footerElements": "{{count}} collection(s) in this course"
+  },
+  "form": {
+    "upsert": {
+      "title": {
+        "status": "Statut",
+        "create": "Create a new course",
+        "update": "Update your course {{course}}",
+        "metadata": "General informations",
+        "collections": "Collections"
+      },
+      "description": {
+        "create": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit quam excepturi eligendi, ratione error reiciendis ab earum dolore, eum doloribus in ut quae suscipit exercitationem necessitatibus sint. Autem, beatae deserunt.",
+        "update": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit quam excepturi eligendi, ratione error reiciendis ab earum dolore, eum doloribus in ut quae suscipit exercitationem necessitatibus sint. Autem, beatae deserunt."
+      },
+      "label": {
+        "name": "Name",
+        "description": "Description",
+        "content": "Content",
+        "id": "Unique identifier"
+      },
+      "helper": {
+        "name": "The name of the course, maximum 64 characters",
+        "description": "A short description of what the course is about",
+        "content": "This is a whole document where you can write a lof of things (might be a WYSIWYG someday)"
+      },
+      "error": {
+        "requiredField": "The field {{field}} is required",
+        "minLength": "This field requires at least {{count}} characters",
+        "maxLength": "This field requires at most {{count}} characters"
+      },
+      "fields": {
+        "name": "name",
+        "description": "description",
+        "content": "content"
+      },
+      "submit": "Submit",
+      "update": "Update",
+      "deleteChoice": "Remove this choice",
+      "addCollection": "Attach a collection",
+      "search": "Search a collection",
+      "seeCollection": "See this collection"
+    }
+  }
+}
