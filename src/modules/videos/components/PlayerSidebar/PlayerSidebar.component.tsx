@@ -18,6 +18,7 @@ import { ease } from '@core/utils/transition'
 
 import { Video } from '@videos/models/video.model'
 
+import { AttachmentsPanel } from './AttachmentsPanel/AttachmentsPanel.component'
 import { TabPanelStyle, RootStyle } from './PlayerSidebar.style'
 import { SubtitlePanel } from './SubtitlesPanel/SubtitlesPanel.component'
 
@@ -90,8 +91,12 @@ export const PlayerSidebar = ({ video, playerRef }: PlayerSidebarProps) => {
               >
                 <Tab label={t('slug.sidebar.tabs.subtitles.title')} value="1" />
                 <Tab
-                  label={t('slug.sidebar.tabs.notes.title')}
+                  label={t('slug.sidebar.tabs.attachments.title')}
                   value="2"
+                />
+                <Tab
+                  label={t('slug.sidebar.tabs.notes.title')}
+                  value="3"
                   disabled
                 />
               </Tabs>
@@ -100,6 +105,9 @@ export const PlayerSidebar = ({ video, playerRef }: PlayerSidebarProps) => {
               {video && <SubtitlePanel video={video} playerRef={playerRef} />}
             </TabPanelStyle>
             <TabPanelStyle value="2">
+              {video && <AttachmentsPanel attachments={video.attachments} />}
+            </TabPanelStyle>
+            <TabPanelStyle value="3">
               <AutoScrollBox />
             </TabPanelStyle>
           </TabContext>
