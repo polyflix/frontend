@@ -19,13 +19,13 @@ export const collectionsApi = api.injectEndpoints({
      */
     getCollection: builder.query<
       Collection,
-      { id: string; filters?: CollectionFilters }
+      { id: string; filters?: CollectionFilters; accessKey?: string }
     >({
       providesTags: (_0, _1, { id }) => [{ type: Endpoint.Collections, id }],
-      query: ({ id, filters }) => {
+      query: ({ id, filters, accessKey }) => {
         return `${Endpoint.Collections}/${id}${filterBuilder.createFilters(
           filters || {}
-        )}`
+        )}${accessKey ? `&accessKey=${accessKey}` : '&join=user'}`
       },
     }),
 
@@ -59,7 +59,7 @@ export const collectionsApi = api.injectEndpoints({
      */
     addCollection: builder.mutation<Collection, ICollectionForm>({
       query: (body: ICollectionForm) => ({
-        url: Endpoint.Collections,
+        url: `${Endpoint.Collections}?join=passwords`,
         method: 'POST',
         body,
       }),
@@ -76,7 +76,7 @@ export const collectionsApi = api.injectEndpoints({
       { slug: string; body: ICollectionForm }
     >({
       query: ({ slug, body }) => ({
-        url: `${Endpoint.Collections}/${slug}`,
+        url: `${Endpoint.Collections}/${slug}?join=passwords`,
         method: 'PUT',
         body,
       }),

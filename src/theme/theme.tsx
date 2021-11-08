@@ -1,3 +1,5 @@
+import { LocalizationProvider } from '@mui/lab'
+import AdapterDayJs from '@mui/lab/AdapterDayjs'
 import { PaletteMode } from '@mui/material'
 import CssBaseline from '@mui/material/CssBaseline'
 import {
@@ -6,10 +8,13 @@ import {
   ThemeOptions,
   ThemeProvider,
 } from '@mui/material/styles'
-import { createContext } from 'react'
-import { useState } from 'react'
-import { useEffect } from 'react'
-import { PropsWithChildren, useMemo } from 'react'
+import {
+  createContext,
+  PropsWithChildren,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react'
 
 import { breakpoints } from './breakpoints'
 import { ComponentsOverrides } from './overrides'
@@ -59,12 +64,14 @@ export const ThemeConfig: React.FC = ({ children }: PropsWithChildren<{}>) => {
 
   return (
     <ColorModeContext.Provider value={{ mode, ...colorMode }}>
-      <StyledEngineProvider injectFirst>
-        <ThemeProvider theme={theme}>
-          <CssBaseline />
-          {children}
-        </ThemeProvider>
-      </StyledEngineProvider>
+      <LocalizationProvider dateAdapter={AdapterDayJs}>
+        <StyledEngineProvider injectFirst>
+          <ThemeProvider theme={theme}>
+            <CssBaseline />
+            {children}
+          </ThemeProvider>
+        </StyledEngineProvider>
+      </LocalizationProvider>
     </ColorModeContext.Provider>
   )
 }

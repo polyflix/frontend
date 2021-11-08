@@ -9,13 +9,13 @@ import { Link } from '@links/models/link.model'
 
 import { User } from '@users/models/user.model'
 
+import { Password } from './password.model'
+
 export interface Collection extends ContentModel {
   description: string
   name: string
   user?: Partial<User>
   slug: string
   elements: Element<Link | Video | Quizz>[]
-
-  // passwords: AccessPassword[]
-  // tags: Tag[]
+  passwords: Password[]
 }
