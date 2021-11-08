@@ -58,9 +58,9 @@ export const ProfileLinksPage = () => {
   const skeletons = buildSkeletons(3)
 
   return (
-    <Page isLoading={isLoading} title={t('explore.title')} sx={{ mt: 3 }}>
+    <Page isLoading={isLoading} sx={{ mt: 3 }}>
       <Typography variant="h4" sx={{ mb: 2 }}>
-        {t('profile.tabs.collections.content.title')}
+        title{t('profile.tabs.links.content.title')}
       </Typography>
 
       <Divider sx={{ my: 3 }} />
@@ -82,7 +82,7 @@ export const ProfileLinksPage = () => {
               },
             })
           }}
-          label={t('search')}
+          label={t('navbar.actions.search.fast', { ns: 'common' })}
         />
         <ItemsPerPage onChange={(limit) => setFilters({ ...filters, limit })} />
       </Stack>

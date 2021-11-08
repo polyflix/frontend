@@ -6,7 +6,8 @@ import {
   TimelineConnector,
   TimelineContent,
 } from '@mui/lab'
-import { Typography, Link } from '@mui/material'
+import { Typography, Link, Alert, Stack, Skeleton } from '@mui/material'
+import { useTranslation } from 'react-i18next'
 import { Link as RouterLink } from 'react-router-dom'
 
 import { Icon } from '@core/components/Icon/Icon.component'
@@ -14,13 +15,25 @@ import { useQuery } from '@core/hooks/useQuery'
 import { Element } from '@core/models/element.model'
 import { ElementType } from '@core/types/element.type'
 
+import { CollectionTimelineSkeleton } from '@collections/components/CollectionTimelineSkeleton/CollectionTimelineSkeleton.component'
 import { Collection } from '@collections/models/collection.model'
+import { useGetCollectionQuery } from '@collections/services/collection.service'
 
 type CollectionTimelineProps = {
-  collection: Collection
+  collectionSlug: string
 }
 
-export const CollectionTimeline = ({ collection }: CollectionTimelineProps) => {
+export const CollectionTimeline = ({
+  collectionSlug,
+}: CollectionTimelineProps) => {
+  const { data, isLoading } = useGetCollectionQuery({
+    slug: collectionSlug,
+    filters: {
+      join: ['elements'],
+    },
+  })
+  const collection: Collection | undefined = data
+  const { t } = useTranslation('courses')
   const query = useQuery() as URLSearchParams
 
   const elementIcon = (type: ElementType): string => {
@@ -59,6 +72,24 @@ export const CollectionTimeline = ({ collection }: CollectionTimelineProps) => {
 
   return (
     <Timeline position="right">
+      {collection?.elements?.length === 0 && (
+        <Alert severity="info">{t('noData')}</Alert>
+      )}
+      {isLoading && (
+        <Stack
+          sx={{
+            border: 1,
+            borderColor: 'grey.400',
+            backgroundColor: 'grey.300',
+            borderRadius: 1,
+            p: 2,
+            my: 2,
+          }}
+        >
+          <Skeleton variant="text" width="70%" />
+          <CollectionTimelineSkeleton />
+        </Stack>
+      )}
       {collection?.elements?.map((item, i: number) => {
         return (
           <TimelineItem

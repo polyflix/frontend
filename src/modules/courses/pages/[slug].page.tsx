@@ -20,7 +20,6 @@ import { Page } from '@core/components/Page/Page.component'
 import { useAuth } from '@auth/hooks/useAuth.hook'
 
 import { CollectionTimeline } from '@collections/components/CollectionTimeline/CollectionTimeline.component'
-import { CollectionTimelineSkeleton } from '@collections/components/CollectionTimelineSkeleton/CollectionTimelineSkeleton.component'
 
 import { Course } from '@courses/models/course.model'
 import { useGetCourseQuery } from '@courses/services/course.service'
@@ -41,15 +40,11 @@ export const CourseSlugPage = () => {
           field: 'collections',
           select: ['slug', 'elements', 'name'],
         },
-        {
-          field: 'collections.elements',
-          select: ['type', 'slug', 'thumbnail', 'draft', 'name'],
-        },
       ],
     }),
     []
   )
-  const { data, isLoading } = useGetCourseQuery({ slug, filters: fetchFilters })
+  const { data } = useGetCourseQuery({ slug, filters: fetchFilters })
   const course: Course | undefined = data
 
   return (
@@ -185,30 +180,11 @@ export const CourseSlugPage = () => {
                 >
                   {collection.name}
                 </Typography>
-                {collection.elements.length ? (
-                  <CollectionTimeline collection={collection} />
-                ) : (
-                  <Alert severity="info">{t('noData')}</Alert>
-                )}
+                <CollectionTimeline collectionSlug={collection.slug} />
               </Stack>
             ))}
             {course?.collections?.length === 0 && (
               <Alert severity="info">{t('noData')}</Alert>
-            )}
-            {isLoading && (
-              <Stack
-                sx={{
-                  border: 1,
-                  borderColor: 'grey.400',
-                  backgroundColor: 'grey.300',
-                  borderRadius: 1,
-                  p: 2,
-                  my: 2,
-                }}
-              >
-                <Skeleton variant="text" width="70%" />
-                <CollectionTimelineSkeleton />
-              </Stack>
             )}
           </>
         </Grid>

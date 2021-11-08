@@ -17,9 +17,11 @@ import { useInjection } from '@polyflix/di'
 import { FabActionContainer } from '@core/components/FabActionContainer/FabActionContainer.component'
 import { Page } from '@core/components/Page/Page.component'
 import { Endpoint } from '@core/constants/endpoint.constant'
+import { useRoles } from '@core/hooks/useRoles.hook'
 import { useSearchQuery } from '@core/hooks/useSearchQuery.hook'
 import { SnackbarService } from '@core/services/snackbar.service'
 import { CrudAction } from '@core/types/http.type'
+import { Role } from '@core/types/roles.type'
 
 import { CollectionTimeline } from '@collections/components/CollectionTimeline/CollectionTimeline.component'
 import {
@@ -34,6 +36,9 @@ export const CollectionSlugPage = () => {
   const { slug } = useParams<{ slug: string }>()
   const history = useHistory()
   const snackbarService = useInjection<SnackbarService>(SnackbarService)
+
+  const { hasRoles } = useRoles()
+  const requiredRoles = [Role.Teacher, Role.Admin]
 
   const [deleteCourse] = useDeleteCollectionMutation()
 
@@ -50,10 +55,14 @@ export const CollectionSlugPage = () => {
     filters,
   })
 
-  const handleDelete = () => {
-    deleteCourse({ slug: data!.slug })
-    snackbarService.notify(CrudAction.DELETE, Endpoint.Collections)
-    history.push('/users/profile/collections')
+  const handleDelete = async () => {
+    try {
+      await deleteCourse({ slug: data!.slug }).unwrap()
+      snackbarService.notify(CrudAction.DELETE, Endpoint.Collections)
+      history.push('/users/profile/collections')
+    } catch (e: any) {
+      snackbarService.createSnackbar(e.data.statusText, { variant: 'error' })
+    }
   }
 
   return (
@@ -95,12 +104,12 @@ export const CollectionSlugPage = () => {
           </Paper>
         </Grid>
       </Grid>
-      {data && (
+      {data && hasRoles(requiredRoles) && (
         <FabActionContainer>
           <Fab
             color="primary"
             aria-label="add"
-            size="small"
+            size="medium"
             onClick={handleDelete}
           >
             <Delete />

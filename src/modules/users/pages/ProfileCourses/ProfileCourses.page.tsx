@@ -72,7 +72,7 @@ export const ProfileCoursesPage = () => {
               },
             })
           }}
-          label={t('search')}
+          label={t('navbar.actions.search.fast', { ns: 'common' })}
         />
         <ItemsPerPage onChange={(limit) => setFilters({ ...filters, limit })} />
       </Stack>
