@@ -12,6 +12,7 @@
     "^@collections /(.*)$",
     "^@users/(.*)$",
     "^@theme/(.*)$",
+    "^@assets/(.*)$",
     "^[./]"
   ],
   "importOrderSeparation": true
