@@ -13,6 +13,7 @@ import {
   Menu,
   MenuItem,
 } from '@mui/material'
+import { Box } from '@mui/system'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link as RouterLink } from 'react-router-dom'
@@ -41,7 +42,7 @@ export const QuizzSliderOption = ({ id }: OptionProps) => {
   }
 
   return (
-    <>
+    <Box>
       <IconButton
         aria-label="video menu"
         size="small"
@@ -113,6 +114,6 @@ export const QuizzSliderOption = ({ id }: OptionProps) => {
         setIsOpen={setIsDeleteQuizzModalOpen}
         onClose={() => setIsDeleteQuizzModalOpen(false)}
       />
-    </>
+    </Box>
   )
 }

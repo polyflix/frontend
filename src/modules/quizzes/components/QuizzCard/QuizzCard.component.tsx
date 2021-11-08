@@ -61,7 +61,7 @@ export const QuizzCard = ({
   // We want to label the quizz as new if it was created less of 7 days ago.
   const isNew = Math.abs(dayjs(quizz.createdAt).diff(dayjs(), 'day')) < 7
 
-  const score = getScore(quizz.data) || 0
+  const score = getScore(quizz) || 0
   const questions = quizz.data.questions || []
   const color = getFeedbackColor(percentage(score, questions.length), theme)
 
@@ -147,7 +147,7 @@ export const QuizzCard = ({
           </Box>
         )}
 
-        <Stack direction="row" spacing={2}>
+        <Stack direction="row" spacing={2} alignItems="center">
           {displayNumberOfQuestions && (
             <Stack textAlign="center">
               <Typography variant="h5">{questions.length}</Typography>
@@ -194,11 +194,7 @@ export const QuizzCard = ({
           <AccordionDetails>
             <Stack spacing={3}>
               {quizz.data.attempts?.map((attempt, idx) => (
-                <QuizzAttemptCard
-                  quizz={quizz.data}
-                  attempt={attempt}
-                  key={idx}
-                />
+                <QuizzAttemptCard quizz={quizz} attempt={attempt} key={idx} />
               ))}
             </Stack>
           </AccordionDetails>
