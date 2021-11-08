@@ -84,6 +84,9 @@
             "info": "No subtitles for this video"
           }
         },
+        "collections": {
+          "title": "Collections"
+        },
         "notes": {
           "title": "Notes"
         },

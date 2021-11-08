@@ -1,13 +1,5 @@
 import { Delete, Edit, PlayArrow } from '@mui/icons-material'
 import {
-  Timeline,
-  TimelineConnector,
-  TimelineContent,
-  TimelineDot,
-  TimelineItem,
-  TimelineSeparator,
-} from '@mui/lab'
-import {
   Alert,
   Button,
   Fab,
@@ -22,13 +14,12 @@ import { Link, useHistory, useParams } from 'react-router-dom'
 import { useInjection } from '@polyflix/di'
 
 import { FabActionContainer } from '@core/components/FabActionContainer/FabActionContainer.component'
-import { Icon } from '@core/components/Icon/Icon.component'
 import { Page } from '@core/components/Page/Page.component'
 import { Endpoint } from '@core/constants/endpoint.constant'
 import { SnackbarService } from '@core/services/snackbar.service'
-import { ElementType } from '@core/types/element.type'
 import { CrudAction } from '@core/types/http.type'
 
+import { CollectionTimeline } from '@collections/components/CollectionTimeline/CollectionTimeline.component'
 import {
   useDeleteCollectionMutation,
   useGetCollectionQuery,
@@ -49,17 +40,6 @@ export const CollectionSlugPage = () => {
     },
   })
 
-  const elementIcon = (type: ElementType): string => {
-    switch (type) {
-      case 'video':
-        return 'eva:play-circle-outline'
-      case 'link':
-        return 'eva:link-2-fill'
-      case 'quizz':
-        return 'healthicons:i-exam-multiple-choice'
-    }
-  }
-
   const handleDelete = () => {
     deleteCourse({ slug: data!.slug })
     snackbarService.notify(CrudAction.DELETE, Endpoint.Collections)
@@ -76,7 +56,17 @@ export const CollectionSlugPage = () => {
                 <Typography variant="h3">{data?.name}</Typography>
                 <Typography variant="body1">{data?.description}</Typography>
               </Stack>
-              <Button variant="outlined" startIcon={<PlayArrow />}>
+              <Button
+                variant="outlined"
+                disabled={data?.elements?.length === 0}
+                startIcon={<PlayArrow />}
+                component={Link}
+                to={
+                  data?.elements
+                    ? `/videos/${data?.elements[0]?.slug}?c=${data?.slug}&index=0`
+                    : ''
+                }
+              >
                 {t('slug.actions.play')}
               </Button>
             </Stack>
@@ -87,34 +77,7 @@ export const CollectionSlugPage = () => {
             <Stack spacing={2}>
               <Typography variant="h4">{t('slug.list.title')}</Typography>
               {data?.elements.length ? (
-                <Timeline position="right">
-                  {data?.elements?.map((item, i: number) => (
-                    <TimelineItem
-                      key={i}
-                      sx={{
-                        '&::before': {
-                          content: 'none',
-                        },
-                      }}
-                    >
-                      <TimelineSeparator>
-                        <TimelineDot>
-                          <Icon name={elementIcon(item.type)} />
-                        </TimelineDot>
-                        <TimelineConnector />
-                      </TimelineSeparator>
-                      <TimelineContent>
-                        <Typography variant="body1">{item.name}</Typography>
-                        <Typography
-                          variant="caption"
-                          sx={{ textTransform: 'capitalize' }}
-                        >
-                          {item.type}
-                        </Typography>
-                      </TimelineContent>
-                    </TimelineItem>
-                  ))}
-                </Timeline>
+                <CollectionTimeline collection={data} />
               ) : (
                 <Alert severity="info">{t('slug.list.noData')}</Alert>
               )}

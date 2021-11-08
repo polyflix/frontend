@@ -10,17 +10,26 @@ import {
   useTheme,
   Tooltip,
 } from '@mui/material'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { AutoScrollBox } from '@core/components/AutoScrollBox/AutoScrollBox.component'
+import { useQuery } from '@core/hooks/useQuery'
 import { ease } from '@core/utils/transition'
 
 import { Video } from '@videos/models/video.model'
 
 import { AttachmentsPanel } from './AttachmentsPanel/AttachmentsPanel.component'
+import { CollectionPanel } from './CollectionPanel/CollectionPanel.component'
 import { TabPanelStyle, RootStyle } from './PlayerSidebar.style'
 import { SubtitlePanel } from './SubtitlesPanel/SubtitlesPanel.component'
+
+enum TabIndex {
+  SUBTITLES = '1',
+  COLLECTION = '2',
+  ATTACHEMENT = '3',
+  NOTES = '4',
+}
 
 type PlayerSidebarProps = {
   video: Video | undefined
@@ -28,7 +37,9 @@ type PlayerSidebarProps = {
 }
 
 export const PlayerSidebar = ({ video, playerRef }: PlayerSidebarProps) => {
-  const [value, setValue] = useState('1')
+  const query = useQuery() as URLSearchParams
+
+  const [value, setValue] = useState(TabIndex.SUBTITLES)
 
   const [open, setOpen] = useState(true)
 
@@ -37,7 +48,13 @@ export const PlayerSidebar = ({ video, playerRef }: PlayerSidebarProps) => {
   const th = useTheme()
   const ltlg: boolean = useMediaQuery(th.breakpoints.down('lg'))
 
-  const handleChange = (event: React.SyntheticEvent, newValue: string) => {
+  useEffect(() => {
+    if (query.get('c')) {
+      setValue(TabIndex.COLLECTION)
+    }
+  }, [])
+
+  const handleChange = (event: React.SyntheticEvent, newValue: TabIndex) => {
     setValue(newValue)
   }
 
@@ -59,8 +76,8 @@ export const PlayerSidebar = ({ video, playerRef }: PlayerSidebarProps) => {
             onClick={() => setOpen(!open)}
             sx={{
               position: 'absolute',
-              top: 5,
-              right: 5,
+              bottom: 0,
+              right: 0,
               zIndex: 1,
             }}
           >
@@ -86,28 +103,41 @@ export const PlayerSidebar = ({ video, playerRef }: PlayerSidebarProps) => {
               <Tabs
                 value={value}
                 onChange={handleChange}
+                variant="scrollable"
                 scrollButtons
                 aria-label="video sidebar tabs"
               >
-                <Tab label={t('slug.sidebar.tabs.subtitles.title')} value="1" />
+                <Tab
+                  label={t('slug.sidebar.tabs.subtitles.title')}
+                  value={TabIndex.SUBTITLES}
+                />
+                {query.has('c') && (
+                  <Tab
+                    label={t('slug.sidebar.tabs.collections.title')}
+                    value={TabIndex.COLLECTION}
+                  />
+                )}
                 <Tab
                   label={t('slug.sidebar.tabs.attachments.title')}
-                  value="2"
+                  value={TabIndex.ATTACHEMENT}
                 />
                 <Tab
                   label={t('slug.sidebar.tabs.notes.title')}
-                  value="3"
+                  value={TabIndex.NOTES}
                   disabled
                 />
               </Tabs>
             </Box>
-            <TabPanelStyle value="1">
+            <TabPanelStyle value={TabIndex.SUBTITLES}>
               {video && <SubtitlePanel video={video} playerRef={playerRef} />}
             </TabPanelStyle>
-            <TabPanelStyle value="2">
+            <TabPanelStyle value={TabIndex.ATTACHEMENT}>
               {video && <AttachmentsPanel attachments={video.attachments} />}
             </TabPanelStyle>
-            <TabPanelStyle value="3">
+            <TabPanelStyle value={TabIndex.COLLECTION}>
+              {query.has('c') && <CollectionPanel />}
+            </TabPanelStyle>
+            <TabPanelStyle value={TabIndex.NOTES}>
               <AutoScrollBox />
             </TabPanelStyle>
           </TabContext>

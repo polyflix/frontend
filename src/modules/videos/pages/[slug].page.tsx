@@ -1,5 +1,5 @@
 import { Grid, Skeleton } from '@mui/material'
-import { useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import { useParams } from 'react-router-dom'
 
 import { AspectRatioBox } from '@core/components/AspectRatioBox/AspectRation.component'
@@ -13,9 +13,11 @@ import { useGetVideoQuery } from '@videos/services/video.service'
 export const SlugPage = () => {
   const { slug } = useParams<{ slug: string }>()
 
-  const { data: video, isLoading } = useGetVideoQuery(slug)
+  const { data: video, isLoading, refetch, isFetching } = useGetVideoQuery(slug)
 
   const playerRef = useRef<HTMLVmPlayerElement>(null)
+
+  useEffect(() => refetch(), [slug])
 
   return (
     <Page
@@ -41,7 +43,7 @@ export const SlugPage = () => {
               margin: '0 auto',
             }}
           >
-            {!isLoading && video ? (
+            {!isLoading && !isFetching && video ? (
               <Player video={video} playerRef={playerRef} />
             ) : (
               <Skeleton

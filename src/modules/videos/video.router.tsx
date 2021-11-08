@@ -15,7 +15,7 @@ export const VideoRouter = () => {
         path={`${url}/:slug?/(create|update)`}
         component={CreateUpdatePage}
       />
-      <Route exact path={`${url}/:slug`}>
+      <Route exact path={`${url}/:slug?`}>
         <SubtitleProvider>
           <SlugPage />
         </SubtitleProvider>
