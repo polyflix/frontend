@@ -20,8 +20,8 @@
         "collections": "Collections"
       },
       "description": {
-        "create": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit quam excepturi eligendi, ratione error reiciendis ab earum dolore, eum doloribus in ut quae suscipit exercitationem necessitatibus sint. Autem, beatae deserunt.",
-        "update": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit quam excepturi eligendi, ratione error reiciendis ab earum dolore, eum doloribus in ut quae suscipit exercitationem necessitatibus sint. Autem, beatae deserunt."
+        "create": "Un cours peut contenir plusieurs collections, ce qui permet à votre utilisateurs de suivre des parcours complexes.",
+        "update": "Un cours peut contenir plusieurs collections, ce qui permet à votre utilisateurs de suivre des parcours complexes."
       },
       "label": {
         "name": "Nom",
