@@ -76,7 +76,10 @@ export const SlugPage = () => {
             },
           }}
         >
-          <VideoDetails video={video} />
+          {
+            //wait video load complete before display details
+            video && <VideoDetails video={video} />
+          }
         </Grid>
       </Grid>
     </Page>
