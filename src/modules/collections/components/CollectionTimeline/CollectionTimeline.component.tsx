@@ -76,16 +76,7 @@ export const CollectionTimeline = ({
         <Alert severity="info">{t('noData')}</Alert>
       )}
       {isLoading && (
-        <Stack
-          sx={{
-            border: 1,
-            borderColor: 'grey.400',
-            backgroundColor: 'grey.300',
-            borderRadius: 1,
-            p: 2,
-            my: 2,
-          }}
-        >
+        <Stack spacing={1}>
           <Skeleton variant="text" width="70%" />
           <CollectionTimelineSkeleton />
         </Stack>

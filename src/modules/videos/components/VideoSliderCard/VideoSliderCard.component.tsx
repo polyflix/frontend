@@ -264,6 +264,7 @@ export const VideoSliderCard = ({ video, isFetching = false }: Props) => {
                 <Typography
                   sx={{
                     color: 'text.secondary',
+                    width: 'calc(100% - 50px)',
                     fontSize: {
                       xs: '0.7rem',
                       md: '0.9rem',
@@ -271,12 +272,14 @@ export const VideoSliderCard = ({ video, isFetching = false }: Props) => {
                     lineHeight: 1,
                   }}
                   variant="body2"
+                  noWrap={true}
                 >
                   {video.publishedBy?.displayName}
                 </Typography>
                 <Typography
                   sx={{
                     color: 'text.secondary',
+                    width: 'calc(100% - 50px)',
                     fontSize: {
                       xs: '0.6rem',
                       md: '0.8rem',

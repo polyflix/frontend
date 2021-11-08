@@ -11,7 +11,7 @@ import React from 'react'
 export const CollectionTimelineSkeleton: React.FC = () => {
   return (
     <Timeline position="right">
-      {[...new Array(4)].map((_, i: number) => (
+      {[...new Array(2)].map((_, i: number) => (
         <TimelineItem
           key={i}
           sx={{
