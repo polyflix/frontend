@@ -2,6 +2,7 @@ import { Container } from '@polyflix/di'
 
 import { Endpoint } from '@core/constants/endpoint.constant'
 import { CrudFilters } from '@core/filters/nestjsx-crud.filter'
+import { Element } from '@core/models/element.model'
 import { api } from '@core/services/api.service'
 import { Pagination } from '@core/types/nestjsx-crud.type'
 
@@ -18,7 +19,10 @@ export const LinksApi = api.injectEndpoints({
     /**
      * Get Link by id query configuration.
      */
-    getLink: builder.query<Link, { id: string; filters?: LinkFilters }>({
+    getLink: builder.query<
+      Element<Link>,
+      { id: string; filters?: LinkFilters }
+    >({
       providesTags: (_0, _1, { id }) => [{ type: Endpoint.Links, id }],
       query: ({ id, filters }) => {
         return `${Endpoint.Links}/${id}${filterBuilder.createFilters(
@@ -30,7 +34,7 @@ export const LinksApi = api.injectEndpoints({
     /**
      * Get Links query configuration
      */
-    getLinks: builder.query<Pagination<Link>, LinkFilters>({
+    getLinks: builder.query<Pagination<Element<Link>>, LinkFilters>({
       query: (filters?: LinkFilters) => {
         return `${Endpoint.Links}${filterBuilder.createFilters(filters || {})}`
       },
@@ -53,7 +57,7 @@ export const LinksApi = api.injectEndpoints({
     /**
      * Add a Link mutation
      */
-    addLink: builder.mutation<Link, ILinkForm>({
+    addLink: builder.mutation<Element<Link>, ILinkForm>({
       query: (body: ILinkForm) => ({
         url: Endpoint.Links,
         method: 'POST',
@@ -67,7 +71,10 @@ export const LinksApi = api.injectEndpoints({
     /**
      * Update Link mutation
      */
-    updateLink: builder.mutation<Link, { id: string; body: ILinkForm }>({
+    updateLink: builder.mutation<
+      Element<Link>,
+      { id: string; body: ILinkForm }
+    >({
       query: ({ id, body }) => ({
         url: `${Endpoint.Links}/${id}`,
         method: 'PUT',
@@ -82,7 +89,7 @@ export const LinksApi = api.injectEndpoints({
     /**
      * Delete Link mutation
      */
-    deleteLink: builder.mutation<Link, { id: string }>({
+    deleteLink: builder.mutation<Element<Link>, { id: string }>({
       query: ({ id }) => ({
         url: `${Endpoint.Links}/${id}`,
         method: 'DELETE',

@@ -30,7 +30,7 @@ export const ExploreQuizzesPage = () => {
     join: [
       {
         field: 'element.user',
-        select: ['firstName', 'lastName', 'profilePicture'],
+        select: ['firstName', 'lastName', 'avatar'],
       },
       { field: 'questions', select: ['label'] },
     ],

@@ -1,10 +1,11 @@
 import { ContentModel } from '@core/models/content.model'
 import { Element } from '@core/models/element.model'
-import { Link } from '@core/types/element.type'
 
 import { Quizz } from '@quizzes/models/quizz.model'
 
 import { Video } from '@videos/models/video.model'
+
+import { Link } from '@links/models/link.model'
 
 import { User } from '@users/models/user.model'
 
