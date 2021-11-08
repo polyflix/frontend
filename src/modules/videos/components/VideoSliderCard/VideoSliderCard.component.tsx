@@ -181,6 +181,11 @@ export const VideoSliderCard = ({ video, isFetching = false }: Props) => {
                 <VideoCardThumbnail
                   loading="lazy"
                   src={video?.thumbnail}
+                  onError={(e: any) => {
+                    e.target.src = '/images/dumb_thumbnail.jpg'
+                    e.preventDefault()
+                    e.onerror = null
+                  }}
                   alt={`${video?.title} thumbnail`}
                 />
               </VideoCardThumbnailContainer>
