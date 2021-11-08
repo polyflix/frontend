@@ -33,7 +33,7 @@ export const QuizzResultsPage = () => {
 
   const [filters, setFilters] = useState<QuizzAttemptFilters>({})
 
-  const { data: quizz, isLoading: isQuizzLoadingding } = useGetQuizzQuery({
+  const { data: quizz, isLoading: isQuizzLoading } = useGetQuizzQuery({
     id,
     filters: {
       join: ['questions', { field: 'user', select: ['firstName', 'lastName'] }],
@@ -56,7 +56,7 @@ export const QuizzResultsPage = () => {
   return (
     <Page
       title={t('results.title', { quizzName: quizz?.name })}
-      isLoading={isQuizzLoadingding || isAttemptsLoading}
+      isLoading={isQuizzLoading || isAttemptsLoading}
     >
       <Header
         title={t('results.title', { quizzName: quizz?.name })}

@@ -26,7 +26,7 @@ export const ProfileQuizzesPage = () => {
     limit: 10,
   })
 
-  const { data } = useGetQuizzesQuery({
+  const { data: quizzes, isLoading: isQuizzLoading } = useGetQuizzesQuery({
     join: [{ field: 'user', select: ['firstName', 'lastName'] }, 'questions'],
     'user.id': user?.id,
     ...filters,
@@ -52,7 +52,7 @@ export const ProfileQuizzesPage = () => {
         <ItemsPerPage onChange={(limit) => setFilters({ ...filters, limit })} />
       </Stack>
       <Grid sx={{ my: 3 }} container spacing={2}>
-        {data?.data.map((item: Quizz) => (
+        {quizzes?.data.map((item: Quizz) => (
           <Grid key={item.id} item xs={12} lg={6}>
             <QuizzCard
               variant="none"
@@ -68,7 +68,7 @@ export const ProfileQuizzesPage = () => {
       <Box display="flex" justifyContent="center">
         <Pagination
           onChange={(e, page) => setFilters({ ...filters, page })}
-          count={data?.pageCount}
+          count={quizzes?.pageCount}
           shape="rounded"
           variant="outlined"
           showFirstButton
