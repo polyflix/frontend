@@ -5,6 +5,8 @@ import { Link as RouterLink } from 'react-router-dom'
 import { Icon } from '@core/components/Icon/Icon.component'
 import { clampString } from '@core/utils/text.utils'
 
+import { useAuth } from '@auth/hooks/useAuth.hook'
+
 import { Collection } from '@collections/models/collection.model'
 
 import { RootStyle, CardFooterStyle } from './CollectionCard.style'
@@ -16,6 +18,7 @@ type CollectionCardProps = {
 
 export const CollectionCard = ({ collection }: CollectionCardProps) => {
   const { t } = useTranslation('collections')
+  const { user } = useAuth()
 
   const draftStyle = collection.draft && {
     opacity: 0.3,
@@ -59,7 +62,9 @@ export const CollectionCard = ({ collection }: CollectionCardProps) => {
               count: collection.elements.length,
             })}
           </Typography>
-          <CollectionCardMenu collection={collection} />
+          {collection?.user?.id === user?.id && (
+            <CollectionCardMenu collection={collection} />
+          )}
         </Stack>
       </CardFooterStyle>
     </RootStyle>

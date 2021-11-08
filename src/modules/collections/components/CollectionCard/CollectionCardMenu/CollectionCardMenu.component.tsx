@@ -1,9 +1,4 @@
-import {
-  Delete,
-  Edit,
-  InfoOutlined,
-  MoreVertOutlined,
-} from '@mui/icons-material'
+import { Delete, Edit, MoreVertOutlined } from '@mui/icons-material'
 import {
   IconButton,
   ListItemIcon,
@@ -73,18 +68,6 @@ export const CollectionCardMenu = ({ collection }: CollectionCardMenuProps) => {
           </ListItemIcon>
           <ListItemText>
             {t('explore.collectionCard.menu.items.edit')}
-          </ListItemText>
-        </MenuItem>
-        <MenuItem
-          onClick={handleClose}
-          component={Link}
-          to={`/collections/${collection.slug}`}
-        >
-          <ListItemIcon>
-            <InfoOutlined fontSize="small" />
-          </ListItemIcon>
-          <ListItemText>
-            {t('explore.collectionCard.menu.items.view')}
           </ListItemText>
         </MenuItem>
         <MenuItem onClick={handleDelete}>
