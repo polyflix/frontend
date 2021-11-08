@@ -12,7 +12,6 @@ import { useAuth } from '@auth/hooks/useAuth.hook'
 
 import { QuizzCard } from '@quizzes/components/QuizzCard/QuizzCard.component'
 import { buildQuizzSearch } from '@quizzes/helpers/search.helper'
-import { Quizz } from '@quizzes/models/quizz.model'
 import { useGetQuizzesQuery } from '@quizzes/services/quizz.service'
 import { QuizzFilters } from '@quizzes/types/filters.type'
 
@@ -26,7 +25,7 @@ export const ProfileQuizzesPage = () => {
     limit: 10,
   })
 
-  const { data: quizzes, isLoading: isQuizzLoading } = useGetQuizzesQuery({
+  const { data: quizzes } = useGetQuizzesQuery({
     join: [
       { field: 'element.user', select: ['firstName', 'lastName'] },
       'questions',
