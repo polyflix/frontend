@@ -78,6 +78,17 @@ const sidebarConfiguration: SidebarItem[] = [
     ],
   },
   {
+    title: 'items.links',
+    section: SidebarSection.MANAGEMENT,
+    icon: 'eva:link-outline',
+    items: [
+      {
+        title: 'actions.create',
+        href: '/links/create',
+      },
+    ],
+  },
+  {
     title: 'items.collections',
     section: SidebarSection.MANAGEMENT,
     icon: 'bx:bx-collection',

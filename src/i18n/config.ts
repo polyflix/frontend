@@ -27,6 +27,7 @@ i18n
       'quizzes',
       'users',
       'date',
+      'links',
       'collections',
     ],
     defaultNS: 'common',

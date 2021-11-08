@@ -1,0 +1,26 @@
+{
+  "forms": {
+    "create-update": {
+      "title": {
+        "metadata": "Metadata",
+        "status": "Statut",
+        "create": "Create a link",
+        "update": "Update the link {{link}}"
+      },
+      "description": {
+        "create": "Create your link to allow others to jump to the URL.",
+        "update": "Change the values in the form below to update you link."
+      },
+      "placeholder": {
+        "name": "Name",
+        "description": "Description",
+        "url": "Link URL",
+        "submit": {
+          "create": "Create the link",
+          "update": "Update the link"
+        }
+      },
+      "errors": {}
+    }
+  }
+}
