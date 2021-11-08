@@ -44,7 +44,7 @@ export const CollectionTimeline = ({ collection }: CollectionTimelineProps) => {
         }
       case 'quizz':
         return {
-          href: `/videos/${element.slug}?c=${collection?.slug}&index=${index}`,
+          href: `/quizzes/${element.id}/play`,
           target: '_blank',
           component: 'a',
         }

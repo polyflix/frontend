@@ -14,13 +14,14 @@ import { useTranslation } from 'react-i18next'
 
 import { Icon } from '@core/components/Icon/Icon.component'
 import { Scrollbar } from '@core/components/Scrollbar/Scrollbar.component'
-import { NotImplementedPage } from '@core/pages/NotImplemented.page'
 import { ElementType } from '@core/types/element.type'
 import { ease } from '@core/utils/transition'
 
 import { ICollectionForm } from '@collections/types/form.type'
 
 import { ElementContainerStyle } from './ElementModal.style'
+import { LinkList } from './LinkList/LinkList.component'
+import { QuizzList } from './QuizzList/QuizzList.component'
 import { VideoList } from './VideoList/VideoList.component'
 
 interface IElementItem {
@@ -72,9 +73,9 @@ export const ElementModal = ({
   const displayContent = () => {
     switch (selectedElementPage) {
       case 'link':
-        return <NotImplementedPage />
+        return <LinkList fieldArray={fieldArray} />
       case 'quizz':
-        return <NotImplementedPage />
+        return <QuizzList fieldArray={fieldArray} />
       case 'video':
         return <VideoList fieldArray={fieldArray} />
     }
