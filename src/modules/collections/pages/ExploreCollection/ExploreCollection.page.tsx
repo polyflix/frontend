@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next'
 
 import { ItemsPerPage } from '@core/components/Filters/ItemsPerPage.component'
 import { Header } from '@core/components/Header/Header.component'
+import { NoData } from '@core/components/NoData/NoData.component'
 import { Page } from '@core/components/Page/Page.component'
 import { Searchbar } from '@core/components/Searchbar/Searchbar.component'
 import { Visibility } from '@core/models/content.model'
@@ -25,7 +26,11 @@ export const ExploreCollectionPage = () => {
     limit: 10,
   })
 
-  const { data, isLoading, isFetching } = useGetCollectionsQuery({
+  const {
+    data: collections,
+    isLoading,
+    isFetching,
+  } = useGetCollectionsQuery({
     join: [{ field: 'elements', select: ['type'] }],
     visibility: Visibility.PUBLIC,
     draft: false,
@@ -69,8 +74,11 @@ export const ExploreCollectionPage = () => {
       </Stack>
 
       <Grid sx={{ my: 3 }} container columnSpacing={2} rowSpacing={4}>
+        {collections?.data && collections.data.length === 0 && (
+          <NoData variant="collections" link="/collections/create" />
+        )}
         {!isFetching
-          ? data?.data.map((item: Collection) => (
+          ? collections?.data.map((item: Collection) => (
               <Grid key={item.id} item xs={12} sm={6} md={6} lg={4}>
                 <CollectionCard collection={item} />
               </Grid>
@@ -85,7 +93,7 @@ export const ExploreCollectionPage = () => {
       <Box display="flex" justifyContent="center">
         <Pagination
           onChange={(e, page) => setFilters({ ...filters, page })}
-          count={data?.pageCount}
+          count={collections?.pageCount}
           shape="rounded"
           variant="outlined"
           showFirstButton

@@ -126,5 +126,9 @@
       }
     }
   },
-  "playerFailed": "Une erreur s'est produite, ré-essayez plus tard"
+  "playerFailed": "Une erreur s'est produite, ré-essayez plus tard",
+  "noData": {
+    "description": "Si vous avez les droits nécessaires vous pouvez créer une vidéo ci-dessous",
+    "buttonText": "Créer une vidéo"
+  }
 }

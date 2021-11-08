@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next'
 
 import { ItemsPerPage } from '@core/components/Filters/ItemsPerPage.component'
 import { Header } from '@core/components/Header/Header.component'
+import { NoData } from '@core/components/NoData/NoData.component'
 import { Page } from '@core/components/Page/Page.component'
 import { Searchbar } from '@core/components/Searchbar/Searchbar.component'
 import { Visibility } from '@core/models/content.model'
@@ -26,7 +27,7 @@ export const ExploreQuizzesPage = () => {
   })
 
   // Fetch the quizzes
-  const { data, isLoading } = useGetQuizzesQuery({
+  const { data: quizzes, isLoading } = useGetQuizzesQuery({
     join: [
       {
         field: 'element.user',
@@ -62,17 +63,21 @@ export const ExploreQuizzesPage = () => {
       </Stack>
 
       <Grid sx={{ my: 3 }} container spacing={2}>
-        {data?.data.map((item: Element<Quizz>) => (
-          <Grid key={item.id} item xs={12} md={4}>
-            <QuizzCard displayTags quizz={item} />
-          </Grid>
-        ))}
+        {quizzes?.data && quizzes?.data.length > 0 ? (
+          quizzes?.data.map((item: Element<Quizz>) => (
+            <Grid key={item.id} item xs={12} md={4}>
+              <QuizzCard displayTags quizz={item} />
+            </Grid>
+          ))
+        ) : (
+          <NoData variant="quizzes" link="/quizzes/create" />
+        )}
       </Grid>
 
       <Box display="flex" justifyContent="center">
         <Pagination
           onChange={(e, page) => setFilters({ ...filters, page })}
-          count={data?.pageCount}
+          count={quizzes?.pageCount}
           shape="rounded"
           variant="outlined"
           showFirstButton

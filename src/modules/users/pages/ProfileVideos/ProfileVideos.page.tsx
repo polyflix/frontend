@@ -3,6 +3,8 @@ import Grid from '@mui/material/Grid'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
+import { NoData } from '@core/components/NoData/NoData.component'
+
 import { useAuth } from '@auth/hooks/useAuth.hook'
 
 import { VideoSliderCard } from '@videos/components/VideoSliderCard/VideoSliderCard.component'
@@ -30,11 +32,15 @@ export const ProfileVideosPage = () => {
         {t('profile.tabs.videos.content.title')}
       </Typography>
       <Grid container spacing={2}>
-        {data?.items.map((item: Video) => (
-          <Grid key={item.id} item xs={12} sm={6} md={4} lg={3}>
-            <VideoSliderCard key={item.id} video={item} />
-          </Grid>
-        ))}
+        {data?.items && data?.items.length > 0 ? (
+          data?.items.map((item: Video) => (
+            <Grid key={item.id} item xs={12} sm={6} md={4} lg={3}>
+              <VideoSliderCard key={item.id} video={item} />
+            </Grid>
+          ))
+        ) : (
+          <NoData variant="videos" link="/videos/create" />
+        )}
       </Grid>
     </Container>
   )

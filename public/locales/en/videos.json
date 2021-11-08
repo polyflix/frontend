@@ -129,5 +129,9 @@
       }
     }
   },
-  "playerFailed": "Failed to load, try again later"
+  "playerFailed": "Failed to load, try again later",
+  "noData": {
+    "description": "If you have the necessary rights you can create a video below",
+    "buttonText": "Create a video"
+  }
 }

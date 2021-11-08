@@ -34,7 +34,11 @@
   },
   "speedDial": {
     "video": "Vidéo",
-    "quizz": "Quizz"
+    "quizz": "Quiz"
   },
-  "uploadInProgress": "Merci de patienter, vos fichiers sont en train d'être envoyés..."
+  "uploadInProgress": "Merci de patienter, vos fichiers sont en train d'être envoyés...",
+  "noData": {
+    "title": "Aucune donnée n'a été trouvée",
+    "descriptionDefault": "Si vous avez les droits nécessaires vous pouvez créer la resource associée"
+  }
 }
