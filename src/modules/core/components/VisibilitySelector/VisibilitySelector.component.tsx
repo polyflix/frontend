@@ -1,5 +1,5 @@
-import { Grid, Paper, Stack, Typography } from '@mui/material'
-import { alpha, Box } from '@mui/system'
+import { Box, Paper, Stack, Typography } from '@mui/material'
+import { alpha } from '@mui/system'
 import { useTranslation } from 'react-i18next'
 
 import { Visibility } from '@core/models/content.model'
@@ -44,11 +44,19 @@ export const VisibilitySelector = ({ value, onChange }: Props) => {
   ]
 
   return (
-    <Grid container spacing={2}>
+    <Box display="grid" gridTemplateColumns="repeat(12, 1fr)" gap={2}>
       {items.map(({ value: v, label, description, icon }, idx) => {
         const isActive = v === value
         return (
-          <Grid key={idx} item xs={12} md={4}>
+          <Box
+            key={idx}
+            sx={{
+              gridColumn: {
+                xs: 'span 12',
+                md: 'span 4',
+              },
+            }}
+          >
             <Paper
               sx={{
                 p: 3,
@@ -77,9 +85,9 @@ export const VisibilitySelector = ({ value, onChange }: Props) => {
                 </Stack>
               </Stack>
             </Paper>
-          </Grid>
+          </Box>
         )
       })}
-    </Grid>
+    </Box>
   )
 }
