@@ -28,7 +28,7 @@ export const SlugPage = () => {
   return (
     <Page
       error={error}
-      title={video?.slug}
+      title={video?.title}
       maxWidth={false}
       sx={{
         maxWidth: '2000px',
