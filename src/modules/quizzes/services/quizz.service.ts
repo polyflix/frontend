@@ -2,6 +2,7 @@ import { Container } from '@polyflix/di'
 
 import { Endpoint } from '@core/constants/endpoint.constant'
 import { CrudFilters } from '@core/filters/nestjsx-crud.filter'
+import { Element } from '@core/models/element.model'
 import { api } from '@core/services/api.service'
 import { Pagination } from '@core/types/nestjsx-crud.type'
 
@@ -18,7 +19,10 @@ export const quizzesApi = api.injectEndpoints({
     /**
      * Get quizz by id query configuration.
      */
-    getQuizz: builder.query<Quizz, { id: string; filters?: QuizzFilters }>({
+    getQuizz: builder.query<
+      Element<Quizz>,
+      { id: string; filters?: QuizzFilters }
+    >({
       providesTags: (_0, _1, { id }) => [{ type: Endpoint.Quizzes, id }],
       query: ({ id, filters }) => {
         return `${Endpoint.Quizzes}/${id}${filterBuilder.createFilters(
@@ -30,7 +34,7 @@ export const quizzesApi = api.injectEndpoints({
     /**
      * Get quizzes query configuration
      */
-    getQuizzes: builder.query<Pagination<Quizz>, QuizzFilters>({
+    getQuizzes: builder.query<Pagination<Element<Quizz>>, QuizzFilters>({
       query: (filters?: QuizzFilters) => {
         return `${Endpoint.Quizzes}${filterBuilder.createFilters(
           filters || {}
@@ -55,7 +59,7 @@ export const quizzesApi = api.injectEndpoints({
     /**
      * Add a quizz mutation
      */
-    addQuizz: builder.mutation<Quizz, IQuizzForm>({
+    addQuizz: builder.mutation<Element<Quizz>, IQuizzForm>({
       query: (body: IQuizzForm) => ({
         url: Endpoint.Quizzes,
         method: 'POST',
@@ -69,7 +73,10 @@ export const quizzesApi = api.injectEndpoints({
     /**
      * Update quizz mutation
      */
-    updateQuizz: builder.mutation<Quizz, { id: string; body: IQuizzForm }>({
+    updateQuizz: builder.mutation<
+      Element<Quizz>,
+      { id: string; body: IQuizzForm }
+    >({
       query: ({ id, body }) => ({
         url: `${Endpoint.Quizzes}/${id}`,
         method: 'PUT',

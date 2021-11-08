@@ -2,6 +2,8 @@ import { alpha, Card, Typography, useTheme } from '@mui/material'
 import dayjs from 'dayjs'
 import { useTranslation } from 'react-i18next'
 
+import { Element } from '@core/models/element.model'
+
 import { useAuth } from '@auth/hooks/useAuth.hook'
 
 import { getFeedbackColor, percentage } from '@quizzes/helpers/score.helper'
@@ -10,7 +12,7 @@ import { Quizz } from '@quizzes/models/quizz.model'
 
 interface Props {
   attempt: Attempt
-  quizz: Quizz
+  quizz: Element<Quizz>
 }
 
 export const QuizzAttemptCard = ({ attempt, quizz }: Props) => {
@@ -19,7 +21,7 @@ export const QuizzAttemptCard = ({ attempt, quizz }: Props) => {
   const { t } = useTranslation('quizzes')
 
   const color = getFeedbackColor(
-    percentage(attempt.score, (quizz.questions || []).length),
+    percentage(attempt.score, (quizz.data.questions || []).length),
     theme
   )
 
@@ -39,7 +41,7 @@ export const QuizzAttemptCard = ({ attempt, quizz }: Props) => {
           user: user?.displayName,
         })}{' '}
         <strong>
-          {attempt.score}/{(quizz.questions || []).length}
+          {attempt.score}/{(quizz.data.questions || []).length}
         </strong>{' '}
         {dayjs(attempt.createdAt).format(t('history.attempt.date.format'))}.
       </Typography>
