@@ -2,6 +2,7 @@ import { Box, Divider, List, Theme, Typography } from '@mui/material'
 import { SxProps } from '@mui/system'
 import { isUndefined } from 'lodash'
 
+import { useRoles } from '@core/hooks/useRoles.hook'
 import { useSidebar } from '@core/hooks/useSidebar.hook'
 import { fadeInAnnimation } from '@core/utils/animation'
 
@@ -18,6 +19,7 @@ interface Props {
 
 export const Section = ({ sx, title, items, ...other }: Props) => {
   const { open } = useSidebar()
+  const { hasRoles } = useRoles()
 
   return (
     <Box {...other} sx={{ ...sx, padding: '0 1rem 0 1rem' }}>
@@ -40,6 +42,9 @@ export const Section = ({ sx, title, items, ...other }: Props) => {
             return <ItemList item={item} key={index} />
           }
 
+          if (!hasRoles(item?.roles || [])) {
+            return
+          }
           return <Item key={index} item={item} />
         })}
       </List>

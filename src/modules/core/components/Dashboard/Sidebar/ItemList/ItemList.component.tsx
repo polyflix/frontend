@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { Icon } from '@core/components/Icon/Icon.component'
+import { useRoles } from '@core/hooks/useRoles.hook'
 import { useSidebar } from '@core/hooks/useSidebar.hook'
 import { fadeInAnnimation } from '@core/utils/animation'
 
@@ -17,7 +18,7 @@ interface Props {
 export const ItemList = ({ item }: Props) => {
   const { t } = useTranslation('sidebar')
   const { open } = useSidebar()
-
+  const { hasRoles } = useRoles()
   const [menuOpen, setMenuOpen] = useState(false)
 
   return (
@@ -42,9 +43,12 @@ export const ItemList = ({ item }: Props) => {
       </ItemStyle>
       <Collapse in={menuOpen} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
-          {item.items!.map((subItem: SidebarItem, i: number) => (
-            <Item key={i} item={subItem} isSubItem={true} />
-          ))}
+          {item.items!.map((subItem: SidebarItem, i: number) => {
+            if (!hasRoles(item?.roles || [])) {
+              return
+            }
+            return <Item key={i} item={subItem} isSubItem={true} />
+          })}
         </List>
       </Collapse>
     </ItemListStyle>

@@ -1,4 +1,5 @@
 import { BaseModel } from '@core/models/base.model'
+import { Role } from '@core/types/roles.type'
 
 export interface User extends BaseModel {
   email: string
@@ -8,4 +9,5 @@ export interface User extends BaseModel {
   isAccountActivated: boolean
   isAdmin: boolean
   displayName: string
+  roles?: Role[]
 }
