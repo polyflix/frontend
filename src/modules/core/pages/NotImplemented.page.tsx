@@ -5,7 +5,7 @@ import { Link as RouterLink } from 'react-router-dom'
 import { Page } from '@core/components/Page/Page.component'
 
 export const NotImplementedPage = () => {
-  const { t } = useTranslation('common')
+  const { t } = useTranslation('errors')
 
   return (
     <Page title={t('404.title')}>

@@ -12,5 +12,10 @@
     "title": "Service unavailable",
     "description": "Oops, the server cannot treat your request right now. Please refresh the page.",
     "cta": "refresh the page"
+  },
+  "notImplemented": {
+    "title": "Not Implemented",
+    "content": "This page is not implemented at the moment",
+    "cta": "Go to the homepage"
   }
 }
