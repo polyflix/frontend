@@ -1,11 +1,11 @@
 import {
-  Modal,
-  Paper,
-  Typography,
-  Theme,
   Box,
   Fade,
+  Modal,
+  Paper,
   Stack,
+  Theme,
+  Typography,
 } from '@mui/material'
 import { alpha, SxProps } from '@mui/system'
 import { useState } from 'react'

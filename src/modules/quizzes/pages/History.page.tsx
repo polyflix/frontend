@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next'
 import { ItemsPerPage } from '@core/components/Filters/ItemsPerPage.component'
 import { Header } from '@core/components/Header/Header.component'
 import { Page } from '@core/components/Page/Page.component'
+import { Element } from '@core/models/element.model'
 
 import { useAuth } from '@auth/hooks/useAuth.hook'
 
@@ -30,7 +31,7 @@ export const QuizzesHistoryPage = () => {
     sort: [{ field: 'attempts.createdAt', order: 'DESC' }],
     page: filters.page || 1,
     limit: filters.limit || 10,
-    draft: false,
+    'element.draft': false,
     'attempts.user': user?.id,
   })
 
@@ -46,14 +47,14 @@ export const QuizzesHistoryPage = () => {
       </Stack>
 
       <Stack sx={{ my: 3 }} spacing={2}>
-        {data?.data.map((quizz: Quizz, quizzIdx) => (
+        {data?.data.map((quizz: Element<Quizz>) => (
           <QuizzCard
             variant="accordion"
             displayScore
             displayScoreMethod
             displayNumberOfQuestions={false}
             displayTags={false}
-            key={quizzIdx}
+            key={quizz.id}
             quizz={quizz}
           />
         ))}

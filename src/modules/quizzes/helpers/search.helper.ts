@@ -4,17 +4,17 @@
  */
 export const buildQuizzSearch = (value: string) => [
   {
-    name: {
+    'element.name': {
       $contL: value,
     },
   },
   {
-    'user.firstName': {
+    'element.user.firstName': {
       $contL: value,
     },
   },
   {
-    'user.lastName': {
+    'element.user.lastName': {
       $contL: value,
     },
   },

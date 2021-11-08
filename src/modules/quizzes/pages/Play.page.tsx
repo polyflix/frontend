@@ -31,7 +31,7 @@ export const PlayQuizzPage = () => {
   // see : https://github.com/reduxjs/redux-toolkit/issues/1526
   const quizzfilters = useMemo<QuizzFilters>(
     () => ({
-      draft: false,
+      'element.draft': false,
       join: [
         'questions',
         {
@@ -76,7 +76,7 @@ export const PlayQuizzPage = () => {
 
   // Is the user has remaining attempts for this quizz ?
   const hasRemainingAttempts =
-    (data?.allowedRetries || 1) - (userAttempts?.total || 0) > 0
+    (data?.data.allowedRetries || 1) - (userAttempts?.total || 0) > 0
   const commonProps: PlayComponentProps = { quizz: data! }
   return (
     <Page title={data?.name} isLoading={isLoading || isAttemptsLoading}>

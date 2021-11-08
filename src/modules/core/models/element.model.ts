@@ -11,6 +11,6 @@ export interface Element<T extends BaseModel> extends ContentModel {
   description?: string
   user?: Partial<User>
   slug: string
-  thumbnail: string
+  thumbnail?: string
   data: T
 }
