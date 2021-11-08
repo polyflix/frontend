@@ -30,6 +30,7 @@ import {
 } from '../../helpers/score.helper'
 import { QuizzAttemptCard } from '../QuizzAttemptCard/QuizzAttemptCard.component'
 import { NewTag } from './QuizzCard.style'
+import { QuizzSliderOption } from './QuizzCardOption.component'
 
 interface Props {
   quizz: Element<Quizz>
@@ -38,7 +39,9 @@ interface Props {
   displayTags?: boolean
   displayScore?: boolean
   displayNumberOfQuestions?: boolean
-  variant?: 'link' | 'accordion'
+  displayPublisher?: boolean
+  displayCrudOptions?: boolean
+  variant?: 'link' | 'accordion' | 'none'
 }
 
 // Component used to display a quizz in the UI
@@ -49,6 +52,8 @@ export const QuizzCard = ({
   displayTags = false,
   displayScore = false,
   displayNumberOfQuestions = true,
+  displayPublisher = true,
+  displayCrudOptions = false,
   variant = 'link',
 }: Props) => {
   const theme = useTheme()
@@ -99,7 +104,7 @@ export const QuizzCard = ({
     >
       {displayTags && buildTags()}
       <Stack spacing={2} direction="row">
-        {buildPublisher()}
+        {displayPublisher && buildPublisher()}
         <Stack>
           <Typography variant="h6" fontWeight="bold">
             {quizz.name}
@@ -143,54 +148,67 @@ export const QuizzCard = ({
           </Box>
         )}
 
-        {displayNumberOfQuestions && (
-          <Stack textAlign="center">
-            <Typography variant="h5">{questions.length}</Typography>
-            <Typography
-              fontSize={12}
-              variant="body2"
-              sx={{ color: 'text.secondary' }}
-            >
-              {'questions'.toUpperCase()}
-            </Typography>
-          </Stack>
-        )}
+        <Stack direction="row" spacing={2} alignItems="center">
+          {displayNumberOfQuestions && (
+            <Stack textAlign="center">
+              <Typography variant="h5">{questions.length}</Typography>
+              <Typography
+                fontSize={12}
+                variant="body2"
+                sx={{ color: 'text.secondary' }}
+              >
+                {'questions'.toUpperCase()}
+              </Typography>
+            </Stack>
+          )}
+          {displayCrudOptions && <QuizzSliderOption id={quizz.id} />}
+        </Stack>
       </Stack>
     </Stack>
   )
 
-  if (variant === 'link') {
-    return (
-      <Link
-        underline="none"
-        component={RouterLink}
-        to={`/quizzes/${quizz.id}/play`}
-      >
+  switch (variant) {
+    case 'link':
+      return (
+        <Link
+          underline="none"
+          component={RouterLink}
+          to={`/quizzes/${quizz.id}/play`}
+        >
+          <Card
+            sx={{ p: 3, position: 'relative', overflow: 'visible' }}
+            variant="outlined"
+          >
+            {buildCommonContent()}
+          </Card>
+        </Link>
+      )
+    case 'accordion':
+      return (
+        <Accordion sx={{ borderRadius: 1 }} variant="outlined">
+          <AccordionSummary
+            expandIcon={<Icon name="eva:arrow-ios-downward-outline" />}
+            sx={{ px: 3, py: 2 }}
+          >
+            {buildCommonContent()}
+          </AccordionSummary>
+          <AccordionDetails>
+            <Stack spacing={3}>
+              {quizz.data.attempts?.map((attempt, idx) => (
+                <QuizzAttemptCard quizz={quizz} attempt={attempt} key={idx} />
+              ))}
+            </Stack>
+          </AccordionDetails>
+        </Accordion>
+      )
+    default:
+      return (
         <Card
           sx={{ p: 3, position: 'relative', overflow: 'visible' }}
           variant="outlined"
         >
           {buildCommonContent()}
         </Card>
-      </Link>
-    )
+      )
   }
-
-  return (
-    <Accordion sx={{ borderRadius: 1 }} variant="outlined">
-      <AccordionSummary
-        expandIcon={<Icon name="eva:arrow-ios-downward-outline" />}
-        sx={{ px: 3, py: 2 }}
-      >
-        {buildCommonContent()}
-      </AccordionSummary>
-      <AccordionDetails>
-        <Stack spacing={3}>
-          {quizz.data.attempts?.map((attempt, idx) => (
-            <QuizzAttemptCard quizz={quizz} attempt={attempt} key={idx} />
-          ))}
-        </Stack>
-      </AccordionDetails>
-    </Accordion>
-  )
 }

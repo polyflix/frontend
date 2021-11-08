@@ -34,7 +34,11 @@
         "title": "Groupes"
       },
       "quizzes": {
-        "title": "Quizzes"
+        "title": "Quiz",
+        "content": {
+          "title": "Mes quiz",
+          "description": "Voici la liste de vos quiz. Sur cette page, vous pouvez les modifier, les supprimer ou bien consulter leurs résultats."
+        }
       }
     }
   }

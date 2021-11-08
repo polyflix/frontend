@@ -7,7 +7,7 @@ export interface QuizzFilters extends QueryFilter {
   keepHighestScore?: boolean
   'element.visibility'?: Visibility
   'element.draft'?: boolean
-  'user.id'?: string
+  'element.user.id'?: string
   'attempts.user'?: string
   name?: NjxQueryFilter
 }
