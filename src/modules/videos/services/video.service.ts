@@ -78,6 +78,18 @@ export const videosApi = api.injectEndpoints({
       invalidatesTags: (result, _1, { id }) =>
         result ? [{ type: Endpoint.Videos, id }] : [],
     }),
+
+    /**
+     * Delete Course mutation
+     */
+    deleteVideo: builder.mutation<Video, { id: string }>({
+      query: ({ id }) => ({
+        url: `${Endpoint.Videos}/${id}`,
+        method: 'DELETE',
+      }),
+      // Invalidates all queries that subscribe to this Video `id` only.
+      invalidatesTags: (_, _1, { id }) => [{ type: Endpoint.Videos, id }],
+    }),
   }),
 })
 
@@ -86,4 +98,5 @@ export const {
   useGetVideoQuery,
   useAddVideoMutation,
   useUpdateVideoMutation,
+  useDeleteVideoMutation,
 } = videosApi

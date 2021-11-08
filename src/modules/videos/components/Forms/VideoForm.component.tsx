@@ -56,6 +56,7 @@ interface Props {
 export const VideoForm = ({ source, video, isUpdate }: Props) => {
   const snackbarService = useInjection<SnackbarService>(SnackbarService)
   const minioService = useInjection<MinioService>(MinioService)
+  const [isInProgress, setIsInProgress] = useState<boolean>(false)
 
   const { t } = useTranslation('videos')
 
@@ -80,7 +81,7 @@ export const VideoForm = ({ source, video, isUpdate }: Props) => {
     defaultValues: {
       title: video?.title,
       description: video?.description,
-      draft: video?.draft,
+      draft: Boolean(video?.draft),
       visibility: video?.visibility || Visibility.PUBLIC,
       thumbnail: video?.thumbnail,
       src: video?.source.replace('-nocookie', ''),
@@ -190,7 +191,9 @@ export const VideoForm = ({ source, video, isUpdate }: Props) => {
             presignedUrl: thumbnailPutPsu,
           })
         }
+        setIsInProgress(true)
         await minioService.upload(uploads)
+        setIsInProgress(false)
       }
 
       // Display the success snackbar
@@ -245,7 +248,7 @@ export const VideoForm = ({ source, video, isUpdate }: Props) => {
                 />
               )}
 
-              {!isYoutube && (
+              {!isYoutube && !isUpdate && (
                 <>
                   {videoFileUrl ? (
                     <FrameSelector
@@ -323,9 +326,7 @@ export const VideoForm = ({ source, video, isUpdate }: Props) => {
             </Stack>
           </Grid>
         </Grid>
-
         <Divider />
-
         <Stack direction="row" justifyContent="space-between">
           <Typography variant="h4">
             {t('forms.create-update.title.attachments')}
@@ -334,17 +335,14 @@ export const VideoForm = ({ source, video, isUpdate }: Props) => {
             <Icon name="carbon:add" size={30} />
           </IconButton>
         </Stack>
-
         <Typography variant="body1" sx={{ color: 'text.secondary' }}>
           {t('forms.create-update.description.attachments')}
         </Typography>
-
         {fields.length === 0 && (
           <Typography variant="body1" sx={{ color: 'text.secondary' }}>
             {t('forms.create-update.placeholder.attachments.empty')}
           </Typography>
         )}
-
         {fields.map((item, index) => {
           return (
             <Stack direction="row" key={item.id} alignItems="center">
@@ -398,23 +396,18 @@ export const VideoForm = ({ source, video, isUpdate }: Props) => {
             </Stack>
           )
         })}
-
         <Divider />
-
         <Typography sx={{ mb: 3 }} variant="h4">
           {t('forms.create-update.title.status')}
         </Typography>
-
         <VisibilitySelector
           value={watch('visibility')}
           onChange={(value: Visibility) => setValue('visibility', value)}
         />
-
         <StatusSelector
           value={watch('draft')}
           onChange={(value: boolean) => setValue('draft', value)}
         />
-
         <LoadingButton {...getCommonSubmitButtonProps(isSubmitting)}>
           {t(
             `forms.create-update.placeholder.submit.${
@@ -422,8 +415,7 @@ export const VideoForm = ({ source, video, isUpdate }: Props) => {
             }`
           )}
         </LoadingButton>
-
-        <UploadProgress />
+        {isInProgress && <UploadProgress />}
       </Stack>
     </form>
   )

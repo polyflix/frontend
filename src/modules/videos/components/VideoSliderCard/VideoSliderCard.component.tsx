@@ -1,7 +1,8 @@
 import {
   InfoOutlined,
   MoreVertOutlined,
-  PlaylistAddOutlined,
+  Edit,
+  Delete,
 } from '@mui/icons-material'
 import {
   Avatar,
@@ -28,7 +29,10 @@ import { DEFAULT_AVATAR_PICTURE } from '@core/constants/defaultValue.constant'
 import { getPublishLabel } from '@core/helpers/date.helper'
 import { videoSlugLink } from '@core/helpers/video.helper'
 
+import { useAuth } from '@auth/hooks/useAuth.hook'
+
 import { Video } from '@videos/models/video.model'
+import { useDeleteVideoMutation } from '@videos/services/video.service'
 
 import {
   VideoCardRootStyle,
@@ -36,10 +40,15 @@ import {
   VideoCardThumbnailContainer,
 } from './VideoSliderCard.style'
 
-const VideoSliderOption = () => {
+interface PropsVideo {
+  video: Video
+}
+
+const VideoSliderOption: React.FC<PropsVideo> = ({ video }) => {
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null)
   const { t } = useTranslation('home')
-
+  const { user } = useAuth()
+  const [deleteVideo] = useDeleteVideoMutation()
   const open = Boolean(anchorEl)
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault()
@@ -70,20 +79,47 @@ const VideoSliderOption = () => {
           'aria-labelledby': 'basic-button',
         }}
       >
-        <MenuItem onClick={handleClose}>
+        <MenuItem component={RouterLink} to={`/videos/${video?.slug}`}>
           <ListItemIcon>
             <InfoOutlined fontSize="small" />
           </ListItemIcon>
           <ListItemText>{t('sliders.videoCard.infoMenu.info')}</ListItemText>
         </MenuItem>
-        <MenuItem onClick={handleClose}>
+        {video?.publishedBy.id === user?.id && (
+          <>
+            <MenuItem
+              onClick={() => {
+                deleteVideo({ id: video?.id })
+              }}
+            >
+              <ListItemIcon sx={{ color: 'error.main' }}>
+                <Delete fontSize="small" />
+              </ListItemIcon>
+              <ListItemText>
+                {t('slug.details.menu.items.delete', { ns: 'videos' })}
+              </ListItemText>
+            </MenuItem>
+            <MenuItem
+              component={RouterLink}
+              to={`/videos/${video?.slug}/update`}
+            >
+              <ListItemIcon>
+                <Edit fontSize="small" />
+              </ListItemIcon>
+              <ListItemText>
+                {t('slug.details.menu.items.edit', { ns: 'videos' })}
+              </ListItemText>
+            </MenuItem>
+          </>
+        )}
+        {/* <MenuItem onClick={handleClose}>
           <ListItemIcon>
             <PlaylistAddOutlined fontSize="small" />
           </ListItemIcon>
           <ListItemText>
             {t('sliders.videoCard.infoMenu.addToPlayList')}
           </ListItemText>
-        </MenuItem>
+        </MenuItem> */}
       </Menu>
     </>
   )
@@ -213,7 +249,7 @@ export const VideoSliderCard = ({ video, isFetching = false }: Props) => {
                     {video?.title}
                   </Typography>
                 </Link>
-                <VideoSliderOption />
+                <VideoSliderOption video={video} />
               </Box>
               <Box>
                 <Typography
