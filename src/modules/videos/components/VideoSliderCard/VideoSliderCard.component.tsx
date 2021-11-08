@@ -87,7 +87,7 @@ const VideoSliderOption: React.FC<PropsVideo> = ({ video }) => {
           </ListItemIcon>
           <ListItemText>{t('sliders.videoCard.infoMenu.info')}</ListItemText>
         </MenuItem>
-        {video?.publishedBy.id === user?.id && (
+        {video.publishedBy!.id === user?.id && (
           <>
             <MenuItem
               onClick={() => {
@@ -128,6 +128,7 @@ const VideoSliderOption: React.FC<PropsVideo> = ({ video }) => {
         open={isDeleteModalOpen}
         setIsOpen={setIsDeleteModalOpen}
         onClose={() => setIsDeleteModalOpen(false)}
+        goBackonSuccess={false}
       />
     </>
   )
