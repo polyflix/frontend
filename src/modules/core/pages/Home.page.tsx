@@ -2,6 +2,7 @@ import { Grid, Typography } from '@mui/material'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
+import { NoData } from '@core/components/NoData/NoData.component'
 import { Page } from '@core/components/Page/Page.component'
 import { Slider } from '@core/components/Slider/Slider.component'
 import { Visibility } from '@core/models/content.model'
@@ -78,9 +79,13 @@ export const HomePage = () => {
             }
             freeMode
           >
-            {videos.map((video) => (
-              <VideoSliderCard key={video.id} video={video} />
-            ))}
+            {videos.length > 0 ? (
+              videos.map((video) => (
+                <VideoSliderCard key={video.id} video={video} />
+              ))
+            ) : (
+              <NoData variant="videos" link="/videos/create" />
+            )}
           </Slider>
         </Grid>
         {/** END LATEST VIDEOS SLIDER **/}
@@ -97,12 +102,16 @@ export const HomePage = () => {
             freeMode
           >
             {/** We slice the array as it is a frozen object to create a clone of it **/}
-            {videos
-              .slice()
-              .sort((a: Video, b: Video) => b.views - a.views)
-              .map((video) => (
-                <VideoSliderCard key={video.id} video={video} />
-              ))}
+            {videos.length > 0 ? (
+              videos
+                .slice()
+                .sort((a: Video, b: Video) => b.views - a.views)
+                .map((video) => (
+                  <VideoSliderCard key={video.id} video={video} />
+                ))
+            ) : (
+              <NoData variant="videos" link="/videos/create" />
+            )}
           </Slider>
         </Grid>
         {/** END POPULAR VIDEOS SLIDER **/}

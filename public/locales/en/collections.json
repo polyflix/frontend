@@ -99,5 +99,9 @@
         }
       }
     }
+  },
+  "noData": {
+    "description": "If you have the necessary rights you can create a collection below",
+    "buttonText": "Create a collection"
   }
 }

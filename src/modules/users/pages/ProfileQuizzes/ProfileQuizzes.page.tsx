@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next'
 
 import { ItemsPerPage } from '@core/components/Filters/ItemsPerPage.component'
 import { Header } from '@core/components/Header/Header.component'
+import { NoData } from '@core/components/NoData/NoData.component'
 import { Searchbar } from '@core/components/Searchbar/Searchbar.component'
 
 import { useAuth } from '@auth/hooks/useAuth.hook'
@@ -54,18 +55,22 @@ export const ProfileQuizzesPage = () => {
         <ItemsPerPage onChange={(limit) => setFilters({ ...filters, limit })} />
       </Stack>
       <Grid sx={{ my: 3 }} container spacing={2}>
-        {quizzes?.data.map((item) => (
-          <Grid key={item.id} item xs={12} lg={6}>
-            <QuizzCard
-              variant="none"
-              displayCrudOptions
-              displayPublisher={false}
-              displayTags
-              displayScoreMethod
-              quizz={item}
-            />
-          </Grid>
-        ))}
+        {quizzes?.data && quizzes?.data.length > 0 ? (
+          quizzes?.data.map((item) => (
+            <Grid key={item.id} item xs={12} lg={6}>
+              <QuizzCard
+                variant="none"
+                displayCrudOptions
+                displayPublisher={false}
+                displayTags
+                displayScoreMethod
+                quizz={item}
+              />
+            </Grid>
+          ))
+        ) : (
+          <NoData variant="quizzes" link="/quizzes/create" />
+        )}
       </Grid>
       <Box display="flex" justifyContent="center">
         <Pagination

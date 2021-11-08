@@ -163,5 +163,9 @@
     "title": "Results - {{quizzName}}",
     "description": "Here are the results of your quiz. You can search for a result by user by using the search bar below.",
     "search": "Search by username"
+  },
+  "noData": {
+    "description": "If you have the necessary rights you can create a quizz below",
+    "buttonText": "Create a quizz"
   }
 }
