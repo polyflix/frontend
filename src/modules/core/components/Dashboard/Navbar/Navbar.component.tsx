@@ -6,11 +6,9 @@ import { BugReport } from '@core/components/BugReport/BugReport.component'
 import { Icon } from '@core/components/Icon/Icon.component'
 import { LanguageButton } from '@core/components/LanguageButton/LanguageButton.component'
 import { Logo } from '@core/components/Logo/Logo.component'
-import { Spotlight } from '@core/components/Spotlight/Spotlight.component'
 import { ThemeButton } from '@core/components/ThemeButton/ThemeButton.component'
 import { useSidebar } from '@core/hooks/useSidebar.hook'
 
-import { NotificationsPopover } from '../../NotificationPopOver/NotificationPopOver.component'
 import { RootStyle, ToolbarStyle } from './Navbar.style'
 
 export const DashboardNavbar: React.FC<PropsWithChildren<{}>> = ({}) => {
@@ -37,7 +35,7 @@ export const DashboardNavbar: React.FC<PropsWithChildren<{}>> = ({}) => {
         </Box>
         <Logo />
         <Box sx={{ flexGrow: 1 }} />
-        <Spotlight />
+        {/*<Spotlight />*/}
         <Stack
           direction="row"
           alignItems="center"
@@ -47,7 +45,7 @@ export const DashboardNavbar: React.FC<PropsWithChildren<{}>> = ({}) => {
           }}
         >
           <LanguageButton />
-          <NotificationsPopover />
+          {/*<NotificationsPopover />*/}
           <BugReport />
           <Box
             sx={{
