@@ -21,14 +21,14 @@ export const ExploreCollectionPage = () => {
   const { t } = useTranslation('collections')
   const [filters, setFilters] = useState<CollectionFilters>({
     sort: [{ field: 'createdAt', order: 'DESC' }],
+    join: [{ field: 'elements', select: ['type'] }],
+    visibility: Visibility.PUBLIC,
+    draft: false,
     page: 1,
     limit: 10,
   })
 
   const { data, isLoading, isFetching } = useGetCollectionsQuery({
-    join: [{ field: 'elements', select: ['type'] }],
-    visibility: Visibility.PUBLIC,
-    draft: false,
     ...filters,
   })
 

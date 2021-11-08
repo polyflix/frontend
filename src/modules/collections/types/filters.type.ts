@@ -5,7 +5,6 @@ import { QueryFilter } from '@core/types/nestjsx-crud.type'
 
 export interface CollectionFilters extends QueryFilter {
   visibility?: Visibility
-  keepHighestScore?: boolean
   draft?: boolean
   name?: NjxQueryFilter
   'user.id'?: string

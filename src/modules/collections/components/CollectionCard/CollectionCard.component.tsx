@@ -59,7 +59,7 @@ export const CollectionCard = ({ collection }: CollectionCardProps) => {
               count: collection.elements.length,
             })}
           </Typography>
-          <CollectionCardMenu />
+          <CollectionCardMenu collection={collection} />
         </Stack>
       </CardFooterStyle>
     </RootStyle>

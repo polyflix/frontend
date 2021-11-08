@@ -8,14 +8,23 @@ import { Page } from '@core/components/Page/Page.component'
 import { CollectionForm } from '@collections/components/Forms/CollectionForm.component'
 import { useGetCollectionQuery } from '@collections/services/collection.service'
 
+// const FormContainer = () => {
+//   <CollectionForm collection={collection} isUpdate={isUpdate} />
+// }
+
 export const CreateUpdateCollectionPage = () => {
   const { slug } = useParams<{ slug: string }>()
 
-  const { data: collection, isLoading } = useGetCollectionQuery({ id: slug })
+  const { data: collection, isLoading } = useGetCollectionQuery({
+    id: slug ?? '',
+    filters: {
+      join: [{ field: 'elements' }],
+    },
+  })
 
   const { t } = useTranslation('collections')
 
-  const isUpdate = !isUndefined(collection)
+  const isUpdate = !isUndefined(slug)
 
   const i18nKey = isUpdate ? 'update' : 'create'
 

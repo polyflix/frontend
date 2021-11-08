@@ -1,4 +1,4 @@
-import { PlayArrow } from '@mui/icons-material'
+import { Delete, Edit, PlayArrow } from '@mui/icons-material'
 import {
   Timeline,
   TimelineConnector,
@@ -7,19 +7,40 @@ import {
   TimelineItem,
   TimelineSeparator,
 } from '@mui/lab'
-import { Alert, Button, Grid, Paper, Stack, Typography } from '@mui/material'
+import {
+  Alert,
+  Button,
+  Fab,
+  Grid,
+  Paper,
+  Stack,
+  Typography,
+} from '@mui/material'
 import { useTranslation } from 'react-i18next'
-import { useParams } from 'react-router-dom'
+import { Link, useParams, useHistory } from 'react-router-dom'
 
+import { useInjection } from '@polyflix/di'
+
+import { FabActionContainer } from '@core/components/FabActionContainer/FabActionContainer.component'
 import { Icon } from '@core/components/Icon/Icon.component'
 import { Page } from '@core/components/Page/Page.component'
+import { Endpoint } from '@core/constants/endpoint.constant'
+import { SnackbarService } from '@core/services/snackbar.service'
 import { ElementType } from '@core/types/element.type'
+import { CrudAction } from '@core/types/http.type'
 
-import { useGetCollectionQuery } from '@collections/services/collection.service'
+import {
+  useDeleteCollectionMutation,
+  useGetCollectionQuery,
+} from '@collections/services/collection.service'
 
 export const CollectionSlugPage = () => {
   const { t } = useTranslation('collections')
   const { slug } = useParams<{ slug: string }>()
+  const history = useHistory()
+  const snackbarService = useInjection<SnackbarService>(SnackbarService)
+
+  const [deleteCourse] = useDeleteCollectionMutation()
 
   const { data, isLoading } = useGetCollectionQuery({
     id: slug,
@@ -37,6 +58,12 @@ export const CollectionSlugPage = () => {
       case 'quizze':
         return 'healthicons:i-exam-multiple-choice'
     }
+  }
+
+  const handleDelete = () => {
+    deleteCourse({ slug: data!.slug })
+    snackbarService.notify(CrudAction.DELETE, Endpoint.Collections)
+    history.push('/users/profile/collections')
   }
 
   return (
@@ -95,6 +122,27 @@ export const CollectionSlugPage = () => {
           </Paper>
         </Grid>
       </Grid>
+      {data && (
+        <FabActionContainer>
+          <Fab
+            color="primary"
+            aria-label="add"
+            size="small"
+            onClick={handleDelete}
+          >
+            <Delete />
+          </Fab>
+          <Fab
+            color="secondary"
+            aria-label="edit"
+            size="medium"
+            component={Link}
+            to={`/collections/${data.slug}/update`}
+          >
+            <Edit />
+          </Fab>
+        </FabActionContainer>
+      )}
     </Page>
   )
 }

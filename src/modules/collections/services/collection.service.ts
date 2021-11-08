@@ -73,17 +73,27 @@ export const collectionsApi = api.injectEndpoints({
      */
     updateCollection: builder.mutation<
       Collection,
-      { id: string; body: ICollectionForm }
+      { slug: string; body: ICollectionForm }
     >({
-      query: ({ id, body }) => ({
-        url: `${Endpoint.Collections}/${id}`,
+      query: ({ slug, body }) => ({
+        url: `${Endpoint.Collections}/${slug}`,
         method: 'PUT',
         body,
       }),
       // Invalidates all queries that subscribe to this Collection `id` only.
       // In this case, `getCollection` will be re-run. `getCollections` *might*  rerun, if this id was under its results.
-      invalidatesTags: (result, _1, { id }) =>
-        result ? [{ type: Endpoint.Collections, id }] : [],
+      invalidatesTags: (result, _1, { slug }) =>
+        result ? [{ type: Endpoint.Collections, slug }] : [],
+    }),
+
+    deleteCollection: builder.mutation<Collection, { slug: string }>({
+      query: ({ slug }) => ({
+        url: `${Endpoint.Collections}/${slug}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: (_, _1, { slug }) => [
+        { type: Endpoint.Collections, slug },
+      ],
     }),
   }),
 })
@@ -93,4 +103,5 @@ export const {
   useGetCollectionQuery,
   useAddCollectionMutation,
   useUpdateCollectionMutation,
+  useDeleteCollectionMutation,
 } = collectionsApi

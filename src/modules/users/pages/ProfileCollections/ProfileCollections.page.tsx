@@ -28,13 +28,13 @@ export const ProfileCollectionsPage = () => {
   const { user } = useAuth()
   const [filters, setFilters] = useState<CollectionFilters>({
     sort: [{ field: 'createdAt', order: 'DESC' }],
+    join: [{ field: 'elements', select: ['type'] }, { field: 'user' }],
+    'user.id': user!.id,
     page: 1,
     limit: 10,
   })
 
   const { data, isLoading, isFetching } = useGetCollectionsQuery({
-    join: [{ field: 'elements', select: ['type'] }, { field: 'user' }],
-    'user.id': user!.id,
     ...filters,
   })
 
