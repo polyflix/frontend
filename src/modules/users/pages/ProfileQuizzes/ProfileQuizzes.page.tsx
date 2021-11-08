@@ -50,7 +50,7 @@ export const ProfileQuizzesPage = () => {
               search: { $or: [...buildQuizzSearch(search)] },
             })
           }}
-          label={t('search', { ns: 'quizzes' })}
+          label={t('navbar.actions.search.fast', { ns: 'common' })}
         />
         <ItemsPerPage onChange={(limit) => setFilters({ ...filters, limit })} />
       </Stack>

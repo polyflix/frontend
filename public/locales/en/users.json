@@ -52,6 +52,7 @@
       "links": {
         "title": "Links",
         "content": {
+          "title": "My links",
           "list": {
             "menu": {
               "actions": {
