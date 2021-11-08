@@ -17,6 +17,7 @@ import 'swiper/css'
 import { useInjection } from '@polyflix/di'
 
 import { DIProvider } from '@core/components/DIProvider/DIProvider'
+import ModalCookies from '@core/components/Modals/ModalCookie.component'
 import { DashboardLayout } from '@core/layouts/Dashboard/Dashboard.layout'
 import { LoadingLayout } from '@core/layouts/Loading/Loading.layout'
 import { NotFoundPage } from '@core/pages/404.page'
@@ -116,6 +117,7 @@ ReactDOM.render(
               <DIProvider>
                 <HelmetProvider>
                   <PolyflixApp />
+                  <ModalCookies />
                 </HelmetProvider>
               </DIProvider>
             </Suspense>
