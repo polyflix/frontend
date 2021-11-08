@@ -1,4 +1,3 @@
-import { CoursesRouter } from '@courses/courses.router'
 import '@vime/core/themes/default.css'
 import { isUndefined } from 'lodash'
 import { SnackbarProvider } from 'notistack'
@@ -36,6 +35,8 @@ import { QuizzRouter } from '@quizzes/quizzes.router'
 import { VideoRouter } from '@videos/video.router'
 
 import { CollectionRouter } from '@collections/collection.router'
+
+import { CoursesRouter } from '@courses/courses.router'
 
 import { UserRouter } from '@users/user.router'
 

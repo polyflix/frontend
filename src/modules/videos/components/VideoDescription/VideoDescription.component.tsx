@@ -35,6 +35,7 @@ export const VideoDetails = ({ video }: VideoDetailsProps) => {
   const [isLiked, setIsLiked] = useState<boolean | undefined>(undefined)
   const [likeDisabled, setLikeDisabled] = useState<boolean>(false)
   const [likeVideo] = useLikeVideoMutation()
+
   let [likeNumber, setLikeNumber] = useState<number>(video?.likes || 0)
   const like = async () => {
     if (video) {
@@ -136,7 +137,7 @@ export const VideoDetails = ({ video }: VideoDetailsProps) => {
                       alignItems: 'center',
                     }}
                   >
-                    <VideoDescriptionMenu />
+                    <VideoDescriptionMenu video={video} />
                   </Box>
                 </Stack>
               </Stack>
