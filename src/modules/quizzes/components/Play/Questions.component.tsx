@@ -15,7 +15,7 @@ export const Questions = ({ quizz }: PlayComponentProps) => {
     usePlayQuizz()
 
   const buildQuestionPagination = (isAnswered: boolean) =>
-    (quizz.questions || []).map((_0, index) => {
+    (quizz.data.questions || []).map((_0, index) => {
       const isActive = index === questionIdx
       return (
         <QuestionPaginationItem
@@ -28,7 +28,7 @@ export const Questions = ({ quizz }: PlayComponentProps) => {
         </QuestionPaginationItem>
       )
     })
-  const question = quizz.questions![questionIdx]
+  const question = quizz.data.questions![questionIdx]
   const isAnswered = (answers[question.id] || []).length > 0
 
   // Memoize the alternatives to avoid new shuffle when user select answers
@@ -38,7 +38,7 @@ export const Questions = ({ quizz }: PlayComponentProps) => {
   )
 
   const isFirstQuestion = questionIdx === 0
-  const isLastQuestion = questionIdx === (quizz.questions || []).length - 1
+  const isLastQuestion = questionIdx === (quizz.data.questions || []).length - 1
 
   return (
     <Grid container spacing={2}>

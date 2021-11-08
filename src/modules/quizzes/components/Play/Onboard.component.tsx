@@ -18,14 +18,16 @@ export const Onboard = ({ quizz }: PlayComponentProps) => {
           <br />
           <br />
           {t('onboarding.description.explanations', {
-            questions: quizz.questions?.length,
+            questions: quizz.data.questions?.length,
           })}
           <br />
           <br />
           {t('onboarding.description.score')}
           <br />
           <br />
-          {t('onboarding.description.limit', { retries: quizz.allowedRetries })}
+          {t('onboarding.description.limit', {
+            retries: quizz.data.allowedRetries,
+          })}
           <br />
         </Typography>
         <Alert severity="warning">{t('onboarding.warning')}</Alert>

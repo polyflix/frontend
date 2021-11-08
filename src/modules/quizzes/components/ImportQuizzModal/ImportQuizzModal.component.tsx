@@ -16,6 +16,7 @@ import { QuizzParser } from '@polyflix/quizz-parser'
 
 import { Dropzone } from '@core/components/Dropzone/Dropzone.component'
 import { Visibility } from '@core/models/content.model'
+import { Element } from '@core/models/element.model'
 import { LocalFileService } from '@core/services/local-file.service'
 import { SnackbarService } from '@core/services/snackbar.service'
 
@@ -24,7 +25,7 @@ import { Quizz } from '@quizzes/models/quizz.model'
 interface Props {
   open: boolean
   onClose: () => void
-  onImport: (quizz: Quizz) => void
+  onImport: (quizz: Element<Quizz>) => void
 }
 
 // Component used in the quizz form to import a quizz from a file
@@ -51,12 +52,16 @@ export const ImportQuizzModal = ({ open, onClose, onImport }: Props) => {
       })
 
       onImport({
-        ...parsedQuizz,
-        allowedRetries: 1,
-        draft: false,
+        type: 'quizz',
+        slug: '',
         name: 'My super quizz',
         visibility: Visibility.PUBLIC,
-        keepHighestScore: false,
+        draft: false,
+        data: {
+          allowedRetries: 1,
+          keepHighestScore: false,
+          ...parsedQuizz,
+        },
       })
     } catch (e: any) {
       snackbarService.createSnackbar(e.message, { variant: 'error' })

@@ -1,6 +1,8 @@
 import { Theme } from '@mui/material'
 import { max } from 'lodash'
 
+import { Element } from '@core/models/element.model'
+
 import { Quizz } from '@quizzes/models/quizz.model'
 
 /**
@@ -30,7 +32,7 @@ export const percentage = (score: number, maximum: number): number =>
  * Compute the score of an user for a quizz.
  * @param quizz
  */
-export const getScore = (quizz: Quizz) => {
+export const getScore = ({ data: quizz }: Element<Quizz>) => {
   const attempts = quizz.attempts || []
   if (attempts.length <= 0) return 0
 

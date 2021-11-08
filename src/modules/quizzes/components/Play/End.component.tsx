@@ -22,7 +22,7 @@ export const End = ({ quizz }: PlayComponentProps) => {
     return t('results.title.disappointing')
   }
 
-  const questions = quizz.questions || []
+  const questions = quizz.data.questions || []
   const score = attempt?.score || 0
   const scorePercentage = percentage(score, questions.length)
   const color = getFeedbackColor(scorePercentage, theme)
