@@ -26,7 +26,6 @@ export const QuizzAttemptCard = ({ attempt, quizz }: Props) => {
   )
 
   const isMe = user?.id === attempt.user?.id
-
   return (
     <Card
       variant="outlined"
@@ -39,7 +38,7 @@ export const QuizzAttemptCard = ({ attempt, quizz }: Props) => {
     >
       <Typography variant="body1">
         {t(`history.attempt.date.text.${isMe ? 'me' : 'user'}`, {
-          user: user?.displayName,
+          user: `${attempt.user?.firstName} ${attempt.user?.lastName}`,
         })}{' '}
         <strong>
           {attempt.score}/{(quizz.data.questions || []).length}
