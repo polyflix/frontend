@@ -5,16 +5,15 @@ import { Quizz } from '@quizzes/models/quizz.model'
 
 import { QuizzAttemptCard } from '../QuizzAttemptCard/QuizzAttemptCard.component'
 
-type Props = {
+interface Props {
   attempts?: Attempt[]
   quizz?: Quizz
 }
 
-export const QuizzAttemptsList = ({ attempts, quizz }: Props) => {
-  const data = attempts || []
+export const QuizzAttemptsList = ({ attempts = [], quizz }: Props) => {
   return (
     <Box sx={{ mt: 3 }}>
-      {data.map((attempt) => {
+      {attempts.map((attempt) => {
         return (
           <QuizzAttemptCard
             key={attempt?.id}
