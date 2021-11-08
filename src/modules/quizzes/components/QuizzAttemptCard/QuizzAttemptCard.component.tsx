@@ -31,6 +31,7 @@ export const QuizzAttemptCard = ({ attempt, quizz }: Props) => {
     <Card
       variant="outlined"
       sx={{
+        mb: 2,
         p: 2,
         border: `1px solid ${color}`,
         backgroundColor: alpha(color, 0.1),
