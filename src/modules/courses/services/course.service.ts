@@ -1,13 +1,13 @@
-import { Course } from '@courses/models/course.model'
-import { CoursesFilters } from '@courses/types/filters.type'
-import { ICourseForm } from '@courses/types/form.type'
-
 import { Container } from '@polyflix/di'
 
 import { Endpoint } from '@core/constants/endpoint.constant'
 import { CrudFilters } from '@core/filters/nestjsx-crud.filter'
 import { api } from '@core/services/api.service'
 import { Pagination } from '@core/types/nestjsx-crud.type'
+
+import { Course } from '@courses/models/course.model'
+import { CoursesFilters } from '@courses/types/filters.type'
+import { ICourseForm } from '@courses/types/form.type'
 
 // Get the filter builder from our DI system
 const filterBuilder = Container.get<CrudFilters<CoursesFilters>>(CrudFilters)
