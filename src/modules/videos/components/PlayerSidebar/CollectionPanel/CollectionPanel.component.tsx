@@ -7,7 +7,7 @@ import { useGetCollectionQuery } from '@collections/services/collection.service'
 export const CollectionPanel = () => {
   const query = useQuery() as URLSearchParams
 
-  const { data: collection, isLoading } = useGetCollectionQuery({
+  const { data: collection } = useGetCollectionQuery({
     id: query.get('c')!,
     filters: {
       join: [{ field: 'elements' }],

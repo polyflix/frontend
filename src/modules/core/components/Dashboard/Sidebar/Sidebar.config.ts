@@ -1,3 +1,6 @@
+import { useRoles } from '@core/hooks/useRoles.hook'
+import { Role } from '@core/types/roles.type'
+
 import i18n from '../../../../../i18n/config'
 
 export enum SidebarSection {
@@ -12,7 +15,7 @@ export interface SidebarItem {
   href?: string
   section?: SidebarSection
   items?: SidebarItem[]
-  condition?: boolean
+  roles?: Role[]
   disabled?: boolean
 }
 
@@ -21,26 +24,31 @@ const sidebarConfiguration: SidebarItem[] = [
     title: 'items.home',
     href: '/',
     icon: 'akar-icons:home',
+    roles: [Role.Student, Role.Teacher, Role.Admin],
   },
   {
     title: 'items.videos',
     href: '/videos/explore',
     icon: 'eva:play-circle-outline',
+    roles: [Role.Student, Role.Teacher, Role.Admin],
   },
   {
     title: 'items.quizzes',
     href: '/quizzes/explore',
     icon: 'healthicons:i-exam-multiple-choice',
+    roles: [Role.Student, Role.Teacher, Role.Admin],
   },
   {
     title: 'items.collections',
     href: '/collections/explore',
     icon: 'bx:bx-collection',
+    roles: [Role.Student, Role.Teacher, Role.Admin],
   },
   {
     title: 'items.videos',
     section: SidebarSection.MANAGEMENT,
     icon: 'eva:play-circle-outline',
+    roles: [Role.Teacher, Role.Admin],
     items: [
       {
         title: 'actions.list',
@@ -50,18 +58,13 @@ const sidebarConfiguration: SidebarItem[] = [
         title: 'actions.create',
         href: '/videos/create',
       },
-      // Not implemented for the moment, but will be soon
-      // {
-      //   title: 'actions.history',
-      //   href: '/videos/history',
-      //   disabled: true,
-      // },
     ],
   },
   {
     title: 'items.quizzes',
     section: SidebarSection.MANAGEMENT,
     icon: 'healthicons:i-exam-multiple-choice',
+    roles: [Role.Teacher, Role.Admin],
     items: [
       {
         title: 'actions.list',
@@ -81,6 +84,7 @@ const sidebarConfiguration: SidebarItem[] = [
     title: 'items.collections',
     section: SidebarSection.MANAGEMENT,
     icon: 'bx:bx-collection',
+    roles: [Role.Teacher, Role.Admin],
     items: [
       {
         title: 'actions.list',
@@ -103,8 +107,10 @@ export interface SidebarConfiguration {
  */
 export const getSidebarSections = (): SidebarConfiguration => {
   const config: SidebarConfiguration = {}
+  const { hasRoles } = useRoles()
 
   sidebarConfiguration.forEach((item) => {
+    if (item?.roles?.length && !hasRoles(item?.roles || [])) return
     const section: string = i18n.t(
       `sidebar:sections.${item.section || SidebarSection.GENERAL}`
     )
