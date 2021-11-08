@@ -7,6 +7,7 @@ import {
   Skeleton,
   Stack,
   Typography,
+  Link,
 } from '@mui/material'
 import IconButton from '@mui/material/IconButton'
 import Tooltip from '@mui/material/Tooltip'
@@ -69,8 +70,6 @@ export const CourseSlugPage = () => {
               {data?.name ? (
                 <Typography
                   sx={{
-                    color: 'text.primary',
-                    cursor: 'pointer',
                     overflowWrap: 'break-word',
                   }}
                   variant="h2"
@@ -82,7 +81,6 @@ export const CourseSlugPage = () => {
                         sx={{
                           display: 'inline',
                           margin: 1,
-                          color: 'primary.light',
                         }}
                         component={RouterLink}
                         to={`/courses/${data?.slug}/update`}
@@ -163,20 +161,22 @@ export const CourseSlugPage = () => {
               <Typography variant="h4">{t('collections')}</Typography>
               {course?.collections?.map((collection) => (
                 <Paper variant="outlined" key={collection.id} sx={{ p: 2 }}>
-                  <Typography
+                  <Link
                     component={RouterLink}
-                    variant="h4"
-                    sx={{
-                      my: 1,
-                      textDecoration: 'none',
-                      cursor: 'pointer',
-                      color: 'black',
-                      width: 'auto',
-                    }}
                     to={`collections/${collection.slug}`}
+                    underline="none"
+                    color="inherit"
                   >
-                    {collection.name}
-                  </Typography>
+                    <Typography
+                      variant="h4"
+                      sx={{
+                        my: 1,
+                        width: 'auto',
+                      }}
+                    >
+                      {collection.name}
+                    </Typography>
+                  </Link>
                   <CollectionTimeline collectionSlug={collection.slug} />
                 </Paper>
               ))}
@@ -188,7 +188,7 @@ export const CourseSlugPage = () => {
         </Grid>
         <Grid item xs={12} lg={8}>
           <Typography variant="h4">{t('introduction')}</Typography>
-          <MarkdownBox body={data?.content} />
+          <MarkdownBox body={data?.content!} />
         </Grid>
       </Grid>
     </Page>
