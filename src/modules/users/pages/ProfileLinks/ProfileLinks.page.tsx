@@ -60,7 +60,7 @@ export const ProfileLinksPage = () => {
   return (
     <Page isLoading={isLoading} sx={{ mt: 3 }}>
       <Typography variant="h4" sx={{ mb: 2 }}>
-        title{t('profile.tabs.links.content.title')}
+        {t('profile.tabs.links.content.title')}
       </Typography>
 
       <Divider sx={{ my: 3 }} />
