@@ -4,7 +4,6 @@ import {
   PlaylistAddOutlined,
 } from '@mui/icons-material'
 import {
-  Avatar,
   Box,
   IconButton,
   ListItemIcon,
@@ -24,11 +23,12 @@ import { useTranslation } from 'react-i18next'
 import { Link as RouterLink } from 'react-router-dom'
 
 import { AspectRatioBox } from '@core/components/AspectRatioBox/AspectRation.component'
-import { DEFAULT_AVATAR_PICTURE } from '@core/constants/defaultValue.constant'
 import { getPublishLabel } from '@core/helpers/date.helper'
 import { videoSlugLink } from '@core/helpers/video.helper'
 
 import { Video } from '@videos/models/video.model'
+
+import { UserAvatar } from '@users/components/UserAvatar/UserAvatar.component'
 
 import {
   VideoCardRootStyle,
@@ -159,9 +159,7 @@ export const VideoSliderCard = ({ video, isFetching = false }: Props) => {
             }}
             direction="row"
           >
-            <Avatar
-              src={video.publishedBy?.avatar || DEFAULT_AVATAR_PICTURE}
-              alt={video.publishedBy?.displayName + ' profile picture.'}
+            <UserAvatar
               sx={{
                 borderRadius: '100%',
                 width: {
@@ -173,6 +171,7 @@ export const VideoSliderCard = ({ video, isFetching = false }: Props) => {
                   sm: 40,
                 },
               }}
+              user={video.publishedBy}
             />
 
             <Box

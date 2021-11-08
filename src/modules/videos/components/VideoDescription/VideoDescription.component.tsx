@@ -2,7 +2,6 @@ import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined'
 import {
   Skeleton,
   Typography,
-  Avatar,
   Stack,
   Paper,
   Grid,
@@ -22,6 +21,8 @@ import { MarkdownBox } from '@core/components/MarkdownBox/MarkdownBox.component'
 import { stringToLongDate, stringToShortDate } from '@core/helpers/date.helper'
 
 import { Video } from '@videos/models/video.model'
+
+import { UserAvatar } from '@users/components/UserAvatar/UserAvatar.component'
 
 import { VideoDescriptionMenu } from './VideoDescriptionMenu/VideoDescriptionMenu.component'
 
@@ -150,10 +151,7 @@ export const VideoDetails = ({ video }: VideoDetailsProps) => {
                   to="#"
                 >
                   <Stack spacing={1} direction="row" alignItems="center">
-                    <Avatar
-                      alt={video.publishedBy?.displayName}
-                      src={video.publishedBy?.avatar}
-                    />
+                    <UserAvatar user={video.publishedBy} />
                     <Typography variant="caption">
                       {video.publishedBy?.displayName}
                     </Typography>

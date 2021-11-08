@@ -1,4 +1,3 @@
-import Avatar from '@mui/material/Avatar'
 import Box from '@mui/material/Box'
 import IconButton from '@mui/material/IconButton'
 import Tab from '@mui/material/Tab'
@@ -9,10 +8,10 @@ import { useTranslation } from 'react-i18next'
 import { Link as RouterLink, useRouteMatch } from 'react-router-dom'
 
 import { Icon } from '@core/components/Icon/Icon.component'
-import { DEFAULT_AVATAR_PICTURE } from '@core/constants/defaultValue.constant'
 
 import { User } from '@users/models/user.model'
 
+import { UserAvatar } from '../UserAvatar/UserAvatar.component'
 import { BannerHead } from './Banner.style'
 
 const BannerTabs = () => {
@@ -104,9 +103,8 @@ export const ProfileBanner = ({ user }: Props) => {
             <Icon name="eva:edit-fill" />
           </IconButton>
         </Tooltip>
-        <Avatar
-          src={user?.avatar || DEFAULT_AVATAR_PICTURE}
-          alt={user.displayName + ' profile picture.'}
+        <UserAvatar
+          user={user}
           sx={{ width: 100, height: 100, borderRadius: 10 }}
         />
         <Box
