@@ -1,4 +1,4 @@
-import { Divider, Stack, Grid, Pagination, Box } from '@mui/material'
+import { Box, Divider, Grid, Pagination, Stack } from '@mui/material'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 

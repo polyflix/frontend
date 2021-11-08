@@ -76,8 +76,8 @@
             }
           },
           "quizz": {
-            "label": "Quizze",
-            "description": "Add a quizze to the collection"
+            "label": "Quizz",
+            "description": "Add a quizz to the collection"
           },
           "link": {
             "label": "Link",

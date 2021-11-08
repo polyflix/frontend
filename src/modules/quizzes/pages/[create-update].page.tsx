@@ -6,6 +6,7 @@ import { useParams } from 'react-router-dom'
 
 import { Header } from '@core/components/Header/Header.component'
 import { Page } from '@core/components/Page/Page.component'
+import { Element } from '@core/models/element.model'
 
 import { QuizzForm } from '@quizzes/components/Forms/QuizzForm.component'
 import { ImportQuizzModal } from '@quizzes/components/ImportQuizzModal/ImportQuizzModal.component'
@@ -17,7 +18,7 @@ export const CreateUpdateQuizzPage = () => {
   const { id } = useParams<{ id: string }>()
 
   const [isImport, setIsImport] = useState<boolean>(false)
-  const [importedQuizz, setImportedQuizz] = useState<Quizz>()
+  const [importedQuizz, setImportedQuizz] = useState<Element<Quizz>>()
 
   const { data, isLoading } = useGetQuizzQuery(
     { id, filters: { join: ['questions', 'questions.alternatives'] } },
@@ -61,6 +62,7 @@ export const CreateUpdateQuizzPage = () => {
         key={importedQuizz?.name}
         isUpdate={isUpdate}
         i18nKey={i18nKey}
+        isImport={Boolean(importedQuizz)}
         quizz={isUpdate ? data : importedQuizz}
       />
     </Page>

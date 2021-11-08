@@ -1,9 +1,9 @@
 import {
+  Box,
   Divider,
-  Stack,
   Grid,
   Pagination,
-  Box,
+  Stack,
   Typography,
 } from '@mui/material'
 import { useState } from 'react'
@@ -28,7 +28,6 @@ export const ProfileCollectionsPage = () => {
   const { user } = useAuth()
   const [filters, setFilters] = useState<CollectionFilters>({
     sort: [{ field: 'createdAt', order: 'DESC' }],
-
     page: 1,
     limit: 10,
   })

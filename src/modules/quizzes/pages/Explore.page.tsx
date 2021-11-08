@@ -7,6 +7,7 @@ import { Header } from '@core/components/Header/Header.component'
 import { Page } from '@core/components/Page/Page.component'
 import { Searchbar } from '@core/components/Searchbar/Searchbar.component'
 import { Visibility } from '@core/models/content.model'
+import { Element } from '@core/models/element.model'
 
 import { QuizzCard } from '@quizzes/components/QuizzCard/QuizzCard.component'
 import { buildQuizzSearch } from '@quizzes/helpers/search.helper'
@@ -27,11 +28,14 @@ export const ExploreQuizzesPage = () => {
   // Fetch the quizzes
   const { data, isLoading } = useGetQuizzesQuery({
     join: [
-      { field: 'user', select: ['firstName', 'lastName', 'profilePicture'] },
+      {
+        field: 'element.user',
+        select: ['firstName', 'lastName', 'profilePicture'],
+      },
       { field: 'questions', select: ['label'] },
     ],
-    visibility: Visibility.PUBLIC,
-    draft: false,
+    'element.visibility': Visibility.PUBLIC,
+    'element.draft': false,
     ...filters,
   })
 
@@ -58,7 +62,7 @@ export const ExploreQuizzesPage = () => {
       </Stack>
 
       <Grid sx={{ my: 3 }} container spacing={2}>
-        {data?.data.map((item: Quizz) => (
+        {data?.data.map((item: Element<Quizz>) => (
           <Grid key={item.id} item xs={12} md={4}>
             <QuizzCard displayTags quizz={item} />
           </Grid>

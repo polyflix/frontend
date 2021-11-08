@@ -29,6 +29,7 @@ import {
   getMarks,
 } from '@core/helpers/form.helper'
 import { Visibility } from '@core/models/content.model'
+import { Element } from '@core/models/element.model'
 import { SnackbarService } from '@core/services/snackbar.service'
 import { CrudAction } from '@core/types/http.type'
 
@@ -41,12 +42,13 @@ import {
 import { IQuizzForm } from '../../types/form.type'
 
 interface Props {
-  quizz?: Quizz
+  quizz?: Element<Quizz>
   i18nKey?: string
   isUpdate: boolean
+  isImport: boolean
 }
 
-export const QuizzForm = ({ quizz, isUpdate }: Props) => {
+export const QuizzForm = ({ quizz, isUpdate, isImport }: Props) => {
   const snackbarService = useInjection<SnackbarService>(SnackbarService)
 
   const { t } = useTranslation('quizzes')
@@ -68,12 +70,13 @@ export const QuizzForm = ({ quizz, isUpdate }: Props) => {
     defaultValues: {
       visibility: quizz?.visibility || Visibility.PUBLIC,
       name: quizz?.name,
-      allowedRetries: quizz?.allowedRetries || 1,
+      allowedRetries: quizz?.data.allowedRetries || 1,
       draft: quizz?.draft,
-      questions: isUpdate
-        ? quizz?.questions
-        : [{ index: 0, label: '', alternatives: [] }],
-      keepHighestScore: quizz?.keepHighestScore || false,
+      questions:
+        isUpdate || isImport
+          ? quizz?.data.questions
+          : [{ index: 0, label: '', alternatives: [] }],
+      keepHighestScore: quizz?.data.keepHighestScore || false,
     },
   })
 
@@ -138,7 +141,7 @@ export const QuizzForm = ({ quizz, isUpdate }: Props) => {
     }
   }
 
-  const quizzQuestions = quizz?.questions || []
+  const quizzQuestions = quizz?.data.questions || []
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
