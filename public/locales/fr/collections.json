@@ -1,3 +1,90 @@
 {
-  "form": {}
+  "explore": {
+    "title": "Explorer les collections",
+    "description": "Trouvez ci-dessous toutes les collections. Vous pouvez rechercher une collection par son nom",
+    "collectionCard": {
+      "footer": {
+        "content": "{{count}} éléments dans la collection"
+      },
+      "menu": {
+        "items": {
+          "edit": "Modifier la collection",
+          "delete": "Supprimer la collection",
+          "view": "Voir la collection"
+        }
+      }
+    }
+  },
+  "slug": {
+    "list": {
+      "title": "Explorer la collection",
+      "noData": "Il n'y a pas d'éléments dans la collection"
+    },
+    "actions": {
+      "play": "Lecture"
+    }
+  },
+  "forms": {
+    "create-update": {
+      "title": {
+        "create": "Créer une nouvelle collection",
+        "update": "Mettre à jour {{collection}}"
+      },
+      "description": {
+        "create": "Créez une collection pour ajouter de nouvelles pièces jointes, ou modifiez simplement le titre ou la description de celles-ci.",
+        "update": "Mettez à jour votre collection pour ajouter de nouvelles pièces jointes, ou simplement modifier le titre ou la description de celle-ci."
+      },
+      "fields": {
+        "name": {
+          "label": "Nom",
+          "errors": {
+            "required": "Requis"
+          }
+        },
+        "description": {
+          "label": "Description",
+          "errors": {
+            "required": "Requis"
+          }
+        },
+        "elements": {
+          "label": "Éléments",
+          "tooltips": {
+            "addElements": "Ajouter un élément"
+          },
+          "errors": {
+            "noData": "Il n'y a pas d'éléments"
+          }
+        }
+      },
+      "actions": {
+        "submit": {
+          "create": "Créer une vidéo",
+          "update": "Vidéo de mise à jour"
+        },
+        "addElement": "Ajouter un élément à la collection"
+      }
+    },
+    "elementModal": {
+      "elementType": {
+        "types": {
+          "video": {
+            "label": "Vidéo",
+            "description": "Ajouter une vidéo à la collection",
+            "actions": {
+              "addElements": "Ajouter {{count}} vidéo(s) à la collection"
+            }
+          },
+          "quizz": {
+            "label": "Quizze",
+            "description": "Ajouter un quizze à la collection"
+          },
+          "link": {
+            "label": "Lien",
+            "description": "Ajouter un lien vers la collection"
+          }
+        }
+      }
+    }
+  }
 }

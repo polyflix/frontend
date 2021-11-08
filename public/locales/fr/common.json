@@ -22,6 +22,7 @@
       },
       "language": "Langue",
       "notifications": "Notifications",
+      "bugReport": "Signaler un bug",
       "add": {
         "media": "Ajouter des médias"
       }

@@ -1,4 +1,4 @@
-import { Divider, Stack, Grid, Pagination, Box } from '@mui/material'
+import { Box, Divider, Grid, Pagination, Stack } from '@mui/material'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -21,14 +21,14 @@ export const ExploreCollectionPage = () => {
   const { t } = useTranslation('collections')
   const [filters, setFilters] = useState<CollectionFilters>({
     sort: [{ field: 'createdAt', order: 'DESC' }],
-    join: [{ field: 'elements', select: ['type'] }],
-    visibility: Visibility.PUBLIC,
-    draft: false,
     page: 1,
     limit: 10,
   })
 
   const { data, isLoading, isFetching } = useGetCollectionsQuery({
+    join: [{ field: 'elements', select: ['type'] }],
+    visibility: Visibility.PUBLIC,
+    draft: false,
     ...filters,
   })
 
@@ -48,7 +48,19 @@ export const ExploreCollectionPage = () => {
           onChange={(search) => {
             setFilters({
               ...filters,
-              search: { $or: [...buildCollectionSearch(search)] },
+              search: {
+                $and: [
+                  ...buildCollectionSearch(search),
+                  {
+                    visibility: {
+                      $eq: Visibility.PUBLIC,
+                    },
+                    draft: {
+                      $eq: false,
+                    },
+                  },
+                ],
+              },
             })
           }}
           label={t('search')}

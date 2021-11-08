@@ -17,7 +17,7 @@ import {
   Typography,
 } from '@mui/material'
 import { useTranslation } from 'react-i18next'
-import { Link, useParams, useHistory } from 'react-router-dom'
+import { Link, useHistory, useParams } from 'react-router-dom'
 
 import { useInjection } from '@polyflix/di'
 
@@ -55,7 +55,7 @@ export const CollectionSlugPage = () => {
         return 'eva:play-circle-outline'
       case 'link':
         return 'eva:link-2-fill'
-      case 'quizze':
+      case 'quizz':
         return 'healthicons:i-exam-multiple-choice'
     }
   }

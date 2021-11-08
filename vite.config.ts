@@ -33,6 +33,10 @@ export default defineConfig({
         replacement: resolve(__dirname, './src/environments'),
       },
       {
+        find: '@assets',
+        replacement: resolve(__dirname, './src/assets'),
+      },
+      {
         find: '@core',
         replacement: resolve(__dirname, './src/modules/core'),
       },

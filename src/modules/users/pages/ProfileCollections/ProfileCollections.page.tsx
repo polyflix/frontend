@@ -1,9 +1,9 @@
 import {
+  Box,
   Divider,
-  Stack,
   Grid,
   Pagination,
-  Box,
+  Stack,
   Typography,
 } from '@mui/material'
 import { useState } from 'react'
@@ -28,13 +28,13 @@ export const ProfileCollectionsPage = () => {
   const { user } = useAuth()
   const [filters, setFilters] = useState<CollectionFilters>({
     sort: [{ field: 'createdAt', order: 'DESC' }],
-    join: [{ field: 'elements', select: ['type'] }, { field: 'user' }],
-    'user.id': user!.id,
     page: 1,
     limit: 10,
   })
 
   const { data, isLoading, isFetching } = useGetCollectionsQuery({
+    join: [{ field: 'elements', select: ['type'] }, { field: 'user' }],
+    'user.id': user!.id,
     ...filters,
   })
 
@@ -53,7 +53,16 @@ export const ProfileCollectionsPage = () => {
           onChange={(search) => {
             setFilters({
               ...filters,
-              search: { $or: [...buildCollectionSearch(search)] },
+              search: {
+                $and: [
+                  ...buildCollectionSearch(search),
+                  {
+                    'user.id': {
+                      $eq: user!.id,
+                    },
+                  },
+                ],
+              },
             })
           }}
           label={t('search')}

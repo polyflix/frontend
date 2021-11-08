@@ -5,7 +5,6 @@ import {
   TextField,
   Typography,
   Divider,
-  Alert,
   IconButton,
   Tooltip,
   List,
@@ -13,6 +12,7 @@ import {
   ListItemAvatar,
   Avatar,
   ListItemText,
+  Alert,
 } from '@mui/material'
 import { useState } from 'react'
 import { useFieldArray, useForm } from 'react-hook-form'
@@ -82,6 +82,7 @@ export const CollectionForm = ({ collection, isUpdate }: Props) => {
   const { fields, remove } = fieldArray
 
   const onSubmit = async (data: ICollectionForm) => {
+    // Need to send only element id
     const mappedData = {
       ...data,
       elements: fields.map((element) => element.id),

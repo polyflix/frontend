@@ -2,6 +2,7 @@ import { Stack } from '@mui/material'
 import Box from '@mui/material/Box'
 import React, { PropsWithChildren } from 'react'
 
+import { BugReport } from '@core/components/BugReport/BugReport.component'
 import { Icon } from '@core/components/Icon/Icon.component'
 import { LanguageButton } from '@core/components/LanguageButton/LanguageButton.component'
 import { Logo } from '@core/components/Logo/Logo.component'
@@ -47,6 +48,7 @@ export const DashboardNavbar: React.FC<PropsWithChildren<{}>> = ({}) => {
         >
           <LanguageButton />
           <NotificationsPopover />
+          <BugReport />
           <Box
             sx={{
               display: {

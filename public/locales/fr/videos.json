@@ -86,6 +86,12 @@
         },
         "notes": {
           "title": "Notes"
+        },
+        "attachments": {
+          "title": "Pièces jointes",
+          "alertMessages": {
+            "info": "Pas de pièces jointes pour cette vidéo"
+          }
         }
       },
       "tooltips": {

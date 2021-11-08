@@ -22,7 +22,7 @@ export const ExploreVideosPage = () => {
     pageSize: 10,
   })
 
-  const { data, isLoading } = useGetVideosQuery({
+  const { data, isLoading, isFetching } = useGetVideosQuery({
     visibility: Visibility.PUBLIC,
     draft: false,
     ...filters,
@@ -57,7 +57,11 @@ export const ExploreVideosPage = () => {
       <Grid sx={{ my: 3 }} container spacing={2}>
         {data?.items.map((item: Video) => (
           <Grid key={item.id} item xs={12} sm={6} md={6} lg={4}>
-            <VideoSliderCard key={item.id} video={item} />
+            <VideoSliderCard
+              key={item.id}
+              video={item}
+              isFetching={isFetching}
+            />
           </Grid>
         ))}
       </Grid>

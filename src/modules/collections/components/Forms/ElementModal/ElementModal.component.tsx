@@ -1,11 +1,11 @@
 import {
-  Modal,
-  Paper,
-  Typography,
-  Theme,
   Box,
   Fade,
+  Modal,
+  Paper,
   Stack,
+  Theme,
+  Typography,
 } from '@mui/material'
 import { alpha, SxProps } from '@mui/system'
 import { useState } from 'react'
@@ -59,7 +59,7 @@ export const ElementModal = ({
       icon: 'ri:lock-password-line',
       label: t('forms.elementModal.elementType.types.quizz.label'),
       description: t('forms.elementModal.elementType.types.quizz.description'),
-      value: 'quizze',
+      value: 'quizz',
     },
     {
       icon: 'ic:outline-visibility-off',
@@ -73,7 +73,7 @@ export const ElementModal = ({
     switch (selectedElementPage) {
       case 'link':
         return <NotImplementedPage />
-      case 'quizze':
+      case 'quizz':
         return <NotImplementedPage />
       case 'video':
         return <VideoList fieldArray={fieldArray} />

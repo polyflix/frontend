@@ -8,10 +8,6 @@ import { Page } from '@core/components/Page/Page.component'
 import { CollectionForm } from '@collections/components/Forms/CollectionForm.component'
 import { useGetCollectionQuery } from '@collections/services/collection.service'
 
-// const FormContainer = () => {
-//   <CollectionForm collection={collection} isUpdate={isUpdate} />
-// }
-
 export const CreateUpdateCollectionPage = () => {
   const { slug } = useParams<{ slug: string }>()
 

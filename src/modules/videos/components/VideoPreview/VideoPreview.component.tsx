@@ -3,6 +3,8 @@ import { useTranslation } from 'react-i18next'
 
 import { Image } from '@core/styles/Image.style'
 
+import dumbThumbnail from '@assets/images/dumb_thumbnail.jpg'
+
 interface Props {
   title?: string
   thumbnail?: string | File
@@ -14,7 +16,7 @@ export const VideoPreview = ({ title, description, thumbnail }: Props) => {
   const { t } = useTranslation('videos')
 
   const getThumbnail = () => {
-    if (!thumbnail) return 'https://i.stack.imgur.com/y9DpT.jpg'
+    if (!thumbnail) return dumbThumbnail
     if (typeof thumbnail === 'string') return thumbnail
 
     return URL.createObjectURL(thumbnail)
