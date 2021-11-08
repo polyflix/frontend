@@ -12,7 +12,7 @@ export const CreateUpdateCollectionPage = () => {
   const { slug } = useParams<{ slug: string }>()
 
   const { data: collection, isLoading } = useGetCollectionQuery({
-    id: slug ?? '',
+    slug: slug ?? '',
     filters: {
       join: [{ field: 'elements' }, { field: 'passwords' }],
     },

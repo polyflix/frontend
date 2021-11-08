@@ -1,0 +1,55 @@
+{
+  "explore": {
+    "title": "Explorer les cours",
+    "bodyTitle": "Explorer les <colored>cours</colored>",
+    "description": "Suivez des cours en ligne au travers de vidéos, quizzes ou encore des ressources externes."
+  },
+  "collections": "Collections",
+  "introduction": "Présentation",
+  "noData": "Aucune donnée disponible",
+  "courseCard": {
+    "footerElements": "{{count}} collection(s) dans ce cours"
+  },
+  "form": {
+    "upsert": {
+      "title": {
+        "status": "Status",
+        "create": "Créer un nouveau cours",
+        "update": "Mettre à jour le cours {{course}}",
+        "metadata": "Informations générales",
+        "collections": "Collections"
+      },
+      "description": {
+        "create": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit quam excepturi eligendi, ratione error reiciendis ab earum dolore, eum doloribus in ut quae suscipit exercitationem necessitatibus sint. Autem, beatae deserunt.",
+        "update": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit quam excepturi eligendi, ratione error reiciendis ab earum dolore, eum doloribus in ut quae suscipit exercitationem necessitatibus sint. Autem, beatae deserunt."
+      },
+      "label": {
+        "name": "Nom",
+        "description": "Description courte",
+        "content": "Contenu de votre cours",
+        "id": "Identifiant unique"
+      },
+      "helper": {
+        "name": "Nom de votre cours avec un maximum de 64 caractères",
+        "description": "Une description courte permettant de comprendre ce que fait votre cours",
+        "content": "Contenu de votre cours, document principal avec une description complète"
+      },
+      "error": {
+        "requiredField": "Le champ {{field}} est exigé",
+        "minLength": "Ce champ demande au moins {{count}} characters",
+        "maxLength": "Ce champ demande au plus {{count}} characters"
+      },
+      "fields": {
+        "name": "nom",
+        "description": "description",
+        "content": "content"
+      },
+      "submit": "Soumettre",
+      "update": "Mettre à jour",
+      "deleteChoice": "Supprimer ce choix",
+      "addCollection": "Attacher une collection",
+      "search": "Rechercher une collection",
+      "seeCollection": "Voir la collection"
+    }
+  }
+}

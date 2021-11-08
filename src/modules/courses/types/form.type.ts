@@ -6,4 +6,5 @@ export interface ICourseForm {
   visibility: Visibility
   description: string
   content: string
+  collections?: string[]
 }

@@ -20,6 +20,7 @@ const BannerTabs = () => {
     path: [
       '/users/profile',
       '/users/profile/videos',
+      '/users/profile/courses',
       '/users/profile/collections',
       '/users/profile/groups',
       '/users/profile/quizzes',
@@ -53,6 +54,12 @@ const BannerTabs = () => {
         label={t('profile.tabs.videos.title')}
         value="/users/profile/videos"
         to="/users/profile/videos"
+        component={RouterLink}
+      />
+      <Tab
+        label={t('profile.tabs.courses.title')}
+        value="/users/profile/courses"
+        to="/users/profile/courses"
         component={RouterLink}
       />
       <Tab

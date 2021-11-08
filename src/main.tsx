@@ -39,7 +39,7 @@ import { LinkRouter } from '@links/links.router'
 
 import { CollectionRouter } from '@collections/collection.router'
 
-import { CoursesRouter } from '@courses/courses.router'
+import { CourseRouter } from '@courses/course.router'
 
 import { UserRouter } from '@users/user.router'
 
@@ -90,11 +90,11 @@ const PolyflixApp = () => {
           >
             <DashboardLayout>
               <Switch>
+                <Route path="/courses" component={CourseRouter} />
                 <Route path="/quizzes" component={QuizzRouter} />
                 <Route path="/users" component={UserRouter} />
                 <Route path="/videos" component={VideoRouter} />
                 <Route path="/collections" component={CollectionRouter} />
-                <Route path="/courses" component={CoursesRouter} />
                 <Route path="/links" component={LinkRouter} />{' '}
                 <Route exact path="/" component={HomePage} />
                 <Route component={NotFoundPage} />
@@ -111,23 +111,23 @@ const PolyflixApp = () => {
 // and the theme provider, in order to ensure that every components of the app can work properly.
 ReactDOM.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <ThemeConfig>
-        <GlobalStyles />
-        <I18nextProvider i18n={i18n}>
-          <SnackbarProvider maxSnack={5}>
-            <Suspense fallback={<LoadingLayout />}>
+    <Suspense fallback={<LoadingLayout />}>
+      <Provider store={store}>
+        <ThemeConfig>
+          <GlobalStyles />
+          <I18nextProvider i18n={i18n}>
+            <SnackbarProvider maxSnack={5}>
               <DIProvider>
                 <HelmetProvider>
                   <PolyflixApp />
                   <ModalCookies />
                 </HelmetProvider>
               </DIProvider>
-            </Suspense>
-          </SnackbarProvider>
-        </I18nextProvider>
-      </ThemeConfig>
-    </Provider>
+            </SnackbarProvider>
+          </I18nextProvider>
+        </ThemeConfig>
+      </Provider>
+    </Suspense>
   </React.StrictMode>,
   document.getElementById('application')
 )

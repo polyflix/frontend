@@ -44,7 +44,7 @@ export const VisibilitySelector = ({ value, onChange }: Props) => {
   ]
 
   return (
-    <Grid container>
+    <Grid container spacing={2}>
       {items.map(({ value: v, label, description, icon }, idx) => {
         const isActive = v === value
         return (

@@ -45,6 +45,12 @@ const sidebarConfiguration: SidebarItem[] = [
     roles: [Role.Student, Role.Teacher, Role.Admin],
   },
   {
+    title: 'items.courses',
+    href: '/courses/explore',
+    icon: 'gg:align-left',
+    roles: [Role.Student, Role.Teacher, Role.Admin],
+  },
+  {
     title: 'items.videos',
     section: SidebarSection.MANAGEMENT,
     icon: 'eva:play-circle-outline',
@@ -77,6 +83,18 @@ const sidebarConfiguration: SidebarItem[] = [
       {
         title: 'actions.history',
         href: '/quizzes/history',
+      },
+    ],
+  },
+  {
+    title: 'items.courses',
+    section: SidebarSection.MANAGEMENT,
+    icon: 'gg:align-left',
+    roles: [Role.Teacher, Role.Admin],
+    items: [
+      {
+        title: 'actions.create',
+        href: '/courses/create',
       },
     ],
   },

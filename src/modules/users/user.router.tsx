@@ -3,6 +3,8 @@ import { Route, Switch, useRouteMatch } from 'react-router-dom'
 import { NotFoundPage } from '@core/pages/404.page'
 import { NotImplementedPage } from '@core/pages/NotImplemented.page'
 
+import { ProfileCoursesPage } from '@users/pages/ProfileCourses/ProfileCourses.page'
+
 import { ProfilePage } from './pages/Profile/Profile.page'
 import { ProfileCollectionsPage } from './pages/ProfileCollections/ProfileCollections.page'
 import { ProfileGroupsPage } from './pages/ProfileGroups/ProfileGroups.page'
@@ -23,6 +25,7 @@ const ProfileRouter = () => {
           path={`${url}/collections`}
           component={ProfileCollectionsPage}
         />
+        <Route exact path={`${url}/courses`} component={ProfileCoursesPage} />
         <Route exact path={`${url}/groups`} component={ProfileGroupsPage} />
         <Route exact path={`${url}/quizzes`} component={ProfileQuizzesPage} />
         <Route component={NotFoundPage} />
