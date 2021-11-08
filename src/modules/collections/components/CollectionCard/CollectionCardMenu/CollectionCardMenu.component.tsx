@@ -13,10 +13,20 @@ import {
 } from '@mui/material'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { Link } from 'react-router-dom'
 
-export const CollectionCardMenu = () => {
+import { Collection } from '@collections/models/collection.model'
+import { useDeleteCollectionMutation } from '@collections/services/collection.service'
+
+type CollectionCardMenuProps = {
+  collection: Collection
+}
+
+export const CollectionCardMenu = ({ collection }: CollectionCardMenuProps) => {
   const { t } = useTranslation('collections')
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null)
+
+  const [deleteCourse] = useDeleteCollectionMutation()
 
   const open = Boolean(anchorEl)
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -26,6 +36,10 @@ export const CollectionCardMenu = () => {
   }
   const handleClose = () => {
     setAnchorEl(null)
+  }
+  const handleDelete = () => {
+    deleteCourse({ slug: collection.slug })
+    handleClose()
   }
 
   return (
@@ -49,7 +63,11 @@ export const CollectionCardMenu = () => {
           'aria-labelledby': 'basic-button',
         }}
       >
-        <MenuItem onClick={handleClose}>
+        <MenuItem
+          onClick={handleClose}
+          component={Link}
+          to={`/collections/${collection.slug}/update`}
+        >
           <ListItemIcon>
             <Edit fontSize="small" />
           </ListItemIcon>
@@ -57,7 +75,11 @@ export const CollectionCardMenu = () => {
             {t('explore.collectionCard.menu.items.edit')}
           </ListItemText>
         </MenuItem>
-        <MenuItem onClick={handleClose}>
+        <MenuItem
+          onClick={handleClose}
+          component={Link}
+          to={`/collections/${collection.slug}`}
+        >
           <ListItemIcon>
             <InfoOutlined fontSize="small" />
           </ListItemIcon>
@@ -65,9 +87,9 @@ export const CollectionCardMenu = () => {
             {t('explore.collectionCard.menu.items.view')}
           </ListItemText>
         </MenuItem>
-        <MenuItem onClick={handleClose}>
+        <MenuItem onClick={handleDelete}>
           <ListItemIcon>
-            <Delete fontSize="small" />
+            <Delete fontSize="small" color="error" />
           </ListItemIcon>
           <ListItemText>
             {t('explore.collectionCard.menu.items.delete')}

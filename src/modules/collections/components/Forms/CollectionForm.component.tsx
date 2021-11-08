@@ -1,3 +1,4 @@
+import { Delete } from '@mui/icons-material'
 import { LoadingButton } from '@mui/lab'
 import {
   Stack,
@@ -78,16 +79,20 @@ export const CollectionForm = ({ collection, isUpdate }: Props) => {
     control,
     name: 'elements',
   })
-  const { fields } = fieldArray
+  const { fields, remove } = fieldArray
 
   const onSubmit = async (data: ICollectionForm) => {
     const mappedData = {
       ...data,
-      elements: data.elements.map((element) => element.id),
+      elements: fields.map((element) => element.id),
     }
+
     try {
       await (isUpdate
-        ? updateCollection({ id: collection!.id, body: data })
+        ? updateCollection({
+            slug: collection!.slug,
+            body: mappedData as unknown as ICollectionForm,
+          })
         : createCollection(mappedData as unknown as ICollectionForm)
       ).unwrap()
 
@@ -95,7 +100,7 @@ export const CollectionForm = ({ collection, isUpdate }: Props) => {
         isUpdate ? CrudAction.UPDATE : CrudAction.CREATE,
         Endpoint.Collections
       )
-      history.push('/collections/explore')
+      history.push('/users/profile/collections')
     } catch (e: any) {
       snackbarService.createSnackbar(e.data.statusText, { variant: 'error' })
     } finally {
@@ -162,7 +167,18 @@ export const CollectionForm = ({ collection, isUpdate }: Props) => {
           {fields.length ? (
             fields.map((item, i: number) => (
               <List key={i}>
-                <ListItem>
+                <ListItem
+                  secondaryAction={
+                    <IconButton
+                      edge="end"
+                      color="error"
+                      aria-label="delete"
+                      onClick={() => remove(i)}
+                    >
+                      <Delete />
+                    </IconButton>
+                  }
+                >
                   <ListItemAvatar>
                     <Avatar src={item.thumbnail} />
                   </ListItemAvatar>
