@@ -171,7 +171,7 @@ export const VideoSliderCard = ({ video, isFetching = false }: Props) => {
                   sm: 40,
                 },
               }}
-              user={video.publishedBy}
+              user={video.publishedBy!}
             />
 
             <Box

@@ -4,7 +4,7 @@ import { SxProps } from '@mui/system'
 import { User } from '@users/models/user.model'
 
 type UserAvatarProps = {
-  user: Partial<User>
+  user: Partial<User> & Pick<User, 'displayName'> & Pick<User, 'avatar'>
   variant?: 'square' | 'circular' | 'rounded' | undefined
   sx?: SxProps<Theme>
 }

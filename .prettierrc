@@ -10,6 +10,7 @@
     "^@quizzes/(.*)$",
     "^@videos/(.*)$",
     "^@collections/(.*)$",
+    "^@courses/(.*)$",
     "^@users/(.*)$",
     "^@theme/(.*)$",
     "^@assets/(.*)$",
