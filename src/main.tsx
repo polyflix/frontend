@@ -34,6 +34,8 @@ import { QuizzRouter } from '@quizzes/quizzes.router'
 
 import { VideoRouter } from '@videos/video.router'
 
+import { LinkRouter } from '@links/links.router'
+
 import { CollectionRouter } from '@collections/collection.router'
 
 import { CoursesRouter } from '@courses/courses.router'
@@ -92,6 +94,7 @@ const PolyflixApp = () => {
                 <Route path="/videos" component={VideoRouter} />
                 <Route path="/collections" component={CollectionRouter} />
                 <Route path="/courses" component={CoursesRouter} />
+                <Route path="/links" component={LinkRouter} />{' '}
                 <Route exact path="/" component={HomePage} />
                 <Route component={NotFoundPage} />
               </Switch>

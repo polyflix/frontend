@@ -1,0 +1,26 @@
+{
+  "forms": {
+    "create-update": {
+      "title": {
+        "metadata": "Métadonnées",
+        "status": "Status",
+        "create": "Créer un lien",
+        "update": "Mise à jour du lien {{lien}}"
+      },
+      "description": {
+        "create": "Créez votre lien pour permettre aux autres utilisateurs d'aller à la ressource ciblée.",
+        "update": "Changez les valeurs dans le formulaire ci-dessous pour mettre à jour votre lien."
+      },
+      "placeholder": {
+        "name": "Nom",
+        "description": "Description",
+        "url": "Lien URL",
+        "submit": {
+          "create": "Créer le lien",
+          "update": "Mettre à jour le lien"
+        }
+      },
+      "errors": {}
+    }
+  }
+}
