@@ -42,7 +42,7 @@ export const ExploreVideosPage = () => {
 
       <Stack justifyContent="space-between" direction="row">
         <Tooltip
-          title={t<string>('soon')}
+          title={t<string>('navbar.actions.search.fast')}
           open={true}
           PopperProps={{
             disablePortal: true,
