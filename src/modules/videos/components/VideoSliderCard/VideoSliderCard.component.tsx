@@ -91,15 +91,16 @@ const VideoSliderOption = () => {
 
 interface Props {
   video: Video
+  isFetching?: boolean
 }
 
-export const VideoSliderCard = ({ video }: Props) => {
+export const VideoSliderCard = ({ video, isFetching = false }: Props) => {
   const th = useTheme()
   const ltsm: boolean = useMediaQuery(th.breakpoints.down('sm'))
 
   return (
     <VideoCardRootStyle>
-      {!video ? (
+      {!video || isFetching ? (
         <>
           <AspectRatioBox ratio={16 / 9}>
             <Skeleton
