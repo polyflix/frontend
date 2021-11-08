@@ -6,6 +6,10 @@
       "logout": "Déconnexion"
     }
   },
+  "cookie": {
+    "description": "On est des gentils, on utilise que des gentils cookies alors acceptez-les (ca serait triste de ne pas accéder à ce site incroyable)",
+    "accept": "Acceptez les cookies"
+  },
   "snackbar": {
     "crudMessage": "{{resource}} à été {{action}} avec succès !"
   },

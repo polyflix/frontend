@@ -6,6 +6,10 @@
       "logout": "Log out"
     }
   },
+  "cookie": {
+    "description": "We are nice guys, we use only nice cookies so accept them ! (it would be sad to not access this amazing website",
+    "accept": "Accept cookies"
+  },
   "snackbar": {
     "crudMessage": "{{resource}} has been successfully {{action}} !"
   },
