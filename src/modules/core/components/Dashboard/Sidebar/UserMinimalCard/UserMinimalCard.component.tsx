@@ -5,13 +5,15 @@ import { fadeInAnnimation } from '@core/utils/animation'
 
 import { useAuth } from '@auth/hooks/useAuth.hook'
 
-export const UserAvatar = ({}) => {
+import { UserAvatar } from '@users/components/UserAvatar/UserAvatar.component'
+
+export const UserMinimalCard = ({}) => {
   const { open } = useSidebar()
   const { user } = useAuth()
 
   return (
     <Stack direction="row" alignItems="center" sx={{ width: '100%' }}>
-      <UserAvatar user={user} />
+      <UserAvatar user={user!} />
       <Box
         sx={{
           ml: 2,
@@ -28,7 +30,7 @@ export const UserAvatar = ({}) => {
         >
           {user?.displayName}
         </Typography>
-        <Tooltip title={user?.email}>
+        <Tooltip title={user!.email}>
           <Typography
             variant="body1"
             sx={{
@@ -37,7 +39,7 @@ export const UserAvatar = ({}) => {
             }}
             noWrap={true}
           >
-            {user?.email}
+            {user!.email}
           </Typography>
         </Tooltip>
       </Box>

@@ -6,13 +6,13 @@
       "@env/*": ["src/environments/*"],
       "@theme/*": ["src/theme/*"],
       "@auth/*": ["src/modules/authentication/*"],
-      "@collections/*": ["src/modules/collections/*"],
       "@users/*": ["src/modules/users/*"],
+      "@collections/*": ["src/modules/collections/*"],
+      "@courses/*": ["src/modules/courses/*"],
       "@videos/*": ["src/modules/videos/*"],
       "@quizzes/*": ["src/modules/quizzes/*"],
       "@subtitles/*": ["src/modules/subtitles/*"],
-      "@stats/*": ["src/modules/stats/*"],
-      "@courses/*": ["src/modules/courses/*"]
+      "@stats/*": ["src/modules/stats/*"]
     },
     "target": "ESNext",
     "useDefineForClassFields": true,

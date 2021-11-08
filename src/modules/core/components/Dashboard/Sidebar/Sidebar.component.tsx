@@ -25,7 +25,7 @@ import { AuthService } from '@auth/services/auth.service'
 import { Section } from './Section/Section.component'
 import { getSidebarSections } from './Sidebar.config'
 import { AccountStyle, RootStyle } from './Sidebar.style'
-import { UserAvatar } from './UserMinimalCard/UserMinimalCard.component'
+import { UserMinimalCard } from './UserMinimalCard/UserMinimalCard.component'
 
 export const DashboardSidebar = () => {
   const authService = useInjection<AuthService>(AuthService)
@@ -76,7 +76,7 @@ export const DashboardSidebar = () => {
                 to="/users/profile/videos"
               >
                 <AccountStyle open={open}>
-                  <UserAvatar />
+                  <UserMinimalCard />
                 </AccountStyle>
               </Link>
             </Box>
