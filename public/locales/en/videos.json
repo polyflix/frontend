@@ -73,6 +73,17 @@
           }
         }
       }
+    },
+    "delete": {
+      "action": {
+        "cancel": "Cancel",
+        "delete": "Delete"
+      },
+      "modal": {
+        "title": "Are you sure ?",
+        "description": "Your video will be permanently deleted."
+      },
+      "success": "Video successfully deleted"
     }
   },
   "slug": {

@@ -9,12 +9,12 @@ import {
 } from '@mui/material'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Link, useHistory } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 import { useAuth } from '@auth/hooks/useAuth.hook'
 
+import { DeleteVideoModal } from '@videos/components/DeleteVideoModal/DeleteVideoModal.component'
 import { Video } from '@videos/models/video.model'
-import { useDeleteVideoMutation } from '@videos/services/video.service'
 
 type Props = {
   video?: Video | null
@@ -23,8 +23,8 @@ type Props = {
 export const VideoDescriptionMenu: React.FC<Props> = ({ video }) => {
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null)
   const { t } = useTranslation('videos')
-  const history = useHistory()
   const { user } = useAuth()
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false)
 
   const open = Boolean(anchorEl)
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -33,7 +33,6 @@ export const VideoDescriptionMenu: React.FC<Props> = ({ video }) => {
   const handleClose = () => {
     setAnchorEl(null)
   }
-  const [deleteVideo] = useDeleteVideoMutation()
 
   return (
     <>
@@ -70,8 +69,7 @@ export const VideoDescriptionMenu: React.FC<Props> = ({ video }) => {
           >
             <MenuItem
               onClick={() => {
-                deleteVideo({ id: video?.id })
-                history.goBack()
+                setIsDeleteModalOpen(true)
               }}
             >
               <ListItemIcon sx={{ color: 'error.main' }}>
@@ -86,6 +84,13 @@ export const VideoDescriptionMenu: React.FC<Props> = ({ video }) => {
               <ListItemText>{t('slug.details.menu.items.edit')}</ListItemText>
             </MenuItem>
           </Menu>
+          <DeleteVideoModal
+            id={video.id}
+            open={isDeleteModalOpen}
+            setIsOpen={setIsDeleteModalOpen}
+            onClose={() => setIsDeleteModalOpen(false)}
+            goBackonSuccess={true}
+          />
         </>
       )}
     </>
