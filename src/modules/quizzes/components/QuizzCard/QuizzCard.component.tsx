@@ -147,7 +147,7 @@ export const QuizzCard = ({
           </Box>
         )}
 
-        <Stack direction="row" spacing={2}>
+        <Stack direction="row" spacing={2} alignItems="center">
           {displayNumberOfQuestions && (
             <Stack textAlign="center">
               <Typography variant="h5">{questions.length}</Typography>
