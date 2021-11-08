@@ -2,7 +2,6 @@ import {
   Accordion,
   AccordionDetails,
   AccordionSummary,
-  Avatar,
   Box,
   Card,
   Chip,
@@ -21,6 +20,8 @@ import { Icon } from '@core/components/Icon/Icon.component'
 import { Element } from '@core/models/element.model'
 
 import { Quizz } from '@quizzes/models/quizz.model'
+
+import { UserAvatar } from '@users/components/UserAvatar/UserAvatar.component'
 
 import {
   getFeedbackColor,
@@ -66,7 +67,7 @@ export const QuizzCard = ({
    */
   const buildPublisher = () => (
     <Tooltip title={`${quizz.user?.firstName} ${quizz.user?.lastName}`}>
-      <Avatar variant="circular" src={quizz.user?.avatar} />
+      <UserAvatar variant="circular" user={quizz.user!} />
     </Tooltip>
   )
 

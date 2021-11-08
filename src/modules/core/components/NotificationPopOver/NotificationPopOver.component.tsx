@@ -3,7 +3,6 @@ import {
   List,
   Badge,
   Button,
-  Avatar,
   Tooltip,
   Divider,
   IconButton,
@@ -22,6 +21,8 @@ import { Link as RouterLink } from 'react-router-dom'
 import { Icon } from '@core/components/Icon/Icon.component'
 import { MenuPopover } from '@core/components/MenuPopOver/MenuPopOver.component'
 import { Scrollbar } from '@core/components/Scrollbar/Scrollbar.component'
+
+// import { UserAvatar } from '@users/components/UserAvatar/UserAvatar.component'
 
 enum NotificationType {}
 // TODO
@@ -71,7 +72,7 @@ type NotificationItemProps = {
 const NotificationItem: React.FC<PropsWithChildren<NotificationItemProps>> = ({
   notification,
 }) => {
-  const { avatar, title } = renderContent(notification)
+  const { title } = renderContent(notification)
 
   const formatDate = (date: number): string => {
     // TODO
@@ -93,7 +94,8 @@ const NotificationItem: React.FC<PropsWithChildren<NotificationItemProps>> = ({
       }}
     >
       <ListItemAvatar>
-        <Avatar sx={{ bgcolor: 'background.neutral' }}>{avatar}</Avatar>
+        {/* TODO */}
+        {/* <UserAvatar sx={{ bgcolor: 'background.neutral' }} user={user}/> */}
       </ListItemAvatar>
       <ListItemText
         primary={title}

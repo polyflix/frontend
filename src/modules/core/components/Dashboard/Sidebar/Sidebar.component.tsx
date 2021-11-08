@@ -25,7 +25,7 @@ import { AuthService } from '@auth/services/auth.service'
 import { Section } from './Section/Section.component'
 import { getSidebarSections } from './Sidebar.config'
 import { AccountStyle, RootStyle } from './Sidebar.style'
-import { UserAvatar } from './UserAvatar/UserAvatar.component'
+import { UserAvatar } from './UserMinimalCard/UserMinimalCard.component'
 
 export const DashboardSidebar = () => {
   const authService = useInjection<AuthService>(AuthService)

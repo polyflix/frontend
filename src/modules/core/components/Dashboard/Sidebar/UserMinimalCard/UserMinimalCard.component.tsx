@@ -1,6 +1,5 @@
-import { Avatar, Box, Stack, Typography, Tooltip } from '@mui/material'
+import { Box, Stack, Typography, Tooltip } from '@mui/material'
 
-import { DEFAULT_AVATAR_PICTURE } from '@core/constants/defaultValue.constant'
 import { useSidebar } from '@core/hooks/useSidebar.hook'
 import { fadeInAnnimation } from '@core/utils/animation'
 
@@ -12,10 +11,7 @@ export const UserAvatar = ({}) => {
 
   return (
     <Stack direction="row" alignItems="center" sx={{ width: '100%' }}>
-      <Avatar
-        src={user?.avatar || DEFAULT_AVATAR_PICTURE}
-        alt={`${user?.displayName} profile picture`}
-      />
+      <UserAvatar user={user} />
       <Box
         sx={{
           ml: 2,

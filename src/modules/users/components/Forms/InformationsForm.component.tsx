@@ -33,7 +33,7 @@ export const InformationsForm = ({ user, title }: Props) => {
       email: user?.email,
       firstName: user?.firstName,
       lastName: user?.lastName,
-      profilePicture: user?.profilePicture,
+      avatar: user?.avatar,
     },
   })
 
