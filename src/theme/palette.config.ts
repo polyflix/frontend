@@ -71,6 +71,7 @@ const getPalette: (mode: PaletteMode) => PaletteOptions = (
   warning: { ...WARNING },
   error: { ...ERROR },
   grey: GREY,
+  bg: mode === 'light' ? GREY[100] : '#202020',
   divider: mode === 'light' ? GREY[200] : '#161c24',
   ...(mode === 'light'
     ? {

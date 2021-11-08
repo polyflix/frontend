@@ -18,7 +18,7 @@ export const InlineCollectionCard: React.FC<Props> = ({ collection }) => {
         borderColor: 'grey.300',
         cursor: 'pointer',
         '&:hover': {
-          backgroundColor: 'grey.100',
+          backgroundColor: 'bg',
         },
       }}
     >

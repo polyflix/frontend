@@ -49,5 +49,5 @@ export const RootStyle = styled<any>(Paper)(({ theme, draft }) => ({
 export const CardFooterStyle = styled(Box)(({ theme }) => ({
   borderRadius: theme.spacing(0, 0, 1, 1),
   padding: theme.spacing(1, 2),
-  backgroundColor: theme.palette.grey[100],
+  backgroundColor: theme.palette.bg,
 }))

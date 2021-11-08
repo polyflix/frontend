@@ -271,8 +271,8 @@ export const CourseForm: React.FC<Props> = ({ course }) => {
                   p: 4,
                   mx: 2,
                   cursor: 'pointer',
-                  borderColor: (theme) => theme.palette.grey[400],
-                  background: (theme) => theme.palette.grey[100],
+                  borderColor: (theme) => theme.palette.bg,
+                  background: (theme) => theme.palette.bg,
                   '&:hover': {
                     borderColor: (theme) => theme.palette.grey[700],
                   },
@@ -299,8 +299,7 @@ export const CourseForm: React.FC<Props> = ({ course }) => {
           sx={{
             p: 4,
             cursor: 'pointer',
-            borderColor: (theme) => theme.palette.grey[400],
-            background: (theme) => theme.palette.grey[100],
+            background: (theme) => theme.palette.bg,
             '&:hover': {
               borderColor: (theme) => theme.palette.grey[700],
             },
