@@ -61,12 +61,12 @@ const BannerTabs = () => {
         to="/users/profile/collections"
         component={RouterLink}
       />
-      <Tab
+      {/* <Tab
         label={t('profile.tabs.groups.title')}
         value="/users/profile/groups"
         to="/users/profile/groups"
         component={RouterLink}
-      />
+      /> */}
       <Tab
         label={t('profile.tabs.quizzes.title')}
         value="/users/profile/quizzes"

@@ -8,7 +8,7 @@ export const NotImplementedPage = () => {
   const { t } = useTranslation('common')
 
   return (
-    <Page title={t('404.title')}>
+    <Page title={t('404.title', { ns: 'errors' })}>
       <Stack direction="column" justifyContent="center" alignItems="center">
         <Typography align="center" sx={{ my: 2 }} variant="h3">
           {t('notImplemented.title')}

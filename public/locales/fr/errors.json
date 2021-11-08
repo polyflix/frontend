@@ -1,7 +1,7 @@
 {
   "403": {
-    "title": "Forbidden",
-    "description": "Lorem ipsum"
+    "title": "Interdit",
+    "description": "Accès non autorisé"
   },
   "404": {
     "title": "Page non trouvée",

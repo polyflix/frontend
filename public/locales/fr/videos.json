@@ -2,7 +2,8 @@
   "search": "Rechercher des vidéos par titre ou auteur",
   "explore": {
     "title": "Explorer les vidéos",
-    "description": "Retrouvez ci-dessous toutes les vidéos. Vous pouvez rechercher une vidéo par son nom ou par le nom de la personne qui l'a publiée."
+    "description": "Retrouvez ci-dessous toutes les vidéos.",
+    "descriptionWithSearch": "Retrouvez ci-dessous toutes les vidéos. Vous pouvez rechercher une vidéo par son nom ou par le nom de la personne qui l'a publiée."
   },
   "providers": {
     "youtube": "Vous voulez ajouter une vidéo YouTube ? Pas de problème, sélectionnez le lien, et choisissez le modèle pour ajouter votre vidéo !",

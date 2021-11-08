@@ -2,7 +2,8 @@
   "search": "Rechercher des quizzs par titre ou auteur",
   "explore": {
     "title": "Explorer les quizzs",
-    "description": "Retrouvez ci-dessous tous les quizz. Vous pouvez rechercher un quizz par son nom ou par le nom de la personne qui l'a publié."
+    "description": "Retrouvez ci-dessous tous les quizz. Vous pouvez rechercher un quizz par son nom ou par le nom de la personne qui l'a publié.",
+    "descriptionWithSearch": "Retrouvez ci-dessous tous les quizz."
   },
   "card": {
     "tags": {
