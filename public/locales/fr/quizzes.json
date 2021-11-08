@@ -9,7 +9,12 @@
     "tags": {
       "new": "Nouveau"
     },
-    "creationDateFormat": "DD/MM/YYYY"
+    "creationDateFormat": "DD/MM/YYYY",
+    "options": {
+      "play": "Jouer",
+      "seeResults": "Voir les résultats",
+      "edit": "Modifier"
+    }
   },
   "import": {
     "title": "Importer un quizz",
@@ -81,6 +86,17 @@
           "required": "L'alternative {{alt}} est requise."
         }
       }
+    },
+    "delete": {
+      "action": {
+        "cancel": "Annuler",
+        "delete": "Supprimer"
+      },
+      "modal": {
+        "title": "Êtes-vous sûr ?",
+        "description": "Votre quiz sera supprimé ainsi que toutes les tentatives des utilisateurs associés."
+      },
+      "success": "Quiz supprimé avec succès"
     }
   },
   "play": {
@@ -139,5 +155,10 @@
   "help": {
     "max": "Le score est le score maximum parmi toutes vos tentatives.",
     "mean": "Le score est la moyenne des scores de toutes vos tentatives."
+  },
+  "results": {
+    "title": "Resultats - {{quizzName}}",
+    "description": "Voici les résultats de votre quizz. Il est possible de rechercher un résultat par utilisateur en utilisant la barre de recherche ci-dessous.",
+    "search": "Rechercher par nom d'utilisateur"
   }
 }

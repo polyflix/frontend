@@ -9,7 +9,12 @@
     "tags": {
       "new": "New"
     },
-    "creationDateFormat": "MM/DD/YYYY"
+    "creationDateFormat": "MM/DD/YYYY",
+    "options": {
+      "play": "Play",
+      "seeResults": "See results",
+      "edit": "Edit"
+    }
   },
   "import": {
     "title": "Import a Quizz",
@@ -84,6 +89,17 @@
           "required": "The option {{alt}} is required."
         }
       }
+    },
+    "delete": {
+      "action": {
+        "cancel": "Cancel",
+        "delete": "Delete"
+      },
+      "modal": {
+        "title": "Are you sure ?",
+        "description": "Your quiz will be deleted along with all associated user attempts."
+      },
+      "success": "Quiz successfully deleted"
     }
   },
   "play": {
@@ -142,5 +158,10 @@
   "help": {
     "max": "The score is the maximum score you've obtained.",
     "mean": "The score is the mean of all your attempts."
+  },
+  "results": {
+    "title": "Results - {{quizzName}}",
+    "description": "Here are the results of your quiz. You can search for a result by user by using the search bar below.",
+    "search": "Search by username"
   }
 }
