@@ -4,8 +4,6 @@ import { useTranslation } from 'react-i18next'
 
 import { Element } from '@core/models/element.model'
 
-import { useAuth } from '@auth/hooks/useAuth.hook'
-
 import { getFeedbackColor, percentage } from '@quizzes/helpers/score.helper'
 import { Attempt } from '@quizzes/models/attempt.model'
 import { Quizz } from '@quizzes/models/quizz.model'
@@ -17,15 +15,14 @@ interface Props {
 
 export const QuizzAttemptCard = ({ attempt, quizz }: Props) => {
   const theme = useTheme()
-  const { user } = useAuth()
   const { t } = useTranslation('quizzes')
 
   const color = getFeedbackColor(
     percentage(attempt.score, (quizz.data.questions || []).length),
     theme
   )
+  const isMe = true // actually only user can see his history, will be imporved later
 
-  const isMe = user?.id === attempt.user?.id
   return (
     <Card
       variant="outlined"
