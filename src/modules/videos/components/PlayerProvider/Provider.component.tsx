@@ -44,10 +44,28 @@ export const Provider: React.FC<PropsWithChildren<ProviderProps>> = ({
 
   switch (videoSourceType) {
     case PlayerVideoSource.YOUTUBE:
-      return <Youtube videoId={streamUrl} cookies={false} />
+      return (
+        <Youtube
+          videoId={streamUrl}
+          cookies={false}
+          className="youtube"
+          style={{
+            height: '100%',
+            display: 'flex',
+            width: '100%',
+          }}
+        />
+      )
     case PlayerVideoSource.INTERNAL:
       return (
-        <VideoVime crossOrigin="use-credentials">
+        <VideoVime
+          crossOrigin="use-credentials"
+          style={{
+            height: '100%',
+            display: 'flex',
+            width: '100%',
+          }}
+        >
           <source data-src={streamUrl} type="video/mp4" />
           {tracks.map((track, i) => (
             <track {...track} key={i} />
