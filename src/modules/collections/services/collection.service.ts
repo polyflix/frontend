@@ -1,15 +1,15 @@
+import { Container } from '@polyflix/di'
+
+import { Endpoint } from '@core/constants/endpoint.constant'
+import { CrudFilters } from '@core/filters/nestjsx-crud.filter'
+import { api } from '@core/services/api.service'
+import { Pagination } from '@core/types/nestjsx-crud.type'
+
 import { Collection } from '@collections/models/collection.model'
 import { CollectionFilters } from '@collections/types/filters.type'
 import { ICollectionForm } from '@collections/types/form.type'
 
-import { Container } from '@polyflix/di'
-
-import { Endpoint } from '@core/constants/endpoint.constant'
-import { RestCrudFilters } from '@core/filters/rest-crud.filter'
-import { api } from '@core/services/api.service'
-
-const filterBuilder =
-  Container.get<RestCrudFilters<CollectionFilters>>(RestCrudFilters)
+const filterBuilder = Container.get<CrudFilters<CollectionFilters>>(CrudFilters)
 
 // Inject collections endpoints to the core API
 export const collectionsApi = api.injectEndpoints({
@@ -17,21 +17,23 @@ export const collectionsApi = api.injectEndpoints({
     /**
      * Get collection by id query configuration.
      */
-    getCollection: builder.query<Collection, string>({
-      providesTags: (_0, _1, id) => [{ type: Endpoint.Collections, id }],
-      query: (id) => {
-        return `${Endpoint.Collections}/${id}`
+    getCollection: builder.query<
+      Collection,
+      { id: string; filters?: CollectionFilters }
+    >({
+      providesTags: (_0, _1, { id }) => [{ type: Endpoint.Collections, id }],
+      query: ({ id, filters }) => {
+        return `${Endpoint.Collections}/${id}${filterBuilder.createFilters(
+          filters || {}
+        )}`
       },
     }),
 
     /**
      * Get Collections query configuration
      */
-    getCollections: builder.query<
-      { items: Collection[]; totalCount: number },
-      CollectionFilters
-    >({
-      query: (filters) => {
+    getCollections: builder.query<Pagination<Collection>, CollectionFilters>({
+      query: (filters?: CollectionFilters) => {
         return `${Endpoint.Collections}${filterBuilder.createFilters(
           filters || {}
         )}`
@@ -43,7 +45,7 @@ export const collectionsApi = api.injectEndpoints({
         // Is result available ?
         result
           ? [
-              ...result.items.map(
+              ...result.data.map(
                 ({ id }) => ({ type: Endpoint.Collections, id } as const)
               ),
               { type: Endpoint.Collections, id: 'LIST' },
@@ -71,17 +73,27 @@ export const collectionsApi = api.injectEndpoints({
      */
     updateCollection: builder.mutation<
       Collection,
-      { id: string; body: ICollectionForm }
+      { slug: string; body: ICollectionForm }
     >({
-      query: ({ id, body }) => ({
-        url: `${Endpoint.Collections}/${id}`,
+      query: ({ slug, body }) => ({
+        url: `${Endpoint.Collections}/${slug}`,
         method: 'PUT',
         body,
       }),
       // Invalidates all queries that subscribe to this Collection `id` only.
       // In this case, `getCollection` will be re-run. `getCollections` *might*  rerun, if this id was under its results.
-      invalidatesTags: (result, _1, { id }) =>
-        result ? [{ type: Endpoint.Collections, id }] : [],
+      invalidatesTags: (result, _1, { slug }) =>
+        result ? [{ type: Endpoint.Collections, slug }] : [],
+    }),
+
+    deleteCollection: builder.mutation<Collection, { slug: string }>({
+      query: ({ slug }) => ({
+        url: `${Endpoint.Collections}/${slug}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: (_, _1, { slug }) => [
+        { type: Endpoint.Collections, slug },
+      ],
     }),
   }),
 })
@@ -91,4 +103,5 @@ export const {
   useGetCollectionQuery,
   useAddCollectionMutation,
   useUpdateCollectionMutation,
+  useDeleteCollectionMutation,
 } = collectionsApi
