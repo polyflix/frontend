@@ -15,6 +15,12 @@
       }
     }
   },
+  "share": {
+    "title": "Get your share links !",
+    "description": "Here your links to allow users to access the collection. <br/><br/> <strong>Please keep them in a secure place, they will be not printed anymore. If you loose them or you wish to revoke one, you can simply regenerate them in the update page of your collection.</strong>",
+    "cta": "Continue",
+    "clipboard": "URL copied to clipboard !"
+  },
   "slug": {
     "list": {
       "title": "Explore Collection",
@@ -35,6 +41,13 @@
         "update": "Update your collection to add new attachments, or simply change the title or the description of it."
       },
       "fields": {
+        "password": {
+          "label": "Passwords",
+          "description": "Below you can add one or more passwords to your collection. By default, the password name will be generated for you but feel free to change it. The password field is optional, if you didn't provide a password in the field, we will generate a new one on our side. <br/><br/><strong>Please note that you'll never be able to see your passwords. Once submitted, we will generate some share links (one per password) and you must keep them. If you loose them, you can regenerate new ones and revoke existing on the update page of the collection.</strong>",
+          "name": "Name of the password",
+          "password": "Password",
+          "expiresAt": "Expiration date"
+        },
         "name": {
           "label": "Name",
           "errors": {
@@ -59,8 +72,8 @@
       },
       "actions": {
         "submit": {
-          "create": "Create video",
-          "update": "Update video"
+          "create": "Create collection",
+          "update": "Update collection"
         },
         "addElement": "Add an element to the collection"
       }

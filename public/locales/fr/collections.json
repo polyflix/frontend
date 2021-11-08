@@ -15,6 +15,12 @@
       }
     }
   },
+  "share": {
+    "title": "Récupérez vos liens de partage !",
+    "description": "Voici vos liens pour permettre aux utilisateurs d'accéder à la collection. <br/><br/> <strong>Veuillez les conserver en lieu sûr, ils ne seront plus imprimés. Si vous les perdez ou si vous souhaitez en révoquer un, vous pouvez simplement les régénérer dans la page de mise à jour de votre collection.</strong>",
+    "cta": "Continuer",
+    "clipboard": "URL copiée dans le presse-papiers !"
+  },
   "slug": {
     "list": {
       "title": "Explorer la collection",
@@ -35,6 +41,13 @@
         "update": "Mettez à jour votre collection pour ajouter de nouvelles pièces jointes, ou simplement modifier le titre ou la description de celle-ci."
       },
       "fields": {
+        "password": {
+          "label": "Mot de passes",
+          "description": "Vous pouvez ajouter ci-dessous un ou plusieurs mots de passe à votre collection. Par défaut, le nom du mot de passe sera généré pour vous mais n'hésitez pas à le changer. Le champ du mot de passe est facultatif, si vous n'avez pas fourni de mot de passe dans le champ, nous en générerons un nouveau de notre côté. <br/><br/><strong>Veuillez noter que vous ne serez jamais en mesure de voir vos mots de passe. Une fois soumis, nous générerons des liens de partage (un par mot de passe) et vous devez les conserver. Si vous les perdez, vous pouvez en régénérer de nouveaux et révoquer les existants sur la page de mise à jour de la collection.</strong>",
+          "name": "Nom du mot de passe",
+          "password": "Mot de passe",
+          "expiresAt": "Date d'expiration"
+        },
         "name": {
           "label": "Nom",
           "errors": {

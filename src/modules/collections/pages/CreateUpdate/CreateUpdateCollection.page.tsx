@@ -14,7 +14,7 @@ export const CreateUpdateCollectionPage = () => {
   const { data: collection, isLoading } = useGetCollectionQuery({
     id: slug ?? '',
     filters: {
-      join: [{ field: 'elements' }],
+      join: [{ field: 'elements' }, { field: 'passwords' }],
     },
   })
 

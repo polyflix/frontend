@@ -17,6 +17,7 @@ import { useInjection } from '@polyflix/di'
 import { FabActionContainer } from '@core/components/FabActionContainer/FabActionContainer.component'
 import { Page } from '@core/components/Page/Page.component'
 import { Endpoint } from '@core/constants/endpoint.constant'
+import { useSearchQuery } from '@core/hooks/useSearchQuery.hook'
 import { SnackbarService } from '@core/services/snackbar.service'
 import { CrudAction } from '@core/types/http.type'
 
@@ -28,6 +29,7 @@ import {
 import { CollectionFilters } from '@collections/types/filters.type'
 
 export const CollectionSlugPage = () => {
+  const accessKey = useSearchQuery('accessKey')
   const { t } = useTranslation('collections')
   const { slug } = useParams<{ slug: string }>()
   const history = useHistory()
@@ -44,6 +46,7 @@ export const CollectionSlugPage = () => {
 
   const { data, isLoading, error } = useGetCollectionQuery({
     id: slug,
+    accessKey,
     filters,
   })
 

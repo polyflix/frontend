@@ -1,8 +1,9 @@
 import { Delete } from '@mui/icons-material'
-import { LoadingButton } from '@mui/lab'
+import { DatePicker, LoadingButton } from '@mui/lab'
 import {
   Alert,
   Avatar,
+  Box,
   Divider,
   IconButton,
   List,
@@ -14,9 +15,10 @@ import {
   Tooltip,
   Typography,
 } from '@mui/material'
+import dayjs from 'dayjs'
 import { useState } from 'react'
 import { useFieldArray, useForm } from 'react-hook-form'
-import { useTranslation } from 'react-i18next'
+import { Trans, useTranslation } from 'react-i18next'
 import { useHistory } from 'react-router-dom'
 
 import { useInjection } from '@polyflix/di'
@@ -41,6 +43,7 @@ import {
 import { ICollectionForm } from '@collections/types/form.type'
 
 import { ElementModal } from './ElementModal/ElementModal.component'
+import { LinkModal } from './LinkModal/LinkModal.component'
 
 interface Props {
   collection?: Collection
@@ -48,6 +51,7 @@ interface Props {
 }
 
 export const CollectionForm = ({ collection, isUpdate }: Props) => {
+  const [openLinkModal, setOpenLinkModal] = useState(false)
   const [openElementModal, setOpenElementModal] = useState(false)
   const snackbarService = useInjection<SnackbarService>(SnackbarService)
 
@@ -55,6 +59,8 @@ export const CollectionForm = ({ collection, isUpdate }: Props) => {
 
   const [createCollection] = useAddCollectionMutation()
   const [updateCollection] = useUpdateCollectionMutation()
+
+  const [collectionData, setCollectionData] = useState<Collection>()
 
   const history = useHistory()
 
@@ -72,24 +78,37 @@ export const CollectionForm = ({ collection, isUpdate }: Props) => {
       draft: collection?.draft || true,
       visibility: collection?.visibility || Visibility.PUBLIC,
       elements: collection?.elements,
+      passwords: collection?.passwords,
     },
   })
 
-  const fieldArray = useFieldArray({
+  const elements = useFieldArray({
     control,
     name: 'elements',
   })
-  const { fields, remove } = fieldArray
+
+  const passwords = useFieldArray({
+    control,
+    name: 'passwords',
+  })
+
+  const { fields, remove } = elements
 
   const onSubmit = async (data: ICollectionForm) => {
     // Need to send only element id
     const mappedData = {
       ...data,
       elements: fields.map((element) => element.id),
+      passwords: data.passwords.map(({ id, expiresAt, password, name }) => ({
+        id,
+        name,
+        expiresAt,
+        ...(password !== '' && { password }),
+      })),
     }
 
     try {
-      await (isUpdate
+      const col = await (isUpdate
         ? updateCollection({
             slug: collection!.slug,
             body: mappedData as unknown as ICollectionForm,
@@ -101,15 +120,23 @@ export const CollectionForm = ({ collection, isUpdate }: Props) => {
         isUpdate ? CrudAction.UPDATE : CrudAction.CREATE,
         Endpoint.Collections
       )
-      history.push('/users/profile/collections')
+
+      if (col?.visibility === Visibility.PROTECTED) {
+        setCollectionData(col)
+        setOpenLinkModal(true)
+      } else history.push('/users/profile/collections')
     } catch (e: any) {
       snackbarService.createSnackbar(e.data.statusText, { variant: 'error' })
-    } finally {
     }
   }
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
+      <LinkModal
+        collection={collectionData}
+        onClose={() => history.push('/users/profile/collections')}
+        open={openLinkModal}
+      />
       <Stack spacing={2}>
         <TextField
           error={Boolean(errors.name)}
@@ -195,7 +222,7 @@ export const CollectionForm = ({ collection, isUpdate }: Props) => {
           <ElementModal
             open={openElementModal}
             onClose={() => setOpenElementModal(false)}
-            fieldArray={fieldArray}
+            fieldArray={elements}
           />
         </Stack>
 
@@ -203,8 +230,98 @@ export const CollectionForm = ({ collection, isUpdate }: Props) => {
 
         <VisibilitySelector
           value={watch('visibility')!}
-          onChange={(value: Visibility) => setValue('visibility', value)}
+          onChange={(value: Visibility) => {
+            if (value === Visibility.PROTECTED) {
+              passwords.append({
+                name: dayjs().format('dd-mm-yyyy'),
+                expiresAt: new Date(),
+              })
+            } else {
+              passwords.remove()
+            }
+            setValue('visibility', value)
+          }}
         />
+
+        {watch('visibility') === Visibility.PROTECTED && (
+          <Box>
+            <Typography
+              variant="h5"
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+              }}
+            >
+              {t('forms.create-update.fields.password.label')}
+              <Tooltip
+                title={t<string>(
+                  'forms.create-update.fields.password.tooltips.addElements'
+                )}
+              >
+                <IconButton
+                  onClick={() =>
+                    passwords.append({
+                      name: dayjs().format('dd-mm-yyyy'),
+                      expiresAt: new Date(),
+                    })
+                  }
+                  color="primary"
+                >
+                  <Icon name="carbon:add" size={30} />
+                </IconButton>
+              </Tooltip>
+            </Typography>
+            <Typography variant="body1" sx={{ color: 'text.secondary' }}>
+              <Trans
+                i18nKey={'forms.create-update.fields.password.description'}
+                ns={'collections'}
+              />
+            </Typography>
+            <Stack sx={{ my: 3 }} spacing={3}>
+              {passwords.fields.map((password, j) => {
+                return (
+                  <Stack key={j} direction="row" spacing={2}>
+                    <TextField
+                      label={t('forms.create-update.fields.password.name')}
+                      {...register(`passwords.${j}.name`)}
+                      {...getCommonTextFieldProps()}
+                    />
+                    <TextField
+                      label={t('forms.create-update.fields.password.password')}
+                      type="password"
+                      {...register(`passwords.${j}.password`)}
+                      {...getCommonTextFieldProps()}
+                    />
+                    <DatePicker
+                      onChange={(date) =>
+                        setValue(`passwords.${j}.expiresAt`, date || new Date())
+                      }
+                      label={t('forms.create-update.fields.password.expiresAt')}
+                      value={watch(`passwords.${j}.expiresAt`)}
+                      disablePast
+                      renderInput={(params) => (
+                        <TextField fullWidth {...params} />
+                      )}
+                    />
+                    <IconButton
+                      edge="end"
+                      disabled={j === 0}
+                      color="error"
+                      aria-label="delete"
+                      onClick={() => passwords.remove(j)}
+                    >
+                      <Delete />
+                    </IconButton>
+                  </Stack>
+                )
+              })}
+            </Stack>
+          </Box>
+        )}
+
+        <Divider />
+
         <StatusSelector
           value={watch('draft')!}
           onChange={(value: boolean) => setValue('draft', value)}
