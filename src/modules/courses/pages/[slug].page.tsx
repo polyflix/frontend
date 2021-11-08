@@ -53,7 +53,7 @@ export const CourseSlugPage = () => {
         container
         spacing={4}
         sx={{
-          backgroundColor: 'grey.300',
+          backgroundColor: 'bg',
           borderRadius: 2,
           mt: 1,
           pb: 4,
@@ -158,9 +158,7 @@ export const CourseSlugPage = () => {
               <Stack
                 key={collection.id}
                 sx={{
-                  border: 1,
-                  borderColor: 'grey.400',
-                  backgroundColor: 'grey.300',
+                  backgroundColor: 'bg',
                   borderRadius: 1,
                   p: 2,
                   my: 2,
