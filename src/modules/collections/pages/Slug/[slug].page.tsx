@@ -1,6 +1,5 @@
 import { Delete, Edit, PlayArrow } from '@mui/icons-material'
 import {
-  Alert,
   Button,
   Fab,
   Grid,
@@ -95,11 +94,7 @@ export const CollectionSlugPage = () => {
           <Paper variant="outlined" sx={{ p: 2 }}>
             <Stack spacing={2}>
               <Typography variant="h4">{t('slug.list.title')}</Typography>
-              {data?.elements.length ? (
-                <CollectionTimeline collection={data} />
-              ) : (
-                <Alert severity="info">{t('slug.list.noData')}</Alert>
-              )}
+              <CollectionTimeline collectionSlug={data?.slug} />
             </Stack>
           </Paper>
         </Grid>
