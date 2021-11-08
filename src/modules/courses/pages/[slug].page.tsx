@@ -41,10 +41,6 @@ export const CourseSlugPage = () => {
           field: 'collections',
           select: ['slug', 'elements', 'name'],
         },
-        {
-          field: 'collections.elements',
-          select: ['type', 'slug', 'thumbnail', 'draft', 'name'],
-        },
       ],
     }),
     []
@@ -185,30 +181,11 @@ export const CourseSlugPage = () => {
                 >
                   {collection.name}
                 </Typography>
-                {collection.elements.length ? (
-                  <CollectionTimeline collection={collection} />
-                ) : (
-                  <Alert severity="info">{t('noData')}</Alert>
-                )}
+                <CollectionTimeline collectionSlug={collection.slug} />
               </Stack>
             ))}
             {course?.collections?.length === 0 && (
               <Alert severity="info">{t('noData')}</Alert>
-            )}
-            {isLoading && (
-              <Stack
-                sx={{
-                  border: 1,
-                  borderColor: 'grey.400',
-                  backgroundColor: 'grey.300',
-                  borderRadius: 1,
-                  p: 2,
-                  my: 2,
-                }}
-              >
-                <Skeleton variant="text" width="70%" />
-                <CollectionTimelineSkeleton />
-              </Stack>
             )}
           </>
         </Grid>
