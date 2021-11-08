@@ -13,7 +13,13 @@ import { useGetVideoQuery } from '@videos/services/video.service'
 export const SlugPage = () => {
   const { slug } = useParams<{ slug: string }>()
 
-  const { data: video, isLoading, refetch, isFetching } = useGetVideoQuery(slug)
+  const {
+    data: video,
+    isLoading,
+    refetch,
+    isFetching,
+    error,
+  } = useGetVideoQuery(slug)
 
   const playerRef = useRef<HTMLVmPlayerElement>(null)
 
@@ -21,6 +27,7 @@ export const SlugPage = () => {
 
   return (
     <Page
+      error={error}
       title={video?.slug}
       maxWidth={false}
       sx={{

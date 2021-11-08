@@ -8,6 +8,7 @@ import {
   Stack,
   Typography,
 } from '@mui/material'
+import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link, useHistory, useParams } from 'react-router-dom'
 
@@ -24,6 +25,7 @@ import {
   useDeleteCollectionMutation,
   useGetCollectionQuery,
 } from '@collections/services/collection.service'
+import { CollectionFilters } from '@collections/types/filters.type'
 
 export const CollectionSlugPage = () => {
   const { t } = useTranslation('collections')
@@ -33,11 +35,16 @@ export const CollectionSlugPage = () => {
 
   const [deleteCourse] = useDeleteCollectionMutation()
 
-  const { data, isLoading } = useGetCollectionQuery({
-    id: slug,
-    filters: {
+  const filters = useMemo<CollectionFilters>(
+    () => ({
       join: [{ field: 'elements' }],
-    },
+    }),
+    []
+  )
+
+  const { data, isLoading, error } = useGetCollectionQuery({
+    id: slug,
+    filters,
   })
 
   const handleDelete = () => {
@@ -47,7 +54,7 @@ export const CollectionSlugPage = () => {
   }
 
   return (
-    <Page isLoading={isLoading}>
+    <Page error={error} isLoading={isLoading}>
       <Grid container spacing={2}>
         <Grid item xs={12} sm={4}>
           <Paper variant="outlined" sx={{ p: 2, pb: 4 }}>

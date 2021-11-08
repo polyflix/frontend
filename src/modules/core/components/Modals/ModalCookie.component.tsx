@@ -30,7 +30,7 @@ function setCookie(cookieName: string, cookieValue: string, expDays: number) {
 function getCookie(cookieName: string): string {
   return document.cookie.split(';').reduce((acc, cur) => {
     const [key, value] = cur.split('=')
-    if (key === cookieName) {
+    if (key.trim() === cookieName) {
       return value
     }
     return acc
@@ -39,7 +39,6 @@ function getCookie(cookieName: string): string {
 
 export default function ModalCookies() {
   const { t } = useTranslation('common', { keyPrefix: 'cookie' })
-
   const cookieName = 'consentcookies'
   const [open, setOpen] = React.useState(getCookie(cookieName) !== 'accepted')
   const handleClose = () => {
@@ -47,25 +46,25 @@ export default function ModalCookies() {
     setOpen(false)
   }
 
+  console.log(getCookie(cookieName))
+
   return (
-    <div>
-      <Modal
-        open={open}
-        aria-labelledby="modal-title"
-        aria-describedby="modal-description"
-      >
-        <Paper sx={style}>
-          <Typography id="modal-title" variant="h6" component="h2">
-            Polyflix
-          </Typography>
-          <Typography id="modal-description" sx={{ mt: 2 }}>
-            {t('description')}
-          </Typography>
-          <Button sx={styleButton} onClick={handleClose}>
-            {t('accept')}
-          </Button>
-        </Paper>
-      </Modal>
-    </div>
+    <Modal
+      open={open}
+      aria-labelledby="modal-title"
+      aria-describedby="modal-description"
+    >
+      <Paper sx={style}>
+        <Typography id="modal-title" variant="h6" component="h2">
+          Polyflix
+        </Typography>
+        <Typography id="modal-description" sx={{ mt: 2 }}>
+          {t('description')}
+        </Typography>
+        <Button sx={styleButton} onClick={handleClose}>
+          {t('accept')}
+        </Button>
+      </Paper>
+    </Modal>
   )
 }

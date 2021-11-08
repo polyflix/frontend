@@ -9,7 +9,7 @@ import { HeaderBaseStyle } from '@core/styles/HeaderBase.style'
 import { ErrorRootStyle } from './Error.style'
 
 interface Props {
-  code: 403 | 404 | 503
+  code: any
   isPage?: boolean
 }
 
