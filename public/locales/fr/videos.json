@@ -73,6 +73,17 @@
           }
         }
       }
+    },
+    "delete": {
+      "action": {
+        "cancel": "Annuler",
+        "delete": "Supprimer"
+      },
+      "modal": {
+        "title": "Êtes-vous sûr ?",
+        "description": "Votre vidéo sera définitivement supprimée."
+      },
+      "success": "Quiz supprimé avec succès"
     }
   },
   "slug": {

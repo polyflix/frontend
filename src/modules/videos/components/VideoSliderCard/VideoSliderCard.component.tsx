@@ -29,8 +29,8 @@ import { videoSlugLink } from '@core/helpers/video.helper'
 
 import { useAuth } from '@auth/hooks/useAuth.hook'
 
+import { DeleteVideoModal } from '@videos/components/DeleteVideoModal/DeleteVideoModal.component'
 import { Video } from '@videos/models/video.model'
-import { useDeleteVideoMutation } from '@videos/services/video.service'
 
 import { UserAvatar } from '@users/components/UserAvatar/UserAvatar.component'
 
@@ -48,7 +48,7 @@ const VideoSliderOption: React.FC<PropsVideo> = ({ video }) => {
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null)
   const { t } = useTranslation('home')
   const { user } = useAuth()
-  const [deleteVideo] = useDeleteVideoMutation()
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false)
   const open = Boolean(anchorEl)
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault()
@@ -89,7 +89,7 @@ const VideoSliderOption: React.FC<PropsVideo> = ({ video }) => {
           <>
             <MenuItem
               onClick={() => {
-                deleteVideo({ id: video?.id })
+                setIsDeleteModalOpen(true)
               }}
             >
               <ListItemIcon sx={{ color: 'error.main' }}>
@@ -121,6 +121,12 @@ const VideoSliderOption: React.FC<PropsVideo> = ({ video }) => {
           </ListItemText>
         </MenuItem> */}
       </Menu>
+      <DeleteVideoModal
+        id={video.id}
+        open={isDeleteModalOpen}
+        setIsOpen={setIsDeleteModalOpen}
+        onClose={() => setIsDeleteModalOpen(false)}
+      />
     </>
   )
 }
