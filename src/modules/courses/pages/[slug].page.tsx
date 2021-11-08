@@ -20,7 +20,6 @@ import { Page } from '@core/components/Page/Page.component'
 import { useAuth } from '@auth/hooks/useAuth.hook'
 
 import { CollectionTimeline } from '@collections/components/CollectionTimeline/CollectionTimeline.component'
-import { CollectionTimelineSkeleton } from '@collections/components/CollectionTimelineSkeleton/CollectionTimelineSkeleton.component'
 
 import { Course } from '@courses/models/course.model'
 import { useGetCourseQuery } from '@courses/services/course.service'
@@ -45,7 +44,7 @@ export const CourseSlugPage = () => {
     }),
     []
   )
-  const { data, isLoading } = useGetCourseQuery({ slug, filters: fetchFilters })
+  const { data } = useGetCourseQuery({ slug, filters: fetchFilters })
   const course: Course | undefined = data
 
   return (
