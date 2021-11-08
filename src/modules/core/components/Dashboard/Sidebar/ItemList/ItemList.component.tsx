@@ -24,7 +24,7 @@ export const ItemList = ({ item }: Props) => {
     <ItemListStyle>
       <ItemStyle open={open} onClick={() => setMenuOpen(!menuOpen)}>
         <ItemIconStyle>
-          <Icon name={item.icon} />
+          <Icon name={item?.icon || ''} />
         </ItemIconStyle>
         <ListItemText
           primary={t(item.title)}

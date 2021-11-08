@@ -12,6 +12,7 @@
   "items": {
     "home": "Accueil",
     "videos": "Vidéos",
-    "quizzes": "Quizz"
+    "quizzes": "Quizz",
+    "collections": "Collections"
   }
 }

@@ -44,7 +44,7 @@ export const Recap = ({ quizz }: PlayComponentProps) => {
         </Typography>
       </Paper>
 
-      {(quizz.questions || []).map((question, idx) => {
+      {(quizz.data.questions || []).map((question, idx) => {
         return (
           <Paper sx={{ p: 4 }} variant="outlined" key={idx}>
             <Typography variant="h6">
@@ -63,7 +63,7 @@ export const Recap = ({ quizz }: PlayComponentProps) => {
                     <Icon
                       size={18}
                       name={
-                        isSelected ? 'bi:check-circle-fill' : 'bi:check-circle'
+                        isSelected ? 'bi:check-circle-fill' : 'bi:x-circle-fill'
                       }
                     />
                     <Typography

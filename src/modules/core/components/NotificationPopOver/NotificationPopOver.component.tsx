@@ -127,7 +127,7 @@ export const NotificationsPopover: React.FC = () => {
   ).length
 
   const handleOpen = () => {
-    setOpen(true)
+    console.log('This feature is currently disabled') // setOpen(true)
   }
 
   const handleClose = () => {
@@ -141,7 +141,7 @@ export const NotificationsPopover: React.FC = () => {
 
   return (
     <>
-      <Tooltip title={t<string>('navbar.actions.notifications')}>
+      <Tooltip title={t<string>('soon')}>
         <IconButton
           ref={anchorRef}
           size="large"

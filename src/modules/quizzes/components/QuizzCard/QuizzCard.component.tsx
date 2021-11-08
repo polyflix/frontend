@@ -18,6 +18,7 @@ import { useTranslation } from 'react-i18next'
 import { Link as RouterLink } from 'react-router-dom'
 
 import { Icon } from '@core/components/Icon/Icon.component'
+import { Element } from '@core/models/element.model'
 
 import { Quizz } from '@quizzes/models/quizz.model'
 
@@ -31,7 +32,7 @@ import { NewTag } from './QuizzCard.style'
 import { QuizzSliderOption } from './QuizzCardOption.component'
 
 interface Props {
-  quizz: Quizz
+  quizz: Element<Quizz>
   displayCreationDate?: boolean
   displayScoreMethod?: boolean
   displayTags?: boolean
@@ -60,8 +61,8 @@ export const QuizzCard = ({
   // We want to label the quizz as new if it was created less of 7 days ago.
   const isNew = Math.abs(dayjs(quizz.createdAt).diff(dayjs(), 'day')) < 7
 
-  const score = getScore(quizz) || 0
-  const questions = quizz.questions || []
+  const score = getScore(quizz.data) || 0
+  const questions = quizz.data.questions || []
   const color = getFeedbackColor(percentage(score, questions.length), theme)
 
   /**
@@ -70,7 +71,7 @@ export const QuizzCard = ({
    */
   const buildPublisher = () => (
     <Tooltip title={`${quizz.user?.firstName} ${quizz.user?.lastName}`}>
-      <Avatar variant="circular" src={quizz.user?.profilePicture} />
+      <Avatar variant="circular" src={quizz.user?.avatar} />
     </Tooltip>
   )
 
@@ -114,7 +115,9 @@ export const QuizzCard = ({
         {displayScoreMethod && (
           <Tooltip
             sx={{ mr: 2 }}
-            title={t<string>(`help.${quizz.keepHighestScore ? 'max' : 'mean'}`)}
+            title={t<string>(
+              `help.${quizz.data.keepHighestScore ? 'max' : 'mean'}`
+            )}
           >
             <Chip
               size="small"
@@ -122,7 +125,7 @@ export const QuizzCard = ({
               variant="outlined"
               label={t(
                 `forms.create-update.placeholder.modes.${
-                  quizz.keepHighestScore ? 'max' : 'mean'
+                  quizz.data.keepHighestScore ? 'max' : 'mean'
                 }`
               )}
             />
@@ -190,8 +193,12 @@ export const QuizzCard = ({
           </AccordionSummary>
           <AccordionDetails>
             <Stack spacing={3}>
-              {quizz.attempts?.map((attempt, idx) => (
-                <QuizzAttemptCard quizz={quizz} attempt={attempt} key={idx} />
+              {quizz.data.attempts?.map((attempt, idx) => (
+                <QuizzAttemptCard
+                  quizz={quizz.data}
+                  attempt={attempt}
+                  key={idx}
+                />
               ))}
             </Stack>
           </AccordionDetails>

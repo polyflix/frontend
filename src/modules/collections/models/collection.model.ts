@@ -1,20 +1,20 @@
 import { ContentModel } from '@core/models/content.model'
+import { Element } from '@core/models/element.model'
+import { Link } from '@core/types/element.type'
+
+import { Quizz } from '@quizzes/models/quizz.model'
 
 import { Video } from '@videos/models/video.model'
 
 import { User } from '@users/models/user.model'
 
-import { AccessPassword } from '../types/form.type'
-
 export interface Collection extends ContentModel {
   description: string
-  title: string
-  publisherId: string
-  publishedBy?: User
-
+  name: string
+  user?: Partial<User>
   slug: string
+  elements: Element<Link | Video | Quizz>[]
 
-  videos: Video[]
-  passwords: AccessPassword[]
-  //   tags: Tag[]
+  // passwords: AccessPassword[]
+  // tags: Tag[]
 }
