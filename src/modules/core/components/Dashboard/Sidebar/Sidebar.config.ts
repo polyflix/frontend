@@ -33,6 +33,11 @@ const sidebarConfiguration: SidebarItem[] = [
     icon: 'healthicons:i-exam-multiple-choice',
   },
   {
+    title: 'items.collections',
+    href: '/collections/explore',
+    icon: 'bx:bx-collection',
+  },
+  {
     title: 'items.videos',
     section: SidebarSection.MANAGEMENT,
     icon: 'eva:play-circle-outline',
@@ -69,6 +74,21 @@ const sidebarConfiguration: SidebarItem[] = [
       {
         title: 'actions.history',
         href: '/quizzes/history',
+      },
+    ],
+  },
+  {
+    title: 'items.collections',
+    section: SidebarSection.MANAGEMENT,
+    icon: 'bx:bx-collection',
+    items: [
+      {
+        title: 'actions.list',
+        href: '/users/profile/collections',
+      },
+      {
+        title: 'actions.create',
+        href: '/collections/create',
       },
     ],
   },

@@ -1,0 +1,90 @@
+{
+  "explore": {
+    "title": "Explore Collections",
+    "description": "Find below all the collections. You can search for a collections by its name",
+    "collectionCard": {
+      "footer": {
+        "content": "{{count}} element in the collection"
+      },
+      "menu": {
+        "items": {
+          "edit": "Edit collection",
+          "delete": "Delete collection",
+          "view": "View collection"
+        }
+      }
+    }
+  },
+  "slug": {
+    "list": {
+      "title": "Explore Collection",
+      "noData": "There are no elements in the collection"
+    },
+    "actions": {
+      "play": "Play"
+    }
+  },
+  "forms": {
+    "create-update": {
+      "title": {
+        "create": "Create a new collection",
+        "update": "Update {{collection}}"
+      },
+      "description": {
+        "create": "Create a collection to add new attachments, or simply change the title or the description of it.",
+        "update": "Update your collection to add new attachments, or simply change the title or the description of it."
+      },
+      "fields": {
+        "name": {
+          "label": "Name",
+          "errors": {
+            "required": "Required"
+          }
+        },
+        "description": {
+          "label": "Description",
+          "errors": {
+            "required": "Required"
+          }
+        },
+        "elements": {
+          "label": "Elements",
+          "tooltips": {
+            "addElements": "Add an element"
+          },
+          "errors": {
+            "noData": "There are no elements"
+          }
+        }
+      },
+      "actions": {
+        "submit": {
+          "create": "Create video",
+          "update": "Update video"
+        },
+        "addElement": "Add an element to the collection"
+      }
+    },
+    "elementModal": {
+      "elementType": {
+        "types": {
+          "video": {
+            "label": "Video",
+            "description": "Add a video to the collection",
+            "actions": {
+              "addElements": "Add {{count}} video(s) to the collection"
+            }
+          },
+          "quizz": {
+            "label": "Quizze",
+            "description": "Add a quizze to the collection"
+          },
+          "link": {
+            "label": "Link",
+            "description": "Add a link to the collection"
+          }
+        }
+      }
+    }
+  }
+}

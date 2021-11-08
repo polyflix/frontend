@@ -9,7 +9,7 @@
     "^@auth/(.*)$",
     "^@quizzes/(.*)$",
     "^@videos/(.*)$",
-    "^@collections /(.*)$",
+    "^@collections/(.*)$",
     "^@users/(.*)$",
     "^@theme/(.*)$",
     "^[./]"
