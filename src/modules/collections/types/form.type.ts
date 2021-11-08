@@ -1,13 +1,19 @@
-import { Visibility } from '@core/models/content.model'
+import { ContentModel } from '@core/models/content.model'
+import { Element } from '@core/models/element.model'
+import { Link } from '@core/types/element.type'
 
-export interface ICollectionForm {
-  title: string
+import { Video } from '@videos/models/video.model'
+
+import { User } from '@users/models/user.model'
+
+export interface ICollectionForm extends ContentModel {
   description: string
-  videos: VideoLite[]
-  draft: boolean
-  visibility: Visibility
-  passwords: AccessPassword[]
-  tags: TagLite[]
+  name: string
+  user?: Partial<User>
+  slug: string
+  elements: Element<Link | Video>[]
+  // passwords: AccessPassword[]
+  // tags: TagLite[]
 }
 
 export type AccessPassword = {
@@ -15,12 +21,4 @@ export type AccessPassword = {
   password: string
   expiration: string
   collectionId: string
-}
-
-type VideoLite = {
-  id: string
-}
-
-type TagLite = {
-  id: string
 }

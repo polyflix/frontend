@@ -28,7 +28,10 @@
         }
       },
       "collections": {
-        "title": "Collections"
+        "title": "Collections",
+        "content": {
+          "title": "My collections"
+        }
       },
       "groups": {
         "title": "Groups"
