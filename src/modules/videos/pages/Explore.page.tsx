@@ -1,4 +1,4 @@
-import { Box, Divider, Grid, Pagination, Stack, Tooltip } from '@mui/material'
+import { Box, Divider, Grid, Pagination, Stack } from '@mui/material'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -6,7 +6,6 @@ import { ItemsPerPage } from '@core/components/Filters/ItemsPerPage.component'
 import { Header } from '@core/components/Header/Header.component'
 import { NoData } from '@core/components/NoData/NoData.component'
 import { Page } from '@core/components/Page/Page.component'
-import { Searchbar } from '@core/components/Searchbar/Searchbar.component'
 import { Visibility } from '@core/models/content.model'
 
 import { VideoSliderCard } from '@videos/components/VideoSliderCard/VideoSliderCard.component'
@@ -23,7 +22,7 @@ export const ExploreVideosPage = () => {
     pageSize: 10,
   })
 
-  const { data, isLoading } = useGetVideosQuery({
+  const { data, isLoading, isFetching } = useGetVideosQuery({
     visibility: Visibility.PUBLIC,
     draft: false,
     ...filters,
@@ -41,15 +40,6 @@ export const ExploreVideosPage = () => {
       <Divider sx={{ my: 3 }} />
 
       <Stack justifyContent="space-between" direction="row">
-        <Tooltip
-          title={t<string>('navbar.actions.search.fast')}
-          open={true}
-          PopperProps={{
-            disablePortal: true,
-          }}
-        >
-          <Searchbar onChange={() => {}} label={t('soon', { ns: 'common' })} />
-        </Tooltip>
         <ItemsPerPage
           onChange={(pageSize) => setFilters({ ...filters, pageSize })}
         />
@@ -59,7 +49,11 @@ export const ExploreVideosPage = () => {
         {data?.items && data?.items.length > 0 ? (
           data?.items.map((item: Video) => (
             <Grid key={item.id} item xs={12} sm={6} md={6} lg={4}>
-              <VideoSliderCard key={item.id} video={item} />
+              <VideoSliderCard
+                key={item.id}
+                video={item}
+                isFetching={isFetching}
+              />
             </Grid>
           ))
         ) : (
