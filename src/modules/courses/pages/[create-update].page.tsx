@@ -21,7 +21,10 @@ export const CreateUpdateCoursePage = () => {
     []
   )
 
-  const { data, isLoading } = useGetCourseQuery({ slug, filters: fetchFilters })
+  const { data, isLoading } = useGetCourseQuery(
+    { slug, filters: fetchFilters },
+    { skip: !slug }
+  )
 
   const i18nKey = isUndefined(data) ? 'create' : 'update'
 
