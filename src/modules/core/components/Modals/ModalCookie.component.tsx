@@ -32,8 +32,6 @@ export default function ModalCookies() {
     setOpen(false)
   }
 
-  console.log(getCookie(cookieName))
-
   return (
     <Modal
       open={open}

@@ -72,47 +72,49 @@ export const HomePage = () => {
 
         {/** LATEST VIDEOS SLIDER **/}
         <Grid item xs={12}>
-          <Slider
-            isLoading={lastVideosQuery.isLoading}
-            heading={
-              <Typography variant="h4">{t('sliders.titles.latest')}</Typography>
-            }
-            freeMode
-          >
-            {videos.length > 0 ? (
-              videos.map((video) => (
+          {lastVideosQuery.isLoading || videos.length > 0 ? (
+            <Slider
+              isLoading={lastVideosQuery.isLoading}
+              heading={
+                <Typography variant="h4">
+                  {t('sliders.titles.latest')}
+                </Typography>
+              }
+              freeMode
+            >
+              {videos.map((video) => (
                 <VideoSliderCard key={video.id} video={video} />
-              ))
-            ) : (
-              <NoData variant="videos" link="/videos/create" />
-            )}
-          </Slider>
+              ))}
+            </Slider>
+          ) : (
+            <NoData variant="videos" link="/videos/create" />
+          )}
         </Grid>
         {/** END LATEST VIDEOS SLIDER **/}
 
         {/** POPULAR VIDEOS SLIDER **/}
         <Grid item xs={12}>
-          <Slider
-            isLoading={lastVideosQuery.isLoading}
-            heading={
-              <Typography variant="h4">
-                {t('sliders.titles.popular')}
-              </Typography>
-            }
-            freeMode
-          >
-            {/** We slice the array as it is a frozen object to create a clone of it **/}
-            {videos.length > 0 ? (
-              videos
+          {lastVideosQuery.isLoading || videos.length > 0 ? (
+            <Slider
+              isLoading={lastVideosQuery.isLoading}
+              heading={
+                <Typography variant="h4">
+                  {t('sliders.titles.popular')}
+                </Typography>
+              }
+              freeMode
+            >
+              {/** We slice the array as it is a frozen object to create a clone of it **/}
+              {videos
                 .slice()
                 .sort((a: Video, b: Video) => b.views - a.views)
                 .map((video) => (
                   <VideoSliderCard key={video.id} video={video} />
-                ))
-            ) : (
-              <NoData variant="videos" link="/videos/create" />
-            )}
-          </Slider>
+                ))}
+            </Slider>
+          ) : (
+            <NoData variant="videos" link="/videos/create" />
+          )}
         </Grid>
         {/** END POPULAR VIDEOS SLIDER **/}
         {/** WATCHED VIDEOS SLIDER **/}

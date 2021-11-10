@@ -103,5 +103,9 @@
   "noData": {
     "description": "Si vous avez les droits nécessaires vous pouvez créer une collection ci-dessous",
     "buttonText": "Créer une collection"
+  },
+  "deleteModal": {
+    "title": "Supprimer la collection",
+    "content": "Etes-vous sûr de vouloir supprimer cette collection ?"
   }
 }

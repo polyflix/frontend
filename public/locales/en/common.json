@@ -40,5 +40,11 @@
   "noData": {
     "title": "No data was found",
     "descriptionDefault": "If you have the necessary rights you can create the associated resource"
+  },
+  "confirmationModal": {
+    "actions": {
+      "cancel": "Cancel",
+      "delete": "Delete"
+    }
   }
 }

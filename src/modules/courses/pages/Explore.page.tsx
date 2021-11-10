@@ -30,7 +30,7 @@ export const ExploreCoursesPage = () => {
   return (
     <Page title={t('explore.title')} isLoading={isLoading}>
       <Grid container spacing={3}>
-        <Grid item xs={11} sm={11} md={7}>
+        <Grid item md={12} lg={8}>
           <Stack spacing={3}>
             <Typography variant="h1">
               <Trans
@@ -51,10 +51,9 @@ export const ExploreCoursesPage = () => {
             </Typography>
           </Stack>
         </Grid>
-        <Grid item md={1} />
         {data &&
           data.data.map((course) => (
-            <Grid item xs={4} md={4} key={course.id}>
+            <Grid item xs={12} sm={6} lg={4} key={course.id}>
               <CourseCard course={course} />
             </Grid>
           ))}

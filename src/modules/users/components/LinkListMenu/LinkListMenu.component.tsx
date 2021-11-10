@@ -10,6 +10,7 @@ import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link as RouterLink } from 'react-router-dom'
 
+import { useConfirmModal } from '@core/hooks/useConfirmModal.hook'
 import { Element } from '@core/models/element.model'
 
 import { Link } from '@links/models/link.model'
@@ -34,10 +35,18 @@ export const LinkListMenuMenu = ({ link }: LinkListMenuMenuProps) => {
   const handleClose = () => {
     setAnchorEl(null)
   }
-  const handleDelete = () => {
-    deleteLink({ id: link.id })
-    handleClose()
-  }
+
+  const { Modal, onClick: onClickModal } = useConfirmModal({
+    title: t('profile.tabs.links.deleteModal.title'),
+    content: t('profile.tabs.links.deleteModal.content'),
+    onCancel: () => {
+      handleClose()
+    },
+    onConfirm: () => {
+      handleClose()
+      deleteLink({ id: link.id })
+    },
+  })
 
   return (
     <>
@@ -72,7 +81,7 @@ export const LinkListMenuMenu = ({ link }: LinkListMenuMenuProps) => {
             {t('profile.tabs.links.content.list.menu.actions.edit')}
           </ListItemText>
         </MenuItem>
-        <MenuItem onClick={handleDelete}>
+        <MenuItem onClick={onClickModal}>
           <ListItemIcon>
             <Delete fontSize="small" color="error" />
           </ListItemIcon>
@@ -81,6 +90,7 @@ export const LinkListMenuMenu = ({ link }: LinkListMenuMenuProps) => {
           </ListItemText>
         </MenuItem>
       </Menu>
+      <Modal />
     </>
   )
 }

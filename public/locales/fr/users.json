@@ -53,11 +53,15 @@
             "menu": {
               "actions": {
                 "edit": "Editer le lien",
-                "delete": "Supprimer le link"
+                "delete": "Supprimer le lien"
               }
             },
             "clipboard": "URL copiée dans le presse-papiers !"
           }
+        },
+        "deleteModal": {
+          "title": "Supprimer le lien",
+          "content": "Êtes-vous sûr de vouloir supprimer ce lien ?"
         }
       }
     }
