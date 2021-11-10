@@ -14,9 +14,12 @@
     "crudMessage": "{{resource}} has been successfully {{action}} !"
   },
   "actions": {
-    "create": "created",
-    "update": "updated",
-    "delete": "deleted"
+    "created": "created",
+    "updated": "updated",
+    "deleted": "deleted",
+    "create": "create",
+    "update": "update",
+    "delete": "delete"
   },
   "navbar": {
     "actions": {

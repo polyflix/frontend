@@ -2,15 +2,16 @@ import { Box, Link, Stack, Typography } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 import { Link as RouterLink } from 'react-router-dom'
 
+import { CardMenu } from '@core/components/CardMenu/CardMenu.component'
 import { Icon } from '@core/components/Icon/Icon.component'
 import { clampString } from '@core/utils/text.utils'
 
 import { useAuth } from '@auth/hooks/useAuth.hook'
 
 import { Collection } from '@collections/models/collection.model'
+import { useDeleteCollectionMutation } from '@collections/services/collection.service'
 
 import { CardFooterStyle, RootStyle } from './CollectionCard.style'
-import { CollectionCardMenu } from './CollectionCardMenu/CollectionCardMenu.component'
 
 type CollectionCardProps = {
   collection: Collection
@@ -19,6 +20,11 @@ type CollectionCardProps = {
 export const CollectionCard = ({ collection }: CollectionCardProps) => {
   const { t } = useTranslation('collections')
   const { user } = useAuth()
+
+  const [deleteCollection] = useDeleteCollectionMutation()
+  const handleDelete = () => {
+    deleteCollection({ slug: collection.slug })
+  }
 
   const draftStyle = collection.draft && {
     opacity: 0.3,
@@ -65,7 +71,10 @@ export const CollectionCard = ({ collection }: CollectionCardProps) => {
               })}
             </Typography>
             {collection?.user?.id === user?.id && (
-              <CollectionCardMenu collection={collection} />
+              <CardMenu
+                updateHref={`/collections/${collection.slug}/update`}
+                onDelete={handleDelete}
+              />
             )}
           </Stack>
         </CardFooterStyle>

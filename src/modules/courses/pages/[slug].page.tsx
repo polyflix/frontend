@@ -3,23 +3,18 @@ import {
   Avatar,
   Divider,
   Grid,
+  Link,
   Paper,
   Skeleton,
   Stack,
   Typography,
-  Link,
 } from '@mui/material'
-import IconButton from '@mui/material/IconButton'
-import Tooltip from '@mui/material/Tooltip'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link as RouterLink, useParams } from 'react-router-dom'
 
-import { Icon } from '@core/components/Icon/Icon.component'
 import { MarkdownBox } from '@core/components/MarkdownBox/MarkdownBox.component'
 import { Page } from '@core/components/Page/Page.component'
-
-import { useAuth } from '@auth/hooks/useAuth.hook'
 
 import { CollectionTimeline } from '@collections/components/CollectionTimeline/CollectionTimeline.component'
 
@@ -30,7 +25,6 @@ import { CoursesFilters } from '@courses/types/filters.type'
 export const CourseSlugPage = () => {
   const { slug } = useParams<{ slug: string }>()
   const { t } = useTranslation('courses')
-  const { user } = useAuth()
   const fetchFilters = useMemo<CoursesFilters>(
     () => ({
       join: [
@@ -75,20 +69,6 @@ export const CourseSlugPage = () => {
                   variant="h2"
                 >
                   {data.name}
-                  {user?.id && data?.user?.id === user.id && (
-                    <Tooltip title={`${t('form.upsert.update')}`}>
-                      <IconButton
-                        sx={{
-                          display: 'inline',
-                          margin: 1,
-                        }}
-                        component={RouterLink}
-                        to={`/courses/${data?.slug}/update`}
-                      >
-                        <Icon name="eva:edit-fill" />
-                      </IconButton>
-                    </Tooltip>
-                  )}
                 </Typography>
               ) : (
                 <Skeleton variant="text" width="50%" height="50px" />
@@ -97,7 +77,7 @@ export const CourseSlugPage = () => {
               {data?.description ? (
                 <Typography
                   variant={'body1'}
-                  sx={{ color: 'grey.700', overflowWrap: 'break-word', py: 2 }}
+                  sx={{ overflowWrap: 'break-word', py: 2 }}
                 >
                   {data.description}
                 </Typography>

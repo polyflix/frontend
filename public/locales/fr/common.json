@@ -14,9 +14,12 @@
     "crudMessage": "{{resource}} à été {{action}} avec succès !"
   },
   "actions": {
-    "create": "créé",
-    "update": "actualisé",
-    "delete": "supprimé"
+    "created": "créé",
+    "updated": "actualisé",
+    "deleted": "supprimé",
+    "create": "créer",
+    "update": "mettre à jour",
+    "delete": "supprimer"
   },
   "navbar": {
     "actions": {

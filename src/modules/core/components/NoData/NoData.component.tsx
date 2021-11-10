@@ -10,7 +10,7 @@ import { Role } from '@core/types/roles.type'
 import animationData from '../../../../assets/lotties/empty-box.json'
 
 interface Props {
-  variant?: 'videos' | 'quizzes' | 'collections' | 'links'
+  variant?: 'videos' | 'quizzes' | 'collections' | 'links' | 'courses'
   link?: string
 }
 

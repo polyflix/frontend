@@ -2,7 +2,10 @@ import { Avatar, Box, Link, Stack, Typography } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 import { Link as RouterLink } from 'react-router-dom'
 
+import { CardMenu } from '@core/components/CardMenu/CardMenu.component'
 import { clampString } from '@core/utils/text.utils'
+
+import { useAuth } from '@auth/hooks/useAuth.hook'
 
 import {
   CardFooterStyle,
@@ -10,6 +13,7 @@ import {
 } from '@collections/components/CollectionCard/CollectionCard.style'
 
 import { Course } from '@courses/models/course.model'
+import { useDeleteCourseMutation } from '@courses/services/course.service'
 
 interface Props {
   course: Course
@@ -17,6 +21,12 @@ interface Props {
 
 export const CourseCard = ({ course }: Props) => {
   const { t } = useTranslation('courses')
+  const { user } = useAuth()
+
+  const [deleteCourse] = useDeleteCourseMutation()
+  const handleDelete = () => {
+    deleteCourse({ slug: course.slug })
+  }
 
   const draftStyle = course.draft && {
     opacity: 0.3,
@@ -68,6 +78,12 @@ export const CourseCard = ({ course }: Props) => {
               count: course?.collections?.length || 0,
             })}
           </Typography>
+          {course?.user?.id === user?.id && (
+            <CardMenu
+              updateHref={`/courses/${course.slug}/update`}
+              onDelete={handleDelete}
+            />
+          )}
         </Stack>
       </CardFooterStyle>
     </RootStyle>

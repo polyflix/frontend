@@ -48,7 +48,11 @@ export const ProfileCollectionsPage = () => {
   const skeletons = buildSkeletons(3)
 
   return (
-    <Page isLoading={isLoading} title={t('explore.title')} sx={{ mt: 3 }}>
+    <Page
+      isLoading={isLoading}
+      title={t('profile.tabs.collections.content.title')}
+      sx={{ mt: 3 }}
+    >
       <Typography variant="h4" sx={{ mb: 2 }}>
         {t('profile.tabs.collections.content.title')}
       </Typography>

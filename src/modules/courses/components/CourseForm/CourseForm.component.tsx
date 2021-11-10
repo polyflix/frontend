@@ -222,7 +222,8 @@ export const CourseForm: React.FC<Props> = ({ course }) => {
         <TextField
           error={Boolean(errors.content)}
           multiline
-          rows={5}
+          minRows={5}
+          maxRows={40}
           disabled={isSubmitting}
           helperText={
             errors.content?.message ?? t('form.upsert.helper.content')
