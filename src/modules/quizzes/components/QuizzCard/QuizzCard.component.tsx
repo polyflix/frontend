@@ -71,9 +71,9 @@ export const QuizzCard = ({
    * Build the publisher UI in the card.
    * @returns
    */
-  const buildPublisher = () => (
-    <Tooltip title={`${quizz.user?.firstName} ${quizz.user?.lastName}`}>
-      <UserAvatar variant="circular" user={quizz.user as User} />
+  const buildPublisher = (user: Partial<User>) => (
+    <Tooltip title={`${user?.firstName} ${user?.lastName}`}>
+      <UserAvatar variant="circular" user={user as User} />
     </Tooltip>
   )
 
@@ -105,7 +105,7 @@ export const QuizzCard = ({
     >
       {displayTags && buildTags()}
       <Stack spacing={2} direction="row">
-        {displayPublisher && buildPublisher()}
+        {displayPublisher && buildPublisher(quizz.user!)}
         <Stack>
           <Typography variant="h6" fontWeight="bold">
             {quizz.name}

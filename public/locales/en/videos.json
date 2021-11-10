@@ -117,7 +117,7 @@
     "details": {
       "tooltips": {
         "likes": "{{count}} like(s)",
-        "views": "{{count}} view(s)",
+        "views": "{{count}} view",
         "seeProfile": "See profile"
       },
       "menu": {

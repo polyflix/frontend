@@ -7,7 +7,6 @@ import { ProfileCoursesPage } from '@users/pages/ProfileCourses/ProfileCourses.p
 
 import { ProfilePage } from './pages/Profile/Profile.page'
 import { ProfileCollectionsPage } from './pages/ProfileCollections/ProfileCollections.page'
-import { ProfileGroupsPage } from './pages/ProfileGroups/ProfileGroups.page'
 import { ProfileLinksPage } from './pages/ProfileLinks/ProfileLinks.page'
 import { ProfileQuizzesPage } from './pages/ProfileQuizzes/ProfileQuizzes.page'
 import { ProfileVideosPage } from './pages/ProfileVideos/ProfileVideos.page'
@@ -27,7 +26,6 @@ const ProfileRouter = () => {
           component={ProfileCollectionsPage}
         />
         <Route exact path={`${url}/courses`} component={ProfileCoursesPage} />
-        <Route exact path={`${url}/groups`} component={ProfileGroupsPage} />
         <Route exact path={`${url}/quizzes`} component={ProfileQuizzesPage} />
         <Route exact path={`${url}/links`} component={ProfileLinksPage} />
         <Route component={NotFoundPage} />

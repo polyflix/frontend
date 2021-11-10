@@ -140,6 +140,8 @@ interface Props {
 }
 
 export const VideoSliderCard = ({ video, isFetching = false }: Props) => {
+  const { t } = useTranslation('videos')
+
   return (
     <VideoCardRootStyle>
       {!video || isFetching ? (
@@ -288,7 +290,9 @@ export const VideoSliderCard = ({ video, isFetching = false }: Props) => {
                   variant="body2"
                   noWrap={true}
                 >
-                  {`${abbreviateNumber(video?.views || 0)} views - `}
+                  {`${abbreviateNumber(video?.views || 0)} ${t<string>(
+                    'slug.details.tooltips.views'
+                  )}${video?.views && video?.views > 1 ? 's' : ''} - `}
                   {getPublishLabel(video?.createdAt)}
                 </Typography>
               </Box>

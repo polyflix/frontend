@@ -11,7 +11,8 @@ import { UserAvatar } from '@users/components/UserAvatar/UserAvatar.component'
 import { User } from '@users/models/user.model'
 
 const getHighestRole = (user: Partial<User> & Pick<User, 'roles'>): string => {
-  if (user?.roles.length > 0) {
+  if (!user.roles) return ''
+  if (user!.roles.length > 0) {
     if (user!.roles.includes(Role.Admin)) {
       return capitalize(Role.Admin)
     }
@@ -28,7 +29,7 @@ const getHighestRole = (user: Partial<User> & Pick<User, 'roles'>): string => {
 export const UserMinimalCard = ({}) => {
   const { open } = useSidebar()
   const { user } = useAuth()
-  const role = getHighestRole(user)
+  const role = getHighestRole(user!)
 
   return (
     <Stack direction="row" alignItems="center" sx={{ width: '100%' }}>

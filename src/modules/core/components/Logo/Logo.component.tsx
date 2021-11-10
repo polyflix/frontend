@@ -1,4 +1,4 @@
-import { Box, Stack, Tooltip, Typography } from '@mui/material'
+import { Box, IconButton, Stack, Tooltip, Typography } from '@mui/material'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useHistory, useLocation } from 'react-router-dom'
@@ -24,17 +24,15 @@ export const Logo = ({ minimal = false }: Props) => {
     <Stack direction="row" alignItems="baseline">
       {location.pathname !== initialPage && (
         <Tooltip title={`${t('goBack')}`} onClick={() => history.goBack()}>
-          <Typography
-            color={'grey.700'}
+          <IconButton
             sx={{
-              px: 2,
               cursor: 'pointer',
               '&:hover': { color: 'primary.main' },
               transitionDuration: '500ms',
             }}
           >
-            <Icon name={'akar-icons:chevron-left'} />
-          </Typography>
+            <Icon name="akar-icons:chevron-left" />
+          </IconButton>
         </Tooltip>
       )}
       <Typography
