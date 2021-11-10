@@ -36,7 +36,7 @@ export const VideoDescriptionMenu: React.FC<Props> = ({ video }) => {
 
   return (
     <>
-      {video.publishedBy.id === user.id && (
+      {video?.publishedBy?.id === user?.id && (
         <>
           <IconButton
             disableRipple={true}
@@ -85,7 +85,7 @@ export const VideoDescriptionMenu: React.FC<Props> = ({ video }) => {
             </MenuItem>
           </Menu>
           <DeleteVideoModal
-            id={video.id}
+            id={video?.id!}
             open={isDeleteModalOpen}
             setIsOpen={setIsDeleteModalOpen}
             onClose={() => setIsDeleteModalOpen(false)}

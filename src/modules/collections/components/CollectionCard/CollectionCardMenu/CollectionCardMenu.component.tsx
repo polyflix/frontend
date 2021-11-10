@@ -10,6 +10,8 @@ import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 
+import { useConfirmModal } from '@core/hooks/useConfirmModal.hook'
+
 import { Collection } from '@collections/models/collection.model'
 import { useDeleteCollectionMutation } from '@collections/services/collection.service'
 
@@ -21,7 +23,7 @@ export const CollectionCardMenu = ({ collection }: CollectionCardMenuProps) => {
   const { t } = useTranslation('collections')
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null)
 
-  const [deleteCourse] = useDeleteCollectionMutation()
+  const [deleteCollection] = useDeleteCollectionMutation()
 
   const open = Boolean(anchorEl)
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -32,10 +34,18 @@ export const CollectionCardMenu = ({ collection }: CollectionCardMenuProps) => {
   const handleClose = () => {
     setAnchorEl(null)
   }
-  const handleDelete = () => {
-    deleteCourse({ slug: collection.slug })
-    handleClose()
-  }
+
+  const { Modal, onClick: onClickModal } = useConfirmModal({
+    title: t('deleteModal.title'),
+    content: t('deleteModal.content'),
+    onCancel: () => {
+      handleClose()
+    },
+    onConfirm: () => {
+      handleClose()
+      deleteCollection({ slug: collection.slug })
+    },
+  })
 
   return (
     <>
@@ -70,7 +80,7 @@ export const CollectionCardMenu = ({ collection }: CollectionCardMenuProps) => {
             {t('explore.collectionCard.menu.items.edit')}
           </ListItemText>
         </MenuItem>
-        <MenuItem onClick={handleDelete}>
+        <MenuItem onClick={onClickModal}>
           <ListItemIcon>
             <Delete fontSize="small" color="error" />
           </ListItemIcon>
@@ -79,6 +89,7 @@ export const CollectionCardMenu = ({ collection }: CollectionCardMenuProps) => {
           </ListItemText>
         </MenuItem>
       </Menu>
+      <Modal />
     </>
   )
 }
