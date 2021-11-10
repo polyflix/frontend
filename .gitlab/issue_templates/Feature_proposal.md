@@ -26,3 +26,4 @@ You have labelled:
 - [ ] the scope(s) concerned
 - [ ] the severity of the bug
 - [ ] the type feature or enhancement
+- [ ] the state of the feature or enhancement
