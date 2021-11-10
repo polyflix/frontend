@@ -61,7 +61,12 @@ const PolyflixApp = () => {
   const { isUnhealthy } = useServerHealth()
 
   // If the server is unavailable, display the 503 page
-  if (isUnhealthy) return <ServiceUnavailablePage />
+  if (isUnhealthy)
+    return (
+      <Router>
+        <ServiceUnavailablePage />
+      </Router>
+    )
 
   // We consider that the user is authenticated when
   // the user value in the state is defined
