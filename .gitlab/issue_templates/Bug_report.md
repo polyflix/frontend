@@ -42,3 +42,4 @@ You have labelled:
 - [ ] the scope(s) concerned
 - [ ] the severity of the bug
 - [ ] the type bug
+- [ ] the state of the bug
