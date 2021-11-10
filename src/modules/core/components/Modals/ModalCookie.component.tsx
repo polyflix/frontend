@@ -54,7 +54,7 @@ export default function ModalCookies() {
         variant="outlined"
       >
         <Typography id="modal-title" variant="h6" component="h2">
-          Polyflix
+          {t('title')}
         </Typography>
         <Typography id="modal-description" sx={{ mt: 2 }}>
           {t('description')}

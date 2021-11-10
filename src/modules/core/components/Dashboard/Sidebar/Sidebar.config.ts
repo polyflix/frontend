@@ -33,12 +33,6 @@ const sidebarConfiguration: SidebarItem[] = [
     roles: [Role.Student, Role.Teacher, Role.Admin],
   },
   {
-    title: 'items.quizzes',
-    href: '/quizzes/explore',
-    icon: 'healthicons:i-exam-multiple-choice',
-    roles: [Role.Student, Role.Teacher, Role.Admin],
-  },
-  {
     title: 'items.collections',
     href: '/collections/explore',
     icon: 'bx:bx-collection',
@@ -51,7 +45,13 @@ const sidebarConfiguration: SidebarItem[] = [
     roles: [Role.Student, Role.Teacher, Role.Admin],
   },
   {
-    title: 'items.videos',
+    title: 'items.quizzes',
+    href: '/quizzes/explore',
+    icon: 'healthicons:i-exam-multiple-choice',
+    roles: [Role.Student, Role.Teacher, Role.Admin],
+  },
+  {
+    title: 'myContent.videos',
     section: SidebarSection.MANAGEMENT,
     icon: 'eva:play-circle-outline',
     roles: [Role.Teacher, Role.Admin],
@@ -67,7 +67,35 @@ const sidebarConfiguration: SidebarItem[] = [
     ],
   },
   {
-    title: 'items.quizzes',
+    title: 'myContent.collections',
+    section: SidebarSection.MANAGEMENT,
+    icon: 'bx:bx-collection',
+    roles: [Role.Teacher, Role.Admin],
+    items: [
+      {
+        title: 'actions.list',
+        href: '/users/profile/collections',
+      },
+      {
+        title: 'actions.create',
+        href: '/collections/create',
+      },
+    ],
+  },
+  {
+    title: 'myContent.courses',
+    section: SidebarSection.MANAGEMENT,
+    icon: 'gg:align-left',
+    roles: [Role.Teacher, Role.Admin],
+    items: [
+      {
+        title: 'actions.create',
+        href: '/courses/create',
+      },
+    ],
+  },
+  {
+    title: 'myContent.quizzes',
     section: SidebarSection.MANAGEMENT,
     icon: 'healthicons:i-exam-multiple-choice',
     roles: [Role.Teacher, Role.Admin],
@@ -87,19 +115,7 @@ const sidebarConfiguration: SidebarItem[] = [
     ],
   },
   {
-    title: 'items.courses',
-    section: SidebarSection.MANAGEMENT,
-    icon: 'gg:align-left',
-    roles: [Role.Teacher, Role.Admin],
-    items: [
-      {
-        title: 'actions.create',
-        href: '/courses/create',
-      },
-    ],
-  },
-  {
-    title: 'items.links',
+    title: 'myContent.links',
     section: SidebarSection.MANAGEMENT,
     icon: 'eva:link-outline',
     roles: [Role.Teacher, Role.Admin],
@@ -111,22 +127,6 @@ const sidebarConfiguration: SidebarItem[] = [
       {
         title: 'actions.create',
         href: '/links/create',
-      },
-    ],
-  },
-  {
-    title: 'items.collections',
-    section: SidebarSection.MANAGEMENT,
-    icon: 'bx:bx-collection',
-    roles: [Role.Teacher, Role.Admin],
-    items: [
-      {
-        title: 'actions.list',
-        href: '/users/profile/collections',
-      },
-      {
-        title: 'actions.create',
-        href: '/collections/create',
       },
     ],
   },

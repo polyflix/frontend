@@ -19,7 +19,7 @@
     "title": "Récupérez vos liens de partage !",
     "description": "Voici vos liens pour permettre aux utilisateurs d'accéder à la collection. <br/><br/> <strong>Veuillez les conserver en lieu sûr, ils ne seront plus imprimés. Si vous les perdez ou si vous souhaitez en révoquer un, vous pouvez simplement les régénérer dans la page de mise à jour de votre collection.</strong>",
     "cta": "Continuer",
-    "clipboard": "URL copiée dans le presse-papiers !"
+    "clipboard": "URL copiée dans le presse-papier !"
   },
   "slug": {
     "list": {
@@ -89,8 +89,8 @@
             }
           },
           "quizz": {
-            "label": "Quizze",
-            "description": "Ajouter un quizze à la collection"
+            "label": "Quiz",
+            "description": "Ajouter un quiz à la collection"
           },
           "link": {
             "label": "Lien",

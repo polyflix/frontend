@@ -28,7 +28,10 @@
         }
       },
       "collections": {
-        "title": "Collections"
+        "title": "Collections",
+        "content": {
+          "title": "Mes collections"
+        }
       },
       "groups": {
         "title": "Groupes"
@@ -49,6 +52,7 @@
       "links": {
         "title": "Liens",
         "content": {
+          "title": "Mes liens",
           "list": {
             "menu": {
               "actions": {
@@ -56,7 +60,7 @@
                 "delete": "Supprimer le lien"
               }
             },
-            "clipboard": "URL copiée dans le presse-papiers !"
+            "clipboard": "URL copiée dans le presse-papier !"
           }
         },
         "deleteModal": {
