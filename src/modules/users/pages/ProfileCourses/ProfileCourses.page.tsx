@@ -10,6 +10,7 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { ItemsPerPage } from '@core/components/Filters/ItemsPerPage.component'
+import { NoData } from '@core/components/NoData/NoData.component'
 import { Page } from '@core/components/Page/Page.component'
 import { Searchbar } from '@core/components/Searchbar/Searchbar.component'
 import { buildSkeletons } from '@core/utils/gui.utils'
@@ -33,7 +34,11 @@ export const ProfileCoursesPage = () => {
     limit: 10,
   })
 
-  const { data, isLoading, isFetching } = useGetCoursesQuery({
+  const {
+    data: courses,
+    isLoading,
+    isFetching,
+  } = useGetCoursesQuery({
     join: [{ field: 'collections', select: ['slug'] }, { field: 'user' }],
     'user.id': user!.id,
     ...filters,
@@ -78,8 +83,11 @@ export const ProfileCoursesPage = () => {
       </Stack>
 
       <Grid sx={{ my: 3 }} container columnSpacing={2} rowSpacing={4}>
+        {courses?.data && courses.data.length === 0 && (
+          <NoData variant="courses" link="/courses/create" />
+        )}
         {!isFetching
-          ? data?.data.map((item: Course) => (
+          ? courses?.data.map((item: Course) => (
               <Grid key={item.id} item xs={12} sm={6} md={6} lg={4}>
                 <CourseCard course={item} />
               </Grid>
@@ -94,7 +102,7 @@ export const ProfileCoursesPage = () => {
       <Box display="flex" justifyContent="center">
         <Pagination
           onChange={(e, page) => setFilters({ ...filters, page })}
-          count={data?.pageCount}
+          count={courses?.pageCount}
           shape="rounded"
           variant="outlined"
           showFirstButton

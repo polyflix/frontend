@@ -6,7 +6,6 @@
   },
   "collections": "Collections",
   "introduction": "Getting started",
-  "noData": "No data available here",
   "courseCard": {
     "footerElements": "{{count}} collection(s) in this course"
   },
@@ -51,5 +50,9 @@
       "search": "Search a collection",
       "seeCollection": "See this collection"
     }
+  },
+  "noData": {
+    "description": "If you have the necessary rights you can create a course below",
+    "buttonText": "Create a course"
   }
 }
