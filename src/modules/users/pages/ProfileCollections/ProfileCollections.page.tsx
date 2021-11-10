@@ -1,17 +1,11 @@
-import {
-  Box,
-  Divider,
-  Grid,
-  Pagination,
-  Stack,
-  Typography,
-} from '@mui/material'
+import { Box, Divider, Grid, Stack, Typography } from '@mui/material'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { ItemsPerPage } from '@core/components/Filters/ItemsPerPage.component'
 import { NoData } from '@core/components/NoData/NoData.component'
 import { Page } from '@core/components/Page/Page.component'
+import { PaginationSynced } from '@core/components/Pagination/PaginationSynced.component'
 import { Searchbar } from '@core/components/Searchbar/Searchbar.component'
 import { buildSkeletons } from '@core/utils/gui.utils'
 
@@ -27,24 +21,23 @@ import { CollectionFilters } from '@collections/types/filters.type'
 export const ProfileCollectionsPage = () => {
   const { t } = useTranslation('users')
   const { user } = useAuth()
+  let params = new URLSearchParams(window.location.search)
+
   const [filters, setFilters] = useState<CollectionFilters>({
     sort: [{ field: 'createdAt', order: 'DESC' }],
     join: [{ field: 'elements', select: ['type'] }, { field: 'user' }],
     'user.id': user!.id,
-    page: 1,
+    page: parseInt(params.get('page') || '1'),
     limit: 10,
   })
 
-  const {
-    data: collections,
-    isLoading,
-    isFetching,
-  } = useGetCollectionsQuery({
+  const { data, isLoading, isFetching } = useGetCollectionsQuery({
     join: [{ field: 'elements', select: ['type'] }, { field: 'user' }],
     'user.id': user!.id,
     ...filters,
   })
 
+  const collections: Collection[] = data?.data || []
   const skeletons = buildSkeletons(3)
 
   return (
@@ -78,17 +71,20 @@ export const ProfileCollectionsPage = () => {
           }}
           label={t('navbar.actions.search.fast', { ns: 'common' })}
         />
-        <ItemsPerPage onChange={(limit) => setFilters({ ...filters, limit })} />
+
+        {/* If there is more than 10 items, we display a limit item per page selector */}
+        {data?.total! > 10 && (
+          <ItemsPerPage
+            onChange={(limit) => setFilters({ ...filters, limit, page: 1 })}
+          />
+        )}
       </Stack>
 
       <Grid sx={{ my: 3 }} container columnSpacing={2} rowSpacing={4}>
-        {collections?.data && collections.data.length === 0 && (
-          <NoData variant="collections" link="/collections/create" />
-        )}
         {!isFetching
-          ? collections?.data.map((item: Collection) => (
-              <Grid key={item.id} item xs={12} sm={6} md={6} lg={4}>
-                <CollectionCard collection={item} />
+          ? collections.map((collection: Collection) => (
+              <Grid key={collection.id} item xs={12} sm={6} md={6} lg={4}>
+                <CollectionCard collection={collection} />
               </Grid>
             ))
           : skeletons.map((_, i: number) => (
@@ -98,16 +94,17 @@ export const ProfileCollectionsPage = () => {
             ))}
       </Grid>
 
-      <Box display="flex" justifyContent="center">
-        <Pagination
-          onChange={(e, page) => setFilters({ ...filters, page })}
-          count={collections?.pageCount}
-          shape="rounded"
-          variant="outlined"
-          showFirstButton
-          showLastButton
-        />
-      </Box>
+      {collections.length > 0 && !isLoading ? (
+        <Box display="flex" sx={{ mt: 3 }} justifyContent="center">
+          <PaginationSynced
+            filters={filters}
+            setFilters={setFilters}
+            pageCount={data?.pageCount!}
+          />
+        </Box>
+      ) : (
+        <NoData variant="collections" link="/collections/create" />
+      )}
     </Page>
   )
 }

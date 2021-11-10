@@ -1,4 +1,4 @@
-import { Box, Divider, Grid, Pagination, Stack } from '@mui/material'
+import { Box, Divider, Grid, Stack } from '@mui/material'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -6,8 +6,11 @@ import { ItemsPerPage } from '@core/components/Filters/ItemsPerPage.component'
 import { Header } from '@core/components/Header/Header.component'
 import { NoData } from '@core/components/NoData/NoData.component'
 import { Page } from '@core/components/Page/Page.component'
+import { PaginationSynced } from '@core/components/Pagination/PaginationSynced.component'
 import { Visibility } from '@core/models/content.model'
+import { buildSkeletons } from '@core/utils/gui.utils'
 
+import { VideoCardSkeleton } from '@videos/components/Skeleton/VideoCardSkeleton/VideoCardSkeleton.component'
 import { VideoSliderCard } from '@videos/components/VideoSliderCard/VideoSliderCard.component'
 import { Video } from '@videos/models/video.model'
 import { useGetVideosQuery } from '@videos/services/video.service'
@@ -15,10 +18,11 @@ import { VideoFilters } from '@videos/types/filters.type'
 
 export const ExploreVideosPage = () => {
   const { t } = useTranslation('videos')
+  let params = new URLSearchParams(window.location.search)
 
   // Useful states for filtering purposes
   const [filters, setFilters] = useState<VideoFilters>({
-    page: 1,
+    page: parseInt(params.get('page') || '1'),
     pageSize: 10,
   })
 
@@ -27,6 +31,9 @@ export const ExploreVideosPage = () => {
     draft: false,
     ...filters,
   })
+
+  const videos: Video[] = data?.items || []
+  const skeletons = buildSkeletons(3)
 
   let totalPage = Math.ceil((data?.totalCount ?? 1) / (filters.pageSize ?? 1))
 
@@ -38,39 +45,46 @@ export const ExploreVideosPage = () => {
       />
 
       <Divider sx={{ my: 3 }} />
-
-      <Stack justifyContent="space-between" direction="row">
-        <ItemsPerPage
-          onChange={(pageSize) => setFilters({ ...filters, pageSize })}
-        />
-      </Stack>
+      {/* If there is more than 10 items, we display a limit item per page selector */}
+      {(data?.totalCount ?? 1) * (filters.pageSize ?? 1) > 10 && (
+        <Stack justifyContent="space-between" direction="row">
+          <ItemsPerPage
+            onChange={(pageSize) =>
+              setFilters({ ...filters, pageSize, page: 1 })
+            }
+          />
+        </Stack>
+      )}
 
       <Grid sx={{ my: 3 }} container spacing={2}>
-        {data?.items && data?.items.length > 0 ? (
-          data?.items.map((item: Video) => (
-            <Grid key={item.id} item xs={12} sm={6} md={6} lg={4}>
-              <VideoSliderCard
-                key={item.id}
-                video={item}
-                isFetching={isFetching}
-              />
-            </Grid>
-          ))
-        ) : (
-          <NoData variant="videos" link="/videos/create" />
-        )}
+        {!isFetching
+          ? videos.map((video: Video) => (
+              <Grid key={video.id} item xs={12} sm={6} md={6} lg={4}>
+                <VideoSliderCard
+                  key={video.id}
+                  video={video}
+                  isFetching={isFetching}
+                />
+              </Grid>
+            ))
+          : skeletons.map((_, i: number) => (
+              <Grid key={i} item xs={12} sm={6} md={6} lg={4}>
+                <VideoCardSkeleton key={i} />
+              </Grid>
+            ))}
       </Grid>
 
-      <Box display="flex" justifyContent="center">
-        <Pagination
-          onChange={(e, page) => setFilters({ ...filters, page })}
-          count={totalPage < 1 ? 1 : totalPage}
-          shape="rounded"
-          variant="outlined"
-          showFirstButton
-          showLastButton
-        />
-      </Box>
+      {videos.length > 0 && !isLoading ? (
+        <Box display="flex" sx={{ mt: 3 }} justifyContent="center">
+          <PaginationSynced
+            filters={filters}
+            setFilters={setFilters}
+            pageCount={totalPage < 1 ? 1 : totalPage}
+          />
+        </Box>
+      ) : (
+        <NoData variant="videos" link="/videos/create" />
+      )}
     </Page>
   )
 }

@@ -1,9 +1,13 @@
-import { Box, Grid, Pagination, Stack, Typography } from '@mui/material'
+import { Box, Grid, Stack, Typography } from '@mui/material'
 import { useState } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 
 import { NoData } from '@core/components/NoData/NoData.component'
 import { Page } from '@core/components/Page/Page.component'
+import { PaginationSynced } from '@core/components/Pagination/PaginationSynced.component'
+import { buildSkeletons } from '@core/utils/gui.utils'
+
+import { CollectionCardSkeleton } from '@collections/components/CollectionCardSkeleton/CollectionCardSkeleton.component'
 
 import { CourseCard } from '@courses/components/CourseCard/CourseCard.component'
 import { Course } from '@courses/models/course.model'
@@ -11,9 +15,10 @@ import { useGetCoursesQuery } from '@courses/services/course.service'
 
 export const ExploreCoursesPage = () => {
   const { t } = useTranslation('courses')
+  let params = new URLSearchParams(window.location.search)
 
   const [filters, setFilters] = useState({
-    page: 1,
+    page: parseInt(params.get('page') || '1'),
     limit: 10,
     draft: false,
     join: [
@@ -28,8 +33,10 @@ export const ExploreCoursesPage = () => {
     ],
   })
 
-  const { data, isLoading } = useGetCoursesQuery(filters)
+  const { data, isLoading, isFetching } = useGetCoursesQuery(filters)
+
   const courses: Course[] = data?.data ?? []
+  const skeletons = buildSkeletons(3)
 
   return (
     <Page title={t('explore.title')} isLoading={isLoading}>
@@ -55,21 +62,26 @@ export const ExploreCoursesPage = () => {
             </Typography>
           </Stack>
         </Grid>
-        {courses.map((course) => (
-          <Grid item xs={12} sm={6} lg={4} key={course.id}>
-            <CourseCard course={course} />
-          </Grid>
-        ))}
+
+        {!isFetching
+          ? courses.map((course: Course) => (
+              <Grid item xs={12} sm={6} lg={4} key={course.id}>
+                <CourseCard course={course} />
+              </Grid>
+            ))
+          : skeletons.map((_, i: number) => (
+              <Grid key={i} item xs={12} sm={6} lg={4}>
+                <CollectionCardSkeleton key={i} />
+              </Grid>
+            ))}
       </Grid>
+
       {courses.length > 0 && !isLoading ? (
         <Box display="flex" sx={{ mt: 3 }} justifyContent="center">
-          <Pagination
-            onChange={(e, page) => setFilters({ ...filters, page })}
-            count={data?.pageCount}
-            shape="rounded"
-            variant="outlined"
-            showFirstButton
-            showLastButton
+          <PaginationSynced
+            filters={filters}
+            setFilters={setFilters}
+            pageCount={data?.pageCount!}
           />
         </Box>
       ) : (

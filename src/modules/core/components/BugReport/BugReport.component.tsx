@@ -10,19 +10,19 @@ export const BugReport: React.FC = () => {
   return (
     <>
       <Tooltip title={t<string>('navbar.actions.bugReport')}>
-        <IconButton>
-          <Link
-            href={
-              'https://docs.google.com/forms/d/e/1FAIpQLScy8UUG38btVXtym4UTBWrJKaOAMRA8-zY2yxCCeUyYolTjOA/viewform'
-            }
-            target="_blank"
-            color="inherit"
-          >
+        <Link
+          href={
+            'https://docs.google.com/forms/d/e/1FAIpQLScy8UUG38btVXtym4UTBWrJKaOAMRA8-zY2yxCCeUyYolTjOA/viewform'
+          }
+          target="_blank"
+          color="inherit"
+        >
+          <IconButton>
             <Stack direction="row" sx={{ alignItems: 'center' }}>
               <Icon name="ion:bug-outline" />
             </Stack>
-          </Link>
-        </IconButton>
+          </IconButton>
+        </Link>
       </Tooltip>
     </>
   )

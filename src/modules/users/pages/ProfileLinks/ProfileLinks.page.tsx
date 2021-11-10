@@ -4,7 +4,6 @@ import {
   List,
   ListItem,
   ListItemText,
-  Pagination,
   Stack,
   Typography,
   Skeleton,
@@ -21,6 +20,7 @@ import { ItemsPerPage } from '@core/components/Filters/ItemsPerPage.component'
 import { Icon } from '@core/components/Icon/Icon.component'
 import { NoData } from '@core/components/NoData/NoData.component'
 import { Page } from '@core/components/Page/Page.component'
+import { PaginationSynced } from '@core/components/Pagination/PaginationSynced.component'
 import { Searchbar } from '@core/components/Searchbar/Searchbar.component'
 import { Element } from '@core/models/element.model'
 import { SnackbarService } from '@core/services/snackbar.service'
@@ -39,22 +39,21 @@ export const ProfileLinksPage = () => {
   const { t } = useTranslation('users')
   const snackbarService = useInjection<SnackbarService>(SnackbarService)
   const { user } = useAuth()
+  let params = new URLSearchParams(window.location.search)
+
   const [filters, setFilters] = useState<LinkFilters>({
     sort: [{ field: 'createdAt', order: 'DESC' }],
-    page: 1,
+    page: parseInt(params.get('page') || '1'),
     limit: 10,
   })
 
-  const {
-    data: links,
-    isLoading,
-    isFetching,
-  } = useGetLinksQuery({
+  const { data, isLoading, isFetching } = useGetLinksQuery({
     join: [{ field: 'element.user', select: ['type'] }, { field: 'user' }],
     'element.user.id': user!.id,
     ...filters,
   })
 
+  const links: Element<Link>[] = data?.data || []
   const skeletons = buildSkeletons(3)
 
   return (
@@ -84,13 +83,18 @@ export const ProfileLinksPage = () => {
           }}
           label={t('navbar.actions.search.fast', { ns: 'common' })}
         />
-        <ItemsPerPage onChange={(limit) => setFilters({ ...filters, limit })} />
+
+        {/* If there is more than 10 items, we display a limit item per page selector */}
+        {data?.total! > 10 && (
+          <ItemsPerPage
+            onChange={(limit) => setFilters({ ...filters, limit, page: 1 })}
+          />
+        )}
       </Stack>
 
       <List sx={{ my: 3 }}>
-        {!isFetching ? (
-          links?.data?.length ? (
-            links?.data.map((item: Element<Link>, i: number) => (
+        {!isFetching
+          ? links.map((item: Element<Link>, i: number) => (
               <ListItem
                 key={i}
                 secondaryAction={<LinkListMenuMenu link={item} />}
@@ -115,31 +119,27 @@ export const ProfileLinksPage = () => {
                 <ListItemText primary={item.name} />
               </ListItem>
             ))
-          ) : (
-            <NoData variant="links" link="/links/create" />
-          )
-        ) : (
-          skeletons.map((_, i: number) => (
-            <ListItem key={i}>
-              <ListItemIcon>
-                <Icon name="eva:link-outline" />
-              </ListItemIcon>
-              <Skeleton variant="text" width="100%" />
-            </ListItem>
-          ))
-        )}
+          : skeletons.map((_, i: number) => (
+              <ListItem key={i}>
+                <ListItemIcon>
+                  <Icon name="eva:link-outline" />
+                </ListItemIcon>
+                <Skeleton variant="text" width="100%" />
+              </ListItem>
+            ))}
       </List>
 
-      <Box display="flex" justifyContent="center">
-        <Pagination
-          onChange={(e, page) => setFilters({ ...filters, page })}
-          count={links?.pageCount}
-          shape="rounded"
-          variant="outlined"
-          showFirstButton
-          showLastButton
-        />
-      </Box>
+      {links.length > 0 && !isLoading ? (
+        <Box display="flex" sx={{ mt: 3 }} justifyContent="center">
+          <PaginationSynced
+            filters={filters}
+            setFilters={setFilters}
+            pageCount={data?.pageCount!}
+          />
+        </Box>
+      ) : (
+        <NoData variant="links" link="/links/create" />
+      )}
     </Page>
   )
 }

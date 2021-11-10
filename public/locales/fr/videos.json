@@ -114,8 +114,8 @@
     "details": {
       "tooltips": {
         "likes": "{{count}} j'aime(s)",
-        "views": "{{count}} vue(s)",
-        "seeProfile": "See profile"
+        "views": "{{count}} vue",
+        "seeProfile": "Voir le profile"
       },
       "menu": {
         "items": {
