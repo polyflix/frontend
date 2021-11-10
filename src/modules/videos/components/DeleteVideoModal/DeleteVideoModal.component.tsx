@@ -49,7 +49,6 @@ export const DeleteVideoModal = ({
       snackbarService.createSnackbar(t('forms.delete.success'), {
         variant: 'success',
       })
-      console.log(goBackonSuccess)
       if (goBackonSuccess) history.goBack()
     } catch (e: any) {
       snackbarService.createSnackbar(e.message, { variant: 'error' })
