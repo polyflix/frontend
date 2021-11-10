@@ -6,9 +6,12 @@
   },
   "collections": "Collections",
   "introduction": "Présentation",
-  "noData": "Aucune donnée disponible",
   "courseCard": {
     "footerElements": "{{count}} collection(s) dans ce cours"
+  },
+  "noData": {
+    "description": "Si vous avez les droits nécessaires vous pouvez créer un cours ci-dessous",
+    "buttonText": "Créer un cours"
   },
   "form": {
     "upsert": {

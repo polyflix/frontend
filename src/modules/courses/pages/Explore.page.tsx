@@ -2,9 +2,11 @@ import { Box, Grid, Pagination, Stack, Typography } from '@mui/material'
 import { useState } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 
+import { NoData } from '@core/components/NoData/NoData.component'
 import { Page } from '@core/components/Page/Page.component'
 
 import { CourseCard } from '@courses/components/CourseCard/CourseCard.component'
+import { Course } from '@courses/models/course.model'
 import { useGetCoursesQuery } from '@courses/services/course.service'
 
 export const ExploreCoursesPage = () => {
@@ -13,6 +15,7 @@ export const ExploreCoursesPage = () => {
   const [filters, setFilters] = useState({
     page: 1,
     limit: 10,
+    draft: false,
     join: [
       {
         field: 'user',
@@ -26,6 +29,7 @@ export const ExploreCoursesPage = () => {
   })
 
   const { data, isLoading } = useGetCoursesQuery(filters)
+  const courses: Course[] = data?.data ?? []
 
   return (
     <Page title={t('explore.title')} isLoading={isLoading}>
@@ -51,23 +55,26 @@ export const ExploreCoursesPage = () => {
             </Typography>
           </Stack>
         </Grid>
-        {data &&
-          data.data.map((course) => (
-            <Grid item xs={12} sm={6} lg={4} key={course.id}>
-              <CourseCard course={course} />
-            </Grid>
-          ))}
+        {courses.map((course) => (
+          <Grid item xs={12} sm={6} lg={4} key={course.id}>
+            <CourseCard course={course} />
+          </Grid>
+        ))}
       </Grid>
-      <Box display="flex" sx={{ mt: 3 }} justifyContent="center">
-        <Pagination
-          onChange={(e, page) => setFilters({ ...filters, page })}
-          count={data?.pageCount}
-          shape="rounded"
-          variant="outlined"
-          showFirstButton
-          showLastButton
-        />
-      </Box>
+      {courses.length > 0 && !isLoading ? (
+        <Box display="flex" sx={{ mt: 3 }} justifyContent="center">
+          <Pagination
+            onChange={(e, page) => setFilters({ ...filters, page })}
+            count={data?.pageCount}
+            shape="rounded"
+            variant="outlined"
+            showFirstButton
+            showLastButton
+          />
+        </Box>
+      ) : (
+        <NoData variant="courses" link="/courses/create" />
+      )}
     </Page>
   )
 }

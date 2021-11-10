@@ -10,6 +10,7 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { ItemsPerPage } from '@core/components/Filters/ItemsPerPage.component'
+import { NoData } from '@core/components/NoData/NoData.component'
 import { Page } from '@core/components/Page/Page.component'
 import { Searchbar } from '@core/components/Searchbar/Searchbar.component'
 import { buildSkeletons } from '@core/utils/gui.utils'
@@ -38,11 +39,16 @@ export const ProfileCoursesPage = () => {
     'user.id': user!.id,
     ...filters,
   })
+  const courses: Course[] = data?.data || []
 
   const skeletons = buildSkeletons(3)
 
   return (
-    <Page isLoading={isLoading} title={t('explore.title')} sx={{ mt: 3 }}>
+    <Page
+      isLoading={isLoading}
+      title={t('profile.tabs.courses.content.title')}
+      sx={{ mt: 3 }}
+    >
       <Typography variant="h4" sx={{ mb: 2 }}>
         {t('profile.tabs.courses.content.title')}
       </Typography>
@@ -79,7 +85,7 @@ export const ProfileCoursesPage = () => {
 
       <Grid sx={{ my: 3 }} container columnSpacing={2} rowSpacing={4}>
         {!isFetching
-          ? data?.data.map((item: Course) => (
+          ? courses.map((item: Course) => (
               <Grid key={item.id} item xs={12} sm={6} md={6} lg={4}>
                 <CourseCard course={item} />
               </Grid>
@@ -92,14 +98,18 @@ export const ProfileCoursesPage = () => {
       </Grid>
 
       <Box display="flex" justifyContent="center">
-        <Pagination
-          onChange={(e, page) => setFilters({ ...filters, page })}
-          count={data?.pageCount}
-          shape="rounded"
-          variant="outlined"
-          showFirstButton
-          showLastButton
-        />
+        {!isFetching && courses.length === 0 ? (
+          <NoData variant="courses" link="/courses/create" />
+        ) : (
+          <Pagination
+            onChange={(e, page) => setFilters({ ...filters, page })}
+            count={data?.pageCount}
+            shape="rounded"
+            variant="outlined"
+            showFirstButton
+            showLastButton
+          />
+        )}
       </Box>
     </Page>
   )

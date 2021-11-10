@@ -89,14 +89,14 @@ export const coursesApi = api.injectEndpoints({
     /**
      * Delete Course mutation
      */
-    deleteCourse: builder.mutation<Course, { id: string }>({
-      query: ({ id }) => ({
-        url: `${Endpoint.Courses}/${id}`,
+    deleteCourse: builder.mutation<Course, { slug: string }>({
+      query: ({ slug }) => ({
+        url: `${Endpoint.Courses}/${slug}`,
         method: 'DELETE',
       }),
       // Invalidates all queries that subscribe to this Course `id` only.
       // In this case, `getCourse` will be re-run. `getCourses` *might*  rerun, if this id was under its results.
-      invalidatesTags: (_, _1, { id }) => [{ type: Endpoint.Courses, id }],
+      invalidatesTags: (_, _1, { slug }) => [{ type: Endpoint.Courses, slug }],
     }),
   }),
 })
