@@ -1,15 +1,8 @@
-import {
-  InfoOutlined,
-  MoreVertOutlined,
-  Edit,
-  Delete,
-} from '@mui/icons-material'
+import { InfoOutlined } from '@mui/icons-material'
 import {
   Box,
-  IconButton,
   ListItemIcon,
   ListItemText,
-  Menu,
   MenuItem,
   Skeleton,
   Stack,
@@ -18,18 +11,22 @@ import {
   Tooltip,
 } from '@mui/material'
 import { abbreviateNumber } from 'js-abbreviation-number'
-import React, { useState } from 'react'
+import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link as RouterLink } from 'react-router-dom'
 
+import { useInjection } from '@polyflix/di'
+
 import { AspectRatioBox } from '@core/components/AspectRatioBox/AspectRation.component'
+import { CardMenu } from '@core/components/CardMenu/CardMenu.component'
+import { Endpoint } from '@core/constants/endpoint.constant'
 import { getPublishLabel } from '@core/helpers/date.helper'
 import { videoSlugLink } from '@core/helpers/video.helper'
+import { SnackbarService } from '@core/services/snackbar.service'
+import { CrudAction } from '@core/types/http.type'
 
-import { useAuth } from '@auth/hooks/useAuth.hook'
-
-import { DeleteVideoModal } from '@videos/components/DeleteVideoModal/DeleteVideoModal.component'
 import { Video } from '@videos/models/video.model'
+import { useDeleteVideoMutation } from '@videos/services/video.service'
 
 import { UserAvatar } from '@users/components/UserAvatar/UserAvatar.component'
 
@@ -44,93 +41,33 @@ interface PropsVideo {
 }
 
 const VideoSliderOption: React.FC<PropsVideo> = ({ video }) => {
-  const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null)
+  const snackbarService = useInjection<SnackbarService>(SnackbarService)
   const { t } = useTranslation('home')
-  const { user } = useAuth()
-  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false)
-  const open = Boolean(anchorEl)
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault()
-    event.stopPropagation()
-    setAnchorEl(event.currentTarget)
+  const [deleteVideo] = useDeleteVideoMutation()
+
+  const handleDelete = async () => {
+    try {
+      await deleteVideo({ id: video?.id! }).unwrap()
+      snackbarService.notify(CrudAction.DELETE, Endpoint.Videos)
+    } catch (e: any) {
+      snackbarService.createSnackbar(e.data.statusText, { variant: 'error' })
+    }
   }
-  const handleClose = () => {
-    setAnchorEl(null)
-  }
+
   return (
-    <>
-      <IconButton
-        aria-label="video menu"
-        size="small"
-        aria-controls="basic-menu"
-        aria-haspopup="true"
-        aria-expanded={open ? 'true' : undefined}
-        onClick={handleClick}
-        sx={{
-          width: '100%',
-        }}
-      >
-        <MoreVertOutlined fontSize="inherit" />
-      </IconButton>
-      <Menu
-        id="basic-menu"
-        anchorEl={anchorEl}
-        open={open}
-        onClose={handleClose}
-        MenuListProps={{
-          'aria-labelledby': 'basic-button',
-        }}
-      >
-        <MenuItem component={RouterLink} to={`/videos/${video?.slug}`}>
-          <ListItemIcon>
-            <InfoOutlined fontSize="small" />
-          </ListItemIcon>
-          <ListItemText>{t('sliders.videoCard.infoMenu.info')}</ListItemText>
-        </MenuItem>
-        {video.publishedBy!.id === user?.id && (
-          <>
-            <MenuItem
-              onClick={() => {
-                setIsDeleteModalOpen(true)
-              }}
-            >
-              <ListItemIcon sx={{ color: 'error.main' }}>
-                <Delete fontSize="small" />
-              </ListItemIcon>
-              <ListItemText>
-                {t('slug.details.menu.items.delete', { ns: 'videos' })}
-              </ListItemText>
-            </MenuItem>
-            <MenuItem
-              component={RouterLink}
-              to={`/videos/${video?.slug}/update`}
-            >
-              <ListItemIcon>
-                <Edit fontSize="small" />
-              </ListItemIcon>
-              <ListItemText>
-                {t('slug.details.menu.items.edit', { ns: 'videos' })}
-              </ListItemText>
-            </MenuItem>
-          </>
-        )}
-        {/* <MenuItem onClick={handleClose}>
-          <ListItemIcon>
-            <PlaylistAddOutlined fontSize="small" />
-          </ListItemIcon>
-          <ListItemText>
-            {t('sliders.videoCard.infoMenu.addToPlayList')}
-          </ListItemText>
-        </MenuItem> */}
-      </Menu>
-      <DeleteVideoModal
-        id={video.id}
-        open={isDeleteModalOpen}
-        setIsOpen={setIsDeleteModalOpen}
-        onClose={() => setIsDeleteModalOpen(false)}
-        goBackonSuccess={false}
-      />
-    </>
+    <CardMenu
+      updateHref={`/videos/${video.slug}/update`}
+      onDelete={handleDelete}
+      publisherId={video?.publishedBy?.id!}
+      type="videos"
+    >
+      <MenuItem component={RouterLink} to={`/videos/${video?.slug}`}>
+        <ListItemIcon>
+          <InfoOutlined fontSize="small" />
+        </ListItemIcon>
+        <ListItemText>{t('sliders.videoCard.infoMenu.info')}</ListItemText>
+      </MenuItem>
+    </CardMenu>
   )
 }
 

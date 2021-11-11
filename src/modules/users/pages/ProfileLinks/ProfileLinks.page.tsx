@@ -9,6 +9,7 @@ import {
   Skeleton,
   ListItemIcon,
   IconButton,
+  Paper,
 } from '@mui/material'
 import { useState } from 'react'
 import CopyToClipboard from 'react-copy-to-clipboard'
@@ -98,6 +99,9 @@ export const ProfileLinksPage = () => {
               <ListItem
                 key={i}
                 secondaryAction={<LinkListMenuMenu link={item} />}
+                component={Paper}
+                variant="outlined"
+                sx={{ mb: 1 }}
               >
                 <ListItemIcon>
                   <CopyToClipboard
@@ -120,7 +124,12 @@ export const ProfileLinksPage = () => {
               </ListItem>
             ))
           : skeletons.map((_, i: number) => (
-              <ListItem key={i}>
+              <ListItem
+                key={i}
+                component={Paper}
+                variant="outlined"
+                sx={{ mb: 1 }}
+              >
                 <ListItemIcon>
                   <Icon name="eva:link-outline" />
                 </ListItemIcon>

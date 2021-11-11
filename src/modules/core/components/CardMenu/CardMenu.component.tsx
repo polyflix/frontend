@@ -13,9 +13,13 @@ import { Link } from 'react-router-dom'
 
 import { useConfirmModal } from '@core/hooks/useConfirmModal.hook'
 
+import { useAuth } from '@auth/hooks/useAuth.hook'
+
 type Props = {
   updateHref: string
   onDelete: () => void
+  publisherId?: string
+  type?: 'common' | 'videos' | 'collections' | 'courses' | 'quizzes' | 'links'
 }
 
 /**
@@ -27,8 +31,11 @@ export const CardMenu: React.FC<Props> = ({
   updateHref,
   onDelete,
   children,
+  publisherId,
+  type = 'common',
 }) => {
   const { t } = useTranslation('common')
+  const { user } = useAuth()
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null)
 
   const open = Boolean(anchorEl)
@@ -42,8 +49,8 @@ export const CardMenu: React.FC<Props> = ({
   }
 
   const { Modal, onClick: onClickModal } = useConfirmModal({
-    title: t('deleteModal.title'),
-    content: t('deleteModal.content'),
+    title: t('deleteModal.title', { ns: type }),
+    content: t('deleteModal.content', { ns: type }),
     onCancel: () => {
       handleClose()
     },
@@ -53,18 +60,22 @@ export const CardMenu: React.FC<Props> = ({
     },
   })
 
+  const isMine: boolean = (user && publisherId === user.id) ?? false
+
   return (
     <>
-      <IconButton
-        aria-label="video menu"
-        size="small"
-        aria-controls="basic-menu"
-        aria-haspopup="true"
-        aria-expanded={open ? 'true' : undefined}
-        onClick={handleClick}
-      >
-        <MoreVertOutlined fontSize="inherit" />
-      </IconButton>
+      {(React.Children.count(children) > 0 || !publisherId || isMine) && (
+        <IconButton
+          aria-label="video menu"
+          size="small"
+          aria-controls="basic-menu"
+          aria-haspopup="true"
+          aria-expanded={open ? 'true' : undefined}
+          onClick={handleClick}
+        >
+          <MoreVertOutlined fontSize="inherit" />
+        </IconButton>
+      )}
       <Menu
         id="basic-menu"
         anchorEl={anchorEl}
@@ -75,18 +86,22 @@ export const CardMenu: React.FC<Props> = ({
         }}
       >
         {children}
-        <MenuItem onClick={handleClose} component={Link} to={updateHref}>
-          <ListItemIcon>
-            <Edit fontSize="small" />
-          </ListItemIcon>
-          <ListItemText>{capitalize(t('actions.update'))}</ListItemText>
-        </MenuItem>
-        <MenuItem onClick={onClickModal}>
-          <ListItemIcon>
-            <Delete fontSize="small" color="error" />
-          </ListItemIcon>
-          <ListItemText>{capitalize(t('actions.delete'))}</ListItemText>
-        </MenuItem>
+        {(!publisherId || isMine) && (
+          <MenuItem onClick={handleClose} component={Link} to={updateHref}>
+            <ListItemIcon>
+              <Edit fontSize="small" />
+            </ListItemIcon>
+            <ListItemText>{capitalize(t('actions.update'))}</ListItemText>
+          </MenuItem>
+        )}
+        {(!publisherId || isMine) && (
+          <MenuItem onClick={onClickModal}>
+            <ListItemIcon>
+              <Delete fontSize="small" color="error" />
+            </ListItemIcon>
+            <ListItemText>{capitalize(t('actions.delete'))}</ListItemText>
+          </MenuItem>
+        )}
       </Menu>
       <Modal />
     </>

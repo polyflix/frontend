@@ -162,7 +162,7 @@ export const QuizzCard = ({
               </Typography>
             </Stack>
           )}
-          {displayCrudOptions && <QuizzSliderOption id={quizz.id} />}
+          {displayCrudOptions && <QuizzSliderOption quizz={quizz} />}
         </Stack>
       </Stack>
     </Stack>

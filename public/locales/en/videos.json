@@ -73,17 +73,6 @@
           }
         }
       }
-    },
-    "delete": {
-      "action": {
-        "cancel": "Cancel",
-        "delete": "Delete"
-      },
-      "modal": {
-        "title": "Are you sure ?",
-        "description": "Your video will be permanently deleted."
-      },
-      "success": "Video successfully deleted"
     }
   },
   "slug": {
@@ -133,5 +122,9 @@
   "noData": {
     "description": "If you have the necessary rights you can create a video below",
     "buttonText": "Create a video"
+  },
+  "deleteModal": {
+    "title": "Delete video",
+    "content": "Are you sure to delete this video?"
   }
 }

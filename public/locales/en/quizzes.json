@@ -89,17 +89,6 @@
           "required": "The option {{alt}} is required."
         }
       }
-    },
-    "delete": {
-      "action": {
-        "cancel": "Cancel",
-        "delete": "Delete"
-      },
-      "modal": {
-        "title": "Are you sure ?",
-        "description": "Your quiz will be deleted along with all associated user attempts."
-      },
-      "success": "Quiz successfully deleted"
     }
   },
   "play": {
@@ -167,5 +156,9 @@
   "noData": {
     "description": "If you have the necessary rights you can create a quizz below",
     "buttonText": "Create a quizz"
+  },
+  "deleteModal": {
+    "title": "Delete quizz",
+    "content": "Are you sure to delete this quizz?"
   }
 }

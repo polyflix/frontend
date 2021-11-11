@@ -1,119 +1,58 @@
-import {
-  Delete,
-  Edit,
-  ListAlt,
-  MoreVertOutlined,
-  PlayArrow,
-} from '@mui/icons-material'
-import {
-  IconButton,
-  Link,
-  ListItemIcon,
-  ListItemText,
-  Menu,
-  MenuItem,
-} from '@mui/material'
-import { Box } from '@mui/system'
-import { useState } from 'react'
+import { ListAlt, PlayArrow } from '@mui/icons-material'
+import { ListItemIcon, ListItemText, MenuItem } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 import { Link as RouterLink } from 'react-router-dom'
 
-import { DeleteQuizzModal } from '../DeleteQuizzModal/DeleteQuizzModal.component'
+import { useInjection } from '@polyflix/di'
+
+import { CardMenu } from '@core/components/CardMenu/CardMenu.component'
+import { Endpoint } from '@core/constants/endpoint.constant'
+import { Element } from '@core/models/element.model'
+import { SnackbarService } from '@core/services/snackbar.service'
+import { CrudAction } from '@core/types/http.type'
+
+import { Quizz } from '@quizzes/models/quizz.model'
+import { useDeleteQuizzMutation } from '@quizzes/services/quizz.service'
 
 interface OptionProps {
-  id: string
+  quizz: Element<Quizz>
 }
 
 //CRUD management in user profile
-export const QuizzSliderOption = ({ id }: OptionProps) => {
-  const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null)
-  const [isDeleteQuizzModalOpen, setIsDeleteQuizzModalOpen] =
-    useState<boolean>(false)
+export const QuizzSliderOption = ({ quizz }: OptionProps) => {
+  const snackbarService = useInjection<SnackbarService>(SnackbarService)
+  const [deleteQuizz] = useDeleteQuizzMutation()
+
   const { t } = useTranslation('quizzes')
 
-  const open = Boolean(anchorEl)
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault()
-    event.stopPropagation()
-    setAnchorEl(event.currentTarget)
-  }
-  const handleClose = () => {
-    setAnchorEl(null)
+  const handleDelete = async () => {
+    try {
+      await deleteQuizz({ id: quizz.id }).unwrap()
+      snackbarService.notify(CrudAction.DELETE, Endpoint.Videos)
+    } catch (e: any) {
+      snackbarService.createSnackbar(e.data.statusText, { variant: 'error' })
+    }
   }
 
   return (
-    <Box>
-      <IconButton
-        aria-label="video menu"
-        size="small"
-        aria-controls="basic-menu"
-        aria-haspopup="true"
-        aria-expanded={open ? 'true' : undefined}
-        onClick={handleClick}
-      >
-        <MoreVertOutlined fontSize="inherit" />
-      </IconButton>
-      <Menu
-        id="basic-menu"
-        anchorEl={anchorEl}
-        open={open}
-        onClose={handleClose}
-        MenuListProps={{
-          'aria-labelledby': 'basic-button',
-        }}
-      >
-        <Link
-          component={RouterLink}
-          to={`/quizzes/${id}/play`}
-          underline="none"
-          color="inherit"
-        >
-          <MenuItem>
-            <ListItemIcon>
-              <PlayArrow fontSize="small" />
-            </ListItemIcon>
-            <ListItemText>{t('card.options.play')}</ListItemText>
-          </MenuItem>
-        </Link>
-        <Link
-          component={RouterLink}
-          to={`/quizzes/${id}/results`}
-          underline="none"
-          color="inherit"
-        >
-          <MenuItem>
-            <ListItemIcon>
-              <ListAlt fontSize="small" />
-            </ListItemIcon>
-            <ListItemText> {t('card.options.seeResults')}</ListItemText>
-          </MenuItem>
-        </Link>
-        <Link
-          component={RouterLink}
-          to={`/quizzes/${id}/update`}
-          underline="none"
-          color="inherit"
-        >
-          <MenuItem>
-            <ListItemIcon>
-              <Edit fontSize="small" />
-            </ListItemIcon>
-            <ListItemText> {t('card.options.edit')}</ListItemText>
-          </MenuItem>
-        </Link>
-        <MenuItem onClick={() => setIsDeleteQuizzModalOpen(true)}>
-          <ListItemIcon>
-            <Delete fontSize="small" />
-          </ListItemIcon>
-          <ListItemText> {t('forms.delete.action.delete')}</ListItemText>
-        </MenuItem>
-      </Menu>
-      <DeleteQuizzModal
-        id={id}
-        open={isDeleteQuizzModalOpen}
-        setIsOpen={setIsDeleteQuizzModalOpen}
-        onClose={() => setIsDeleteQuizzModalOpen(false)}
-      />
-    </Box>
+    <CardMenu
+      updateHref={`/quizzes/${quizz.id}/update`}
+      onDelete={handleDelete}
+      publisherId={quizz?.user?.id!}
+      type="quizzes"
+    >
+      <MenuItem component={RouterLink} to={`/quizzes/${quizz.id}/play`}>
+        <ListItemIcon>
+          <PlayArrow fontSize="small" />
+        </ListItemIcon>
+        <ListItemText>{t('card.options.play')}</ListItemText>
+      </MenuItem>
+      <MenuItem component={RouterLink} to={`/quizzes/${quizz.id}/results`}>
+        <ListItemIcon>
+          <ListAlt fontSize="small" />
+        </ListItemIcon>
+        <ListItemText> {t('card.options.seeResults')}</ListItemText>
+      </MenuItem>
+    </CardMenu>
   )
 }
