@@ -1,4 +1,4 @@
-import { Container, Divider, Stack } from '@mui/material'
+import { Divider, Stack } from '@mui/material'
 import Grid from '@mui/material/Grid'
 import { Box } from '@mui/system'
 import { useState } from 'react'
@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next'
 import { ItemsPerPage } from '@core/components/Filters/ItemsPerPage.component'
 import { Header } from '@core/components/Header/Header.component'
 import { NoData } from '@core/components/NoData/NoData.component'
+import { Page } from '@core/components/Page/Page.component'
 import { PaginationSynced } from '@core/components/Pagination/PaginationSynced.component'
 import { Searchbar } from '@core/components/Searchbar/Searchbar.component'
 import { Element } from '@core/models/element.model'
@@ -45,7 +46,7 @@ export const ProfileQuizzesPage = () => {
   const skeletons = buildSkeletons(4)
 
   return (
-    <Container disableGutters={true} maxWidth={false} sx={{ mt: 3 }}>
+    <Page disableGutters={true} sx={{ mt: 3 }}>
       <Header
         title={t('profile.tabs.quizzes.content.title')}
         description={t('profile.tabs.quizzes.content.description')}
@@ -110,6 +111,6 @@ export const ProfileQuizzesPage = () => {
       ) : (
         <NoData variant="quizzes" link="/quizzes/create" />
       )}
-    </Container>
+    </Page>
   )
 }

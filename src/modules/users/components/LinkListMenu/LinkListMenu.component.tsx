@@ -1,17 +1,10 @@
-import { Delete, Edit, MoreVertOutlined } from '@mui/icons-material'
-import {
-  IconButton,
-  ListItemIcon,
-  ListItemText,
-  Menu,
-  MenuItem,
-} from '@mui/material'
-import React, { useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import { Link as RouterLink } from 'react-router-dom'
+import { useInjection } from '@polyflix/di'
 
-import { useConfirmModal } from '@core/hooks/useConfirmModal.hook'
+import { CardMenu } from '@core/components/CardMenu/CardMenu.component'
+import { Endpoint } from '@core/constants/endpoint.constant'
 import { Element } from '@core/models/element.model'
+import { SnackbarService } from '@core/services/snackbar.service'
+import { CrudAction } from '@core/types/http.type'
 
 import { Link } from '@links/models/link.model'
 import { useDeleteLinkMutation } from '@links/services/link.service'
@@ -21,76 +14,24 @@ type LinkListMenuMenuProps = {
 }
 
 export const LinkListMenuMenu = ({ link }: LinkListMenuMenuProps) => {
-  const { t } = useTranslation('users')
-  const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null)
-
+  const snackbarService = useInjection<SnackbarService>(SnackbarService)
   const [deleteLink] = useDeleteLinkMutation()
 
-  const open = Boolean(anchorEl)
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault()
-    event.stopPropagation()
-    setAnchorEl(event.currentTarget)
+  const handleDelete = async () => {
+    try {
+      await deleteLink({ id: link?.id! }).unwrap()
+      snackbarService.notify(CrudAction.DELETE, Endpoint.Links)
+    } catch (e: any) {
+      snackbarService.createSnackbar(e.data.statusText, { variant: 'error' })
+    }
   }
-  const handleClose = () => {
-    setAnchorEl(null)
-  }
-
-  const { Modal, onClick: onClickModal } = useConfirmModal({
-    title: t('profile.tabs.links.deleteModal.title'),
-    content: t('profile.tabs.links.deleteModal.content'),
-    onCancel: () => {
-      handleClose()
-    },
-    onConfirm: () => {
-      handleClose()
-      deleteLink({ id: link.id })
-    },
-  })
 
   return (
-    <>
-      <IconButton
-        aria-label="video menu"
-        size="small"
-        aria-controls="basic-menu"
-        aria-haspopup="true"
-        aria-expanded={open ? 'true' : undefined}
-        onClick={handleClick}
-      >
-        <MoreVertOutlined fontSize="inherit" />
-      </IconButton>
-      <Menu
-        id="basic-menu"
-        anchorEl={anchorEl}
-        open={open}
-        onClose={handleClose}
-        MenuListProps={{
-          'aria-labelledby': 'basic-button',
-        }}
-      >
-        <MenuItem
-          onClick={handleClose}
-          component={RouterLink}
-          to={`/links/${link.id}/update`}
-        >
-          <ListItemIcon>
-            <Edit fontSize="small" />
-          </ListItemIcon>
-          <ListItemText>
-            {t('profile.tabs.links.content.list.menu.actions.edit')}
-          </ListItemText>
-        </MenuItem>
-        <MenuItem onClick={onClickModal}>
-          <ListItemIcon>
-            <Delete fontSize="small" color="error" />
-          </ListItemIcon>
-          <ListItemText>
-            {t('profile.tabs.links.content.list.menu.actions.delete')}
-          </ListItemText>
-        </MenuItem>
-      </Menu>
-      <Modal />
-    </>
+    <CardMenu
+      updateHref={`/links/${link.id}/update`}
+      onDelete={handleDelete}
+      publisherId={link?.user?.id!}
+      type="links"
+    />
   )
 }

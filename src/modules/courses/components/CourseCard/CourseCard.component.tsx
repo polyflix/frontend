@@ -82,6 +82,7 @@ export const CourseCard = ({ course }: Props) => {
             <CardMenu
               updateHref={`/courses/${course.slug}/update`}
               onDelete={handleDelete}
+              type="courses"
             />
           )}
         </Stack>

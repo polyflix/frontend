@@ -54,5 +54,9 @@
       "search": "Search a collection",
       "seeCollection": "See this collection"
     }
+  },
+  "deleteModal": {
+    "title": "Delete course",
+    "content": "Are you sure to delete this course?"
   }
 }

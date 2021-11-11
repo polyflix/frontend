@@ -33,7 +33,9 @@ export const Page = forwardRef<typeof Box, PropsWithChildren<PageProps>>(
         <title>{title === '' ? 'Polyflix' : `${title} | Polyflix`}</title>
       </Helmet>
       {isLoading ? (
-        <LoadingLayout isPage={false} />
+        <Box sx={{ ...sx }}>
+          <LoadingLayout isPage={false} />
+        </Box>
       ) : (
         <Container sx={{ ...sx }} {...containerProps}>
           {error ? (

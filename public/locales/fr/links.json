@@ -26,5 +26,9 @@
   "noData": {
     "description": "Si vous avez les droits nécessaires vous pouvez créer un lien ci-dessous",
     "buttonText": "Créer un lien"
+  },
+  "deleteModal": {
+    "title": "Supprimer le lien",
+    "content": "Êtes-vous sûr de vouloir supprimer ce lien ?"
   }
 }

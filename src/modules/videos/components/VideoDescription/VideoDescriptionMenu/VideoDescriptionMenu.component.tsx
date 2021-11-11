@@ -1,98 +1,38 @@
 /* eslint-disable react/prop-types */
-import { MoreVertOutlined, Edit, Delete } from '@mui/icons-material'
-import {
-  IconButton,
-  MenuItem,
-  ListItemIcon,
-  ListItemText,
-  Menu,
-} from '@mui/material'
-import { useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import { Link } from 'react-router-dom'
+import { useInjection } from '@polyflix/di'
 
-import { useAuth } from '@auth/hooks/useAuth.hook'
+import { CardMenu } from '@core/components/CardMenu/CardMenu.component'
+import { Endpoint } from '@core/constants/endpoint.constant'
+import { SnackbarService } from '@core/services/snackbar.service'
+import { CrudAction } from '@core/types/http.type'
 
-import { DeleteVideoModal } from '@videos/components/DeleteVideoModal/DeleteVideoModal.component'
 import { Video } from '@videos/models/video.model'
+import { useDeleteVideoMutation } from '@videos/services/video.service'
 
 type Props = {
   video?: Video | null
 }
 
 export const VideoDescriptionMenu: React.FC<Props> = ({ video }) => {
-  const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null)
-  const { t } = useTranslation('videos')
-  const { user } = useAuth()
-  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false)
+  const snackbarService = useInjection<SnackbarService>(SnackbarService)
 
-  const open = Boolean(anchorEl)
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget)
-  }
-  const handleClose = () => {
-    setAnchorEl(null)
+  const [deleteVideo] = useDeleteVideoMutation()
+
+  const handleDelete = async () => {
+    try {
+      await deleteVideo({ id: video?.id! }).unwrap()
+      snackbarService.notify(CrudAction.DELETE, Endpoint.Videos)
+    } catch (e: any) {
+      snackbarService.createSnackbar(e.data.statusText, { variant: 'error' })
+    }
   }
 
   return (
-    <>
-      {video?.publishedBy?.id === user?.id && (
-        <>
-          <IconButton
-            disableRipple={true}
-            aria-label="video menu"
-            size="small"
-            aria-controls="basic-menu"
-            aria-haspopup="true"
-            aria-expanded={open ? 'true' : undefined}
-            onClick={handleClick}
-            sx={{
-              top: '1rem',
-              right: '1rem',
-              position: {
-                xs: 'absolute',
-                md: 'static',
-              },
-            }}
-          >
-            <MoreVertOutlined fontSize="inherit" />
-          </IconButton>
-
-          <Menu
-            id="basic-menu"
-            anchorEl={anchorEl}
-            open={open}
-            onClose={handleClose}
-            MenuListProps={{
-              'aria-labelledby': 'basic-button',
-            }}
-          >
-            <MenuItem
-              onClick={() => {
-                setIsDeleteModalOpen(true)
-              }}
-            >
-              <ListItemIcon sx={{ color: 'error.main' }}>
-                <Delete fontSize="small" />
-              </ListItemIcon>
-              <ListItemText>{t('slug.details.menu.items.delete')}</ListItemText>
-            </MenuItem>
-            <MenuItem component={Link} to={`/videos/${video?.slug}/update`}>
-              <ListItemIcon>
-                <Edit fontSize="small" />
-              </ListItemIcon>
-              <ListItemText>{t('slug.details.menu.items.edit')}</ListItemText>
-            </MenuItem>
-          </Menu>
-          <DeleteVideoModal
-            id={video?.id!}
-            open={isDeleteModalOpen}
-            setIsOpen={setIsDeleteModalOpen}
-            onClose={() => setIsDeleteModalOpen(false)}
-            goBackonSuccess={true}
-          />
-        </>
-      )}
-    </>
+    <CardMenu
+      updateHref={`/videos/${video?.slug}/update`}
+      onDelete={handleDelete}
+      publisherId={video?.publishedBy?.id!}
+      type="videos"
+    />
   )
 }
