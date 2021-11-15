@@ -62,10 +62,6 @@
             },
             "clipboard": "URL copied to clipboard !"
           }
-        },
-        "deleteModal": {
-          "title": "Delete link",
-          "content": "Are you sure to delete this link?"
         }
       }
     }

@@ -62,6 +62,7 @@
         },
         "elements": {
           "label": "Éléments",
+          "hint": "Vous pouvez organiser les éléments en les sélectionnant individuellement et en les déplaçant !",
           "tooltips": {
             "addElements": "Ajouter un élément"
           },
