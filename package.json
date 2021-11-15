@@ -1,6 +1,6 @@
 {
   "name": "polyflix",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "scripts": {
     "start": "BUILD_MODE=local vite",
     "build": "vite build",
