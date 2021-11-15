@@ -2,14 +2,9 @@ import { Delete } from '@mui/icons-material'
 import { DatePicker, LoadingButton } from '@mui/lab'
 import {
   Alert,
-  Avatar,
   Box,
   Divider,
   IconButton,
-  List,
-  ListItem,
-  ListItemAvatar,
-  ListItemText,
   Stack,
   TextField,
   Tooltip,
@@ -23,6 +18,7 @@ import { useHistory } from 'react-router-dom'
 
 import { useInjection } from '@polyflix/di'
 
+import { FieldArrayDragDropWrapper } from '@core/components/FieldArrayDragDropWrapper/FieldArrayDragDropWrapper.component'
 import { Icon } from '@core/components/Icon/Icon.component'
 import { StatusSelector } from '@core/components/StatusSelector/StatusSelector.component'
 import { VisibilitySelector } from '@core/components/VisibilitySelector/VisibilitySelector.component'
@@ -35,6 +31,7 @@ import { Visibility } from '@core/models/content.model'
 import { SnackbarService } from '@core/services/snackbar.service'
 import { CrudAction } from '@core/types/http.type'
 
+import { CollectionDragDrop } from '@collections/CollectionDragElement/CollectionDragDrop.component'
 import { Collection } from '@collections/models/collection.model'
 import {
   useAddCollectionMutation,
@@ -92,13 +89,16 @@ export const CollectionForm = ({ collection, isUpdate }: Props) => {
     name: 'passwords',
   })
 
-  const { fields, remove } = elements
+  const { fields } = elements
 
   const onSubmit = async (data: ICollectionForm) => {
     // Need to send only element id
     const mappedData = {
       ...data,
-      elements: fields.map((element) => element.id),
+      elementToCollection: fields.map((element, index) => ({
+        elementId: element.id,
+        order: index,
+      })),
       passwords: data.passwords.map(({ id, expiresAt, password, name }) => ({
         id,
         name,
@@ -192,28 +192,15 @@ export const CollectionForm = ({ collection, isUpdate }: Props) => {
               </IconButton>
             </Tooltip>
           </Typography>
-          {fields.length ? (
-            fields.map((item, i: number) => (
-              <List key={i}>
-                <ListItem
-                  secondaryAction={
-                    <IconButton
-                      edge="end"
-                      color="error"
-                      aria-label="delete"
-                      onClick={() => remove(i)}
-                    >
-                      <Delete />
-                    </IconButton>
-                  }
-                >
-                  <ListItemAvatar>
-                    <Avatar src={item.thumbnail} />
-                  </ListItemAvatar>
-                  <ListItemText primary={item.name} />
-                </ListItem>
-              </List>
-            ))
+          <Typography variant="body1" sx={{ color: 'text.secondary' }}>
+            {t('forms.create-update.fields.elements.hint')}
+          </Typography>
+          {fields.length > 0 ? (
+            <FieldArrayDragDropWrapper
+              dragDropId={'dragdrop-elements'}
+              fieldArray={elements}
+              Component={CollectionDragDrop}
+            />
           ) : (
             <Alert severity="warning">
               {t('forms.create-update.fields.elements.errors.noData')}
