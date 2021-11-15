@@ -62,10 +62,6 @@
             },
             "clipboard": "URL copiée dans le presse-papier !"
           }
-        },
-        "deleteModal": {
-          "title": "Supprimer le lien",
-          "content": "Êtes-vous sûr de vouloir supprimer ce lien ?"
         }
       }
     }

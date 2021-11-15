@@ -6,8 +6,6 @@ import { CardMenu } from '@core/components/CardMenu/CardMenu.component'
 import { Icon } from '@core/components/Icon/Icon.component'
 import { clampString } from '@core/utils/text.utils'
 
-import { useAuth } from '@auth/hooks/useAuth.hook'
-
 import { Collection } from '@collections/models/collection.model'
 import { useDeleteCollectionMutation } from '@collections/services/collection.service'
 
@@ -19,7 +17,6 @@ type CollectionCardProps = {
 
 export const CollectionCard = ({ collection }: CollectionCardProps) => {
   const { t } = useTranslation('collections')
-  const { user } = useAuth()
 
   const [deleteCollection] = useDeleteCollectionMutation()
   const handleDelete = () => {
@@ -70,12 +67,12 @@ export const CollectionCard = ({ collection }: CollectionCardProps) => {
                 count: collection.elements.length,
               })}
             </Typography>
-            {collection?.user?.id === user?.id && (
-              <CardMenu
-                updateHref={`/collections/${collection.slug}/update`}
-                onDelete={handleDelete}
-              />
-            )}
+            <CardMenu
+              updateHref={`/collections/${collection.slug}/update`}
+              onDelete={handleDelete}
+              publisherId={collection?.user?.id}
+              type="collections"
+            />
           </Stack>
         </CardFooterStyle>
       )}

@@ -26,5 +26,9 @@
   "noData": {
     "description": "If you have the necessary rights you can create a link below",
     "buttonText": "Create a link"
+  },
+  "deleteModal": {
+    "title": "Delete link",
+    "content": "Are you sure to delete this link?"
   }
 }

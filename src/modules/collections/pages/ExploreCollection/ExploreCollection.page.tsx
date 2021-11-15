@@ -30,7 +30,10 @@ export const ExploreCollectionPage = () => {
   })
 
   const { data, isLoading, isFetching } = useGetCollectionsQuery({
-    join: [{ field: 'elements', select: ['type'] }],
+    join: [
+      { field: 'elements', select: ['type'] },
+      { field: 'user', select: ['id'] },
+    ],
     visibility: Visibility.PUBLIC,
     draft: false,
     ...filters,
