@@ -1,5 +1,7 @@
 import {
   Box,
+  Button,
+  Container,
   Fade,
   Modal,
   Paper,
@@ -161,6 +163,13 @@ export const ElementModal = ({
             </ElementContainerStyle>
             <Box sx={{ mt: 2 }}>{displayContent()}</Box>
           </Scrollbar>
+          <Container
+            sx={{ display: 'flex', justifyContent: 'center', my: '1em' }}
+          >
+            <Button onClick={onClose}>
+              {t('forms.create-update.actions.validate')}
+            </Button>
+          </Container>
         </Paper>
       </Fade>
     </Modal>
