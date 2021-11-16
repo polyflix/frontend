@@ -7,7 +7,7 @@ import {
   Theme,
   Typography,
 } from '@mui/material'
-import { alpha, SxProps, Shape } from '@mui/system'
+import { alpha, SxProps } from '@mui/system'
 import { useState } from 'react'
 import { UseFieldArrayReturn } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
