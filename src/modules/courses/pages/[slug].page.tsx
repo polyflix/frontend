@@ -11,20 +11,34 @@ import {
 } from '@mui/material'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Link as RouterLink, useParams } from 'react-router-dom'
+import { Link as RouterLink, useHistory, useParams } from 'react-router-dom'
 
+import { useInjection } from '@polyflix/di'
+
+import { CardMenu } from '@core/components/CardMenu/CardMenu.component'
 import { MarkdownBox } from '@core/components/MarkdownBox/MarkdownBox.component'
 import { Page } from '@core/components/Page/Page.component'
+import { Endpoint } from '@core/constants/endpoint.constant'
+import { SnackbarService } from '@core/services/snackbar.service'
+import { CrudAction } from '@core/types/http.type'
+
+import { useAuth } from '@auth/hooks/useAuth.hook'
 
 import { CollectionTimeline } from '@collections/components/CollectionTimeline/CollectionTimeline.component'
 
 import { Course } from '@courses/models/course.model'
-import { useGetCourseQuery } from '@courses/services/course.service'
+import {
+  useDeleteCourseMutation,
+  useGetCourseQuery,
+} from '@courses/services/course.service'
 import { CoursesFilters } from '@courses/types/filters.type'
 
 export const CourseSlugPage = () => {
   const { slug } = useParams<{ slug: string }>()
   const { t } = useTranslation('courses')
+  const history = useHistory()
+  const snackbarService = useInjection<SnackbarService>(SnackbarService)
+
   const fetchFilters = useMemo<CoursesFilters>(
     () => ({
       join: [
@@ -43,6 +57,19 @@ export const CourseSlugPage = () => {
   const { data } = useGetCourseQuery({ slug, filters: fetchFilters })
   const course: Course | undefined = data
 
+  const { user } = useAuth()
+
+  const [deleteCourse] = useDeleteCourseMutation()
+  const handleDelete = async () => {
+    try {
+      await deleteCourse({ slug: course!.slug }).unwrap()
+      snackbarService.notify(CrudAction.DELETE, Endpoint.Courses)
+      history.push('/users/profile/courses')
+    } catch (e: any) {
+      snackbarService.createSnackbar(e.data.statusText, { variant: 'error' })
+    }
+  }
+
   return (
     <Page title={course?.name}>
       <Paper
@@ -56,6 +83,7 @@ export const CourseSlugPage = () => {
             xs: 2,
             sm: 4,
           },
+          position: 'relative',
         }}
       >
         <Grid container spacing={4}>
@@ -129,6 +157,22 @@ export const CourseSlugPage = () => {
               )}
             </Stack>
           </Grid>
+          {course?.user?.id === user?.id && (
+            <Grid
+              sx={{
+                position: 'absolute',
+                top: 1,
+                right: 1,
+                margin: 1,
+              }}
+            >
+              <CardMenu
+                updateHref={`/courses/${course!.slug}/update`}
+                onDelete={handleDelete}
+                type="courses"
+              />
+            </Grid>
+          )}
         </Grid>
       </Paper>
 
