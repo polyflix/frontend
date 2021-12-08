@@ -86,7 +86,12 @@ export const VideoDetails = ({ video }: VideoDetailsProps) => {
                     </Typography>
                   </Tooltip>
                 </Stack>
-                <Stack spacing={2} direction="row">
+                <Stack
+                  spacing={2}
+                  direction="row"
+                  justifyContent="flex-end"
+                  alignItems="center"
+                >
                   <Tooltip
                     title={t<string>('slug.details.tooltips.likes', {
                       count: likeNumber,
@@ -98,7 +103,7 @@ export const VideoDetails = ({ video }: VideoDetailsProps) => {
                       onClick={() => like()}
                       disabled={likeDisabled}
                       variant={isLiked ? 'outlined' : 'text'}
-                      size="small"
+                      size="medium"
                     >
                       {likeNumber}
                     </Button>
@@ -149,7 +154,7 @@ export const VideoDetails = ({ video }: VideoDetailsProps) => {
                   to="#"
                 >
                   <Stack spacing={1} direction="row" alignItems="center">
-                    <UserAvatar user={video.publishedBy} />
+                    <UserAvatar user={video.publishedBy!} />
                     <Typography variant="caption">
                       {video.publishedBy?.displayName}
                     </Typography>
