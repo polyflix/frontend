@@ -33,6 +33,21 @@ const sidebarConfiguration: SidebarItem[] = [
     roles: [Role.Student, Role.Teacher, Role.Admin],
   },
   {
+    title: 'items.quizzes',
+    icon: 'healthicons:i-exam-multiple-choice',
+    roles: [Role.Student, Role.Teacher, Role.Admin],
+    items: [
+      {
+        title: 'actions.explore',
+        href: '/quizzes/explore',
+      },
+      {
+        title: 'actions.history',
+        href: '/quizzes/history',
+      },
+    ],
+  },
+  {
     title: 'items.collections',
     href: '/collections/explore',
     icon: 'bx:bx-collection',
