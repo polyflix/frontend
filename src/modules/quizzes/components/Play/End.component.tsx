@@ -39,7 +39,7 @@ export const End = ({ quizz }: PlayComponentProps) => {
           <CircularProgressbar
             value={score}
             maxValue={questions.length}
-            text={`${score}/${questions.length}`}
+            text={`${score.toFixed(2)}/${questions.length}`}
             styles={buildStyles({
               trailColor: theme.palette.divider,
               pathColor: color,

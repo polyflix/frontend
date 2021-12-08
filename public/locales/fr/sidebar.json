@@ -1,6 +1,7 @@
 {
   "actions": {
     "list": "Lister",
+    "explore": "Explorer",
     "create": "Créer",
     "history": "Historique",
     "logout": "Déconnexion"

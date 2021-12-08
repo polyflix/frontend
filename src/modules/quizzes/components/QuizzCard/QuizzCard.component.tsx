@@ -19,7 +19,10 @@ import { Link as RouterLink } from 'react-router-dom'
 import { Icon } from '@core/components/Icon/Icon.component'
 import { Element } from '@core/models/element.model'
 
+import { useAuth } from '@auth/hooks/useAuth.hook'
+
 import { Quizz } from '@quizzes/models/quizz.model'
+import { useGetAttemptsQuery } from '@quizzes/services/attempt.service'
 
 import { UserAvatar } from '@users/components/UserAvatar/UserAvatar.component'
 import { User } from '@users/models/user.model'
@@ -59,6 +62,7 @@ export const QuizzCard = ({
 }: Props) => {
   const theme = useTheme()
   const { t } = useTranslation('quizzes')
+  const { user } = useAuth()
 
   // We want to label the quizz as new if it was created less of 7 days ago.
   const isNew = Math.abs(dayjs(quizz.createdAt).diff(dayjs(), 'day')) < 7
@@ -67,11 +71,24 @@ export const QuizzCard = ({
   const questions = quizz.data.questions || []
   const color = getFeedbackColor(percentage(score, questions.length), theme)
 
+  const { data: attempts, isLoading: isAttemptsLoading } = useGetAttemptsQuery({
+    id: quizz.id,
+    filters: {
+      join: [
+        {
+          field: 'user',
+          select: ['firstName', 'lastName'],
+        },
+      ],
+      'user.id': user!.id,
+    },
+  })
+
   /**
    * Build the publisher UI in the card.
    * @returns
    */
-  const buildPublisher = (user: Partial<User>) => (
+  const buildPublisher = () => (
     <Tooltip title={`${user?.firstName} ${user?.lastName}`}>
       <UserAvatar variant="circular" user={user as User} />
     </Tooltip>
@@ -105,7 +122,7 @@ export const QuizzCard = ({
     >
       {displayTags && buildTags()}
       <Stack spacing={2} direction="row">
-        {displayPublisher && buildPublisher(quizz.user!)}
+        {displayPublisher && buildPublisher()}
         <Stack>
           <Typography variant="h6" fontWeight="bold">
             {quizz.name}
@@ -195,9 +212,10 @@ export const QuizzCard = ({
           </AccordionSummary>
           <AccordionDetails>
             <Stack spacing={3}>
-              {quizz.data.attempts?.map((attempt, idx) => (
-                <QuizzAttemptCard quizz={quizz} attempt={attempt} key={idx} />
-              ))}
+              {!isAttemptsLoading &&
+                attempts?.data.map((attempt, idx) => (
+                  <QuizzAttemptCard quizz={quizz} attempt={attempt} key={idx} />
+                ))}
             </Stack>
           </AccordionDetails>
         </Accordion>

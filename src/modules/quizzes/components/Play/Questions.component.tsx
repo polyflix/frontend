@@ -18,14 +18,15 @@ export const Questions = ({ quizz }: PlayComponentProps) => {
     (quizz.data.questions || []).map((_0, index) => {
       const isActive = index === questionIdx
       return (
-        <QuestionPaginationItem
-          key={index}
-          onClick={() => index !== questionIdx && setQuestion(index)}
-          isActive={isActive}
-          isAnswered={isAnswered}
-        >
-          {index + 1}
-        </QuestionPaginationItem>
+        <Grid item md={6} lg={4} xl={3} key={index}>
+          <QuestionPaginationItem
+            onClick={() => index !== questionIdx && setQuestion(index)}
+            isActive={isActive}
+            isAnswered={isAnswered}
+          >
+            {index + 1}
+          </QuestionPaginationItem>
+        </Grid>
       )
     })
   const question = quizz.data.questions![questionIdx]
@@ -44,9 +45,9 @@ export const Questions = ({ quizz }: PlayComponentProps) => {
     <Grid container spacing={2}>
       <Grid xs={12} md={2} item>
         <Paper sx={{ p: 1 }} variant="outlined">
-          <Stack spacing={1} direction="row">
+          <Grid container spacing={1} align="center">
             {buildQuestionPagination(isAnswered)}
-          </Stack>
+          </Grid>
         </Paper>
       </Grid>
       <Grid xs={12} md={10} item>

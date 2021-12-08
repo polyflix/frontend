@@ -12,9 +12,10 @@ import animationData from '../../../../assets/lotties/empty-box.json'
 interface Props {
   variant?: 'videos' | 'quizzes' | 'collections' | 'links' | 'courses'
   link?: string
+  creatable?: boolean
 }
 
-export const NoData = ({ link, variant }: Props) => {
+export const NoData = ({ link, variant, creatable = true }: Props) => {
   const { t } = useTranslation('common')
   const { hasRoles } = useRoles()
   const requiredRoles = [Role.Teacher, Role.Admin]
@@ -41,11 +42,13 @@ export const NoData = ({ link, variant }: Props) => {
       </Typography>
       {hasRoles(requiredRoles) && (
         <>
-          <Typography align="center" sx={{ color: 'text.secondary' }}>
-            {variant
-              ? t('noData.description', { ns: variant })
-              : t('noData.descriptionDefault')}
-          </Typography>
+          {creatable && (
+            <Typography align="center" sx={{ color: 'text.secondary' }}>
+              {variant
+                ? t('noData.description', { ns: variant })
+                : t('noData.descriptionDefault')}
+            </Typography>
+          )}
           {link && (
             <Button
               to={link}
@@ -58,7 +61,7 @@ export const NoData = ({ link, variant }: Props) => {
           )}
         </>
       )}
-      <Box>
+      <Box sx={{ pb: 2 }}>
         <Lottie options={defaultOptions} height={200} width={200} />
       </Box>
     </Stack>

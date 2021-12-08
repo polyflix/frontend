@@ -69,8 +69,6 @@ export const Dropzone = ({
       sx={{
         p: 4,
         cursor: 'pointer',
-        borderColor: (theme) => theme.palette.grey[400],
-        background: (theme) => theme.palette.grey[100],
         '&:hover': {
           borderColor: (theme) => theme.palette.grey[700],
         },

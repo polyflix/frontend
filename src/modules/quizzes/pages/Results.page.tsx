@@ -33,14 +33,22 @@ export const QuizzResultsPage = () => {
 
   const [filters, setFilters] = useState<QuizzAttemptFilters>({})
 
-  const { data: quizz, isLoading: isQuizzLoading } = useGetQuizzQuery({
+  const {
+    data: quizz,
+    isLoading: isQuizzLoading,
+    isFetching: isQuizzFetching,
+  } = useGetQuizzQuery({
     id,
     filters: {
       join: ['questions', { field: 'user', select: ['firstName', 'lastName'] }],
     },
   })
 
-  const { data: attempts, isLoading: isAttemptsLoading } = useGetAttemptsQuery({
+  const {
+    data: attempts,
+    isLoading: isAttemptsLoading,
+    isFetching: isAttemptsFetching,
+  } = useGetAttemptsQuery({
     id,
     filters: {
       join: [
@@ -75,7 +83,12 @@ export const QuizzResultsPage = () => {
         />
         <ItemsPerPage onChange={(limit) => setFilters({ ...filters, limit })} />
       </Stack>
-      <QuizzAttemptsList attempts={attempts?.data} quizz={quizz} />
+      <QuizzAttemptsList
+        attempts={attempts?.data}
+        quizz={quizz}
+        isQuizzFetching={isQuizzFetching}
+        isAttemptsFetching={isAttemptsFetching}
+      />
       <Box display="flex" justifyContent="center">
         <Pagination
           onChange={(e, page) => setFilters({ ...filters, page })}
