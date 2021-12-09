@@ -76,7 +76,8 @@
           "create": "Create collection",
           "update": "Update collection"
         },
-        "addElement": "Add an element to the collection"
+        "addElement": "Add an element to the collection",
+        "validate": "Validate"
       }
     },
     "elementModal": {

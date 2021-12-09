@@ -76,7 +76,8 @@
           "create": "Créer une collection",
           "update": "Mettre à jour la collection"
         },
-        "addElement": "Ajouter un élément à la collection"
+        "addElement": "Ajouter un élément à la collection",
+        "validate": "Valider"
       }
     },
     "elementModal": {
