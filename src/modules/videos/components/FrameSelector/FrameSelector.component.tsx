@@ -1,5 +1,5 @@
 import { Button, Stack, Tooltip } from '@mui/material'
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 
 import { Icon } from '@core/components/Icon/Icon.component'
 import { dataUriToBlob } from '@core/helpers/file.helper'
@@ -14,6 +14,7 @@ interface Props {
 // Component used to render a video, and select frames inside
 export const FrameSelector = ({ src, onSelect }: Props) => {
   const player = useRef<HTMLVideoElement>(null)
+  const [posterInit, setPosterInit] = useState(false)
 
   const onScreenshot = () => {
     const canvas = document.createElement('canvas')
@@ -32,7 +33,15 @@ export const FrameSelector = ({ src, onSelect }: Props) => {
 
   return (
     <Stack position="relative">
-      <VideoStyle ref={player} src={src} controls />
+      <VideoStyle
+        ref={player}
+        src={`${src}#t=0.1`}
+        onCanPlay={() => {
+          if (!posterInit) onScreenshot()
+          setPosterInit(true)
+        }}
+        controls
+      />
 
       <Tooltip title="Screenshot">
         <Button
