@@ -121,12 +121,26 @@ export const QuizzCard = ({
       alignItems="center"
     >
       {displayTags && buildTags()}
-      <Stack spacing={2} direction="row">
+      <Stack
+        spacing={2}
+        direction="row"
+        sx={{ width: '100%', overflow: 'hidden' }}
+      >
         {displayPublisher && buildPublisher()}
-        <Stack>
-          <Typography variant="h6" fontWeight="bold">
-            {quizz.name}
-          </Typography>
+        <Stack sx={{ width: '100%', overflow: 'hidden' }}>
+          <Tooltip title={quizz.name}>
+            <Typography
+              variant="h6"
+              fontWeight="bold"
+              sx={{
+                color: 'text.primary',
+                whiteSpace: 'nowrap',
+              }}
+              noWrap={true}
+            >
+              {quizz.name}
+            </Typography>
+          </Tooltip>
           {displayCreationDate && buildCreationDate()}
         </Stack>
       </Stack>
