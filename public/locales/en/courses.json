@@ -11,7 +11,8 @@
   },
   "noData": {
     "description": "If you have the necessary rights you can create a course below",
-    "buttonText": "Create a course"
+    "buttonText": "Create a course",
+    "empty": "There are no collections associated with the course"
   },
   "form": {
     "upsert": {

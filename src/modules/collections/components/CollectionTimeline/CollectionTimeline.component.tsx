@@ -33,7 +33,7 @@ export const CollectionTimeline = ({
     },
   })
   const collection: Collection | undefined = data
-  const { t } = useTranslation('courses')
+  const { t } = useTranslation('collections')
   const query = useQuery() as URLSearchParams
 
   const elementIcon = (type: ElementType): string => {
@@ -73,7 +73,7 @@ export const CollectionTimeline = ({
   return (
     <Timeline position="right">
       {collection?.elements?.length === 0 && (
-        <Alert severity="info">{t('noData')}</Alert>
+        <Alert severity="info">{t('noData.empty')}</Alert>
       )}
       {isLoading && (
         <Stack spacing={1}>
