@@ -103,7 +103,8 @@
   },
   "noData": {
     "description": "Si vous avez les droits nécessaires vous pouvez créer une collection ci-dessous",
-    "buttonText": "Créer une collection"
+    "buttonText": "Créer une collection",
+    "empty": "Il n'y a pas d'éléments dans la collection"
   },
   "deleteModal": {
     "title": "Supprimer la collection",

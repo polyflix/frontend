@@ -103,7 +103,8 @@
   },
   "noData": {
     "description": "If you have the necessary rights you can create a collection below",
-    "buttonText": "Create a collection"
+    "buttonText": "Create a collection",
+    "empty": "There are no items in the collection"
   },
   "deleteModal": {
     "title": "Delete collection",

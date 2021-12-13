@@ -11,7 +11,8 @@
   },
   "noData": {
     "description": "Si vous avez les droits nécessaires vous pouvez créer un cours ci-dessous",
-    "buttonText": "Créer un cours"
+    "buttonText": "Créer un cours",
+    "empty": "Il n'y a pas de collections associée au cours"
   },
   "form": {
     "upsert": {

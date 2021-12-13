@@ -162,7 +162,7 @@ export const CourseSlugPage = () => {
               ))}
             </Stack>
             {course?.collections?.length === 0 && (
-              <Alert severity="info">{t('noData')}</Alert>
+              <Alert severity="info">{t('noData.empty')}</Alert>
             )}
           </>
         </Grid>
