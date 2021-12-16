@@ -64,6 +64,9 @@ export const Player: React.FC<Props> = ({ playerRef, video }) => {
   const [lastPlayerTime, setLastPlayerTime] = useState<number | undefined>()
 
   useEffect(() => {
+    window.onkeypress = (e: KeyboardEvent) => {
+      return !(e.key === ' ' && e.target !== document.body)
+    }
     setSubtitles(subtitles)
     setState(subtitleState)
   }, [setState, setSubtitles, subtitles, subtitleState])
