@@ -1,5 +1,124 @@
 include:
   - project: 'polyflix-do/ci-templates'
+    file: '/templates/nodejs.yml'
     ref: main
-    file: '/front-end.yml'
-    
+
+# ======================================
+# REVIEW ENVIRONMENT
+# ======================================
+
+build:review:
+  extends: build:code
+  before_script:
+    - !reference [.node, before_script]
+    - cat src/environments/production.environment.ts | sed "s/polyflix/$CI_ENVIRONMENT_SLUG.qapolyflix/g" > src/environments/$CI_ENVIRONMENT_SLUG.environment.ts
+  environment:
+    name: review/$CI_COMMIT_REF_SLUG
+    action: prepare
+  rules:
+    # If we are on a feature branch
+    - if: $CI_COMMIT_BRANCH && $CI_OPEN_MERGE_REQUESTS
+      variables:
+        BUILD_MODE: $CI_ENVIRONMENT_SLUG
+
+package:review:
+  extends: package:app
+  needs: ["build:review"]
+  environment:
+    name: review/$CI_COMMIT_REF_SLUG
+    url: https://$CI_ENVIRONMENT_SLUG.qapolyflix.dopolytech.fr
+    action: start
+    on_stop: stop:review
+    auto_stop_in: 1 week
+  after_script:
+    - echo "IMAGE_TAG=$CI_ENVIRONMENT_SLUG" >> deploy.env
+  rules:
+    # If we are on a feature branch
+    - if: $CI_COMMIT_BRANCH && $CI_OPEN_MERGE_REQUESTS
+      variables:
+        CUSTOM_REGISTRIES_DESTINATIONS: "--destination $CI_REGISTRY_IMAGE:$CI_ENVIRONMENT_SLUG"
+  artifacts:
+    reports:
+      dotenv: deploy.env
+
+stop:review:
+  image: curlimages/curl:7.81.0
+  stage: deploy
+  environment:
+    name: review/$CI_COMMIT_REF_SLUG
+    action: stop
+  script:
+    - curl --fail -X POST --form token=$CI_INFRASTRUCTURE_TRIGGER_TOKEN --form "variables[ENVIRONMENT]=review/$CI_COMMIT_REF_SLUG" --form ref=review-env "$CI_API_V4_URL/projects/1346/trigger/pipeline"
+  rules:
+    - if: $CI_COMMIT_BRANCH && $CI_OPEN_MERGE_REQUESTS
+      allow_failure: true
+      when: manual
+
+deploy:review:
+  needs: ["package:review"]
+  extends: .kube-deploy
+  rules:
+    # If we want to deploy a review env
+    - if: $CI_COMMIT_BRANCH && $CI_OPEN_MERGE_REQUESTS
+      when: manual
+      allow_failure: true
+      variables:
+        HELM_OPTIONS: --set deployments.frontend.tag=$IMAGE_TAG
+        ENVIRONMENT: review/$CI_COMMIT_REF_SLUG
+
+# ===============================
+
+deploy:kube:
+  needs: ["package:app"]
+  extends: .kube-deploy
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+      variables:
+        HELM_OPTIONS: "--set deployments.frontend.tag=$CI_COMMIT_BRANCH-$CI_COMMIT_SHORT_SHA"
+        ENVIRONMENT: qa
+    - if: $CI_COMMIT_TAG
+      variables:
+        HELM_OPTIONS: "--set deployments.frontend.tag=$CI_COMMIT_TAG"
+        ENVIRONMENT: production
+
+package:app:
+  stage: package
+  extends: docker_build
+  needs: ["build:code"]
+  environment:
+    name: $ENVIRONMENT
+    action: prepare
+  rules:
+    # If we are on main branch
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+      variables:
+        ENVIRONMENT: qa
+        CUSTOM_REGISTRIES_DESTINATIONS: "--destination $CI_REGISTRY_IMAGE:$CI_COMMIT_BRANCH-$CI_COMMIT_SHORT_SHA"
+    # If we are on main branch
+    - if: $CI_COMMIT_TAG
+      variables:
+        ENVIRONMENT: production
+        CUSTOM_REGISTRIES_DESTINATIONS: "--destination $CI_REGISTRY_IMAGE:$CI_COMMIT_TAG"
+
+# Temp deactivate
+semantic_release:
+    allow_failure: true
+    rules:
+        - when: never
+
+build:code:local:
+  extends: build:code
+  variables:
+    BUILD_MODE: k3d
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+
+#Build frontend for local env
+package:app:local:
+  needs: ["build:code:local"]
+  extends: docker_build
+  stage: package
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+      variables:
+        CUSTOM_REGISTRIES_DESTINATIONS: "--destination $CI_REGISTRY_IMAGE:local"

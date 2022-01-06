@@ -4,14 +4,14 @@
   "scripts": {
     "start": "BUILD_MODE=local vite",
     "build": "vite build",
-    "lint": "eslint src/ && eslint --ext .json ./public/locales",
+    "lint": "eslint --cache src/ public/locales/**/*.json",
     "lint:ci": "npm run lint",
     "test": "BUILD_MODE=test cypress open-ct",
     "test:ci": "BUILD_MODE=test cypress run-ct",
     "format": "prettier --write ./src",
     "format:check": "prettier --check ./src",
     "serve": "vite preview",
-    "fix:lint": "eslint --fix src/ && eslint --ext .json ./public/locales --fix",
+    "fix:lint": "eslint --cache --fix src/ public/locales/**/*.json",
     "fix:format": "prettier --write ./src",
     "fix": "npm-run-all -p fix:*"
   },
