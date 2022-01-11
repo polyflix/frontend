@@ -4,6 +4,7 @@ import {
   Button,
   Checkbox,
   Divider,
+  IconButton,
   InputAdornment,
   Paper,
   Slider,
@@ -20,6 +21,7 @@ import { useHistory } from 'react-router-dom'
 
 import { useInjection } from '@polyflix/di'
 
+import { Icon } from '@core/components/Icon/Icon.component'
 import { StatusSelector } from '@core/components/StatusSelector/StatusSelector.component'
 import { VisibilitySelector } from '@core/components/VisibilitySelector/VisibilitySelector.component'
 import { Endpoint } from '@core/constants/endpoint.constant'
@@ -80,10 +82,16 @@ export const QuizzForm = ({ quizz, isUpdate, isImport }: Props) => {
     },
   })
 
-  const { fields, append } = useFieldArray({
+  const { fields, append, remove } = useFieldArray({
     control,
     name: 'questions',
   })
+
+  const removeQuestion = (index: number) => {
+    if (fields.length > 1) {
+      remove(index)
+    }
+  }
 
   /**
    * Validate if a quizz is well formed before sending it to the API.
@@ -237,21 +245,36 @@ export const QuizzForm = ({ quizz, isUpdate, isImport }: Props) => {
           return (
             <Paper sx={{ p: 3 }} key={index} variant="outlined">
               <Stack spacing={2}>
-                <TextField
-                  error={Boolean(questionErrors?.label)}
-                  helperText={questionErrors?.label?.message}
-                  label="Question"
-                  {...getCommonTextFieldProps()}
-                  {...register(`questions.${index}.label` as const, {
-                    required: {
-                      value: true,
-                      message: t(
-                        'forms.create-update.validation.question.required'
-                      ),
-                    },
-                  })}
-                />
-
+                <Box
+                  sx={{
+                    display: 'inline-flex',
+                    justifyContent: 'space-between',
+                  }}
+                >
+                  <TextField
+                    error={Boolean(questionErrors?.label)}
+                    helperText={questionErrors?.label?.message}
+                    label="Question"
+                    {...getCommonTextFieldProps()}
+                    {...register(`questions.${index}.label` as const, {
+                      required: {
+                        value: true,
+                        message: t(
+                          'forms.create-update.validation.question.required'
+                        ),
+                      },
+                    })}
+                  />
+                  {!isUpdate && fields.length > 1 && (
+                    <IconButton
+                      sx={{ margin: '8px' }}
+                      onClick={() => removeQuestion(index)}
+                      color="primary"
+                    >
+                      <Icon name="carbon:delete" size={25} />
+                    </IconButton>
+                  )}
+                </Box>
                 <Typography variant="body1" sx={{ color: 'text.secondary' }}>
                   {t(
                     'forms.create-update.placeholder.alternatives.description'
