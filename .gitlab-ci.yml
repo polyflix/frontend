@@ -44,6 +44,8 @@ package:review:
 stop:review:
   image: curlimages/curl:7.81.0
   stage: deploy
+  variables:
+    GIT_STRATEGY: none
   environment:
     name: review/$CI_COMMIT_REF_SLUG
     action: stop
