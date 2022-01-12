@@ -1,9 +1,10 @@
-import { Box, Divider, Stack, Typography } from '@mui/material'
+import { Box, Divider, Stack } from '@mui/material'
 import Grid from '@mui/material/Grid'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { ItemsPerPage } from '@core/components/Filters/ItemsPerPage.component'
+import { Header } from '@core/components/Header/Header.component'
 import { NoData } from '@core/components/NoData/NoData.component'
 import { Page } from '@core/components/Page/Page.component'
 import { PaginationSynced } from '@core/components/Pagination/PaginationSynced.component'
@@ -39,10 +40,12 @@ export const ProfileVideosPage = () => {
   let totalPage = Math.ceil((data?.totalCount ?? 1) / (filters.pageSize ?? 1))
 
   return (
-    <Page disableGutters={true} sx={{ mt: 3 }}>
-      <Typography variant="h4" sx={{ mb: 2 }}>
-        {t('profile.tabs.videos.content.title')}
-      </Typography>
+    <Page
+      disableGutters={true}
+      sx={{ mt: 3 }}
+      title={t('profile.tabs.videos.content.title')}
+    >
+      <Header title={t('profile.tabs.videos.content.title')} />
 
       <Divider sx={{ my: 3 }} />
 
@@ -84,7 +87,7 @@ export const ProfileVideosPage = () => {
           />
         </Box>
       ) : (
-        <NoData variant="videos" link="/videos/create" />
+        !isLoading && <NoData variant="videos" link="/videos/create" />
       )}
     </Page>
   )

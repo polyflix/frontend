@@ -21,7 +21,7 @@ export const Logo = ({ minimal = false }: Props) => {
   const onClickLogo = () => history.push('/')
 
   return (
-    <Stack direction="row" alignItems="baseline">
+    <Stack direction="row" alignItems="center">
       {location.pathname !== initialPage && (
         <Tooltip title={`${t('goBack')}`} onClick={() => history.goBack()}>
           <IconButton

@@ -1,8 +1,9 @@
-import { Box, Divider, Grid, Stack, Typography } from '@mui/material'
+import { Box, Divider, Grid, Stack } from '@mui/material'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { ItemsPerPage } from '@core/components/Filters/ItemsPerPage.component'
+import { Header } from '@core/components/Header/Header.component'
 import { NoData } from '@core/components/NoData/NoData.component'
 import { Page } from '@core/components/Page/Page.component'
 import { PaginationSynced } from '@core/components/Pagination/PaginationSynced.component'
@@ -42,13 +43,11 @@ export const ProfileCollectionsPage = () => {
 
   return (
     <Page
-      isLoading={isLoading}
+      disableGutters={true}
       title={t('profile.tabs.collections.content.title')}
       sx={{ mt: 3 }}
     >
-      <Typography variant="h4" sx={{ mb: 2 }}>
-        {t('profile.tabs.collections.content.title')}
-      </Typography>
+      <Header title={t('profile.tabs.collections.content.title')} />
 
       <Divider sx={{ my: 3 }} />
 
@@ -103,7 +102,9 @@ export const ProfileCollectionsPage = () => {
           />
         </Box>
       ) : (
-        <NoData variant="collections" link="/collections/create" />
+        !isLoading && (
+          <NoData variant="collections" link="/collections/create" />
+        )
       )}
     </Page>
   )

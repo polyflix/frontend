@@ -23,7 +23,7 @@ export const RootStyle = styled(Paper)(({ theme }) => ({
     position: 'absolute',
     backgroundColor: theme.palette.background.paper,
     border: '1px solid',
-    borderColor: theme.palette.grey[200],
+    borderColor: theme.palette.background.default,
     top: theme.spacing(1),
     left: theme.spacing(1),
     height: '100%',
@@ -43,5 +43,5 @@ export const RootStyle = styled(Paper)(({ theme }) => ({
 export const CardFooterStyle = styled(Box)(({ theme }) => ({
   borderRadius: theme.spacing(0, 0, 1, 1),
   padding: theme.spacing(1, 2),
-  backgroundColor: theme.palette.grey[100],
+  backgroundColor: theme.palette.background.default,
 }))

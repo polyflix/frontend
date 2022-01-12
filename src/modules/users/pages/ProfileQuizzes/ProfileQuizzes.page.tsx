@@ -46,7 +46,11 @@ export const ProfileQuizzesPage = () => {
   const skeletons = buildSkeletons(4)
 
   return (
-    <Page disableGutters={true} sx={{ mt: 3 }}>
+    <Page
+      disableGutters={true}
+      sx={{ mt: 3 }}
+      title={t('profile.tabs.quizzes.content.title')}
+    >
       <Header
         title={t('profile.tabs.quizzes.content.title')}
         description={t('profile.tabs.quizzes.content.description')}
@@ -109,7 +113,7 @@ export const ProfileQuizzesPage = () => {
           />
         </Box>
       ) : (
-        <NoData variant="quizzes" link="/quizzes/create" />
+        !isLoading && <NoData variant="quizzes" link="/quizzes/create" />
       )}
     </Page>
   )

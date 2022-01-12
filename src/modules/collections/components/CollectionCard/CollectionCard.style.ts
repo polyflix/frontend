@@ -26,7 +26,7 @@ export const RootStyle = styled<any>(Paper)(({ theme, draft }) => ({
     position: 'absolute',
     backgroundColor: theme.palette.background.paper,
     border: '1px solid',
-    borderColor: theme.palette.grey[200],
+    borderColor: theme.palette.background.default,
     top: theme.spacing(1),
     left: theme.spacing(1),
     height: '100%',

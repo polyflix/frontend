@@ -60,12 +60,6 @@ const sidebarConfiguration: SidebarItem[] = [
     roles: [Role.Student, Role.Teacher, Role.Admin],
   },
   {
-    title: 'items.quizzes',
-    href: '/quizzes/explore',
-    icon: 'healthicons:i-exam-multiple-choice',
-    roles: [Role.Student, Role.Teacher, Role.Admin],
-  },
-  {
     title: 'myContent.videos',
     section: SidebarSection.MANAGEMENT,
     icon: 'eva:play-circle-outline',

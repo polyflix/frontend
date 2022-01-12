@@ -1,6 +1,6 @@
-import { InputBase } from '@mui/material'
+import SearchIcon from '@mui/icons-material/Search'
 
-import { SearchbarRootStyle } from './Searchbar.style'
+import { Search, SearchIconWrapper, StyledInputBase } from './Searchbar.style'
 
 interface Props {
   label?: string
@@ -9,11 +9,15 @@ interface Props {
 
 export const Searchbar = ({ label, onChange }: Props) => {
   return (
-    <SearchbarRootStyle>
-      <InputBase
-        onChange={({ target }) => onChange(target.value)}
+    <Search>
+      <SearchIconWrapper>
+        <SearchIcon />
+      </SearchIconWrapper>
+      <StyledInputBase
         placeholder={label}
+        onChange={({ target }) => onChange(target.value)}
+        inputProps={{ 'aria-label': 'search' }}
       />
-    </SearchbarRootStyle>
+    </Search>
   )
 }

@@ -5,7 +5,6 @@ import {
   ListItem,
   ListItemText,
   Stack,
-  Typography,
   Skeleton,
   ListItemIcon,
   IconButton,
@@ -18,6 +17,7 @@ import { useTranslation } from 'react-i18next'
 import { useInjection } from '@polyflix/di'
 
 import { ItemsPerPage } from '@core/components/Filters/ItemsPerPage.component'
+import { Header } from '@core/components/Header/Header.component'
 import { Icon } from '@core/components/Icon/Icon.component'
 import { NoData } from '@core/components/NoData/NoData.component'
 import { Page } from '@core/components/Page/Page.component'
@@ -58,10 +58,12 @@ export const ProfileLinksPage = () => {
   const skeletons = buildSkeletons(3)
 
   return (
-    <Page isLoading={isLoading} sx={{ mt: 3 }}>
-      <Typography variant="h4" sx={{ mb: 2 }}>
-        {t('profile.tabs.links.content.title')}
-      </Typography>
+    <Page
+      disableGutters={true}
+      sx={{ mt: 3 }}
+      title={t('profile.tabs.links.content.title')}
+    >
+      <Header title={t('profile.tabs.links.content.title')} />
 
       <Divider sx={{ my: 3 }} />
 
@@ -147,7 +149,7 @@ export const ProfileLinksPage = () => {
           />
         </Box>
       ) : (
-        <NoData variant="links" link="/links/create" />
+        !isLoading && <NoData variant="links" link="/links/create" />
       )}
     </Page>
   )
