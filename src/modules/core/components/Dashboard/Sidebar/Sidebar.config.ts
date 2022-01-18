@@ -28,9 +28,18 @@ const sidebarConfiguration: SidebarItem[] = [
   },
   {
     title: 'items.videos',
-    href: '/videos/explore',
     icon: 'eva:play-circle-outline',
     roles: [Role.Student, Role.Teacher, Role.Admin],
+    items: [
+      {
+        title: 'actions.explore',
+        href: '/videos/explore',
+      },
+      {
+        title: 'actions.history',
+        href: '/videos/history',
+      },
+    ],
   },
   {
     title: 'items.quizzes',

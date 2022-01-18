@@ -123,5 +123,14 @@
   "deleteModal": {
     "title": "Supprimer la vidéo",
     "content": "Êtes-vous sûr de vouloir supprimer cette vidéo ?"
+  },
+  "history": {
+    "title": "Historique - Vidéo",
+    "description": "Retrouvez ci-dessous l'historique des vidéos que vous avez vu."
+  },
+  "filter": {
+    "watched": "Vues",
+    "watching": "En cours",
+    "all": "Toutes"
   }
 }

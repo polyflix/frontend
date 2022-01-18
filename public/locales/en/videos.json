@@ -126,5 +126,14 @@
   "deleteModal": {
     "title": "Delete video",
     "content": "Are you sure to delete this video?"
+  },
+  "history": {
+    "title": "History - Video",
+    "description": "Find below the history of the videos you have seen."
+  },
+  "filter": {
+    "watched": "Watched",
+    "watching": "Watching",
+    "all": "All"
   }
 }
