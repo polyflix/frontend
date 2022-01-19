@@ -107,6 +107,10 @@ const sidebarConfiguration: SidebarItem[] = [
     roles: [Role.Teacher, Role.Admin],
     items: [
       {
+        title: 'actions.list',
+        href: '/users/profile/courses',
+      },
+      {
         title: 'actions.create',
         href: '/courses/create',
       },
