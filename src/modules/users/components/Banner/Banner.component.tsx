@@ -18,7 +18,6 @@ const BannerTabs = () => {
   const { t } = useTranslation('users')
   const routeMatch = useRouteMatch({
     path: [
-      '/users/profile',
       '/users/profile/videos',
       '/users/profile/courses',
       '/users/profile/collections',
@@ -45,12 +44,6 @@ const BannerTabs = () => {
         },
       }}
     >
-      <Tab
-        label={t('profile.tabs.profile')}
-        value="/users/profile"
-        to="/users/profile"
-        component={RouterLink}
-      />
       <Tab
         label={t('profile.tabs.videos.title')}
         value="/users/profile/videos"
@@ -112,7 +105,7 @@ export const ProfileBanner = ({ user }: Props) => {
               color: 'primary.main',
             }}
             component={RouterLink}
-            to="profile/settings"
+            to="/users/profile/settings"
           >
             <Icon name="eva:edit-fill" />
           </IconButton>
