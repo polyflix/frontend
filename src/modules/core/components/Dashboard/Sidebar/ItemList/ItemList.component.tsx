@@ -18,7 +18,6 @@ interface Props {
 export const ItemList = ({ item }: Props) => {
   const { t } = useTranslation('sidebar')
   const { open } = useSidebar()
-  const { hasRoles } = useRoles()
   const [menuOpen, setMenuOpen] = useState(false)
 
   return (
@@ -44,9 +43,6 @@ export const ItemList = ({ item }: Props) => {
       <Collapse in={menuOpen} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
           {item.items!.map((subItem: SidebarItem, i: number) => {
-            if (!hasRoles(item?.roles || [])) {
-              return
-            }
             return <Item key={i} item={subItem} isSubItem={true} />
           })}
         </List>

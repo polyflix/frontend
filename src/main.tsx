@@ -46,9 +46,19 @@ import { UserRouter } from '@users/user.router'
 import { GlobalStyles } from '@theme/globalStyles'
 import { ThemeConfig } from '@theme/theme'
 
+import { ReactKeycloakProvider, useKeycloak } from '@react-keycloak/web'
+
 import './i18n/config'
 import i18n from './i18n/config'
 import './styles/index.scss'
+import Keycloak from 'keycloak-js'
+import { environment } from '@env/environment'
+
+export const keycloakProvider = new Keycloak({
+  url: environment.urlRealm,
+  realm: environment.realm,
+  clientId: environment.clientIdRealm,
+});
 
 /**
  * This functional component is the main entrypoint of our app.
@@ -56,8 +66,9 @@ import './styles/index.scss'
  */
 const PolyflixApp = () => {
   const authService = useInjection<AuthService>(AuthService)
+  const { keycloak } = useKeycloak()
 
-  const { user, hasRefreshedAuth, isAuthRefreshing } = useAuth()
+  const { user, isAuthRefreshing } = useAuth()
   const { isUnhealthy } = useServerHealth()
 
   // If the server is unavailable, display the 503 page
@@ -76,11 +87,11 @@ const PolyflixApp = () => {
 
   // If the user is not authenticated and we didn't try to refresh the authentication
   // we should try to automatically renew the authentication of the user.
-  if (!isAuthenticated && !hasRefreshedAuth) authService.refreshAuth()
+/*  if (!isAuthenticated && !hasRefreshedAuth) authService.refreshAuth()*/
 
   // We want to return the loading screen only in the case of the refresh authentication
   // or if we are waiting for informations from the server
-  if (isAuthRefreshing) return <LoadingLayout />
+/*  if (isAuthRefreshing) return <LoadingLayout />*/
 
   return (
     <Router>
@@ -88,25 +99,25 @@ const PolyflixApp = () => {
         {/* We want the user to be redirected to home page if already logged in */}
         <Route path="/auth" component={AuthRouter} />
         {/* We restrict these route to an authenticated user*/}
-        <PrivateRoute condition={isAuthenticated}>
-          <PrivateRoute
-            condition={isAccountValidated}
-            redirectTo={'/auth/validate'}
-          >
-            <DashboardLayout>
-              <Switch>
-                <Route path="/courses" component={CourseRouter} />
-                <Route path="/quizzes" component={QuizzRouter} />
-                <Route path="/users" component={UserRouter} />
-                <Route path="/videos" component={VideoRouter} />
-                <Route path="/collections" component={CollectionRouter} />
-                <Route path="/links" component={LinkRouter} />{' '}
-                <Route exact path="/" component={HomePage} />
-                <Route component={NotFoundPage} />
-              </Switch>
-            </DashboardLayout>
+          <PrivateRoute condition={isAuthenticated}>
+            <PrivateRoute
+              condition={isAccountValidated}
+              redirectTo={'/auth/validate'}
+            >
+              <DashboardLayout>
+                <Switch>
+                  <Route path="/courses" component={CourseRouter} />
+                  <Route path="/quizzes" component={QuizzRouter} />
+                  <Route path="/users" component={UserRouter} />
+                  <Route path="/videos" component={VideoRouter} />
+                  <Route path="/collections" component={CollectionRouter} />
+                  <Route path="/links" component={LinkRouter} />{' '}
+                  <Route exact path="/" component={HomePage} />
+                  <Route component={NotFoundPage} />
+                </Switch>
+              </DashboardLayout>
+            </PrivateRoute>
           </PrivateRoute>
-        </PrivateRoute>
       </Switch>
     </Router>
   )
@@ -124,7 +135,9 @@ ReactDOM.render(
             <SnackbarProvider maxSnack={5}>
               <DIProvider>
                 <HelmetProvider>
-                  <PolyflixApp />
+                  <ReactKeycloakProvider authClient={keycloakProvider}>
+                      <PolyflixApp />
+                    </ReactKeycloakProvider>
                   <ModalCookies />
                 </HelmetProvider>
               </DIProvider>

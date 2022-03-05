@@ -34,7 +34,8 @@ const fetchWithRefresh: BaseQueryFn<
   FetchBaseQueryError
 > = async (args, api, extraOptions) => {
   let result = await baseQuery(args, api, extraOptions)
-  if (result.error && result.error.status === 401) {
+/*  if (result.error && result.error.status === 401) {
+
     // try to get a new token
     const refreshResult = await baseQuery(
       { method: 'POST', url: '/auth/refresh' },
@@ -56,7 +57,7 @@ const fetchWithRefresh: BaseQueryFn<
     } else {
       store.dispatch(logoutUser())
     }
-  }
+  }*/
   return result
 }
 

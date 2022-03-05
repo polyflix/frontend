@@ -11,3 +11,11 @@ export interface User extends BaseModel {
   displayName: string
   roles?: Role[]
 }
+
+export const convertKeycloakUserToModel = (data: any): User => ({
+    ...data,
+    avatar: "https://c.tenor.com/2O1TPEXjjj0AAAAC/cheems-doggo.gif",
+  isAccountActivated: true,
+  isAdmin: true,
+  displayName: data.firstName + " " + data.lastName,
+})

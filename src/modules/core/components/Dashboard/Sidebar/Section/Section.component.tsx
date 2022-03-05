@@ -19,7 +19,6 @@ interface Props {
 
 export const Section = ({ sx, title, items, ...other }: Props) => {
   const { open } = useSidebar()
-  const { hasRoles } = useRoles()
 
   return (
     <Box {...other} sx={{ ...sx, padding: '0 1rem 0 1rem' }}>
@@ -40,10 +39,6 @@ export const Section = ({ sx, title, items, ...other }: Props) => {
 
           if (hasItems) {
             return <ItemList item={item} key={index} />
-          }
-
-          if (!hasRoles(item?.roles || [])) {
-            return
           }
           return <Item key={index} item={item} />
         })}

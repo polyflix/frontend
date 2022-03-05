@@ -26,9 +26,10 @@ import { Section } from './Section/Section.component'
 import { getSidebarSections } from './Sidebar.config'
 import { AccountStyle, RootStyle } from './Sidebar.style'
 import { UserMinimalCard } from './UserMinimalCard/UserMinimalCard.component'
+import { useKeycloak } from '@react-keycloak/web'
 
 export const DashboardSidebar = () => {
-  const authService = useInjection<AuthService>(AuthService)
+  const { keycloak } = useKeycloak()
 
   const th = useTheme()
   const ltsm: boolean = useMediaQuery(th.breakpoints.down('md'))
@@ -73,7 +74,7 @@ export const DashboardSidebar = () => {
               <Link
                 underline="none"
                 component={RouterLink}
-                to="/users/profile/videos"
+                to="/"
               >
                 <AccountStyle open={open}>
                   <UserMinimalCard />
@@ -129,7 +130,7 @@ export const DashboardSidebar = () => {
               >
                 <Tooltip title={t<string>('actions.logout')}>
                   <Button
-                    onClick={() => authService.logout()}
+                    onClick={() => keycloak.logout()}
                     variant="outlined"
                     color="primary"
                     aria-label="add"

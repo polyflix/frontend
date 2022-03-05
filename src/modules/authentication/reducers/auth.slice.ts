@@ -77,6 +77,8 @@ export const authSlice = createSlice({
       state.token = action.payload.token
       state.isLoading = false
       state.isAuthRefreshing = false
+      console.log("dispatch(): authenticateUser")
+      console.log("dispatch(): authenticateUser, payload user: " + JSON.stringify(action.payload.user))
     },
     /**
      * This method set the user in payload as current user.

@@ -21,4 +21,7 @@ export const environment: Environment = {
     { name: 'Professor', email: 'professor@gmail.com', password: '123456789' },
     { name: 'Admin', email: 'admin@gmail.com', password: '123456789' },
   ],
+  urlRealm: "http://localhost:8090/auth",
+  realm: "test",
+  clientIdRealm: "react-auth",
 }

@@ -24,6 +24,7 @@ import {
   IRequestResetPasswordForm,
   IResetPasswordForm,
 } from '@auth/types/form.type'
+import { User } from '@users/models/user.model'
 
 @Injectable()
 export class AuthService {
@@ -40,7 +41,7 @@ export class AuthService {
   }
 
   public async refreshAuth() {
-    this.dispatch(refreshAuthInProgress())
+/*    this.dispatch(refreshAuthInProgress())
 
     const { status, response } = await this.httpService.post(
       `${this.endpoint}/refresh`
@@ -67,7 +68,7 @@ export class AuthService {
         user,
         token,
       })
-    )
+    )*/
   }
 
   /**
@@ -75,8 +76,9 @@ export class AuthService {
    * @param {ILoginForm} body the form data to send with the request
    * @returns
    */
-  public async login(body: ILoginForm) {
+  public async login(body: User, token: string) {
     this.dispatch(authenticationInProgress())
+/*
 
     const { status, response, error } = await this.httpService.post(
       `${this.endpoint}/login`,
@@ -89,13 +91,14 @@ export class AuthService {
       this.dispatch(authenticationFailed())
       throw error
     }
+*/
 
-    const { user, accessToken } = response
+/*    const { user, accessToken } = response*/
 
     return this.dispatch(
       authenticateUser({
-        token: accessToken,
-        user: user,
+        token: token,
+        user: body,
       })
     )
   }

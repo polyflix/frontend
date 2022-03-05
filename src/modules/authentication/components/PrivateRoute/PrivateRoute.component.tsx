@@ -1,5 +1,6 @@
 import React, { PropsWithChildren } from 'react'
 import { Redirect, Route, RouteProps } from 'react-router-dom'
+import { useKeycloak } from '@react-keycloak/web'
 
 interface Props {
   condition: boolean

@@ -11,10 +11,12 @@ import {
   RootAuthStyle,
   SectionAuthStyle,
 } from '@auth/styles/Auth.style'
+import { useKeycloak } from '@react-keycloak/web'
 
 export const LoginPage = () => {
   // Get the translation from the auth namespace
   const { t } = useTranslation('auth')
+  const { keycloak } = useKeycloak()
 
   return (
     <RootAuthStyle
@@ -57,7 +59,33 @@ export const LoginPage = () => {
             </Typography>
           </Box>
 
-          <LoginForm />
+          <Button
+            fullWidth
+            size="large"
+            type="submit"
+            variant="contained"
+            onClick={() => {
+
+              keycloak.login()
+                .then(console.log)
+                .catch(console.error)
+            }}>
+            Se connecter
+          </Button>
+
+          <Button
+            fullWidth
+            size="large"
+            type="submit"
+            variant="text"
+            onClick={() => {
+
+              keycloak.register()
+                .then(console.log)
+                .catch(console.error)
+            }}>
+              S'enregister
+          </Button>
 
           <MHidden width="smUp">
             <Typography variant="subtitle2" sx={{ mt: 3, textAlign: 'center' }}>

@@ -11,10 +11,13 @@ import {
   RootAuthStyle,
   SectionAuthStyle,
 } from '@auth/styles/Auth.style'
+import { useKeycloak } from '@react-keycloak/web'
 
 export const RegisterPage = () => {
   const { t } = useTranslation('auth')
+  const { keycloak } = useKeycloak()
 
+  keycloak.register()
   return (
     <RootAuthStyle
       maxWidth={false}

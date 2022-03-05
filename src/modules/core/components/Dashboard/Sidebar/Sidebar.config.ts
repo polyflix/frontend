@@ -24,131 +24,14 @@ const sidebarConfiguration: SidebarItem[] = [
     title: 'items.home',
     href: '/',
     icon: 'akar-icons:home',
-    roles: [Role.Student, Role.Teacher, Role.Admin],
   },
   {
     title: 'items.videos',
     icon: 'eva:play-circle-outline',
-    roles: [Role.Student, Role.Teacher, Role.Admin],
     items: [
       {
         title: 'actions.explore',
         href: '/videos/explore',
-      },
-      {
-        title: 'actions.history',
-        href: '/videos/history',
-      },
-    ],
-  },
-  {
-    title: 'items.quizzes',
-    icon: 'healthicons:i-exam-multiple-choice',
-    roles: [Role.Student, Role.Teacher, Role.Admin],
-    items: [
-      {
-        title: 'actions.explore',
-        href: '/quizzes/explore',
-      },
-      {
-        title: 'actions.history',
-        href: '/quizzes/history',
-      },
-    ],
-  },
-  {
-    title: 'items.collections',
-    href: '/collections/explore',
-    icon: 'bx:bx-collection',
-    roles: [Role.Student, Role.Teacher, Role.Admin],
-  },
-  {
-    title: 'items.courses',
-    href: '/courses/explore',
-    icon: 'gg:align-left',
-    roles: [Role.Student, Role.Teacher, Role.Admin],
-  },
-  {
-    title: 'myContent.videos',
-    section: SidebarSection.MANAGEMENT,
-    icon: 'eva:play-circle-outline',
-    roles: [Role.Teacher, Role.Admin],
-    items: [
-      {
-        title: 'actions.list',
-        href: '/users/profile/videos',
-      },
-      {
-        title: 'actions.create',
-        href: '/videos/create',
-      },
-    ],
-  },
-  {
-    title: 'myContent.collections',
-    section: SidebarSection.MANAGEMENT,
-    icon: 'bx:bx-collection',
-    roles: [Role.Teacher, Role.Admin],
-    items: [
-      {
-        title: 'actions.list',
-        href: '/users/profile/collections',
-      },
-      {
-        title: 'actions.create',
-        href: '/collections/create',
-      },
-    ],
-  },
-  {
-    title: 'myContent.courses',
-    section: SidebarSection.MANAGEMENT,
-    icon: 'gg:align-left',
-    roles: [Role.Teacher, Role.Admin],
-    items: [
-      {
-        title: 'actions.list',
-        href: '/users/profile/courses',
-      },
-      {
-        title: 'actions.create',
-        href: '/courses/create',
-      },
-    ],
-  },
-  {
-    title: 'myContent.quizzes',
-    section: SidebarSection.MANAGEMENT,
-    icon: 'healthicons:i-exam-multiple-choice',
-    roles: [Role.Teacher, Role.Admin],
-    items: [
-      {
-        title: 'actions.list',
-        href: '/users/profile/quizzes',
-      },
-      {
-        title: 'actions.create',
-        href: '/quizzes/create',
-      },
-      {
-        title: 'actions.history',
-        href: '/quizzes/history',
-      },
-    ],
-  },
-  {
-    title: 'myContent.links',
-    section: SidebarSection.MANAGEMENT,
-    icon: 'eva:link-outline',
-    roles: [Role.Teacher, Role.Admin],
-    items: [
-      {
-        title: 'actions.list',
-        href: '/users/profile/links',
-      },
-      {
-        title: 'actions.create',
-        href: '/links/create',
       },
     ],
   },
@@ -163,10 +46,8 @@ export interface SidebarConfiguration {
  */
 export const getSidebarSections = (): SidebarConfiguration => {
   const config: SidebarConfiguration = {}
-  const { hasRoles } = useRoles()
 
   sidebarConfiguration.forEach((item) => {
-    if (item?.roles?.length && !hasRoles(item?.roles || [])) return
     const section: string = i18n.t(
       `sidebar:sections.${item.section || SidebarSection.GENERAL}`
     )
