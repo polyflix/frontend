@@ -7,15 +7,15 @@ import { PlayQuizzPage } from './pages/Play.page'
 import { QuizzResultsPage } from './pages/Results.page'
 import { CreateUpdateQuizzPage } from './pages/[create-update].page'
 
+import Button from 'remote_app/Button'
+
 export const QuizzRouter = () => {
   const { url } = useRouteMatch()
 
   return (
     <Switch>
       <Route path={`${url}/:id/play`}>
-        <PlayQuizzProvider>
-          <PlayQuizzPage />
-        </PlayQuizzProvider>
+        <Button />
       </Route>
       <Route path={`${url}/:id/results`} component={QuizzResultsPage} />
       <Route

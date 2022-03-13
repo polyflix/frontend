@@ -1,8 +1,11 @@
 import react from '@vitejs/plugin-react'
 import { resolve } from 'path'
 import { defineConfig } from 'vite'
+import federation from "@originjs/vite-plugin-federation";
 
 import replace from './.vite/replace.plugin'
+import pkg from './package.json'
+
 
 /**
  * If we are on the development environment,
@@ -86,6 +89,11 @@ export default defineConfig({
           ['@babel/plugin-proposal-decorators', { legacy: true }],
           ['@babel/plugin-proposal-class-properties', { loose: true }],
         ],
+      },
+    }),
+    federation({
+      remotes:{
+        remote_app: "http://localhost:5001/remoteEntry.js",
       },
     }),
     // eslintPlugin(),
