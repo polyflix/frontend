@@ -105,22 +105,3 @@ package:app:
 # Temp deactivate
 semantic_release:
     allow_failure: true
-    rules:
-        - when: never
-
-build:code:local:
-  extends: build:code
-  variables:
-    BUILD_MODE: k3d
-  rules:
-    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
-
-#Build frontend for local env
-package:app:local:
-  needs: ["build:code:local"]
-  extends: docker_build
-  stage: package
-  rules:
-    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
-      variables:
-        CUSTOM_REGISTRIES_DESTINATIONS: "--destination $CI_REGISTRY_IMAGE:local"
