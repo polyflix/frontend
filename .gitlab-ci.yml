@@ -76,11 +76,12 @@ deploy:kube:
   rules:
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
       variables:
-        HELM_OPTIONS: "--set deployments.frontend.tag=$CI_COMMIT_BRANCH-$CI_COMMIT_SHORT_SHA"
+        HELM_OPTIONS: "--set image.tag=$CI_COMMIT_BRANCH-$CI_COMMIT_SHORT_SHA"
         ENVIRONMENT: qa
+        HELM_RELEASE_NAME: "frontend"
     - if: $CI_COMMIT_TAG
       variables:
-        HELM_OPTIONS: "--set deployments.frontend.tag=$CI_COMMIT_TAG --set jobs.migrations.optional=true"
+        HELM_OPTIONS: "--set image.tag=$CI_COMMIT_TAG"
         ENVIRONMENT_NS: default
         ENVIRONMENT: production
 
