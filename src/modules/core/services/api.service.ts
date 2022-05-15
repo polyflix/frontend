@@ -36,7 +36,11 @@ const fetchWithRefresh: BaseQueryFn<
   let result = await baseQuery(args, api, extraOptions)
   if (result.error && result.error.status === 401) {
     // try to get a new token
-    const refreshResult = await baseQuery('/auth/refresh', api, extraOptions)
+    const refreshResult = await baseQuery(
+      { method: 'POST', url: '/auth/refresh' },
+      api,
+      extraOptions
+    )
     if (refreshResult.data) {
       const { token, user } = result.data || {
         token: undefined,
