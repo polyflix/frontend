@@ -35,6 +35,8 @@ import { Element } from '@core/models/element.model'
 import { SnackbarService } from '@core/services/snackbar.service'
 import { CrudAction } from '@core/types/http.type'
 
+import { useAuth } from '@auth/hooks/useAuth.hook'
+
 import { Quizz } from '@quizzes/models/quizz.model'
 import {
   useAddQuizzMutation,
@@ -52,6 +54,8 @@ interface Props {
 
 export const QuizzForm = ({ quizz, isUpdate, isImport }: Props) => {
   const snackbarService = useInjection<SnackbarService>(SnackbarService)
+
+  const { user } = useAuth()
 
   const { t } = useTranslation('quizzes')
 
@@ -79,6 +83,7 @@ export const QuizzForm = ({ quizz, isUpdate, isImport }: Props) => {
           ? quizz?.data.questions
           : [{ index: 0, label: '', alternatives: [] }],
       keepHighestScore: quizz?.data.keepHighestScore || false,
+      user: user,
     },
   })
 

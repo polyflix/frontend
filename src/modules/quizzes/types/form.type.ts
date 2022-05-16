@@ -2,6 +2,8 @@ import { Visibility } from '@core/models/content.model'
 
 import { Question } from '@quizzes/models/question.model'
 
+import { User } from '@users/models/user.model'
+
 export interface IQuizzForm {
   name: string
   draft: boolean
@@ -9,4 +11,5 @@ export interface IQuizzForm {
   allowedRetries: number
   keepHighestScore: boolean
   questions: Question[]
+  user: User
 }
