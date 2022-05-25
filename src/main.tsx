@@ -1,5 +1,6 @@
+import { ReactKeycloakProvider, useKeycloak } from '@react-keycloak/web'
 import '@vime/core/themes/default.css'
-import { isUndefined } from 'lodash'
+import { initial, isUndefined } from 'lodash'
 import { SnackbarProvider } from 'notistack'
 import React, { Suspense } from 'react'
 // eslint-disable-next-line import/no-extraneous-dependencies
@@ -23,6 +24,7 @@ import { LoadingLayout } from '@core/layouts/Loading/Loading.layout'
 import { NotFoundPage } from '@core/pages/404.page'
 import { ServiceUnavailablePage } from '@core/pages/503.page'
 import { HomePage } from '@core/pages/Home.page'
+import Secured from '@core/pages/Secured.page'
 import { store } from '@core/store'
 
 import { AuthRouter } from '@auth/auth.router'
@@ -46,8 +48,8 @@ import { UserRouter } from '@users/user.router'
 import { GlobalStyles } from '@theme/globalStyles'
 import { ThemeConfig } from '@theme/theme'
 
-import './i18n/config'
 import i18n from './i18n/config'
+import keycloak from './keycloak/config'
 import './styles/index.scss'
 
 /**
@@ -58,7 +60,10 @@ const PolyflixApp = () => {
   const authService = useInjection<AuthService>(AuthService)
 
   const { user, hasRefreshedAuth, isAuthRefreshing } = useAuth()
+  console.log('user:', user)
+  console.log('isAuthRefreshing:', isAuthRefreshing)
   const { isUnhealthy } = useServerHealth()
+  const { initialized, keycloak } = useKeycloak()
 
   // If the server is unavailable, display the 503 page
   if (isUnhealthy)
@@ -70,17 +75,18 @@ const PolyflixApp = () => {
 
   // We consider that the user is authenticated when
   // the user value in the state is defined
-  const isAuthenticated = !isUndefined(user)
+
+  const isAuthenticated = !isUndefined(user) && (keycloak?.authenticated ?? false)
 
   const isAccountValidated = Boolean(user?.isAccountActivated)
 
   // If the user is not authenticated and we didn't try to refresh the authentication
   // we should try to automatically renew the authentication of the user.
-  if (!isAuthenticated && !hasRefreshedAuth) authService.refreshAuth()
+  if (!isAuthenticated && !hasRefreshedAuth && initialized) authService.refreshAuth()
 
   // We want to return the loading screen only in the case of the refresh authentication
   // or if we are waiting for informations from the server
-  if (isAuthRefreshing) return <LoadingLayout />
+  if (isAuthRefreshing || !initialized) return <LoadingLayout />
 
   return (
     <Router>
@@ -124,8 +130,10 @@ ReactDOM.render(
             <SnackbarProvider maxSnack={5}>
               <DIProvider>
                 <HelmetProvider>
-                  <PolyflixApp />
-                  <ModalCookies />
+                  <ReactKeycloakProvider authClient={keycloak}>
+                    <PolyflixApp />
+                    <ModalCookies />
+                  </ReactKeycloakProvider>
                 </HelmetProvider>
               </DIProvider>
             </SnackbarProvider>

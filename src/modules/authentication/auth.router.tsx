@@ -1,10 +1,11 @@
 import { isUndefined } from 'lodash'
-import { Route, Switch, useRouteMatch } from 'react-router-dom'
+import { Redirect, Route, Switch, useRouteMatch } from 'react-router-dom'
 
 import { PrivateRoute } from '@auth/components/PrivateRoute/PrivateRoute.component'
 import { useAuth } from '@auth/hooks/useAuth.hook'
 
 import { LoginPage } from './pages/Login.page'
+import RedirectPage from './pages/Redirect.page'
 import { RegisterPage } from './pages/Register.page'
 import { ResetPasswordPage } from './pages/ResetPassword.page'
 import { ValidatePage } from './pages/Validate.page'
@@ -20,6 +21,7 @@ export const AuthRouter = () => {
   const isAccountActivated = user?.isAccountActivated || false
   return (
     <Switch>
+      <Route exact path={`${url}/redirect`} component={RedirectPage} />
       <PrivateRoute
         exact
         path={`${url}/validate`}

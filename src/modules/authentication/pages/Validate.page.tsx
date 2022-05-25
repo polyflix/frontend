@@ -29,6 +29,7 @@ interface ValidatePageQueryParams {
 }
 
 const SendEmailContent: React.FC = () => {
+  console.log('validation page')
   const { t } = useTranslation('auth')
   return (
     <Box sx={{ mb: 5 }}>

@@ -1,5 +1,6 @@
 import { StatusCodes } from 'http-status-codes'
 import type { TFunction } from 'i18next'
+import keycloak from '../../../../src/keycloak/config'
 
 import { Inject, Injectable } from '@polyflix/di'
 
@@ -17,6 +18,7 @@ import {
   logoutUser,
   refreshAuthFailed,
   refreshAuthInProgress,
+  refreshAuthSucces,
 } from '@auth/reducers/auth.slice'
 import {
   ILoginForm,
@@ -24,6 +26,8 @@ import {
   IRequestResetPasswordForm,
   IResetPasswordForm,
 } from '@auth/types/form.type'
+
+import { User } from '@users/models/user.model'
 
 @Injectable()
 export class AuthService {
@@ -42,32 +46,72 @@ export class AuthService {
   public async refreshAuth() {
     this.dispatch(refreshAuthInProgress())
 
-    const { status, response } = await this.httpService.post(
-      `${this.endpoint}/refresh`
-    )
-    if (
-      status !== StatusCodes.OK ||
-      (status === StatusCodes.OK && !response.user)
-    ) {
-      return this.dispatch(refreshAuthFailed())
+    try {
+      const refreshed = await keycloak
+      .updateToken(5)
+
+      if (refreshed) {
+        console.log('Token was successfully refreshed')
+      } else {
+        console.log('Token is still valid')
+      }
+      this.dispatch(refreshAuthSucces())
+    } catch (error) {
+        console.log('Failed to refresh the token, or the session has expired:', error)
+        this.dispatch(refreshAuthFailed())
+        return
     }
 
-    const { user, token } = response
+    //TODO : call api to get the user
+    const user: User = {
+      id: '1',
+      email: 'test@gmail.com',
+      firstName: 'John',
+      lastName: 'Doe',
+      avatar: 'https://www.remove.bg/images/remove_image_background.jpg',
+      isAccountActivated: true,
+      isAdmin: true,
+      displayName: 'test',
+    }
 
-    // Example for snackbar
-    this.snackbarService.createSnackbar(
-      this.translate('snackbarExample', { user: user.firstName }),
-      {
-        variant: 'success',
-      }
-    )
+    if (user && keycloak.token)
+    {
+      this.dispatch(
+        authenticateUser({
+          user,
+          token: keycloak.token,
+        })
+    )}
+    else {
+      this.dispatch(refreshAuthFailed())
+    }
 
-    return this.dispatch(
-      authenticateUser({
-        user,
-        token,
-      })
-    )
+            // const { status, response } = await this.httpService.post(
+            //   `${this.endpoint}/refresh`
+            // )
+            // if (
+            //   status !== StatusCodes.OK ||
+            //   (status === StatusCodes.OK && !response.user)
+            // ) {
+            //   return this.dispatch(refreshAuthFailed())
+            // }
+
+            // const { user, token } = response
+
+            // // Example for snackbar
+            // this.snackbarService.createSnackbar(
+            //   this.translate('snackbarExample', { user: user.firstName }),
+            //   {
+            //     variant: 'success',
+            //   }
+            // )
+
+    // return this.dispatch(
+    //   authenticateUser({
+    //     user,
+    //     token,
+    //   })
+    // )
   }
 
   /**
@@ -95,6 +139,19 @@ export class AuthService {
     return this.dispatch(
       authenticateUser({
         token: accessToken,
+        user: user,
+      })
+    )
+  }
+
+  /**
+   * Store token in the Redux store
+   * @param token
+   */
+  public async storeUser(token: string, user: User) {
+    return this.dispatch(
+      authenticateUser({
+        token: token,
         user: user,
       })
     )
@@ -155,7 +212,7 @@ export class AuthService {
    * Log out the current logged in user
    */
   public async logout() {
-    await this.httpService.get(`${this.endpoint}/logout`)
+    await keycloak.logout()
     this.dispatch(logoutUser())
   }
 

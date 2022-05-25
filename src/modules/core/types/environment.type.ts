@@ -12,4 +12,8 @@ export interface Environment {
   minioUrl: string
   debugMode?: boolean
   debugCredentials?: DebugCredential[]
+  urlRealm: string
+  realm: string
+  clientIdReald: string
+  redirectUri: string
 }

@@ -21,4 +21,8 @@ export const environment: Environment = {
     { name: 'Professor', email: 'professor@gmail.com', password: '123456789' },
     { name: 'Admin', email: 'admin@gmail.com', password: '123456789' },
   ],
+  urlRealm: 'http://localhost:3002/',
+  realm: 'polyflix',
+  clientIdReald: 'polyflix-front',
+  redirectUri: 'http://localhost:3000/auth/redirect',
 }

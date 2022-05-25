@@ -1,4 +1,7 @@
+import { environment } from '@env/environment'
 import { Box, Button, Container, Link, Typography } from '@mui/material'
+import { useKeycloak } from '@react-keycloak/web'
+import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link as RouterLink } from 'react-router-dom'
 
@@ -15,6 +18,16 @@ import {
 export const LoginPage = () => {
   // Get the translation from the auth namespace
   const { t } = useTranslation('auth')
+
+  const { keycloak } = useKeycloak()
+
+  const login = useCallback(() => {
+    keycloak?.login({
+      redirectUri: environment.redirectUri,
+    })
+  }, [keycloak])
+
+  console.log('login page')
 
   return (
     <RootAuthStyle
@@ -48,7 +61,7 @@ export const LoginPage = () => {
 
       <Container maxWidth="sm">
         <ContentAuthStyle>
-          <Box sx={{ mb: 5 }}>
+          {/* <Box sx={{ mb: 5 }}>
             <Typography variant="h4" gutterBottom>
               {t('signIn.title')}
             </Typography>
@@ -57,7 +70,28 @@ export const LoginPage = () => {
             </Typography>
           </Box>
 
-          <LoginForm />
+          <LoginForm /> */}
+          <Button
+            fullWidth
+            size="large"
+            type="submit"
+            variant="contained"
+            onClick={login}
+          >
+            Se connecter
+          </Button>
+
+          <Button
+            fullWidth
+            size="large"
+            type="submit"
+            variant="text"
+            onClick={() => {
+              keycloak.register().then(console.log).catch(console.error)
+            }}
+          >
+            S'enregister
+          </Button>
 
           <MHidden width="smUp">
             <Typography variant="subtitle2" sx={{ mt: 3, textAlign: 'center' }}>
