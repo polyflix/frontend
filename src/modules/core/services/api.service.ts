@@ -15,7 +15,7 @@ import { authenticateUser, logoutUser } from '@auth/reducers/auth.slice'
 
 // Here we configure the fetch base query of our API.
 // We define the endoint, the headers configuration etc.
-const baseQuery = (version: ApiVersion) =>
+export const baseQuery = (version: ApiVersion) =>
   fetchBaseQuery({
     baseUrl: `${environment.api}/api/${version}`,
     prepareHeaders: (headers, { getState }) => {

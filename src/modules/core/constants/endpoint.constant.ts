@@ -6,4 +6,5 @@ export enum Endpoint {
   Courses = 'courses',
   Attempts = 'attempts',
   Links = 'links',
+  Search = 'search',
 }

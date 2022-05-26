@@ -6,6 +6,7 @@ import Fade from '@mui/material/Fade'
 import InputAdornment from '@mui/material/InputAdornment'
 import Modal from '@mui/material/Modal'
 import Typography from '@mui/material/Typography'
+import { useSearchQuery } from '@search/services/search.service'
 import React, { PropsWithChildren, useEffect, useState } from 'react'
 import { isMacOs } from 'react-device-detect'
 import { useTranslation } from 'react-i18next'
@@ -23,7 +24,14 @@ export const Spotlight: React.FC<PropsWithChildren<{}>> = ({}) => {
   const theme = useTheme()
   const shortText = useMediaQuery(theme.breakpoints.down('sm'))
 
+  const [query, setQuery] = useState('kotlin')
+  const { data, refetch } = useSearchQuery(query)
+
   const { t } = useTranslation('common')
+
+  useEffect(() => {
+    refetch()
+  }, [query])
 
   // Manipulation display of modal
   const [modalOpened, setOpen] = useState(false)
@@ -122,6 +130,8 @@ export const Spotlight: React.FC<PropsWithChildren<{}>> = ({}) => {
                 <SearchIcon />
               </SearchIconWrapper>
               <SearchFieldInModal
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
                 autoFocus
                 placeholder={t('navbar.actions.search.fast')}
                 InputProps={{
@@ -135,6 +145,10 @@ export const Spotlight: React.FC<PropsWithChildren<{}>> = ({}) => {
                 }}
                 variant="filled"
               />
+              <ul>
+                {data &&
+                  data.results.map((i: any) => <li key={i.id}>{i.id}</li>)}
+              </ul>
             </Search>
           </Box>
         </Fade>

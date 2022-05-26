@@ -76,6 +76,10 @@ export default defineConfig({
         find: '@links',
         replacement: resolve(__dirname, './src/modules/links'),
       },
+      {
+        find: '@search',
+        replacement: resolve(__dirname, './src/modules/search'),
+      },
     ],
   },
   plugins: [

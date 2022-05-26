@@ -13,7 +13,8 @@
       "@quizzes/*": ["src/modules/quizzes/*"],
       "@subtitles/*": ["src/modules/subtitles/*"],
       "@stats/*": ["src/modules/stats/*"],
-      "@links/*": ["src/modules/links/*"]
+      "@links/*": ["src/modules/links/*"],
+      "@search/*": ["src/modules/search/*"]
     },
     "target": "ESNext",
     "useDefineForClassFields": true,
