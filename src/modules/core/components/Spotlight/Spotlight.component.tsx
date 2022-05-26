@@ -6,6 +6,7 @@ import Fade from '@mui/material/Fade'
 import InputAdornment from '@mui/material/InputAdornment'
 import Modal from '@mui/material/Modal'
 import Typography from '@mui/material/Typography'
+import { useSearchQuery } from '@search/services/search.service'
 import React, { PropsWithChildren, useEffect, useState } from 'react'
 import { isMacOs } from 'react-device-detect'
 import { useTranslation } from 'react-i18next'
@@ -40,6 +41,10 @@ export const Spotlight: React.FC<PropsWithChildren<{}>> = ({}) => {
     })
 
   const { t } = useTranslation('common')
+
+  useEffect(() => {
+    refetch()
+  }, [query])
 
   // Manipulation display of modal
   const [modalOpened, setOpen] = useState(false)
