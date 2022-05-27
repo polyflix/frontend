@@ -10,6 +10,7 @@ import { useSearchQuery } from '@search/services/search.service'
 import React, { PropsWithChildren, useEffect, useState } from 'react'
 import { isMacOs } from 'react-device-detect'
 import { useTranslation } from 'react-i18next'
+import { debounceTime, map, Subject } from 'rxjs'
 
 /** Importing search bar related styles */
 import {
@@ -27,11 +28,20 @@ export const Spotlight: React.FC<PropsWithChildren<{}>> = ({}) => {
   const [query, setQuery] = useState('kotlin')
   const { data, refetch } = useSearchQuery(query)
 
-  const { t } = useTranslation('common')
+  const changeHandler = new Subject()
 
-  useEffect(() => {
-    refetch()
-  }, [query])
+  changeHandler
+    .asObservable()
+    .pipe(
+      map((event: any) => event.target.value),
+      debounceTime(500)
+    )
+    .subscribe((value) => {
+      setQuery(value)
+      refetch()
+    })
+
+  const { t } = useTranslation('common')
 
   // Manipulation display of modal
   const [modalOpened, setOpen] = useState(false)
@@ -130,8 +140,8 @@ export const Spotlight: React.FC<PropsWithChildren<{}>> = ({}) => {
                 <SearchIcon />
               </SearchIconWrapper>
               <SearchFieldInModal
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
+                onChange={(newValue) => changeHandler.next(newValue)}
+                // onChange={(e) => setQuery(e.target.value)}
                 autoFocus
                 placeholder={t('navbar.actions.search.fast')}
                 InputProps={{
