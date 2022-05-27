@@ -5,7 +5,7 @@ export const Search = styled('div')(({ theme }) => ({
   position: 'relative',
   borderRadius: theme.shape.borderRadius,
   '&:hover': {
-    backgroundColor: alpha(theme.palette.grey[400], 0.5),
+    backgroundColor: alpha(theme.palette.grey[300], 0.5),
   },
   margin: theme.spacing(0, 0, 0, 0),
   width: '100%',
@@ -64,6 +64,19 @@ export const SearchFieldInModal = styled(TextField)(({ theme }) => ({
     // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
     width: '100%',
+  },
+}))
+
+export const SearchResult = styled('div')(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'row',
+  alignItems: 'center',
+  padding: theme.spacing(1, 1, 1, 0),
+  borderRadius: 2,
+  width: '100%',
+  minHeight: '70px',
+  '&:hover': {
+    backgroundColor: alpha(theme.palette.grey[600], 0.5),
   },
 }))
 

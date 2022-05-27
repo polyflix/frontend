@@ -1,5 +1,10 @@
 import SearchIcon from '@mui/icons-material/Search'
-import { ClickAwayListener, useMediaQuery, useTheme } from '@mui/material'
+import {
+  ClickAwayListener,
+  Pagination,
+  useMediaQuery,
+  useTheme,
+} from '@mui/material'
 import Backdrop from '@mui/material/Backdrop'
 import Box from '@mui/material/Box'
 import Fade from '@mui/material/Fade'
@@ -17,6 +22,8 @@ import { useTranslation } from 'react-i18next'
 import { BehaviorSubject, debounceTime, filter, map, switchMap } from 'rxjs'
 
 import { useInjection } from '@polyflix/di'
+
+import { SearchResult as SearchResultComponent } from './SearchResult.component'
 
 /** Importing search bar related styles */
 import {
@@ -157,9 +164,6 @@ export const Spotlight: React.FC<PropsWithChildren<{}>> = ({}) => {
           <Box sx={boxStyles}>
             {/* The modal box dialog */}
             <Search>
-              <SearchIconWrapper>
-                <SearchIcon />
-              </SearchIconWrapper>
               <SearchFieldInModal
                 onChange={(newValue) => changeHandler.next(newValue)}
                 // onChange={(e) => setQuery(e.target.value)}
@@ -167,6 +171,11 @@ export const Spotlight: React.FC<PropsWithChildren<{}>> = ({}) => {
                 placeholder={t('navbar.actions.search.fast')}
                 InputProps={{
                   'aria-label': 'search',
+                  startAdornment: (
+                    <SearchIconWrapper sx={{ paddingLeft: 1 }}>
+                      <SearchIcon />
+                    </SearchIconWrapper>
+                  ),
                   endAdornment: (
                     <InputAdornment position="end">
                       <Typography variant="body2">esc</Typography>
@@ -176,9 +185,35 @@ export const Spotlight: React.FC<PropsWithChildren<{}>> = ({}) => {
                 }}
                 variant="filled"
               />
-              <ul>
-                {data && data.map((i: any) => <li key={i.id}>{i.id}</li>)}
-              </ul>
+              {data && (
+                <Pagination
+                  onChange={(_, p) => setPage(p)}
+                  count={data.totalPages}
+                  sx={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    paddingY: 1,
+                  }}
+                />
+              )}
+              {data && (
+                <Box
+                  sx={{
+                    overflowY: 'scroll',
+                    minHeight: '35vh',
+                    maxHeight: '70vh',
+                  }}
+                >
+                  {data.map((result) => (
+                    <SearchResultComponent
+                      key={result.id}
+                      result={result}
+                      query={query}
+                      closeModal={handleClose}
+                    />
+                  ))}
+                </Box>
+              )}
             </Search>
           </Box>
         </Fade>
