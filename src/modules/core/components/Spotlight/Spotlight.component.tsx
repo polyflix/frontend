@@ -6,11 +6,17 @@ import Fade from '@mui/material/Fade'
 import InputAdornment from '@mui/material/InputAdornment'
 import Modal from '@mui/material/Modal'
 import Typography from '@mui/material/Typography'
-import { useSearchQuery } from '@search/services/search.service'
+import {
+  PaginatedSearchResult,
+  SearchResult,
+} from '@search/models/search.model'
+import { SearchService } from '@search/services/search.service'
 import React, { PropsWithChildren, useEffect, useState } from 'react'
 import { isMacOs } from 'react-device-detect'
 import { useTranslation } from 'react-i18next'
-import { debounceTime, map, Subject } from 'rxjs'
+import { BehaviorSubject, debounceTime, filter, map, switchMap } from 'rxjs'
+
+import { useInjection } from '@polyflix/di'
 
 /** Importing search bar related styles */
 import {
@@ -20,6 +26,8 @@ import {
   SearchFieldInModal,
   SearchIconWrapper,
 } from './Spotlight.style'
+
+const changeHandler$ = new BehaviorSubject('')
 
 export const Spotlight: React.FC<PropsWithChildren<{}>> = ({}) => {
   const theme = useTheme()
@@ -40,11 +48,21 @@ export const Spotlight: React.FC<PropsWithChildren<{}>> = ({}) => {
       refetch()
     })
 
-  const { t } = useTranslation('common')
+  const [data, setData] = useState<SearchResult[]>([])
 
   useEffect(() => {
-    refetch()
-  }, [query])
+    changeHandler$
+      .pipe(
+        filter((q) => q.length >= 3),
+        debounceTime(500),
+        switchMap((value: string) => searchService.searchFor(value)),
+        map((value: PaginatedSearchResult) => value.results)
+      )
+      .subscribe((value) => setData(value))
+    return () => changeHandler$.unsubscribe()
+  }, [])
+
+  const { t } = useTranslation('common')
 
   // Manipulation display of modal
   const [modalOpened, setOpen] = useState(false)
@@ -159,8 +177,7 @@ export const Spotlight: React.FC<PropsWithChildren<{}>> = ({}) => {
                 variant="filled"
               />
               <ul>
-                {data &&
-                  data.results.map((i: any) => <li key={i.id}>{i.id}</li>)}
+                {data && data.map((i: any) => <li key={i.id}>{i.id}</li>)}
               </ul>
             </Search>
           </Box>
