@@ -1,10 +1,8 @@
 import { StatusCodes } from 'http-status-codes'
-import type { TFunction } from 'i18next'
-import keycloak from '../../../../src/keycloak/config'
 
 import { Inject, Injectable } from '@polyflix/di'
 
-import { APP_DISPATCHER, APP_TRANSLATION } from '@core/constants/app.constant'
+import { APP_DISPATCHER } from '@core/constants/app.constant'
 import { ApiService } from '@core/services/endpoint.service'
 import { HttpService } from '@core/services/http.service'
 import { SnackbarService } from '@core/services/snackbar.service'
@@ -27,7 +25,9 @@ import {
   IResetPasswordForm,
 } from '@auth/types/form.type'
 
-import { User } from '@users/models/user.model'
+import { MeService } from '@users/services/me.service'
+
+import keycloak from '../../../../src/keycloak/config'
 
 @Injectable()
 export class AuthService {
@@ -36,9 +36,9 @@ export class AuthService {
   constructor(
     private readonly apiService: ApiService,
     private readonly httpService: HttpService,
+    private readonly meService: MeService,
     private readonly snackbarService: SnackbarService,
-    @Inject(APP_DISPATCHER) private readonly dispatch: AppDispatch,
-    @Inject(APP_TRANSLATION) private readonly translate: TFunction
+    @Inject(APP_DISPATCHER) private readonly dispatch: AppDispatch
   ) {
     this.endpoint = `${this.apiService.endpoint(ApiVersion.V1)}/auth`
   }
@@ -47,71 +47,23 @@ export class AuthService {
     this.dispatch(refreshAuthInProgress())
 
     try {
-      const refreshed = await keycloak
-      .updateToken(5)
-
-      if (refreshed) {
-        console.log('Token was successfully refreshed')
-      } else {
-        console.log('Token is still valid')
-      }
-      this.dispatch(refreshAuthSucces())
-    } catch (error) {
-        console.log('Failed to refresh the token, or the session has expired:', error)
-        this.dispatch(refreshAuthFailed())
-        return
-    }
-
-    //TODO : call api to get the user
-    const user: User = {
-      id: '1',
-      email: 'test@gmail.com',
-      firstName: 'John',
-      lastName: 'Doe',
-      avatar: 'https://www.remove.bg/images/remove_image_background.jpg',
-      isAccountActivated: true,
-      isAdmin: true,
-      displayName: 'test',
-    }
-
-    if (user && keycloak.token)
-    {
+      await keycloak.updateToken(5)
+      const user = await this.meService.getMe()
       this.dispatch(
         authenticateUser({
           user,
-          token: keycloak.token,
+          token: keycloak.token!!,
         })
-    )}
-    else {
+      )
+      this.dispatch(refreshAuthSucces())
+    } catch (error) {
+      console.log(
+        'Failed to refresh the token, or the session has expired:',
+        error
+      )
       this.dispatch(refreshAuthFailed())
+      return
     }
-
-            // const { status, response } = await this.httpService.post(
-            //   `${this.endpoint}/refresh`
-            // )
-            // if (
-            //   status !== StatusCodes.OK ||
-            //   (status === StatusCodes.OK && !response.user)
-            // ) {
-            //   return this.dispatch(refreshAuthFailed())
-            // }
-
-            // const { user, token } = response
-
-            // // Example for snackbar
-            // this.snackbarService.createSnackbar(
-            //   this.translate('snackbarExample', { user: user.firstName }),
-            //   {
-            //     variant: 'success',
-            //   }
-            // )
-
-    // return this.dispatch(
-    //   authenticateUser({
-    //     user,
-    //     token,
-    //   })
-    // )
   }
 
   /**
@@ -145,13 +97,13 @@ export class AuthService {
   }
 
   /**
-   * Store token in the Redux store
-   * @param token
+   * Fetch the current logged in user profile
    */
-  public async storeUser(token: string, user: User) {
+  public async getUser() {
+    const user = await this.meService.getMe()
     return this.dispatch(
       authenticateUser({
-        token: token,
+        token: keycloak.token!!,
         user: user,
       })
     )

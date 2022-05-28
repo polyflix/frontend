@@ -32,9 +32,7 @@ export class HttpService implements BaseHttpService {
     private readonly apiService: ApiService,
     @Inject(APP_DISPATCHER) private readonly dispatch: AppDispatch
   ) {
-    this._axios = axios.create({
-      withCredentials: true,
-    })
+    this._axios = axios.create()
 
     /**
      * Interceptor used to send a refresh token reauest

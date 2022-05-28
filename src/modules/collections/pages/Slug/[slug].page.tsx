@@ -30,7 +30,7 @@ export const CollectionSlugPage = () => {
   const snackbarService = useInjection<SnackbarService>(SnackbarService)
 
   const { hasRoles } = useRoles()
-  const requiredRoles = [Role.Teacher, Role.Admin]
+  const requiredRoles = [Role.Contributor, Role.Admin]
 
   const [deleteCourse] = useDeleteCollectionMutation()
 

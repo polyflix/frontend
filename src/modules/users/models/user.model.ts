@@ -1,13 +1,11 @@
-import { BaseModel } from '@core/models/base.model'
 import { Role } from '@core/types/roles.type'
 
-export interface User extends BaseModel {
+export interface User {
+  id: string
   email: string
+  username: string
   firstName: string
   lastName: string
   avatar: string
-  isAccountActivated: boolean
-  isAdmin: boolean
-  displayName: string
-  roles?: Role[]
+  roles: Role[]
 }

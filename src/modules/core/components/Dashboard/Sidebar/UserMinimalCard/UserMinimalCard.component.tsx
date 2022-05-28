@@ -1,4 +1,4 @@
-import { Box, Stack, Typography, Tooltip } from '@mui/material'
+import { Box, Stack, Tooltip, Typography } from '@mui/material'
 
 import { useSidebar } from '@core/hooks/useSidebar.hook'
 import { Role } from '@core/types/roles.type'
@@ -16,11 +16,11 @@ const getHighestRole = (user: Partial<User> & Pick<User, 'roles'>): string => {
     if (user!.roles.includes(Role.Admin)) {
       return capitalize(Role.Admin)
     }
-    if (user!.roles.includes(Role.Teacher)) {
-      return capitalize(Role.Teacher)
+    if (user!.roles.includes(Role.Contributor)) {
+      return capitalize(Role.Contributor)
     }
-    if (user!.roles.includes(Role.Student)) {
-      return capitalize(Role.Student)
+    if (user!.roles.includes(Role.Member)) {
+      return capitalize(Role.Member)
     }
   }
   return ''
@@ -49,7 +49,7 @@ export const UserMinimalCard = ({}) => {
           }}
           noWrap={true}
         >
-          {user?.displayName}
+          {user?.firstName} {user?.lastName}
         </Typography>
         <Tooltip title={role}>
           <Typography

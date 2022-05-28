@@ -24,12 +24,12 @@ const sidebarConfiguration: SidebarItem[] = [
     title: 'items.home',
     href: '/',
     icon: 'akar-icons:home',
-    roles: [Role.Student, Role.Teacher, Role.Admin],
+    roles: [Role.Member, Role.Contributor, Role.Admin],
   },
   {
     title: 'items.videos',
     icon: 'eva:play-circle-outline',
-    roles: [Role.Student, Role.Teacher, Role.Admin],
+    roles: [Role.Member, Role.Contributor, Role.Admin],
     items: [
       {
         title: 'actions.explore',
@@ -44,7 +44,7 @@ const sidebarConfiguration: SidebarItem[] = [
   {
     title: 'items.quizzes',
     icon: 'healthicons:i-exam-multiple-choice',
-    roles: [Role.Student, Role.Teacher, Role.Admin],
+    roles: [Role.Member, Role.Contributor, Role.Admin],
     items: [
       {
         title: 'actions.explore',
@@ -60,19 +60,19 @@ const sidebarConfiguration: SidebarItem[] = [
     title: 'items.collections',
     href: '/collections/explore',
     icon: 'bx:bx-collection',
-    roles: [Role.Student, Role.Teacher, Role.Admin],
+    roles: [Role.Member, Role.Contributor, Role.Admin],
   },
   {
     title: 'items.courses',
     href: '/courses/explore',
     icon: 'gg:align-left',
-    roles: [Role.Student, Role.Teacher, Role.Admin],
+    roles: [Role.Member, Role.Contributor, Role.Admin],
   },
   {
     title: 'myContent.videos',
     section: SidebarSection.MANAGEMENT,
     icon: 'eva:play-circle-outline',
-    roles: [Role.Teacher, Role.Admin],
+    roles: [Role.Contributor, Role.Admin],
     items: [
       {
         title: 'actions.list',
@@ -88,7 +88,7 @@ const sidebarConfiguration: SidebarItem[] = [
     title: 'myContent.collections',
     section: SidebarSection.MANAGEMENT,
     icon: 'bx:bx-collection',
-    roles: [Role.Teacher, Role.Admin],
+    roles: [Role.Contributor, Role.Admin],
     items: [
       {
         title: 'actions.list',
@@ -104,7 +104,7 @@ const sidebarConfiguration: SidebarItem[] = [
     title: 'myContent.courses',
     section: SidebarSection.MANAGEMENT,
     icon: 'gg:align-left',
-    roles: [Role.Teacher, Role.Admin],
+    roles: [Role.Contributor, Role.Admin],
     items: [
       {
         title: 'actions.list',
@@ -120,7 +120,7 @@ const sidebarConfiguration: SidebarItem[] = [
     title: 'myContent.quizzes',
     section: SidebarSection.MANAGEMENT,
     icon: 'healthicons:i-exam-multiple-choice',
-    roles: [Role.Teacher, Role.Admin],
+    roles: [Role.Contributor, Role.Admin],
     items: [
       {
         title: 'actions.list',
@@ -140,7 +140,7 @@ const sidebarConfiguration: SidebarItem[] = [
     title: 'myContent.links',
     section: SidebarSection.MANAGEMENT,
     icon: 'eva:link-outline',
-    roles: [Role.Teacher, Role.Admin],
+    roles: [Role.Contributor, Role.Admin],
     items: [
       {
         title: 'actions.list',

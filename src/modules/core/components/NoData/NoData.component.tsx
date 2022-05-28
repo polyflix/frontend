@@ -18,7 +18,7 @@ interface Props {
 export const NoData = ({ link, variant, creatable = true }: Props) => {
   const { t } = useTranslation('common')
   const { hasRoles } = useRoles()
-  const requiredRoles = [Role.Teacher, Role.Admin]
+  const requiredRoles = [Role.Contributor, Role.Admin]
 
   const defaultOptions = {
     loop: true,

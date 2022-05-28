@@ -80,7 +80,6 @@ export const authSlice = createSlice({
       state,
       action: PayloadAction<{ user: User; token: string }>
     ) => {
-      console.log('authenticateUser')
       state.user = action.payload.user
       state.token = action.payload.token
       state.isLoading = false
@@ -92,7 +91,6 @@ export const authSlice = createSlice({
      * @param action
      */
     setUser: (state, action: PayloadAction<User>) => {
-      console.log("setUser")
       state.user = action.payload
     },
     /**
@@ -100,7 +98,6 @@ export const authSlice = createSlice({
      * @param state
      */
     logoutUser: (state) => {
-      console.log("logoutUser")
       state.user = undefined
       state.token = undefined
     },

@@ -1,6 +1,6 @@
 import { ReactKeycloakProvider, useKeycloak } from '@react-keycloak/web'
 import '@vime/core/themes/default.css'
-import { initial, isUndefined } from 'lodash'
+import { isUndefined } from 'lodash'
 import { SnackbarProvider } from 'notistack'
 import React, { Suspense } from 'react'
 // eslint-disable-next-line import/no-extraneous-dependencies
@@ -24,7 +24,6 @@ import { LoadingLayout } from '@core/layouts/Loading/Loading.layout'
 import { NotFoundPage } from '@core/pages/404.page'
 import { ServiceUnavailablePage } from '@core/pages/503.page'
 import { HomePage } from '@core/pages/Home.page'
-import Secured from '@core/pages/Secured.page'
 import { store } from '@core/store'
 
 import { AuthRouter } from '@auth/auth.router'
@@ -60,10 +59,8 @@ const PolyflixApp = () => {
   const authService = useInjection<AuthService>(AuthService)
 
   const { user, hasRefreshedAuth, isAuthRefreshing } = useAuth()
-  console.log('user:', user)
-  console.log('isAuthRefreshing:', isAuthRefreshing)
-  const { isUnhealthy } = useServerHealth()
   const { initialized, keycloak } = useKeycloak()
+  const { isUnhealthy } = useServerHealth()
 
   // If the server is unavailable, display the 503 page
   if (isUnhealthy)
@@ -75,14 +72,14 @@ const PolyflixApp = () => {
 
   // We consider that the user is authenticated when
   // the user value in the state is defined
-
-  const isAuthenticated = !isUndefined(user) && (keycloak?.authenticated ?? false)
-
-  const isAccountValidated = Boolean(user?.isAccountActivated)
+  const isKeycloakAuthenticated = Boolean(keycloak.authenticated)
+  const isAuthenticated = !isUndefined(user) && isKeycloakAuthenticated
 
   // If the user is not authenticated and we didn't try to refresh the authentication
   // we should try to automatically renew the authentication of the user.
-  if (!isAuthenticated && !hasRefreshedAuth && initialized) authService.refreshAuth()
+  if (!isAuthenticated && !hasRefreshedAuth && initialized) {
+    authService.refreshAuth()
+  }
 
   // We want to return the loading screen only in the case of the refresh authentication
   // or if we are waiting for informations from the server
@@ -95,23 +92,18 @@ const PolyflixApp = () => {
         <Route path="/auth" component={AuthRouter} />
         {/* We restrict these route to an authenticated user*/}
         <PrivateRoute condition={isAuthenticated}>
-          <PrivateRoute
-            condition={isAccountValidated}
-            redirectTo={'/auth/validate'}
-          >
-            <DashboardLayout>
-              <Switch>
-                <Route path="/courses" component={CourseRouter} />
-                <Route path="/quizzes" component={QuizzRouter} />
-                <Route path="/users" component={UserRouter} />
-                <Route path="/videos" component={VideoRouter} />
-                <Route path="/collections" component={CollectionRouter} />
-                <Route path="/links" component={LinkRouter} />{' '}
-                <Route exact path="/" component={HomePage} />
-                <Route component={NotFoundPage} />
-              </Switch>
-            </DashboardLayout>
-          </PrivateRoute>
+          <DashboardLayout>
+            <Switch>
+              <Route path="/courses" component={CourseRouter} />
+              <Route path="/quizzes" component={QuizzRouter} />
+              <Route path="/users" component={UserRouter} />
+              <Route path="/videos" component={VideoRouter} />
+              <Route path="/collections" component={CollectionRouter} />
+              <Route path="/links" component={LinkRouter} />{' '}
+              <Route exact path="/" component={HomePage} />
+              <Route component={NotFoundPage} />
+            </Switch>
+          </DashboardLayout>
         </PrivateRoute>
       </Switch>
     </Router>
