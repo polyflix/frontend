@@ -7,7 +7,7 @@ import { ApiVersion } from '@core/types/http.type'
 export const searchApi = createApi({
   reducerPath: 'api/search',
   baseQuery: fetchBaseQuery({
-    baseUrl: `${environment.api}/api/${ApiVersion.V2_0_0}`,
+    baseUrl: `${environment.api}/api/${ApiVersion.V2}`,
   }),
   tagTypes: [Endpoint.Search],
   endpoints: (builder) => ({
