@@ -47,13 +47,13 @@ export const videosApi = createApi({
         // Is result available ?
         result
           ? [
-            ...result.items.map(
-              ({ slug }) => ({ type: Endpoint.Videos, slug } as const)
-            ),
-            { type: Endpoint.Videos, id: 'LIST' },
-          ]
+              ...result.items.map(
+                ({ slug }) => ({ type: Endpoint.Videos, slug } as const)
+              ),
+              { type: Endpoint.Videos, id: 'LIST' },
+            ]
           : // An error occured, but we still want to refetch this query when the tag is invalidated.
-          [{ type: Endpoint.Videos, id: 'LIST' }],
+            [{ type: Endpoint.Videos, id: 'LIST' }],
     }),
 
     /**

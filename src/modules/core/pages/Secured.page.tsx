@@ -1,5 +1,4 @@
 import { useKeycloak } from '@react-keycloak/web'
-import React from 'react'
 
 const Secured = () => {
   const { keycloak } = useKeycloak()

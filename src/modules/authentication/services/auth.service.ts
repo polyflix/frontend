@@ -25,7 +25,7 @@ import {
 
 import { MeService } from '@users/services/me.service'
 
-import keycloak from '../../../../src/keycloak/config'
+import keycloakClient from '../../../../src/keycloak/config'
 
 @Injectable()
 export class AuthService {
@@ -44,13 +44,13 @@ export class AuthService {
     this.dispatch(refreshAuthInProgress())
 
     try {
-      await keycloak.updateToken(5)
+      await keycloakClient.updateToken(5)
       const user = await this.meService.getMe()
 
       this.dispatch(
         authenticateUser({
           user,
-          token: keycloak.token!!,
+          token: keycloakClient.token!!,
         })
       )
     } catch (error) {
@@ -100,7 +100,7 @@ export class AuthService {
     const user = await this.meService.getMe()
     return this.dispatch(
       authenticateUser({
-        token: keycloak.token!!,
+        token: keycloakClient.token!!,
         user: user,
       })
     )
@@ -161,7 +161,7 @@ export class AuthService {
    * Log out the current logged in user
    */
   public async logout() {
-    await keycloak.logout()
+    await keycloakClient.logout()
     this.dispatch(logoutUser())
   }
 

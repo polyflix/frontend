@@ -48,7 +48,7 @@ import { GlobalStyles } from '@theme/globalStyles'
 import { ThemeConfig } from '@theme/theme'
 
 import i18n from './i18n/config'
-import keycloak from './keycloak/config'
+import keycloakClient from './keycloak/config'
 import './styles/index.scss'
 
 /**
@@ -122,7 +122,7 @@ ReactDOM.render(
             <SnackbarProvider maxSnack={5}>
               <DIProvider>
                 <HelmetProvider>
-                  <ReactKeycloakProvider authClient={keycloak}>
+                  <ReactKeycloakProvider authClient={keycloakClient}>
                     <PolyflixApp />
                     <ModalCookies />
                   </ReactKeycloakProvider>
