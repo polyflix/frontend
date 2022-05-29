@@ -51,13 +51,6 @@ export const authSlice = createSlice({
       state.isAuthRefreshing = false
     },
     /**
-     * Action called when the app succes to refresh the user authentication
-     * @param state
-     */
-    refreshAuthSucces: (state) => {
-      state.isAuthRefreshing = false
-    },
-    /**
      * Action called when the app failed to authenticate the user
      * @param state
      */
@@ -110,7 +103,6 @@ export const {
   authenticationInProgress,
   authenticationFailed,
   refreshAuthFailed,
-  refreshAuthSucces,
   refreshAuthInProgress,
   setUser,
 } = authSlice.actions

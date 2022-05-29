@@ -16,7 +16,7 @@ export class MeService {
     private readonly httpService: HttpService,
     private readonly apiService: ApiService
   ) {
-    this.endpoint = this.apiService.endpoint(ApiVersion.V2_0_0) + '/users'
+    this.endpoint = this.apiService.endpoint(ApiVersion.V2) + '/users'
   }
 
   async getMe(): Promise<User> {

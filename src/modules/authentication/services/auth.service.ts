@@ -5,7 +5,6 @@ import { Inject, Injectable } from '@polyflix/di'
 import { APP_DISPATCHER } from '@core/constants/app.constant'
 import { ApiService } from '@core/services/endpoint.service'
 import { HttpService } from '@core/services/http.service'
-import { SnackbarService } from '@core/services/snackbar.service'
 import type { AppDispatch } from '@core/store'
 import { ApiVersion } from '@core/types/http.type'
 
@@ -16,7 +15,6 @@ import {
   logoutUser,
   refreshAuthFailed,
   refreshAuthInProgress,
-  refreshAuthSucces,
 } from '@auth/reducers/auth.slice'
 import {
   ILoginForm,
@@ -37,7 +35,6 @@ export class AuthService {
     private readonly apiService: ApiService,
     private readonly httpService: HttpService,
     private readonly meService: MeService,
-    private readonly snackbarService: SnackbarService,
     @Inject(APP_DISPATCHER) private readonly dispatch: AppDispatch
   ) {
     this.endpoint = `${this.apiService.endpoint(ApiVersion.V1)}/auth`
@@ -49,13 +46,13 @@ export class AuthService {
     try {
       await keycloak.updateToken(5)
       const user = await this.meService.getMe()
+
       this.dispatch(
         authenticateUser({
           user,
           token: keycloak.token!!,
         })
       )
-      this.dispatch(refreshAuthSucces())
     } catch (error) {
       console.log(
         'Failed to refresh the token, or the session has expired:',
@@ -166,53 +163,6 @@ export class AuthService {
   public async logout() {
     await keycloak.logout()
     this.dispatch(logoutUser())
-  }
-
-  /**
-   * Request for a new email to validate an account
-   * @param email
-   */
-  public async sendAgainValidationEmail(email: string) {
-    const { status, error } = await this.httpService.post(
-      `${this.endpoint}/validate/send`,
-      {
-        body: {
-          email,
-        },
-      }
-    )
-
-    if (status !== StatusCodes.ACCEPTED) {
-      this.snackbarService.createSnackbar(error, {
-        variant: 'error',
-      })
-      throw error
-    }
-  }
-
-  /**
-   * Request to activate an account, is executed when  user accessed to
-   * validate page with an id in it
-   * @param userId
-   */
-  public async validateAccount(userId: string) {
-    const { status, error } = await this.httpService.post(
-      `${this.endpoint}/validate`,
-      {
-        body: {
-          userId,
-        },
-      }
-    )
-
-    if (status !== StatusCodes.ACCEPTED) {
-      this.snackbarService.createSnackbar(error, {
-        variant: 'error',
-      })
-      throw error
-    }
-
-    await this.refreshAuth()
   }
 
   /**

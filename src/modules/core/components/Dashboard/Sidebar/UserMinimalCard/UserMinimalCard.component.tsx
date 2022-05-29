@@ -49,7 +49,9 @@ export const UserMinimalCard = ({}) => {
           }}
           noWrap={true}
         >
-          {user?.firstName} {user?.lastName}
+          {user?.firstName != '' && user?.lastName != ''
+            ? user?.firstName + ' ' + user?.lastName
+            : user?.username}
         </Typography>
         <Tooltip title={role}>
           <Typography

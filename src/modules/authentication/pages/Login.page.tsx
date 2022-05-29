@@ -1,5 +1,5 @@
 import { environment } from '@env/environment'
-import { Box, Button, Container, Link, Typography } from '@mui/material'
+import { Button, Container, Link, Typography } from '@mui/material'
 import { useKeycloak } from '@react-keycloak/web'
 import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -7,7 +7,6 @@ import { Link as RouterLink } from 'react-router-dom'
 
 import { MHidden } from '@core/components/MHidden/MHidden.component'
 
-import { LoginForm } from '@auth/components/Forms/LoginForm.component'
 import { AuthLayout } from '@auth/layouts/Auth.layout'
 import {
   ContentAuthStyle,
@@ -22,12 +21,16 @@ export const LoginPage = () => {
   const { keycloak } = useKeycloak()
 
   const login = useCallback(() => {
-    keycloak?.login({
+    keycloak.login({
       redirectUri: environment.redirectUri,
     })
   }, [keycloak])
 
-  console.log('login page')
+  const register = useCallback(() => {
+    keycloak.register({
+      redirectUri: environment.redirectUri,
+    })
+  }, [keycloak])
 
   return (
     <RootAuthStyle
@@ -68,9 +71,8 @@ export const LoginPage = () => {
             <Typography sx={{ color: 'text.secondary' }}>
               {t('signIn.subtitle')}
             </Typography>
-          </Box>
+          </Box> */}
 
-          <LoginForm /> */}
           <Button
             fullWidth
             size="large"
@@ -78,19 +80,18 @@ export const LoginPage = () => {
             variant="contained"
             onClick={login}
           >
-            Se connecter
+            {t('signIn.confirm')}
           </Button>
 
           <Button
             fullWidth
+            sx={{ mt: 5 }}
             size="large"
             type="submit"
             variant="text"
-            onClick={() => {
-              keycloak.register().then(console.log).catch(console.error)
-            }}
+            onClick={register}
           >
-            S'enregister
+            {t('signUp.confirm')}
           </Button>
 
           <MHidden width="smUp">
