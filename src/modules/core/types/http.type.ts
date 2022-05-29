@@ -21,6 +21,7 @@ export enum ApiType {
 
 export enum ApiVersion {
   V1 = 'v1',
+  V2 = 'v2.0.0',
 }
 
 export interface IRequestOptions {

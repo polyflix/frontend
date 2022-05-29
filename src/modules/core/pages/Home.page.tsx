@@ -40,6 +40,7 @@ export const HomePage = () => {
   })
 
   const videos = lastVideosQuery.data?.items || []
+
   const watchingVideos = watchingVideosQuery.data?.items || []
   const watchedVideos = watchedVideosQuery.data?.items || []
 
@@ -64,7 +65,7 @@ export const HomePage = () => {
             freeMode
           >
             {watchingVideos.map((video) => (
-              <VideoSliderCard key={video.id} video={video} />
+              <VideoSliderCard key={video.slug} video={video} />
             ))}
           </Slider>
         </Grid>
@@ -83,7 +84,7 @@ export const HomePage = () => {
               freeMode
             >
               {videos.map((video) => (
-                <VideoSliderCard key={video.id} video={video} />
+                <VideoSliderCard key={video.slug} video={video} />
               ))}
             </Slider>
           ) : (
@@ -109,7 +110,7 @@ export const HomePage = () => {
                 .slice()
                 .sort((a: Video, b: Video) => b.views - a.views)
                 .map((video) => (
-                  <VideoSliderCard key={video.id} video={video} />
+                  <VideoSliderCard key={video.slug} video={video} />
                 ))}
             </Slider>
           ) : (
@@ -133,7 +134,7 @@ export const HomePage = () => {
             freeMode
           >
             {watchedVideos.map((video) => (
-              <VideoSliderCard key={video.id} video={video} />
+              <VideoSliderCard key={video.slug} video={video} />
             ))}
           </Slider>
         </Grid>

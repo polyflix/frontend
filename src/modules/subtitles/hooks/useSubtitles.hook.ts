@@ -35,10 +35,10 @@ export const useSubtitles = (video: Video): UseSubtitlesProps => {
     const fetchedSubtitles: Subtitle[] = []
     setState('loading')
 
-    video.availableLanguages.forEach(async (language) => {
+    video.availableLanguages?.forEach(async (language) => {
       try {
         const { tokenAccess } = await minioService.getSubtitlePresignedUrl(
-          video.id,
+          video.slug,
           language
         )
         fetchedSubtitles.push({
@@ -55,15 +55,16 @@ export const useSubtitles = (video: Video): UseSubtitlesProps => {
       setState('success')
       setSubtitles(fetchedSubtitles)
     })
-  }, [minioService, snackbarService, video.availableLanguages, video.id])
+  }, [minioService, snackbarService, video.availableLanguages, video.slug])
 
   useEffect(() => {
     if (authLoading || subtitles) {
       return
     }
     if (
+      true || // TODO Remove when we add subtitles
       video.sourceType !== PlayerVideoSource.INTERNAL ||
-      video.availableLanguages.length === 0
+      video.availableLanguages?.length === 0
     ) {
       setSubtitles([])
       setState('idle')
@@ -74,7 +75,7 @@ export const useSubtitles = (video: Video): UseSubtitlesProps => {
   }, [
     subtitles,
     video.sourceType,
-    video.availableLanguages.length,
+    video.availableLanguages?.length,
     fetchSubtitles,
     authLoading,
   ])

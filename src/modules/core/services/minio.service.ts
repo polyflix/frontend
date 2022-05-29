@@ -74,12 +74,12 @@ export class MinioService {
   /**
    *	Request a preSignedUrl to see video content
    *
-   * @param {string} videoId -- ID of video
+   * @param {string} slug -- slug of video
    * @returns {Promise<PresignedUrl>}
    */
-  public async getVideoPresignedUrl(videoId: string): Promise<PresignedURL> {
+  public async getVideoPresignedUrl(slug: string): Promise<PresignedURL> {
     const { status, response, error } = await this.httpService.get(
-      `${this.endpoint}/video/${videoId}`
+      `${this.apiService.endpoint(ApiVersion.V2)}/videos/${slug}/token`
     )
     if (status !== StatusCodes.OK) {
       throw error

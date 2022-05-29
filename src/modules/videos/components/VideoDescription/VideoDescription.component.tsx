@@ -11,7 +11,6 @@ import {
   Box,
   Button,
 } from '@mui/material'
-import { useLikeVideoMutation } from '@stats/service/watchtime-sync.service'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link as RouterLink } from 'react-router-dom'
@@ -21,6 +20,7 @@ import { MarkdownBox } from '@core/components/MarkdownBox/MarkdownBox.component'
 import { stringToLongDate, stringToShortDate } from '@core/helpers/date.helper'
 
 import { Video } from '@videos/models/video.model'
+import { useLikeVideoMutation } from '@videos/services/video.service'
 
 import { UserAvatar } from '@users/components/UserAvatar/UserAvatar.component'
 
@@ -40,7 +40,7 @@ export const VideoDetails = ({ video }: VideoDetailsProps) => {
   const like = async () => {
     if (video) {
       setLikeDisabled(true)
-      await likeVideo(video.id)
+      await likeVideo(video.slug)
       if (!isLiked) {
         setLikeNumber(likeNumber + 1)
       } else {

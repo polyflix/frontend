@@ -8,7 +8,7 @@ import { Environment } from '@core/types/environment.type'
  * You should ALWAYS import only this file in the app in order to access variables.
  */
 export const environment: Environment = {
-  api: 'http://localhost:5000',
+  api: 'http://localhost:4000',
   minioUrl: 'http://localhost:9000',
   debugMode: true,
   debugCredentials: [

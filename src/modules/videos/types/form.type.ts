@@ -9,7 +9,8 @@ export interface IVideoForm {
   thumbnail?: string
   draft: boolean
   visibility: Visibility
-  src?: string
+  source?: string
   attachments: Attachment[]
-  //   tags: tagLite[]
+  // TODO
+  // tags: tagLite[]
 }

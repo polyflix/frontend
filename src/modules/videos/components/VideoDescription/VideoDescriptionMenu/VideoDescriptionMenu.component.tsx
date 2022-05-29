@@ -20,7 +20,7 @@ export const VideoDescriptionMenu: React.FC<Props> = ({ video }) => {
 
   const handleDelete = async () => {
     try {
-      await deleteVideo({ id: video?.id! }).unwrap()
+      await deleteVideo({ slug: video?.slug! }).unwrap()
       snackbarService.notify(CrudAction.DELETE, Endpoint.Videos)
     } catch (e: any) {
       snackbarService.createSnackbar(e.data.statusText, { variant: 'error' })

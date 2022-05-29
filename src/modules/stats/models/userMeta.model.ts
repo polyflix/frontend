@@ -6,3 +6,11 @@ export interface WatchMetadata {
   updatedAt: string
   createdAt: string
 }
+
+export interface Watchtime {
+  videoId: string
+  userId?: string
+  watchedSeconds: number
+  watchedPercent: number
+  isWatched: boolean
+}

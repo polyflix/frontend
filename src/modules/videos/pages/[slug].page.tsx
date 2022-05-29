@@ -50,7 +50,7 @@ export const SlugPage = () => {
               margin: '0 auto',
             }}
           >
-            {!isLoading && !isFetching && video ? (
+            {!isLoading && !isFetching && !!video ? (
               <Player video={video} playerRef={playerRef} />
             ) : (
               <Skeleton

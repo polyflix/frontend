@@ -11,4 +11,5 @@ export type UpsertUserVideoMeta = {
   videoId: string
   watchedSeconds: number
   watchedPercent: number
+  isWatched?: boolean
 }

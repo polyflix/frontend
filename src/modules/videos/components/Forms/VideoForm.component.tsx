@@ -84,7 +84,7 @@ export const VideoForm = ({ source, video, isUpdate }: Props) => {
       draft: Boolean(video?.draft),
       visibility: video?.visibility || Visibility.PUBLIC,
       thumbnail: video?.thumbnail,
-      src: video?.source.replace('-nocookie', ''),
+      source: video?.source.replace('-nocookie', ''),
       attachments: video?.attachments,
     },
   })
@@ -111,7 +111,7 @@ export const VideoForm = ({ source, video, isUpdate }: Props) => {
   )
 
   // Useful variables
-  const videoSource = watch('src')
+  const videoSource = watch('source')
   const thumbnail = watch('thumbnail')
   const isYoutube = source === 'YouTube'
 
@@ -151,10 +151,10 @@ export const VideoForm = ({ source, video, isUpdate }: Props) => {
     if (!isYoutube) {
       // If we have a video file, generate the a filename for it
       if (videoFile) {
-        data.src = generateFilename(videoFile)
+        data.source = generateFilename(videoFile)
       } else if (isUpdate && !videoFile) {
         // if video has not been changed on update
-        delete data.src
+        delete data.source
         delete data.thumbnail
       } else {
         return snackbarService.createSnackbar(
@@ -174,7 +174,7 @@ export const VideoForm = ({ source, video, isUpdate }: Props) => {
     try {
       // handle response and get video and thumbnail psu url to upload them
       const { videoPutPsu, thumbnailPutPsu } = await (isUpdate
-        ? updateVideo({ id: video!.id, body: data })
+        ? updateVideo({ slug: video!.slug, body: data })
         : createVideo(data)
       ).unwrap()
 
@@ -229,11 +229,11 @@ export const VideoForm = ({ source, video, isUpdate }: Props) => {
             <Stack spacing={3}>
               {isYoutube && (
                 <TextField
-                  error={Boolean(errors.src)}
-                  helperText={errors.src?.message}
+                  error={Boolean(errors.source)}
+                  helperText={errors.source?.message}
                   label={t('forms.create-update.placeholder.youtubeUrl')}
                   {...getCommonTextFieldProps()}
-                  {...register('src', {
+                  {...register('source', {
                     required: {
                       value: true,
                       message: `${t(

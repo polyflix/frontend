@@ -63,9 +63,9 @@ export const ProfileVideosPage = () => {
       <Grid sx={{ my: 3 }} container spacing={2}>
         {!isFetching
           ? videos.map((video: Video) => (
-              <Grid key={video.id} item xs={12} sm={6} md={4} lg={3}>
+              <Grid key={video.slug} item xs={12} sm={6} md={4} lg={3}>
                 <VideoSliderCard
-                  key={video.id}
+                  key={video.slug}
                   video={video}
                   isFetching={isFetching}
                 />

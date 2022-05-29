@@ -64,9 +64,9 @@ export const VideoHistoryPage = () => {
       <Grid sx={{ my: 3 }} container spacing={2}>
         {!isFetching
           ? videos.map((video: Video) => (
-              <Grid key={video.id} item xs={12} sm={6} md={6} lg={4}>
+              <Grid key={video.slug} item xs={12} sm={6} md={6} lg={4}>
                 <VideoSliderCard
-                  key={video.id}
+                  key={video.slug}
                   video={video}
                   isFetching={isFetching}
                 />

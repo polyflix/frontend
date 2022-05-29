@@ -28,7 +28,7 @@ type StreamUrlHookType = {
 export const useStreamUrl = ({
   sourceType,
   source: sourceRaw,
-  id,
+  slug,
 }: Video): StreamUrlHookType => {
   const minioService = useInjection<MinioService>(MinioService)
   const { isLoading: authLoading } = useAuth()
@@ -36,9 +36,9 @@ export const useStreamUrl = ({
   const [streamUrl, setStreamUrl] = useState<string | undefined>()
   const [error, setError] = useState<string | undefined>()
 
-  const getPresignedUrl = async (videoId: string) => {
+  const getPresignedUrl = async (s: string) => {
     try {
-      const { tokenAccess } = await minioService.getVideoPresignedUrl(videoId)
+      const { tokenAccess } = await minioService.getVideoPresignedUrl(s)
       setStreamUrl(tokenAccess)
     } catch (e: any) {
       setError(e)
@@ -62,7 +62,7 @@ export const useStreamUrl = ({
       return
     }
 
-    getPresignedUrl(id)
+    getPresignedUrl(slug)
   }, [authLoading])
   return { streamUrl, error, loading }
 }

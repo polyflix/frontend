@@ -4,7 +4,6 @@ import {
   SYNC_RATE_LIMITER_MAX,
   SYNC_RATE_LIMITER_MIN,
 } from '@stats/constants/stats.constant'
-import { useUpdateWatchtimeMutation } from '@stats/service/watchtime-sync.service'
 import { useSubtitles } from '@subtitles/hooks/useSubtitles.hook'
 import {
   Captions,
@@ -26,6 +25,7 @@ import { useAuth } from '@auth/hooks/useAuth.hook'
 import { useStreamUrl } from '@videos/hooks/useStreamUrl.hook'
 import { useSubtitlesContext } from '@videos/hooks/useSubtitlesContext.hook'
 import { Video } from '@videos/models/video.model'
+import { useUpdateWatchtimeMutation } from '@videos/services/video.service'
 
 import { ErrorCard } from '../ErrorCard/ErrorCard.component'
 import { Provider } from '../PlayerProvider/Provider.component'
@@ -54,6 +54,7 @@ export const Player: React.FC<Props> = ({ playerRef, video }) => {
     error: streamUrlError,
     loading: videoLoading,
   } = useStreamUrl(video)
+
   const { setSubtitles, setState } = useSubtitlesContext()
   const { subtitles, state: subtitleState } = useSubtitles(video)
 
@@ -76,8 +77,9 @@ export const Player: React.FC<Props> = ({ playerRef, video }) => {
   const {
     sourceType: videoSourceType,
     thumbnail: videoThumbnail,
-    id: videoId,
-    userMeta,
+    slug: videoSlug,
+    // userMeta,
+    watchtime,
   } = video
   const loading = videoLoading
 
@@ -117,10 +119,10 @@ export const Player: React.FC<Props> = ({ playerRef, video }) => {
     }
 
     updateWatchtime({
-      videoId: videoId,
-      watchedSeconds: +playerRef.current.currentTime.toFixed(2),
+      videoId: videoSlug,
+      watchedSeconds: +playerRef.current?.currentTime?.toFixed(2),
       watchedPercent: +(
-        playerRef.current.currentTime / playerRef.current.duration
+        playerRef.current?.currentTime / playerRef.current?.duration
       ).toFixed(2),
     })
   }
@@ -206,8 +208,8 @@ export const Player: React.FC<Props> = ({ playerRef, video }) => {
   }
 
   const onPlaybackStart = () => {
-    if (playerRef?.current && userMeta?.watchedSeconds)
-      playerRef.current.currentTime = userMeta.watchedSeconds
+    if (playerRef?.current && watchtime?.watchedSeconds)
+      playerRef.current.currentTime = watchtime.watchedSeconds
   }
 
   return (

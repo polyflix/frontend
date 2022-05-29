@@ -18,7 +18,7 @@ export class YoutubeService {
     private readonly apiService: ApiService,
     private readonly snackbarService: SnackbarService
   ) {
-    this.endpoint = apiService.endpoint(ApiVersion.V1)
+    this.endpoint = apiService.endpoint(ApiVersion.V2)
   }
 
   /**

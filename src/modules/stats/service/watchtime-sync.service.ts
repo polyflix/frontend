@@ -1,3 +1,8 @@
+/**
+ * *************
+ * DEPRECIATED *
+ * *************
+ */
 import { UpsertUserVideoMeta } from '@stats/types/userMeta.type'
 
 import { Endpoint } from '@core/constants/endpoint.constant'
