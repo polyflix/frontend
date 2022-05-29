@@ -16,7 +16,7 @@ export class SearchService {
     private readonly apiService: ApiService,
     private readonly httpService: HttpService
   ) {
-    this.endpoint = `${this.apiService.endpoint(ApiVersion.V2_0_0)}/${
+    this.endpoint = `${this.apiService.endpoint(ApiVersion.V2)}/${
       Endpoint.Search
     }`
   }

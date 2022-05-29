@@ -1,25 +1,17 @@
 import SearchIcon from '@mui/icons-material/Search'
-import {
-  ClickAwayListener,
-  Pagination,
-  useMediaQuery,
-  useTheme,
-} from '@mui/material'
+import { ClickAwayListener, useMediaQuery, useTheme } from '@mui/material'
 import Backdrop from '@mui/material/Backdrop'
 import Box from '@mui/material/Box'
 import Fade from '@mui/material/Fade'
 import InputAdornment from '@mui/material/InputAdornment'
 import Modal from '@mui/material/Modal'
 import Typography from '@mui/material/Typography'
-import {
-  PaginatedSearchResult,
-  SearchResult,
-} from '@search/models/search.model'
+import { PaginatedSearchResult } from '@search/models/search.model'
 import { SearchService } from '@search/services/search.service'
 import React, { PropsWithChildren, useEffect, useState } from 'react'
 import { isMacOs } from 'react-device-detect'
 import { useTranslation } from 'react-i18next'
-import { BehaviorSubject, debounceTime, filter, map, switchMap } from 'rxjs'
+import { BehaviorSubject, debounceTime, filter, switchMap } from 'rxjs'
 
 import { useInjection } from '@polyflix/di'
 
@@ -27,7 +19,6 @@ import { SearchResult as SearchResultComponent } from './SearchResult.component'
 
 /** Importing search bar related styles */
 import {
-  boxStyles,
   Search,
   SearchField,
   SearchFieldInModal,
@@ -35,37 +26,25 @@ import {
 } from './Spotlight.style'
 
 const changeHandler$ = new BehaviorSubject('')
+const MIN_CHAR_SEARCH = 3
 
 export const Spotlight: React.FC<PropsWithChildren<{}>> = ({}) => {
   const theme = useTheme()
   const shortText = useMediaQuery(theme.breakpoints.down('sm'))
 
-  const [query, setQuery] = useState('kotlin')
+  const searchService = useInjection<SearchService>(SearchService)
 
-  const changeHandler = new Subject()
-
-  changeHandler
-    .asObservable()
-    .pipe(
-      map((event: any) => event.target.value),
-      debounceTime(500)
-    )
-    .subscribe((value) => {
-      setQuery(value)
-      refetch()
-    })
-
-  const [data, setData] = useState<SearchResult[]>([])
+  const [data, setData] = useState<PaginatedSearchResult>()
+  const [query, setQuery] = useState<string>()
 
   useEffect(() => {
     changeHandler$
       .pipe(
-        filter((q) => q.length >= 3),
+        filter((q) => q.length >= MIN_CHAR_SEARCH),
         debounceTime(500),
-        switchMap((value: string) => searchService.searchFor(value)),
-        map((value: PaginatedSearchResult) => value.results)
+        switchMap((q: string) => searchService.searchFor(q))
       )
-      .subscribe((value) => setData(value))
+      .subscribe((value: PaginatedSearchResult) => setData(value))
     return () => changeHandler$.unsubscribe()
   }, [])
 
@@ -90,6 +69,14 @@ export const Spotlight: React.FC<PropsWithChildren<{}>> = ({}) => {
       e.preventDefault() // disable default browser binding if triggered
       handleOpen()
     }
+  }
+
+  const handleSearchChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ): void => {
+    const querry = event.target.value
+    changeHandler$.next(querry)
+    setQuery(querry)
   }
 
   // We put the event listener on the whole document because we have to catch the key pressed no matter where the user is on the page
@@ -132,7 +119,6 @@ export const Spotlight: React.FC<PropsWithChildren<{}>> = ({}) => {
 
         <SearchField
           onClick={handleOpen}
-          disabled
           placeholder={
             shortText ? '' : t('navbar.actions.search.default') + '..'
           }
@@ -161,60 +147,66 @@ export const Spotlight: React.FC<PropsWithChildren<{}>> = ({}) => {
         }}
       >
         <Fade in={modalOpened}>
-          <Box sx={boxStyles}>
-            {/* The modal box dialog */}
-            <Search>
-              <SearchFieldInModal
-                onChange={(newValue) => changeHandler.next(newValue)}
-                // onChange={(e) => setQuery(e.target.value)}
-                autoFocus
-                placeholder={t('navbar.actions.search.fast')}
-                InputProps={{
-                  'aria-label': 'search',
-                  startAdornment: (
-                    <SearchIconWrapper sx={{ paddingLeft: 1 }}>
-                      <SearchIcon />
-                    </SearchIconWrapper>
-                  ),
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <Typography variant="body2">esc</Typography>
-                    </InputAdornment>
-                  ),
-                  disableUnderline: true,
-                }}
-                variant="filled"
-              />
-              {data && (
-                <Pagination
-                  onChange={(_, p) => setPage(p)}
-                  count={data.totalPages}
-                  sx={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                    paddingY: 1,
+          <Box
+            sx={{
+              position: 'relative',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              width: '100%',
+              height: '100%',
+              p: 4,
+            }}
+          >
+            <Box
+              sx={{
+                width: '100%',
+                maxWidth: 1500,
+                p: 2,
+                borderRadius: 1,
+                boxShadow: 10,
+                bgcolor: 'background.paper',
+              }}
+            >
+              {/* The modal box dialog */}
+              <Search>
+                <SearchFieldInModal
+                  onChange={handleSearchChange}
+                  autoFocus
+                  helperText={t('navbar.actions.search.hint', {
+                    count: MIN_CHAR_SEARCH,
+                  })}
+                  placeholder={t('navbar.actions.search.fast')}
+                  InputProps={{
+                    'aria-label': 'search',
+                    startAdornment: (
+                      <SearchIconWrapper sx={{ paddingLeft: 1 }}>
+                        <SearchIcon />
+                      </SearchIconWrapper>
+                    ),
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <Typography variant="body2">esc</Typography>
+                      </InputAdornment>
+                    ),
+                    disableUnderline: true,
                   }}
+                  variant="filled"
                 />
-              )}
-              {data && (
-                <Box
-                  sx={{
-                    overflowY: 'scroll',
-                    minHeight: '35vh',
-                    maxHeight: '70vh',
-                  }}
-                >
-                  {data.map((result) => (
-                    <SearchResultComponent
-                      key={result.id}
-                      result={result}
-                      query={query}
-                      closeModal={handleClose}
-                    />
-                  ))}
-                </Box>
-              )}
-            </Search>
+                {data && (
+                  <Box>
+                    {data.results.map((result) => (
+                      <SearchResultComponent
+                        key={result.id}
+                        result={result}
+                        query={query || ''}
+                        closeModal={handleClose}
+                      />
+                    ))}
+                  </Box>
+                )}
+              </Search>
+            </Box>
           </Box>
         </Fade>
       </Modal>

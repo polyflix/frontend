@@ -25,6 +25,7 @@
   "navbar": {
     "actions": {
       "search": {
+        "hint": "Écrivez au moins {{count}} caractères",
         "default": "Rechercher",
         "fast": "Recherche rapide"
       },

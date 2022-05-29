@@ -3,6 +3,7 @@ import { alpha, styled } from '@mui/system'
 
 export const Search = styled('div')(({ theme }) => ({
   position: 'relative',
+  bgcolor: 'background.paper',
   borderRadius: theme.shape.borderRadius,
   '&:hover': {
     backgroundColor: alpha(theme.palette.grey[300], 0.5),
@@ -79,15 +80,3 @@ export const SearchResult = styled('div')(({ theme }) => ({
     backgroundColor: alpha(theme.palette.grey[600], 0.5),
   },
 }))
-
-export const boxStyles = {
-  position: 'absolute' as 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: { xs: 350, md: 550 },
-  bgcolor: 'background.paper',
-  borderRadius: 2,
-  boxShadow: 10,
-  p: 4,
-}
