@@ -1,3 +1,4 @@
+import { Link } from '@mui/material'
 import TextField from '@mui/material/TextField'
 import { alpha, styled } from '@mui/system'
 
@@ -68,15 +69,28 @@ export const SearchFieldInModal = styled(TextField)(({ theme }) => ({
   },
 }))
 
-export const SearchResult = styled('div')(({ theme }) => ({
+export const SearchCard = styled(Link)(({ theme }) => ({
   display: 'flex',
-  flexDirection: 'row',
-  alignItems: 'center',
-  padding: theme.spacing(1, 1, 1, 0),
-  borderRadius: 2,
+  flexDirection: 'column',
+  justifyContent: 'center',
   width: '100%',
-  minHeight: '70px',
+  height: '100%',
+  borderRadius: theme.shape.borderRadius,
   '&:hover': {
-    backgroundColor: alpha(theme.palette.grey[600], 0.5),
+    backgroundColor: alpha(theme.palette.grey[400], 0.7),
+  },
+}))
+
+export const HighlightedSpan = styled('span')(({ theme }) => ({
+  position: 'relative',
+  fontWeight: 'bold',
+  '&:after': {
+    content: '""',
+    background: alpha(theme.palette.primary.main, 0.2),
+    position: 'absolute',
+    width: '100%',
+    height: '35%',
+    bottom: 0,
+    left: 0,
   },
 }))

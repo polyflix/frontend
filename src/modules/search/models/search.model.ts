@@ -1,6 +1,7 @@
 export enum SearchTypes {
   VIDEO = 'video',
   QUIZ = 'quiz',
+  USER = 'user',
 }
 
 export interface SearchResult {
@@ -15,6 +16,8 @@ export interface SearchVideo extends SearchResult {
   title: string
   /** The description of the video */
   description: string
+  /** The thumbnail URL of the video */
+  thumbnail: string
 }
 
 export interface SearchQuiz extends SearchResult {
@@ -22,8 +25,24 @@ export interface SearchQuiz extends SearchResult {
   name: string
 }
 
+export interface SearchUser extends SearchResult {
+  avatar: string
+  firstName: string
+  lastName: string
+  username: string
+}
+
 export interface PaginatedSearchResult {
   results: SearchResult[]
+  totalElements: number
+  totalPages: number
+  currentPage: number
+}
+
+export interface SortedPaginatedSearchResult {
+  videos: SearchVideo[]
+  quizzes: SearchQuiz[]
+  users: SearchUser[]
   totalElements: number
   totalPages: number
   currentPage: number

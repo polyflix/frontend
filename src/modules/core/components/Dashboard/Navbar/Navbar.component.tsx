@@ -36,7 +36,6 @@ export const DashboardNavbar: React.FC<PropsWithChildren<{}>> = ({}) => {
         </Box>
         <Logo />
         <Box sx={{ flexGrow: 1 }} />
-        <Spotlight />
         <Stack
           direction="row"
           alignItems="center"
@@ -45,8 +44,8 @@ export const DashboardNavbar: React.FC<PropsWithChildren<{}>> = ({}) => {
             color: (theme) => theme.palette.grey[600],
           }}
         >
+          <Spotlight />
           <LanguageButton />
-          {/*<NotificationsPopover />*/}
           <BugReport />
           <Box
             sx={{

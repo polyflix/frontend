@@ -1,3 +1,5 @@
+import { HighlightedSpan } from './Spotlight.style'
+
 type HighlightedTextProps = {
   text: string
   search: string
@@ -15,9 +17,7 @@ export const HighlightedText: React.FC<HighlightedTextProps> = ({
     <span>
       {parts.map((part, i) =>
         part.toLowerCase() === search.toLowerCase() ? (
-          <span key={i} style={{ background: 'red', color: 'white' }}>
-            {part}
-          </span>
+          <HighlightedSpan key={i}>{part}</HighlightedSpan>
         ) : (
           part
         )

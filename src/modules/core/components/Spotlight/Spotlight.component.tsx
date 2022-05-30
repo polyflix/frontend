@@ -1,21 +1,37 @@
 import SearchIcon from '@mui/icons-material/Search'
-import { ClickAwayListener, useMediaQuery, useTheme } from '@mui/material'
+import {
+  IconButton,
+  Pagination,
+  Tooltip,
+  useMediaQuery,
+  useTheme,
+} from '@mui/material'
 import Backdrop from '@mui/material/Backdrop'
 import Box from '@mui/material/Box'
 import Fade from '@mui/material/Fade'
 import InputAdornment from '@mui/material/InputAdornment'
 import Modal from '@mui/material/Modal'
 import Typography from '@mui/material/Typography'
-import { PaginatedSearchResult } from '@search/models/search.model'
+import { SortedPaginatedSearchResult } from '@search/models/search.model'
 import { SearchService } from '@search/services/search.service'
 import React, { PropsWithChildren, useEffect, useState } from 'react'
 import { isMacOs } from 'react-device-detect'
 import { useTranslation } from 'react-i18next'
-import { BehaviorSubject, debounceTime, filter, switchMap } from 'rxjs'
+import {
+  BehaviorSubject,
+  debounceTime,
+  filter,
+  switchMap,
+  Subject,
+  takeUntil,
+} from 'rxjs'
 
 import { useInjection } from '@polyflix/di'
 
-import { SearchResult as SearchResultComponent } from './SearchResult.component'
+import { NoData } from '@core/components/NoData/NoData.component'
+
+import { Scrollbar } from '../Scrollbar/Scrollbar.component'
+import { SearchSlider } from './SearchSlider.component'
 
 /** Importing search bar related styles */
 import {
@@ -25,8 +41,12 @@ import {
   SearchIconWrapper,
 } from './Spotlight.style'
 
-const changeHandler$ = new BehaviorSubject('')
+const query$ = new BehaviorSubject<string>('')
+const page$ = new BehaviorSubject<number>(1)
+const unsubscribeAll$ = new Subject()
+
 const MIN_CHAR_SEARCH = 3
+const PAGE_SIZE = 10
 
 export const Spotlight: React.FC<PropsWithChildren<{}>> = ({}) => {
   const theme = useTheme()
@@ -34,31 +54,44 @@ export const Spotlight: React.FC<PropsWithChildren<{}>> = ({}) => {
 
   const searchService = useInjection<SearchService>(SearchService)
 
-  const [data, setData] = useState<PaginatedSearchResult>()
-  const [query, setQuery] = useState<string>()
+  const [data, setData] = useState<SortedPaginatedSearchResult>()
+  const [page, setPage] = useState(1)
+
+  const executeSearch = (q: string, p: number) =>
+    searchService.searchFor({
+      query: q,
+      page: p,
+      size: PAGE_SIZE,
+    })
 
   useEffect(() => {
-    changeHandler$
+    page$
       .pipe(
-        filter((q) => q.length >= MIN_CHAR_SEARCH),
-        debounceTime(500),
-        switchMap((q: string) => searchService.searchFor(q))
+        switchMap((p) => executeSearch(query$.value, p)),
+        takeUntil(unsubscribeAll$)
       )
-      .subscribe((value: PaginatedSearchResult) => setData(value))
-    return () => changeHandler$.unsubscribe()
+      .subscribe((value: SortedPaginatedSearchResult) => setData(value))
+    query$
+      .pipe(
+        filter((q: string) => q.length >= MIN_CHAR_SEARCH),
+        debounceTime(300),
+        switchMap((q) => executeSearch(q, 1)),
+        takeUntil(unsubscribeAll$)
+      )
+      .subscribe((value: SortedPaginatedSearchResult) => setData(value))
+    return () => {
+      unsubscribeAll$.complete()
+      unsubscribeAll$.unsubscribe()
+    }
   }, [])
 
   const { t } = useTranslation('common')
+  const { t: tS } = useTranslation('sidebar')
 
   // Manipulation display of modal
   const [modalOpened, setOpen] = useState(false)
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
-
-  // As searchbar is in wip state, we want to show tooltip on mobile by clicking on it
-  const [, setMobileTooltipState] = useState(false)
-  const showMobileTooltip = () => setMobileTooltipState(true)
-  const hideMobileTooltip = () => setMobileTooltipState(false)
 
   /**
    *  Match crtl + k binding
@@ -74,9 +107,13 @@ export const Spotlight: React.FC<PropsWithChildren<{}>> = ({}) => {
   const handleSearchChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ): void => {
-    const querry = event.target.value
-    changeHandler$.next(querry)
-    setQuery(querry)
+    setPage(1)
+    query$.next(event.target.value)
+  }
+
+  const handlePageChange = (newPage: number): void => {
+    page$.next(newPage)
+    setPage(newPage)
   }
 
   // We put the event listener on the whole document because we have to catch the key pressed no matter where the user is on the page
@@ -90,7 +127,6 @@ export const Spotlight: React.FC<PropsWithChildren<{}>> = ({}) => {
       <Box
         onClick={handleOpen}
         sx={{
-          padding: 1,
           display: {
             lg: 'none',
             xs: 'flex',
@@ -100,9 +136,11 @@ export const Spotlight: React.FC<PropsWithChildren<{}>> = ({}) => {
           justifyContent: 'center',
         }}
       >
-        <ClickAwayListener onClickAway={hideMobileTooltip}>
-          <SearchIcon onClick={showMobileTooltip} />
-        </ClickAwayListener>
+        <Tooltip title={t<string>('navbar.actions.search.fast')}>
+          <IconButton>
+            <SearchIcon />
+          </IconButton>
+        </Tooltip>
       </Box>
       <Search
         sx={{
@@ -131,6 +169,7 @@ export const Spotlight: React.FC<PropsWithChildren<{}>> = ({}) => {
               </InputAdornment>
             ),
             disableUnderline: true,
+            readOnly: true,
           }}
           variant="filled"
         />
@@ -153,7 +192,7 @@ export const Spotlight: React.FC<PropsWithChildren<{}>> = ({}) => {
               maxWidth: '1500px',
               top: '50%',
               left: '50%',
-              width: '100%',
+              width: '80%',
               transform: 'translate(-50%, -50%)',
               p: { xs: 1, md: 2 },
             }}
@@ -171,6 +210,7 @@ export const Spotlight: React.FC<PropsWithChildren<{}>> = ({}) => {
               <Search>
                 <SearchFieldInModal
                   onChange={handleSearchChange}
+                  defaultValue={query$.value}
                   autoFocus
                   helperText={t('navbar.actions.search.hint', {
                     count: MIN_CHAR_SEARCH,
@@ -193,18 +233,50 @@ export const Spotlight: React.FC<PropsWithChildren<{}>> = ({}) => {
                   variant="filled"
                 />
                 {data && (
-                  <Box>
-                    {data.results.map((result) => (
-                      <SearchResultComponent
-                        key={result.id}
-                        result={result}
-                        query={query || ''}
-                        closeModal={handleClose}
-                      />
-                    ))}
-                  </Box>
+                  <Scrollbar
+                    sx={{
+                      maxHeight: '70vh',
+                    }}
+                  >
+                    <SearchSlider
+                      title={tS<string>('items.videos')}
+                      results={data.videos}
+                      query={query$.value}
+                      closeModal={handleClose}
+                    />
+                    <SearchSlider
+                      title={tS<string>('items.quizzes')}
+                      results={data.quizzes}
+                      query={query$.value}
+                      closeModal={handleClose}
+                    />
+                    <SearchSlider
+                      title={tS<string>('administration.resources.users')}
+                      results={data.users}
+                      query={query$.value}
+                      closeModal={handleClose}
+                    />
+                  </Scrollbar>
                 )}
               </Search>
+              {data &&
+                data.totalElements === 0 &&
+                query$.value.length >= MIN_CHAR_SEARCH && (
+                  <NoData creatable={false} />
+                )}
+              {data && data.totalPages > 1 && (
+                <Pagination
+                  onChange={(_, p) => handlePageChange(p)}
+                  page={page}
+                  count={data?.totalPages || 1}
+                  shape="rounded"
+                  sx={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    marginTop: '1%',
+                  }}
+                />
+              )}
             </Box>
           </Box>
         </Fade>

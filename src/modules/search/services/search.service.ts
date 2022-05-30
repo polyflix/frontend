@@ -1,5 +1,13 @@
-import { PaginatedSearchResult } from '@search/models/search.model'
+import {
+  PaginatedSearchResult,
+  SearchQuiz,
+  SearchUser,
+  SearchVideo,
+  SortedPaginatedSearchResult,
+} from '@search/models/search.model'
+import { SearchFilters } from '@search/types/filters.type'
 import { StatusCodes } from 'http-status-codes'
+import { groupBy } from 'lodash'
 
 import { Injectable } from '@polyflix/di'
 
@@ -24,16 +32,30 @@ export class SearchService {
   /**
    *	Send a search query
    *
-   * @param {string} query -- query string to search
-   * @returns {Promise<PaginatedSearchResult>}
+   * @param {SearchFilters} filters The filters to search, including the query
+   * @returns {Promise<SortedPaginatedSearchResult>}
    */
-  public async searchFor(query: string): Promise<PaginatedSearchResult> {
+  public async searchFor(
+    filters: SearchFilters
+  ): Promise<SortedPaginatedSearchResult> {
     const { status, response, error } = await this.httpService.get(
-      `${this.endpoint}?q=${query}&page=1&size=10`
+      `${this.endpoint}?q=${filters.query}&page=${filters.page}&size=${filters.size}`
     )
     if (status !== StatusCodes.OK) {
       throw error
     }
-    return response
+    return this.sortSearchResults(response)
+  }
+
+  private sortSearchResults(
+    rawResults: PaginatedSearchResult
+  ): SortedPaginatedSearchResult {
+    const sortedResults = groupBy(rawResults.results, 'type')
+    return {
+      videos: (sortedResults.video as SearchVideo[]) || [],
+      quizzes: (sortedResults.quiz as SearchQuiz[]) || [],
+      users: (sortedResults.user as SearchUser[]) || [],
+      ...rawResults,
+    }
   }
 }
