@@ -1,6 +1,7 @@
 export enum Endpoint {
   Quizzes = 'quizzes',
   Videos = 'videos',
+  Users = 'users',
   Collections = 'collections',
   Stats = 'stats',
   Courses = 'courses',

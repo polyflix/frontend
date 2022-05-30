@@ -41,8 +41,8 @@ export const UserForm = ({ user }: Props) => {
             aria-label="User profile form selector"
           >
             <Tab label={t('profile.tabs.account')} value="1" />
-            <Tab label={t('profile.tabs.security')} value="2" />
-            <Tab label={t('profile.tabs.advanced')} value="3" />
+            {/*<Tab label={t('profile.tabs.security')} value="2" />
+            <Tab label={t('profile.tabs.advanced')} value="3" />*/}
           </TabList>
         </Box>
         <TabPanel value="1">

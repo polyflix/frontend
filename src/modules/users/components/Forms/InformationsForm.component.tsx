@@ -1,4 +1,5 @@
 import LoadingButton from '@mui/lab/LoadingButton'
+import { Avatar } from '@mui/material'
 import Grid from '@mui/material/Grid'
 import Paper from '@mui/material/Paper'
 import TextField from '@mui/material/TextField'
@@ -7,12 +8,10 @@ import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 
-import { useInjection } from '@polyflix/di'
-
 import { Regex } from '@core/constants/regex.constant'
 
 import { User } from '@users/models/user.model'
-import { UserService } from '@users/services/user.service'
+import { useUpdateUserMutation } from '@users/services/user.service'
 
 interface Props {
   user: User
@@ -20,7 +19,7 @@ interface Props {
 }
 
 export const InformationsForm = ({ user, title }: Props) => {
-  const userService = useInjection<UserService>(UserService)
+  const [updateUser] = useUpdateUserMutation()
 
   const { t } = useTranslation('auth')
 
@@ -28,11 +27,13 @@ export const InformationsForm = ({ user, title }: Props) => {
     register,
     handleSubmit,
     formState: { errors },
+    watch,
   } = useForm<User>({
     defaultValues: {
       email: user?.email,
       firstName: user?.firstName,
       lastName: user?.lastName,
+      username: user?.username,
       avatar: user?.avatar,
     },
   })
@@ -48,7 +49,7 @@ export const InformationsForm = ({ user, title }: Props) => {
     try {
       let u: User = data
       u.id = user.id
-      await userService.updateUser(u)
+      await updateUser({ id: u.id, body: u })
     } finally {
       setIsAction(false)
     }
@@ -61,6 +62,22 @@ export const InformationsForm = ({ user, title }: Props) => {
       </Typography>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Grid container spacing={2}>
+          <Grid item xs={12} md={2}>
+            <Avatar
+              sx={{ width: 100, height: 100, borderRadius: 10 }}
+              src={watch('avatar')}
+              alt={`profile picture`}
+            />
+          </Grid>
+          <Grid item xs={12} md={10} mt={2}>
+            <TextField
+              fullWidth
+              label={t('fields.avatar.label')}
+              {...register('avatar')}
+              error={Boolean(errors.avatar)}
+              helperText={errors.avatar?.message}
+            />
+          </Grid>
           <Grid item xs={12} md={6}>
             <TextField
               fullWidth
@@ -91,6 +108,21 @@ export const InformationsForm = ({ user, title }: Props) => {
           </Grid>
           <Grid item xs={12}>
             <TextField
+              fullWidth
+              label={t('fields.username.label')}
+              {...register('username', {
+                required: {
+                  value: true,
+                  message: t('fields.username.required'),
+                },
+              })}
+              error={Boolean(errors.username)}
+              helperText={errors.username?.message}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              disabled={true}
               fullWidth
               label={t('fields.email.label')}
               {...register('email', {

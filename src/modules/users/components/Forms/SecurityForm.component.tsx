@@ -13,7 +13,7 @@ import { useTranslation } from 'react-i18next'
 import { useInjection } from '@polyflix/di'
 
 import { User } from '@users/models/user.model'
-import { UserService } from '@users/services/user.service'
+import { UseroldService } from '@users/services/userold.service'
 import { IUserPasswordForm } from '@users/types/users.type'
 
 interface Props {
@@ -22,7 +22,7 @@ interface Props {
 }
 
 export const SecurityForm = ({ user, title }: Props) => {
-  const userService = useInjection<UserService>(UserService)
+  const userService = useInjection<UseroldService>(UseroldService)
 
   const { t } = useTranslation('auth')
 

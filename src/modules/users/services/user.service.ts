@@ -1,89 +1,63 @@
-import { EntityId } from '@reduxjs/toolkit'
-import { StatusCodes } from 'http-status-codes'
+import { createApi } from '@reduxjs/toolkit/dist/query/react'
 
-import { Injectable } from '@polyflix/di'
-
-import { CrudAbstractService } from '@core/services/crud-abstract.service'
-import {
-  ApiVersion,
-  CrudAction,
-  IApiResponse,
-  WithPagination,
-} from '@core/types/http.type'
-
-import { logoutUser, setUser } from '@auth/reducers/auth.slice'
+import { Endpoint } from '@core/constants/endpoint.constant'
+import { fetchWithRefresh } from '@core/services/api.service'
+import { ApiVersion } from '@core/types/http.type'
 
 import { User } from '@users/models/user.model'
-import { IUserPasswordForm } from '@users/types/users.type'
 
-@Injectable()
-export class UserService extends CrudAbstractService<
-  User,
-  IUserPasswordForm & User
-> {
-  constructor() {
-    super(ApiVersion.V1, 'users')
-  }
+export const usersApi = createApi({
+  reducerPath: 'api/users',
+  baseQuery: fetchWithRefresh(ApiVersion.V2),
+  tagTypes: [Endpoint.Users],
+  endpoints: (builder) => ({
+    /**
+     * Get user by id query configuration.
+     */
+    getUser: builder.query<User, string>({
+      providesTags: (_0, _1, id) => [{ type: Endpoint.Users, id }],
+      query: (id) => {
+        return `${Endpoint.Users}/${id}`
+      },
+    }),
 
-  async delete(item: User): Promise<void> {
-    const { status, error } = await this.httpService.delete(
-      `${this.endpoint}/${item.id}`
-    )
+    /**
+     * Get Users query configuration
+     */
+    getUsers: builder.query<{ data: User[]; totalCount: number }, string>({
+      query: () => {
+        return `${Endpoint.Users}`
+      },
+      // Provides a list of Users .
+      // If any mutation is executed that invalidate any of these tags, this query will re-run to be always up-to-date.
+      // The `LIST` id is a "virtual id" we just made up to be able to invalidate this query specifically if a new `User` element was added.
+      providesTags: (result) =>
+        // Is result available ?
+        result
+          ? [
+              ...result.data.map(
+                ({ id }) => ({ type: Endpoint.Users, id } as const)
+              ),
+              { type: Endpoint.Users, id: 'LIST' },
+            ]
+          : // An error occured, but we still want to refetch this query when the tag is invalidated.
+            [{ type: Endpoint.Users, id: 'LIST' }],
+    }),
 
-    if (status !== StatusCodes.NO_CONTENT) {
-      // Example for snackbar
-      this.snackbarService.createSnackbar(error, {
-        variant: 'error',
-      })
-    }
+    /**
+     * Update user mutation
+     */
+    updateUser: builder.mutation<User, { id: string; body: User }>({
+      query: ({ id, body }) => ({
+        url: `${Endpoint.Users}/${id}`,
+        method: 'PUT',
+        body,
+      }),
+      invalidatesTags: (result, _1, { id }) =>
+        result ? [{ type: Endpoint.Users, id }] : [],
+    }),
+  }),
+})
 
-    this.notify(CrudAction.DELETE)
-
-    this.dispatch(logoutUser())
-  }
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  findAll(): Promise<IApiResponse<WithPagination<User[]>>> {
-    throw new Error('Method not implemented.')
-  }
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  get(item: User): Promise<User> {
-    throw new Error('Method not implemented.')
-  }
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  getById(id: EntityId): Promise<User> {
-    throw new Error('Method not implemented.')
-  }
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  save(data: {}): Promise<User> {
-    throw new Error('Method not implemented.')
-  }
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  update(data: {}): Promise<void | User> {
-    throw new Error('Method not implemented.')
-  }
-
-  async updateUser(item: User | (IUserPasswordForm & User)) {
-    const {
-      response: user,
-      status,
-      error,
-    } = await this.httpService.put(`${this.endpoint}/${item.id}`, {
-      body: item,
-    })
-
-    if (status !== StatusCodes.OK) {
-      return this.snackbarService.createSnackbar(error, {
-        variant: 'error',
-      })
-    }
-
-    this.notify(CrudAction.UPDATE)
-
-    return this.dispatch(setUser(user))
-  }
-}
+export const { useGetUserQuery, useGetUsersQuery, useUpdateUserMutation } =
+  usersApi

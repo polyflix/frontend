@@ -12,7 +12,7 @@ import { useInjection } from '@polyflix/di'
 import { Regex } from '@core/constants/regex.constant'
 
 import { User } from '@users/models/user.model'
-import { UserService } from '@users/services/user.service'
+import { UseroldService } from '@users/services/userold.service'
 
 interface Props {
   user: User
@@ -26,7 +26,7 @@ interface Props {
  * @constructor
  */
 export const AdvancedForm = ({ user, title }: Props) => {
-  const userService = useInjection<UserService>(UserService)
+  const userService = useInjection<UseroldService>(UseroldService)
 
   const { t } = useTranslation('auth')
 
