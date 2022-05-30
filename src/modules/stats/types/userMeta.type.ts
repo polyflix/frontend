@@ -8,7 +8,7 @@ export interface IWatchMetadata {
 }
 
 export type UpsertUserVideoMeta = {
-  videoId: string
+  videoSlug: string
   watchedSeconds: number
   watchedPercent: number
   isWatched?: boolean

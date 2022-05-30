@@ -119,7 +119,7 @@ export const Player: React.FC<Props> = ({ playerRef, video }) => {
     }
 
     updateWatchtime({
-      videoId: videoSlug,
+      videoSlug: videoSlug,
       watchedSeconds: +playerRef.current?.currentTime?.toFixed(2),
       watchedPercent: +(
         playerRef.current?.currentTime / playerRef.current?.duration

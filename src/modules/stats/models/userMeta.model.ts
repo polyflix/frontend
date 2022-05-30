@@ -8,7 +8,7 @@ export interface WatchMetadata {
 }
 
 export interface Watchtime {
-  videoId: string
+  videoSlug: string
   userId?: string
   watchedSeconds: number
   watchedPercent: number
