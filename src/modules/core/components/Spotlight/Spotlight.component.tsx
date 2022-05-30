@@ -149,19 +149,18 @@ export const Spotlight: React.FC<PropsWithChildren<{}>> = ({}) => {
         <Fade in={modalOpened}>
           <Box
             sx={{
-              position: 'relative',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
+              position: 'absolute',
+              maxWidth: '1500px',
+              top: '50%',
+              left: '50%',
               width: '100%',
-              height: '100%',
-              p: 4,
+              transform: 'translate(-50%, -50%)',
+              p: { xs: 1, md: 2 },
             }}
           >
             <Box
               sx={{
                 width: '100%',
-                maxWidth: 1500,
                 p: 2,
                 borderRadius: 1,
                 boxShadow: 10,
