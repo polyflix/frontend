@@ -52,7 +52,7 @@ export const VideoDetails = ({ video }: VideoDetailsProps) => {
   }
 
   if (video && isLiked === undefined) {
-    setIsLiked(video?.userMeta ? video?.userMeta.isLiked : false)
+    setIsLiked(video?.isLiked)
   }
 
   return (
