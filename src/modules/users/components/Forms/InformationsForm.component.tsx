@@ -7,8 +7,11 @@ import Typography from '@mui/material/Typography'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
+import { useDispatch } from 'react-redux'
 
 import { Regex } from '@core/constants/regex.constant'
+
+import { setUser } from '@auth/reducers/auth.slice'
 
 import { User } from '@users/models/user.model'
 import { useUpdateUserMutation } from '@users/services/user.service'
@@ -22,6 +25,7 @@ export const InformationsForm = ({ user, title }: Props) => {
   const [updateUser] = useUpdateUserMutation()
 
   const { t } = useTranslation('auth')
+  const dispatch = useDispatch()
 
   const {
     register,
@@ -49,7 +53,9 @@ export const InformationsForm = ({ user, title }: Props) => {
     try {
       let u: User = data
       u.id = user.id
-      await updateUser({ id: u.id, body: u })
+      const response = await updateUser({ id: u.id, body: u })
+      const updatedUser = response.data
+      dispatch(setUser(updatedUser))
     } finally {
       setIsAction(false)
     }

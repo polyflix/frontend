@@ -121,7 +121,9 @@ export const ProfileBanner = ({ user }: Props) => {
           }}
         >
           <Typography align="center" variant="h4">
-            {user.displayName}
+            {user?.firstName != '' && user?.lastName != ''
+              ? user?.firstName + ' ' + user?.lastName
+              : user?.username}
           </Typography>
           <Typography align="center" variant="body1">
             {user.email}
