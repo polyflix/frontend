@@ -79,6 +79,14 @@ export const authSlice = createSlice({
       state.isAuthRefreshing = false
     },
     /**
+     * This method set the token in payload as current token .
+     * @param state
+     * @param action
+     */
+    refreshToken: (state, action: PayloadAction<{ token: string }>) => {
+      state.token = action.payload.token
+    },
+    /**
      * This method set the user in payload as current user.
      * @param state
      * @param action
@@ -103,6 +111,7 @@ export const {
   authenticationInProgress,
   authenticationFailed,
   refreshAuthFailed,
+  refreshToken,
   refreshAuthInProgress,
   setUser,
 } = authSlice.actions

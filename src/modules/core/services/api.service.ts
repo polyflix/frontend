@@ -11,7 +11,9 @@ import { Endpoint } from '@core/constants/endpoint.constant'
 import { RootState, store } from '@core/store'
 import { ApiVersion } from '@core/types/http.type'
 
-import { authenticateUser, logoutUser } from '@auth/reducers/auth.slice'
+import { logoutUser, refreshToken } from '@auth/reducers/auth.slice'
+
+import keycloakClient from '../../../../src/keycloak/config'
 
 // Here we configure the fetch base query of our API.
 // We define the endoint, the headers configuration etc.
@@ -35,25 +37,16 @@ export const fetchWithRefresh: (
   (version: ApiVersion) => async (args, api, extraOptions) => {
     let result = await baseQuery(version)(args, api, extraOptions)
     if (result.error && result.error.status === 401) {
-      // try to get a new token
-      const refreshResult = await baseQuery(version)(
-        { method: 'POST', url: '/auth/refresh' },
-        api,
-        extraOptions
-      )
-      if (refreshResult.data) {
-        const { token, user } = result.data || {
-          token: undefined,
-          user: undefined,
-        }
-        // store the new token
-        if (token && user) {
-          // Re-authenticate the user
-          store.dispatch(authenticateUser({ token, user }))
-          // Retry the query
-          result = await baseQuery(version)(args, api, extraOptions)
-        }
-      } else {
+      try {
+        // Try to get a new token
+        await keycloakClient.updateToken(-1)
+
+        // Store new token in the state
+        store.dispatch(refreshToken({ token: keycloakClient.token!! }))
+
+        // Retry the query
+        result = await baseQuery(version)(args, api, extraOptions)
+      } catch {
         store.dispatch(logoutUser())
       }
     }
