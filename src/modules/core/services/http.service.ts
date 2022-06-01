@@ -6,7 +6,6 @@ import axios, {
   Method,
 } from 'axios'
 import { StatusCodes } from 'http-status-codes'
-import keycloakClient from 'src/keycloak/config'
 
 import { Inject, Injectable } from '@polyflix/di'
 
@@ -15,14 +14,15 @@ import { healthy, unhealthy } from '@core/reducers/server.slice'
 import type { AppDispatch } from '@core/store'
 import { store } from '@core/store'
 
+import keycloakClient from '@auth/keycloak/config'
+import { refreshToken } from '@auth/reducers/auth.slice'
+
 import {
-  ApiVersion,
   BaseHttpService,
   IApiResponse,
   IRequestOptions,
 } from '../types/http.type'
 import { ApiService } from './endpoint.service'
-import { refreshToken } from '@auth/reducers/auth.slice'
 
 const NETWORK_ERROR = 'Network error'
 

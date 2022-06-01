@@ -11,9 +11,8 @@ import { Endpoint } from '@core/constants/endpoint.constant'
 import { RootState, store } from '@core/store'
 import { ApiVersion } from '@core/types/http.type'
 
+import keycloakClient from '@auth/keycloak/config'
 import { logoutUser, refreshToken } from '@auth/reducers/auth.slice'
-
-import keycloakClient from '../../../../src/keycloak/config'
 
 // Here we configure the fetch base query of our API.
 // We define the endoint, the headers configuration etc.

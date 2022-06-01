@@ -30,6 +30,7 @@ import { AuthRouter } from '@auth/auth.router'
 import { PrivateRoute } from '@auth/components/PrivateRoute/PrivateRoute.component'
 import { useAuth } from '@auth/hooks/useAuth.hook'
 import { useServerHealth } from '@auth/hooks/useServerHealth.hook'
+import keycloakClient from '@auth/keycloak/config'
 import { AuthService } from '@auth/services/auth.service'
 
 import { QuizzRouter } from '@quizzes/quizzes.router'
@@ -48,7 +49,6 @@ import { GlobalStyles } from '@theme/globalStyles'
 import { ThemeConfig } from '@theme/theme'
 
 import i18n from './i18n/config'
-import keycloakClient from './keycloak/config'
 import './styles/index.scss'
 
 /**

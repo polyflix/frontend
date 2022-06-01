@@ -4,9 +4,9 @@ import { ApiService } from '@core/services/endpoint.service'
 import { HttpService } from '@core/services/http.service'
 import { ApiVersion } from '@core/types/http.type'
 
-import { User } from '@users/models/user.model'
+import keycloak from '@auth/keycloak/config'
 
-import keycloak from '../../../keycloak/config'
+import { User } from '@users/models/user.model'
 
 @Injectable()
 export class MeService {
