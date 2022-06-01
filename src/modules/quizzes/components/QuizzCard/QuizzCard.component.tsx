@@ -28,11 +28,7 @@ import { useGetAttemptsQuery } from '@quizzes/services/attempt.service'
 import { UserAvatar } from '@users/components/UserAvatar/UserAvatar.component'
 import { User } from '@users/models/user.model'
 
-import {
-  getFeedbackColor,
-  getScore,
-  percentage,
-} from '../../helpers/score.helper'
+import { getFeedbackColor, percentage } from '../../helpers/score.helper'
 import { QuizzAttemptCard } from '../QuizzAttemptCard/QuizzAttemptCard.component'
 import { NewTag } from './QuizzCard.style'
 import { QuizzSliderOption } from './QuizzCardOption.component'
