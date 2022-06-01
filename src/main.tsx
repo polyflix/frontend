@@ -51,6 +51,7 @@ import { ThemeConfig } from '@theme/theme'
 import i18n from './i18n/config'
 import { AdminRouter } from './modules/admin/admin.router'
 import './styles/index.scss'
+import { LinkRouter } from '@links/links.router'
 
 /**
  * This functional component is the main entrypoint of our app.
