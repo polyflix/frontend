@@ -7,6 +7,8 @@ import { useInjection } from '@polyflix/di'
 import { Icon } from '@core/components/Icon/Icon.component'
 import { SnackbarService } from '@core/services/snackbar.service'
 
+import { useAuth } from '@auth/hooks/useAuth.hook'
+
 import { usePlayQuizz } from '@quizzes/hooks/usePlayQuizz.hook'
 import { useSubmitAttemptMutation } from '@quizzes/services/attempt.service'
 import { PlayComponentProps, Step } from '@quizzes/types/play.type'
@@ -19,6 +21,8 @@ export const Recap = ({ quizz }: PlayComponentProps) => {
 
   const { answers, setQuestion, setStep, setAttempt } = usePlayQuizz()
 
+  const { user } = useAuth()
+
   // get the mutation
   const [submit, { isLoading }] = useSubmitAttemptMutation()
 
@@ -27,7 +31,11 @@ export const Recap = ({ quizz }: PlayComponentProps) => {
    */
   const handleSubmit = async () => {
     try {
-      const attempt = await submit({ id: quizz.id, answers }).unwrap()
+      const attempt = await submit({
+        id: quizz.id,
+        answers,
+        user: user!!,
+      }).unwrap()
       setStep(Step.End)
       setAttempt(attempt)
     } catch (e: any) {

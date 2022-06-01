@@ -5,6 +5,9 @@ import snackBarReducer from '@core/reducers/snackbar.slice'
 
 import authReducer from '@auth/reducers/auth.slice'
 
+import { quizzesAttemptsApi } from '@quizzes/services/attempt.service'
+import { quizzesApi } from '@quizzes/services/quizz.service'
+
 import videosReducer from '@videos/reducers/video.slice'
 import { videosApi } from '@videos/services/video.service'
 
@@ -21,6 +24,8 @@ export const store = configureStore({
     [videosApi.reducerPath]: videosApi.reducer,
     [usersApi.reducerPath]: usersApi.reducer,
     [subtitlesApi.reducerPath]: subtitlesApi.reducer,
+    [quizzesApi.reducerPath]: quizzesApi.reducer,
+    [quizzesAttemptsApi.reducerPath]: quizzesAttemptsApi.reducer,
     auth: authReducer,
     server: serverReducer,
     videos: videosReducer,
@@ -29,7 +34,13 @@ export const store = configureStore({
     upload: uploadReducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(api.middleware).concat(videosApi.middleware),
+    getDefaultMiddleware()
+      .concat(api.middleware)
+      .concat(videosApi.middleware)
+      .concat(usersApi.middleware)
+      .concat(subtitlesApi.middleware)
+      .concat(quizzesApi.middleware)
+      .concat(quizzesAttemptsApi.middleware),
 })
 
 export type RootState = ReturnType<typeof store.getState>

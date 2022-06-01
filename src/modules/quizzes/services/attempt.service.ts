@@ -1,19 +1,27 @@
+import { createApi } from '@reduxjs/toolkit/dist/query/react'
+
 import { Container } from '@polyflix/di'
 
 import { Endpoint } from '@core/constants/endpoint.constant'
 import { CrudFilters } from '@core/filters/nestjsx-crud.filter'
-import { api } from '@core/services/api.service'
+import { fetchWithRefresh } from '@core/services/api.service'
+import { ApiVersion } from '@core/types/http.type'
 import { Pagination } from '@core/types/nestjsx-crud.type'
 
 import { Attempt } from '@quizzes/models/attempt.model'
 import { QuizzAttemptFilters, QuizzFilters } from '@quizzes/types/filters.type'
 import { QuizzAnswers } from '@quizzes/types/play.type'
 
+import { User } from '@users/models/user.model'
+
 // Get the filter builder from our DI system
 const filterBuilder = Container.get<CrudFilters<QuizzFilters>>(CrudFilters)
 
 // Inject quizzes attempts endpoints to the core API
-export const quizzesAttemptsApi = api.injectEndpoints({
+export const quizzesAttemptsApi = createApi({
+  reducerPath: 'api/attempts',
+  baseQuery: fetchWithRefresh(ApiVersion.V2),
+  tagTypes: [Endpoint.Attempts],
   endpoints: (builder) => ({
     /**
      * Build the get attempts query
@@ -43,12 +51,12 @@ export const quizzesAttemptsApi = api.injectEndpoints({
      */
     submitAttempt: builder.mutation<
       Attempt,
-      { id: string; answers: QuizzAnswers }
+      { id: string; answers: QuizzAnswers; user: Partial<User> }
     >({
-      query: ({ answers, id }) => ({
+      query: ({ answers, id, user }) => ({
         url: `${Endpoint.Quizzes}/${id}/attempts`,
         method: 'POST',
-        body: { answers },
+        body: { answers, user },
       }),
       // Invalidates all Quizz-type queries providing the LIST id - after all, depending of the sort order
       // that newly created quizz could show up in any lists.

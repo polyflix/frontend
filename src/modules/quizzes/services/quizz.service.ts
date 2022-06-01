@@ -1,9 +1,12 @@
+import { createApi } from '@reduxjs/toolkit/dist/query/react'
+
 import { Container } from '@polyflix/di'
 
 import { Endpoint } from '@core/constants/endpoint.constant'
 import { CrudFilters } from '@core/filters/nestjsx-crud.filter'
 import { Element } from '@core/models/element.model'
-import { api } from '@core/services/api.service'
+import { fetchWithRefresh } from '@core/services/api.service'
+import { ApiVersion } from '@core/types/http.type'
 import { Pagination } from '@core/types/nestjsx-crud.type'
 
 import { Quizz } from '@quizzes/models/quizz.model'
@@ -14,7 +17,10 @@ import { IQuizzForm } from '@quizzes/types/form.type'
 const filterBuilder = Container.get<CrudFilters<QuizzFilters>>(CrudFilters)
 
 // Inject quizzes endpoints to the core API
-export const quizzesApi = api.injectEndpoints({
+export const quizzesApi = createApi({
+  reducerPath: 'api/quizzes',
+  baseQuery: fetchWithRefresh(ApiVersion.V2),
+  tagTypes: [Endpoint.Quizzes],
   endpoints: (builder) => ({
     /**
      * Get quizz by id query configuration.
