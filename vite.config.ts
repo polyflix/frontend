@@ -80,6 +80,10 @@ export default defineConfig({
         find: '@search',
         replacement: resolve(__dirname, './src/modules/search'),
       },
+      {
+        find: '@admin',
+        replacement: resolve(__dirname, './src/modules/admin'),
+      },
     ],
   },
   plugins: [

@@ -8,7 +8,8 @@
   },
   "sections": {
     "general": "General",
-    "management": "My content"
+    "management": "My content",
+    "administration": "Administration"
   },
   "items": {
     "home": "Home",
@@ -24,5 +25,11 @@
     "courses": "Courses",
     "links": "Links",
     "collections": "Collections"
+  },
+  "administration": {
+    "resources": {
+      "label": "Resources",
+      "users": "Users"
+    }
   }
 }

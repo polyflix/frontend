@@ -2,6 +2,7 @@ import { createApi } from '@reduxjs/toolkit/dist/query/react'
 
 import { Endpoint } from '@core/constants/endpoint.constant'
 import { fetchWithRefresh } from '@core/services/api.service'
+import { PaginationFilter } from '@core/types/filters.type'
 import { ApiVersion } from '@core/types/http.type'
 
 import { User } from '@users/models/user.model'
@@ -24,10 +25,17 @@ export const usersApi = createApi({
     /**
      * Get Users query configuration
      */
-    getUsers: builder.query<{ data: User[]; totalCount: number }, string>({
-      query: () => {
-        return `${Endpoint.Users}`
+    getUsers: builder.query<
+      {
+        currentPage: number
+        data: User[]
+        totalElements: number
+        totalPages: number
       },
+      PaginationFilter
+    >({
+      query: ({ page = 1, pageSize = 1 }) =>
+        `${Endpoint.Users}?page=${page}&size=${pageSize}`,
       // Provides a list of Users .
       // If any mutation is executed that invalidate any of these tags, this query will re-run to be always up-to-date.
       // The `LIST` id is a "virtual id" we just made up to be able to invalidate this query specifically if a new `User` element was added.

@@ -30,6 +30,7 @@ i18n
       'courses',
       'links',
       'collections',
+      'administration',
     ],
     defaultNS: 'common',
   })

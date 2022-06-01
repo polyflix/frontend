@@ -9,9 +9,10 @@ export const getCommonTextFieldProps = (): TextFieldProps => ({
 })
 
 export const getCommonSubmitButtonProps = (
-  isLoading: boolean
+  isLoading: boolean,
+  fullWidth: boolean = true
 ): LoadingButtonProps => ({
-  fullWidth: true,
+  fullWidth,
   size: 'large',
   type: 'submit',
   variant: 'contained',

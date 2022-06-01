@@ -1,0 +1,38 @@
+{
+  "users": {
+    "page": {
+      "panel": {
+        "title": "Users",
+        "you": "It's you",
+        "fields": {
+          "avatar": "Avatar",
+          "fullName": "Full name",
+          "email": "Email",
+          "roles": "Roles"
+        }
+      }
+    },
+    "form": {
+      "labels": {
+        "firstName": "First name",
+        "lastName": "Last name",
+        "username": "Username"
+      },
+      "errors": {
+        "firstName": {
+          "required": "The first name is required."
+        },
+        "lastName": {
+          "required": "The last name is required."
+        },
+        "username": {
+          "required": "The username is required."
+        }
+      },
+      "actions": {
+        "close": "Close",
+        "save": "Save"
+      }
+    }
+  }
+}

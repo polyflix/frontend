@@ -25,6 +25,7 @@ import { NotFoundPage } from '@core/pages/404.page'
 import { ServiceUnavailablePage } from '@core/pages/503.page'
 import { HomePage } from '@core/pages/Home.page'
 import { store } from '@core/store'
+import { Role } from '@core/types/roles.type'
 
 import { AuthRouter } from '@auth/auth.router'
 import { PrivateRoute } from '@auth/components/PrivateRoute/PrivateRoute.component'
@@ -49,6 +50,7 @@ import { GlobalStyles } from '@theme/globalStyles'
 import { ThemeConfig } from '@theme/theme'
 
 import i18n from './i18n/config'
+import { AdminRouter } from './modules/admin/admin.router'
 import './styles/index.scss'
 
 /**
@@ -100,6 +102,11 @@ const PolyflixApp = () => {
               <Route path="/videos" component={VideoRouter} />
               <Route path="/collections" component={CollectionRouter} />
               <Route path="/links" component={LinkRouter} />{' '}
+              <PrivateRoute
+                condition={user?.roles.includes(Role.Admin) || false}
+              >
+                <Route path="/admin" component={AdminRouter} />
+              </PrivateRoute>
               <Route exact path="/" component={HomePage} />
               <Route component={NotFoundPage} />
             </Switch>

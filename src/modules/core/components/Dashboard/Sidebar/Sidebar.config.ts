@@ -6,6 +6,7 @@ import i18n from '../../../../../i18n/config'
 export enum SidebarSection {
   GENERAL = 'general',
   MANAGEMENT = 'management',
+  ADMIN = 'administration',
 }
 
 export interface SidebarItem {
@@ -149,6 +150,18 @@ const sidebarConfiguration: SidebarItem[] = [
       {
         title: 'actions.create',
         href: '/links/create',
+      },
+    ],
+  },
+  {
+    title: 'administration.resources.label',
+    section: SidebarSection.ADMIN,
+    icon: 'carbon:software-resource-cluster',
+    roles: [Role.Admin],
+    items: [
+      {
+        title: 'administration.resources.users',
+        href: '/admin/users',
       },
     ],
   },

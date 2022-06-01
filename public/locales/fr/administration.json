@@ -1,0 +1,38 @@
+{
+  "users": {
+    "page": {
+      "panel": {
+        "title": "Utilisateurs",
+        "you": "Vous",
+        "fields": {
+          "avatar": "Avatar",
+          "fullName": "Nom d'affichage",
+          "email": "Addresse email",
+          "roles": "Roles"
+        }
+      }
+    },
+    "form": {
+      "labels": {
+        "firstName": "Prénom",
+        "lastName": "Nom",
+        "username": "Nom d'utilisateur"
+      },
+      "errors": {
+        "firstName": {
+          "required": "Le prénom est requis."
+        },
+        "lastName": {
+          "required": "Le nom est requis."
+        },
+        "username": {
+          "required": "Le nom d'utilisateur est requis."
+        }
+      },
+      "actions": {
+        "close": "Fermer",
+        "save": "Sauvegarder"
+      }
+    }
+  }
+}

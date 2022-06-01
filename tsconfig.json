@@ -14,7 +14,8 @@
       "@subtitles/*": ["src/modules/subtitles/*"],
       "@stats/*": ["src/modules/stats/*"],
       "@links/*": ["src/modules/links/*"],
-      "@search/*": ["src/modules/search/*"]
+      "@search/*": ["src/modules/search/*"],
+      "@admin/*": ["src/modules/admin/*"]
     },
     "target": "ESNext",
     "useDefineForClassFields": true,
