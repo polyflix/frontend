@@ -12,6 +12,7 @@ import {
   useTheme,
 } from '@mui/material'
 import dayjs from 'dayjs'
+import { useEffect, useState } from 'react'
 import { buildStyles, CircularProgressbar } from 'react-circular-progressbar'
 import { useTranslation } from 'react-i18next'
 import { Link as RouterLink } from 'react-router-dom'
@@ -67,9 +68,7 @@ export const QuizzCard = ({
   // We want to label the quizz as new if it was created less of 7 days ago.
   const isNew = Math.abs(dayjs(quizz.createdAt).diff(dayjs(), 'day')) < 7
 
-  const score = getScore(quizz) || 0
   const questions = quizz.data.questions || []
-  const color = getFeedbackColor(percentage(score, questions.length), theme)
 
   const { data: attempts, isLoading: isAttemptsLoading } = useGetAttemptsQuery({
     id: quizz.id,
@@ -83,6 +82,24 @@ export const QuizzCard = ({
       'user.id': user!.id,
     },
   })
+
+  // We use state because of attempts could be loaded after the component and need hot refresh
+  const [score, setScore] = useState(0)
+  const [color, setColor] = useState('')
+
+  useEffect(() => {
+    if (attempts) {
+      let computedScore = quizz.data.keepHighestScore
+        ? attempts!.data
+            .map((attempt) => attempt.score)
+            .sort((a, b) => b - a)[0]
+        : attempts!.data
+            .map((attempt) => attempt.score)
+            .reduce((a, b) => a + b, 0)
+      setScore(computedScore)
+    }
+    setColor(getFeedbackColor(percentage(score, questions.length), theme))
+  }, [attempts])
 
   /**
    * Build the publisher UI in the card.
