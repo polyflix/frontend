@@ -6,6 +6,7 @@ import axios, {
   Method,
 } from 'axios'
 import { StatusCodes } from 'http-status-codes'
+import keycloakClient from 'src/keycloak/config'
 
 import { Inject, Injectable } from '@polyflix/di'
 
@@ -21,6 +22,7 @@ import {
   IRequestOptions,
 } from '../types/http.type'
 import { ApiService } from './endpoint.service'
+import { refreshToken } from '@auth/reducers/auth.slice'
 
 const NETWORK_ERROR = 'Network error'
 
@@ -48,19 +50,19 @@ export class HttpService implements BaseHttpService {
         if (error.message === NETWORK_ERROR) throw Error(NETWORK_ERROR)
         if (error?.response?.status === 401 && !originalRequest._retry) {
           originalRequest._retry = true
-          const endpoint = `${apiService.endpoint(ApiVersion.V1)}/auth`
-          const res = await this.post(`${endpoint}/refresh`)
 
-          const { error: error1, response } = res
+          // Try to update token
+          await keycloakClient.updateToken(-5)
 
-          if (error1) return Promise.reject(error1)
+          // Store new token in the store
+          this.dispatch(refreshToken({ token: keycloakClient.token!! }))
 
-          const { token } = response
-
+          // Retry the query
           originalRequest.headers = {
             ...originalRequest.headers,
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${keycloakClient.token}`,
           }
+
           return axios(originalRequest)
         }
 
