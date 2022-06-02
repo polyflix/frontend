@@ -16,6 +16,12 @@ export interface Video {
   description: string
   thumbnail: string
   publishedBy?: User
+  publisher?: {
+    id: string
+    avatar: string
+    firstName: string
+    lastName: string
+  }
   likes: number
   views: number
   sourceType: PlayerVideoSource

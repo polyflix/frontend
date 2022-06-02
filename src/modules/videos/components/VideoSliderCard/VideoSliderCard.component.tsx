@@ -58,7 +58,8 @@ const VideoSliderOption: React.FC<PropsVideo> = ({ video }) => {
     <CardMenu
       updateHref={`/videos/${video.slug}/update`}
       onDelete={handleDelete}
-      publisherId={video?.publishedBy?.id!}
+      // publisherId={video?.publishedBy?.id!}
+      publisherId={video?.publisher?.id!}
       type="videos"
     >
       <MenuItem component={RouterLink} to={`/videos/${video?.slug}`}>
@@ -157,7 +158,7 @@ export const VideoSliderCard = ({ video, isFetching = false }: Props) => {
                   sm: 40,
                 },
               }}
-              user={video.publishedBy!}
+              user={video.publisher!}
             />
             <Box
               sx={{
@@ -213,7 +214,7 @@ export const VideoSliderCard = ({ video, isFetching = false }: Props) => {
                   variant="body2"
                   noWrap={true}
                 >
-                  {video.publishedBy?.displayName}
+                  {`${video.publisher?.firstName} ${video.publisher?.lastName}`}
                 </Typography>
                 <Typography
                   sx={{

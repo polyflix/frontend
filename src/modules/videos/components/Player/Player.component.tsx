@@ -44,6 +44,8 @@ const PLAYER_MOVE_FORWARD_STEP = 13
 const PLAYER_MOVE_BACKWARD_STEP = 10
 
 export const Player: React.FC<Props> = ({ playerRef, video }) => {
+  console.log('Player')
+
   const { token } = useAuth()
   const hostRef = useRef<HTMLDivElement>(null)
 
