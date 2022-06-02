@@ -7,66 +7,66 @@ include:
 # REVIEW ENVIRONMENT
 # ======================================
 
-build:review:
-  extends: build:code
-  before_script:
-    - !reference [.node, before_script]
-    - cat src/environments/production.environment.ts | sed "s/polyflix/$CI_ENVIRONMENT_SLUG.qapolyflix/g" > src/environments/$CI_ENVIRONMENT_SLUG.environment.ts
-  environment:
-    name: review/$CI_COMMIT_REF_SLUG
-    action: prepare
-  rules:
-    # If we are on a feature branch
-    - if: $CI_COMMIT_BRANCH && $CI_OPEN_MERGE_REQUESTS
-      variables:
-        BUILD_MODE: $CI_ENVIRONMENT_SLUG
-
-package:review:
-  extends: package:app
-  needs: ["build:review"]
-  environment:
-    name: review/$CI_COMMIT_REF_SLUG
-    url: https://$CI_ENVIRONMENT_SLUG.qapolyflix.dopolytech.fr
-    action: start
-    on_stop: stop:review
-    auto_stop_in: 1 week
-  after_script:
-    - echo "IMAGE_TAG=$CI_ENVIRONMENT_SLUG" >> deploy.env
-  rules:
-    # If we are on a feature branch
-    - if: $CI_COMMIT_BRANCH && $CI_OPEN_MERGE_REQUESTS
-      variables:
-        CUSTOM_REGISTRIES_DESTINATIONS: "--destination $CI_REGISTRY_IMAGE:$CI_ENVIRONMENT_SLUG"
-  artifacts:
-    reports:
-      dotenv: deploy.env
-
-stop:review:
-  image: curlimages/curl:7.81.0
-  stage: deploy
-  variables:
-    GIT_STRATEGY: none
-  environment:
-    name: review/$CI_COMMIT_REF_SLUG
-    action: stop
-  script:
-    - curl --fail -X POST --form token=$CI_INFRASTRUCTURE_TRIGGER_TOKEN --form "variables[ENVIRONMENT]=review/$CI_COMMIT_REF_SLUG" --form ref=review-env "$CI_API_V4_URL/projects/1346/trigger/pipeline"
-  rules:
-    - if: $CI_COMMIT_BRANCH && $CI_OPEN_MERGE_REQUESTS
-      allow_failure: true
-      when: manual
-
-deploy:review:
-  needs: ["package:review"]
-  extends: .kube-deploy
-  rules:
-    # If we want to deploy a review env
-    - if: $CI_COMMIT_BRANCH && $CI_OPEN_MERGE_REQUESTS
-      when: manual
-      allow_failure: true
-      variables:
-        HELM_OPTIONS: --set deployments.frontend.tag=$IMAGE_TAG
-        ENVIRONMENT: review/$CI_COMMIT_REF_SLUG
+# build:review:
+#   extends: build:code
+#   before_script:
+#     - !reference [.node, before_script]
+#     - cat src/environments/production.environment.ts | sed "s/polyflix/$CI_ENVIRONMENT_SLUG.qapolyflix/g" > src/environments/$CI_ENVIRONMENT_SLUG.environment.ts
+#   environment:
+#     name: review/$CI_COMMIT_REF_SLUG
+#     action: prepare
+#   rules:
+#     # If we are on a feature branch
+#     - if: $CI_COMMIT_BRANCH && $CI_OPEN_MERGE_REQUESTS
+#       variables:
+#         BUILD_MODE: $CI_ENVIRONMENT_SLUG
+# 
+# package:review:
+#   extends: package:app
+#   needs: ["build:review"]
+#   environment:
+#     name: review/$CI_COMMIT_REF_SLUG
+#     url: https://$CI_ENVIRONMENT_SLUG.qapolyflix.dopolytech.fr
+#     action: start
+#     on_stop: stop:review
+#     auto_stop_in: 1 week
+#   after_script:
+#     - echo "IMAGE_TAG=$CI_ENVIRONMENT_SLUG" >> deploy.env
+#   rules:
+#     # If we are on a feature branch
+#     - if: $CI_COMMIT_BRANCH && $CI_OPEN_MERGE_REQUESTS
+#       variables:
+#         CUSTOM_REGISTRIES_DESTINATIONS: "--destination $CI_REGISTRY_IMAGE:$CI_ENVIRONMENT_SLUG"
+#   artifacts:
+#     reports:
+#       dotenv: deploy.env
+# 
+# stop:review:
+#   image: curlimages/curl:7.81.0
+#   stage: deploy
+#   variables:
+#     GIT_STRATEGY: none
+#   environment:
+#     name: review/$CI_COMMIT_REF_SLUG
+#     action: stop
+#   script:
+#     - curl --fail -X POST --form token=$CI_INFRASTRUCTURE_TRIGGER_TOKEN --form "variables[ENVIRONMENT]=review/$CI_COMMIT_REF_SLUG" --form ref=review-env "$CI_API_V4_URL/projects/1346/trigger/pipeline"
+#   rules:
+#     - if: $CI_COMMIT_BRANCH && $CI_OPEN_MERGE_REQUESTS
+#       allow_failure: true
+#       when: manual
+# 
+# deploy:review:
+#   needs: ["package:review"]
+#   extends: .kube-deploy
+#   rules:
+#     # If we want to deploy a review env
+#     - if: $CI_COMMIT_BRANCH && $CI_OPEN_MERGE_REQUESTS
+#       when: manual
+#       allow_failure: true
+#       variables:
+#         HELM_OPTIONS: --set deployments.frontend.tag=$IMAGE_TAG
+#         ENVIRONMENT: review/$CI_COMMIT_REF_SLUG
 
 # ===============================
 
