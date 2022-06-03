@@ -29,7 +29,8 @@
     "resources": {
       "label": "Resources",
       "users": "Users",
-      "groups": "Groups"
+      "groups": "Groups",
+      "videos": "Videos"
     }
   }
 }

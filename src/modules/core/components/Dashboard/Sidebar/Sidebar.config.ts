@@ -149,6 +149,7 @@ const sidebarConfiguration: SidebarItem[] = [
         title: 'administration.resources.groups',
         href: '/admin/groups',
       },
+      { title: 'administration.resources.videos', href: '/admin/videos' },
     ],
   },
 ]
