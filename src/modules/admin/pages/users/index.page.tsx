@@ -70,12 +70,14 @@ const columns = (user: User, t: TFunction): GridColDef[] => [
 export const AdminUserPage = () => {
   // Pagination state
   const { user } = useAuth()
-  const [page, setPage] = useState<number>(0)
   const [pageSize, setPageSize] = useState<number>(10)
   const [selected, setSelected] = useState<User>()
   const { t } = useTranslation('administration')
 
-  const { isLoading, isFetching, data } = useGetUsersQuery({ page, pageSize })
+  const { isLoading, isFetching, data } = useGetUsersQuery({
+    page: 0,
+    pageSize: 9999,
+  })
 
   const totalElements = data?.totalElements || 0
   const users = data?.data || []
@@ -99,7 +101,6 @@ export const AdminUserPage = () => {
           columns={columns(user!, t)}
           pageSize={pageSize}
           rowsPerPageOptions={[10, 30, 50, 100]}
-          onPageChange={setPage}
           onPageSizeChange={setPageSize}
         />
       </div>
