@@ -100,8 +100,9 @@ const PolyflixApp = () => {
               <Route path="/users" component={UserRouter} />
               <Route path="/videos" component={VideoRouter} />
               <Route path="/modules" component={CollectionRouter} />
-              {/* <Route path="/links" component={LinkRouter} />{' '} */}
+              {/* <Route path="/links" component={LinkRouter} /> */}
               <Route path="/collections" component={CollectionRouter} />
+              <Route path="/modules" component={CollectionRouter} />
               <Route exact path="/" component={HomePage} />
               <PrivateRoute
                 condition={user?.roles.includes(Role.Admin) || false}
