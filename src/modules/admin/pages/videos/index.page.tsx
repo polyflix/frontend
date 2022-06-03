@@ -1,4 +1,4 @@
-import { Chip } from '@mui/material'
+import { Chip, Typography } from '@mui/material'
 import { DataGrid, GridColDef } from '@mui/x-data-grid'
 import { capitalize } from 'lodash'
 import { useState } from 'react'
@@ -13,28 +13,47 @@ import { AdminLayout } from '../../layouts/AdminLayout.layout'
 const columns: GridColDef[] = [
   { field: 'title', headerName: 'Title', width: 400 },
   {
-    field: 'roles',
-    headerName: 'Roles',
+    field: 'author',
+    headerName: 'Author',
     width: 200,
-    sortable: false,
     renderCell: (params) => (
       <>
-        {params.row.roles.map((role: string, index: number) => (
-          <Chip
-            key={index}
-            label={capitalize(role)}
-            variant="outlined"
-            color="primary"
-          />
-        ))}
+        <Typography sx={{ mr: 1 }}>{params.row.publisher.firstName} {params.row.publisher.lastName}</Typography>
       </>
     ),
   },
+  {
+    field: 'draft',
+    headerName: 'Draft',
+    width: 100,
+    renderCell: (params) => (
+      <Chip
+            label={capitalize(params.row.draft)}
+            variant="outlined"
+            color="primary"
+          />
+    ),
+  },
+  {
+    field: 'visibility',
+    headerName: 'Visibility',
+    width: 100,
+    renderCell: (params) => (
+      <Chip
+            label={capitalize(params.row.draft)}
+            variant="outlined"
+            color="primary"
+          />
+    ),
+  },
+  {
+    field: '',
+  }
 ]
 
 export const AdminVideoPage = () => {
   // Pagination state
-  const [page, setPage] = useState<number>(0)
+  const [page, setPage] = useState<number>(1)
   const [pageSize, setPageSize] = useState<number>(10)
   const [selected, setSelected] = useState<Video>()
   const { t } = useTranslation('administration')
@@ -44,6 +63,12 @@ export const AdminVideoPage = () => {
   const totalElements = data?.totalCount || 0
   const videos = data?.items || []
 
+  // map slug to id
+  const videosWithId = videos.map((video: Video) => ({
+    ...video,
+    id: video.slug,
+  }))
+
   return (
     <AdminLayout pageTitle={t('video.page.panel.title')}>
       <EditVideoModal video={selected} />
@@ -51,7 +76,7 @@ export const AdminVideoPage = () => {
         <DataGrid
           isRowSelectable={() => false}
           loading={isLoading || isFetching}
-          rows={videos}
+          rows={videosWithId}
           onRowClick={(params) => setSelected(params.row)}
           rowCount={totalElements}
           columns={columns}
