@@ -53,7 +53,7 @@ export const CourseForm: React.FC<Props> = ({ course }) => {
   // Collection selection modal
   const [openCollectionModal, setOpenCollectionModal] = useState(false)
   const [storedCollections, setStoredCollections] = useState<Collection[]>(
-    course?.collections ?? []
+    course?.modules ?? []
   )
   const appendStoredCollections = useCallback(
     (collection: Collection) => {
@@ -87,7 +87,7 @@ export const CourseForm: React.FC<Props> = ({ course }) => {
       // We use an object, else useFieldArray will create an array with each letter an entry
       // Trust me you don't want this
       // @ts-ignore
-      collections: course?.collections?.map((i) => ({ id: i.id })) ?? [],
+      modules: course?.modules?.map((i) => ({ id: i.id })) ?? [],
     },
   })
 
@@ -98,12 +98,13 @@ export const CourseForm: React.FC<Props> = ({ course }) => {
     remove: removeSelectedCollectionFields,
   } = useFieldArray({
     control,
-    name: 'collections',
+    name: 'modules',
     keyName: 'uniqueId',
   })
 
   const onSubmit = async (courseData: ICourseForm) => {
     const submitMethod = () => {
+      courseData.modules = courseData.modules!.map((i) => i.id)
       if (isUpdate && course)
         return updateCourseMutator({ slug: course.slug, body: courseData })
 

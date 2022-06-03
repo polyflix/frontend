@@ -62,7 +62,6 @@ export const api = createApi({
     Endpoint.Stats,
     Endpoint.Quizzes,
     Endpoint.Attempts,
-    Endpoint.Courses,
     Endpoint.Links,
   ],
   endpoints: () => ({}),

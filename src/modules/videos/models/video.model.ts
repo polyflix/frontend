@@ -9,6 +9,7 @@ import { PlayerVideoSource } from '@videos/types/video.type'
 import { Attachment } from './attachment.model'
 
 export interface Video {
+  id: string
   slug: string
   title: string
   description: string

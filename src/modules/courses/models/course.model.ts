@@ -10,5 +10,5 @@ export interface Course extends ContentModel {
   description: string
   content: string
   user?: Partial<User>
-  collections?: Collection[]
+  modules?: Collection[]
 }

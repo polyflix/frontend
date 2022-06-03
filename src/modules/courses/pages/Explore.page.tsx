@@ -19,24 +19,16 @@ export const ExploreCoursesPage = () => {
 
   const [filters, setFilters] = useState({
     page: parseInt(params.get('page') || '1'),
-    limit: 10,
+    pageSize: 10,
     draft: false,
-    join: [
-      {
-        field: 'user',
-        select: ['firstName', 'lastName', 'avatar'],
-      },
-      {
-        field: 'collections',
-        select: ['slug'],
-      },
-    ],
   })
 
   const { data, isLoading, isFetching } = useGetCoursesQuery(filters)
 
   const courses: Course[] = data?.data ?? []
   const skeletons = buildSkeletons(3)
+
+  let totalPage = Math.ceil((data?.total ?? 1) / (filters.pageSize ?? 1))
 
   return (
     <Page title={t('explore.title')} isLoading={isLoading}>
@@ -81,7 +73,7 @@ export const ExploreCoursesPage = () => {
           <PaginationSynced
             filters={filters}
             setFilters={setFilters}
-            pageCount={data?.pageCount!}
+            pageCount={totalPage}
           />
         </Box>
       ) : (

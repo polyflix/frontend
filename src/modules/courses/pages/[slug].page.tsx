@@ -39,21 +39,7 @@ export const CourseSlugPage = () => {
   const history = useHistory()
   const snackbarService = useInjection<SnackbarService>(SnackbarService)
 
-  const fetchFilters = useMemo<CoursesFilters>(
-    () => ({
-      join: [
-        {
-          field: 'user',
-          select: ['firstName', 'fullName', 'lastName', 'avatar'],
-        },
-        {
-          field: 'collections',
-          select: ['slug', 'elements', 'name'],
-        },
-      ],
-    }),
-    []
-  )
+  const fetchFilters = useMemo<CoursesFilters>(() => ({}), [])
   const { data } = useGetCourseQuery({ slug, filters: fetchFilters })
   const course: Course | undefined = data
 
@@ -183,11 +169,11 @@ export const CourseSlugPage = () => {
           <>
             <Stack spacing={2}>
               <Typography variant="h4">{t('collections')}</Typography>
-              {course?.collections?.map((collection) => (
-                <Paper variant="outlined" key={collection.id} sx={{ p: 2 }}>
+              {course?.modules?.map((module) => (
+                <Paper variant="outlined" key={module.id} sx={{ p: 2 }}>
                   <Link
                     component={RouterLink}
-                    to={`collections/${collection.slug}`}
+                    to={`/modules/${module.slug}`}
                     underline="none"
                     color="inherit"
                   >
@@ -198,14 +184,14 @@ export const CourseSlugPage = () => {
                         width: 'auto',
                       }}
                     >
-                      {collection.name}
+                      {module.name}
                     </Typography>
                   </Link>
-                  <CollectionTimeline collectionSlug={collection.slug} />
+                  <CollectionTimeline collectionSlug={module.slug} />
                 </Paper>
               ))}
             </Stack>
-            {course?.collections?.length === 0 && (
+            {course?.modules?.length === 0 && (
               <Alert severity="info">{t('noData.empty')}</Alert>
             )}
           </>

@@ -1,19 +1,24 @@
+import { createApi } from '@reduxjs/toolkit/dist/query/react'
+
 import { Container } from '@polyflix/di'
 
 import { Endpoint } from '@core/constants/endpoint.constant'
-import { CrudFilters } from '@core/filters/nestjsx-crud.filter'
-import { api } from '@core/services/api.service'
-import { Pagination } from '@core/types/nestjsx-crud.type'
+import { RestCrudFilters } from '@core/filters/rest-crud.filter'
+import { fetchWithRefresh } from '@core/services/api.service'
+import { ApiVersion } from '@core/types/http.type'
 
 import { Course } from '@courses/models/course.model'
 import { CoursesFilters } from '@courses/types/filters.type'
 import { ICourseForm } from '@courses/types/form.type'
 
-// Get the filter builder from our DI system
-const filterBuilder = Container.get<CrudFilters<CoursesFilters>>(CrudFilters)
+const filterBuilder =
+  Container.get<RestCrudFilters<CoursesFilters>>(RestCrudFilters)
 
 // Inject Courses endpoints to the core API
-export const coursesApi = api.injectEndpoints({
+export const coursesApi = createApi({
+  reducerPath: 'api/courses',
+  baseQuery: fetchWithRefresh(ApiVersion.V2),
+  tagTypes: [Endpoint.Courses],
   endpoints: (builder) => ({
     /**
      * Get Course by id query configuration.
@@ -33,7 +38,10 @@ export const coursesApi = api.injectEndpoints({
     /**
      * Get Courses query configuration
      */
-    getCourses: builder.query<Pagination<Course>, CoursesFilters>({
+    getCourses: builder.query<
+      { data: Course[]; total: number; page: number; pageSize: number },
+      CoursesFilters
+    >({
       query: (filters?: CoursesFilters) => {
         return `${Endpoint.Courses}${filterBuilder.createFilters(
           filters || {}

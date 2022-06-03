@@ -7,4 +7,5 @@ export interface ICourseForm {
   description: string
   content: string
   collections?: string[]
+  modules?: string[]
 }

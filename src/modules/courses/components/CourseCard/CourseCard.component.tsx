@@ -75,7 +75,7 @@ export const CourseCard = ({ course }: Props) => {
         >
           <Typography variant="body2" sx={{ ...draftStyle }}>
             {t('courseCard.footerElements', {
-              count: course?.collections?.length || 0,
+              count: course?.modules?.length || 0,
             })}
           </Typography>
           {course?.user?.id === user?.id && (

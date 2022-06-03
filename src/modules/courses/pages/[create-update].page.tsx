@@ -14,12 +14,7 @@ import { CoursesFilters } from '@courses/types/filters.type'
 export const CreateUpdateCoursePage = () => {
   const { t } = useTranslation('courses')
   const { slug } = useParams<{ slug: string }>()
-  const fetchFilters = useMemo<CoursesFilters>(
-    () => ({
-      join: [{ field: 'user', select: ['avatar'] }, { field: 'collections' }],
-    }),
-    []
-  )
+  const fetchFilters = useMemo<CoursesFilters>(() => ({}), [])
 
   const { data, isLoading } = useGetCourseQuery(
     { slug, filters: fetchFilters },

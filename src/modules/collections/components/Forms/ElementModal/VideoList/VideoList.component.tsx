@@ -43,11 +43,11 @@ export const VideoList = ({ fieldArray }: VideoListProps) => {
   const { fields, append, remove } = fieldArray
 
   const handleToggle = (video: Video) => () => {
-    const currentIndex = fields.findIndex((e) => e.id === video.slug)
+    const currentIndex = fields.findIndex((e) => e.id === video.id)
 
     if (currentIndex === -1) {
       append({
-        id: video.slug,
+        id: video.id,
         name: video.title,
         thumbnail: video.thumbnail,
       })
@@ -55,9 +55,8 @@ export const VideoList = ({ fieldArray }: VideoListProps) => {
       remove(currentIndex)
     }
   }
-
   const isVideoSelected = (video: Video) =>
-    fields.some((e) => e.slug === video.slug)
+    fields.some((e) => e.id === video.id)
 
   let totalPage = Math.ceil((videos?.totalCount ?? 1) / (filters.pageSize ?? 1))
 
@@ -69,7 +68,7 @@ export const VideoList = ({ fieldArray }: VideoListProps) => {
         {videos
           ? videos?.items.map((item: Video) => (
               <ListItem
-                key={item.slug}
+                key={item.id}
                 secondaryAction={
                   <Checkbox
                     edge="end"
