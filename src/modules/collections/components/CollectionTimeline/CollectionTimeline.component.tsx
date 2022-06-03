@@ -28,9 +28,6 @@ export const CollectionTimeline = ({
 }: CollectionTimelineProps) => {
   const { data, isLoading } = useGetCollectionQuery({
     slug: collectionSlug,
-    filters: {
-      join: ['elements'],
-    },
   })
   const collection: Collection | undefined = data
   const { t } = useTranslation('collections')

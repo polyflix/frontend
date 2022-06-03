@@ -33,7 +33,7 @@ export const LinkModal = ({ open, onClose, collection }: Props) => {
   const snackbarService = useInjection<SnackbarService>(SnackbarService)
 
   const getUrl = (key: string) =>
-    `${location.protocol}//${location.host}/collections/${collection?.slug}?accessKey=${key}`
+    `${location.protocol}//${location.host}/modules/${collection?.slug}?accessKey=${key}`
 
   return (
     <Modal

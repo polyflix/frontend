@@ -11,6 +11,8 @@ import { quizzesApi } from '@quizzes/services/quizz.service'
 import videosReducer from '@videos/reducers/video.slice'
 import { videosApi } from '@videos/services/video.service'
 
+import { collectionsApi as modulesApi } from '@collections/services/collection.service'
+
 import usersReducer from '@users/reducers/user.slice'
 import { usersApi } from '@users/services/user.service'
 
@@ -26,6 +28,7 @@ export const store = configureStore({
     [subtitlesApi.reducerPath]: subtitlesApi.reducer,
     [quizzesApi.reducerPath]: quizzesApi.reducer,
     [quizzesAttemptsApi.reducerPath]: quizzesAttemptsApi.reducer,
+    [modulesApi.reducerPath]: modulesApi.reducer,
     auth: authReducer,
     server: serverReducer,
     videos: videosReducer,
@@ -40,7 +43,8 @@ export const store = configureStore({
       .concat(usersApi.middleware)
       .concat(subtitlesApi.middleware)
       .concat(quizzesApi.middleware)
-      .concat(quizzesAttemptsApi.middleware),
+      .concat(quizzesAttemptsApi.middleware)
+      .concat(modulesApi.middleware),
 })
 
 export type RootState = ReturnType<typeof store.getState>

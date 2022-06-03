@@ -13,9 +13,6 @@ export const CreateUpdateCollectionPage = () => {
 
   const { data: collection, isLoading } = useGetCollectionQuery({
     slug: slug ?? '',
-    filters: {
-      join: [{ field: 'elements' }, { field: 'passwords' }],
-    },
   })
 
   const { t } = useTranslation('collections')

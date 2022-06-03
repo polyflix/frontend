@@ -100,7 +100,7 @@ const PolyflixApp = () => {
               <Route path="/quizzes" component={QuizzRouter} />
               <Route path="/users" component={UserRouter} />
               <Route path="/videos" component={VideoRouter} />
-              <Route path="/collections" component={CollectionRouter} />
+              <Route path="/modules" component={CollectionRouter} />
               <Route path="/links" component={LinkRouter} />{' '}
               <Route exact path="/" component={HomePage} />
               <PrivateRoute

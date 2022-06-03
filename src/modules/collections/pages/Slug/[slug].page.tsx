@@ -34,12 +34,7 @@ export const CollectionSlugPage = () => {
 
   const [deleteCourse] = useDeleteCollectionMutation()
 
-  const filters = useMemo<CollectionFilters>(
-    () => ({
-      join: [{ field: 'elements' }],
-    }),
-    []
-  )
+  const filters = useMemo<CollectionFilters>(() => ({}), [])
 
   const { data, isLoading, error } = useGetCollectionQuery({
     slug: slug,
@@ -50,8 +45,8 @@ export const CollectionSlugPage = () => {
   const handleDelete = async () => {
     try {
       await deleteCourse({ slug: data!.slug }).unwrap()
-      snackbarService.notify(CrudAction.DELETE, Endpoint.Collections)
-      history.push('/users/profile/collections')
+      snackbarService.notify(CrudAction.DELETE, Endpoint.Modules)
+      history.push('/users/profile/modules')
     } catch (e: any) {
       snackbarService.createSnackbar(e.data.statusText, { variant: 'error' })
     }
@@ -107,7 +102,7 @@ export const CollectionSlugPage = () => {
             aria-label="edit"
             size="medium"
             component={Link}
-            to={`/collections/${data.slug}/update`}
+            to={`/modules/${data.slug}/update`}
           >
             <Edit />
           </Fab>

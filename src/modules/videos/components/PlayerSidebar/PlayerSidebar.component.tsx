@@ -26,7 +26,7 @@ import { SubtitlePanel } from './SubtitlesPanel/SubtitlesPanel.component'
 
 enum TabIndex {
   SUBTITLES = '1',
-  COLLECTION = '2',
+  MODULE = '2',
   ATTACHEMENT = '3',
   NOTES = '4',
 }
@@ -50,7 +50,7 @@ export const PlayerSidebar = ({ video, playerRef }: PlayerSidebarProps) => {
 
   useEffect(() => {
     if (query.get('c')) {
-      setValue(TabIndex.COLLECTION)
+      setValue(TabIndex.MODULE)
     }
   }, [])
 
@@ -114,7 +114,7 @@ export const PlayerSidebar = ({ video, playerRef }: PlayerSidebarProps) => {
                 {query.has('c') && (
                   <Tab
                     label={t('slug.sidebar.tabs.collections.title')}
-                    value={TabIndex.COLLECTION}
+                    value={TabIndex.MODULE}
                   />
                 )}
                 <Tab
@@ -134,7 +134,7 @@ export const PlayerSidebar = ({ video, playerRef }: PlayerSidebarProps) => {
             <TabPanelStyle value={TabIndex.ATTACHEMENT}>
               {video && <AttachmentsPanel attachments={video.attachments} />}
             </TabPanelStyle>
-            <TabPanelStyle value={TabIndex.COLLECTION}>
+            <TabPanelStyle value={TabIndex.MODULE}>
               {query.has('c') && <CollectionPanel />}
             </TabPanelStyle>
             <TabPanelStyle value={TabIndex.NOTES}>

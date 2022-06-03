@@ -3,7 +3,7 @@ export enum Endpoint {
   Videos = 'videos',
   Users = 'users',
   Subtitles = 'subtitles',
-  Collections = 'collections',
+  Modules = 'modules',
   Stats = 'stats',
   Courses = 'courses',
   Attempts = 'attempts',

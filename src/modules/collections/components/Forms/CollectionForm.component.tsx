@@ -95,7 +95,7 @@ export const CollectionForm = ({ collection, isUpdate }: Props) => {
     // Need to send only element id
     const mappedData = {
       ...data,
-      elementToCollection: fields.map((element, index) => ({
+      elements: fields.map((element, index) => ({
         elementId: element.id,
         order: index,
       })),
@@ -118,13 +118,13 @@ export const CollectionForm = ({ collection, isUpdate }: Props) => {
 
       snackbarService.notify(
         isUpdate ? CrudAction.UPDATE : CrudAction.CREATE,
-        Endpoint.Collections
+        Endpoint.Modules
       )
 
       if (col?.visibility === Visibility.PROTECTED) {
         setCollectionData(col)
         setOpenLinkModal(true)
-      } else history.push('/users/profile/collections')
+      } else history.push('/users/profile/modules')
     } catch (e: any) {
       snackbarService.createSnackbar(e.data.statusText, { variant: 'error' })
     }
@@ -134,7 +134,7 @@ export const CollectionForm = ({ collection, isUpdate }: Props) => {
     <form onSubmit={handleSubmit(onSubmit)}>
       <LinkModal
         collection={collectionData}
-        onClose={() => history.push('/users/profile/collections')}
+        onClose={() => history.push('/users/profile/modules')}
         open={openLinkModal}
       />
       <Stack spacing={2}>

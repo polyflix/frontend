@@ -59,7 +59,7 @@ const sidebarConfiguration: SidebarItem[] = [
   },
   {
     title: 'items.collections',
-    href: '/collections/explore',
+    href: '/modules/explore',
     icon: 'bx:bx-collection',
     roles: [Role.Member, Role.Contributor, Role.Admin],
   },
@@ -93,11 +93,11 @@ const sidebarConfiguration: SidebarItem[] = [
     items: [
       {
         title: 'actions.list',
-        href: '/users/profile/collections',
+        href: '/users/profile/modules',
       },
       {
         title: 'actions.create',
-        href: '/collections/create',
+        href: '/modules/create',
       },
     ],
   },

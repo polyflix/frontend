@@ -32,7 +32,7 @@ export const CollectionCard = ({ collection }: CollectionCardProps) => {
       {/** The thing with collection.draft is meant to be here because DOM cannot parse it if it's not a string **/}
       <Link
         component={RouterLink}
-        to={`/collections/${collection.slug}`}
+        to={`/modules/${collection.slug}`}
         underline="none"
         color="inherit"
         sx={{ height: '100%' }}
@@ -68,7 +68,7 @@ export const CollectionCard = ({ collection }: CollectionCardProps) => {
               })}
             </Typography>
             <CardMenu
-              updateHref={`/collections/${collection.slug}/update`}
+              updateHref={`/modules/${collection.slug}/update`}
               onDelete={handleDelete}
               publisherId={collection?.user?.id}
               type="collections"

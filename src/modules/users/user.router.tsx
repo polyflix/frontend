@@ -22,7 +22,7 @@ const ProfileRouter = () => {
         <Route exact path={`${url}/videos`} component={ProfileVideosPage} />
         <Route
           exact
-          path={`${url}/collections`}
+          path={`${url}/modules`}
           component={ProfileCollectionsPage}
         />
         <Route exact path={`${url}/courses`} component={ProfileCoursesPage} />
