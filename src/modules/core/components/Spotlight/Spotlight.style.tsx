@@ -1,4 +1,4 @@
-import { Link } from '@mui/material'
+import { Link, Box } from '@mui/material'
 import TextField from '@mui/material/TextField'
 import { alpha, styled } from '@mui/system'
 
@@ -6,9 +6,6 @@ export const Search = styled('div')(({ theme }) => ({
   position: 'relative',
   bgcolor: 'background.paper',
   borderRadius: theme.shape.borderRadius,
-  '&:hover': {
-    backgroundColor: alpha(theme.palette.grey[300], 0.5),
-  },
   margin: theme.spacing(0, 0, 0, 0),
   width: '100%',
   [theme.breakpoints.up('sm')]: {
@@ -76,8 +73,9 @@ export const SearchCard = styled(Link)(({ theme }) => ({
   width: '100%',
   height: '100%',
   borderRadius: theme.shape.borderRadius,
+  transition: 'background ease 300ms',
   '&:hover': {
-    backgroundColor: alpha(theme.palette.grey[400], 0.7),
+    backgroundColor: alpha(theme.palette.grey[400], 0.3),
   },
 }))
 
@@ -93,4 +91,12 @@ export const HighlightedSpan = styled('span')(({ theme }) => ({
     bottom: 0,
     left: 0,
   },
+}))
+
+export const ResultThumbnailContainer = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  backgroundColor: theme.palette.grey[300],
+  borderRadius: theme.spacing(1),
 }))

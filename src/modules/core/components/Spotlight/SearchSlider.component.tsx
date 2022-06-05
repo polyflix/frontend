@@ -32,9 +32,16 @@ export const SearchSlider: React.FC<SearchSliderProps> = ({
         paddingX: '1%',
       }}
     >
-      <Typography variant="h3">{title}</Typography>
+      <Typography
+        variant="h4"
+        sx={{
+          marginBottom: 1,
+        }}
+      >
+        {title}
+      </Typography>
       <Swiper
-        spaceBetween={20}
+        spaceBetween={10}
         breakpoints={{
           300: {
             slidesPerView: 2.25,

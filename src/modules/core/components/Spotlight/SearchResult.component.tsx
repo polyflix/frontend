@@ -1,4 +1,4 @@
-import { Stack, Tooltip, Typography, Box, Avatar } from '@mui/material'
+import { Stack, Tooltip, Typography, Avatar } from '@mui/material'
 import {
   SearchQuiz,
   SearchTypes,
@@ -13,7 +13,7 @@ import { VideoCardThumbnail } from '@videos/components/VideoCard/VideoCard.style
 
 import { AspectRatioBox } from '../AspectRatioBox/AspectRation.component'
 import { HighlightedText } from './HighlightedText.component'
-import { SearchCard } from './Spotlight.style'
+import { ResultThumbnailContainer, SearchCard } from './Spotlight.style'
 
 type SearchResultProps = {
   result: SearchVideo | SearchQuiz | SearchUser
@@ -58,16 +58,10 @@ export const SearchResult: React.FC<SearchResultProps> = ({
       break
   }
 
-  return (
-    <SearchCard
-      underline="none"
-      color="inherit"
-      component={RouterLink}
-      to={link}
-      onClick={() => closeModal()}
-    >
-      <AspectRatioBox ratio={16 / 9}>
-        {result.type === SearchTypes.VIDEO && (
+  const displayResultThumbnail = () => {
+    switch (result.type) {
+      case SearchTypes.VIDEO:
+        return (
           <VideoCardThumbnail
             loading="lazy"
             src={(result as SearchVideo).thumbnail}
@@ -78,71 +72,81 @@ export const SearchResult: React.FC<SearchResultProps> = ({
             }}
             alt={`${title} thumbnail`}
           />
-        )}
-        {result.type === SearchTypes.USER && (
+        )
+      case SearchTypes.QUIZ:
+        return <Icon name={icon} />
+      case SearchTypes.USER:
+        return (
           <Avatar
-            sx={{ width: '100px', height: '100px' }}
             src={(result as SearchUser).avatar}
             alt={`${title} profile picture`}
           />
-        )}
-        {result.type !== SearchTypes.VIDEO &&
-          result.type !== SearchTypes.USER && <Icon name={icon} />}
+        )
+    }
+  }
+
+  return (
+    <SearchCard
+      underline="none"
+      color="inherit"
+      component={RouterLink}
+      to={link}
+      onClick={closeModal}
+    >
+      <AspectRatioBox ratio={16 / 9}>
+        <ResultThumbnailContainer>
+          {displayResultThumbnail()}
+        </ResultThumbnailContainer>
       </AspectRatioBox>
       <Stack
         sx={{
           mt: {
             xs: 1,
-            md: 2,
+            sm: 2,
           },
+          paddingLeft: {
+            xs: 0,
+            sm: 1,
+          },
+          paddingRight: {
+            xs: 0,
+            sm: 1,
+          },
+          paddingBottom: 1,
         }}
-        direction="row"
+        direction="column"
       >
-        <Box
-          sx={{
-            pl: 1,
-            width: '100%',
-          }}
-        >
-          <Box
+        <Tooltip title={title} followCursor>
+          <Typography
+            fontWeight="bold"
+            variant="subtitle1"
+            noWrap={true}
             sx={{
-              display: 'grid',
-              gridTemplateColumns: '1fr 28px',
+              fontSize: {
+                xs: '0.8rem',
+                md: '1rem',
+              },
             }}
           >
-            <Tooltip title={title} followCursor>
-              <Typography
-                fontWeight="bold"
-                variant="subtitle1"
-                noWrap={true}
-                sx={{
-                  fontSize: {
-                    xs: '0.8rem',
-                    md: '1rem',
-                  },
-                }}
-              >
-                <HighlightedText text={title} search={query} />
-              </Typography>
-            </Tooltip>
-          </Box>
-          <Box>
-            <Typography
-              sx={{
-                color: 'text.secondary',
-                textAlign: 'justify',
-                fontSize: {
-                  xs: '0.7rem',
-                  md: '0.9rem',
-                },
-                lineHeight: 1,
-              }}
-              variant="body2"
-            >
-              <HighlightedText text={description} search={query} />
-            </Typography>
-          </Box>
-        </Box>
+            <HighlightedText text={title} search={query} />
+          </Typography>
+        </Tooltip>
+        {description && (
+          <Typography
+            sx={{
+              color: 'text.secondary',
+              textAlign: 'left',
+              fontSize: {
+                xs: '0.7rem',
+                md: '0.9rem',
+              },
+              lineHeight: 1,
+            }}
+            variant="body2"
+          >
+            <HighlightedText text={description} search={query} />
+          </Typography>
+        )}
       </Stack>
     </SearchCard>
   )
