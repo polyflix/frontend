@@ -25,22 +25,14 @@ export const ExploreQuizzesPage = () => {
 
   // Useful states for filtering purposes
   const [filters, setFilters] = useState<QuizzFilters>({
-    sort: [{ field: 'createdAt', order: 'DESC' }],
     page: parseInt(params.get('page') || '1'),
     limit: 10,
+    visibility: Visibility.PUBLIC,
+    //draft: false,
   })
 
   // Fetch the quizzes
   const { data, isLoading, isFetching } = useGetQuizzesQuery({
-    join: [
-      {
-        field: 'element.user',
-        select: ['firstName', 'lastName', 'avatar'],
-      },
-      { field: 'questions', select: ['label'] },
-    ],
-    'element.visibility': Visibility.PUBLIC,
-    'element.draft': false,
     ...filters,
   })
 

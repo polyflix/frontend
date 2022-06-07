@@ -69,13 +69,7 @@ export const QuizzCard = ({
   const { data: attempts, isLoading: isAttemptsLoading } = useGetAttemptsQuery({
     id: quizz.id,
     filters: {
-      join: [
-        {
-          field: 'user',
-          select: ['firstName', 'lastName'],
-        },
-      ],
-      'user.id': user!.id,
+      //'user.id': user!.id,
     },
   })
 

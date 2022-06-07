@@ -22,24 +22,19 @@ export const QuizzesHistoryPage = () => {
   const { t } = useTranslation('quizzes')
   const { user } = useAuth()
 
-  const [filters, setFilters] = useState<Partial<QuizzFilters>>({})
+  const [filters, setFilters] = useState<Partial<QuizzFilters>>({
+    page: 1,
+    limit: 10,
+    isDone: true,
+    userId: user?.id,
+  })
 
   const {
     data: quizzes,
     isLoading,
     isFetching,
   } = useGetQuizzesQuery({
-    join: [
-      'attempts',
-      'questions',
-      { field: 'attempts.user', select: ['firstName', 'lastName'] },
-      { field: 'user', select: ['firstName', 'lastName'] },
-    ],
-    sort: [{ field: 'attempts.createdAt', order: 'DESC' }],
-    page: filters.page || 1,
-    limit: filters.limit || 10,
-    'element.draft': false,
-    'attempts.user': user?.id,
+    ...filters,
   })
 
   const skeletons = buildSkeletons(3)
