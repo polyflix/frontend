@@ -1,4 +1,15 @@
 {
+  "roles": {
+    "page": {
+      "panel": {
+        "title": "Roles",
+        "fields": {
+          "name": "Role name",
+          "permissions": "Number of permissions attached"
+        }
+      }
+    }
+  },
   "users": {
     "page": {
       "panel": {

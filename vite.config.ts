@@ -84,6 +84,10 @@ export default defineConfig({
         find: '@admin',
         replacement: resolve(__dirname, './src/modules/admin'),
       },
+      {
+        find: '@roles',
+        replacement: resolve(__dirname, './src/modules/roles'),
+      },
     ],
   },
   plugins: [

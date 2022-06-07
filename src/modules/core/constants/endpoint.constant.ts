@@ -9,4 +9,6 @@ export enum Endpoint {
   Attempts = 'attempts',
   Links = 'links',
   Search = 'search',
+  Roles = 'roles',
+  Permissions = 'permissions',
 }

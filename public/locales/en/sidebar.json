@@ -27,6 +27,7 @@
     "collections": "Collections"
   },
   "administration": {
+    "roles": "Roles & Permissions",
     "resources": {
       "label": "Resources",
       "users": "Users"

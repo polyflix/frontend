@@ -1,4 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit'
+import { permissionsApi } from '@roles/services/permission.service'
+import { rolesApi } from '@roles/services/role.service'
 import { subtitlesApi } from '@subtitles/services/subtitle.service'
 
 import snackBarReducer from '@core/reducers/snackbar.slice'
@@ -26,6 +28,8 @@ export const store = configureStore({
     [subtitlesApi.reducerPath]: subtitlesApi.reducer,
     [quizzesApi.reducerPath]: quizzesApi.reducer,
     [quizzesAttemptsApi.reducerPath]: quizzesAttemptsApi.reducer,
+    [permissionsApi.reducerPath]: permissionsApi.reducer,
+    [rolesApi.reducerPath]: rolesApi.reducer,
     auth: authReducer,
     server: serverReducer,
     videos: videosReducer,
@@ -40,7 +44,9 @@ export const store = configureStore({
       .concat(usersApi.middleware)
       .concat(subtitlesApi.middleware)
       .concat(quizzesApi.middleware)
-      .concat(quizzesAttemptsApi.middleware),
+      .concat(quizzesAttemptsApi.middleware)
+      .concat(permissionsApi.middleware)
+      .concat(rolesApi.middleware),
 })
 
 export type RootState = ReturnType<typeof store.getState>

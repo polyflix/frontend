@@ -15,7 +15,8 @@
       "@stats/*": ["src/modules/stats/*"],
       "@links/*": ["src/modules/links/*"],
       "@search/*": ["src/modules/search/*"],
-      "@admin/*": ["src/modules/admin/*"]
+      "@admin/*": ["src/modules/admin/*"],
+      "@roles/*": ["src/modules/roles/*"]
     },
     "target": "ESNext",
     "useDefineForClassFields": true,

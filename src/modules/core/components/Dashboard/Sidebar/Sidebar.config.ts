@@ -154,6 +154,13 @@ const sidebarConfiguration: SidebarItem[] = [
     ],
   },
   {
+    title: 'administration.roles',
+    section: SidebarSection.ADMIN,
+    icon: 'icon-park-outline:permissions',
+    roles: [Role.Admin],
+    href: '/admin/roles',
+  },
+  {
     title: 'administration.resources.label',
     section: SidebarSection.ADMIN,
     icon: 'carbon:software-resource-cluster',
