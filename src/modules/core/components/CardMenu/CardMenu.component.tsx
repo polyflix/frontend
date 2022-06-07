@@ -12,6 +12,7 @@ import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 
 import { useConfirmModal } from '@core/hooks/useConfirmModal.hook'
+import { Role } from '@core/types/roles.type'
 
 import { useAuth } from '@auth/hooks/useAuth.hook'
 
@@ -61,6 +62,7 @@ export const CardMenu: React.FC<Props> = ({
   })
 
   const isMine: boolean = (user && publisherId === user.id) ?? false
+  const isAdmin = user?.roles?.length && user?.roles?.includes(Role.Admin)
 
   return (
     <>
@@ -86,7 +88,7 @@ export const CardMenu: React.FC<Props> = ({
         }}
       >
         {children}
-        {(!publisherId || isMine) && (
+        {(!publisherId || isMine || isAdmin) && (
           <MenuItem onClick={handleClose} component={Link} to={updateHref}>
             <ListItemIcon>
               <Edit fontSize="small" />
@@ -94,7 +96,7 @@ export const CardMenu: React.FC<Props> = ({
             <ListItemText>{capitalize(t('actions.update'))}</ListItemText>
           </MenuItem>
         )}
-        {(!publisherId || isMine) && (
+        {(!publisherId || isMine || isAdmin) && (
           <MenuItem onClick={onClickModal}>
             <ListItemIcon>
               <Delete fontSize="small" color="error" />

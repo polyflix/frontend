@@ -6,8 +6,6 @@ import { PresignedURL } from '@core/models/presigned-url.model'
 
 import { PlayerVideoSource } from '@videos/types/video.type'
 
-import { User } from '@users/models/user.model'
-
 import { Attachment } from './attachment.model'
 
 export interface Video {
@@ -15,7 +13,6 @@ export interface Video {
   title: string
   description: string
   thumbnail: string
-  publishedBy?: User
   publisher?: {
     id: string
     avatar: string

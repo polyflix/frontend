@@ -31,7 +31,6 @@ export const VideoDescriptionMenu: React.FC<Props> = ({ video }) => {
     <CardMenu
       updateHref={`/videos/${video?.slug}/update`}
       onDelete={handleDelete}
-      // publisherId={video?.publishedBy?.id!}
       publisherId={video?.publisher?.id!}
       type="videos"
     />

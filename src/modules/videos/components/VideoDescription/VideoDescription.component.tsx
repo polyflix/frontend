@@ -156,10 +156,6 @@ export const VideoDetails = ({ video }: VideoDetailsProps) => {
                   to="#"
                 >
                   <Stack spacing={1} direction="row" alignItems="center">
-                    {/* <UserAvatar user={video.publishedBy!} />
-                    <Typography variant="caption">
-                      {video.publishedBy?.displayName}
-                    </Typography> */}
                     <UserAvatar user={video.publisher!} />
                     <Typography variant="caption">
                       {`${video.publisher?.firstName} ${video.publisher?.lastName}`}
