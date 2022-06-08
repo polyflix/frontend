@@ -21,8 +21,8 @@ import {
   BehaviorSubject,
   debounceTime,
   filter,
-  switchMap,
   Subject,
+  switchMap,
   takeUntil,
 } from 'rxjs'
 
@@ -57,12 +57,13 @@ export const Spotlight: React.FC<PropsWithChildren<{}>> = ({}) => {
   const [data, setData] = useState<SortedPaginatedSearchResult>()
   const [page, setPage] = useState(1)
 
-  const executeSearch = (q: string, p: number) =>
-    searchService.searchFor({
-      query: q,
-      page: p,
+  const executeSearch = (query: string, pageNumber: number) => {
+    return searchService.searchFor({
+      query: query,
+      page: pageNumber,
       size: PAGE_SIZE,
     })
+  }
 
   useEffect(() => {
     page$

@@ -11,3 +11,8 @@ export interface Subtitle {
   id?: string
   video?: Video
 }
+
+export interface SubtitleResponse {
+  language: SubtitleLanguages
+  accessUrl: string
+}

@@ -44,8 +44,6 @@ const PLAYER_MOVE_FORWARD_STEP = 13
 const PLAYER_MOVE_BACKWARD_STEP = 10
 
 export const Player: React.FC<Props> = ({ playerRef, video }) => {
-  console.log('Player')
-
   const { token } = useAuth()
   const hostRef = useRef<HTMLDivElement>(null)
 
@@ -65,14 +63,15 @@ export const Player: React.FC<Props> = ({ playerRef, video }) => {
 
   // time from player to last sync
   const [lastPlayerTime, setLastPlayerTime] = useState<number | undefined>()
-
+  useEffect(() => {
+    setSubtitles(subtitles)
+    setState(subtitleState)
+  }, [setState, setSubtitles, subtitles, subtitleState])
   useEffect(() => {
     window.onkeypress = (e: KeyboardEvent) => {
       return !(e.key === ' ' && e.target !== document.body)
     }
-    setSubtitles(subtitles)
-    setState(subtitleState)
-  }, [setState, setSubtitles, subtitles, subtitleState])
+  }, [])
 
   const [mediaError, setMediaError] = useState<string>()
 

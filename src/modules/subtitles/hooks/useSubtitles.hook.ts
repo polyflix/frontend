@@ -1,8 +1,8 @@
 import { Subtitle } from '@subtitles/models/subtitle.model'
 import { useGetVideoSubtitleQuery } from '@subtitles/services/subtitle.service'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
-import { Block } from '@polyflix/vtt-parser'
+import { Block, VttFile } from '@polyflix/vtt-parser'
 
 import {
   i18nLanguageToSubtitleLanguage,
@@ -46,6 +46,19 @@ export const useSubtitles = (video: Video): UseSubtitlesProps => {
       }
     )
 
+  const applySubtitles = useCallback(async () => {
+    if (!data) {
+      return
+    }
+    let subtitle = {
+      lang: data.language,
+      vttUrl: data.accessUrl,
+      vttFile: await VttFile.fromUrl(data.accessUrl),
+    } as Subtitle
+    setSubtitles([subtitle])
+    setState('success')
+  }, [data])
+
   // Handling pending request to trigger dispatch
   useEffect(() => {
     if (isExternal) {
@@ -71,8 +84,7 @@ export const useSubtitles = (video: Video): UseSubtitlesProps => {
     }
 
     if (data) {
-      setSubtitles(data)
-      setState('success')
+      applySubtitles()
     }
   }, [isError, isSuccess])
 
