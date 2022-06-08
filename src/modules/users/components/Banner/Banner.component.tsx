@@ -74,12 +74,12 @@ const BannerTabs = () => {
         to="/users/profile/quizzes"
         component={RouterLink}
       />
-      <Tab
+      {/* <Tab
         label={t('profile.tabs.links.title')}
         value="/users/profile/links"
         to="/users/profile/links"
         component={RouterLink}
-      />
+      /> */}
     </Tabs>
   )
 }
