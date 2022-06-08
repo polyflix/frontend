@@ -45,8 +45,8 @@ export const CreateUpdatePage = () => {
       />
 
       {!source && !video && (
-        <Grid container spacing={5}>
-          <Grid item md={4}>
+        <Grid container spacing={12}>
+          <Grid item md={6}>
             <Link style={{ textDecoration: 'none' }} to="?src=YouTube">
               <VideoSourceCard
                 icon="logos:youtube-icon"
@@ -55,7 +55,7 @@ export const CreateUpdatePage = () => {
               />
             </Link>
           </Grid>
-          <Grid item md={4}>
+          <Grid item md={6}>
             <Link style={{ textDecoration: 'none' }} to="?src=File">
               <VideoSourceCard
                 icon="bi:file-arrow-up"

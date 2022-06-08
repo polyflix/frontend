@@ -17,6 +17,9 @@ export const VideoSourceCard = ({ source, icon, description }: Props) => {
       sx={{
         height: '100%',
         p: 3,
+        '&:hover': {
+          bgcolor: 'background.default',
+        },
       }}
     >
       <Stack spacing={3}>
