@@ -12,6 +12,7 @@ import {
   Stack,
   Typography,
 } from '@mui/material'
+import { Buffer } from 'buffer'
 import CopyToClipboard from 'react-copy-to-clipboard'
 import { Trans, useTranslation } from 'react-i18next'
 
@@ -33,7 +34,9 @@ export const LinkModal = ({ open, onClose, collection }: Props) => {
   const snackbarService = useInjection<SnackbarService>(SnackbarService)
 
   const getUrl = (key: string) =>
-    `${location.protocol}//${location.host}/modules/${collection?.slug}?accessKey=${key}`
+    `${location.protocol}//${location.host}/modules/${
+      collection?.slug
+    }?accessKey=${Buffer.from(key, 'utf8').toString('base64')}`
 
   return (
     <Modal
@@ -65,27 +68,29 @@ export const LinkModal = ({ open, onClose, collection }: Props) => {
               <Trans i18nKey={'share.description'} ns={'collections'} />
             </Typography>
             <List>
-              {collection?.passwords.map(({ accessKey, name }: any) => (
-                <ListItem key={accessKey}>
-                  <CopyToClipboard
-                    onCopy={() => {
-                      snackbarService.createSnackbar(t('share.clipboard'), {
-                        variant: 'success',
-                      })
-                    }}
-                    text={getUrl(accessKey)}
-                  >
-                    <ListItemButton>
-                      <ListItemIcon>
-                        <Icon name="fa-solid:share-square" />
-                      </ListItemIcon>
-                      <ListItemText>{`${name} : ${getUrl(
-                        accessKey
-                      )}`}</ListItemText>
-                    </ListItemButton>
-                  </CopyToClipboard>
-                </ListItem>
-              ))}
+              {collection?.passwords.map(
+                ({ password: accessKey, name }: any) => (
+                  <ListItem key={accessKey}>
+                    <CopyToClipboard
+                      onCopy={() => {
+                        snackbarService.createSnackbar(t('share.clipboard'), {
+                          variant: 'success',
+                        })
+                      }}
+                      text={getUrl(accessKey)}
+                    >
+                      <ListItemButton>
+                        <ListItemIcon>
+                          <Icon name="fa-solid:share-square" />
+                        </ListItemIcon>
+                        <ListItemText>{`${name} : ${getUrl(
+                          accessKey
+                        )}`}</ListItemText>
+                      </ListItemButton>
+                    </CopyToClipboard>
+                  </ListItem>
+                )
+              )}
             </List>
           </Stack>
           <Stack>
