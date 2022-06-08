@@ -40,7 +40,7 @@ const columns: GridColDef[] = [
     width: 100,
     renderCell: (params) => (
       <Chip
-            label={capitalize(params.row.draft)}
+            label={capitalize(params.row.visibility)}
             variant="outlined"
             color="primary"
           />
@@ -71,7 +71,7 @@ export const AdminVideoPage = () => {
 
   return (
     <AdminLayout pageTitle={t('video.page.panel.title')}>
-      <EditVideoModal video={selected} />
+      <EditVideoModal key={selected?.slug} video={selected} />
       <div style={{ height: '500px', width: '100%', background: 'white' }}>
         <DataGrid
           isRowSelectable={() => false}
