@@ -1,19 +1,14 @@
-import { useSwitch, UseSwitchProps } from '@mui/core/SwitchUnstyled'
-import { useTheme } from '@mui/material'
-import clsx from 'clsx'
-import * as React from 'react'
-import { useContext } from 'react'
+import { useSwitch, UseSwitchParameters } from "@mui/base/SwitchUnstyled";
+import { useTheme } from "@mui/material";
+import clsx from "clsx";
+import * as React from "react";
+import { useContext } from "react";
 
-import { ColorModeContext } from '@theme/theme'
+import { ColorModeContext } from "@theme/theme";
 
-import {
-  SwitchRoot,
-  SwitchTrack,
-  SwitchInput,
-  SwitchThumb,
-} from './ThemeButton.style'
+import { SwitchInput, SwitchRoot, SwitchThumb, SwitchTrack } from "./ThemeButton.style";
 
-function MUISwitch(props: UseSwitchProps) {
+function MUISwitch(props: UseSwitchParameters) {
   const { getInputProps, checked, disabled, focusVisible } = useSwitch(props)
   const theme = useTheme()
 
@@ -43,7 +38,7 @@ export const ThemeButton: React.FC = () => {
   return (
     <MUISwitch
       onChange={handleChange}
-      checked={mode === 'light' ? false : true}
+      checked={mode !== 'light'}
     />
   )
 }
