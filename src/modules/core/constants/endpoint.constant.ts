@@ -9,4 +9,5 @@ export enum Endpoint {
   Attempts = 'attempts',
   Links = 'links',
   Search = 'search',
+  Notes = 'notes',
 }

@@ -17,6 +17,7 @@ import { AutoScrollBox } from '@core/components/AutoScrollBox/AutoScrollBox.comp
 import { useQuery } from '@core/hooks/useQuery'
 import { ease } from '@core/utils/transition'
 
+import { NotesPanel } from '@videos/components/PlayerSidebar/NotesPanel/NotesPanel.component'
 import { Video } from '@videos/models/video.model'
 
 import { AttachmentsPanel } from './AttachmentsPanel/AttachmentsPanel.component'
@@ -124,7 +125,6 @@ export const PlayerSidebar = ({ video, playerRef }: PlayerSidebarProps) => {
                 <Tab
                   label={t('slug.sidebar.tabs.notes.title')}
                   value={TabIndex.NOTES}
-                  disabled
                 />
               </Tabs>
             </Box>
@@ -138,6 +138,7 @@ export const PlayerSidebar = ({ video, playerRef }: PlayerSidebarProps) => {
               {query.has('c') && <CollectionPanel />}
             </TabPanelStyle>
             <TabPanelStyle value={TabIndex.NOTES}>
+              {video && <NotesPanel videoId={video.slug} />}
               <AutoScrollBox />
             </TabPanelStyle>
           </TabContext>

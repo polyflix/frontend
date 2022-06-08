@@ -8,7 +8,9 @@ import authReducer from '@auth/reducers/auth.slice'
 import { quizzesAttemptsApi } from '@quizzes/services/attempt.service'
 import { quizzesApi } from '@quizzes/services/quizz.service'
 
+import notesReducer from '@videos/reducers/notes.slice'
 import videosReducer from '@videos/reducers/video.slice'
+import { notesApi } from '@videos/services/notes.service'
 import { videosApi } from '@videos/services/video.service'
 
 import { collectionsApi as modulesApi } from '@collections/services/collection.service'
@@ -27,6 +29,7 @@ export const store = configureStore({
     [api.reducerPath]: api.reducer,
     [videosApi.reducerPath]: videosApi.reducer,
     [usersApi.reducerPath]: usersApi.reducer,
+    [notesApi.reducerPath]: notesApi.reducer,
     [subtitlesApi.reducerPath]: subtitlesApi.reducer,
     [quizzesApi.reducerPath]: quizzesApi.reducer,
     [quizzesAttemptsApi.reducerPath]: quizzesAttemptsApi.reducer,
@@ -35,6 +38,7 @@ export const store = configureStore({
     auth: authReducer,
     server: serverReducer,
     videos: videosReducer,
+    notes: notesReducer,
     users: usersReducer,
     snackbar: snackBarReducer,
     upload: uploadReducer,
@@ -44,6 +48,7 @@ export const store = configureStore({
       .concat(api.middleware)
       .concat(videosApi.middleware)
       .concat(usersApi.middleware)
+      .concat(notesApi.middleware)
       .concat(subtitlesApi.middleware)
       .concat(quizzesApi.middleware)
       .concat(quizzesAttemptsApi.middleware)

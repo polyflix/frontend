@@ -14,3 +14,7 @@ export interface IVideoForm {
   // TODO
   // tags: tagLite[]
 }
+
+export interface INoteForm {
+  content: string
+}
