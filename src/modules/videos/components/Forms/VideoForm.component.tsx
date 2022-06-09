@@ -33,6 +33,7 @@ import { MinioService } from '@core/services/minio.service'
 import { SnackbarService } from '@core/services/snackbar.service'
 import { CrudAction } from '@core/types/http.type'
 
+import { useStreamUrl } from '@videos/hooks/useStreamUrl.hook'
 import { Video } from '@videos/models/video.model'
 import {
   useAddVideoMutation,
@@ -155,7 +156,6 @@ export const VideoForm = ({ source, video, isUpdate }: Props) => {
       } else if (isUpdate && !videoFile) {
         // if video has not been changed on update
         delete data.source
-        delete data.thumbnail
       } else {
         return snackbarService.createSnackbar(
           t('forms.create-update.validation.video.required', {
@@ -208,6 +208,10 @@ export const VideoForm = ({ source, video, isUpdate }: Props) => {
     }
   }
 
+  const { streamUrl } = isUpdate
+    ? useStreamUrl(video!)
+    : { streamUrl: undefined }
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Typography sx={{ mb: 3 }} variant="h4">
@@ -245,6 +249,13 @@ export const VideoForm = ({ source, video, isUpdate }: Props) => {
                       message: `${t('videoManagement.inputs.videoURL.error')}.`,
                     },
                   })}
+                />
+              )}
+
+              {!isYoutube && isUpdate && (
+                <FrameSelector
+                  onSelect={setVideoThumbnailFile}
+                  src={streamUrl!}
                 />
               )}
 

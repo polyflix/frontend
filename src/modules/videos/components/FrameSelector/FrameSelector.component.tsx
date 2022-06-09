@@ -35,6 +35,7 @@ export const FrameSelector = ({ src, onSelect }: Props) => {
     <Stack position="relative">
       <VideoStyle
         ref={player}
+        crossOrigin={'anonymous'}
         src={`${src}#t=0.1`}
         onCanPlay={() => {
           if (!posterInit) onScreenshot()
