@@ -21,6 +21,8 @@ import { coursesApi } from '@courses/services/course.service'
 import usersReducer from '@users/reducers/user.slice'
 import { usersApi } from '@users/services/user.service'
 
+import { certificationsApi } from '@certifications/services/certification.service'
+
 import uploadReducer from './reducers/file-upload.slice'
 import serverReducer from './reducers/server.slice'
 import { api } from './services/api.service'
@@ -31,6 +33,7 @@ export const store = configureStore({
     [videosApi.reducerPath]: videosApi.reducer,
     [usersApi.reducerPath]: usersApi.reducer,
     [notesApi.reducerPath]: notesApi.reducer,
+    [certificationsApi.reducerPath]: certificationsApi.reducer,
     [subtitlesApi.reducerPath]: subtitlesApi.reducer,
     [quizzesApi.reducerPath]: quizzesApi.reducer,
     [quizzesAttemptsApi.reducerPath]: quizzesAttemptsApi.reducer,
@@ -51,6 +54,7 @@ export const store = configureStore({
       .concat(videosApi.middleware)
       .concat(usersApi.middleware)
       .concat(notesApi.middleware)
+      .concat(certificationsApi.middleware)
       .concat(subtitlesApi.middleware)
       .concat(quizzesApi.middleware)
       .concat(quizzesAttemptsApi.middleware)

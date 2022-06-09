@@ -84,6 +84,10 @@ export default defineConfig({
         find: '@admin',
         replacement: resolve(__dirname, './src/modules/admin'),
       },
+      {
+        find: '@certifications',
+        replacement: resolve(__dirname, './src/modules/certifications'),
+      },
     ],
   },
   plugins: [

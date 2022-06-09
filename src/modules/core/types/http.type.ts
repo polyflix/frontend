@@ -9,6 +9,14 @@ export interface WithPagination<T> {
   totalCount: number
 }
 
+export interface Pagination<T> {
+  data: T[]
+  count: number
+  page: number
+  pageCount: number
+  total: number
+}
+
 export enum CrudAction {
   CREATE = 'create',
   UPDATE = 'update',

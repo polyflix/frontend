@@ -86,5 +86,31 @@
   "noData": {
     "description": "If you have the necessary rights you can create one below",
     "buttonText": "Create"
+  },
+  "certifications": {
+    "page": {
+      "panel": {
+        "title": "Certifications",
+        "fields": {
+          "name": "Name",
+          "certificationID": "Certification ID"
+        }
+      }
+    },
+    "form": {
+      "labels": {
+        "name": "Certification name",
+        "certificationID": "Certification ID"
+      },
+      "errors": {
+        "name": {
+          "required": "The name is required."
+        }
+      },
+      "actions": {
+        "close": "Close",
+        "save": "Save"
+      }
+    }
   }
 }

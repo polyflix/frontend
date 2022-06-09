@@ -28,8 +28,9 @@
   "administration": {
     "resources": {
       "label": "Resources",
+      "groups": "Groups",
       "users": "Users",
-      "groups": "Groups"
+      "certifications": "Certifications"
     }
   }
 }

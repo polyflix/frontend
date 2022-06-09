@@ -7,7 +7,8 @@
   },
   "sections": {
     "general": "Général",
-    "management": "Mon contenu"
+    "management": "Mon contenu",
+    "administration": "Administration"
   },
   "items": {
     "home": "Accueil",
@@ -23,5 +24,12 @@
     "quizzes": "Quiz",
     "links": "Liens",
     "collections": "Modules"
+  },
+  "administration": {
+    "resources": {
+      "label": "Resources",
+      "users": "Users",
+      "certifications": "Certifications"
+    }
   }
 }

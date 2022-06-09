@@ -149,6 +149,10 @@ const sidebarConfiguration: SidebarItem[] = [
         title: 'administration.resources.groups',
         href: '/admin/groups',
       },
+      {
+        title: 'administration.resources.certifications',
+        href: '/admin/certifications',
+      },
     ],
   },
 ]
