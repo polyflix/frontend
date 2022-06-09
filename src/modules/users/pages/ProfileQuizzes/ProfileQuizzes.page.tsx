@@ -9,7 +9,7 @@ import { Header } from '@core/components/Header/Header.component'
 import { NoData } from '@core/components/NoData/NoData.component'
 import { Page } from '@core/components/Page/Page.component'
 import { PaginationSynced } from '@core/components/Pagination/PaginationSynced.component'
-import { Searchbar } from '@core/components/Searchbar/Searchbar.component'
+import { Visibility } from '@core/models/content.model'
 import { Element } from '@core/models/element.model'
 import { buildSkeletons } from '@core/utils/gui.utils'
 
@@ -17,7 +17,6 @@ import { useAuth } from '@auth/hooks/useAuth.hook'
 
 import { QuizzCard } from '@quizzes/components/QuizzCard/QuizzCard.component'
 import { QuizzCardSkeleton } from '@quizzes/components/QuizzCardSkeleton/QuizzCardSkeleton.component'
-import { buildQuizzSearch } from '@quizzes/helpers/search.helper'
 import { Quizz } from '@quizzes/models/quizz.model'
 import { useGetQuizzesQuery } from '@quizzes/services/quizz.service'
 import { QuizzFilters } from '@quizzes/types/filters.type'
@@ -28,17 +27,14 @@ export const ProfileQuizzesPage = () => {
   let params = new URLSearchParams(window.location.search)
 
   const [filters, setFilters] = useState<Partial<QuizzFilters>>({
-    sort: [{ field: 'createdAt', order: 'DESC' }],
     page: parseInt(params.get('page') || '1'),
-    limit: 10,
+    pageSize: 10,
   })
 
   const { data, isLoading, isFetching } = useGetQuizzesQuery({
-    join: [
-      { field: 'element.user', select: ['firstName', 'lastName'] },
-      'questions',
-    ],
-    'element.user.id': user?.id,
+    visibility: Visibility.PRIVATE,
+    draft: true,
+    userId: user?.id,
     ...filters,
   })
 
@@ -58,7 +54,7 @@ export const ProfileQuizzesPage = () => {
       <Divider sx={{ my: 3 }} />
 
       <Stack justifyContent="space-between" direction="row">
-        <Searchbar
+        {/* <Searchbar
           onChange={(search) => {
             setFilters({
               ...filters,
@@ -73,12 +69,14 @@ export const ProfileQuizzesPage = () => {
             })
           }}
           label={t('navbar.actions.search.fast', { ns: 'common' })}
-        />
+        /> */}
 
         {/* If there is more than 10 items, we display a limit item per page selector */}
         {data?.total! > 10 && (
           <ItemsPerPage
-            onChange={(limit) => setFilters({ ...filters, limit, page: 1 })}
+            onChange={(pageSize) =>
+              setFilters({ ...filters, pageSize, page: 1 })
+            }
           />
         )}
       </Stack>
@@ -93,6 +91,8 @@ export const ProfileQuizzesPage = () => {
                   displayPublisher={false}
                   displayTags
                   displayScoreMethod
+                  displayDraft
+                  displayVisibility
                   quizz={quizz}
                 />
               </Grid>

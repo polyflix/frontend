@@ -29,24 +29,14 @@ export const PlayQuizzPage = () => {
   // see : https://github.com/reduxjs/redux-toolkit/issues/1526
   const quizzfilters = useMemo<QuizzFilters>(
     () => ({
-      'element.draft': false,
-      join: [
-        'questions',
-        {
-          field: 'questions.alternatives',
-          // We want to select only the label to prevent cheat,
-          // otherwise we can see the good anwser for each questions in the JSON response.
-          select: ['label'],
-        },
-      ],
+      draft: false,
     }),
     []
   )
   // Same as above
   const attemptsFilters = useMemo<QuizzAttemptFilters>(
     () => ({
-      join: [{ field: 'user', select: ['firstName', 'lastName'] }],
-      'user.id': user?.id,
+      userId: user!.id,
     }),
     []
   )

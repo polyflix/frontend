@@ -39,6 +39,8 @@ interface Props {
   displayScoreMethod?: boolean
   displayTags?: boolean
   displayScore?: boolean
+  displayDraft?: boolean
+  displayVisibility?: boolean
   displayNumberOfQuestions?: boolean
   displayPublisher?: boolean
   displayCrudOptions?: boolean
@@ -52,6 +54,8 @@ export const QuizzCard = ({
   displayScoreMethod = false,
   displayTags = false,
   displayScore = false,
+  displayDraft = false,
+  displayVisibility = false,
   displayNumberOfQuestions = true,
   displayPublisher = true,
   displayCrudOptions = false,
@@ -68,15 +72,7 @@ export const QuizzCard = ({
 
   const { data: attempts, isLoading: isAttemptsLoading } = useGetAttemptsQuery({
     id: quizz.id,
-    filters: {
-      join: [
-        {
-          field: 'user',
-          select: ['firstName', 'lastName'],
-        },
-      ],
-      'user.id': user!.id,
-    },
+    filters: { userId: user!.id },
   })
 
   // We use state because of attempts could be loaded after the component and need hot refresh
@@ -95,7 +91,7 @@ export const QuizzCard = ({
       setScore(computedScore)
     }
     setColor(getFeedbackColor(percentage(score, questions.length), theme))
-  }, [attempts])
+  }, [isAttemptsLoading])
 
   /**
    * Build the publisher UI in the card.
@@ -148,10 +144,42 @@ export const QuizzCard = ({
               sx={{
                 color: 'text.primary',
                 whiteSpace: 'nowrap',
+                display: 'inline-block',
               }}
               noWrap={true}
             >
+              {displayVisibility && quizz.visibility !== 'public' && (
+                <Typography
+                  variant="h6"
+                  sx={{
+                    color: 'text.secondary',
+                    marginRight: '0.5rem',
+                    display: 'inline-block',
+                  }}
+                >
+                  <Icon
+                    size={16}
+                    name={
+                      quizz.visibility === 'private'
+                        ? 'ic:outline-visibility-off'
+                        : 'ri:lock-password-line'
+                    }
+                  />
+                </Typography>
+              )}
               {quizz.name}
+              {displayDraft && quizz.draft && (
+                <Typography
+                  variant="caption"
+                  sx={{
+                    color: 'text.secondary',
+                    marginLeft: '0.5rem',
+                    fontWeight: 'bold',
+                  }}
+                >
+                  {t('card.draft')}
+                </Typography>
+              )}
             </Typography>
           </Tooltip>
           {displayCreationDate && buildCreationDate()}

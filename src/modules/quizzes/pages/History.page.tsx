@@ -1,4 +1,4 @@
-import { Box, Pagination, Stack } from '@mui/material'
+import { Box, Stack } from '@mui/material'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -6,6 +6,7 @@ import { ItemsPerPage } from '@core/components/Filters/ItemsPerPage.component'
 import { Header } from '@core/components/Header/Header.component'
 import { NoData } from '@core/components/NoData/NoData.component'
 import { Page } from '@core/components/Page/Page.component'
+import { PaginationSynced } from '@core/components/Pagination/PaginationSynced.component'
 import { Element } from '@core/models/element.model'
 import { buildSkeletons } from '@core/utils/gui.utils'
 
@@ -29,17 +30,11 @@ export const QuizzesHistoryPage = () => {
     isLoading,
     isFetching,
   } = useGetQuizzesQuery({
-    join: [
-      'attempts',
-      'questions',
-      { field: 'attempts.user', select: ['firstName', 'lastName'] },
-      { field: 'user', select: ['firstName', 'lastName'] },
-    ],
-    sort: [{ field: 'attempts.createdAt', order: 'DESC' }],
     page: filters.page || 1,
-    limit: filters.limit || 10,
-    'element.draft': false,
-    'attempts.user': user?.id,
+    pageSize: filters.pageSize || 10,
+    draft: false,
+    userId: user?.id,
+    isDone: true,
   })
 
   const skeletons = buildSkeletons(3)
@@ -52,7 +47,12 @@ export const QuizzesHistoryPage = () => {
       />
 
       <Stack justifyContent="end" direction="row">
-        <ItemsPerPage onChange={(limit) => setFilters({ ...filters, limit })} />
+        {/* If there is more than 10 items, we display a limit item per page selector */}
+        {quizzes?.total! > 10 && (
+          <ItemsPerPage
+            onChange={(pageSize) => setFilters({ ...filters, pageSize })}
+          />
+        )}
       </Stack>
 
       <Stack sx={{ my: 3 }} spacing={2}>
@@ -65,6 +65,7 @@ export const QuizzesHistoryPage = () => {
                 displayScoreMethod
                 displayNumberOfQuestions={false}
                 displayTags={false}
+                displayVisibility
                 key={quizz.id}
                 quizz={quizz}
               />
@@ -78,13 +79,10 @@ export const QuizzesHistoryPage = () => {
       </Stack>
 
       <Box display="flex" justifyContent="center">
-        <Pagination
-          onChange={(e, page) => setFilters({ ...filters, page })}
-          count={quizzes?.pageCount}
-          shape="rounded"
-          variant="outlined"
-          showFirstButton
-          showLastButton
+        <PaginationSynced
+          filters={filters}
+          setFilters={setFilters}
+          pageCount={quizzes?.pageCount!}
         />
       </Box>
     </Page>

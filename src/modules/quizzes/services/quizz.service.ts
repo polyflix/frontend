@@ -3,7 +3,7 @@ import { createApi } from '@reduxjs/toolkit/dist/query/react'
 import { Container } from '@polyflix/di'
 
 import { Endpoint } from '@core/constants/endpoint.constant'
-import { CrudFilters } from '@core/filters/nestjsx-crud.filter'
+import { RestCrudFilters } from '@core/filters/rest-crud.filter'
 import { Element } from '@core/models/element.model'
 import { fetchWithRefresh } from '@core/services/api.service'
 import { ApiVersion } from '@core/types/http.type'
@@ -14,7 +14,8 @@ import { QuizzFilters } from '@quizzes/types/filters.type'
 import { IQuizzForm } from '@quizzes/types/form.type'
 
 // Get the filter builder from our DI system
-const filterBuilder = Container.get<CrudFilters<QuizzFilters>>(CrudFilters)
+const filterBuilder =
+  Container.get<RestCrudFilters<QuizzFilters>>(RestCrudFilters)
 
 // Inject quizzes endpoints to the core API
 export const quizzesApi = createApi({

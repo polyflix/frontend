@@ -7,25 +7,11 @@ import { useParams } from 'react-router-dom'
 import { ItemsPerPage } from '@core/components/Filters/ItemsPerPage.component'
 import { Header } from '@core/components/Header/Header.component'
 import { Page } from '@core/components/Page/Page.component'
-import { Searchbar } from '@core/components/Searchbar/Searchbar.component'
 
 import { QuizzAttemptsList } from '@quizzes/components/QuizzAttemptsList/QuizzAttemptsList.component'
 import { useGetAttemptsQuery } from '@quizzes/services/attempt.service'
 import { useGetQuizzQuery } from '@quizzes/services/quizz.service'
 import { QuizzAttemptFilters } from '@quizzes/types/filters.type'
-
-const getSearchByName = (value: string) => [
-  {
-    'user.firstName': {
-      $contL: value,
-    },
-  },
-  {
-    'user.lastName': {
-      $contL: value,
-    },
-  },
-]
 
 export const QuizzResultsPage = () => {
   const { id } = useParams<{ id: string }>()
@@ -39,9 +25,6 @@ export const QuizzResultsPage = () => {
     isFetching: isQuizzFetching,
   } = useGetQuizzQuery({
     id,
-    filters: {
-      join: ['questions', { field: 'user', select: ['firstName', 'lastName'] }],
-    },
   })
 
   const {
@@ -50,15 +33,7 @@ export const QuizzResultsPage = () => {
     isFetching: isAttemptsFetching,
   } = useGetAttemptsQuery({
     id,
-    filters: {
-      join: [
-        {
-          field: 'user',
-          select: ['firstName', 'lastName'],
-        },
-      ],
-      ...filters,
-    },
+    filters: filters,
   })
 
   return (
@@ -72,7 +47,7 @@ export const QuizzResultsPage = () => {
       />
       <Divider sx={{ my: 3 }} />
       <Stack justifyContent="space-between" direction="row">
-        <Searchbar
+        {/* <Searchbar
           onChange={(value) =>
             setFilters({
               ...filters,
@@ -80,8 +55,10 @@ export const QuizzResultsPage = () => {
             })
           }
           label={t('results.search')}
+        /> */}
+        <ItemsPerPage
+          onChange={(pageSize) => setFilters({ ...filters, pageSize })}
         />
-        <ItemsPerPage onChange={(limit) => setFilters({ ...filters, limit })} />
       </Stack>
       <QuizzAttemptsList
         attempts={attempts?.data}

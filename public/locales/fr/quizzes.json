@@ -9,6 +9,7 @@
     "tags": {
       "new": "Nouveau"
     },
+    "draft": "Brouillon",
     "creationDateFormat": "DD/MM/YYYY",
     "options": {
       "play": "Jouer",
@@ -108,7 +109,8 @@
       "description": "Ci-dessous le récapitulatif de vos réponses pour ce quiz. Prenez le temps qu'il vous faut pour relire et corriger si besoin. Une fois que tout est ok, cliquez sur le bouton valider tout en bas de la page pour soumettre votre tentative et obtenir votre score.",
       "validate": "Valider",
       "updateAnswers": "Modifier mes réponses",
-      "validationMessage": "En cliquant sur valider, votre tentative sera enregistrée. Il ne sera pas possible de revenir en arrière."
+      "validationMessage": "En cliquant sur valider, votre tentative sera enregistrée. Il ne sera pas possible de revenir en arrière.",
+      "selected": "Réponse sélectionnée"
     },
     "questions": {
       "next": "Question suivante",

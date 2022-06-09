@@ -63,24 +63,33 @@ export const Recap = ({ quizz }: PlayComponentProps) => {
                 const isSelected = (answers[question.id] || []).includes(id)
                 return (
                   <Stack
-                    sx={{ color: isSelected ? 'success.main' : 'primary.main' }}
+                    sx={{ color: 'primary.main' }}
                     direction="row"
                     alignItems="center"
                     key={altIdx}
                   >
-                    <Icon
-                      size={18}
-                      name={
-                        isSelected ? 'bi:check-circle-fill' : 'bi:x-circle-fill'
-                      }
-                    />
+                    {isSelected && (
+                      <Icon size={18} name="fluent:target-arrow-16-filled" />
+                    )}
                     <Typography
                       sx={{
                         ml: 1,
                         color: isSelected ? 'text.primary' : 'action.disabled',
                       }}
                     >
-                      {label}
+                      {label}{' '}
+                      {isSelected && (
+                        <Typography
+                          sx={{
+                            ml: 1,
+                            fontSize: '0.8rem',
+                            display: 'inline-block',
+                            color: 'action.disabled',
+                          }}
+                        >
+                          {t('recap.selected')}
+                        </Typography>
+                      )}
                     </Typography>
                   </Stack>
                 )

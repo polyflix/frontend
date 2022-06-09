@@ -1,17 +1,14 @@
-import { QueryFilter as NjxQueryFilter } from '@nestjsx/crud-request'
-
 import { Visibility } from '@core/models/content.model'
-import { QueryFilter } from '@core/types/nestjsx-crud.type'
+import { PaginationFilter } from '@core/types/filters.type'
 
-export interface QuizzFilters extends QueryFilter {
+export interface QuizzFilters extends PaginationFilter {
   keepHighestScore?: boolean
-  'element.visibility'?: Visibility
-  'element.draft'?: boolean
-  'element.user.id'?: string
-  'attempts.user'?: string
-  name?: NjxQueryFilter
+  visibility?: Visibility
+  draft?: boolean
+  userId?: string
+  isDone?: boolean
 }
 
-export interface QuizzAttemptFilters extends QueryFilter {
-  'user.id'?: string
+export interface QuizzAttemptFilters extends PaginationFilter {
+  userId?: string
 }

@@ -9,6 +9,7 @@
     "tags": {
       "new": "New"
     },
+    "draft": "Draft",
     "creationDateFormat": "MM/DD/YYYY",
     "options": {
       "play": "Play",
@@ -116,7 +117,8 @@
       "description": "Below is a summary of your answers for this quizz. Take the time you need to review and correct if necessary. Once everything is ok, click on the submit button at the bottom of the page to submit your attempt and get your score.",
       "validate": "Validate",
       "updateAnswers": "Modify my answers",
-      "validationMessage": "By clicking on validate, your attempt will be saved. It will not be possible to go back."
+      "validationMessage": "By clicking on validate, your attempt will be saved. It will not be possible to go back.",
+      "selected": "Selected answer"
     },
     "results": {
       "title": {
