@@ -70,6 +70,23 @@ include:
 
 # ===============================
 
+# We want to build a custom image for the bootstrap environment
+build:docker:
+  extends: build:code
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+      variables:
+        BUILD_MODE: docker
+
+package:docker:
+  stage: package
+  extends: docker_build
+  needs: ["build:docker"]
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+      variables:
+        CUSTOM_REGISTRIES_DESTINATIONS: "--destination $CI_REGISTRY_IMAGE:docker"
+
 deploy:kube:
   needs: ["package:app"]
   extends: .kube-deploy
