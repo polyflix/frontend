@@ -39,7 +39,12 @@ export const collectionsApi = createApi({
      * Get Collections query configuration
      */
     getCollections: builder.query<
-      { data: Collection[]; total: number; page: number; pageSize: number },
+      {
+        data: Collection[]
+        total: number
+        page: number
+        pageSize: number
+      },
       CollectionFilters
     >({
       query: (filters?: CollectionFilters) => {

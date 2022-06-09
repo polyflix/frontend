@@ -8,6 +8,8 @@ type Props = {
 }
 
 export const InlineCollectionCard: React.FC<Props> = ({ collection }) => {
+  const DESCRIPTION_LENGTH = 50
+
   return (
     <Stack
       sx={{
@@ -24,7 +26,9 @@ export const InlineCollectionCard: React.FC<Props> = ({ collection }) => {
     >
       <Typography variant="h6">{collection.name}</Typography>
       <Typography variant="body1">
-        {collection.description.substring(0, 50)}...
+        {collection.description.length > DESCRIPTION_LENGTH
+          ? `${collection.description.substring(0, DESCRIPTION_LENGTH - 3)}...`
+          : collection.description}
       </Typography>
     </Stack>
   )
