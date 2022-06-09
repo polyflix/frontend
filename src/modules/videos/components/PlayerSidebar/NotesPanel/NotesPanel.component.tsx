@@ -82,7 +82,7 @@ export const NotesPanel = ({ videoId }: NotesProps) => {
 
   return (
     <AutoScrollBox>
-      {data !== undefined && (
+      {value !== undefined && (
         <ListItem>
           <MDEditor
             id="note"
