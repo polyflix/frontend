@@ -4,7 +4,6 @@ import { Route, Switch, useRouteMatch } from 'react-router-dom'
 import { PrivateRoute } from '@auth/components/PrivateRoute/PrivateRoute.component'
 import { useAuth } from '@auth/hooks/useAuth.hook'
 
-import { LoginPage } from './pages/Login.page'
 import { RedirectPage } from './pages/Redirect.page'
 
 /**
@@ -19,7 +18,7 @@ export const AuthRouter = () => {
     <Switch>
       <Route exact path={`${url}/redirect`} component={RedirectPage} />
       <PrivateRoute condition={!isAuthenticated} redirectTo={'/'}>
-        <Route exact path={`${url}/login`} component={LoginPage} />
+        <Route exact path={`${url}/login`} component={RedirectPage} />
       </PrivateRoute>
     </Switch>
   )
