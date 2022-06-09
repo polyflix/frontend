@@ -16,7 +16,7 @@ import {
 } from '@mui/material'
 import { useGenerateSubtitlesMutation } from '@subtitles/services/adminSubtitle.service'
 import { isUndefined } from 'lodash'
-import { GetDerivedStateFromError, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 
@@ -32,7 +32,6 @@ import {
 
 import { Video } from '@videos/models/video.model'
 import { useUpdateVideoMutation } from '@videos/services/video.service'
-import { IVideoForm } from '@videos/types/form.type'
 import { PlayerVideoSource } from '@videos/types/video.type'
 
 interface Props {
@@ -213,7 +212,9 @@ export const EditVideoModal = ({ video }: Props) => {
                         variant="outlined"
                         disabled={isExternal}
                       >
-                        {isExternal ? t('video.form.actions.cantGenerateSubtitles') : t('video.form.actions.generateSubtitles')}
+                        {isExternal
+                          ? t('video.form.actions.cantGenerateSubtitles')
+                          : t('video.form.actions.generateSubtitles')}
                       </Button>
                       <LoadingButton
                         {...getCommonSubmitButtonProps(isSubmitting, false)}

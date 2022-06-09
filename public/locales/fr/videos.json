@@ -6,7 +6,9 @@
     "descriptionWithSearch": "Retrouvez ci-dessous toutes les vidéos. Vous pouvez rechercher une vidéo par son nom ou par le nom de la personne qui l'a publiée."
   },
   "page": {
-    "panel": { "title": "Video management dashboard" }
+    "panel": {
+      "title": "Video management dashboard"
+    }
   },
   "providers": {
     "youtube": "Vous voulez ajouter une vidéo YouTube ? Pas de problème, sélectionnez le lien, et choisissez le modèle pour ajouter votre vidéo !",
