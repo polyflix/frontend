@@ -12,29 +12,37 @@ import {
   Modal,
   OutlinedInput,
   Select,
-  Stack
- } from '@mui/material'
+  Stack,
+} from '@mui/material'
+import { useGenerateSubtitlesMutation } from '@subtitles/services/adminSubtitle.service'
 import { isUndefined } from 'lodash'
 import { GetDerivedStateFromError, useEffect, useState } from 'react'
+import { Controller, useForm } from 'react-hook-form'
+import { useTranslation } from 'react-i18next'
 
-import { useUpdateVideoMutation } from '@videos/services/video.service'
+import { useInjection } from '@polyflix/di'
 
 import { getCommonSubmitButtonProps } from '@core/helpers/form.helper'
 import { Visibility } from '@core/models/content.model'
-import { Video } from '@videos/models/video.model'
-import { Controller, useForm } from 'react-hook-form'
-import { useTranslation } from 'react-i18next'
 import { SnackbarService } from '@core/services/snackbar.service'
-import { useInjection } from '@polyflix/di'
+import {
+  i18nLanguageToSubtitleLanguage,
+  PolyflixLanguage,
+} from '@core/utils/language.util'
+
+import { Video } from '@videos/models/video.model'
+import { useUpdateVideoMutation } from '@videos/services/video.service'
 import { IVideoForm } from '@videos/types/form.type'
+import { PlayerVideoSource } from '@videos/types/video.type'
 
 interface Props {
-  video?: Video
+  video: Video
 }
 
-
 export const EditVideoModal = ({ video }: Props) => {
+  const [isExternal, setIsExternal] = useState<boolean>(false)
   const snackbarService = useInjection<SnackbarService>(SnackbarService)
+  const currentLanguage = localStorage.getItem('i18nextLng')
   const [updateVideo] = useUpdateVideoMutation()
   const { t } = useTranslation('administration')
   const {
@@ -46,12 +54,22 @@ export const EditVideoModal = ({ video }: Props) => {
   } = useForm<AdminVideoForm>({
     defaultValues: {
       title: video?.title,
-      visibility: video?.visibility ?? "protected" as Visibility,
+      visibility: video?.visibility ?? ('protected' as Visibility),
       draft: 'true' as Draft, //video?.draft?.toString() as Draft,
       availableLanguages: video?.availableLanguages,
     },
   })
 
+  const [generateSubtitles] = useGenerateSubtitlesMutation()
+
+  const onGenerateSubtitles = async () => {
+    const r = generateSubtitles({
+      slug: video.slug,
+      language: i18nLanguageToSubtitleLanguage(
+        (currentLanguage ?? 'en') as PolyflixLanguage
+      ),
+    })
+  }
 
   const [open, setOpen] = useState<boolean>(false)
 
@@ -74,7 +92,12 @@ export const EditVideoModal = ({ video }: Props) => {
     }
   }
 
-  useEffect(() => setOpen(!isUndefined(video)), [video])
+  useEffect(() => {
+    setOpen(!isUndefined(video))
+    if (video && video.sourceType) {
+      setIsExternal(video.sourceType === PlayerVideoSource.YOUTUBE)
+    }
+  }, [video])
 
   return (
     <Modal
@@ -107,10 +130,11 @@ export const EditVideoModal = ({ video }: Props) => {
               bgcolor: 'background.paper',
             }}
           >
-          <form onSubmit={handleSubmit(onSubmit)}>
-          <Stack direction="row">
-
-            <Controller
+            <Box>
+              <form onSubmit={handleSubmit(onSubmit)}>
+                <Grid container spacing={3}>
+                  <Grid item xs={12}>
+                    <Controller
                       control={control}
                       name="visibility"
                       render={({ field }) => (
@@ -143,9 +167,9 @@ export const EditVideoModal = ({ video }: Props) => {
                         </FormControl>
                       )}
                     />
-          </Stack>
-          <Stack direction="row">
-            <Controller
+                  </Grid>
+                  <Grid item xs={12}>
+                    <Controller
                       control={control}
                       name="draft"
                       render={({ field }) => (
@@ -178,10 +202,18 @@ export const EditVideoModal = ({ video }: Props) => {
                         </FormControl>
                       )}
                     />
-          </Stack>
+                  </Grid>
+                  <Grid item xs={12}>
                     <Stack justifyContent="end" spacing={2} direction="row">
                       <Button onClick={handleClose} variant="outlined">
                         {t('users.form.actions.close')}
+                      </Button>
+                      <Button
+                        onClick={onGenerateSubtitles}
+                        variant="outlined"
+                        disabled={isExternal}
+                      >
+                        {isExternal ? t('video.form.actions.cantGenerateSubtitles') : t('video.form.actions.generateSubtitles')}
                       </Button>
                       <LoadingButton
                         {...getCommonSubmitButtonProps(isSubmitting, false)}
@@ -189,7 +221,10 @@ export const EditVideoModal = ({ video }: Props) => {
                         {t('users.form.actions.save')}
                       </LoadingButton>
                     </Stack>
-                    </form>
+                  </Grid>
+                </Grid>
+              </form>
+            </Box>
           </Box>
         </Box>
       </Fade>

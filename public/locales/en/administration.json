@@ -86,5 +86,30 @@
   "noData": {
     "description": "If you have the necessary rights you can create one below",
     "buttonText": "Create"
+  },
+  "video": {
+    "page": {
+      "panel": {
+        "title": "Videos",
+        "fields": {
+          "title": "Title",
+          "author": "Author",
+          "draft": "Draft",
+          "visibility": "Visibility"
+        }
+      }
+    },
+    "form": {
+      "labels": {
+        "draft": "Draft",
+        "visibility": "Visibility"
+      },
+      "actions": {
+        "close": "Close",
+        "save": "Save",
+        "generateSubtitles": "Generate subtitles for my language",
+        "cantGenerateSubtitles": "Can't generate subtitles for an external video"
+      }
+    }
   }
 }

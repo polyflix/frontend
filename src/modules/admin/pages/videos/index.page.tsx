@@ -10,53 +10,59 @@ import { useGetVideosQuery } from '@videos/services/video.service'
 import { EditVideoModal } from '../../components/videos/EditVideoModal.component'
 import { AdminLayout } from '../../layouts/AdminLayout.layout'
 
-const columns: GridColDef[] = [
-  { field: 'title', headerName: 'Title', width: 400 },
-  {
-    field: 'author',
-    headerName: 'Author',
-    width: 200,
-    renderCell: (params) => (
-      <>
-        <Typography sx={{ mr: 1 }}>{params.row.publisher.firstName} {params.row.publisher.lastName}</Typography>
-      </>
-    ),
-  },
-  {
-    field: 'draft',
-    headerName: 'Draft',
-    width: 100,
-    renderCell: (params) => (
-      <Chip
-            label={capitalize(params.row.draft)}
-            variant="outlined"
-            color="primary"
-          />
-    ),
-  },
-  {
-    field: 'visibility',
-    headerName: 'Visibility',
-    width: 100,
-    renderCell: (params) => (
-      <Chip
-            label={capitalize(params.row.visibility)}
-            variant="outlined"
-            color="primary"
-          />
-    ),
-  },
-  {
-    field: '',
-  }
-]
-
 export const AdminVideoPage = () => {
   // Pagination state
   const [page, setPage] = useState<number>(1)
   const [pageSize, setPageSize] = useState<number>(10)
   const [selected, setSelected] = useState<Video>()
   const { t } = useTranslation('administration')
+
+  const columns: GridColDef[] = [
+    {
+      field: 'title',
+      headerName: t('video.page.panel.fields.title'),
+      width: 400,
+    },
+    {
+      field: 'author',
+      headerName: t('video.page.panel.fields.author'),
+      width: 200,
+      renderCell: (params) => (
+        <>
+          <Typography sx={{ mr: 1 }}>
+            {params.row.publisher.firstName} {params.row.publisher.lastName}
+          </Typography>
+        </>
+      ),
+    },
+    {
+      field: 'draft',
+      headerName: t('video.page.panel.fields.draft'),
+      width: 100,
+      renderCell: (params) => (
+        <Chip
+          label={capitalize(params.row.draft)}
+          variant="outlined"
+          color="primary"
+        />
+      ),
+    },
+    {
+      field: 'visibility',
+      headerName: t('video.page.panel.fields.visibility'),
+      width: 100,
+      renderCell: (params) => (
+        <Chip
+          label={capitalize(params.row.visibility)}
+          variant="outlined"
+          color="primary"
+        />
+      ),
+    },
+    {
+      field: '',
+    },
+  ]
 
   const { isLoading, isFetching, data } = useGetVideosQuery({ page, pageSize })
 

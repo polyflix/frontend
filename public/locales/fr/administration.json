@@ -35,56 +35,29 @@
       }
     }
   },
-  "groups": {
+  "video": {
     "page": {
       "panel": {
-        "title": "Groupes"
-      },
-      "actions": {
-        "create": "Créer un groupe",
-        "edit": "Modifier le groupe",
-        "delete": "Supprimer le groupe",
-        "info": "Info"
-      }
-    },
-    "view": {
-      "generalInfo": "Informations générales",
-      "groupOwner": "Propriétaire du groupe",
-      "groupName": "Nom du groupe",
-      "groupMembers": "Membres du groupe",
-      "countMembers": "Nombre de membres"
-    },
-    "deleteModal": {
-      "title": "Supprimer le groupe",
-      "content": "Êtes-vous sûr de vouloir supprimer ce groupe ?"
-    },
-    "forms": {
-      "create-update": {
-        "title": {
-          "create": "Créer un groupe",
-          "update": "Modifier le groupe {{group}}"
-        },
-        "description": {
-          "create": "Pour créer un groupe, il est nécessaire de sélectionner un propriétaire et au moins un membre.",
-          "update": "Modifier un groupe existant"
-        },
-        "placeholder": {
-          "name": "Nom",
-          "owner": "Propriétaire",
-          "members": "Membres",
-          "submit": {
-            "create": "Créer le groupe",
-            "update": "Mettre à jour le groupe"
-          }
-        },
-        "validation": {
-          "required": "Ce champ est requis"
+        "title": "Vidéos",
+        "fields": {
+          "title": "Titre",
+          "author": "Auteur",
+          "draft": "Brouillon",
+          "visibility": "Visilibité"
         }
       }
+    },
+    "form": {
+      "labels": {
+        "draft": "Brouillon",
+        "visibility": "Visilibité"
+      },
+      "actions": {
+        "close": "Retour",
+        "save": "Engregistrer",
+        "generateSubtitles": "Générer les sous-titres pour ma langue",
+        "cantGenerateSubtitles": "Pas de génération de sous-titres car c'est une vidéo externe"
+      }
     }
-  },
-  "noData": {
-    "description": "Si vous avez les droits nécessaires, vous pouvez en créer un ci-dessous",
-    "buttonText": "Create"
   }
 }
