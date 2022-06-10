@@ -34,5 +34,57 @@
         "save": "Save"
       }
     }
+  },
+  "groups": {
+    "page": {
+      "panel": {
+        "title": "Groups"
+      },
+      "actions": {
+        "create": "Create group",
+        "edit": "Edit group",
+        "delete": "Delete group",
+        "info": "Info"
+      }
+    },
+    "view": {
+      "generalInfo": "General informations",
+      "groupOwner": "Group owner",
+      "groupName": "Group name",
+      "groupMembers": "Group Members",
+      "countMembers": "Number of members"
+    },
+    "deleteModal": {
+      "title": "Delete group",
+      "content": "Are you sure to delete this group?"
+    },
+    "forms": {
+      "create-update": {
+        "title": {
+          "create": "Create a new group",
+          "update": "Update {{group}}"
+        },
+        "description": {
+          "create": "To create a group, it is necessary to select an owner and at least one member.",
+          "update": "Modify an existing group"
+        },
+        "placeholder": {
+          "name": "Name",
+          "owner": "Owner",
+          "members": "Members",
+          "submit": {
+            "create": "Create group",
+            "update": "Update group"
+          }
+        },
+        "validation": {
+          "required": "This field is required"
+        }
+      }
+    }
+  },
+  "noData": {
+    "description": "If you have the necessary rights you can create one below",
+    "buttonText": "Create"
   }
 }

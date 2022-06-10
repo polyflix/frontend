@@ -1,4 +1,4 @@
-import { AdminUserForm } from '@admin/types/user.type'
+import { AdminUserForm } from '@admin/models/user.model'
 import { LoadingButton } from '@mui/lab'
 import {
   Avatar,

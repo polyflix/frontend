@@ -10,4 +10,5 @@ export enum Endpoint {
   Links = 'links',
   Search = 'search',
   Notes = 'notes',
+  Groups = 'groups',
 }

@@ -23,5 +23,12 @@
     "quizzes": "Quiz",
     "links": "Liens",
     "collections": "Collections"
+  },
+  "administration": {
+    "resources": {
+      "label": "Resources",
+      "users": "Utilisateurs",
+      "groups": "Groupes"
+    }
   }
 }

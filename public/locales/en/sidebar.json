@@ -28,7 +28,8 @@
   "administration": {
     "resources": {
       "label": "Resources",
-      "users": "Users"
+      "users": "Users",
+      "groups": "Groups"
     }
   }
 }

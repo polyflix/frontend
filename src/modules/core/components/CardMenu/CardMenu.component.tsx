@@ -1,12 +1,12 @@
 import { Delete, Edit, MoreVertOutlined } from '@mui/icons-material'
 import {
-  capitalize,
   IconButton,
   ListItemIcon,
   ListItemText,
   Menu,
   MenuItem,
 } from '@mui/material'
+import { capitalize } from 'lodash'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'

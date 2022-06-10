@@ -1,10 +1,10 @@
 import { Box, Stack, Tooltip, Typography } from '@mui/material'
+import { capitalize } from 'lodash'
 import { useTranslation } from 'react-i18next'
 
 import { useSidebar } from '@core/hooks/useSidebar.hook'
 import { Role } from '@core/types/roles.type'
 import { fadeInAnnimation } from '@core/utils/animation'
-import { capitalize } from '@core/utils/text.utils'
 
 import { useAuth } from '@auth/hooks/useAuth.hook'
 
