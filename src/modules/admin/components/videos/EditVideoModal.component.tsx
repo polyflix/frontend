@@ -45,10 +45,8 @@ export const EditVideoModal = ({ video }: Props) => {
   const [updateVideo] = useUpdateVideoMutation()
   const { t } = useTranslation('administration')
   const {
-    register,
     handleSubmit,
-    watch,
-    formState: { errors, isSubmitting },
+    formState: { isSubmitting },
     control,
   } = useForm<AdminVideoForm>({
     defaultValues: {
@@ -62,7 +60,7 @@ export const EditVideoModal = ({ video }: Props) => {
   const [generateSubtitles] = useGenerateSubtitlesMutation()
 
   const onGenerateSubtitles = async () => {
-    const r = generateSubtitles({
+    generateSubtitles({
       slug: video.slug,
       language: i18nLanguageToSubtitleLanguage(
         (currentLanguage ?? 'en') as PolyflixLanguage

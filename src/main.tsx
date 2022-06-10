@@ -38,9 +38,6 @@ import { QuizzRouter } from '@quizzes/quizzes.router'
 
 import { VideoRouter } from '@videos/video.router'
 
-import { LinkRouter } from '@links/links.router'
-
-// import { LinkRouter } from '@links/links.router'$
 import { CollectionRouter } from '@collections/collection.router'
 
 import { CourseRouter } from '@courses/course.router'
