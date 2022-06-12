@@ -1,9 +1,9 @@
-import { Stack, Tooltip, Typography, Avatar } from '@mui/material'
+import { Avatar, Stack, Tooltip, Typography } from '@mui/material'
 import {
   SearchQuiz,
   SearchTypes,
-  SearchVideo,
   SearchUser,
+  SearchVideo,
 } from '@search/models/search.model'
 import { Link as RouterLink } from 'react-router-dom'
 
@@ -35,7 +35,7 @@ export const SearchResult: React.FC<SearchResultProps> = ({
 
   switch (result.type) {
     case SearchTypes.VIDEO:
-      link = `/videos/${result.id}`
+      link = `/videos/${result.slug}`
       icon = 'eva:play-circle-outline'
       title = (result as SearchVideo).title
       description = (result as SearchVideo).description

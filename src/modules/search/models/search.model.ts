@@ -12,6 +12,8 @@ export interface SearchResult {
 }
 
 export interface SearchVideo extends SearchResult {
+  /** The slug of the video */
+  slug: string
   /** The title of the video */
   title: string
   /** The description of the video */
