@@ -1,8 +1,9 @@
-import { Divider, Stack } from '@mui/material'
+import { Divider, Link, Stack } from '@mui/material'
 import Grid from '@mui/material/Grid'
 import { Box } from '@mui/system'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { Link as RouterLink } from 'react-router-dom'
 
 import { ItemsPerPage } from '@core/components/Filters/ItemsPerPage.component'
 import { Header } from '@core/components/Header/Header.component'
@@ -47,10 +48,20 @@ export const ProfileQuizzesPage = () => {
       sx={{ mt: 3 }}
       title={t('profile.tabs.quizzes.content.title')}
     >
-      <Header
-        title={t('profile.tabs.quizzes.content.title')}
-        description={t('profile.tabs.quizzes.content.description')}
-      />
+      <Stack justifyContent="space-between" direction="row">
+        <Header
+          title={t('profile.tabs.quizzes.content.title')}
+          description={t('profile.tabs.quizzes.content.description')}
+        />
+        <Link
+          underline="none"
+          component={RouterLink}
+          color="inherit"
+          to="/quizzes/history"
+        >
+          {t('profile.actions.history')}
+        </Link>
+      </Stack>
       <Divider sx={{ my: 3 }} />
 
       <Stack justifyContent="space-between" direction="row">

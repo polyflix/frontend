@@ -7,7 +7,8 @@
     "actions": {
       "update": "Update profile",
       "edit": "Edit your profile",
-      "delete": "Delete your account"
+      "delete": "Delete your account",
+      "history": "See history"
     },
     "hints": {
       "delete": "Delete your account won't delete your videos. You must delete your videos before deleting your account if we want so."

@@ -7,7 +7,8 @@
     "actions": {
       "update": "Mettre à jour le profil",
       "edit": "Modifier votre profil",
-      "delete": "Supprimer votre profil"
+      "delete": "Supprimer votre profil",
+      "history": "Mon historique"
     },
     "hints": {
       "delete": "Supprimer votre compte ne supprimera pas vos vidéos. Vous devez au préalable supprimer les vidéos manuellement."

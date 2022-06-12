@@ -30,32 +30,14 @@ const sidebarConfiguration: SidebarItem[] = [
   {
     title: 'items.videos',
     icon: 'eva:play-circle-outline',
+    href: '/videos/explore',
     roles: [Role.Member, Role.Contributor, Role.Admin],
-    items: [
-      {
-        title: 'actions.explore',
-        href: '/videos/explore',
-      },
-      {
-        title: 'actions.history',
-        href: '/videos/history',
-      },
-    ],
   },
   {
     title: 'items.quizzes',
     icon: 'healthicons:i-exam-multiple-choice',
+    href: '/quizzes/explore',
     roles: [Role.Member, Role.Contributor, Role.Admin],
-    items: [
-      {
-        title: 'actions.explore',
-        href: '/quizzes/explore',
-      },
-      {
-        title: 'actions.history',
-        href: '/quizzes/history',
-      },
-    ],
   },
   {
     title: 'items.collections',

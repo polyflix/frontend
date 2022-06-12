@@ -1,7 +1,8 @@
-import { Box, Divider, Stack } from '@mui/material'
+import { Box, Divider, Link, Stack } from '@mui/material'
 import Grid from '@mui/material/Grid'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { Link as RouterLink } from 'react-router-dom'
 
 import { ItemsPerPage } from '@core/components/Filters/ItemsPerPage.component'
 import { Header } from '@core/components/Header/Header.component'
@@ -45,7 +46,17 @@ export const ProfileVideosPage = () => {
       sx={{ mt: 3 }}
       title={t('profile.tabs.videos.content.title')}
     >
-      <Header title={t('profile.tabs.videos.content.title')} />
+      <Stack justifyContent="space-between" direction="row">
+        <Header title={t('profile.tabs.videos.content.title')} />
+        <Link
+          underline="none"
+          component={RouterLink}
+          color="inherit"
+          to="/videos/history"
+        >
+          {t('profile.actions.history')}
+        </Link>
+      </Stack>
 
       <Divider sx={{ my: 3 }} />
 
