@@ -89,21 +89,23 @@ export const AdminUserPage = () => {
         key={selected?.id}
         user={selected}
       />
-      <div style={{ height: '80vh', width: '100%', background: 'white' }}>
-        <DataGrid
-          isRowSelectable={() => false}
-          loading={isLoading || isFetching}
-          rows={users}
-          onRowClick={(params) => {
-            setSelected(params.row)
-          }}
-          rowCount={totalElements}
-          columns={columns(user!, t)}
-          pageSize={pageSize}
-          rowsPerPageOptions={[10, 30, 50, 100]}
-          onPageSizeChange={setPageSize}
-        />
-      </div>
+      <DataGrid
+        sx={{
+          height: '80vh',
+          width: '100%',
+        }}
+        isRowSelectable={() => false}
+        loading={isLoading || isFetching}
+        rows={users}
+        onRowClick={(params) => {
+          setSelected(params.row)
+        }}
+        rowCount={totalElements}
+        columns={columns(user!, t)}
+        pageSize={pageSize}
+        rowsPerPageOptions={[10, 30, 50, 100]}
+        onPageSizeChange={setPageSize}
+      />
     </AdminLayout>
   )
 }

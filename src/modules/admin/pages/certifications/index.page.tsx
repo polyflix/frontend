@@ -52,23 +52,25 @@ export const AdminCertificationPage = () => {
         key={selected?.certificationID}
         certification={selected}
       />
-      <div style={{ height: '80vh', width: '100%', background: 'white' }}>
-        <DataGrid
-          getRowId={(row) => row.certificationID}
-          isRowSelectable={() => false}
-          loading={isLoading || isFetching}
-          rows={certifications}
-          onRowClick={(params) => {
-            setSelected(params.row)
-          }}
-          rowCount={totalElements}
-          columns={columns(t)}
-          pageSize={pageSize}
-          rowsPerPageOptions={[10, 30, 50, 100]}
-          onPageChange={setPage}
-          onPageSizeChange={setPageSize}
-        />
-      </div>
+      <DataGrid
+        sx={{
+          height: '80vh',
+          width: '100%',
+        }}
+        getRowId={(row) => row.certificationID}
+        isRowSelectable={() => false}
+        loading={isLoading || isFetching}
+        rows={certifications}
+        onRowClick={(params) => {
+          setSelected(params.row)
+        }}
+        rowCount={totalElements}
+        columns={columns(t)}
+        pageSize={pageSize}
+        rowsPerPageOptions={[10, 30, 50, 100]}
+        onPageChange={setPage}
+        onPageSizeChange={setPageSize}
+      />
       <Tooltip title={t<string>('navbar.actions.logout')}>
         <Button
           onClick={() => setSelected({ certificationID: undefined, name: '' })}

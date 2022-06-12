@@ -106,6 +106,7 @@ export const Questions = ({ quizz }: PlayComponentProps) => {
                     : setQuestion(questionIdx + 1)
                 }
                 variant="outlined"
+                disabled={!isAnswered}
               >
                 {isLastQuestion
                   ? t('questions.terminate')
