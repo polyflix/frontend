@@ -1,4 +1,5 @@
 import { Box, Stack, Tooltip, Typography } from '@mui/material'
+import { useTranslation } from 'react-i18next'
 
 import { useSidebar } from '@core/hooks/useSidebar.hook'
 import { Role } from '@core/types/roles.type'
@@ -29,7 +30,8 @@ const getHighestRole = (user: Partial<User> & Pick<User, 'roles'>): string => {
 export const UserMinimalCard = ({}) => {
   const { open } = useSidebar()
   const { user } = useAuth()
-  const role = getHighestRole(user!)
+  const { t } = useTranslation()
+  const role = t(`roles.${getHighestRole(user!).toLowerCase()}`)
 
   return (
     <Stack direction="row" alignItems="center" sx={{ width: '100%' }}>

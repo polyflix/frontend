@@ -1,4 +1,5 @@
 import { Box, Drawer, Link, useMediaQuery, useTheme } from '@mui/material'
+import { useTranslation } from 'react-i18next'
 import { Link as RouterLink } from 'react-router-dom'
 
 import { Scrollbar } from '@core/components/Scrollbar/Scrollbar.component'
@@ -17,6 +18,10 @@ export const DashboardSidebar = () => {
   const ltsm: boolean = useMediaQuery(th.breakpoints.down('md'))
 
   const { open, toggle } = useSidebar()
+
+  // Without it, translations are not loaded, so ignore eslint unused
+  /* eslint-disable @typescript-eslint/no-unused-vars */
+  const { t } = useTranslation('sidebar')
 
   return (
     <RootStyle open={open}>

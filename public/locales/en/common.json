@@ -1,4 +1,9 @@
 {
+  "roles": {
+    "member": "Member",
+    "administrator": "Administrator",
+    "contributor": "Contributor"
+  },
   "snackbarExample": "Welcome back, {{user}}",
   "sidebar": {
     "actions": {
