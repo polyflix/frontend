@@ -89,7 +89,7 @@ export const AdminUserPage = () => {
         key={selected?.id}
         user={selected}
       />
-      <div style={{ height: '500px', width: '100%', background: 'white' }}>
+      <div style={{ height: '80vh', width: '100%', background: 'white' }}>
         <DataGrid
           isRowSelectable={() => false}
           loading={isLoading || isFetching}

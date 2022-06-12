@@ -1,4 +1,5 @@
 import { EditCertificationModal } from '@admin/components/certifications/EditCertificationModal'
+import { Button, Tooltip } from '@mui/material'
 import { DataGrid, GridColDef } from '@mui/x-data-grid'
 import { TFunction } from 'i18next'
 import { capitalize } from 'lodash'
@@ -51,7 +52,7 @@ export const AdminCertificationPage = () => {
         key={selected?.certificationID}
         certification={selected}
       />
-      <div style={{ height: '500px', width: '100%', background: 'white' }}>
+      <div style={{ height: '80vh', width: '100%', background: 'white' }}>
         <DataGrid
           getRowId={(row) => row.certificationID}
           isRowSelectable={() => false}
@@ -68,6 +69,13 @@ export const AdminCertificationPage = () => {
           onPageSizeChange={setPageSize}
         />
       </div>
+      <Tooltip title={t<string>('navbar.actions.logout')}>
+        <Button
+          onClick={() => setSelected({ certificationID: undefined, name: '' })}
+        >
+          Create
+        </Button>
+      </Tooltip>
     </AdminLayout>
   )
 }

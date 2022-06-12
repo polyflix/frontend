@@ -99,7 +99,7 @@
     },
     "form": {
       "labels": {
-        "name": "Certification name",
+        "name": "Nom de la certification",
         "certificationID": "Certification ID"
       },
       "errors": {
@@ -108,8 +108,9 @@
         }
       },
       "actions": {
-        "close": "Close",
-        "save": "Save"
+        "close": "Fermer",
+        "save": "Enregistrer",
+        "create": "Créer une nouvelle certification"
       }
     }
   }

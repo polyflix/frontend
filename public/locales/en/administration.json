@@ -109,7 +109,8 @@
       },
       "actions": {
         "close": "Close",
-        "save": "Save"
+        "save": "Save",
+        "create": "Create a new certification"
       }
     }
   }

@@ -25,7 +25,11 @@ import {
 import { SnackbarService } from '@core/services/snackbar.service'
 
 import { Certification } from '@certifications/models/certification.model'
-import { useUpdateCertificationMutation } from '@certifications/services/certification.service'
+import {
+  useAddCertificationMutation,
+  useUpdateCertificationMutation,
+} from '@certifications/services/certification.service'
+import { ICertificationForm } from '@certifications/types/form.type'
 
 interface Props {
   certification?: Certification
@@ -35,6 +39,7 @@ interface Props {
 export const EditCertificationModal = ({ certification, onClose }: Props) => {
   const snackbarService = useInjection<SnackbarService>(SnackbarService)
   const [open, setOpen] = useState<boolean>(false)
+  const [createCertifications] = useAddCertificationMutation()
   const [updateCertifications] = useUpdateCertificationMutation()
   const { t } = useTranslation('administration')
   const {
@@ -43,8 +48,8 @@ export const EditCertificationModal = ({ certification, onClose }: Props) => {
     formState: { errors, isSubmitting },
   } = useForm<AdminCertificationForm>({
     defaultValues: {
-      certificationID: certification?.certificationID,
-      name: certification?.name,
+      certificationID: certification?.certificationID || undefined,
+      name: certification?.name || '',
     },
   })
 
@@ -60,10 +65,17 @@ export const EditCertificationModal = ({ certification, onClose }: Props) => {
       ...certification,
       ...data,
     }
-    const { error } = (await updateCertifications({
-      id: certification!.certificationID,
-      body: body as Certification,
-    })) as any
+    let error = null
+    if (certification?.certificationID) {
+      error = (await updateCertifications({
+        id: certification!.certificationID,
+        body: body as Certification,
+      })) as any
+    } else {
+      delete body.certificationID
+      error = await createCertifications(body as ICertificationForm)
+    }
+
     if (error) {
       snackbarService.createSnackbar(error.data.message, { variant: 'error' })
     } else {
@@ -108,9 +120,15 @@ export const EditCertificationModal = ({ certification, onClose }: Props) => {
                   <Grid item xs={12}>
                     <Stack spacing={2} direction="row" alignItems="center">
                       <Stack>
-                        <Typography variant="h4">
-                          ID: {certification?.certificationID}
-                        </Typography>
+                        {certification?.certificationID ? (
+                          <Typography variant="h4">
+                            ID: {certification?.certificationID}
+                          </Typography>
+                        ) : (
+                          <Typography variant="h4">
+                            {t('certifications.form.actions.create')}
+                          </Typography>
+                        )}
                       </Stack>
                     </Stack>
                   </Grid>
