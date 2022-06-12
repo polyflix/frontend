@@ -29,6 +29,7 @@
         "default": "Rechercher",
         "fast": "Recherche rapide"
       },
+      "logout": "Déconnexion",
       "language": "Langue",
       "notifications": "Notifications",
       "bugReport": "Signaler un bug",

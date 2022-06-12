@@ -29,6 +29,7 @@
         "default": "Search for",
         "fast": "Quick search"
       },
+      "logout": "Log out",
       "language": "Language",
       "notifications": "Notifications",
       "bugReport": "Report a bug",

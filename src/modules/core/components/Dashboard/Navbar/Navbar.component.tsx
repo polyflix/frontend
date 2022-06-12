@@ -10,6 +10,8 @@ import { Spotlight } from '@core/components/Spotlight/Spotlight.component'
 import { ThemeButton } from '@core/components/ThemeButton/ThemeButton.component'
 import { useSidebar } from '@core/hooks/useSidebar.hook'
 
+import { Logout } from '@auth/components/Logout/Logout.component'
+
 import { RootStyle, ToolbarStyle } from './Navbar.style'
 
 export const DashboardNavbar: React.FC<PropsWithChildren<{}>> = ({}) => {
@@ -47,6 +49,7 @@ export const DashboardNavbar: React.FC<PropsWithChildren<{}>> = ({}) => {
           <Spotlight />
           <LanguageButton />
           <BugReport />
+          <Logout />
           <Box
             sx={{
               display: {

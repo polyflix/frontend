@@ -3,8 +3,7 @@
     "list": "List",
     "explore": "Explore",
     "create": "Create",
-    "history": "History",
-    "logout": "Log out"
+    "history": "History"
   },
   "sections": {
     "general": "General",

@@ -1,23 +1,13 @@
-import {
-  Box,
-  Button,
-  Drawer,
-  Link,
-  Tooltip,
-  useMediaQuery,
-  useTheme,
-} from '@mui/material'
+import { Box, Drawer, Link, useMediaQuery, useTheme } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 import { Link as RouterLink } from 'react-router-dom'
 
 import { useInjection } from '@polyflix/di'
 
-import { Icon } from '@core/components/Icon/Icon.component'
 import { Scrollbar } from '@core/components/Scrollbar/Scrollbar.component'
 import { ThemeButton } from '@core/components/ThemeButton/ThemeButton.component'
 import { useSidebar } from '@core/hooks/useSidebar.hook'
 import { OPEN_DRAWER_WIDTH } from '@core/layouts/Dashboard/Dashboard.style'
-import { fadeInAnnimation } from '@core/utils/animation'
 import { ease } from '@core/utils/transition'
 
 import { AuthService } from '@auth/services/auth.service'
@@ -105,70 +95,6 @@ export const DashboardSidebar = () => {
                 }}
               >
                 <ThemeButton />
-              </Box>
-            </Box>
-
-            <Box
-              sx={{
-                pb: 3,
-                mt: 5,
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}
-            >
-              <Box
-                sx={{
-                  ...(open && {
-                    px: 4,
-                  }),
-                  width: '100%',
-                  display: 'flex',
-                  justifyContent: 'center',
-                }}
-              >
-                <Tooltip title={t<string>('actions.logout')}>
-                  <Button
-                    onClick={() => authService.logout()}
-                    variant="outlined"
-                    color="primary"
-                    aria-label="add"
-                    size="small"
-                    sx={{
-                      display: 'flex',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      overflow: 'hidden',
-                      minWidth: 40,
-                      ...(open && {
-                        width: '100%',
-                        height: 40,
-                      }),
-                      ...(!open && {
-                        width: 40,
-                        height: 40,
-                      }),
-                    }}
-                  >
-                    <Icon name="eva:log-in-fill" />
-                    <Box
-                      component="p"
-                      sx={{
-                        transition: (theme) => ease(theme, 'width'),
-                        ...(open && {
-                          ml: 1,
-                        }),
-                        ...(!open && {
-                          width: 0,
-                        }),
-                        whiteSpace: 'nowrap',
-                        ...fadeInAnnimation(open),
-                      }}
-                    >
-                      {t('actions.logout')}
-                    </Box>
-                  </Button>
-                </Tooltip>
               </Box>
             </Box>
           </Scrollbar>
