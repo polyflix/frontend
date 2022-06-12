@@ -1,8 +1,5 @@
 import { Box, Drawer, Link, useMediaQuery, useTheme } from '@mui/material'
-import { useTranslation } from 'react-i18next'
 import { Link as RouterLink } from 'react-router-dom'
-
-import { useInjection } from '@polyflix/di'
 
 import { Scrollbar } from '@core/components/Scrollbar/Scrollbar.component'
 import { ThemeButton } from '@core/components/ThemeButton/ThemeButton.component'
@@ -10,21 +7,16 @@ import { useSidebar } from '@core/hooks/useSidebar.hook'
 import { OPEN_DRAWER_WIDTH } from '@core/layouts/Dashboard/Dashboard.style'
 import { ease } from '@core/utils/transition'
 
-import { AuthService } from '@auth/services/auth.service'
-
 import { Section } from './Section/Section.component'
 import { getSidebarSections } from './Sidebar.config'
 import { AccountStyle, RootStyle } from './Sidebar.style'
 import { UserMinimalCard } from './UserMinimalCard/UserMinimalCard.component'
 
 export const DashboardSidebar = () => {
-  const authService = useInjection<AuthService>(AuthService)
-
   const th = useTheme()
   const ltsm: boolean = useMediaQuery(th.breakpoints.down('md'))
 
   const { open, toggle } = useSidebar()
-  const { t } = useTranslation('sidebar')
 
   return (
     <RootStyle open={open}>
