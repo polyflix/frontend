@@ -1,14 +1,14 @@
 import { InfoOutlined } from '@mui/icons-material'
 import {
   Box,
+  Link,
   ListItemIcon,
   ListItemText,
   MenuItem,
   Skeleton,
   Stack,
-  Typography,
-  Link,
   Tooltip,
+  Typography,
 } from '@mui/material'
 import { abbreviateNumber } from 'js-abbreviation-number'
 import React from 'react'
@@ -110,10 +110,7 @@ export const VideoSliderCard = ({ video, isFetching = false }: Props) => {
         </>
       ) : (
         <>
-          <AspectRatioBox
-            ratio={16 / 9}
-            sx={{ bgcolor: 'grey.400', borderRadius: 1 }}
-          >
+          <AspectRatioBox ratio={16 / 9} sx={{ borderRadius: 1 }}>
             <Link
               underline="none"
               color="inherit"
