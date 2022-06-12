@@ -190,7 +190,7 @@ export const Spotlight: React.FC<PropsWithChildren<{}>> = ({}) => {
           <Box
             sx={{
               position: 'absolute',
-              maxWidth: '1500px',
+              maxWidth: '850px',
               top: '50%',
               left: '50%',
               width: '80%',
@@ -251,12 +251,12 @@ export const Spotlight: React.FC<PropsWithChildren<{}>> = ({}) => {
                       query={query$.value}
                       closeModal={handleClose}
                     />
-                    <SearchSlider
+                    {/* <SearchSlider
                       title={tS<string>('administration.resources.users')}
                       results={data.users}
                       query={query$.value}
                       closeModal={handleClose}
-                    />
+                    /> */}
                   </Scrollbar>
                 )}
               </Search>
