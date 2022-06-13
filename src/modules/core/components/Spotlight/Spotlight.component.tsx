@@ -58,6 +58,7 @@ export const Spotlight: React.FC<PropsWithChildren<{}>> = ({}) => {
   const [page, setPage] = useState(1)
 
   const executeSearch = (query: string, pageNumber: number) => {
+    if (query == '' || !query) return
     return searchService.searchFor({
       query: query,
       page: pageNumber,
