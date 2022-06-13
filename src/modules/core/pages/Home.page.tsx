@@ -1,4 +1,5 @@
 import { Grid, Typography } from '@mui/material'
+import { isEmpty } from 'lodash'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -61,6 +62,16 @@ export const HomePage = () => {
 
   const { t } = useTranslation('home')
 
+  if (
+    isEmpty(lastVideos) &&
+    isEmpty(popularVideos) &&
+    isEmpty(mostLikedVideos) &&
+    isEmpty(watchingVideos) &&
+    isEmpty(watchedVideos)
+  ) {
+    return <NoData variant="videos" link="/videos/create" />
+  }
+
   return (
     <Page title={t('page.title')} maxWidth={false}>
       <Grid container spacing={5}>
@@ -87,70 +98,68 @@ export const HomePage = () => {
         {/** END CURRENTLY WATCHING VIDEOS SLIDER **/}
 
         {/** LATEST VIDEOS SLIDER **/}
-        <Grid item xs={12}>
-          {lastVideosQuery.isLoading || lastVideos.length > 0 ? (
-            <Slider
-              isLoading={lastVideosQuery.isLoading}
-              heading={
-                <Typography variant="h4">
-                  {t('sliders.titles.latest')}
-                </Typography>
-              }
-              freeMode
-            >
-              {lastVideos.map((video) => (
-                <VideoSliderCard key={video.slug} video={video} />
-              ))}
-            </Slider>
-          ) : (
-            <NoData variant="videos" link="/videos/create" />
-          )}
+        <Grid
+          item
+          xs={12}
+          hidden={!lastVideosQuery.isLoading && lastVideos.length === 0}
+        >
+          <Slider
+            isLoading={lastVideosQuery.isLoading}
+            heading={
+              <Typography variant="h4">{t('sliders.titles.latest')}</Typography>
+            }
+            freeMode
+          >
+            {lastVideos.map((video) => (
+              <VideoSliderCard key={video.slug} video={video} />
+            ))}
+          </Slider>
         </Grid>
         {/** END LATEST VIDEOS SLIDER **/}
 
         {/** POPULAR VIDEOS SLIDER **/}
-        <Grid item xs={12}>
-          {popularVideosQuery.isLoading || popularVideos.length > 0 ? (
-            <Slider
-              isLoading={popularVideosQuery.isLoading}
-              heading={
-                <Typography variant="h4">
-                  {t('sliders.titles.popular')}
-                </Typography>
-              }
-              freeMode
-            >
-              {/** We slice the array as it is a frozen object to create a clone of it **/}
-              {popularVideos.map((video) => (
-                <VideoSliderCard key={video.slug} video={video} />
-              ))}
-            </Slider>
-          ) : (
-            <NoData variant="videos" link="/videos/create" />
-          )}
+        <Grid
+          item
+          xs={12}
+          hidden={!popularVideosQuery.isLoading && popularVideos.length === 0}
+        >
+          <Slider
+            isLoading={popularVideosQuery.isLoading}
+            heading={
+              <Typography variant="h4">
+                {t('sliders.titles.popular')}
+              </Typography>
+            }
+            freeMode
+          >
+            {/** We slice the array as it is a frozen object to create a clone of it **/}
+            {popularVideos.map((video) => (
+              <VideoSliderCard key={video.slug} video={video} />
+            ))}
+          </Slider>
         </Grid>
         {/** END POPULAR VIDEOS SLIDER **/}
 
         {/** MOST LIKED VIDEOS SLIDER **/}
-        <Grid item xs={12}>
-          {mostLikedVideosQuery.isLoading || mostLikedVideos.length > 0 ? (
-            <Slider
-              isLoading={mostLikedVideosQuery.isLoading}
-              heading={
-                <Typography variant="h4">
-                  {t('sliders.titles.rated')}
-                </Typography>
-              }
-              freeMode
-            >
-              {/** We slice the array as it is a frozen object to create a clone of it **/}
-              {mostLikedVideos.map((video) => (
-                <VideoSliderCard key={video.slug} video={video} />
-              ))}
-            </Slider>
-          ) : (
-            <NoData variant="videos" link="/videos/create" />
-          )}
+        <Grid
+          item
+          xs={12}
+          hidden={
+            !mostLikedVideosQuery.isLoading && mostLikedVideos.length === 0
+          }
+        >
+          <Slider
+            isLoading={mostLikedVideosQuery.isLoading}
+            heading={
+              <Typography variant="h4">{t('sliders.titles.rated')}</Typography>
+            }
+            freeMode
+          >
+            {/** We slice the array as it is a frozen object to create a clone of it **/}
+            {mostLikedVideos.map((video) => (
+              <VideoSliderCard key={video.slug} video={video} />
+            ))}
+          </Slider>
         </Grid>
         {/** END MOST LIKED VIDEOS SLIDER **/}
 
