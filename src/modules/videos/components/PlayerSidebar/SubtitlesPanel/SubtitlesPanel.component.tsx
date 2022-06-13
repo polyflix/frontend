@@ -7,17 +7,44 @@ import { Block } from '@polyflix/vtt-parser'
 
 import { AutoScrollBox } from '@core/components/AutoScrollBox/AutoScrollBox.component'
 import { buildSkeletons } from '@core/utils/gui.utils'
-import { msToHMS } from '@core/utils/time.util'
 
 import { useSubtitlesContext } from '@videos/hooks/useSubtitlesContext.hook'
 import { Video } from '@videos/models/video.model'
 
-import { ListItemTextStyle, ListItemStyle } from './SubtitlesPanel.style'
+import { SubtitleSentence } from './SubtitlesPanel.style'
 
 type SubtitleTextProps = {
   block: Block
   playerRef: React.RefObject<HTMLVmPlayerElement>
 }
+
+// const SubtitleTextOld = ({ block, playerRef }: SubtitleTextProps) => {
+//   const [currentTime, setCurrentTime] = usePlayerContext(
+//     playerRef,
+//     'currentTime',
+//     0
+//   )
+//   const blockRef = useRef<HTMLDivElement>(null)
+
+//   const executeScroll = (): void =>
+//     blockRef?.current?.scrollIntoView({ block: 'center' })
+
+//   const isCurrent =
+//     block.startTime / 1000 <= currentTime && block.endTime / 1000 > currentTime
+
+//   if (isCurrent) {
+//     executeScroll()
+//   }
+//   return (
+//     <ListItemTextStyle
+//       ref={blockRef}
+//       current={isCurrent.toString()}
+//       onClick={() => setCurrentTime(block.startTime / 1000)}
+//       primary={block.text}
+//       // secondary={msToHMS(block.startTime)}
+//     />
+//   )
+// }
 
 const SubtitleText = ({ block, playerRef }: SubtitleTextProps) => {
   const [currentTime, setCurrentTime] = usePlayerContext(
@@ -27,6 +54,7 @@ const SubtitleText = ({ block, playerRef }: SubtitleTextProps) => {
   )
   const blockRef = useRef<HTMLDivElement>(null)
 
+  console.log(block.text)
   const executeScroll = (): void =>
     blockRef?.current?.scrollIntoView({ block: 'center' })
 
@@ -37,13 +65,15 @@ const SubtitleText = ({ block, playerRef }: SubtitleTextProps) => {
     executeScroll()
   }
   return (
-    <ListItemTextStyle
+    <SubtitleSentence
       ref={blockRef}
       current={isCurrent.toString()}
       onClick={() => setCurrentTime(block.startTime / 1000)}
-      primary={block.text}
-      secondary={msToHMS(block.startTime)}
-    />
+      // value={block.text}
+      // secondary={msToHMS(block.startTime)}
+    >
+      {block.text}
+    </SubtitleSentence>
   )
 }
 
@@ -64,7 +94,7 @@ export const SubtitlePanel = ({ playerRef }: SubtitlePanelProps) => {
         return (
           <>
             {ghosts.map((_, index: number) => (
-              <ListItemStyle key={index}>
+              <SubtitleSentence key={index}>
                 <Stack
                   spacing={2}
                   direction="row"
@@ -78,7 +108,7 @@ export const SubtitlePanel = ({ playerRef }: SubtitlePanelProps) => {
                     height={15}
                   />
                 </Stack>
-              </ListItemStyle>
+              </SubtitleSentence>
             ))}
           </>
         )
@@ -93,9 +123,7 @@ export const SubtitlePanel = ({ playerRef }: SubtitlePanelProps) => {
       case 'success':
         return (currentSubtitle?.vttFile.getBlocks() || []).map(
           (block: Block, i: number) => (
-            <ListItemStyle key={i}>
-              <SubtitleText block={block} playerRef={playerRef} />
-            </ListItemStyle>
+            <SubtitleText key={i} block={block} playerRef={playerRef} />
           )
         )
       default:
@@ -111,7 +139,9 @@ export const SubtitlePanel = ({ playerRef }: SubtitlePanelProps) => {
 
   return (
     <AutoScrollBox>
-      <List dense={true}>{content()}</List>
+      <List sx={{ padding: '1em' }} dense={true}>
+        {content()}
+      </List>
     </AutoScrollBox>
   )
 }
