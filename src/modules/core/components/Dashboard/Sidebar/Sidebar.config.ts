@@ -58,7 +58,7 @@ const sidebarConfiguration: SidebarItem[] = [
     roles: [Role.Contributor, Role.Admin],
     items: [
       {
-        title: 'actions.list',
+        title: 'actions.video',
         href: '/users/profile/videos',
       },
       {
@@ -74,7 +74,7 @@ const sidebarConfiguration: SidebarItem[] = [
     roles: [Role.Contributor, Role.Admin],
     items: [
       {
-        title: 'actions.list',
+        title: 'actions.module',
         href: '/users/profile/modules',
       },
       {
@@ -90,7 +90,7 @@ const sidebarConfiguration: SidebarItem[] = [
     roles: [Role.Contributor, Role.Admin],
     items: [
       {
-        title: 'actions.list',
+        title: 'actions.course',
         href: '/users/profile/courses',
       },
       {
@@ -106,7 +106,7 @@ const sidebarConfiguration: SidebarItem[] = [
     roles: [Role.Contributor, Role.Admin],
     items: [
       {
-        title: 'actions.list',
+        title: 'actions.quiz',
         href: '/users/profile/quizzes',
       },
       {

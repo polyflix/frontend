@@ -1,6 +1,9 @@
 {
   "actions": {
-    "list": "Lister",
+    "video": "Mes vidéos",
+    "course": "Mes cours",
+    "module": "Mes modules",
+    "quiz": "Mes quiz",
     "explore": "Explorer",
     "create": "Créer",
     "history": "Historique"
