@@ -12,6 +12,9 @@
           "delete": "Supprimer le module",
           "view": "Voir le module"
         }
+      },
+      "tags": {
+        "draft": "Brouillon"
       }
     }
   },

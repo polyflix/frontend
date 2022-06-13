@@ -17,7 +17,10 @@ import { buildStyles, CircularProgressbar } from 'react-circular-progressbar'
 import { useTranslation } from 'react-i18next'
 import { Link as RouterLink } from 'react-router-dom'
 
+import { DraftTag } from '@core/components/Chip/Draft.component'
+import { NewTag } from '@core/components/Chip/New.component'
 import { Icon } from '@core/components/Icon/Icon.component'
+import { VisibilityIcons } from '@core/components/Visibility/Icons/VisibilityIcons.component'
 import { Element } from '@core/models/element.model'
 
 import { useAuth } from '@auth/hooks/useAuth.hook'
@@ -30,7 +33,6 @@ import { User } from '@users/models/user.model'
 
 import { getFeedbackColor, percentage } from '../../helpers/score.helper'
 import { QuizzAttemptCard } from '../QuizzAttemptCard/QuizzAttemptCard.component'
-import { NewTag } from './QuizzCard.style'
 import { QuizzSliderOption } from './QuizzCardOption.component'
 
 interface Props {
@@ -108,9 +110,12 @@ export const QuizzCard = ({
    * @returns
    */
   const buildTags = () =>
-    isNew && (
+    (displayDraft && (
+      <DraftTag size="small" variant="outlined" label={t('card.tags.draft')} />
+    )) ||
+    (isNew && (
       <NewTag size="small" variant="outlined" label={t('card.tags.new')} />
-    )
+    ))
 
   /**
    * Build the creation date in the card
@@ -149,37 +154,9 @@ export const QuizzCard = ({
               noWrap={true}
             >
               {displayVisibility && quizz.visibility !== 'public' && (
-                <Typography
-                  variant="h6"
-                  sx={{
-                    color: 'text.secondary',
-                    marginRight: '0.5rem',
-                    display: 'inline-block',
-                  }}
-                >
-                  <Icon
-                    size={16}
-                    name={
-                      quizz.visibility === 'private'
-                        ? 'ic:outline-visibility-off'
-                        : 'ri:lock-password-line'
-                    }
-                  />
-                </Typography>
+                <VisibilityIcons visibility={quizz!.visibility!} />
               )}
               {quizz.name}
-              {displayDraft && quizz.draft && (
-                <Typography
-                  variant="caption"
-                  sx={{
-                    color: 'text.secondary',
-                    marginLeft: '0.5rem',
-                    fontWeight: 'bold',
-                  }}
-                >
-                  {t('card.draft')}
-                </Typography>
-              )}
             </Typography>
           </Tooltip>
           {displayCreationDate && buildCreationDate()}

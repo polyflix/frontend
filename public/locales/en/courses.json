@@ -7,7 +7,10 @@
   "collections": "Modules",
   "introduction": "Getting started",
   "courseCard": {
-    "footerElements": "{{count}} module(s) in this course"
+    "footerElements": "{{count}} module(s) in this course",
+    "tags": {
+      "draft": "Draft"
+    }
   },
   "noData": {
     "description": "If you have the necessary rights you can create a course below",

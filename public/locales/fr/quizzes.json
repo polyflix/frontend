@@ -7,7 +7,8 @@
   },
   "card": {
     "tags": {
-      "new": "Nouveau"
+      "new": "Nouveau",
+      "draft": "Brouillon"
     },
     "draft": "Brouillon",
     "creationDateFormat": "DD/MM/YYYY",

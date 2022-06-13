@@ -2,7 +2,7 @@ import { Paper, styled, Box, alpha } from '@mui/material'
 
 import { ease } from '@core/utils/transition'
 
-export const RootStyle = styled<any>(Paper)(({ theme, draft }) => ({
+export const RootStyle = styled<any>(Paper)(({ theme }) => ({
   position: 'relative',
   height: '200px',
 
@@ -12,9 +12,6 @@ export const RootStyle = styled<any>(Paper)(({ theme, draft }) => ({
 
   '&:hover': {
     borderColor: theme.palette.primary.main,
-    ...(draft && {
-      borderColor: alpha(theme.palette.primary.main, 0.5),
-    }),
     '.card-footer': {
       backgroundColor: alpha(theme.palette.primary.light, 0.2),
     },
@@ -36,9 +33,6 @@ export const RootStyle = styled<any>(Paper)(({ theme, draft }) => ({
   },
   '&:hover::after': {
     backgroundColor: theme.palette.primary.light,
-    ...(draft && {
-      backgroundColor: alpha(theme.palette.primary.light, 0.5),
-    }),
     [theme.breakpoints.up('xs')]: {
       transform: 'rotate(1.5deg)',
     },

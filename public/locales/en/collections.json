@@ -12,6 +12,9 @@
           "delete": "Delete module",
           "view": "View module"
         }
+      },
+      "tags": {
+        "draft": "Draft"
       }
     }
   },

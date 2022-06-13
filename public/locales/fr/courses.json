@@ -7,7 +7,10 @@
   "collections": "Modules",
   "introduction": "Présentation",
   "courseCard": {
-    "footerElements": "{{count}} module(s) dans ce cours"
+    "footerElements": "{{count}} module(s) dans ce cours",
+    "tags": {
+      "draft": "Brouillon"
+    }
   },
   "noData": {
     "description": "Si vous avez les droits nécessaires vous pouvez créer un cours ci-dessous",

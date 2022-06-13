@@ -7,7 +7,8 @@
   },
   "card": {
     "tags": {
-      "new": "New"
+      "new": "New",
+      "draft": "Draft"
     },
     "draft": "Draft",
     "creationDateFormat": "MM/DD/YYYY",
