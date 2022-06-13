@@ -1,0 +1,63 @@
+{
+  "explore": {
+    "title": "Explore our cursus",
+    "bodyTitle": "Explore our <colored>cursus</colored>",
+    "description": "Discover something new with our cursus, through videos, quizzes and external resources."
+  },
+  "collections": "Modules",
+  "introduction": "Getting started",
+  "cursusCard": {
+    "footerElements": "{{count}} module(s) in this cursus"
+  },
+  "noData": {
+    "description": "If you have the necessary rights you can create a cursus below",
+    "buttonText": "Create a cursus",
+    "empty": "There are no modules associated with the cursus"
+  },
+  "form": {
+    "upsert": {
+      "title": {
+        "status": "Statut",
+        "create": "Create a new cursus",
+        "update": "Update your cursus {{cursus}}",
+        "metadata": "General informations",
+        "collections": "Modules"
+      },
+      "description": {
+        "create": "A cursus can contain several modules, so people can explore these to follow complex flows.",
+        "update": "A cursus can contain several modules, so people can explore these to follow complex flows."
+      },
+      "label": {
+        "name": "Name",
+        "description": "Description",
+        "content": "Content",
+        "id": "Unique identifier"
+      },
+      "helper": {
+        "name": "The name of the cursus, maximum {{count}} characters",
+        "description": "A short description of what the cursus is about",
+        "content": "This is a whole document where you can write a lof of things (might be a WYSIWYG someday)"
+      },
+      "error": {
+        "requiredField": "The field {{field}} is required",
+        "minLength": "This field requires at least {{count}} characters",
+        "maxLength": "This field requires at most {{count}} characters"
+      },
+      "fields": {
+        "name": "name",
+        "description": "description",
+        "content": "content"
+      },
+      "submit": "Submit",
+      "update": "Update",
+      "deleteChoice": "Remove this choice",
+      "addCollection": "Attach a module",
+      "search": "Search a module",
+      "seeCollection": "See this module"
+    }
+  },
+  "deleteModal": {
+    "title": "Delete cursus",
+    "content": "Are you sure to delete this cursus?"
+  }
+}

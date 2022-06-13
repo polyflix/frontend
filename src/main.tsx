@@ -1,3 +1,4 @@
+import { CursusRouter } from '@cursus/cursus.router'
 import { ReactKeycloakProvider, useKeycloak } from '@react-keycloak/web'
 import '@vime/core/themes/default.css'
 import { isUndefined } from 'lodash'
@@ -95,6 +96,7 @@ const PolyflixApp = () => {
         <PrivateRoute condition={isAuthenticated}>
           <DashboardLayout>
             <Switch>
+              <Route path="/cursus" component={CursusRouter} />
               <Route path="/courses" component={CourseRouter} />
               <Route path="/quizzes" component={QuizzRouter} />
               <Route path="/users" component={UserRouter} />

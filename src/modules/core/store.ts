@@ -1,4 +1,5 @@
 import { groupsApi } from '@admin/services/group.service'
+import { cursusApi } from '@cursus/services/cursus.service'
 import { configureStore } from '@reduxjs/toolkit'
 import { subtitlesApi } from '@subtitles/services/subtitle.service'
 
@@ -40,6 +41,7 @@ export const store = configureStore({
     [modulesApi.reducerPath]: modulesApi.reducer,
     [coursesApi.reducerPath]: coursesApi.reducer,
     [groupsApi.reducerPath]: groupsApi.reducer,
+    [cursusApi.reducerPath]: cursusApi.reducer,
     auth: authReducer,
     server: serverReducer,
     videos: videosReducer,
@@ -60,7 +62,8 @@ export const store = configureStore({
       .concat(quizzesAttemptsApi.middleware)
       .concat(modulesApi.middleware)
       .concat(coursesApi.middleware)
-      .concat(groupsApi.middleware),
+      .concat(groupsApi.middleware)
+      .concat(cursusApi.middleware),
 })
 
 export type RootState = ReturnType<typeof store.getState>

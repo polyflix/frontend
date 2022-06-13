@@ -52,6 +52,12 @@ const sidebarConfiguration: SidebarItem[] = [
     roles: [Role.Member, Role.Contributor, Role.Admin],
   },
   {
+    title: 'items.cursus',
+    href: '/cursus/explore',
+    icon: 'gg:align-left',
+    roles: [Role.Member, Role.Contributor, Role.Admin],
+  },
+  {
     title: 'myContent.videos',
     section: SidebarSection.MANAGEMENT,
     icon: 'eva:play-circle-outline',
@@ -96,6 +102,22 @@ const sidebarConfiguration: SidebarItem[] = [
       {
         title: 'actions.create',
         href: '/courses/create',
+      },
+    ],
+  },
+  {
+    title: 'myContent.cursus',
+    section: SidebarSection.MANAGEMENT,
+    icon: 'gg:align-left',
+    roles: [Role.Contributor, Role.Admin],
+    items: [
+      {
+        title: 'actions.list',
+        href: '/users/profile/cursus',
+      },
+      {
+        title: 'actions.create',
+        href: '/cursus/create',
       },
     ],
   },

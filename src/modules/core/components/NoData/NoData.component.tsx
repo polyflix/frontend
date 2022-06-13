@@ -17,6 +17,7 @@ interface Props {
     | 'links'
     | 'courses'
     | 'administration'
+    | 'cursus'
   link?: string
   creatable?: boolean
 }

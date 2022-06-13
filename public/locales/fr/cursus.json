@@ -1,0 +1,63 @@
+{
+  "explore": {
+    "title": "Explorer les cursus",
+    "bodyTitle": "Explorer les <colored>cursus</colored>",
+    "description": "Suivez des cursus en ligne au travers de vidéos, quizzes ou encore des ressources externes."
+  },
+  "collections": "Modules",
+  "introduction": "Présentation",
+  "cursusCard": {
+    "footerElements": "{{count}} module(s) dans ce cursus"
+  },
+  "noData": {
+    "description": "Si vous avez les droits nécessaires vous pouvez créer un cursus ci-dessous",
+    "buttonText": "Créer un cursus",
+    "empty": "Il n'y a pas de modules associée au cursus"
+  },
+  "form": {
+    "upsert": {
+      "title": {
+        "status": "Status",
+        "create": "Créer un nouveau cursus",
+        "update": "Mettre à jour le cursus {{cursus}}",
+        "metadata": "Informations générales",
+        "collections": "Modules"
+      },
+      "description": {
+        "create": "Un cursus peut contenir plusieurs modules, ce qui permet à votre utilisateurs de suivre des cursus complexes.",
+        "update": "Un cursus peut contenir plusieurs modules, ce qui permet à votre utilisateurs de suivre des cursus complexes."
+      },
+      "label": {
+        "name": "Nom",
+        "description": "Description courte",
+        "content": "Contenu de votre cursus",
+        "id": "Identifiant unique"
+      },
+      "helper": {
+        "name": "Nom de votre cursus avec un maximum de {{count}} caractères",
+        "description": "Une description courte permettant de comprendre ce que fait votre cursus",
+        "content": "Contenu de votre cursus, document principal avec une description complète"
+      },
+      "error": {
+        "requiredField": "Le champ {{field}} est exigé",
+        "minLength": "Ce champ demande au moins {{count}} characters",
+        "maxLength": "Ce champ demande au plus {{count}} characters"
+      },
+      "fields": {
+        "name": "nom",
+        "description": "description",
+        "content": "content"
+      },
+      "submit": "Soumettre",
+      "update": "Mettre à jour",
+      "deleteChoice": "Supprimer ce choix",
+      "addCollection": "Attacher un module",
+      "search": "Rechercher un module",
+      "seeCollection": "Voir le module"
+    }
+  },
+  "deleteModal": {
+    "title": "Supprimer le cursus",
+    "content": "Êtes-vous sûr de vouloir supprimer ce cursus ?"
+  }
+}

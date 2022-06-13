@@ -73,6 +73,10 @@ export default defineConfig({
         replacement: resolve(__dirname, './src/modules/courses'),
       },
       {
+        find: '@cursus',
+        replacement: resolve(__dirname, './src/modules/cursus'),
+      },
+      {
         find: '@links',
         replacement: resolve(__dirname, './src/modules/links'),
       },

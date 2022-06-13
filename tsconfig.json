@@ -9,6 +9,7 @@
       "@users/*": ["src/modules/users/*"],
       "@collections/*": ["src/modules/collections/*"],
       "@courses/*": ["src/modules/courses/*"],
+      "@cursus/*": ["src/modules/cursus/*"],
       "@videos/*": ["src/modules/videos/*"],
       "@quizzes/*": ["src/modules/quizzes/*"],
       "@subtitles/*": ["src/modules/subtitles/*"],
