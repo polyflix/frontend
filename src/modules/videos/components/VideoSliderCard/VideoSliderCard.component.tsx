@@ -199,7 +199,7 @@ export const VideoSliderCard = ({ video, isFetching = false }: Props) => {
                     </Typography>
                   </Tooltip>
                 </Link>
-                {video.publisher!.id === user!.id && isAdmin && (
+                {(video.publisher!.id === user!.id || isAdmin) && (
                   <VideoSliderOption video={video} />
                 )}
               </Box>
