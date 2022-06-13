@@ -1,4 +1,3 @@
-import { environment } from '@env/environment'
 import { Avatar, Stack, Tooltip, Typography } from '@mui/material'
 import {
   SearchQuiz,
@@ -6,90 +5,97 @@ import {
   SearchUser,
   SearchVideo,
 } from '@search/models/search.model'
+import { useEffect, useState } from 'react'
 import { Link as RouterLink } from 'react-router-dom'
 
 import { Icon } from '@core/components/Icon/Icon.component'
 
-import { VideoCardThumbnail } from '@videos/components/VideoCard/VideoCard.style'
-
 import { AspectRatioBox } from '../AspectRatioBox/AspectRation.component'
 import { HighlightedText } from './HighlightedText.component'
 import { ResultThumbnailContainer, SearchCard } from './Spotlight.style'
+import { VideoSearchThumbnail } from './VideoSearchThumbnail'
+
+export type Result = SearchVideo | SearchQuiz | SearchUser
 
 type SearchResultProps = {
-  result: SearchVideo | SearchQuiz | SearchUser
+  result: Result
   query: string
   closeModal: () => void
 }
 
-const thumbnailRegex =
-  /[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/gi
+type SearchResultState = {
+  link: string
+  title: string
+  description?: string
+  icon: string
+}
+const defaultSearchResultState: SearchResultState = {
+  link: '',
+  title: '',
+  description: '',
+  icon: '',
+}
+
+const DESCRIPTION_LENGTH = 150
 
 export const SearchResult: React.FC<SearchResultProps> = ({
   result,
   query,
   closeModal,
 }: SearchResultProps) => {
-  let link = ''
-  let title = ''
-  let description = ''
-  let icon = ''
+  const [searchResult, setSearchResult] = useState(defaultSearchResultState)
 
-  const DESCRIPTION_LENGTH = 150
+  useEffect(() => {
+    switch (result.type) {
+      case SearchTypes.VIDEO:
+        const rawDescription = (result as SearchVideo).description
+        const description =
+          rawDescription.length > DESCRIPTION_LENGTH
+            ? `${rawDescription.substring(0, DESCRIPTION_LENGTH - 3)}...`
+            : rawDescription
+        setSearchResult({
+          description,
+          link: `/videos/${result.slug}`,
+          icon: 'eva:play-circle-outline',
+          title: (result as SearchVideo).title,
+        })
+        break
+      case SearchTypes.QUIZ:
+        setSearchResult({
+          link: `/quizzes/${result.id}/play`,
+          icon: 'healthicons:i-exam-multiple-choice',
+          title: (result as SearchQuiz).name,
+          description: '',
+        })
+        break
+      case SearchTypes.USER:
+        const fullName = `${(result as SearchUser).firstName} ${
+          (result as SearchUser).lastName
+        }`
+        setSearchResult({
+          link: `/users/profile/${result.id}`,
+          icon: 'bx:user-circle',
+          title: fullName,
+        })
+        break
+    }
+  }, [])
 
-  switch (result.type) {
-    case SearchTypes.VIDEO:
-      link = `/videos/${result.slug}`
-      icon = 'eva:play-circle-outline'
-      title = (result as SearchVideo).title
-      description = (result as SearchVideo).description
-      description =
-        description.length > DESCRIPTION_LENGTH
-          ? `${description.substring(0, DESCRIPTION_LENGTH - 3)}...`
-          : description
-      break
-    case SearchTypes.QUIZ:
-      link = `/quizzes/${result.id}/play`
-      icon = 'healthicons:i-exam-multiple-choice'
-      title = (result as SearchQuiz).name
-      break
-    case SearchTypes.USER:
-      link = `/users/profile/${result.id}`
-      icon = 'bx:user-circle'
-      title = `${(result as SearchUser).firstName} ${
-        (result as SearchUser).lastName
-      }`
-      break
-  }
-
-  const displayResultThumbnail = () => {
+  let displayResultThumbnail = () => {
     switch (result.type) {
       case SearchTypes.VIDEO:
         return (
-          <VideoCardThumbnail
-            loading="lazy"
-            src={
-              thumbnailRegex.test((result as SearchVideo).thumbnail)
-                ? (result as SearchVideo).thumbnail
-                : `${environment.minioUrl}/images/${
-                    (result as SearchVideo).thumbnail
-                  }`
-            }
-            onError={(e: any) => {
-              e.target.src = '/images/dumb_thumbnail.jpg'
-              e.preventDefault()
-              e.onerror = null
-            }}
-            alt={`${title} thumbnail`}
+          <VideoSearchThumbnail
+            thumbnailUrl={(result as SearchVideo)?.thumbnail}
           />
         )
       case SearchTypes.QUIZ:
-        return <Icon name={icon} />
+        return <Icon name={searchResult.icon} />
       case SearchTypes.USER:
         return (
           <Avatar
             src={(result as SearchUser).avatar}
-            alt={`${title} profile picture`}
+            alt={`${searchResult.title} profile picture`}
           />
         )
     }
@@ -100,7 +106,7 @@ export const SearchResult: React.FC<SearchResultProps> = ({
       underline="none"
       color="inherit"
       component={RouterLink}
-      to={link}
+      to={searchResult.link}
       onClick={closeModal}
     >
       <AspectRatioBox ratio={16 / 9}>
@@ -126,7 +132,7 @@ export const SearchResult: React.FC<SearchResultProps> = ({
         }}
         direction="column"
       >
-        <Tooltip title={title} followCursor>
+        <Tooltip title={searchResult.title} followCursor>
           <Typography
             fontWeight="bold"
             variant="subtitle1"
@@ -138,10 +144,10 @@ export const SearchResult: React.FC<SearchResultProps> = ({
               },
             }}
           >
-            <HighlightedText text={title} search={query} />
+            <HighlightedText text={searchResult.title} search={query} />
           </Typography>
         </Tooltip>
-        {description && (
+        {searchResult.description && (
           <Typography
             sx={{
               color: 'text.secondary',
@@ -154,7 +160,7 @@ export const SearchResult: React.FC<SearchResultProps> = ({
             }}
             variant="body2"
           >
-            <HighlightedText text={description} search={query} />
+            <HighlightedText text={searchResult.description} search={query} />
           </Typography>
         )}
       </Stack>
