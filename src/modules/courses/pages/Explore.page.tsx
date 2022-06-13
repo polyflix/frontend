@@ -33,28 +33,25 @@ export const ExploreCoursesPage = () => {
   return (
     <Page title={t('explore.title')} isLoading={isLoading}>
       <Grid container spacing={3}>
-        <Grid item md={12} lg={8}>
-          <Stack spacing={3}>
-            <Typography variant="h1">
-              <Trans
-                i18nKey="explore.bodyTitle"
-                ns={'courses'}
-                components={{
-                  colored: (
-                    <Box component={'div'} sx={{ color: 'primary.light' }} />
-                  ),
-                }}
-              />
-            </Typography>
-            <Typography
-              variant="h4"
-              sx={{ fontWeight: '400', color: 'text.secondary' }}
-            >
-              {t('explore.description')}
-            </Typography>
-          </Stack>
-        </Grid>
-
+        <Stack spacing={3}>
+          <Typography variant="h1">
+            <Trans
+              i18nKey="explore.bodyTitle"
+              ns={'courses'}
+              components={{
+                colored: (
+                  <Box component={'div'} sx={{ color: 'primary.light' }} />
+                ),
+              }}
+            />
+          </Typography>
+          <Typography
+            variant="h4"
+            sx={{ fontWeight: '400', color: 'text.secondary' }}
+          >
+            {t('explore.description')}
+          </Typography>
+        </Stack>
         {!isFetching
           ? courses.map((course: Course) => (
               <Grid item xs={12} sm={6} lg={4} key={course.id}>
