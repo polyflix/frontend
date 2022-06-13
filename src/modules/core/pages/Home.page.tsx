@@ -11,8 +11,6 @@ import { VideoSliderCard } from '@videos/components/VideoSliderCard/VideoSliderC
 import { useGetVideosQuery } from '@videos/services/video.service'
 import { VideoFilters } from '@videos/types/filters.type'
 
-import { Video } from '../../videos/models/video.model'
-
 export const HomePage = () => {
   const [filters] = useState<VideoFilters>({
     page: 1,
@@ -22,6 +20,21 @@ export const HomePage = () => {
   const lastVideosQuery = useGetVideosQuery({
     visibility: Visibility.PUBLIC,
     draft: false,
+    order: '-createdAt',
+    ...filters,
+  })
+
+  const popularVideosQuery = useGetVideosQuery({
+    visibility: Visibility.PUBLIC,
+    draft: false,
+    order: '-views',
+    ...filters,
+  })
+
+  const mostLikedVideosQuery = useGetVideosQuery({
+    visibility: Visibility.PUBLIC,
+    draft: false,
+    order: '-likes',
     ...filters,
   })
 
@@ -39,7 +52,9 @@ export const HomePage = () => {
     isWatched: true,
   })
 
-  const videos = lastVideosQuery.data?.items || []
+  const lastVideos = lastVideosQuery.data?.items || []
+  const popularVideos = popularVideosQuery.data?.items || []
+  const mostLikedVideos = mostLikedVideosQuery.data?.items || []
 
   const watchingVideos = watchingVideosQuery.data?.items || []
   const watchedVideos = watchedVideosQuery.data?.items || []
@@ -73,7 +88,7 @@ export const HomePage = () => {
 
         {/** LATEST VIDEOS SLIDER **/}
         <Grid item xs={12}>
-          {lastVideosQuery.isLoading || videos.length > 0 ? (
+          {lastVideosQuery.isLoading || lastVideos.length > 0 ? (
             <Slider
               isLoading={lastVideosQuery.isLoading}
               heading={
@@ -83,7 +98,7 @@ export const HomePage = () => {
               }
               freeMode
             >
-              {videos.map((video) => (
+              {lastVideos.map((video) => (
                 <VideoSliderCard key={video.slug} video={video} />
               ))}
             </Slider>
@@ -95,9 +110,9 @@ export const HomePage = () => {
 
         {/** POPULAR VIDEOS SLIDER **/}
         <Grid item xs={12}>
-          {lastVideosQuery.isLoading || videos.length > 0 ? (
+          {popularVideosQuery.isLoading || popularVideos.length > 0 ? (
             <Slider
-              isLoading={lastVideosQuery.isLoading}
+              isLoading={popularVideosQuery.isLoading}
               heading={
                 <Typography variant="h4">
                   {t('sliders.titles.popular')}
@@ -106,18 +121,39 @@ export const HomePage = () => {
               freeMode
             >
               {/** We slice the array as it is a frozen object to create a clone of it **/}
-              {videos
-                .slice()
-                .sort((a: Video, b: Video) => b.views - a.views)
-                .map((video) => (
-                  <VideoSliderCard key={video.slug} video={video} />
-                ))}
+              {popularVideos.map((video) => (
+                <VideoSliderCard key={video.slug} video={video} />
+              ))}
             </Slider>
           ) : (
             <NoData variant="videos" link="/videos/create" />
           )}
         </Grid>
         {/** END POPULAR VIDEOS SLIDER **/}
+
+        {/** MOST LIKED VIDEOS SLIDER **/}
+        <Grid item xs={12}>
+          {mostLikedVideosQuery.isLoading || mostLikedVideos.length > 0 ? (
+            <Slider
+              isLoading={mostLikedVideosQuery.isLoading}
+              heading={
+                <Typography variant="h4">
+                  {t('sliders.titles.rated')}
+                </Typography>
+              }
+              freeMode
+            >
+              {/** We slice the array as it is a frozen object to create a clone of it **/}
+              {mostLikedVideos.map((video) => (
+                <VideoSliderCard key={video.slug} video={video} />
+              ))}
+            </Slider>
+          ) : (
+            <NoData variant="videos" link="/videos/create" />
+          )}
+        </Grid>
+        {/** END MOST LIKED VIDEOS SLIDER **/}
+
         {/** WATCHED VIDEOS SLIDER **/}
         <Grid
           item

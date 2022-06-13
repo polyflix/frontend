@@ -5,9 +5,10 @@
   "sliders": {
     "titles": {
       "continueWatching": "Continuer à regarder",
-      "latest": "Les plus récents",
+      "latest": "Les plus récentes",
       "popular": "Populaire",
-      "watchAgain": "Regardez à nouveau"
+      "watchAgain": "Regardez à nouveau",
+      "rated": "Les plus aimées"
     },
     "videoCard": {
       "infoMenu": {
