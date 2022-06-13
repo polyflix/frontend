@@ -17,7 +17,7 @@ export const BugReport: React.FC = () => {
           target="_blank"
           color="inherit"
         >
-          <IconButton>
+          <IconButton size="small">
             <Stack direction="row" sx={{ alignItems: 'center' }}>
               <Icon name="ion:bug-outline" />
             </Stack>
