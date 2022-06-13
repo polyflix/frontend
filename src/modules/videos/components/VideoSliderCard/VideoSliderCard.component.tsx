@@ -24,6 +24,9 @@ import { getPublishLabel } from '@core/helpers/date.helper'
 import { videoSlugLink } from '@core/helpers/video.helper'
 import { SnackbarService } from '@core/services/snackbar.service'
 import { CrudAction } from '@core/types/http.type'
+import { Role } from '@core/types/roles.type'
+
+import { useAuth } from '@auth/hooks/useAuth.hook'
 
 import { Video } from '@videos/models/video.model'
 import { useDeleteVideoMutation } from '@videos/services/video.service'
@@ -78,6 +81,8 @@ interface Props {
 
 export const VideoSliderCard = ({ video, isFetching = false }: Props) => {
   const { t } = useTranslation('videos')
+  const { user } = useAuth()
+  const isAdmin = user?.roles?.length && user?.roles?.includes(Role.Admin)
 
   return (
     <VideoCardRootStyle>
@@ -194,7 +199,11 @@ export const VideoSliderCard = ({ video, isFetching = false }: Props) => {
                     </Typography>
                   </Tooltip>
                 </Link>
-                <VideoSliderOption video={video} />
+                {video.publisher!.id === user!.id && isAdmin ? (
+                  <VideoSliderOption video={video} />
+                ) : (
+                  ''
+                )}
               </Box>
               <Box>
                 <Typography
