@@ -170,7 +170,12 @@ export const CourseForm: React.FC<Props> = ({ course }) => {
 
         <TextField
           error={Boolean(errors.name)}
-          helperText={errors.name?.message ?? t('form.upsert.helper.name')}
+          helperText={
+            errors.name?.message ??
+            t('form.upsert.helper.name', {
+              count: 100,
+            })
+          }
           label={t('form.upsert.label.name')}
           disabled={isSubmitting}
           {...getCommonTextFieldProps()}
@@ -182,15 +187,15 @@ export const CourseForm: React.FC<Props> = ({ course }) => {
               }),
             },
             maxLength: {
-              value: 64,
+              value: 100,
               message: t('form.upsert.error.maxLength', {
-                count: 64,
+                count: 100,
               }),
             },
             minLength: {
-              value: 8,
+              value: 1,
               message: t('form.upsert.error.minLength', {
-                count: 8,
+                count: 1,
               }),
             },
           })}

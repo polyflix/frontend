@@ -34,7 +34,7 @@
         "id": "Identifiant unique"
       },
       "helper": {
-        "name": "Nom de votre cours avec un maximum de 64 caractères",
+        "name": "Nom de votre cours avec un maximum de {{count}} caractères",
         "description": "Une description courte permettant de comprendre ce que fait votre cours",
         "content": "Contenu de votre cours, document principal avec une description complète"
       },

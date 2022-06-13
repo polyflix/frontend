@@ -34,7 +34,7 @@
         "id": "Unique identifier"
       },
       "helper": {
-        "name": "The name of the course, maximum 64 characters",
+        "name": "The name of the course, maximum {{count}} characters",
         "description": "A short description of what the course is about",
         "content": "This is a whole document where you can write a lof of things (might be a WYSIWYG someday)"
       },
