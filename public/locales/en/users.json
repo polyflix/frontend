@@ -33,7 +33,8 @@
       "collections": {
         "title": "Modules",
         "content": {
-          "title": "My modules"
+          "title": "My modules",
+          "description": "Here is the list of your modules. On this page, you can edit them, delete them or consult their content."
         }
       },
       "groups": {
