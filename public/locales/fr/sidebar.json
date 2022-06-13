@@ -28,8 +28,10 @@
   "administration": {
     "resources": {
       "label": "Resources",
-      "users": "Users",
-      "certifications": "Certifications"
+      "certifications": "Certifications",
+      "users": "Utilisateurs",
+      "groups": "Groupes",
+      "videos": "Vidéos"
     }
   }
 }

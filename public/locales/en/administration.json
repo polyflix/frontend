@@ -116,5 +116,34 @@
         "create": "Create a new certification"
       }
     }
+  },
+  "video": {
+    "page": {
+      "panel": {
+        "title": "Videos",
+        "fields": {
+          "title": "Title",
+          "author": "Author",
+          "draft": "Draft",
+          "visibility": "Visibility"
+        }
+      }
+    },
+    "form": {
+      "labels": {
+        "draft": "Draft",
+        "visibility": "Visibility",
+        "title": "Titre"
+      },
+      "actions": {
+        "generateSubtitles": "Generate subtitles for my language",
+        "cantGenerateSubtitles": "Can't generate subtitles for an external video"
+      },
+      "errors": {
+        "title": {
+          "required": "Le titre est requis."
+        }
+      }
+    }
   }
 }

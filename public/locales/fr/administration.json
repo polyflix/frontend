@@ -116,5 +116,36 @@
         "create": "Créer une nouvelle certification"
       }
     }
+  },
+  "video": {
+    "page": {
+      "panel": {
+        "title": "Vidéos",
+        "fields": {
+          "title": "Titre",
+          "author": "Auteur",
+          "draft": "Brouillon",
+          "visibility": "Visilibité"
+        }
+      }
+    },
+    "form": {
+      "labels": {
+        "draft": "Brouillon",
+        "visibility": "Visilibité",
+        "title": "Titre"
+      },
+      "actions": {
+        "close": "Retour",
+        "save": "Engregistrer",
+        "generateSubtitles": "Générer les sous-titres pour ma langue",
+        "cantGenerateSubtitles": "Pas de génération de sous-titres car c'est une vidéo externe"
+      },
+      "errors": {
+        "title": {
+          "required": "Le titre est requis."
+        }
+      }
+    }
   }
 }
