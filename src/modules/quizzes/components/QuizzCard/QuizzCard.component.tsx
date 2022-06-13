@@ -100,8 +100,8 @@ export const QuizzCard = ({
    * @returns
    */
   const buildPublisher = () => (
-    <Tooltip title={`${user?.firstName} ${user?.lastName}`}>
-      <UserAvatar variant="circular" user={user as User} />
+    <Tooltip title={`${quizz.user?.firstName} ${quizz.user?.lastName}`}>
+      <UserAvatar variant="circular" user={quizz.user as User} />
     </Tooltip>
   )
 
