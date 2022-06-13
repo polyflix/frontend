@@ -8,6 +8,7 @@ import { ease } from '@core/utils/transition'
 import { Icon } from '../Icon/Icon.component'
 
 interface Props {
+  withProtected?: boolean
   value: Visibility
   onChange: (value: Visibility) => void
 }
@@ -19,10 +20,14 @@ interface IVisibilityItem {
   description: string
 }
 
-export const VisibilitySelector = ({ value, onChange }: Props) => {
+export const VisibilitySelector = ({
+  value,
+  onChange,
+  withProtected = false,
+}: Props) => {
   const { t } = useTranslation('resources')
 
-  const items: IVisibilityItem[] = [
+  let items: IVisibilityItem[] = [
     {
       icon: 'si-glyph:global',
       label: t('visibility.public.label'),
@@ -42,9 +47,16 @@ export const VisibilitySelector = ({ value, onChange }: Props) => {
       description: t('visibility.private.description'),
     },
   ]
+  if (!withProtected) {
+    items = items.filter((item) => item.value !== Visibility.PROTECTED)
+  }
 
   return (
-    <Box display="grid" gridTemplateColumns="repeat(12, 1fr)" gap={2}>
+    <Box
+      display="grid"
+      gridTemplateColumns={`repeat(${items.length * 4}, 1fr)`}
+      gap={2}
+    >
       {items.map(({ value: v, label, description, icon }, idx) => {
         const isActive = v === value
         return (

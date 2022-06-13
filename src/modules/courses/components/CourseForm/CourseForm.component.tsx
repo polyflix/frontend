@@ -83,7 +83,7 @@ export const CourseForm: React.FC<Props> = ({ course }) => {
       description: course?.description,
       name: course?.name,
       visibility: course?.visibility || Visibility.PUBLIC,
-      draft: course?.draft ?? false,
+      draft: Boolean(course?.draft),
       // We use an object, else useFieldArray will create an array with each letter an entry
       // Trust me you don't want this
       // @ts-ignore

@@ -23,6 +23,7 @@ export const ExploreCollectionPage = () => {
 
   const [filters, setFilters] = useState<CollectionFilters>({
     order: 'createdAt',
+    draft: false,
     page: parseInt(params.get('page') || '1'),
     pageSize: 10,
   })

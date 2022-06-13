@@ -72,7 +72,7 @@ export const CollectionForm = ({ collection, isUpdate }: Props) => {
     defaultValues: {
       name: collection?.name,
       description: collection?.description,
-      draft: collection?.draft || true,
+      draft: Boolean(collection?.draft),
       visibility: collection?.visibility || Visibility.PUBLIC,
       elements: collection?.elements,
       passwords: collection?.passwords,
@@ -216,6 +216,7 @@ export const CollectionForm = ({ collection, isUpdate }: Props) => {
         <Divider />
 
         <VisibilitySelector
+          withProtected={true}
           value={watch('visibility')!}
           onChange={(value: Visibility) => {
             if (value === Visibility.PROTECTED) {
