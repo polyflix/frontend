@@ -15,20 +15,13 @@
     "courses": "Cours",
     "quizzes": "Quiz",
     "links": "Liens",
-    "collections": "Collections"
+    "collections": "Modules"
   },
   "myContent": {
     "videos": "Vidéos",
     "courses": "Cours",
     "quizzes": "Quiz",
     "links": "Liens",
-    "collections": "Collections"
-  },
-  "administration": {
-    "resources": {
-      "label": "Resources",
-      "users": "Utilisateurs",
-      "groups": "Groupes"
-    }
+    "collections": "Modules"
   }
 }

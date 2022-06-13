@@ -31,10 +31,9 @@
         }
       },
       "collections": {
-        "title": "Collections",
+        "title": "Modules",
         "content": {
-          "title": "My collections",
-          "description": "Here is the list of your collections. On this page, you can edit them, delete them or consult their content."
+          "title": "My modules"
         }
       },
       "groups": {

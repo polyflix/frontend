@@ -1,30 +1,30 @@
 {
   "explore": {
-    "title": "Explorer les collections",
-    "description": "Trouvez ci-dessous toutes les collections. Vous pouvez rechercher une collection par son nom",
+    "title": "Explorer les modules",
+    "description": "Trouvez ci-dessous toutes les modules. Vous pouvez rechercher un module par son nom",
     "collectionCard": {
       "footer": {
-        "content": "{{count}} éléments dans la collection"
+        "content": "{{count}} éléments dans le module"
       },
       "menu": {
         "items": {
-          "edit": "Modifier la collection",
-          "delete": "Supprimer la collection",
-          "view": "Voir la collection"
+          "edit": "Modifier le module",
+          "delete": "Supprimer le module",
+          "view": "Voir le module"
         }
       }
     }
   },
   "share": {
     "title": "Récupérez vos liens de partage !",
-    "description": "Voici vos liens pour permettre aux utilisateurs d'accéder à la collection. <br/><br/> <strong>Veuillez les conserver en lieu sûr, ils ne seront plus imprimés. Si vous les perdez ou si vous souhaitez en révoquer un, vous pouvez simplement les régénérer dans la page de mise à jour de votre collection.</strong>",
+    "description": "Voici vos liens pour permettre aux utilisateurs d'accéder à le module. <br/><br/> <strong>Veuillez les conserver en lieu sûr, ils ne seront plus imprimés. Si vous les perdez ou si vous souhaitez en révoquer un, vous pouvez simplement les régénérer dans la page de mise à jour de votre module.</strong>",
     "cta": "Continuer",
     "clipboard": "URL copiée dans le presse-papier !"
   },
   "slug": {
     "list": {
-      "title": "Explorer la collection",
-      "noData": "Il n'y a pas d'éléments dans la collection"
+      "title": "Explorer le module",
+      "noData": "Il n'y a pas d'éléments dans le module"
     },
     "actions": {
       "play": "Lecture"
@@ -33,17 +33,17 @@
   "forms": {
     "create-update": {
       "title": {
-        "create": "Créer une nouvelle collection",
-        "update": "Mettre à jour {{collection}}"
+        "create": "Créer un nouveau module",
+        "update": "Mettre à jour {{module}}"
       },
       "description": {
-        "create": "Créez une collection pour ajouter de nouvelles pièces jointes, ou modifiez simplement le titre ou la description de celles-ci.",
-        "update": "Mettez à jour votre collection pour ajouter de nouvelles pièces jointes, ou simplement modifier le titre ou la description de celle-ci."
+        "create": "Créez un module pour ajouter de nouvelles pièces jointes, ou modifiez simplement le titre ou la description de celles-ci.",
+        "update": "Mettez à jour votre module pour ajouter de nouvelles pièces jointes, ou simplement modifier le titre ou la description de celle-ci."
       },
       "fields": {
         "password": {
           "label": "Mot de passes",
-          "description": "Vous pouvez ajouter ci-dessous un ou plusieurs mots de passe à votre collection. Par défaut, le nom du mot de passe sera généré pour vous mais n'hésitez pas à le changer. Le champ du mot de passe est facultatif, si vous n'avez pas fourni de mot de passe dans le champ, nous en générerons un nouveau de notre côté. <br/><br/><strong>Veuillez noter que vous ne serez jamais en mesure de voir vos mots de passe. Une fois soumis, nous générerons des liens de partage (un par mot de passe) et vous devez les conserver. Si vous les perdez, vous pouvez en régénérer de nouveaux et révoquer les existants sur la page de mise à jour de la collection.</strong>",
+          "description": "Vous pouvez ajouter ci-dessous un ou plusieurs mots de passe à votre module. Par défaut, le nom du mot de passe sera généré pour vous mais n'hésitez pas à le changer. Le champ du mot de passe est facultatif, si vous n'avez pas fourni de mot de passe dans le champ, nous en générerons un nouveau de notre côté. <br/><br/><strong>Veuillez noter que vous ne serez jamais en mesure de voir vos mots de passe. Une fois soumis, nous générerons des liens de partage (un par mot de passe) et vous devez les conserver. Si vous les perdez, vous pouvez en régénérer de nouveaux et révoquer les existants sur la page de mise à jour du module.</strong>",
           "name": "Nom du mot de passe",
           "password": "Mot de passe",
           "expiresAt": "Date d'expiration"
@@ -73,10 +73,10 @@
       },
       "actions": {
         "submit": {
-          "create": "Créer une collection",
-          "update": "Mettre à jour la collection"
+          "create": "Créer un module",
+          "update": "Mettre à jour le module"
         },
-        "addElement": "Ajouter un élément à la collection",
+        "addElement": "Ajouter un élément au module",
         "validate": "Valider"
       }
     },
@@ -85,30 +85,30 @@
         "types": {
           "video": {
             "label": "Vidéo",
-            "description": "Ajouter une vidéo à la collection",
+            "description": "Ajouter une vidéo au module",
             "actions": {
-              "addElements": "Ajouter {{count}} vidéo(s) à la collection"
+              "addElements": "Ajouter {{count}} vidéo(s) au module"
             }
           },
           "quizz": {
             "label": "Quiz",
-            "description": "Ajouter un quiz à la collection"
+            "description": "Ajouter un quiz au module"
           },
           "link": {
             "label": "Lien",
-            "description": "Ajouter un lien vers la collection"
+            "description": "Ajouter un lien vers le module"
           }
         }
       }
     }
   },
   "noData": {
-    "description": "Si vous avez les droits nécessaires vous pouvez créer une collection ci-dessous",
-    "buttonText": "Créer une collection",
-    "empty": "Il n'y a pas d'éléments dans la collection"
+    "description": "Si vous avez les droits nécessaires vous pouvez créer un module ci-dessous",
+    "buttonText": "Créer un module",
+    "empty": "Il n'y a pas d'éléments dans le module"
   },
   "deleteModal": {
-    "title": "Supprimer la collection",
-    "content": "Etes-vous sûr de vouloir supprimer cette collection ?"
+    "title": "Supprimer le module",
+    "content": "Etes-vous sûr de vouloir supprimer ce module ?"
   }
 }

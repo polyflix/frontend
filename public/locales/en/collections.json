@@ -1,30 +1,30 @@
 {
   "explore": {
-    "title": "Explore Collections",
-    "description": "Find below all the collections. You can search for a collections by its name",
+    "title": "Explore Modules",
+    "description": "Find below all the modules. You can search for a modules by its name",
     "collectionCard": {
       "footer": {
-        "content": "{{count}} element in the collection"
+        "content": "{{count}} element in the module"
       },
       "menu": {
         "items": {
-          "edit": "Edit collection",
-          "delete": "Delete collection",
-          "view": "View collection"
+          "edit": "Edit module",
+          "delete": "Delete module",
+          "view": "View module"
         }
       }
     }
   },
   "share": {
     "title": "Get your share links !",
-    "description": "Here your links to allow users to access the collection. <br/><br/> <strong>Please keep them in a secure place, they will be not printed anymore. If you loose them or you wish to revoke one, you can simply regenerate them in the update page of your collection.</strong>",
+    "description": "Here your links to allow users to access the module. <br/><br/> <strong>Please keep them in a secure place, they will be not printed anymore. If you loose them or you wish to revoke one, you can simply regenerate them in the update page of your module.</strong>",
     "cta": "Continue",
     "clipboard": "URL copied to clipboard !"
   },
   "slug": {
     "list": {
-      "title": "Explore Collection",
-      "noData": "There are no elements in the collection"
+      "title": "Explore Module",
+      "noData": "There are no elements in the module"
     },
     "actions": {
       "play": "Play"
@@ -33,17 +33,17 @@
   "forms": {
     "create-update": {
       "title": {
-        "create": "Create a new collection",
-        "update": "Update {{collection}}"
+        "create": "Create a new module",
+        "update": "Update {{module}}"
       },
       "description": {
-        "create": "Create a collection to add new attachments, or simply change the title or the description of it.",
-        "update": "Update your collection to add new attachments, or simply change the title or the description of it."
+        "create": "Create a module to add new attachments, or simply change the title or the description of it.",
+        "update": "Update your module to add new attachments, or simply change the title or the description of it."
       },
       "fields": {
         "password": {
           "label": "Passwords",
-          "description": "Below you can add one or more passwords to your collection. By default, the password name will be generated for you but feel free to change it. The password field is optional, if you didn't provide a password in the field, we will generate a new one on our side. <br/><br/><strong>Please note that you'll never be able to see your passwords. Once submitted, we will generate some share links (one per password) and you must keep them. If you loose them, you can regenerate new ones and revoke existing on the update page of the collection.</strong>",
+          "description": "Below you can add one or more passwords to your module. By default, the password name will be generated for you but feel free to change it. The password field is optional, if you didn't provide a password in the field, we will generate a new one on our side. <br/><br/><strong>Please note that you'll never be able to see your passwords. Once submitted, we will generate some share links (one per password) and you must keep them. If you loose them, you can regenerate new ones and revoke existing on the update page of the module.</strong>",
           "name": "Name of the password",
           "password": "Password",
           "expiresAt": "Expiration date"
@@ -73,10 +73,10 @@
       },
       "actions": {
         "submit": {
-          "create": "Create collection",
-          "update": "Update collection"
+          "create": "Create module",
+          "update": "Update module"
         },
-        "addElement": "Add an element to the collection",
+        "addElement": "Add an element to the module",
         "validate": "Validate"
       }
     },
@@ -85,30 +85,30 @@
         "types": {
           "video": {
             "label": "Video",
-            "description": "Add a video to the collection",
+            "description": "Add a video to the module",
             "actions": {
-              "addElements": "Add {{count}} video(s) to the collection"
+              "addElements": "Add {{count}} video(s) to the module"
             }
           },
           "quizz": {
             "label": "Quizz",
-            "description": "Add a quizz to the collection"
+            "description": "Add a quizz to the module"
           },
           "link": {
             "label": "Link",
-            "description": "Add a link to the collection"
+            "description": "Add a link to the module"
           }
         }
       }
     }
   },
   "noData": {
-    "description": "If you have the necessary rights you can create a collection below",
-    "buttonText": "Create a collection",
-    "empty": "There are no items in the collection"
+    "description": "If you have the necessary rights you can create a module below",
+    "buttonText": "Create a module",
+    "empty": "There are no items in the module"
   },
   "deleteModal": {
-    "title": "Delete collection",
-    "content": "Are you sure to delete this collection?"
+    "title": "Delete module",
+    "content": "Are you sure to delete this module?"
   }
 }

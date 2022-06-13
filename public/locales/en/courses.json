@@ -4,15 +4,15 @@
     "bodyTitle": "Explore our <colored>courses</colored>",
     "description": "Discover something new with our courses, through videos, quizzes and external resources."
   },
-  "collections": "Collections",
+  "collections": "Modules",
   "introduction": "Getting started",
   "courseCard": {
-    "footerElements": "{{count}} collection(s) in this course"
+    "footerElements": "{{count}} module(s) in this course"
   },
   "noData": {
     "description": "If you have the necessary rights you can create a course below",
     "buttonText": "Create a course",
-    "empty": "There are no collections associated with the course"
+    "empty": "There are no modules associated with the course"
   },
   "form": {
     "upsert": {
@@ -21,11 +21,11 @@
         "create": "Create a new course",
         "update": "Update your course {{course}}",
         "metadata": "General informations",
-        "collections": "Collections"
+        "collections": "Modules"
       },
       "description": {
-        "create": "A course can contain several collections, so people can explore these to follow complex flows.",
-        "update": "A course can contain several collections, so people can explore these to follow complex flows."
+        "create": "A course can contain several modules, so people can explore these to follow complex flows.",
+        "update": "A course can contain several modules, so people can explore these to follow complex flows."
       },
       "label": {
         "name": "Name",
@@ -51,9 +51,9 @@
       "submit": "Submit",
       "update": "Update",
       "deleteChoice": "Remove this choice",
-      "addCollection": "Attach a collection",
-      "search": "Search a collection",
-      "seeCollection": "See this collection"
+      "addCollection": "Attach a module",
+      "search": "Search a module",
+      "seeCollection": "See this module"
     }
   },
   "deleteModal": {
