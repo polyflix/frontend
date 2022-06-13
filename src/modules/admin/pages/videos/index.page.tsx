@@ -69,20 +69,14 @@ export const AdminVideoPage = () => {
   const totalElements = data?.totalCount || 0
   const videos = data?.items || []
 
-  // map slug to id
-  const videosWithId = videos.map((video: Video) => ({
-    ...video,
-    id: video.slug,
-  }))
-
   return (
     <AdminLayout pageTitle={t('video.page.panel.title')}>
-      <EditVideoModal key={selected?.slug} video={selected} />
+      <EditVideoModal key={selected?.id} video={selected} />
       <div style={{ height: '500px', width: '100%', background: 'white' }}>
         <DataGrid
           isRowSelectable={() => false}
           loading={isLoading || isFetching}
-          rows={videosWithId}
+          rows={videos}
           onRowClick={(params) => setSelected(params.row)}
           rowCount={totalElements}
           columns={columns}
