@@ -1,5 +1,5 @@
 export interface Certification {
-  certificationID?: string
+  id?: string
   name: string
 }
 

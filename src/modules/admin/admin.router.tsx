@@ -1,9 +1,9 @@
 import { Route, Switch, useRouteMatch } from 'react-router-dom'
 
+import { AdminCertificationPage } from './pages/certifications/index.page'
 import { AdminFromGroupPage } from './pages/groups/form/form.page'
 import { AdminGroupPage } from './pages/groups/list/list.page'
 import { AdminViewGroupPage } from './pages/groups/view/view.page'
-import { AdminCertificationPage } from './pages/certifications/index.page'
 import { AdminUserPage } from './pages/users/index.page'
 
 export const AdminRouter = () => {

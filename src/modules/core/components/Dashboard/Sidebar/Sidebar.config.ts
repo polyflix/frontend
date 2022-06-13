@@ -136,24 +136,25 @@ const sidebarConfiguration: SidebarItem[] = [
   //   ],
   // },
   {
-    title: 'administration.resources.label',
+    title: 'administration.resources.users',
     section: SidebarSection.ADMIN,
-    icon: 'carbon:software-resource-cluster',
+    icon: 'bxs:user',
+    href: '/admin/users',
     roles: [Role.Admin],
-    items: [
-      {
-        title: 'administration.resources.users',
-        href: '/admin/users',
-      },
-      {
-        title: 'administration.resources.groups',
-        href: '/admin/groups',
-      },
-      {
-        title: 'administration.resources.certifications',
-        href: '/admin/certifications',
-      },
-    ],
+  },
+  {
+    title: 'administration.resources.groups',
+    section: SidebarSection.ADMIN,
+    icon: 'carbon:user-multiple',
+    href: '/admin/groups',
+    roles: [Role.Admin],
+  },
+  {
+    title: 'administration.resources.certifications',
+    section: SidebarSection.ADMIN,
+    icon: 'carbon:user-certification',
+    href: '/admin/certifications',
+    roles: [Role.Admin],
   },
 ]
 

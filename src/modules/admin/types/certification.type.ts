@@ -1,4 +1,4 @@
 export interface AdminCertificationForm {
-  certificationID?: string
+  id?: string
   name?: string
 }

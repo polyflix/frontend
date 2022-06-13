@@ -71,10 +71,10 @@ export const certificationsApi = createApi({
         result
           ? [
               ...result.data.map(
-                ({ certificationID }) =>
+                ({ id }) =>
                   ({
                     type: Endpoint.Certifications,
-                    id: certificationID,
+                    id: id,
                   } as const)
               ),
               { type: Endpoint.Certifications, id: 'LIST' },

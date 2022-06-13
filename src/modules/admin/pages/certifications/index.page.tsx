@@ -1,5 +1,7 @@
 import { EditCertificationModal } from '@admin/components/certifications/EditCertificationModal'
-import { Button, Tooltip } from '@mui/material'
+import { AdminLayout } from '@admin/layouts/AdminLayout.layout'
+import { Add } from '@mui/icons-material'
+import { Button } from '@mui/material'
 import { DataGrid, GridColDef } from '@mui/x-data-grid'
 import { TFunction } from 'i18next'
 import { capitalize } from 'lodash'
@@ -9,23 +11,23 @@ import { useTranslation } from 'react-i18next'
 import { Certification } from '@certifications/models/certification.model'
 import { useGetCertificationsQuery } from '@certifications/services/certification.service'
 
-import { AdminLayout } from '../../layouts/AdminLayout.layout'
-
 const columns = (t: TFunction): GridColDef[] => [
   {
-    field: 'certificationID',
+    field: 'id',
     headerName: t('certifications.page.panel.fields.certificationID'),
     sortable: false,
     align: 'center',
     headerAlign: 'center',
-    width: 120,
-    renderCell: (params) => `${capitalize(params.row.certificationID) || ''}`,
+    width: 300,
+    hideable: true,
+    renderCell: (params) => `${capitalize(params.row.id) || ''}`,
   },
   {
     field: 'name',
     headerName: t('certifications.page.panel.fields.name'),
     sortable: true,
-    width: 160,
+    width: 300,
+    editable: true,
     valueGetter: (params) => `${capitalize(params.row.name) || ''}`,
   },
 ]
@@ -46,10 +48,21 @@ export const AdminCertificationPage = () => {
   const certifications = data?.data || []
 
   return (
-    <AdminLayout pageTitle={t('certifications.page.panel.title')}>
+    <AdminLayout
+      pageTitle={t('certifications.page.panel.title')}
+      action={
+        <Button
+          onClick={() => setSelected({ id: undefined, name: '' })}
+          startIcon={<Add />}
+          variant="contained"
+        >
+          {t('certifications.page.actions.create')}
+        </Button>
+      }
+    >
       <EditCertificationModal
         onClose={() => setSelected(undefined)}
-        key={selected?.certificationID}
+        key={selected?.id}
         certification={selected}
       />
       <DataGrid
@@ -57,7 +70,7 @@ export const AdminCertificationPage = () => {
           height: '80vh',
           width: '100%',
         }}
-        getRowId={(row) => row.certificationID}
+        getRowId={(row) => row.id}
         isRowSelectable={() => false}
         loading={isLoading || isFetching}
         rows={certifications}
@@ -71,13 +84,6 @@ export const AdminCertificationPage = () => {
         onPageChange={setPage}
         onPageSizeChange={setPageSize}
       />
-      <Tooltip title={t<string>('navbar.actions.logout')}>
-        <Button
-          onClick={() => setSelected({ certificationID: undefined, name: '' })}
-        >
-          Create
-        </Button>
-      </Tooltip>
     </AdminLayout>
   )
 }

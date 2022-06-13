@@ -48,7 +48,7 @@ export const EditCertificationModal = ({ certification, onClose }: Props) => {
     formState: { errors, isSubmitting },
   } = useForm<AdminCertificationForm>({
     defaultValues: {
-      certificationID: certification?.certificationID || undefined,
+      id: certification?.id || undefined,
       name: certification?.name || '',
     },
   })
@@ -66,18 +66,22 @@ export const EditCertificationModal = ({ certification, onClose }: Props) => {
       ...data,
     }
     let error = null
-    if (certification?.certificationID) {
-      error = (await updateCertifications({
-        id: certification!.certificationID,
+    if (certification?.id) {
+      const updateResult = await updateCertifications({
+        id: certification!.id,
         body: body as Certification,
-      })) as any
+      })
+      error = updateResult?.error?.data?.error
     } else {
-      delete body.certificationID
-      error = await createCertifications(body as ICertificationForm)
+      delete body.id
+      const createResult = await createCertifications(
+        body as ICertificationForm
+      )
+      error = createResult?.error?.data?.error
     }
 
     if (error) {
-      snackbarService.createSnackbar(error.data.message, { variant: 'error' })
+      snackbarService.createSnackbar(error, { variant: 'error' })
     } else {
       handleClose()
     }
@@ -120,9 +124,9 @@ export const EditCertificationModal = ({ certification, onClose }: Props) => {
                   <Grid item xs={12}>
                     <Stack spacing={2} direction="row" alignItems="center">
                       <Stack>
-                        {certification?.certificationID ? (
+                        {certification?.id ? (
                           <Typography variant="h4">
-                            ID: {certification?.certificationID}
+                            ID: {certification?.id}
                           </Typography>
                         ) : (
                           <Typography variant="h4">

@@ -89,6 +89,9 @@
   },
   "certifications": {
     "page": {
+      "actions": {
+        "create": "Créer une certification"
+      },
       "panel": {
         "title": "Certifications",
         "fields": {
