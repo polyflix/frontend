@@ -57,5 +57,11 @@
       "cancel": "Cancel",
       "delete": "Delete"
     }
+  },
+  "appearance": {
+    "description": "Customize the application to your liking.",
+    "darkmode": {
+      "informations": "Activate the dark mode to preserve your eyes."
+    }
   }
 }

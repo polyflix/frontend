@@ -10,6 +10,7 @@ import { useTranslation } from 'react-i18next'
 import { User } from '@users/models/user.model'
 
 import { AdvancedForm } from './AdvancedForm.component'
+import { AppearanceForm } from './AppearanceForm.component'
 import { InformationsForm } from './InformationsForm.component'
 import { SecurityForm } from './SecurityForm.component'
 
@@ -43,6 +44,7 @@ export const UserForm = ({ user }: Props) => {
             <Tab label={t('profile.tabs.account')} value="1" />
             {/*<Tab label={t('profile.tabs.security')} value="2" />
             <Tab label={t('profile.tabs.advanced')} value="3" />*/}
+            <Tab label={t('profile.tabs.appearance')} value="4" />
           </TabList>
         </Box>
         <TabPanel value="1">
@@ -53,6 +55,9 @@ export const UserForm = ({ user }: Props) => {
         </TabPanel>
         <TabPanel value="3">
           <AdvancedForm title={t('profile.tabs.advanced')} user={user} />
+        </TabPanel>
+        <TabPanel value="4">
+          <AppearanceForm title={t('profile.tabs.appearance')} user={user} />
         </TabPanel>
       </TabContext>
     </Paper>

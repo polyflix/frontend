@@ -2,12 +2,10 @@ import { Stack } from '@mui/material'
 import Box from '@mui/material/Box'
 import React, { PropsWithChildren } from 'react'
 
-import { BugReport } from '@core/components/BugReport/BugReport.component'
 import { Icon } from '@core/components/Icon/Icon.component'
 import { LanguageButton } from '@core/components/LanguageButton/LanguageButton.component'
 import { Logo } from '@core/components/Logo/Logo.component'
 import { Spotlight } from '@core/components/Spotlight/Spotlight.component'
-import { ThemeButton } from '@core/components/ThemeButton/ThemeButton.component'
 import { useSidebar } from '@core/hooks/useSidebar.hook'
 
 import { Logout } from '@auth/components/Logout/Logout.component'
@@ -48,7 +46,6 @@ export const DashboardNavbar: React.FC<PropsWithChildren<{}>> = ({}) => {
         >
           <Spotlight />
           <LanguageButton />
-          <BugReport />
           <Logout />
           <Box
             sx={{
@@ -57,9 +54,7 @@ export const DashboardNavbar: React.FC<PropsWithChildren<{}>> = ({}) => {
                 xs: 'none',
               },
             }}
-          >
-            <ThemeButton />
-          </Box>
+          ></Box>
         </Stack>
       </ToolbarStyle>
     </RootStyle>

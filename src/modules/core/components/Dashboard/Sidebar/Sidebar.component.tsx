@@ -2,6 +2,7 @@ import { Box, Drawer, Link, useMediaQuery, useTheme } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 import { Link as RouterLink } from 'react-router-dom'
 
+import { BugReport } from '@core/components/BugReport/BugReport.component'
 import { Scrollbar } from '@core/components/Scrollbar/Scrollbar.component'
 import { ThemeButton } from '@core/components/ThemeButton/ThemeButton.component'
 import { useSidebar } from '@core/hooks/useSidebar.hook'
@@ -73,7 +74,6 @@ export const DashboardSidebar = () => {
             ))}
 
             <Box sx={{ flexGrow: 1 }} />
-
             <Box
               sx={{
                 pb: 3,
@@ -87,12 +87,15 @@ export const DashboardSidebar = () => {
                 sx={{
                   display: {
                     sm: 'none',
-                    xs: 'block',
+                    xs: 'grid',
                   },
+                  alignItems: 'center',
+                  alignContent: 'center',
                 }}
               >
                 <ThemeButton />
               </Box>
+              <BugReport />
             </Box>
           </Scrollbar>
         </Drawer>
