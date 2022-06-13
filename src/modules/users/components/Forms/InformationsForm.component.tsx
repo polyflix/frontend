@@ -9,7 +9,12 @@ import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { useDispatch } from 'react-redux'
 
+import { useInjection } from '@polyflix/di'
+
+import { Endpoint } from '@core/constants/endpoint.constant'
 import { Regex } from '@core/constants/regex.constant'
+import { SnackbarService } from '@core/services/snackbar.service'
+import { CrudAction } from '@core/types/http.type'
 
 import { setUser } from '@auth/reducers/auth.slice'
 
@@ -22,6 +27,8 @@ interface Props {
 }
 
 export const InformationsForm = ({ user, title }: Props) => {
+  const snackbarService = useInjection<SnackbarService>(SnackbarService)
+
   const [updateUser] = useUpdateUserMutation()
 
   const { t } = useTranslation('auth')
@@ -50,12 +57,18 @@ export const InformationsForm = ({ user, title }: Props) => {
    */
   const onSubmit = async (data: User) => {
     setIsAction(true)
+
     try {
-      let u: User = data
-      u.id = user.id
-      const response = await updateUser({ id: u.id, body: u })
-      const updatedUser = response.data
+      const { data: updatedUser } = await updateUser({
+        id: user.id,
+        body: data,
+      }).unwrap()
       dispatch(setUser(updatedUser))
+
+      // Display the success snackbar
+      snackbarService.notify(CrudAction.UPDATE, Endpoint.Users)
+    } catch (e: any) {
+      snackbarService.createSnackbar(e.data.statusText, { variant: 'error' })
     } finally {
       setIsAction(false)
     }
