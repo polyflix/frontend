@@ -1,3 +1,4 @@
+import { environment } from '@env/environment'
 import { Avatar, Stack, Tooltip, Typography } from '@mui/material'
 import {
   SearchQuiz,
@@ -20,6 +21,9 @@ type SearchResultProps = {
   query: string
   closeModal: () => void
 }
+
+const thumbnailRegex =
+  /[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/gi
 
 export const SearchResult: React.FC<SearchResultProps> = ({
   result,
@@ -64,7 +68,13 @@ export const SearchResult: React.FC<SearchResultProps> = ({
         return (
           <VideoCardThumbnail
             loading="lazy"
-            src={(result as SearchVideo).thumbnail}
+            src={
+              thumbnailRegex.test((result as SearchVideo).thumbnail)
+                ? (result as SearchVideo).thumbnail
+                : `${environment.minioUrl}/images/${
+                    (result as SearchVideo).thumbnail
+                  }`
+            }
             onError={(e: any) => {
               e.target.src = '/images/dumb_thumbnail.jpg'
               e.preventDefault()
