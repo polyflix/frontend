@@ -1,6 +1,7 @@
 import { environment } from '@env/environment'
 import { Avatar, Stack, Tooltip, Typography } from '@mui/material'
 import {
+  SearchModule,
   SearchQuiz,
   SearchTypes,
   SearchUser,
@@ -38,6 +39,16 @@ export const SearchResult: React.FC<SearchResultProps> = ({
   const DESCRIPTION_LENGTH = 150
 
   switch (result.type) {
+    case SearchTypes.MODULE:
+      link = `/modules/${(result as SearchModule).slug}`
+      icon = 'bx:bx-collection'
+      title = (result as SearchModule).name
+      description = (result as SearchModule).description
+      description =
+        description.length > DESCRIPTION_LENGTH
+          ? `${description.substring(0, DESCRIPTION_LENGTH - 3)}...`
+          : description
+      break
     case SearchTypes.VIDEO:
       link = `/videos/${result.slug}`
       icon = 'eva:play-circle-outline'
@@ -64,6 +75,8 @@ export const SearchResult: React.FC<SearchResultProps> = ({
 
   const displayResultThumbnail = () => {
     switch (result.type) {
+      case SearchTypes.MODULE:
+        return (result as SearchModule).name
       case SearchTypes.VIDEO:
         return (
           <VideoCardThumbnail

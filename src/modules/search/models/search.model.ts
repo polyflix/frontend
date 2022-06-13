@@ -2,6 +2,8 @@ export enum SearchTypes {
   VIDEO = 'video',
   QUIZ = 'quiz',
   USER = 'user',
+  COURSE = 'course',
+  MODULE = 'module',
 }
 
 export interface SearchResult {
@@ -34,6 +36,18 @@ export interface SearchUser extends SearchResult {
   username: string
 }
 
+export interface SearchModule extends SearchResult {
+  name: string
+  slug: string
+  description: string
+}
+
+export interface SearchCourse extends SearchResult {
+  name: string
+  slug: string
+  shortDescription: string
+}
+
 export interface PaginatedSearchResult {
   results: SearchResult[]
   totalElements: number
@@ -45,6 +59,8 @@ export interface SortedPaginatedSearchResult {
   videos: SearchVideo[]
   quizzes: SearchQuiz[]
   users: SearchUser[]
+  modules: SearchModule[]
+  courses: SearchCourse[]
   totalElements: number
   totalPages: number
   currentPage: number

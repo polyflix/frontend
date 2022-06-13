@@ -125,6 +125,8 @@ export const Spotlight: React.FC<PropsWithChildren<{}>> = ({}) => {
     return () => document.removeEventListener('keydown', keydownHandler)
   }, [])
 
+  console.log(data)
+
   return (
     <>
       <Box
@@ -250,6 +252,18 @@ export const Spotlight: React.FC<PropsWithChildren<{}>> = ({}) => {
                     <SearchSlider
                       title={tS<string>('items.quizzes')}
                       results={data.quizzes}
+                      query={query$.value}
+                      closeModal={handleClose}
+                    />
+                    <SearchSlider
+                      title={tS<string>('items.courses')}
+                      results={data.courses}
+                      query={query$.value}
+                      closeModal={handleClose}
+                    />
+                    <SearchSlider
+                      title={tS<string>('items.collections')}
+                      results={data.modules}
                       query={query$.value}
                       closeModal={handleClose}
                     />

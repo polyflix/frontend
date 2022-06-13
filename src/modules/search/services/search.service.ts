@@ -1,5 +1,7 @@
 import {
   PaginatedSearchResult,
+  SearchCourse,
+  SearchModule,
   SearchQuiz,
   SearchUser,
   SearchVideo,
@@ -55,6 +57,8 @@ export class SearchService {
       videos: (sortedResults.video as SearchVideo[]) || [],
       quizzes: (sortedResults.quiz as SearchQuiz[]) || [],
       users: (sortedResults.user as SearchUser[]) || [],
+      modules: (sortedResults.module as SearchModule[]) || [],
+      courses: (sortedResults.course as SearchCourse[]) || [],
       ...rawResults,
     }
   }
