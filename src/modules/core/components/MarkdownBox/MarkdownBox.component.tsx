@@ -15,7 +15,16 @@ export const MarkdownBox = ({ body }: MarkdownBoxProps) => {
         h4: ({ children }) => <Typography variant="h5">{children}</Typography>,
         h5: ({ children }) => <Typography variant="h6">{children}</Typography>,
         h6: ({ children }) => <Typography variant="h6">{children}</Typography>,
-        a: ({ children }) => <Link>{children}</Link>,
+        a: ({ children, href }) => (
+          <Link
+            component="a"
+            href={href}
+            target="_blank"
+            rel="noopener noreferrer nofollow"
+          >
+            {children}
+          </Link>
+        ),
         ul: ({ node, ...props }) => (
           <ul className="list-disc list-inside" {...props}>
             {}

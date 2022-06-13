@@ -1,6 +1,7 @@
 import { Typography } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 
+import { MarkdownBox } from '@core/components/MarkdownBox/MarkdownBox.component'
 import { Image } from '@core/styles/Image.style'
 
 interface Props {
@@ -31,9 +32,13 @@ export const VideoPreview = ({ title, description, thumbnail }: Props) => {
       <Typography sx={{ my: 2 }} variant="h5">
         {title || t('preview.title')}
       </Typography>
-      <Typography whiteSpace="pre-wrap" variant="body1">
-        {description || t('preview.description')}
-      </Typography>
+      {description ? (
+        <MarkdownBox body={description} />
+      ) : (
+        <Typography whiteSpace="pre-wrap" variant="body1">
+          {t('preview.description')}
+        </Typography>
+      )}
     </>
   )
 }

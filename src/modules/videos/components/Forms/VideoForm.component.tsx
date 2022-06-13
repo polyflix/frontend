@@ -46,6 +46,7 @@ import { VideoSource } from '@videos/types/video.type'
 import { FrameSelector } from '../FrameSelector/FrameSelector.component'
 import { VideoPreview } from '../VideoPreview/VideoPreview.component'
 
+const urlRegex = /(https?:\/\/[^\s]+)/gi
 interface Props {
   source?: VideoSource
   video?: Video
@@ -71,6 +72,17 @@ export const VideoForm = ({ source, video, isUpdate }: Props) => {
 
   const history = useHistory()
 
+  const formatDescription = (description: string) => {
+    let descriptionTemp = description
+    const links = description.match(urlRegex) || []
+
+    links.forEach((link) => {
+      descriptionTemp = descriptionTemp?.replace(link, `[${link}](${link})\n`)
+    })
+
+    return descriptionTemp
+  }
+
   const {
     control,
     register,
@@ -81,7 +93,10 @@ export const VideoForm = ({ source, video, isUpdate }: Props) => {
   } = useForm<IVideoForm>({
     defaultValues: {
       title: video?.title,
-      description: video?.description,
+      description:
+        video?.description && !isUpdate
+          ? formatDescription(video.description)
+          : video?.description,
       draft: Boolean(video?.draft),
       visibility: video?.visibility || Visibility.PUBLIC,
       thumbnail: video?.thumbnail,
@@ -134,7 +149,7 @@ export const VideoForm = ({ source, video, isUpdate }: Props) => {
         title,
       } = await youtubeService.getVideoMetadata(url)
 
-      setValue('description', description)
+      setValue('description', formatDescription(description))
       setValue('title', title)
       setValue('thumbnail', ytbThumbnail)
 
@@ -144,7 +159,7 @@ export const VideoForm = ({ source, video, isUpdate }: Props) => {
     if (videoSource && !isUpdate) {
       getYoutubeMeta(videoSource)
     }
-  }, [videoSource, isUpdate, setValue, youtubeService])
+  }, [videoSource, isUpdate, youtubeService])
 
   // Function called when the user submit the form without errors
   const onSubmit = async (data: IVideoForm) => {
