@@ -44,7 +44,10 @@ export const ProfileCoursesPage = () => {
       title={t('profile.tabs.courses.content.title')}
       sx={{ mt: 3 }}
     >
-      <Header title={t('profile.tabs.courses.content.title')} />
+      <Header
+        title={t('profile.tabs.courses.content.title')}
+        description={t('profile.tabs.courses.content.description')}
+      />
 
       <Divider sx={{ my: 3 }} />
 

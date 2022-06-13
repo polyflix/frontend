@@ -63,7 +63,10 @@ export const ProfileLinksPage = () => {
       sx={{ mt: 3 }}
       title={t('profile.tabs.links.content.title')}
     >
-      <Header title={t('profile.tabs.links.content.title')} />
+      <Header
+        title={t('profile.tabs.links.content.title')}
+        description={t('profile.tabs.links.content.description')}
+      />
 
       <Divider sx={{ my: 3 }} />
 

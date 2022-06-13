@@ -47,7 +47,10 @@ export const ProfileVideosPage = () => {
       title={t('profile.tabs.videos.content.title')}
     >
       <Stack justifyContent="space-between" direction="row">
-        <Header title={t('profile.tabs.videos.content.title')} />
+        <Header
+          title={t('profile.tabs.videos.content.title')}
+          description={t('profile.tabs.videos.content.description')}
+        />
         <Link
           underline="none"
           component={RouterLink}

@@ -44,7 +44,10 @@ export const ProfileCollectionsPage = () => {
       title={t('profile.tabs.collections.content.title')}
       sx={{ mt: 3 }}
     >
-      <Header title={t('profile.tabs.collections.content.title')} />
+      <Header
+        title={t('profile.tabs.collections.content.title')}
+        description={t('profile.tabs.collections.content.description')}
+      />
 
       <Divider sx={{ my: 3 }} />
 

@@ -26,13 +26,15 @@
       "videos": {
         "title": "Videos",
         "content": {
-          "title": "My videos"
+          "title": "My videos",
+          "description": "Here is the list of your videos. On this page, you can edit them, delete them."
         }
       },
       "collections": {
         "title": "Collections",
         "content": {
-          "title": "My collections"
+          "title": "My collections",
+          "description": "Here is the list of your collections. On this page, you can edit them, delete them or consult their content."
         }
       },
       "groups": {
@@ -48,13 +50,15 @@
       "courses": {
         "title": "Courses",
         "content": {
-          "title": "My courses"
+          "title": "My courses",
+          "description": "Here is the list of your courses. On this page, you can edit them, delete them or consult their content."
         }
       },
       "links": {
         "title": "Links",
         "content": {
           "title": "My links",
+          "description": "Here is the list of your links. On this page, you can edit them, delete them.",
           "list": {
             "menu": {
               "actions": {
