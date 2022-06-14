@@ -39,7 +39,7 @@ export const Recap = ({ quizz }: PlayComponentProps) => {
       setStep(Step.End)
       setAttempt(attempt)
     } catch (e: any) {
-      snackbarService.createSnackbar(e.data.statusText, { variant: 'error' })
+      snackbarService.createSnackbar(e?.data?.statusText, { variant: 'error' })
     }
   }
 

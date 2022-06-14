@@ -27,7 +27,7 @@ export const VideoDescriptionMenu: React.FC<Props> = ({ video }) => {
       history.push('/videos/explore')
       snackbarService.notify(CrudAction.DELETE, Endpoint.Videos)
     } catch (e: any) {
-      snackbarService.createSnackbar(e.data.statusText, { variant: 'error' })
+      snackbarService.createSnackbar(e?.data?.statusText, { variant: 'error' })
     }
   }
 

@@ -1,4 +1,5 @@
-import { Box, Divider, Link, Stack } from '@mui/material'
+import { HistoryRounded } from '@mui/icons-material'
+import { Box, Button, Divider, Stack } from '@mui/material'
 import Grid from '@mui/material/Grid'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -46,19 +47,20 @@ export const ProfileVideosPage = () => {
       sx={{ mt: 3 }}
       title={t('profile.tabs.videos.content.title')}
     >
-      <Stack justifyContent="space-between" direction="row">
+      <Stack justifyContent="space-between" direction="row" alignItems="start">
         <Header
           title={t('profile.tabs.videos.content.title')}
           description={t('profile.tabs.videos.content.description')}
         />
-        <Link
-          underline="none"
+        <Button
+          startIcon={<HistoryRounded />}
+          variant="outlined"
           component={RouterLink}
           color="inherit"
           to="/videos/history"
         >
           {t('profile.actions.history')}
-        </Link>
+        </Button>
       </Stack>
 
       <Divider sx={{ my: 3 }} />

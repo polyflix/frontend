@@ -53,7 +53,7 @@ const VideoSliderOption: React.FC<PropsVideo> = ({ video }) => {
       await deleteVideo({ slug: video?.slug! }).unwrap()
       snackbarService.notify(CrudAction.DELETE, Endpoint.Videos)
     } catch (e: any) {
-      snackbarService.createSnackbar(e.data.statusText, { variant: 'error' })
+      snackbarService.createSnackbar(e?.data?.statusText, { variant: 'error' })
     }
   }
 

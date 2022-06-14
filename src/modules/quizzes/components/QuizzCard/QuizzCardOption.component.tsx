@@ -30,7 +30,7 @@ export const QuizzSliderOption = ({ quizz }: OptionProps) => {
       await deleteQuizz({ id: quizz.id }).unwrap()
       snackbarService.notify(CrudAction.DELETE, Endpoint.Videos)
     } catch (e: any) {
-      snackbarService.createSnackbar(e.data.statusText, { variant: 'error' })
+      snackbarService.createSnackbar(e?.data?.statusText, { variant: 'error' })
     }
   }
 

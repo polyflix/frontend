@@ -52,7 +52,7 @@ export const CourseSlugPage = () => {
       snackbarService.notify(CrudAction.DELETE, Endpoint.Courses)
       history.push('/users/profile/courses')
     } catch (e: any) {
-      snackbarService.createSnackbar(e.data.statusText, { variant: 'error' })
+      snackbarService.createSnackbar(e?.data?.statusText, { variant: 'error' })
     }
   }
 

@@ -113,7 +113,7 @@ export const GroupFrom = ({ group, isUpdate }: Props) => {
 
       history.push('/admin/groups')
     } catch (e: any) {
-      snackbarService.createSnackbar(e.data.statusText, { variant: 'error' })
+      snackbarService.createSnackbar(e?.data?.statusText, { variant: 'error' })
     }
   }
   const displayUserById = (id: string) => {

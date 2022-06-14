@@ -126,7 +126,7 @@ export const CollectionForm = ({ collection, isUpdate }: Props) => {
         setOpenLinkModal(true)
       } else history.push('/users/profile/modules')
     } catch (e: any) {
-      snackbarService.createSnackbar(e.data.statusText, { variant: 'error' })
+      snackbarService.createSnackbar(e?.data?.statusText, { variant: 'error' })
     }
   }
 

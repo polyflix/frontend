@@ -150,7 +150,7 @@ export const QuizzForm = ({ quizz, isUpdate, isImport }: Props) => {
 
       history.push('/users/profile/quizzes')
     } catch (e: any) {
-      snackbarService.createSnackbar(e.data.statusText, { variant: 'error' })
+      snackbarService.createSnackbar(e?.data?.statusText, { variant: 'error' })
     }
   }
 

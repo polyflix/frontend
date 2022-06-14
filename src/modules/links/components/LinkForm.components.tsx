@@ -72,7 +72,7 @@ export const LinkForm = ({ link, isUpdate }: Props) => {
 
       history.push('/users/profile/links')
     } catch (e: any) {
-      snackbarService.createSnackbar(e.data.statusText, { variant: 'error' })
+      snackbarService.createSnackbar(e?.data?.statusText, { variant: 'error' })
     }
   }
 

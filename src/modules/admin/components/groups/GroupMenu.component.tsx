@@ -27,7 +27,7 @@ export const GroupMenu = ({ group }: PropsGroupMenu) => {
       })
       snackbarService.notify(CrudAction.DELETE, Endpoint.Groups)
     } catch (e: any) {
-      snackbarService.createSnackbar(e.data.statusText, { variant: 'error' })
+      snackbarService.createSnackbar(e?.data?.statusText, { variant: 'error' })
     }
   }
 

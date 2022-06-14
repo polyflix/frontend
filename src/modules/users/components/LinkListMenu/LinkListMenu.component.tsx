@@ -22,7 +22,7 @@ export const LinkListMenuMenu = ({ link }: LinkListMenuMenuProps) => {
       await deleteLink({ id: link?.id! }).unwrap()
       snackbarService.notify(CrudAction.DELETE, Endpoint.Links)
     } catch (e: any) {
-      snackbarService.createSnackbar(e.data.statusText, { variant: 'error' })
+      snackbarService.createSnackbar(e?.data?.statusText, { variant: 'error' })
     }
   }
 

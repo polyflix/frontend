@@ -53,7 +53,7 @@ export const AdminViewGroupPage = () => {
 
       history.push('/admin/groups')
     } catch (e: any) {
-      snackbarService.createSnackbar(e.data.statusText, { variant: 'error' })
+      snackbarService.createSnackbar(e?.data?.statusText, { variant: 'error' })
     }
   }
 

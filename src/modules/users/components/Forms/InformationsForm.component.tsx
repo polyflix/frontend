@@ -68,7 +68,7 @@ export const InformationsForm = ({ user, title }: Props) => {
       // Display the success snackbar
       snackbarService.notify(CrudAction.UPDATE, Endpoint.Users)
     } catch (e: any) {
-      snackbarService.createSnackbar(e.data.statusText, { variant: 'error' })
+      snackbarService.createSnackbar(e?.data?.statusText, { variant: 'error' })
     } finally {
       setIsAction(false)
     }

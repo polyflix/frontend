@@ -219,7 +219,7 @@ export const VideoForm = ({ source, video, isUpdate }: Props) => {
 
       history.push('/videos/explore')
     } catch (e: any) {
-      snackbarService.createSnackbar(e.data.statusText, { variant: 'error' })
+      snackbarService.createSnackbar(e?.data?.statusText, { variant: 'error' })
     }
   }
 
