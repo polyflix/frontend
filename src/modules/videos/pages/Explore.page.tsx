@@ -29,6 +29,7 @@ export const ExploreVideosPage = () => {
   const { data, isLoading, isFetching } = useGetVideosQuery({
     visibility: Visibility.PUBLIC,
     draft: false,
+    order: '-createdAt',
     ...filters,
   })
 
