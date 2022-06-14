@@ -9,7 +9,6 @@ import {
   List,
   ListItem,
   Avatar,
-  ListItemText,
   Chip,
   Stack,
   Card,
@@ -20,13 +19,15 @@ import {
   IconButton,
   Tooltip,
 } from '@mui/material'
-import { capitalize } from 'lodash'
 import { useTranslation } from 'react-i18next'
 import { useHistory, useParams } from 'react-router-dom'
 import { Link as RouterLink } from 'react-router-dom'
 
 import { useInjection } from '@polyflix/di'
 
+import { AsyncListItemText } from '@core/components/AsyncListItem/AsyncListItem.component'
+import { AsyncText } from '@core/components/AsyncText/AsyncListItem.component'
+import { UserName } from '@core/components/UserName/UserName.component'
 import { Endpoint } from '@core/constants/endpoint.constant'
 import { useConfirmModal } from '@core/hooks/useConfirmModal.hook'
 import { SnackbarService } from '@core/services/snackbar.service'
@@ -97,8 +98,8 @@ export const AdminViewGroupPage = () => {
                     <ListItemIcon>
                       <InfoRounded />
                     </ListItemIcon>
-                    <ListItemText
-                      primary={t('groups.view.groupName')}
+                    <AsyncListItemText
+                      primary={t<string>('groups.view.groupName')}
                       secondary={group?.name}
                     />
                   </ListItem>
@@ -106,8 +107,8 @@ export const AdminViewGroupPage = () => {
                     <ListItemIcon>
                       <Groups />
                     </ListItemIcon>
-                    <ListItemText
-                      primary="Number of members"
+                    <AsyncListItemText
+                      primary={t<string>('groups.view.countMembers')}
                       secondary={group?.members?.length}
                     />
                   </ListItem>
@@ -126,14 +127,15 @@ export const AdminViewGroupPage = () => {
                   src={group?.owner.avatar}
                   sx={{ mb: 2, width: 60, height: 60 }}
                 />
-                <Typography variant="body1">
-                  {capitalize(
-                    `${group?.owner?.firstName} ${group?.owner?.lastName}`
-                  )}
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  {group?.owner.email}
-                </Typography>
+                <UserName
+                  firstName={group?.owner?.lastName}
+                  lastName={group?.owner?.lastName}
+                />
+                <AsyncText
+                  value={group?.owner?.email}
+                  variant="body2"
+                  color="text.secondary"
+                />
                 {group?.owner?.roles?.map((role: string, index: number) => (
                   <Chip
                     key={index}

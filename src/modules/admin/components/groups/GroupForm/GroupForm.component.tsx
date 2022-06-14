@@ -252,9 +252,11 @@ export const GroupFrom = ({ group, isUpdate }: Props) => {
               </LoadingButton>
             </Stack>
           </form>
-          <Paper variant="outlined">
-            <MembersList members={selectedMembers} />
-          </Paper>
+          {selectedMembers.length > 0 && (
+            <Paper variant="outlined">
+              <MembersList members={selectedMembers} />
+            </Paper>
+          )}
         </Stack>
       )}
     </>
