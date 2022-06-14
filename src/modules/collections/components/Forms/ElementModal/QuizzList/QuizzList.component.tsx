@@ -33,23 +33,14 @@ export const QuizzList = ({ fieldArray }: QuizzListProps) => {
   const { user } = useAuth()
 
   const [filters, setFilters] = useState<QuizzFilters>({
-    'user.id': user?.id,
+    userId: user?.id,
     page: 1,
-    limit: 10,
+    pageSize: 10,
+    visibility: Visibility.PUBLIC,
   })
 
   // Fetch the quizzes
-  const { data: quizzes } = useGetQuizzesQuery({
-    join: [
-      {
-        field: 'element.user',
-        select: ['firstName', 'lastName', 'avatar'],
-      },
-      { field: 'questions', select: ['label'] },
-    ],
-    'element.visibility': Visibility.PUBLIC,
-    ...filters,
-  })
+  const { data: quizzes } = useGetQuizzesQuery(filters)
 
   const { fields, append, remove } = fieldArray
 

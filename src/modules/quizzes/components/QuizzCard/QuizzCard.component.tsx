@@ -91,7 +91,10 @@ export const QuizzCard = ({
       setScore(computedScore)
     }
     setColor(
-      getFeedbackColor(percentage(score, quizz.data.questions_count!), theme)
+      getFeedbackColor(
+        percentage(score, quizz.data.questions_count || 0),
+        theme
+      )
     )
   }, [isAttemptsLoading])
 
@@ -187,8 +190,8 @@ export const QuizzCard = ({
           <Box sx={{ width: 70, mr: 2 }}>
             <CircularProgressbar
               value={score}
-              maxValue={quizz.data.questions_count}
-              text={`${score.toFixed(2)}/${quizz.data.questions_count}`}
+              maxValue={quizz.data.questions_count || 0}
+              text={`${score.toFixed(2)}/${quizz.data.questions_count || 0}`}
               styles={buildStyles({
                 trailColor: theme.palette.divider,
                 pathColor: color,
@@ -201,7 +204,9 @@ export const QuizzCard = ({
         <Stack direction="row" spacing={2} alignItems="center">
           {displayNumberOfQuestions && (
             <Stack textAlign="center">
-              <Typography variant="h5">{quizz.data.questions_count}</Typography>
+              <Typography variant="h5">
+                {quizz.data.questions_count || 0}
+              </Typography>
               <Typography
                 fontSize={12}
                 variant="body2"
