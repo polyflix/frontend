@@ -1,5 +1,5 @@
 export interface AttachmentParams {
-  offset: number,
-  limit: number,
-  userId: number,
+  offset: number
+  limit: number
+  userId: string
 }

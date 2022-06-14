@@ -27,14 +27,14 @@ export const AttachmentsPanel = ({ video }: AttachmentPanelProps) => {
   const { data: attachments } = useGetVideoAttachmentsQuery(video.id)
 
   const content = () => {
-    return attachments && attachments.length === 0 ? (
+    return attachments && attachments.items.length === 0 ? (
       <ListItem>
         <Alert severity="info" sx={{ width: '100%' }}>
           {t('slug.sidebar.tabs.attachments.alertMessages.info')}
         </Alert>
       </ListItem>
     ) : (
-      attachments?.map((attachment) => (
+      attachments?.items.map((attachment) => (
         <ListItem key={attachment.id}>
           <Alert severity="info" icon={false} sx={{ width: '100%' }}>
             <Link

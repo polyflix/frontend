@@ -14,6 +14,8 @@ import videosReducer from '@videos/reducers/video.slice'
 import { notesApi } from '@videos/services/notes.service'
 import { videosApi } from '@videos/services/video.service'
 
+import { attachmentsApi } from '@attachments/services/attachment.service'
+
 import { collectionsApi as modulesApi } from '@collections/services/collection.service'
 
 import { coursesApi } from '@courses/services/course.service'
@@ -26,7 +28,6 @@ import { certificationsApi } from '@certifications/services/certification.servic
 import uploadReducer from './reducers/file-upload.slice'
 import serverReducer from './reducers/server.slice'
 import { api } from './services/api.service'
-import { attachmentsApi } from "@attachments/services/attachment.service";
 
 export const store = configureStore({
   reducer: {

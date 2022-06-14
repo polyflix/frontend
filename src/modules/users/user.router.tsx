@@ -6,8 +6,8 @@ import { NotImplementedPage } from '@core/pages/NotImplemented.page'
 import { ProfileCoursesPage } from '@users/pages/ProfileCourses/ProfileCourses.page'
 
 import { ProfilePage } from './pages/Profile/Profile.page'
+import { ProfileAttachmentsPage } from './pages/ProfileAttachments/ProfileAttachments.page'
 import { ProfileCollectionsPage } from './pages/ProfileCollections/ProfileCollections.page'
-import { ProfileLinksPage } from './pages/ProfileLinks/ProfileLinks.page'
 import { ProfileQuizzesPage } from './pages/ProfileQuizzes/ProfileQuizzes.page'
 import { ProfileVideosPage } from './pages/ProfileVideos/ProfileVideos.page'
 import { EditProfilePage } from './pages/UpdateProfile/UpdateProfile.page'
@@ -27,7 +27,11 @@ const ProfileRouter = () => {
         />
         <Route exact path={`${url}/courses`} component={ProfileCoursesPage} />
         <Route exact path={`${url}/quizzes`} component={ProfileQuizzesPage} />
-        <Route exact path={`${url}/links`} component={ProfileLinksPage} />
+        <Route
+          exact
+          path={`${url}/attachments`}
+          component={ProfileAttachmentsPage}
+        />
         <Route component={NotFoundPage} />
       </Switch>
     </ProfilePage>

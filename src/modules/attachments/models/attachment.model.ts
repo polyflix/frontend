@@ -1,3 +1,13 @@
+export enum AttachmentStatus {
+  InProgress = 'IN_PROGRESS',
+  Completed = 'COMPLETED',
+}
+
+export enum AttachmentType {
+  External = 'EXTERNAL',
+  Internal = 'Internal',
+}
+
 export interface Attachment {
   id: string
   title: string
@@ -17,12 +27,7 @@ export interface Attachment {
   extension?: string
 }
 
-export enum AttachmentStatus {
-  InProgress = 'IN_PROGRESS',
-  Completed = 'COMPLETED',
-}
-
-export enum AttachmentType {
-  External = 'EXTERNAL',
-  Internal = 'Internal',
+export interface PaginatedAttachments {
+  items: Attachment[]
+  totalCount: number
 }

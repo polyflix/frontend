@@ -15,14 +15,13 @@
     "videos": "Videos",
     "quizzes": "Quizzes",
     "courses": "Courses",
-    "links": "Links",
     "collections": "Modules"
   },
   "myContent": {
     "videos": "Videos",
     "quizzes": "Quizzes",
     "courses": "Courses",
-    "links": "Links",
+    "attachments": "Attachments",
     "collections": "Modules"
   },
   "administration": {
