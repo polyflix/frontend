@@ -27,9 +27,10 @@ import { VideoDescriptionMenu } from './VideoDescriptionMenu/VideoDescriptionMen
 
 type VideoDetailsProps = {
   video?: Video
+  refetch: () => void
 }
 
-export const VideoDetails = ({ video }: VideoDetailsProps) => {
+export const VideoDetails = ({ video, refetch }: VideoDetailsProps) => {
   const { t } = useTranslation('videos')
   const [isLiked, setIsLiked] = useState<boolean | undefined>(undefined)
   const [likeDisabled, setLikeDisabled] = useState<boolean>(false)
@@ -49,6 +50,7 @@ export const VideoDetails = ({ video }: VideoDetailsProps) => {
       setLikeDisabled(false)
     }
   }
+  useEffect(() => refetch(), [isLiked])
 
   useEffect(() => {
     if (video && isLiked === undefined) {

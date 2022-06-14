@@ -87,7 +87,7 @@ export const SlugPage = () => {
         >
           {
             //wait video load complete before display details
-            video && <VideoDetails video={video} />
+            video && <VideoDetails video={video} refetch={refetch} />
           }
         </Grid>
       </Grid>
