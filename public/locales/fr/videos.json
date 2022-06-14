@@ -91,7 +91,8 @@
           }
         },
         "notes": {
-          "title": "Notes"
+          "title": "Notes",
+          "saved": "Note sauvegardée"
         },
         "attachments": {
           "title": "Pièces jointes",

@@ -2,8 +2,11 @@ import { ListItem } from '@mui/material'
 import MDEditor from '@uiw/react-md-editor'
 import { useCallback, useContext, useEffect, useState } from 'react'
 
+import { useInjection } from '@polyflix/di'
+
 import { AutoScrollBox } from '@core/components/AutoScrollBox/AutoScrollBox.component'
 import { useInterval } from '@core/hooks/useInterval.hook'
+import { SnackbarService } from '@core/services/snackbar.service'
 
 import {
   useGetNoteQuery,
@@ -24,6 +27,8 @@ export const NotesPanel = ({ videoId }: NotesProps) => {
   })
   const [updateNote] = useUpdateNoteMutation()
   const { mode } = useContext(ColorModeContext)
+  const snackbarService = useInjection<SnackbarService>(SnackbarService)
+  const { t } = useTranslation('videos')
 
   useEffect(() => {
     const { content: noteContent } = data || {}
@@ -65,6 +70,9 @@ export const NotesPanel = ({ videoId }: NotesProps) => {
       ) {
         e.preventDefault()
         saveChange()
+        snackbarService.createSnackbar(t('slug.sidebar.tabs.notes.saved'), {
+          variant: 'success',
+        })
       }
       if (e.key === ' ') {
         setValue(value + ' ')

@@ -89,7 +89,8 @@
           "title": "Modules"
         },
         "notes": {
-          "title": "Notes"
+          "title": "Notes",
+          "saved": "Note saved"
         },
         "attachments": {
           "title": "Attachments",
