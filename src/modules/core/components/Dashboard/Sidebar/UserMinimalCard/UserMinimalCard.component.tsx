@@ -9,6 +9,7 @@ import { fadeInAnnimation } from '@core/utils/animation'
 import { useAuth } from '@auth/hooks/useAuth.hook'
 
 import { UserAvatar } from '@users/components/UserAvatar/UserAvatar.component'
+import { getUsernameToDisplay } from '@users/helpers/displayUsername.helper'
 import { User } from '@users/models/user.model'
 
 const getHighestRole = (user: Partial<User> & Pick<User, 'roles'>): string => {
@@ -51,9 +52,7 @@ export const UserMinimalCard = ({}) => {
           }}
           noWrap={true}
         >
-          {user?.firstName != '' && user?.lastName != ''
-            ? user?.firstName + ' ' + user?.lastName
-            : user?.username}
+          {getUsernameToDisplay(user!)}
         </Typography>
         <Tooltip title={role}>
           <Typography

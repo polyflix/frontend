@@ -11,6 +11,7 @@ import { Page } from '@core/components/Page/Page.component'
 import { useAuth } from '@auth/hooks/useAuth.hook'
 
 import { ProfileBanner } from '@users/components/Banner/Banner.component'
+import { getUsernameToDisplay } from '@users/helpers/displayUsername.helper'
 
 export const ProfilePage: React.FC<PropsWithChildren<{}>> = ({ children }) => {
   const { t } = useTranslation('users')
@@ -19,7 +20,7 @@ export const ProfilePage: React.FC<PropsWithChildren<{}>> = ({ children }) => {
 
   return (
     <Page
-      title={t('profile.title.view') + user?.firstName}
+      title={t('profile.title.view') + getUsernameToDisplay(user!)}
       maxWidth={'xl'}
       sx={{
         display: 'flex',
@@ -37,7 +38,7 @@ export const ProfilePage: React.FC<PropsWithChildren<{}>> = ({ children }) => {
         justifyContent="space-between"
       >
         <Typography sx={{ mb: 2 }} align="left" variant="h3">
-          {t('profile.title.view') + user?.firstName}
+          {t('profile.title.view') + getUsernameToDisplay(user!)}
         </Typography>
         <Button
           variant="outlined"

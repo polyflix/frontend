@@ -5,6 +5,10 @@ import Typography from '@mui/material/Typography'
 import { useTranslation } from 'react-i18next'
 import { Link as RouterLink, useRouteMatch } from 'react-router-dom'
 
+import {
+  getUserFullname,
+  getUsernameToDisplay,
+} from '@users/helpers/displayUsername.helper'
 import { User } from '@users/models/user.model'
 
 import { UserAvatar } from '../UserAvatar/UserAvatar.component'
@@ -96,15 +100,15 @@ export const ProfileBanner = ({ user }: Props) => {
           sx={{
             paddingTop: 1,
             paddingBottom: 4,
+            alignItems: 'center',
+            display: 'grid',
           }}
         >
           <Typography align="center" variant="h4">
-            {user?.firstName != '' && user?.lastName != ''
-              ? user?.firstName + ' ' + user?.lastName
-              : user?.username}
+            {getUserFullname(user)}
           </Typography>
-          <Typography align="center" variant="body1">
-            {user.email}
+          <Typography align="center" margin="auto" variant="body1" color="gray">
+            {user.username != user.email && getUsernameToDisplay(user!)}
           </Typography>
         </Box>
         <BannerTabs />
