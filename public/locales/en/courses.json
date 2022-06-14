@@ -17,6 +17,9 @@
     "buttonText": "Create a course",
     "empty": "There are no modules associated with the course"
   },
+  "visibility": {
+    "private": "This module is private"
+  },
   "form": {
     "upsert": {
       "title": {

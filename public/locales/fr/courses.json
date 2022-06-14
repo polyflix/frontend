@@ -17,6 +17,9 @@
     "buttonText": "Créer un cours",
     "empty": "Il n'y a pas de modules associée au cours"
   },
+  "visibility": {
+    "private": "Ce module est privé"
+  },
   "form": {
     "upsert": {
       "title": {

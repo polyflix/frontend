@@ -18,6 +18,9 @@
       }
     }
   },
+  "visibility": {
+    "private": "Élement privé"
+  },
   "share": {
     "title": "Récupérez vos liens de partage !",
     "description": "Voici vos liens pour permettre aux utilisateurs d'accéder à le module. <br/><br/> <strong>Veuillez les conserver en lieu sûr, ils ne seront plus imprimés. Si vous les perdez ou si vous souhaitez en révoquer un, vous pouvez simplement les régénérer dans la page de mise à jour de votre module.</strong>",
