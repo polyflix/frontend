@@ -14,6 +14,9 @@ import { Icon } from '@core/components/Icon/Icon.component'
 import { useQuery } from '@core/hooks/useQuery'
 import { Element } from '@core/models/element.model'
 import { ElementType } from '@core/types/element.type'
+import { Role } from '@core/types/roles.type'
+
+import { useAuth } from '@auth/hooks/useAuth.hook'
 
 import { CollectionTimelineSkeleton } from '@collections/components/CollectionTimelineSkeleton/CollectionTimelineSkeleton.component'
 import { Collection } from '@collections/models/collection.model'
@@ -32,6 +35,9 @@ export const CollectionTimeline = ({
   const collection: Collection | undefined = data
   const { t } = useTranslation('collections')
   const query = useQuery() as URLSearchParams
+
+  const { user } = useAuth()
+  const isAdmin = user?.roles?.length && user?.roles?.includes(Role.Admin)
 
   const elementIcon = (type: ElementType): string => {
     switch (type) {
@@ -97,19 +103,27 @@ export const CollectionTimeline = ({
               <TimelineConnector />
             </TimelineSeparator>
             <TimelineContent>
-              <Link
-                color="inherit"
-                underline="none"
-                {...generateLinkAttribute(item, i)}
-              >
-                <Typography variant="body1">{item.name}</Typography>
-                <Typography
-                  variant="caption"
-                  sx={{ textTransform: 'capitalize' }}
-                >
-                  {item.type}
-                </Typography>
-              </Link>
+              <>
+                {item.visibility === 'private' &&
+                item?.id != item.user?.id &&
+                !isAdmin ? (
+                  <Alert severity="error">{t('visibility.private')}</Alert>
+                ) : (
+                  <Link
+                    color="inherit"
+                    underline="none"
+                    {...generateLinkAttribute(item, i)}
+                  >
+                    <Typography variant="body1">{item.name}</Typography>
+                    <Typography
+                      variant="caption"
+                      sx={{ textTransform: 'capitalize' }}
+                    >
+                      {item.type}
+                    </Typography>
+                  </Link>
+                )}
+              </>
             </TimelineContent>
           </TimelineItem>
         )

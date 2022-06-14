@@ -18,6 +18,9 @@
       }
     }
   },
+  "visibility": {
+    "private": "Private element"
+  },
   "share": {
     "title": "Get your share links !",
     "description": "Here your links to allow users to access the module. <br/><br/> <strong>Please keep them in a secure place, they will be not printed anymore. If you loose them or you wish to revoke one, you can simply regenerate them in the update page of your module.</strong>",

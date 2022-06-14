@@ -21,6 +21,7 @@ import { Page } from '@core/components/Page/Page.component'
 import { Endpoint } from '@core/constants/endpoint.constant'
 import { SnackbarService } from '@core/services/snackbar.service'
 import { CrudAction } from '@core/types/http.type'
+import { Role } from '@core/types/roles.type'
 
 import { useAuth } from '@auth/hooks/useAuth.hook'
 
@@ -55,6 +56,8 @@ export const CourseSlugPage = () => {
       snackbarService.createSnackbar(e?.data?.statusText, { variant: 'error' })
     }
   }
+
+  const isAdmin = user?.roles?.length && user?.roles?.includes(Role.Admin)
 
   return (
     <Page title={course?.name}>
@@ -170,25 +173,44 @@ export const CourseSlugPage = () => {
             <Stack spacing={2}>
               <Typography variant="h4">{t('collections')}</Typography>
               {course?.modules?.map((module) => (
-                <Paper variant="outlined" key={module.id} sx={{ p: 2 }}>
-                  <Link
-                    component={RouterLink}
-                    to={`/modules/${module.slug}`}
-                    underline="none"
-                    color="inherit"
-                  >
-                    <Typography
-                      variant="h4"
-                      sx={{
-                        my: 1,
-                        width: 'auto',
-                      }}
-                    >
-                      {module.name}
-                    </Typography>
-                  </Link>
-                  <CollectionTimeline collectionSlug={module.slug} />
-                </Paper>
+                <>
+                  {module.visibility === 'private' &&
+                  user?.id != module.user?.id &&
+                  !isAdmin ? (
+                    <Paper variant="outlined" key={module.id} sx={{ p: 2 }}>
+                      <Typography
+                        variant="h4"
+                        sx={{
+                          my: 1,
+                          width: 'auto',
+                        }}
+                      >
+                        {module.name}
+                      </Typography>
+                      <Alert severity="error">{t('visibility.private')}</Alert>
+                    </Paper>
+                  ) : (
+                    <Paper variant="outlined" key={module.id} sx={{ p: 2 }}>
+                      <Link
+                        component={RouterLink}
+                        to={`/modules/${module.slug}`}
+                        underline="none"
+                        color="inherit"
+                      >
+                        <Typography
+                          variant="h4"
+                          sx={{
+                            my: 1,
+                            width: 'auto',
+                          }}
+                        >
+                          {module.name}
+                        </Typography>
+                      </Link>
+                      <CollectionTimeline collectionSlug={module.slug} />
+                    </Paper>
+                  )}
+                </>
               ))}
             </Stack>
             {course?.modules?.length === 0 && (
