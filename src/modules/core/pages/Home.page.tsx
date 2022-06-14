@@ -11,6 +11,7 @@ import { Visibility } from '@core/models/content.model'
 import { VideoSliderCard } from '@videos/components/VideoSliderCard/VideoSliderCard.component'
 import { useGetVideosQuery } from '@videos/services/video.service'
 import { VideoFilters } from '@videos/types/filters.type'
+import { useGetUserAttachmentsQuery } from "@attachments/services/attachment.service";
 
 export const HomePage = () => {
   const [filters] = useState<VideoFilters>({

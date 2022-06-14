@@ -1,3 +1,4 @@
+import { Attachment } from '@attachments/models/attachment.model'
 import {
   Alert,
   Avatar,
@@ -13,7 +14,6 @@ import { AutoScrollBox } from '@core/components/AutoScrollBox/AutoScrollBox.comp
 import { Icon } from '@core/components/Icon/Icon.component'
 
 import { getDomain } from '@videos/helpers/favicon.helper'
-import { Attachment } from '@videos/models/attachment.model'
 
 interface AttachmentPanelProps {
   attachments: Attachment[]
@@ -47,7 +47,7 @@ export const AttachmentsPanel = ({
                   <Icon name="akar-icons:link-chain" size={30} />
                 </Avatar>
                 <Typography variant="body2" sx={{ ml: 2 }}>
-                  {attachment.label}
+                  {attachment.title}
                 </Typography>
               </Stack>
             </Link>

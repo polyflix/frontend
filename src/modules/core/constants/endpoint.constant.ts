@@ -13,4 +13,5 @@ export enum Endpoint {
   Groups = 'groups',
   Certifications = 'certifications',
   AdminSubtitles = 'admin/subtitles',
+  Attachments = 'attachments'
 }
