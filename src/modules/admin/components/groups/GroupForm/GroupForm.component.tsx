@@ -6,14 +6,10 @@ import {
 import { IGroupForm } from '@admin/types/form.type'
 import { LoadingButton } from '@mui/lab'
 import {
-  Box,
+  Autocomplete,
   CircularProgress,
-  FormControl,
-  FormHelperText,
   Grid,
-  InputLabel,
   Paper,
-  Select,
   Stack,
   TextField,
 } from '@mui/material'
@@ -37,7 +33,7 @@ import { User } from '@users/models/user.model'
 import { useGetUsersQuery } from '@users/services/user.service'
 
 import { MembersList } from '../MembersList.component'
-import { StyledMenuItem, StyledOutlinedInput } from './GroupForm.style'
+import { StyledMenuItem } from './GroupForm.style'
 import { GroupSelectItem } from './GroupSelectItem.component'
 
 interface Props {
@@ -75,6 +71,7 @@ export const GroupFrom = ({ group, isUpdate }: Props) => {
     formState: { errors, isSubmitting },
     control,
     watch,
+    setValue,
   } = useForm<IGroupForm>({
     defaultValues: {
       members: group?.members.map((m) => m.id) || [],
@@ -119,7 +116,7 @@ export const GroupFrom = ({ group, isUpdate }: Props) => {
   const displayUserById = (id: string) => {
     const user = users?.data.find((u: User) => u.id === id)
     if (!user) {
-      return 'N/A'
+      return ''
     }
     return capitalize(`${user.firstName} ${user.lastName}`)
   }
@@ -154,45 +151,47 @@ export const GroupFrom = ({ group, isUpdate }: Props) => {
                     control={control}
                     name="owner"
                     rules={{ required: true }}
-                    render={({ field }) => (
-                      <FormControl
-                        fullWidth
-                        error={Boolean(errors.owner)}
+                    render={({ field: controllerField }) => (
+                      <Autocomplete
+                        {...controllerField}
                         disabled={isUpdate}
-                      >
-                        <InputLabel id="owner">
-                          {t('groups.forms.create-update.placeholder.owner')}
-                        </InputLabel>
-                        <Select
-                          {...field}
-                          input={<StyledOutlinedInput label="owner" />}
-                          labelId="owner"
-                          renderValue={(selected) => (
-                            <Box
-                              sx={{
-                                display: 'flex',
-                                flexWrap: 'wrap',
-                                gap: 0.5,
-                              }}
-                            >
-                              {displayUserById(selected)}
-                            </Box>
-                          )}
-                        >
-                          {users?.data?.map((user) => (
-                            <StyledMenuItem key={user.id} value={user.id}>
-                              <GroupSelectItem key={user.id} user={user} />
-                            </StyledMenuItem>
-                          ))}
-                        </Select>
-                        {Boolean(errors.owner) && (
-                          <FormHelperText>
-                            {t(
-                              'groups.forms.create-update.validation.required'
-                            )}
-                          </FormHelperText>
+                        options={users?.data.map((u) => u.id) || []}
+                        getOptionLabel={(option) => displayUserById(option)}
+                        onChange={(e, options) =>
+                          setValue('owner', options!, {
+                            shouldValidate: true,
+                          })
+                        }
+                        renderOption={(props, option) => (
+                          <StyledMenuItem
+                            key={option}
+                            value={option}
+                            sx={{ mx: 1 }}
+                            {...props}
+                          >
+                            <GroupSelectItem
+                              user={
+                                users?.data.find((u: User) => u.id === option)!
+                              }
+                            />
+                          </StyledMenuItem>
                         )}
-                      </FormControl>
+                        renderInput={(params) => (
+                          <TextField
+                            {...params}
+                            error={Boolean(errors?.owner)}
+                            placeholder={t(
+                              'groups.forms.create-update.placeholder.owner'
+                            )}
+                            helperText={
+                              Boolean(errors?.owner) &&
+                              t(
+                                'groups.forms.create-update.validation.required'
+                              )
+                            }
+                          />
+                        )}
+                      />
                     )}
                   />
                 </Grid>
@@ -201,44 +200,49 @@ export const GroupFrom = ({ group, isUpdate }: Props) => {
                     control={control}
                     name="members"
                     rules={{ required: true }}
-                    render={({ field }) => (
-                      <FormControl fullWidth error={Boolean(errors.members)}>
-                        <InputLabel id="members">
-                          {t('groups.forms.create-update.placeholder.members')}
-                        </InputLabel>
-                        <Select
-                          {...field}
-                          input={<StyledOutlinedInput label="members" />}
-                          labelId="members"
-                          multiple
-                          renderValue={(selected) => (
-                            <Box
-                              sx={{
-                                display: 'flex',
-                                flexWrap: 'wrap',
-                                gap: 0.5,
-                              }}
-                            >
-                              {selected
-                                .map((userId) => displayUserById(userId))
-                                .join(', ')}
-                            </Box>
-                          )}
-                        >
-                          {users?.data?.map((user) => (
-                            <StyledMenuItem key={user.id} value={user.id}>
-                              <GroupSelectItem key={user.id} user={user} />
-                            </StyledMenuItem>
-                          ))}
-                        </Select>
-                        {Boolean(errors.members) && (
-                          <FormHelperText>
-                            {t(
-                              'groups.forms.create-update.validation.required'
-                            )}
-                          </FormHelperText>
+                    render={({ field: controllerField }) => (
+                      <Autocomplete
+                        {...controllerField}
+                        multiple
+                        limitTags={2}
+                        disableCloseOnSelect
+                        options={users?.data.map((u) => u.id) || []}
+                        getOptionLabel={(option) => displayUserById(option)}
+                        onChange={(e, options) =>
+                          setValue('members', options, {
+                            shouldValidate: true,
+                          })
+                        }
+                        renderOption={(props, option) => (
+                          <StyledMenuItem
+                            key={option}
+                            value={option}
+                            sx={{ mx: 1 }}
+                            {...props}
+                          >
+                            <GroupSelectItem
+                              user={
+                                users?.data.find((u: User) => u.id === option)!
+                              }
+                            />
+                          </StyledMenuItem>
                         )}
-                      </FormControl>
+                        renderInput={(params) => (
+                          <TextField
+                            {...params}
+                            error={Boolean(errors?.members)}
+                            placeholder={t(
+                              'groups.forms.create-update.placeholder.members'
+                            )}
+                            helperText={
+                              Boolean(errors?.members) &&
+                              t(
+                                'groups.forms.create-update.validation.required'
+                              )
+                            }
+                          />
+                        )}
+                      />
                     )}
                   />
                 </Grid>
