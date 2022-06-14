@@ -4,7 +4,8 @@ export interface Certification {
 }
 
 export interface Certificate {
-  certificate: Certification
+  certification: Certification
   firstName: string
   lastName: string
+  createdAt: string
 }

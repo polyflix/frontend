@@ -7,7 +7,10 @@ import { RestCrudFilters } from '@core/filters/rest-crud.filter'
 import { fetchWithRefresh } from '@core/services/api.service'
 import { ApiVersion, Pagination } from '@core/types/http.type'
 
-import { Certification } from '@certifications/models/certification.model'
+import {
+  Certificate,
+  Certification,
+} from '@certifications/models/certification.model'
 import { CertificationFilters } from '@certifications/types/filters.type'
 import { ICertificationForm } from '@certifications/types/form.type'
 
@@ -39,15 +42,10 @@ export const certificationsApi = createApi({
     /**
      * Get a certificate from a certification by certificate id
      */
-    getCertificate: builder.query<
-      Certification,
-      { id: string; filters?: CertificationFilters }
-    >({
+    getCertificate: builder.query<Certificate, { id: string }>({
       providesTags: (_0, _1, { id }) => [{ type: Endpoint.Certifications, id }],
-      query: ({ id, filters }) => {
-        return `${
-          Endpoint.Certifications
-        }/certificate/${id}${filterBuilder.createFilters(filters || {})}`
+      query: ({ id }) => {
+        return `${Endpoint.Certifications}/certificate/${id}`
       },
     }),
 

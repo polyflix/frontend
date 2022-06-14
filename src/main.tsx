@@ -50,6 +50,7 @@ import { ThemeConfig } from '@theme/theme'
 
 import i18n from './i18n/config'
 import { AdminRouter } from './modules/admin/admin.router'
+import { CertificatePage } from './modules/certifications/pages/Certificate.page'
 import './styles/index.scss'
 
 /**
@@ -62,7 +63,6 @@ const PolyflixApp = () => {
   const { user, hasRefreshedAuth, isAuthRefreshing } = useAuth()
   const { initialized, keycloak } = useKeycloak()
   const { isUnhealthy } = useServerHealth()
-
   // If the server is unavailable, display the 503 page
   if (isUnhealthy)
     return (
@@ -91,6 +91,8 @@ const PolyflixApp = () => {
       <Switch>
         {/* We want the user to be redirected to home page if already logged in */}
         <Route path="/auth" component={AuthRouter} />
+        <Route path="/certificate/:id" component={CertificatePage} />
+
         {/* We restrict these route to an authenticated user*/}
         <PrivateRoute condition={isAuthenticated}>
           <DashboardLayout>

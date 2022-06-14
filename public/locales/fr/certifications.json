@@ -1,0 +1,11 @@
+{
+  "explore": {
+    "title": "Certificat"
+  },
+  "data": {
+    "dateFormat": "DD/MM/YYYY",
+    "owner": "Obtenu par",
+    "the": "le"
+  },
+  "empty": "Ce certificat n'existe pas."
+}
