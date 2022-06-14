@@ -70,8 +70,6 @@ export const QuizzCard = ({
   // We want to label the quizz as new if it was created less of 7 days ago.
   const isNew = Math.abs(dayjs(quizz.createdAt).diff(dayjs(), 'day')) < 7
 
-  const questions = quizz.data.questions || []
-
   const { data: attempts, isLoading: isAttemptsLoading } = useGetAttemptsQuery({
     id: quizz.id,
     filters: { userId: user!.id },
@@ -92,7 +90,9 @@ export const QuizzCard = ({
             .reduce((a, b) => a + b, 0)
       setScore(computedScore)
     }
-    setColor(getFeedbackColor(percentage(score, questions.length), theme))
+    setColor(
+      getFeedbackColor(percentage(score, quizz.data.questions_count!), theme)
+    )
   }, [isAttemptsLoading])
 
   /**
@@ -187,8 +187,8 @@ export const QuizzCard = ({
           <Box sx={{ width: 70, mr: 2 }}>
             <CircularProgressbar
               value={score}
-              maxValue={questions.length}
-              text={`${score.toFixed(2)}/${questions.length}`}
+              maxValue={quizz.data.questions_count}
+              text={`${score.toFixed(2)}/${quizz.data.questions_count}`}
               styles={buildStyles({
                 trailColor: theme.palette.divider,
                 pathColor: color,
@@ -201,7 +201,7 @@ export const QuizzCard = ({
         <Stack direction="row" spacing={2} alignItems="center">
           {displayNumberOfQuestions && (
             <Stack textAlign="center">
-              <Typography variant="h5">{questions.length}</Typography>
+              <Typography variant="h5">{quizz.data.questions_count}</Typography>
               <Typography
                 fontSize={12}
                 variant="body2"

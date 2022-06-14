@@ -8,4 +8,5 @@ export interface Quizz extends ContentModel {
   keepHighestScore: boolean
   questions?: Question[]
   attempts?: Attempt[]
+  questions_count?: number
 }
