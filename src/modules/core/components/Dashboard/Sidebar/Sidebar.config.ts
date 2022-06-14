@@ -68,6 +68,26 @@ const sidebarConfiguration: SidebarItem[] = [
     ],
   },
   {
+    title: 'myContent.quizzes',
+    section: SidebarSection.MANAGEMENT,
+    icon: 'healthicons:i-exam-multiple-choice',
+    roles: [Role.Contributor, Role.Admin],
+    items: [
+      {
+        title: 'actions.list',
+        href: '/users/profile/quizzes',
+      },
+      {
+        title: 'actions.create',
+        href: '/quizzes/create',
+      },
+      {
+        title: 'actions.history',
+        href: '/quizzes/history',
+      },
+    ],
+  },
+  {
     title: 'myContent.collections',
     section: SidebarSection.MANAGEMENT,
     icon: 'bx:bx-collection',
@@ -96,26 +116,6 @@ const sidebarConfiguration: SidebarItem[] = [
       {
         title: 'actions.create',
         href: '/courses/create',
-      },
-    ],
-  },
-  {
-    title: 'myContent.quizzes',
-    section: SidebarSection.MANAGEMENT,
-    icon: 'healthicons:i-exam-multiple-choice',
-    roles: [Role.Contributor, Role.Admin],
-    items: [
-      {
-        title: 'actions.list',
-        href: '/users/profile/quizzes',
-      },
-      {
-        title: 'actions.create',
-        href: '/quizzes/create',
-      },
-      {
-        title: 'actions.history',
-        href: '/quizzes/history',
       },
     ],
   },
@@ -159,7 +159,7 @@ const sidebarConfiguration: SidebarItem[] = [
   {
     title: 'administration.resources.videos',
     section: SidebarSection.ADMIN,
-    icon: 'clarity:video-gallery-solid',
+    icon: 'eva:play-circle-outline',
     href: '/admin/videos',
     roles: [Role.Admin],
   },
