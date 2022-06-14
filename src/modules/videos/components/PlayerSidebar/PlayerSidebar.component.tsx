@@ -20,12 +20,6 @@ import { ease } from '@core/utils/transition'
 import { NotesPanel } from '@videos/components/PlayerSidebar/NotesPanel/NotesPanel.component'
 import { Video } from '@videos/models/video.model'
 
-import {
-  AttachmentStatus,
-  AttachmentType,
-} from '@attachments/models/attachment.model'
-import { useGetVideoAttachmentsQuery } from '@attachments/services/attachment.service'
-
 import { AttachmentsPanel } from './AttachmentsPanel/AttachmentsPanel.component'
 import { CollectionPanel } from './CollectionPanel/CollectionPanel.component'
 import { TabPanelStyle, RootStyle } from './PlayerSidebar.style'
@@ -49,8 +43,6 @@ export const PlayerSidebar = ({ video, playerRef }: PlayerSidebarProps) => {
   const [value, setValue] = useState(TabIndex.SUBTITLES)
 
   const [open, setOpen] = useState(true)
-
-  // const [] = useGetVideoAttachmentsQuery('')
 
   const { t } = useTranslation('videos')
 
@@ -140,45 +132,7 @@ export const PlayerSidebar = ({ video, playerRef }: PlayerSidebarProps) => {
               {video && <SubtitlePanel video={video} playerRef={playerRef} />}
             </TabPanelStyle>
             <TabPanelStyle value={TabIndex.ATTACHEMENT}>
-              {video && (
-                <AttachmentsPanel
-                  attachments={[
-                    {
-                      id: 'id',
-                      title: 'Super attachment',
-                      modules: [],
-                      videos: [],
-                      status: AttachmentStatus.Completed,
-                      url: 'http://google.com',
-                      description: 'vlavla',
-                      type: AttachmentType.External,
-                      userId: 'okok',
-                    },
-                    {
-                      id: '27ac8095-dabe-4f6a-8da5-8a3a3b9f09c9',
-                      userId: '92d7e6f2-bde5-48b3-a0c2-cf8ef391361a',
-                      status: AttachmentStatus.Completed,
-                      type: AttachmentType.Internal,
-                      videos: [],
-                      modules: [],
-                      url: 'http://localhost:9000/attachments/27ac8095-dabe-4f6a-8da5-8a3a3b9f09c9.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=minio%2F20220614%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20220614T145646Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=0e7d1e0aae373a1c23074a176d144207a79aaa58743ae11e3aa3cc9c4a26d527',
-                      extension: 'png',
-                      title: 'bg la coupe',
-                    },
-                    {
-                      id: 'id',
-                      title: 'Super attachment',
-                      modules: [],
-                      videos: [],
-                      status: AttachmentStatus.Completed,
-                      url: 'http://gitlab.com',
-                      description: 'vlavla',
-                      type: AttachmentType.External,
-                      userId: 'okok',
-                    },
-                  ]}
-                />
-              )}
+              {video && <AttachmentsPanel video={video} />}
             </TabPanelStyle>
             <TabPanelStyle value={TabIndex.MODULE}>
               {query.has('c') && <CollectionPanel />}

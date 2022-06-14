@@ -1,4 +1,3 @@
-import { Attachment } from '@attachments/models/attachment.model'
 import {
   Alert,
   Avatar,
@@ -14,25 +13,28 @@ import { AutoScrollBox } from '@core/components/AutoScrollBox/AutoScrollBox.comp
 import { Icon } from '@core/components/Icon/Icon.component'
 
 import { getDomain } from '@videos/helpers/favicon.helper'
+import { Video } from '@videos/models/video.model'
+
+import { useGetVideoAttachmentsQuery } from '@attachments/services/attachment.service'
 
 interface AttachmentPanelProps {
-  attachments: Attachment[]
+  video: Video
 }
 
-export const AttachmentsPanel = ({
-  attachments = [],
-}: AttachmentPanelProps) => {
+export const AttachmentsPanel = ({ video }: AttachmentPanelProps) => {
   const { t } = useTranslation('videos')
 
+  const { data: attachments } = useGetVideoAttachmentsQuery(video.id)
+
   const content = () => {
-    return attachments.length === 0 ? (
+    return attachments && attachments.length === 0 ? (
       <ListItem>
         <Alert severity="info" sx={{ width: '100%' }}>
           {t('slug.sidebar.tabs.attachments.alertMessages.info')}
         </Alert>
       </ListItem>
     ) : (
-      attachments.map((attachment) => (
+      attachments?.map((attachment) => (
         <ListItem key={attachment.id}>
           <Alert severity="info" icon={false} sx={{ width: '100%' }}>
             <Link
