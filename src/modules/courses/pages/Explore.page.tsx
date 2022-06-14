@@ -40,7 +40,7 @@ export const ExploreCoursesPage = () => {
               ns={'courses'}
               components={{
                 colored: (
-                  <Box component={'div'} sx={{ color: 'primary.light' }} />
+                  <Box component={'div'} sx={{ color: 'primary.main' }} />
                 ),
               }}
             />
