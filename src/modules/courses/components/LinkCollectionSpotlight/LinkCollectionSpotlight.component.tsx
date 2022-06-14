@@ -2,7 +2,7 @@ import { CircularProgress, Stack, Pagination } from '@mui/material'
 import { Box } from '@mui/system'
 import React, { useState } from 'react'
 
-import { Visibility } from '@core/models/content.model'
+import { useAuth } from '@auth/hooks/useAuth.hook'
 
 import { InlineCollectionCard } from '@collections/components/InlineCollectionCard/InlineCollectionCard.component'
 import { Collection } from '@collections/models/collection.model'
@@ -16,22 +16,15 @@ type Props = {
 export const LinkCollectionSpotlight: React.FC<Props> = ({
   onSelectCollection,
 }) => {
-  // const [query, setQuery] = useState('')
-  // const [searchValue, setSearchValue] = useState('')
+  const { user } = useAuth()
 
   const [filters, setFilters] = useState<CollectionFilters>({
-    order: 'createdAt',
+    order: '-createdAt',
     page: 1,
     pageSize: 5,
     draft: false,
-    visibility: Visibility.PUBLIC,
+    userId: user?.id,
   })
-  // We put a threshold, so when we type we don't search for EVERY characters
-  // we wait a small time to know if the user ended typing or not
-  // useEffect(() => {
-  //   const timeoutId = setTimeout(() => setQuery(searchValue), 500)
-  //   return () => clearTimeout(timeoutId)
-  // }, [searchValue])
 
   const { data: collections, isLoading } = useGetCollectionsQuery({
     ...filters,
