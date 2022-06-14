@@ -12,7 +12,7 @@ import { useGetVideosQuery } from '@videos/services/video.service'
 export const AdminVideoPage = () => {
   // Pagination state
   const [page, setPage] = useState<number>(1)
-  const [pageSize, setPageSize] = useState<number>(10)
+  const [pageSize, setPageSize] = useState<number>(999)
   const [selected, setSelected] = useState<Video>()
   const { t } = useTranslation('administration')
 
