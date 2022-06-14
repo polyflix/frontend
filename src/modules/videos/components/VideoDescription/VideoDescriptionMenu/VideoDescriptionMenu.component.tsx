@@ -1,4 +1,6 @@
 /* eslint-disable react/prop-types */
+import { useHistory } from 'react-router-dom'
+
 import { useInjection } from '@polyflix/di'
 
 import { CardMenu } from '@core/components/CardMenu/CardMenu.component'
@@ -15,12 +17,14 @@ type Props = {
 
 export const VideoDescriptionMenu: React.FC<Props> = ({ video }) => {
   const snackbarService = useInjection<SnackbarService>(SnackbarService)
+  const history = useHistory()
 
   const [deleteVideo] = useDeleteVideoMutation()
 
   const handleDelete = async () => {
     try {
       await deleteVideo({ slug: video?.slug! }).unwrap()
+      history.push('/videos/explore')
       snackbarService.notify(CrudAction.DELETE, Endpoint.Videos)
     } catch (e: any) {
       snackbarService.createSnackbar(e.data.statusText, { variant: 'error' })

@@ -66,7 +66,10 @@ export const CardMenu: React.FC<Props> = ({
 
   return (
     <>
-      {(React.Children.count(children) > 0 || !publisherId || isMine) && (
+      {(React.Children.count(children) > 0 ||
+        !publisherId ||
+        isMine ||
+        isAdmin) && (
         <IconButton
           aria-label="video menu"
           size="small"
