@@ -74,7 +74,7 @@ export const CollectionCard = ({ collection }: CollectionCardProps) => {
               updateHref={`/modules/${collection.slug}/update`}
               onDelete={handleDelete}
               publisherId={collection?.user?.id}
-              type="modules"
+              type="collections"
             />
           </Stack>
         </CardFooterStyle>
