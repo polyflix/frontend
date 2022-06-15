@@ -87,7 +87,7 @@ export const AttachmentForm = ({
   const { t } = useTranslation('attachments')
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(onSubmit)} id="AttachmentForm">
       <Typography sx={{ mb: 3 }} variant="h4">
         {t(`forms.create-update.title.${attachment ? 'update' : 'create'}`)}
       </Typography>
@@ -121,7 +121,10 @@ export const AttachmentForm = ({
           />
         </Grid>
         <Grid item xs={12}>
-          <LoadingButton {...getCommonSubmitButtonProps(isSubmitting)}>
+          <LoadingButton
+            {...getCommonSubmitButtonProps(isSubmitting)}
+            form="AttachmentForm"
+          >
             {t(
               `forms.create-update.placeholder.submit.${
                 attachment ? 'update' : 'create'

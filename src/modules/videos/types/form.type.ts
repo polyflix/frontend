@@ -1,6 +1,6 @@
 import { Visibility } from '@core/models/content.model'
 
-import { Attachment } from '@videos/models/attachment.model'
+import { Attachment } from '@attachments/models/attachment.model'
 
 export interface IVideoForm {
   hasSubtitle: boolean

@@ -12,9 +12,9 @@ import { useTranslation } from 'react-i18next'
 import { AutoScrollBox } from '@core/components/AutoScrollBox/AutoScrollBox.component'
 import { Icon } from '@core/components/Icon/Icon.component'
 
-import { getDomain } from '@videos/helpers/favicon.helper'
 import { Video } from '@videos/models/video.model'
 
+import { getDomain } from '@attachments/helpers/favicon.helper'
 import { useGetVideoAttachmentsQuery } from '@attachments/services/attachment.service'
 
 interface AttachmentPanelProps {

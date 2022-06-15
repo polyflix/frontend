@@ -16,7 +16,6 @@ import { useHistory } from 'react-router-dom'
 import { useInjection } from '@polyflix/di'
 
 import { Dropzone } from '@core/components/Dropzone/Dropzone.component'
-import { Icon } from '@core/components/Icon/Icon.component'
 import { MHidden } from '@core/components/MHidden/MHidden.component'
 import { StatusSelector } from '@core/components/StatusSelector/StatusSelector.component'
 import { UploadProgress } from '@core/components/UploadProgress/UploadProgress.component'
@@ -42,6 +41,9 @@ import {
 import { YoutubeService } from '@videos/services/youtube.service'
 import { IVideoForm } from '@videos/types/form.type'
 import { VideoSource } from '@videos/types/video.type'
+
+import { AttachmentSelector } from '@attachments/components/AttachmentSelector.component'
+import { Attachment } from '@attachments/models/attachment.model'
 
 import { FrameSelector } from '../FrameSelector/FrameSelector.component'
 import { VideoPreview } from '../VideoPreview/VideoPreview.component'
@@ -101,12 +103,12 @@ export const VideoForm = ({ source, video, isUpdate }: Props) => {
       visibility: video?.visibility || Visibility.PUBLIC,
       thumbnail: video?.thumbnail,
       source: video?.source.replace('-nocookie', ''),
-      attachments: video?.attachments,
+      attachments: video?.attachments || [],
     },
   })
 
   // Make the field "attachments" an array to use with react hook form
-  const { fields, append, remove } = useFieldArray({
+  const attachments = useFieldArray({
     control,
     name: 'attachments',
   })
@@ -186,6 +188,8 @@ export const VideoForm = ({ source, video, isUpdate }: Props) => {
       }
     }
 
+    data.attachments = attachments.fields
+
     try {
       // handle response and get video and thumbnail psu url to upload them
       const { videoPutPsu, thumbnailPutPsu } = await (isUpdate
@@ -228,7 +232,7 @@ export const VideoForm = ({ source, video, isUpdate }: Props) => {
     : { streamUrl: undefined }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(onSubmit)} id="VideoForm">
       <Typography sx={{ mb: 3 }} variant="h4">
         {t('forms.create-update.title.metadata')}
       </Typography>
@@ -353,75 +357,7 @@ export const VideoForm = ({ source, video, isUpdate }: Props) => {
           </Grid>
         </Grid>
         <Divider />
-        <Stack direction="row" justifyContent="space-between">
-          <Typography variant="h4">
-            {t('forms.create-update.title.attachments')}
-          </Typography>
-          <IconButton onClick={() => append({})} color="primary">
-            <Icon name="carbon:add" size={30} />
-          </IconButton>
-        </Stack>
-        <Typography variant="body1" sx={{ color: 'text.secondary' }}>
-          {t('forms.create-update.description.attachments')}
-        </Typography>
-        {fields.length === 0 && (
-          <Typography variant="body1" sx={{ color: 'text.secondary' }}>
-            {t('forms.create-update.placeholder.attachments.empty')}
-          </Typography>
-        )}
-        {fields.map((item, index) => {
-          return (
-            <Stack direction="row" key={item.id} alignItems="center">
-              <TextField
-                error={Boolean(
-                  Array.isArray(errors.attachments) &&
-                    errors.attachments[index]?.label
-                )}
-                helperText={
-                  Array.isArray(errors.attachments) &&
-                  errors.attachments[index]?.label?.message
-                }
-                label={t('forms.create-update.placeholder.attachments.label')}
-                {...getCommonTextFieldProps()}
-                {...register(`attachments.${index}.label`, {
-                  required: {
-                    value: true,
-                    message: t(
-                      'forms.create-update.validation.attachments.label.required'
-                    ),
-                  },
-                })}
-              />
-
-              <Box sx={{ px: 1 }} />
-
-              <TextField
-                error={Boolean(
-                  Array.isArray(errors.attachments) &&
-                    errors.attachments[index]?.url
-                )}
-                helperText={
-                  Array.isArray(errors.attachments) &&
-                  errors.attachments[index]?.url?.message
-                }
-                label={t('forms.create-update.placeholder.attachments.url')}
-                {...getCommonTextFieldProps()}
-                {...register(`attachments.${index}.url`, {
-                  required: {
-                    value: true,
-                    message: t(
-                      'forms.create-update.validation.attachments.url.required'
-                    ),
-                  },
-                })}
-              />
-
-              <IconButton color="primary" onClick={() => remove(index)}>
-                <Icon name="ic:round-clear" />
-              </IconButton>
-            </Stack>
-          )
-        })}
+        <AttachmentSelector attachments={attachments} videoId={video?.id} />
         <Divider />
         <Typography sx={{ mb: 3 }} variant="h4">
           {t('forms.create-update.title.status')}
@@ -434,7 +370,10 @@ export const VideoForm = ({ source, video, isUpdate }: Props) => {
           value={watch('draft')}
           onChange={(value: boolean) => setValue('draft', value)}
         />
-        <LoadingButton {...getCommonSubmitButtonProps(isSubmitting)}>
+        <LoadingButton
+          {...getCommonSubmitButtonProps(isSubmitting)}
+          form="VideoForm"
+        >
           {t(
             `forms.create-update.placeholder.submit.${
               isUpdate ? 'update' : 'create'
