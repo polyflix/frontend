@@ -56,6 +56,31 @@ export const videosApi = createApi({
             [{ type: Endpoint.Videos, id: 'LIST' }],
     }),
 
+    getAdminVideos: builder.query<
+      { items: Video[]; totalCount: number },
+      VideoFilters
+    >({
+      query: (filters) => {
+        return `${Endpoint.AdminVideos}${filterBuilder.createFilters(
+          filters || {}
+        )}`
+      },
+      // Provides a list of Videos by slug.
+      // If any mutation is executed that invalidate any of these tags, this query will re-run to be always up-to-date.
+      // The `LIST` id is a "virtual id" we just made up to be able to invalidate this query specifically if a new `Video` element was added.
+      providesTags: (result) =>
+        // Is result available ?
+        result
+          ? [
+              ...result.items.map(
+                ({ slug }) => ({ type: Endpoint.Videos, slug } as const)
+              ),
+              { type: Endpoint.Videos, id: 'LIST' },
+            ]
+          : // An error occured, but we still want to refetch this query when the tag is invalidated.
+            [{ type: Endpoint.Videos, id: 'LIST' }],
+    }),
+
     /**
      * Add a video mutation
      */
@@ -85,6 +110,23 @@ export const videosApi = createApi({
         result ? [{ type: Endpoint.Videos, slug }] : [],
     }),
 
+    /**
+     * Update video mutation
+     */
+    updateAdminVideo: builder.mutation<
+      Video,
+      { slug: string; body: IVideoForm }
+    >({
+      query: ({ slug, body }) => ({
+        url: `${Endpoint.AdminVideos}/${slug}`,
+        method: 'PUT',
+        body,
+      }),
+      // Invalidates all queries that subscribe to this Video `slug` only.
+      // In this case, `getVideo` will be re-run. `getVideos` *might*  rerun, if this id was under its results.
+      invalidatesTags: (result, _1, { slug }) =>
+        result ? [{ type: Endpoint.Videos, slug }] : [],
+    }),
     /**
      * Delete Course mutation
      */
@@ -119,9 +161,11 @@ export const videosApi = createApi({
 
 export const {
   useGetVideosQuery,
+  useGetAdminVideosQuery,
   useGetVideoQuery,
   useAddVideoMutation,
   useUpdateVideoMutation,
+  useUpdateAdminVideoMutation,
   useDeleteVideoMutation,
   useUpdateWatchtimeMutation,
   useLikeVideoMutation,

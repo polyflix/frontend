@@ -39,18 +39,18 @@ import {
 } from '@core/utils/language.util'
 
 import { Video } from '@videos/models/video.model'
-import { useUpdateVideoMutation } from '@videos/services/video.service'
+import { useUpdateAdminVideoMutation } from '@videos/services/video.service'
 import { PlayerVideoSource } from '@videos/types/video.type'
 
 interface Props {
-  video: Video
+  video?: Video
 }
 
 export const EditVideoModal = ({ video }: Props) => {
   const [isExternal, setIsExternal] = useState<boolean>(false)
   const snackbarService = useInjection<SnackbarService>(SnackbarService)
   const currentLanguage = localStorage.getItem('i18nextLng')
-  const [updateVideo] = useUpdateVideoMutation()
+  const [updateVideo] = useUpdateAdminVideoMutation()
   const { t } = useTranslation('administration')
   const {
     register,
@@ -61,7 +61,7 @@ export const EditVideoModal = ({ video }: Props) => {
     defaultValues: {
       title: video?.title,
       visibility: video?.visibility ?? ('protected' as Visibility),
-      draft: 'true' as Draft, //video?.draft?.toString() as Draft,
+      draft: (!video?.draft ? 'false' : 'true') as Draft,
       availableLanguages: video?.availableLanguages,
     },
   })
@@ -70,7 +70,7 @@ export const EditVideoModal = ({ video }: Props) => {
 
   const onGenerateSubtitles = async () => {
     generateSubtitles({
-      slug: video.slug,
+      slug: video?.slug ?? '',
       language: i18nLanguageToSubtitleLanguage(
         (currentLanguage ?? 'en') as PolyflixLanguage
       ),
@@ -82,14 +82,9 @@ export const EditVideoModal = ({ video }: Props) => {
   const handleClose = () => setOpen(false)
 
   const onSubmit = async (data: AdminVideoForm) => {
-    const body = { ...video, ...data }
-    console.log('body:', body)
-
-    // map body to IVideoForm
-
     const { error } = (await updateVideo({
       slug: video!.slug,
-      body: body,
+      body: data,
     })) as any
     if (error) {
       snackbarService.createSnackbar(error.data.message, { variant: 'error' })

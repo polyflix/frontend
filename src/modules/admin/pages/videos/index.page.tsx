@@ -7,7 +7,7 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { Video } from '@videos/models/video.model'
-import { useGetVideosQuery } from '@videos/services/video.service'
+import { useGetAdminVideosQuery } from '@videos/services/video.service'
 
 export const AdminVideoPage = () => {
   // Pagination state
@@ -60,7 +60,10 @@ export const AdminVideoPage = () => {
     },
   ]
 
-  const { isLoading, isFetching, data } = useGetVideosQuery({ page, pageSize })
+  const { isLoading, isFetching, data } = useGetAdminVideosQuery({
+    page,
+    pageSize,
+  })
 
   const totalElements = data?.totalCount || 0
   const videos = data?.items || []
