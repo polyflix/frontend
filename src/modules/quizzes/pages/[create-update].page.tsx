@@ -21,7 +21,7 @@ export const CreateUpdateQuizzPage = () => {
   const [importedQuizz, setImportedQuizz] = useState<Element<Quizz>>()
 
   const { data, isLoading } = useGetQuizzQuery(
-    { id, filters: { join: ['questions', 'questions.alternatives'] } },
+    { id, filters: { solved: true } },
     { skip: !id }
   )
 

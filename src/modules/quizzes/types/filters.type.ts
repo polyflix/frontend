@@ -7,6 +7,7 @@ export interface QuizzFilters extends PaginationFilter {
   draft?: boolean
   userId?: string
   isDone?: boolean
+  solved?: boolean
 }
 
 export interface QuizzAttemptFilters extends PaginationFilter {
