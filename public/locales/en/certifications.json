@@ -1,11 +1,13 @@
 {
   "explore": {
-    "title": "Certificate"
+    "title": "Certificate",
+    "addLinkedin": "Add to your LinkedIn profile"
   },
   "data": {
     "dateFormat": "MM/DD/YYYY",
-    "owner": "Obtained by",
-    "the": "the"
+    "owner1": "We hereby certify that:",
+    "owner2": "successfully completed, received a passing grade, and was awarded this platform's Honor Code Certificate of Completion in:",
+    "date": "Obtained on:"
   },
   "empty": "This certificate doesn't exist"
 }

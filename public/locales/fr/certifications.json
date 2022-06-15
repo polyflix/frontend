@@ -1,11 +1,13 @@
 {
   "explore": {
-    "title": "Certificat"
+    "title": "Certificat",
+    "addLinkedin": "Ajouter sur votre profil LinkedIn"
   },
   "data": {
     "dateFormat": "DD/MM/YYYY",
-    "owner": "Obtenu par",
-    "the": "le"
+    "owner1": "Nous certifions que :",
+    "owner2": "a terminé avec succès, a obtenu la note de passage et a reçu le certificat d'achèvement :",
+    "date": "Obtenu le :"
   },
   "empty": "Ce certificat n'existe pas."
 }
