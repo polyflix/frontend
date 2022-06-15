@@ -90,7 +90,8 @@
   "certifications": {
     "page": {
       "actions": {
-        "create": "Create certification"
+        "create": "Create certification",
+        "edit": "Update certification"
       },
       "panel": {
         "title": "Certifications",
@@ -98,6 +99,12 @@
           "name": "Name",
           "certificationID": "Certification ID"
         }
+      },
+      "certificate": {
+        "title": "Certificates associated with this certification",
+        "date": "MM/DD/YYYY",
+        "add": "Create certificate",
+        "user": "User to be certified"
       }
     },
     "form": {

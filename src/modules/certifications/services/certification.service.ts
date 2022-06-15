@@ -53,6 +53,19 @@ export const certificationsApi = createApi({
     }),
 
     /**
+     * Get a list of certificate by certification id
+     */
+    getCertificatesByCertification: builder.query<
+      Pagination<Certificate>,
+      { id: string }
+    >({
+      providesTags: (_0, _1, { id }) => [{ type: Endpoint.Certifications, id }],
+      query: ({ id }) => {
+        return `${Endpoint.Certifications}/${id}/certificate`
+      },
+    }),
+
+    /**
      * Add a Certificate mutation
      */
     addCertificate: builder.mutation<ICertificateForm, ICertificateForm>({
@@ -150,6 +163,7 @@ export const certificationsApi = createApi({
 export const {
   useGetCertificationsQuery,
   useGetCertificateQuery,
+  useGetCertificatesByCertificationQuery,
   useGetCertificationQuery,
   useAddCertificationMutation,
   useUpdateCertificationMutation,
