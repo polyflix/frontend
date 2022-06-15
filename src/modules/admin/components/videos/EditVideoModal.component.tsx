@@ -37,8 +37,8 @@ import {
 
 import { Video } from '@videos/models/video.model'
 import {
-  useUpdateAdminVideoMutation,
   useDeleteVideoMutation,
+  useUpdateAdminVideoMutation,
 } from '@videos/services/video.service'
 import { PlayerVideoSource } from '@videos/types/video.type'
 
@@ -57,7 +57,7 @@ export const EditVideoModal = ({ video, onClose }: Props) => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
     control,
   } = useForm<AdminVideoForm>({
     defaultValues: {
@@ -274,6 +274,11 @@ export const EditVideoModal = ({ video, onClose }: Props) => {
                       <Button onClick={handleClose} variant="outlined">
                         {t('users.form.actions.close')}
                       </Button>
+                      <LoadingButton
+                        {...getCommonSubmitButtonProps(isSubmitting, false)}
+                      >
+                        {t('users.form.actions.save')}
+                      </LoadingButton>
                     </Stack>
                   </Grid>
                 </Grid>
