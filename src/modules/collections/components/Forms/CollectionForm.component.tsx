@@ -45,9 +45,16 @@ import { LinkModal } from './LinkModal/LinkModal.component'
 interface Props {
   collection?: Collection
   isUpdate: boolean
+  allowRedirect?: boolean
+  onSubmit?: (collectionId: string) => void
 }
 
-export const CollectionForm = ({ collection, isUpdate }: Props) => {
+export const CollectionForm = ({
+  collection,
+  isUpdate,
+  allowRedirect = true,
+  onSubmit: emitOnSubmit,
+}: Props) => {
   const [openLinkModal, setOpenLinkModal] = useState(false)
   const [openElementModal, setOpenElementModal] = useState(false)
   const snackbarService = useInjection<SnackbarService>(SnackbarService)
@@ -115,16 +122,19 @@ export const CollectionForm = ({ collection, isUpdate }: Props) => {
           })
         : createCollection(mappedData as unknown as ICollectionForm)
       ).unwrap()
-
       snackbarService.notify(
         isUpdate ? CrudAction.UPDATE : CrudAction.CREATE,
         Endpoint.Modules
       )
-
       if (col?.visibility === Visibility.PROTECTED) {
         setCollectionData(col)
         setOpenLinkModal(true)
-      } else history.push('/users/profile/modules')
+      } else if (allowRedirect) {
+        history.push('/users/profile/modules')
+      }
+      if (emitOnSubmit) {
+        emitOnSubmit(col.id)
+      }
     } catch (e: any) {
       snackbarService.createSnackbar(e?.data?.statusText, { variant: 'error' })
     }
@@ -185,6 +195,7 @@ export const CollectionForm = ({ collection, isUpdate }: Props) => {
               )}
             >
               <IconButton
+                type="button"
                 onClick={() => setOpenElementModal(true)}
                 color="primary"
               >

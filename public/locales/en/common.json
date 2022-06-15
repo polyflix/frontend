@@ -25,7 +25,8 @@
     "deleted": "deleted",
     "create": "create",
     "update": "update",
-    "delete": "delete"
+    "delete": "delete",
+    "closeModal": "Close modal"
   },
   "navbar": {
     "actions": {

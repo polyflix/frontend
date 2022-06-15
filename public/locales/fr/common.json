@@ -25,7 +25,8 @@
     "deleted": "supprimé",
     "create": "créer",
     "update": "mettre à jour",
-    "delete": "supprimer"
+    "delete": "supprimer",
+    "closeModal": "Fermer la modale"
   },
   "navbar": {
     "actions": {

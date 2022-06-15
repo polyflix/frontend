@@ -1,17 +1,20 @@
+import { Delete } from '@mui/icons-material'
 import { LoadingButton } from '@mui/lab'
 import {
-  Box,
   Divider,
-  Fade,
-  Modal,
+  IconButton,
+  List,
+  ListItem,
+  ListItemAvatar,
+  ListItemText,
   Paper,
   Stack,
   TextField,
   Typography,
+  Avatar,
 } from '@mui/material'
-import Backdrop from '@mui/material/Backdrop'
 import { isUndefined } from 'lodash'
-import React, { useCallback, useState } from 'react'
+import React, { useState } from 'react'
 import { useFieldArray, useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { useHistory } from 'react-router-dom'
@@ -30,16 +33,14 @@ import { Visibility } from '@core/models/content.model'
 import { SnackbarService } from '@core/services/snackbar.service'
 import { CrudAction } from '@core/types/http.type'
 
-import { CollectionCard } from '@collections/components/CollectionCard/CollectionCard.component'
-import { Collection } from '@collections/models/collection.model'
-
-import { LinkCollectionSpotlight } from '@courses/components/LinkCollectionSpotlight/LinkCollectionSpotlight.component'
 import { Course } from '@courses/models/course.model'
 import {
   useAddCourseMutation,
   useUpdateCourseMutation,
 } from '@courses/services/course.service'
 import { ICourseForm } from '@courses/types/form.type'
+
+import { CourseFormattachedCollectionModal } from './CourseFormattachedCollectionModal/CourseFormattachedCollectionModal.component'
 
 interface Props {
   course?: Course
@@ -50,24 +51,11 @@ export const CourseForm: React.FC<Props> = ({ course }) => {
   const { t } = useTranslation('courses')
   const history = useHistory()
 
-  // Collection selection modal
   const [openCollectionModal, setOpenCollectionModal] = useState(false)
-  const [storedCollections, setStoredCollections] = useState<Collection[]>(
-    course?.modules ?? []
-  )
-  const appendStoredCollections = useCallback(
-    (collection: Collection) => {
-      if (storedCollections.find((item) => item.id === collection.id)) return
-
-      setStoredCollections([...storedCollections, collection])
-    },
-    [storedCollections]
-  )
 
   const [createCourseMutator] = useAddCourseMutation()
   const [updateCourseMutator] = useUpdateCourseMutation()
 
-  // Define whether this form is currently an update of an item
   const isUpdate = !isUndefined(course)
 
   const {
@@ -79,78 +67,42 @@ export const CourseForm: React.FC<Props> = ({ course }) => {
     setValue,
   } = useForm<ICourseForm>({
     defaultValues: {
-      content: course?.content,
-      description: course?.description,
       name: course?.name,
-      visibility: course?.visibility || Visibility.PUBLIC,
       draft: Boolean(course?.draft),
-      // We use an object, else useFieldArray will create an array with each letter an entry
-      // Trust me you don't want this
-      // @ts-ignore
-      modules: course?.modules?.map((i) => ({ id: i.id })) ?? [],
+      visibility: course?.visibility || Visibility.PUBLIC,
+      description: course?.description,
+      content: course?.content,
+      modules: course?.modules ?? [],
     },
   })
 
   // Collections linked to this form
-  const {
-    fields: selectedCollectionFields,
-    append: appendSelectedCollectionFields,
-    remove: removeSelectedCollectionFields,
-  } = useFieldArray({
+  const modulesFieldArray = useFieldArray({
     control,
     name: 'modules',
     keyName: 'uniqueId',
   })
 
   const onSubmit = async (courseData: ICourseForm) => {
-    const submitMethod = () => {
-      courseData.modules = courseData.modules!.map((i) => i.id)
-      if (isUpdate && course)
-        return updateCourseMutator({ slug: course.slug, body: courseData })
+    const formatedData = {
+      ...courseData,
+      modules: courseData?.modules?.map((m) => m.id) || [],
+    } as unknown as ICourseForm
 
-      return createCourseMutator(courseData)
-    }
+    try {
+      await (isUpdate
+        ? updateCourseMutator({ slug: course.slug, body: formatedData })
+        : createCourseMutator(formatedData)
+      ).unwrap()
 
-    await submitMethod()
-      .unwrap()
-      .then((result: Course) => {
-        if (isUpdate)
-          snackbarService.notify(CrudAction.UPDATE, Endpoint.Courses)
-        else snackbarService.notify(CrudAction.CREATE, Endpoint.Courses)
-
-        history.push(`/courses/${result.slug}`)
-      })
-      .catch((err: any) => {
-        snackbarService.createSnackbar(err.data.statusText, {
-          variant: 'error',
-        })
-      })
-  }
-
-  /**
-   * Callback when user selects a collection in a subcomponent of spotlight
-   * @param selectedCollection
-   */
-  const onSelectCollection = (selectedCollection: Collection) => {
-    setOpenCollectionModal(false)
-    // If collection is already selected, we want to skip it so we don't add it twice
-    if (
-      selectedCollectionFields.find(
-        (collection) => collection.id === selectedCollection.id
+      snackbarService.notify(
+        isUpdate ? CrudAction.UPDATE : CrudAction.CREATE,
+        Endpoint.Courses
       )
-    )
-      return
-    appendSelectedCollectionFields({ id: selectedCollection.id })
-    appendStoredCollections(selectedCollection)
-  }
-  /**
-   * Remove i array of selected collection, we remove a collection based on its index
-   * @param removeIndex
-   */
-  const onRemoveCollection = (removeIndex: number) => {
-    if (!selectedCollectionFields[removeIndex]) return
-
-    removeSelectedCollectionFields(removeIndex)
+      history.push(`/courses/explore`)
+    } catch (e: any) {
+      snackbarService.createSnackbar(e?.data?.statusText, { variant: 'error' })
+    }
   }
 
   return (
@@ -251,62 +203,40 @@ export const CourseForm: React.FC<Props> = ({ course }) => {
         <Typography sx={{ mb: 3 }} variant="h4">
           {t('form.upsert.title.collections')}
         </Typography>
-        {selectedCollectionFields.map((item, index) => {
-          const foundCollection = storedCollections.find(
-            (i) => i.id === item.id
-          )
-
-          if (!foundCollection) {
-            console.error(
-              'Could not render a selected collection, failed to find the stored one'
-            )
-            return null
-          }
-          return (
-            <Stack direction="row" key={item.uniqueId}>
-              <Box
-                sx={{
-                  width: '80%',
-                }}
+        {modulesFieldArray.fields.length > 0 && (
+          <List>
+            {modulesFieldArray.fields.map((collection, index) => (
+              <ListItem
+                key={index}
+                secondaryAction={
+                  <IconButton
+                    edge="end"
+                    color="error"
+                    aria-label="delete"
+                    onClick={() => modulesFieldArray.remove(index)}
+                  >
+                    <Delete />
+                  </IconButton>
+                }
               >
-                <CollectionCard collection={foundCollection} />
-              </Box>
-
-              <Paper
-                variant="outlined"
-                sx={{
-                  p: 4,
-                  mx: 2,
-                  cursor: 'pointer',
-                  borderColor: (theme) => theme.palette.bg,
-                  background: (theme) => theme.palette.bg,
-                  '&:hover': {
-                    borderColor: (theme) => theme.palette.grey[700],
-                  },
-                }}
-                onClick={() => onRemoveCollection(index)}
-              >
-                <Stack
-                  justifyContent="center"
-                  alignItems="center"
-                  textAlign="center"
-                >
-                  <Icon size={30} name="ant-design:delete-filled" />
-                  <Typography sx={{ mx: 1 }} variant="body1">
-                    {t('form.upsert.deleteChoice')}
-                  </Typography>
-                </Stack>
-              </Paper>
-            </Stack>
-          )
-        })}
+                <ListItemAvatar>
+                  <Avatar>{collection.name[0]}</Avatar>
+                </ListItemAvatar>
+                <ListItemText
+                  primary={collection.name}
+                  secondary={`${collection?.user?.firstName} ${collection?.user?.lastName}`} // TODO
+                />
+              </ListItem>
+            ))}
+          </List>
+        )}
 
         <Paper
           variant="outlined"
           sx={{
             p: 4,
             cursor: 'pointer',
-            background: (theme) => theme.palette.bg,
+            bgcolor: 'background.paper',
             '&:hover': {
               borderColor: (theme) => theme.palette.grey[700],
             },
@@ -323,40 +253,12 @@ export const CourseForm: React.FC<Props> = ({ course }) => {
               {t('form.upsert.addCollection')}
             </Typography>
           </Stack>
-          <Modal
+
+          <CourseFormattachedCollectionModal
             open={openCollectionModal}
             onClose={() => setOpenCollectionModal(false)}
-            closeAfterTransition
-            BackdropComponent={Backdrop}
-            BackdropProps={{
-              timeout: 500,
-            }}
-            aria-labelledby="Collection specific modal"
-            aria-describedby="Link a collection into your course"
-          >
-            <Fade in={openCollectionModal}>
-              <Box
-                sx={{
-                  position: 'absolute',
-                  top: { xs: 0, md: '50%' },
-                  left: { xs: 0, md: '50%' },
-                  transform: {
-                    xs: 'translate(0,0)',
-                    md: 'translate(-50%, -50%)',
-                  },
-                  width: { xs: '100%', md: 700 },
-                  bgcolor: 'background.paper',
-                  borderRadius: { xs: 0, md: 2 },
-                  boxShadow: 10,
-                  p: 4,
-                }}
-              >
-                <LinkCollectionSpotlight
-                  onSelectCollection={onSelectCollection}
-                />
-              </Box>
-            </Fade>
-          </Modal>
+            fieldArray={modulesFieldArray}
+          />
         </Paper>
 
         <Divider />

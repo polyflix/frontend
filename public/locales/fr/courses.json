@@ -27,7 +27,8 @@
         "create": "Créer un nouveau cours",
         "update": "Mettre à jour le cours {{course}}",
         "metadata": "Informations générales",
-        "collections": "Modules"
+        "collections": "Modules",
+        "listOfModule": "Liste des modules"
       },
       "description": {
         "create": "Un cours peut contenir plusieurs modules, ce qui permet à votre utilisateurs de suivre des cursus complexes.",
@@ -59,7 +60,9 @@
       "deleteChoice": "Supprimer ce choix",
       "addCollection": "Attacher un module",
       "search": "Rechercher un module",
-      "seeCollection": "Voir le module"
+      "seeCollection": "Voir le module",
+      "createModule": "Créer le module",
+      "deleteModule": "Supprimer le module"
     }
   },
   "deleteModal": {

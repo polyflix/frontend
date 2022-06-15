@@ -13,10 +13,6 @@ export const InlineCollectionCard: React.FC<Props> = ({ collection }) => {
   return (
     <Stack
       sx={{
-        my: 1,
-        pb: 1,
-        px: 2,
-        borderBottom: 1,
         borderColor: 'grey.300',
         cursor: 'pointer',
         '&:hover': {

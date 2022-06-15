@@ -27,7 +27,8 @@
         "create": "Create a new course",
         "update": "Update your course {{course}}",
         "metadata": "General informations",
-        "collections": "Modules"
+        "collections": "Modules",
+        "listOfModule": "List of modules"
       },
       "description": {
         "create": "A course can contain several modules, so people can explore these to follow complex flows.",
@@ -59,7 +60,9 @@
       "deleteChoice": "Remove this choice",
       "addCollection": "Attach a module",
       "search": "Search a module",
-      "seeCollection": "See this module"
+      "seeCollection": "See this module",
+      "createModule": "Create module",
+      "deleteModule": "Delete module"
     }
   },
   "deleteModal": {
