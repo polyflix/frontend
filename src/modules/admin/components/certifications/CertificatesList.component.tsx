@@ -13,6 +13,7 @@ import dayjs from 'dayjs'
 import { capitalize } from 'lodash'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { Link } from 'react-router-dom'
 
 import { LoadingLayout } from '@core/layouts/Loading/Loading.layout'
 import { buildSkeletons } from '@core/utils/gui.utils'
@@ -73,7 +74,9 @@ export const CertificatesList = ({ certification }: PropsCertificatesList) => {
                       </Stack>
                     }
                   />
-                  <ListItemText primary={`id: ${certificate.id}`} />
+                  <Link to={`/certificate/${certificate.id}`} target="_blank">
+                    <ListItemText primary={`id: ${certificate.id}`} />
+                  </Link>
                 </ListItem>
                 {i !== results.data.length - 1 && (
                   <Divider variant="inset" component="li" />

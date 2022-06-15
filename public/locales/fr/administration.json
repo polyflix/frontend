@@ -91,7 +91,8 @@
     "page": {
       "actions": {
         "create": "Créer une certification",
-        "edit": "Modifier la certification"
+        "edit": "Modifier la certification",
+        "info": "Info"
       },
       "panel": {
         "title": "Certifications",

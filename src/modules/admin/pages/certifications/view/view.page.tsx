@@ -1,6 +1,6 @@
 import { CertificatesList } from '@admin/components/certifications/CertificatesList.component'
 import { AdminLayout } from '@admin/layouts/AdminLayout.layout'
-import { Delete, Edit, Groups, InfoRounded } from '@mui/icons-material'
+import { Announcement, Assignment, Delete, Edit } from '@mui/icons-material'
 import {
   Button,
   Card,
@@ -92,7 +92,7 @@ export const AdminViewCertificationPage = () => {
                 <List>
                   <ListItem disablePadding>
                     <ListItemIcon>
-                      <InfoRounded />
+                      <Assignment />
                     </ListItemIcon>
                     <AsyncListItemText
                       primary={t<string>('certifications.form.labels.name')}
@@ -101,7 +101,7 @@ export const AdminViewCertificationPage = () => {
                   </ListItem>
                   <ListItem disablePadding>
                     <ListItemIcon>
-                      <Groups />
+                      <Announcement />
                     </ListItemIcon>
                     <AsyncListItemText
                       primary={t<string>(
