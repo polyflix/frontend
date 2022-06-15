@@ -26,7 +26,10 @@ import { Link as RouterLink } from 'react-router-dom'
 
 import { useInjection } from '@polyflix/di'
 
-import { getCommonTextFieldProps } from '@core/helpers/form.helper'
+import {
+  getCommonSubmitButtonProps,
+  getCommonTextFieldProps,
+} from '@core/helpers/form.helper'
 import { videoSlugLink } from '@core/helpers/video.helper'
 import { Visibility } from '@core/models/content.model'
 import { SnackbarService } from '@core/services/snackbar.service'
