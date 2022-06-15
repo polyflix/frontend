@@ -22,7 +22,6 @@ import { ease } from '@core/utils/transition'
 import { ICollectionForm } from '@collections/types/form.type'
 
 import { ElementContainerStyle } from './ElementModal.style'
-import { LinkList } from './LinkList/LinkList.component'
 import { QuizzList } from './QuizzList/QuizzList.component'
 import { VideoList } from './VideoList/VideoList.component'
 
@@ -64,18 +63,19 @@ export const ElementModal = ({
       description: t('forms.elementModal.elementType.types.quizz.description'),
       value: 'quizz',
     },
-    {
-      icon: 'ic:outline-visibility-off',
-      label: t('forms.elementModal.elementType.types.link.label'),
-      description: t('forms.elementModal.elementType.types.link.description'),
-      value: 'link',
-    },
+    // attachment temporary disabled has it is not implemented yet
+    // {
+    //   icon: 'ic:outline-visibility-off',
+    //   label: t('forms.elementModal.elementType.types.link.label'),
+    //   description: t('forms.elementModal.elementType.types.link.description'),
+    //   value: 'link',
+    // },
   ]
 
   const displayContent = () => {
     switch (selectedElementPage) {
-      case 'link':
-        return <LinkList fieldArray={fieldArray} />
+      // case 'link':
+      //   return <LinkList fieldArray={fieldArray} />
       case 'quizz':
         return <QuizzList fieldArray={fieldArray} />
       case 'video':
@@ -166,7 +166,7 @@ export const ElementModal = ({
           <Container
             sx={{ display: 'flex', justifyContent: 'center', my: '1em' }}
           >
-            <Button onClick={onClose}>
+            <Button onClick={onClose} variant="contained">
               {t('forms.create-update.actions.validate')}
             </Button>
           </Container>
