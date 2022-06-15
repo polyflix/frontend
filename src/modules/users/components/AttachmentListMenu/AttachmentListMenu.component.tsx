@@ -5,22 +5,26 @@ import { Endpoint } from '@core/constants/endpoint.constant'
 import { SnackbarService } from '@core/services/snackbar.service'
 import { CrudAction } from '@core/types/http.type'
 
-import { useDeleteLinkMutation } from '@links/services/link.service'
-
 import { Attachment } from '@attachments/models/attachment.model'
+import { useDeleteAttachmentMutation } from '@attachments/services/attachment.service'
 
 type AttachmentListMenuProps = {
   attachment: Attachment
+  onDelete: () => void
 }
 
-export const AttachmentListMenu = ({ attachment }: AttachmentListMenuProps) => {
+export const AttachmentListMenu = ({
+  attachment,
+  onDelete,
+}: AttachmentListMenuProps) => {
   const snackbarService = useInjection<SnackbarService>(SnackbarService)
-  const [deleteLink] = useDeleteLinkMutation()
+  const [deleteAttachment] = useDeleteAttachmentMutation()
 
   const handleDelete = async () => {
     try {
-      await deleteLink({ id: attachment.id }).unwrap()
-      snackbarService.notify(CrudAction.DELETE, Endpoint.Links)
+      await deleteAttachment({ id: attachment.id }).unwrap()
+      snackbarService.notify(CrudAction.DELETE, Endpoint.Attachments)
+      onDelete()
     } catch (e: any) {
       snackbarService.createSnackbar(e?.data?.statusText, { variant: 'error' })
     }
@@ -28,9 +32,9 @@ export const AttachmentListMenu = ({ attachment }: AttachmentListMenuProps) => {
 
   return (
     <CardMenu
-      updateHref={`/users/profile/attachments/${attachment.id}/update`}
+      updateHref={`/users/profile/attachments/update/${attachment.id}`}
       onDelete={handleDelete}
-      type="links"
+      type="attachments"
     />
   )
 }

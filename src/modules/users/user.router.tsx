@@ -29,7 +29,7 @@ const ProfileRouter = () => {
         <Route exact path={`${url}/quizzes`} component={ProfileQuizzesPage} />
         <Route
           exact
-          path={`${url}/attachments`}
+          path={`${url}/attachments/:mode?/:slug?`}
           component={ProfileAttachmentsPage}
         />
         <Route component={NotFoundPage} />

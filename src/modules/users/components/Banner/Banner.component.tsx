@@ -21,7 +21,6 @@ const BannerTabs = () => {
       '/users/profile/quizzes',
       '/users/profile/attachments',
     ],
-    exact: true,
   })
   const currentTab = routeMatch?.path
 

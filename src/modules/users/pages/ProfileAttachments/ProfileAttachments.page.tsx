@@ -11,9 +11,10 @@ import {
   Paper,
   Link,
 } from '@mui/material'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import CopyToClipboard from 'react-copy-to-clipboard'
 import { useTranslation } from 'react-i18next'
+import { useHistory, useParams } from 'react-router-dom'
 
 import { useInjection } from '@polyflix/di'
 
@@ -28,15 +29,23 @@ import { buildSkeletons } from '@core/utils/gui.utils'
 
 import { useAuth } from '@auth/hooks/useAuth.hook'
 
+import { AttachmentModal } from '@attachments/components/AttachmentModal.component'
 import { Attachment } from '@attachments/models/attachment.model'
 import { AttachmentParams } from '@attachments/models/attachment.params'
-import { useGetUserAttachmentsQuery } from '@attachments/services/attachment.service'
+import {
+  useGetAttachmentQuery,
+  useGetUserAttachmentsQuery,
+} from '@attachments/services/attachment.service'
 
 import { AttachmentListMenu } from '@users/components/AttachmentListMenu/AttachmentListMenu.component'
 
 const MAX_ATTACHMENTS_BY_PAGE = 10
 
 export const ProfileAttachmentsPage = () => {
+  const { mode, slug } = useParams<{ mode?: string; slug?: string }>()
+
+  const history = useHistory()
+
   const { t } = useTranslation('users')
   const snackbarService = useInjection<SnackbarService>(SnackbarService)
   const { user } = useAuth()
@@ -48,9 +57,28 @@ export const ProfileAttachmentsPage = () => {
     userId: user!.id,
   })
 
-  const { data, isLoading, isFetching } = useGetUserAttachmentsQuery(filters)
+  const { data, isLoading, isFetching, refetch } =
+    useGetUserAttachmentsQuery(filters)
+  const { data: attachment, refetch: refetchAttachment } =
+    useGetAttachmentQuery(
+      { id: slug || '' },
+      {
+        skip: !slug,
+      }
+    )
+
+  const [isModalOpened, setIsModalOpened] = useState(false)
 
   const skeletons = buildSkeletons(3)
+
+  useEffect(() => {
+    if (mode) setIsModalOpened(true)
+  }, [mode, slug])
+
+  const onCreate = () => {
+    refetchAttachment()
+    history.push('/users/profile/attachments/create')
+  }
 
   return (
     <Page
@@ -58,10 +86,30 @@ export const ProfileAttachmentsPage = () => {
       sx={{ mt: 3 }}
       title={t('profile.tabs.attachments.content.title')}
     >
-      <Header
-        title={t('profile.tabs.attachments.content.title')}
-        description={t('profile.tabs.attachments.content.description')}
-      />
+      <Stack justifyContent="space-between" direction="row">
+        <Header
+          title={t('profile.tabs.attachments.content.title')}
+          description={t('profile.tabs.attachments.content.description')}
+        />
+        <IconButton onClick={onCreate} color="primary">
+          <Icon name="carbon:add" size={30} />
+        </IconButton>
+        {((slug && attachment) || !slug) && (
+          <AttachmentModal
+            attachment={slug ? attachment : undefined}
+            open={isModalOpened}
+            onClose={() => {
+              setIsModalOpened(false)
+              history.push('/users/profile/attachments')
+            }}
+            onSubmit={() => {
+              refetch()
+              setIsModalOpened(false)
+              history.push('/users/profile/attachments')
+            }}
+          />
+        )}
+      </Stack>
 
       <Divider sx={{ my: 3 }} />
 
@@ -81,7 +129,12 @@ export const ProfileAttachmentsPage = () => {
           ? data?.items.map((item: Attachment, i: number) => (
               <ListItem
                 key={i}
-                secondaryAction={<AttachmentListMenu attachment={item} />}
+                secondaryAction={
+                  <AttachmentListMenu
+                    attachment={item}
+                    onDelete={() => refetch()}
+                  />
+                }
                 component={Paper}
                 variant="outlined"
                 sx={{ mb: 1 }}

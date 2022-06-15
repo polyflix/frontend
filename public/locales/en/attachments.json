@@ -4,20 +4,28 @@
       "title": {
         "metadata": "Metadata",
         "status": "Statut",
-        "create": "Create a link",
-        "update": "Update the link {{link}}"
+        "create": "Create an attachment",
+        "update": "Update the attachment {{attachment}}"
       },
       "description": {
         "create": "Create your link to allow others to jump to the URL.",
         "update": "Change the values in the form below to update you link."
       },
       "placeholder": {
-        "name": "Name",
+        "title": "Title",
         "description": "Description",
         "url": "Link URL",
         "submit": {
           "create": "Create the link",
           "update": "Update the link"
+        }
+      },
+      "validation": {
+        "title": {
+          "required": "Title of the attachment is required"
+        },
+        "url": {
+          "required": "URL of the attachment is required"
         }
       },
       "errors": {}
