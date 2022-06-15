@@ -44,9 +44,10 @@ import { PlayerVideoSource } from '@videos/types/video.type'
 
 interface Props {
   video?: Video
+  onClose: () => void
 }
 
-export const EditVideoModal = ({ video }: Props) => {
+export const EditVideoModal = ({ video, onClose }: Props) => {
   const [isExternal, setIsExternal] = useState<boolean>(false)
   const snackbarService = useInjection<SnackbarService>(SnackbarService)
   const currentLanguage = localStorage.getItem('i18nextLng')
@@ -79,7 +80,10 @@ export const EditVideoModal = ({ video }: Props) => {
 
   const [open, setOpen] = useState<boolean>(false)
 
-  const handleClose = () => setOpen(false)
+  const handleClose = () => {
+    setOpen(false)
+    onClose()
+  }
 
   const onSubmit = async (data: AdminVideoForm) => {
     const { error } = (await updateVideo({

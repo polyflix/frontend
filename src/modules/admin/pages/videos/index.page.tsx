@@ -70,7 +70,11 @@ export const AdminVideoPage = () => {
 
   return (
     <AdminLayout pageTitle={t('video.page.panel.title')}>
-      <EditVideoModal key={selected?.id} video={selected} />
+      <EditVideoModal
+        onClose={() => setSelected(undefined)}
+        key={selected?.id}
+        video={selected}
+      />
       <DataGrid
         sx={{
           height: '80vh',
