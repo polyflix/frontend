@@ -33,7 +33,9 @@
       "noData": "There are no elements in the module"
     },
     "actions": {
-      "play": "Play"
+      "play": "Play",
+      "delete": "Delete module",
+      "edit": "Edit module"
     }
   },
   "forms": {

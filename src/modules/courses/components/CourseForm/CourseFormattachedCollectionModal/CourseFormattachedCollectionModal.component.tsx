@@ -8,6 +8,7 @@ import {
   Stack,
   Typography,
   List,
+  Alert,
   Button,
 } from '@mui/material'
 import { Box } from '@mui/system'
@@ -152,17 +153,23 @@ export const CourseFormattachedCollectionModal = ({
                     {t('form.upsert.createModule')}
                   </Button>
                 </Stack>
-                <List>
-                  {collections?.data?.map((collection) => (
-                    <CollectionListItem
-                      key={collection.id}
-                      collection={collection}
-                      newCollections={newCollections}
-                      handleToggle={handleToggle}
-                      isLinkSelected={isLinkSelected}
-                    />
-                  ))}
-                </List>
+                {collections?.data?.length > 0 ? (
+                  <List>
+                    {collections?.data?.map((collection) => (
+                      <CollectionListItem
+                        key={collection.id}
+                        collection={collection}
+                        newCollections={newCollections}
+                        handleToggle={handleToggle}
+                        isLinkSelected={isLinkSelected}
+                      />
+                    ))}
+                  </List>
+                ) : (
+                  <Alert severity="warning">
+                    {t('form.upsert.error.noModule')}
+                  </Alert>
+                )}
                 <Box display="flex" justifyContent="center">
                   <Pagination
                     onChange={(e, page) => setFilters({ ...filters, page })}

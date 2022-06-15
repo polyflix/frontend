@@ -33,7 +33,9 @@
       "noData": "Il n'y a pas d'éléments dans le module"
     },
     "actions": {
-      "play": "Lecture"
+      "play": "Lecture",
+      "delete": "Supprimer le module",
+      "edit": "Modifier le module"
     }
   },
   "forms": {

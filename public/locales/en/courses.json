@@ -20,6 +20,12 @@
   "visibility": {
     "private": "This module is private"
   },
+  "slug": {
+    "actions": {
+      "delete": "Delete module",
+      "edit": "Edit module"
+    }
+  },
   "form": {
     "upsert": {
       "title": {
@@ -48,7 +54,9 @@
       "error": {
         "requiredField": "The field {{field}} is required",
         "minLength": "This field requires at least {{count}} characters",
-        "maxLength": "This field requires at most {{count}} characters"
+        "maxLength": "This field requires at most {{count}} characters",
+        "noModuleSelected": "There are no modules selected",
+        "noModule": "There are no modules"
       },
       "fields": {
         "name": "name",

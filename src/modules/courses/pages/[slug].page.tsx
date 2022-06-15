@@ -1,12 +1,16 @@
+import { Edit, Delete } from '@mui/icons-material'
 import {
   Alert,
   Avatar,
+  Button,
   Divider,
   Grid,
+  IconButton,
   Link,
   Paper,
   Skeleton,
   Stack,
+  Tooltip,
   Typography,
 } from '@mui/material'
 import { useMemo } from 'react'
@@ -19,6 +23,7 @@ import { CardMenu } from '@core/components/CardMenu/CardMenu.component'
 import { MarkdownBox } from '@core/components/MarkdownBox/MarkdownBox.component'
 import { Page } from '@core/components/Page/Page.component'
 import { Endpoint } from '@core/constants/endpoint.constant'
+import { useConfirmModal } from '@core/hooks/useConfirmModal.hook'
 import { SnackbarService } from '@core/services/snackbar.service'
 import { CrudAction } from '@core/types/http.type'
 import { Role } from '@core/types/roles.type'
@@ -57,146 +62,144 @@ export const CourseSlugPage = () => {
     }
   }
 
+  const { Modal: ConfirmModal, onClick: onClickModal } = useConfirmModal({
+    title: t('deleteModal.title'),
+    content: t('deleteModal.content'),
+    onCancel: () => {},
+    onConfirm: () => handleDelete(),
+  })
+
   const isAdmin = user?.roles?.length && user?.roles?.includes(Role.Admin)
 
   return (
-    <Page title={course?.name}>
-      <Paper
-        variant="outlined"
-        sx={{
-          px: {
-            xs: 1,
-            sm: 3,
-          },
-          py: {
-            xs: 2,
-            sm: 4,
-          },
-          position: 'relative',
-        }}
-      >
-        <Grid container spacing={4}>
-          <Grid item xs={12} md={8} sx={{ minHeight: '250px' }}>
-            <Stack>
-              {data?.name ? (
-                <Typography
-                  sx={{
-                    overflowWrap: 'break-word',
-                  }}
-                  variant="h2"
-                >
-                  {data.name}
-                </Typography>
-              ) : (
-                <Skeleton variant="text" width="50%" height="50px" />
-              )}
-
-              {data?.description ? (
-                <Typography
-                  variant={'body1'}
-                  sx={{ overflowWrap: 'break-word', py: 2 }}
-                >
-                  {data.description}
-                </Typography>
-              ) : (
-                <>
-                  <Skeleton variant="text" width="85%" />
-                  <Skeleton variant="text" width="80%" />
-                  <Skeleton variant="text" width="90%" />
-                  <Skeleton variant="text" width="70%" />
-                </>
-              )}
-            </Stack>
-          </Grid>
-          <Grid item xs={12} md={4}>
-            <Stack sx={{ height: '100%' }}>
-              {course?.user?.avatar ? (
-                <Avatar
-                  sx={{ width: '100px', height: '100px', margin: 'auto' }}
-                  variant="square"
-                  src={course.user.avatar}
-                />
-              ) : (
-                <Skeleton
-                  sx={{
-                    borderRadius: '8px',
-                    height: '100px',
-                    width: '100px',
-                    margin: 'auto',
-                  }}
-                  animation="wave"
-                  variant="rectangular"
-                />
-              )}
-              {course?.user?.firstName && course?.user?.lastName ? (
-                <Typography sx={{ textAlign: 'center' }} variant={'h5'}>
-                  {course.user.firstName} {course.user.lastName}
-                </Typography>
-              ) : (
-                <Skeleton
-                  sx={{
-                    borderRadius: '8px',
-                    height: '15px',
-                    width: '40%',
-                    marginX: 'auto',
-                  }}
-                  animation="wave"
-                  variant="rectangular"
-                />
-              )}
-            </Stack>
-          </Grid>
-          {course?.user?.id === user?.id && (
-            <Grid
-              sx={{
-                position: 'absolute',
-                top: 1,
-                right: 1,
-                margin: 1,
-              }}
+    <>
+      <Page title={course?.name}>
+        {course?.user?.id === user?.id && (
+          <Stack
+            direction="row"
+            spacing={2}
+            alignItems="center"
+            justifyContent="end"
+            sx={{
+              mb: 2,
+            }}
+          >
+            <Button
+              component={RouterLink}
+              to={`/courses/${course!.slug}/update`}
+              startIcon={<Edit />}
+              variant="outlined"
             >
-              <CardMenu
-                updateHref={`/courses/${course!.slug}/update`}
-                onDelete={handleDelete}
-                type="courses"
-              />
+              {t('slug.actions.edit')}
+            </Button>
+            <Tooltip title={t<string>('slug.actions.delete')}>
+              <IconButton color="primary" onClick={onClickModal}>
+                <Delete />
+              </IconButton>
+            </Tooltip>
+          </Stack>
+        )}
+        <Paper
+          variant="outlined"
+          sx={{
+            px: {
+              xs: 1,
+              sm: 3,
+            },
+            py: {
+              xs: 2,
+              sm: 4,
+            },
+            position: 'relative',
+          }}
+        >
+          <Grid container spacing={4}>
+            <Grid item xs={12} md={8} sx={{ minHeight: '250px' }}>
+              <Stack>
+                {data?.name ? (
+                  <Typography
+                    sx={{
+                      overflowWrap: 'break-word',
+                    }}
+                    variant="h2"
+                  >
+                    {data.name}
+                  </Typography>
+                ) : (
+                  <Skeleton variant="text" width="50%" height="50px" />
+                )}
+
+                {data?.description ? (
+                  <Typography
+                    variant={'body1'}
+                    sx={{ overflowWrap: 'break-word', py: 2 }}
+                  >
+                    {data.description}
+                  </Typography>
+                ) : (
+                  <>
+                    <Skeleton variant="text" width="85%" />
+                    <Skeleton variant="text" width="80%" />
+                    <Skeleton variant="text" width="90%" />
+                    <Skeleton variant="text" width="70%" />
+                  </>
+                )}
+              </Stack>
             </Grid>
-          )}
-        </Grid>
-      </Paper>
+            <Grid item xs={12} md={4}>
+              <Stack sx={{ height: '100%' }}>
+                {course?.user?.avatar ? (
+                  <Avatar
+                    sx={{ width: '100px', height: '100px', margin: 'auto' }}
+                    variant="rounded"
+                    src={course.user.avatar}
+                  />
+                ) : (
+                  <Skeleton
+                    sx={{
+                      borderRadius: '8px',
+                      height: '100px',
+                      width: '100px',
+                      margin: 'auto',
+                    }}
+                    animation="wave"
+                    variant="rectangular"
+                  />
+                )}
+                {course?.user?.firstName && course?.user?.lastName ? (
+                  <Typography sx={{ textAlign: 'center' }} variant={'h5'}>
+                    {course.user.firstName} {course.user.lastName}
+                  </Typography>
+                ) : (
+                  <Skeleton
+                    sx={{
+                      borderRadius: '8px',
+                      height: '15px',
+                      width: '40%',
+                      marginX: 'auto',
+                    }}
+                    animation="wave"
+                    variant="rectangular"
+                  />
+                )}
+              </Stack>
+            </Grid>
+          </Grid>
+        </Paper>
 
-      <Divider sx={{ my: 2 }} />
+        <Divider sx={{ my: 2 }} />
 
-      <Grid container spacing={4}>
-        <Grid item xs={12} lg={4}>
-          <>
-            <Stack spacing={2}>
-              <Typography variant="h4">{t('collections')}</Typography>
-              {course?.modules?.map((module) => (
-                <>
-                  {module.visibility === 'private' &&
-                  user?.id != module.user?.id &&
-                  !isAdmin ? (
-                    <Paper variant="outlined" key={module.id} sx={{ p: 2 }}>
-                      <Typography
-                        variant="h4"
-                        sx={{
-                          my: 1,
-                          width: 'auto',
-                        }}
-                      >
-                        {module.name}
-                      </Typography>
-                      <Alert severity="error">{t('visibility.private')}</Alert>
-                    </Paper>
-                  ) : (
-                    <Paper variant="outlined" key={module.id} sx={{ p: 2 }}>
-                      <Link
-                        component={RouterLink}
-                        to={`/modules/${module.slug}`}
-                        underline="none"
-                        color="inherit"
-                      >
+        <Grid container spacing={4}>
+          <Grid item xs={12} lg={4}>
+            <>
+              <Stack spacing={2}>
+                <Typography variant="h4">{t('collections')}</Typography>
+                {course?.modules?.map((module) => (
+                  <>
+                    {module.visibility === 'private' &&
+                    user?.id != module.user?.id &&
+                    !isAdmin ? (
+                      <Paper variant="outlined" key={module.id} sx={{ p: 2 }}>
                         <Typography
                           variant="h4"
                           sx={{
@@ -206,23 +209,46 @@ export const CourseSlugPage = () => {
                         >
                           {module.name}
                         </Typography>
-                      </Link>
-                      <CollectionTimeline collectionSlug={module.slug} />
-                    </Paper>
-                  )}
-                </>
-              ))}
-            </Stack>
-            {course?.modules?.length === 0 && (
-              <Alert severity="info">{t('noData.empty')}</Alert>
-            )}
-          </>
+                        <Alert severity="error">
+                          {t('visibility.private')}
+                        </Alert>
+                      </Paper>
+                    ) : (
+                      <Paper variant="outlined" key={module.id} sx={{ p: 2 }}>
+                        <Link
+                          component={RouterLink}
+                          to={`/modules/${module.slug}`}
+                          underline="none"
+                          color="inherit"
+                        >
+                          <Typography
+                            variant="h4"
+                            sx={{
+                              my: 1,
+                              width: 'auto',
+                            }}
+                          >
+                            {module.name}
+                          </Typography>
+                        </Link>
+                        <CollectionTimeline collectionSlug={module.slug} />
+                      </Paper>
+                    )}
+                  </>
+                ))}
+              </Stack>
+              {course?.modules?.length === 0 && (
+                <Alert severity="info">{t('noData.empty')}</Alert>
+              )}
+            </>
+          </Grid>
+          <Grid item xs={12} lg={8}>
+            <Typography variant="h4">{t('introduction')}</Typography>
+            <MarkdownBox body={data?.content!} />
+          </Grid>
         </Grid>
-        <Grid item xs={12} lg={8}>
-          <Typography variant="h4">{t('introduction')}</Typography>
-          <MarkdownBox body={data?.content!} />
-        </Grid>
-      </Grid>
-    </Page>
+      </Page>
+      <ConfirmModal />
+    </>
   )
 }

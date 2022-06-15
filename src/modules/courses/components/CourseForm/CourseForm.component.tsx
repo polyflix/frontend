@@ -11,6 +11,7 @@ import {
   Stack,
   TextField,
   Typography,
+  Alert,
   Avatar,
 } from '@mui/material'
 import { isUndefined } from 'lodash'
@@ -203,7 +204,7 @@ export const CourseForm: React.FC<Props> = ({ course }) => {
         <Typography sx={{ mb: 3 }} variant="h4">
           {t('form.upsert.title.collections')}
         </Typography>
-        {modulesFieldArray.fields.length > 0 && (
+        {modulesFieldArray.fields.length > 0 ? (
           <List>
             {modulesFieldArray.fields.map((collection, index) => (
               <ListItem
@@ -229,6 +230,10 @@ export const CourseForm: React.FC<Props> = ({ course }) => {
               </ListItem>
             ))}
           </List>
+        ) : (
+          <Alert severity="warning">
+            {t('form.upsert.error.noModuleSelected')}
+          </Alert>
         )}
 
         <Paper
