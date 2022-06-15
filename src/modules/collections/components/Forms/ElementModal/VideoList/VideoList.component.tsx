@@ -9,10 +9,12 @@ import {
   ListItemText,
   Avatar,
   Skeleton,
+  Tooltip,
 } from '@mui/material'
 import { useState } from 'react'
 import { UseFieldArrayReturn } from 'react-hook-form'
 
+import { getShortDescription } from '@core/helpers/video.helper'
 import { buildSkeletons } from '@core/utils/gui.utils'
 
 import { useAuth } from '@auth/hooks/useAuth.hook'
@@ -67,24 +69,30 @@ export const VideoList = ({ fieldArray }: VideoListProps) => {
       <List>
         {videos
           ? videos?.items.map((item: Video) => (
-              <ListItem
+              <Tooltip
                 key={item.id}
-                secondaryAction={
-                  <Checkbox
-                    edge="end"
-                    onChange={handleToggle(item)}
-                    checked={isVideoSelected(item)}
-                  />
-                }
-                disablePadding
+                placement="bottom-start"
+                title={getShortDescription(item)}
               >
-                <ListItemButton onClick={handleToggle(item)}>
-                  <ListItemAvatar>
-                    <Avatar alt="video thumbnail" src={item.thumbnail} />
-                  </ListItemAvatar>
-                  <ListItemText primary={item.title} />
-                </ListItemButton>
-              </ListItem>
+                <ListItem
+                  key={item.id}
+                  secondaryAction={
+                    <Checkbox
+                      edge="end"
+                      onChange={handleToggle(item)}
+                      checked={isVideoSelected(item)}
+                    />
+                  }
+                  disablePadding
+                >
+                  <ListItemButton onClick={handleToggle(item)}>
+                    <ListItemAvatar>
+                      <Avatar alt="video thumbnail" src={item.thumbnail} />
+                    </ListItemAvatar>
+                    <ListItemText primary={item.title} />
+                  </ListItemButton>
+                </ListItem>
+              </Tooltip>
             ))
           : ghosts.map((_, i: number) => (
               <ListItem
