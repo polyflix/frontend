@@ -128,13 +128,16 @@ export const AdminViewGroupPage = () => {
                   sx={{ mb: 2, width: 60, height: 60 }}
                 />
                 <UserName
-                  firstName={group?.owner?.lastName}
+                  firstName={group?.owner?.firstName}
                   lastName={group?.owner?.lastName}
                 />
                 <AsyncText
                   value={group?.owner?.email}
                   variant="body2"
                   color="text.secondary"
+                  sx={{
+                    maxWidth: '200px',
+                  }}
                 />
                 {group?.owner?.roles?.map((role: string, index: number) => (
                   <Chip
@@ -145,6 +148,9 @@ export const AdminViewGroupPage = () => {
                       ns: 'common',
                     })}
                     size="small"
+                    sx={{
+                      mt: 2,
+                    }}
                   />
                 ))}
               </Stack>

@@ -22,7 +22,7 @@ export const UserName = ({
         component="span"
         spacing={1}
         sx={{
-          width: '150px',
+          maxWidth: '175px',
         }}
       >
         <AsyncText value={capitalize(firstName)} />

@@ -16,7 +16,9 @@ export const AsyncText: React.FC<AsyncTextProps> = ({
       (isString(value) && value.length === 0) ? (
         <Skeleton animation="wave" width="100%" />
       ) : (
-        <Typography {...props}>{value}</Typography>
+        <Typography noWrap {...props}>
+          {value}
+        </Typography>
       )}
     </>
   )
