@@ -103,17 +103,22 @@
     "form": {
       "labels": {
         "name": "Certification name",
-        "certificationID": "Certification ID"
+        "certificationID": "Certification ID",
+        "userid": "User ID"
       },
       "errors": {
         "name": {
           "required": "The name is required."
+        },
+        "userid": {
+          "required": "The user ID is required."
         }
       },
       "actions": {
         "close": "Close",
         "save": "Save",
-        "create": "Create a new certification"
+        "create": "Create a new certification",
+        "addUser": "Add user"
       }
     }
   },

@@ -12,7 +12,10 @@ import {
   Certification,
 } from '@certifications/models/certification.model'
 import { CertificationFilters } from '@certifications/types/filters.type'
-import { ICertificationForm } from '@certifications/types/form.type'
+import {
+  ICertificateForm,
+  ICertificationForm,
+} from '@certifications/types/form.type'
 
 // Get the filter builder from our DI system
 const filterBuilder =
@@ -47,6 +50,20 @@ export const certificationsApi = createApi({
       query: ({ id }) => {
         return `${Endpoint.Certifications}/certificate/${id}`
       },
+    }),
+
+    /**
+     * Add a Certificate mutation
+     */
+    addCertificate: builder.mutation<ICertificateForm, ICertificateForm>({
+      query: (body: ICertificateForm) => ({
+        url: Endpoint.Certifications + '/certificate',
+        method: 'POST',
+        body,
+      }),
+      // Invalidates all Certification-type queries providing the LIST id - after all, depending of the sort order
+      // that newly created Certification could show up in any lists.
+      invalidatesTags: [{ type: Endpoint.Certifications, id: 'LIST' }],
     }),
 
     /**
@@ -137,4 +154,5 @@ export const {
   useAddCertificationMutation,
   useUpdateCertificationMutation,
   useDeleteCertificationMutation,
+  useAddCertificateMutation,
 } = certificationsApi
