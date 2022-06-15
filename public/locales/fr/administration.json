@@ -137,9 +137,10 @@
       },
       "actions": {
         "close": "Retour",
-        "save": "Engregistrer",
+        "save": "Enregistrer",
         "generateSubtitles": "Générer les sous-titres pour ma langue",
-        "cantGenerateSubtitles": "Pas de génération de sous-titres car c'est une vidéo externe"
+        "cantGenerateSubtitles": "Pas de génération de sous-titres car c'est une vidéo externe",
+        "delete": "Supprimer"
       },
       "errors": {
         "title": {

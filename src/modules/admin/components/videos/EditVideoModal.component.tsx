@@ -26,10 +26,7 @@ import { Link as RouterLink } from 'react-router-dom'
 
 import { useInjection } from '@polyflix/di'
 
-import {
-  getCommonSubmitButtonProps,
-  getCommonTextFieldProps,
-} from '@core/helpers/form.helper'
+import { getCommonTextFieldProps } from '@core/helpers/form.helper'
 import { videoSlugLink } from '@core/helpers/video.helper'
 import { Visibility } from '@core/models/content.model'
 import { SnackbarService } from '@core/services/snackbar.service'
@@ -39,7 +36,10 @@ import {
 } from '@core/utils/language.util'
 
 import { Video } from '@videos/models/video.model'
-import { useUpdateAdminVideoMutation } from '@videos/services/video.service'
+import {
+  useUpdateAdminVideoMutation,
+  useDeleteVideoMutation,
+} from '@videos/services/video.service'
 import { PlayerVideoSource } from '@videos/types/video.type'
 
 interface Props {
@@ -52,11 +52,12 @@ export const EditVideoModal = ({ video, onClose }: Props) => {
   const snackbarService = useInjection<SnackbarService>(SnackbarService)
   const currentLanguage = localStorage.getItem('i18nextLng')
   const [updateVideo] = useUpdateAdminVideoMutation()
+  const [deleteVideo] = useDeleteVideoMutation()
   const { t } = useTranslation('administration')
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors },
     control,
   } = useForm<AdminVideoForm>({
     defaultValues: {
@@ -83,6 +84,20 @@ export const EditVideoModal = ({ video, onClose }: Props) => {
   const handleClose = () => {
     setOpen(false)
     onClose()
+  }
+
+  const onDelete = async () => {
+    if (video) {
+      const slug = await deleteVideo({ slug: video.slug })
+      if (!slug) {
+        snackbarService.createSnackbar(
+          t('video.page.panel.actions.delete.error'),
+          { variant: 'error' }
+        )
+      } else {
+        handleClose()
+      }
+    }
   }
 
   const onSubmit = async (data: AdminVideoForm) => {
@@ -244,6 +259,9 @@ export const EditVideoModal = ({ video, onClose }: Props) => {
                   </Grid>
                   <Grid item xs={12}>
                     <Stack justifyContent="end" spacing={2} direction="row">
+                      <LoadingButton onClick={onDelete}>
+                        {t('video.form.actions.delete')}
+                      </LoadingButton>
                       <Button
                         onClick={onGenerateSubtitles}
                         variant="outlined"
@@ -256,11 +274,6 @@ export const EditVideoModal = ({ video, onClose }: Props) => {
                       <Button onClick={handleClose} variant="outlined">
                         {t('users.form.actions.close')}
                       </Button>
-                      <LoadingButton
-                        {...getCommonSubmitButtonProps(isSubmitting, false)}
-                      >
-                        {t('users.form.actions.save')}
-                      </LoadingButton>
                     </Stack>
                   </Grid>
                 </Grid>

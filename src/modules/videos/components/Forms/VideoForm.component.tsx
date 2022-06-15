@@ -1,22 +1,13 @@
 import { LoadingButton } from '@mui/lab'
-import {
-  Box,
-  Divider,
-  Grid,
-  IconButton,
-  Stack,
-  TextField,
-  Typography,
-} from '@mui/material'
+import { Divider, Grid, Stack, TextField, Typography } from '@mui/material'
 import { useEffect, useMemo, useState } from 'react'
-import { useFieldArray, useForm } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { useHistory } from 'react-router-dom'
 
 import { useInjection } from '@polyflix/di'
 
 import { Dropzone } from '@core/components/Dropzone/Dropzone.component'
-import { Icon } from '@core/components/Icon/Icon.component'
 import { MHidden } from '@core/components/MHidden/MHidden.component'
 import { StatusSelector } from '@core/components/StatusSelector/StatusSelector.component'
 import { UploadProgress } from '@core/components/UploadProgress/UploadProgress.component'
@@ -84,7 +75,6 @@ export const VideoForm = ({ source, video, isUpdate }: Props) => {
   }
 
   const {
-    control,
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
@@ -105,11 +95,11 @@ export const VideoForm = ({ source, video, isUpdate }: Props) => {
     },
   })
 
-  // Make the field "attachments" an array to use with react hook form
+  /* // Make the field "attachments" an array to use with react hook form
   const { fields, append, remove } = useFieldArray({
     control,
     name: 'attachments',
-  })
+  }) */
 
   // Useful states for our compoennt
   // This boolean allow us to control when a video was autocompleted (YouTube for example)
@@ -353,7 +343,7 @@ export const VideoForm = ({ source, video, isUpdate }: Props) => {
           </Grid>
         </Grid>
         <Divider />
-        <Stack direction="row" justifyContent="space-between">
+        {/* <Stack direction="row" justifyContent="space-between">
           <Typography variant="h4">
             {t('forms.create-update.title.attachments')}
           </Typography>
@@ -421,7 +411,7 @@ export const VideoForm = ({ source, video, isUpdate }: Props) => {
               </IconButton>
             </Stack>
           )
-        })}
+        })} */}
         <Divider />
         <Typography sx={{ mb: 3 }} variant="h4">
           {t('forms.create-update.title.status')}
