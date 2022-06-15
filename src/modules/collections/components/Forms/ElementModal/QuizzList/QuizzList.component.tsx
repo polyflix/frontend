@@ -36,7 +36,7 @@ export const QuizzList = ({ fieldArray }: QuizzListProps) => {
     userId: user?.id,
     page: 1,
     pageSize: 10,
-    visibility: Visibility.PUBLIC,
+    visibility: Visibility.PRIVATE,
   })
 
   // Fetch the quizzes
