@@ -1,7 +1,6 @@
 import { Delete, Edit, PlayArrow } from '@mui/icons-material'
 import {
   Button,
-  Fab,
   Grid,
   IconButton,
   Paper,
@@ -15,7 +14,6 @@ import { Link, useHistory, useParams } from 'react-router-dom'
 
 import { useInjection } from '@polyflix/di'
 
-import { FabActionContainer } from '@core/components/FabActionContainer/FabActionContainer.component'
 import { Page } from '@core/components/Page/Page.component'
 import { Endpoint } from '@core/constants/endpoint.constant'
 import { useConfirmModal } from '@core/hooks/useConfirmModal.hook'
@@ -38,26 +36,18 @@ export const CollectionSlugPage = () => {
   const { slug } = useParams<{ slug: string }>()
   const history = useHistory()
   const snackbarService = useInjection<SnackbarService>(SnackbarService)
-
-  const { hasRoles } = useRoles()
-  const requiredRoles = [Role.Contributor, Role.Admin]
-
-  const [deleteCourse] = useDeleteCollectionMutation()
-
   const filters = useMemo<CollectionFilters>(() => ({}), [])
-
-  const { Modal: ConfirmModal, onClick: onClickModal } = useConfirmModal({
-    title: t('deleteModal.title'),
-    content: t('deleteModal.content'),
-    onCancel: () => {},
-    onConfirm: () => handleDelete(),
-  })
 
   const { data, isLoading, error } = useGetCollectionQuery({
     slug: slug,
     accessKey,
     filters,
   })
+
+  const { hasRoles } = useRoles()
+  const requiredRoles = [Role.Contributor, Role.Admin]
+
+  const [deleteCourse] = useDeleteCollectionMutation()
 
   const handleDelete = async () => {
     try {
@@ -68,6 +58,13 @@ export const CollectionSlugPage = () => {
       snackbarService.createSnackbar(e?.data?.statusText, { variant: 'error' })
     }
   }
+
+  const { Modal: ConfirmModal, onClick: onClickModal } = useConfirmModal({
+    title: t('deleteModal.title'),
+    content: t('deleteModal.content'),
+    onCancel: () => {},
+    onConfirm: () => handleDelete(),
+  })
 
   return (
     <>

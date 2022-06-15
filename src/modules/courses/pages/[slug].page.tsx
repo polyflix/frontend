@@ -19,7 +19,6 @@ import { Link as RouterLink, useHistory, useParams } from 'react-router-dom'
 
 import { useInjection } from '@polyflix/di'
 
-import { CardMenu } from '@core/components/CardMenu/CardMenu.component'
 import { MarkdownBox } from '@core/components/MarkdownBox/MarkdownBox.component'
 import { Page } from '@core/components/Page/Page.component'
 import { Endpoint } from '@core/constants/endpoint.constant'
