@@ -18,7 +18,13 @@ export const subtitlesApi = createApi({
         return `${Endpoint.Subtitles}/${slug}/${language}`
       },
     }),
+    getVideoSubtitles: builder.query<SubtitleResponse[], { slug: string }>({
+      query: ({ slug }) => {
+        return `${Endpoint.Subtitles}/${slug}`
+      },
+    }),
   }),
 })
 
-export const { useGetVideoSubtitleQuery } = subtitlesApi
+export const { useGetVideoSubtitleQuery, useGetVideoSubtitlesQuery } =
+  subtitlesApi

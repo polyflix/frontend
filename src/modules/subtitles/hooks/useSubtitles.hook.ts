@@ -1,13 +1,8 @@
 import { Subtitle } from '@subtitles/models/subtitle.model'
-import { useGetVideoSubtitleQuery } from '@subtitles/services/subtitle.service'
+import { useGetVideoSubtitlesQuery } from '@subtitles/services/subtitle.service'
 import { useCallback, useEffect, useState } from 'react'
 
 import { Block, VttFile } from '@polyflix/vtt-parser'
-
-import {
-  i18nLanguageToSubtitleLanguage,
-  PolyflixLanguage,
-} from '@core/utils/language.util'
 
 import { SubtitleState } from '@videos/contexts/Subtitles.context'
 import { Video } from '@videos/models/video.model'
@@ -29,35 +24,33 @@ export const useSubtitles = (video: Video): UseSubtitlesProps => {
 
   const [state, setState] = useState<SubtitleState>('loading')
 
-  let currentLanguage = localStorage.getItem('i18nextLng')
-
   const isExternal = video.sourceType === PlayerVideoSource.YOUTUBE
 
-  const { isLoading, isError, isFetching, data, error, isSuccess } =
-    useGetVideoSubtitleQuery(
-      {
-        slug: video.slug,
-        language: i18nLanguageToSubtitleLanguage(
-          (currentLanguage ?? 'en') as PolyflixLanguage
-        ),
-      },
-      {
-        skip: isExternal,
-      }
-    )
+  const {
+    isLoading,
+    isError,
+    isFetching,
+    data: subtitlesResponse,
+    error,
+    isSuccess,
+  } = useGetVideoSubtitlesQuery({ slug: video.slug }, { skip: isExternal })
 
   const applySubtitles = useCallback(async () => {
-    if (!data) {
+    if (!subtitlesResponse) {
       return
     }
-    let subtitle = {
-      lang: data.language,
-      vttUrl: data.accessUrl,
-      vttFile: await VttFile.fromUrl(data.accessUrl),
-    } as Subtitle
-    setSubtitles([subtitle])
+    let mySubtitles: Subtitle[] = []
+    for (const mySubtitle of subtitlesResponse) {
+      let subtitle = {
+        lang: mySubtitle.language,
+        vttUrl: mySubtitle.accessUrl,
+        vttFile: await VttFile.fromUrl(mySubtitle.accessUrl),
+      } as Subtitle
+      mySubtitles.push(subtitle)
+    }
+    setSubtitles(mySubtitles)
     setState('success')
-  }, [data])
+  }, [subtitlesResponse])
 
   // Handling pending request to trigger dispatch
   useEffect(() => {
@@ -83,7 +76,7 @@ export const useSubtitles = (video: Video): UseSubtitlesProps => {
       return
     }
 
-    if (data) {
+    if (subtitlesResponse) {
       applySubtitles()
     }
   }, [isError, isSuccess])
