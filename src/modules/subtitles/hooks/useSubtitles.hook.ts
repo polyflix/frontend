@@ -1,5 +1,8 @@
 import { Subtitle } from '@subtitles/models/subtitle.model'
-import { useGetVideoSubtitlesQuery } from '@subtitles/services/subtitle.service'
+import {
+  useGetVideoSubtitleQuery,
+  useGetVideoSubtitlesQuery,
+} from '@subtitles/services/subtitle.service'
 import { useCallback, useEffect, useState } from 'react'
 
 import { Block, VttFile } from '@polyflix/vtt-parser'
@@ -39,15 +42,24 @@ export const useSubtitles = (video: Video): UseSubtitlesProps => {
     if (!subtitlesResponse) {
       return
     }
+
     let mySubtitles: Subtitle[] = []
-    for (const mySubtitle of subtitlesResponse) {
-      let subtitle = {
-        lang: mySubtitle.language,
-        vttUrl: mySubtitle.accessUrl,
-        vttFile: await VttFile.fromUrl(mySubtitle.accessUrl),
-      } as Subtitle
-      mySubtitles.push(subtitle)
-    }
+    subtitlesResponse.subtitles.forEach(async (sub) => {
+      console.log(2, sub.language)
+      const { isLoading: loadSub, data: subTitleByLang } =
+        useGetVideoSubtitleQuery(
+          { slug: video.slug, language: sub.language },
+          { skip: isExternal }
+        )
+      console.log(2.5, loadSub)
+      console.debug(3, subTitleByLang)
+      mySubtitles.push({
+        lang: subTitleByLang!.language,
+        vttUrl: subTitleByLang!.accessUrl,
+        vttFile: await VttFile.fromUrl(subTitleByLang!.accessUrl),
+      } as Subtitle)
+    })
+    console.log(1)
     setSubtitles(mySubtitles)
     setState('success')
   }, [subtitlesResponse])

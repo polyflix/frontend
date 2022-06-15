@@ -1,5 +1,8 @@
 import { createApi } from '@reduxjs/toolkit/dist/query/react'
-import { SubtitleResponse } from '@subtitles/models/subtitle.model'
+import {
+  SubtitleResponse,
+  SubtitlesResponse,
+} from '@subtitles/models/subtitle.model'
 import { SubtitleLanguages } from '@subtitles/types/subtitle.type'
 
 import { Endpoint } from '@core/constants/endpoint.constant'
@@ -18,7 +21,7 @@ export const subtitlesApi = createApi({
         return `${Endpoint.Subtitles}/${slug}/${language}`
       },
     }),
-    getVideoSubtitles: builder.query<SubtitleResponse[], { slug: string }>({
+    getVideoSubtitles: builder.query<SubtitlesResponse, { slug: string }>({
       query: ({ slug }) => {
         return `${Endpoint.Subtitles}/${slug}`
       },
