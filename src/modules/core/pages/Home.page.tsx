@@ -67,7 +67,12 @@ export const HomePage = () => {
     isEmpty(popularVideos) &&
     isEmpty(mostLikedVideos) &&
     isEmpty(watchingVideos) &&
-    isEmpty(watchedVideos)
+    isEmpty(watchedVideos) &&
+    !lastVideosQuery.isLoading &&
+    !popularVideosQuery.isLoading &&
+    !mostLikedVideosQuery.isLoading &&
+    !watchingVideosQuery.isLoading &&
+    !watchedVideosQuery.isLoading
   ) {
     return <NoData variant="videos" link="/videos/create" />
   }
