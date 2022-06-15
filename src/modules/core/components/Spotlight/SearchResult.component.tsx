@@ -13,7 +13,7 @@ import { Icon } from '@core/components/Icon/Icon.component'
 import { AspectRatioBox } from '../AspectRatioBox/AspectRation.component'
 import { HighlightedText } from './HighlightedText.component'
 import { ResultThumbnailContainer, SearchCard } from './Spotlight.style'
-import { VideoSearchThumbnail } from './VideoSearchThumbnail'
+import { VideoSearchThumbnail } from './VideoSearchThumbnail.component'
 
 export type Result = SearchVideo | SearchQuiz | SearchUser
 
