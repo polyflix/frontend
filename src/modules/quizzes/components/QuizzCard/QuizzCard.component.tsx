@@ -25,6 +25,7 @@ import { Element } from '@core/models/element.model'
 
 import { useAuth } from '@auth/hooks/useAuth.hook'
 
+import { Attempt } from '@quizzes/models/attempt.model'
 import { Quizz } from '@quizzes/models/quizz.model'
 import { useGetAttemptsQuery } from '@quizzes/services/attempt.service'
 
@@ -83,20 +84,20 @@ export const QuizzCard = ({
     if (attempts) {
       let computedScore = quizz.data.keepHighestScore
         ? attempts!.data
-            .map((attempt) => attempt.score)
+            .map((attempt: Attempt) => attempt.score)
             .sort((a, b) => b - a)[0]
         : attempts!.data
-            .map((attempt) => attempt.score)
+            .map((attempt: Attempt) => attempt.score)
             .reduce((a, b) => a + b, 0)
       setScore(computedScore)
-    }
-    setColor(
-      getFeedbackColor(
-        percentage(score, quizz.data.questions_count || 0),
-        theme
+      setColor(
+        getFeedbackColor(
+          percentage(computedScore, quizz.data.questions_count || 0),
+          theme
+        )
       )
-    )
-  }, [isAttemptsLoading])
+    }
+  }, [attempts])
 
   /**
    * Build the publisher UI in the card.
@@ -113,7 +114,7 @@ export const QuizzCard = ({
    * @returns
    */
   const buildTags = () =>
-    (displayDraft && (
+    (displayDraft && quizz.draft && (
       <DraftTag size="small" variant="outlined" label={t('card.tags.draft')} />
     )) ||
     (isNew && (

@@ -21,7 +21,7 @@ export const QuizzAttemptCard = ({ attempt, quizz }: Props) => {
   const { user } = useAuth()
 
   const color = getFeedbackColor(
-    percentage(attempt.score, (quizz.data.questions || []).length),
+    percentage(attempt.score, quizz.data.questions_count || 0),
     theme
   )
   const isMe = user?.id === attempt.user?.id
@@ -41,7 +41,7 @@ export const QuizzAttemptCard = ({ attempt, quizz }: Props) => {
           user: `${attempt.user?.firstName} ${attempt.user?.lastName}`,
         })}{' '}
         <strong>
-          {attempt.score.toFixed(2)}/{(quizz.data.questions || []).length}
+          {attempt.score.toFixed(2)}/{quizz.data.questions_count || 0}
         </strong>{' '}
         {dayjs(attempt.createdAt).format(t('history.attempt.date.format'))}.
       </Typography>
