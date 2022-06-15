@@ -1,4 +1,8 @@
 {
+  "401": {
+    "title": "Interdit",
+    "description": "Accès non autorisé"
+  },
   "403": {
     "title": "Interdit",
     "description": "Accès non autorisé"
