@@ -70,7 +70,8 @@
       "search": "Search a module",
       "seeCollection": "See this module",
       "createModule": "Create module",
-      "deleteModule": "Delete module"
+      "deleteModule": "Delete module",
+      "validate": "Validate -{{selected}} module(s) selected"
     }
   },
   "deleteModal": {

@@ -70,7 +70,8 @@
       "search": "Rechercher un module",
       "seeCollection": "Voir le module",
       "createModule": "Créer le module",
-      "deleteModule": "Supprimer le module"
+      "deleteModule": "Supprimer le module",
+      "validate": "Valider - {{selected}} module(s) sélectionné"
     }
   },
   "deleteModal": {

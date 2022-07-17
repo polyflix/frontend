@@ -11,7 +11,6 @@ import {
   Alert,
   Button,
 } from '@mui/material'
-import { Box } from '@mui/system'
 import { SxProps } from '@mui/system'
 import { useState } from 'react'
 import { UseFieldArrayReturn } from 'react-hook-form'
@@ -106,7 +105,7 @@ export const CourseFormattachedCollectionModal = ({
         }}
         keepMounted={false}
         open={open}
-        onClose={() => onClose()}
+        onClose={onClose}
         closeAfterTransition
         aria-labelledby="Course form modal"
         aria-describedby="Link a collection into your course"
@@ -170,7 +169,13 @@ export const CourseFormattachedCollectionModal = ({
                     {t('form.upsert.error.noModule')}
                   </Alert>
                 )}
-                <Box display="flex" justifyContent="center">
+                <Stack
+                  direction="column"
+                  display="flex"
+                  justifyContent="center"
+                  alignItems="center"
+                  spacing={2}
+                >
                   <Pagination
                     onChange={(e, page) => setFilters({ ...filters, page })}
                     count={totalPage < 1 ? 1 : totalPage}
@@ -179,7 +184,10 @@ export const CourseFormattachedCollectionModal = ({
                     showFirstButton
                     showLastButton
                   />
-                </Box>
+                  <Button onClick={onClose} variant="contained">
+                    {t('form.upsert.validate', { selected: fields.length })}
+                  </Button>
+                </Stack>
               </Stack>
             </Scrollbar>
           </Paper>
