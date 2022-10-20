@@ -1,7 +1,5 @@
 import { Button, Stack, Typography } from '@mui/material'
-import { Box } from '@mui/system'
 import { useTranslation } from 'react-i18next'
-import Lottie from 'react-lottie'
 import { Link as RouterLink } from 'react-router-dom'
 
 import { useRoles } from '@core/hooks/useRoles.hook'
@@ -67,9 +65,9 @@ export const NoData = ({ link, variant, creatable = true }: Props) => {
           )}
         </>
       )}
-      <Box sx={{ pb: 2 }}>
+      {/* <Box sx={{ pb: 2 }}>
         <Lottie options={defaultOptions} height={200} width={200} />
-      </Box>
+      </Box> */}
     </Stack>
   )
 }
