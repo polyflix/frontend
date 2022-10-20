@@ -6,14 +6,13 @@
     "build": "vite build",
     "lint": "eslint --cache src/ public/locales/**/*.json",
     "lint:ci": "npm run lint",
-    "test": "BUILD_MODE=test cypress open-ct",
-    "test:ci": "BUILD_MODE=test cypress run-ct",
     "format": "prettier --write ./src",
     "format:check": "prettier --check ./src",
     "serve": "vite preview",
     "fix:lint": "eslint --cache --fix src/ public/locales/**/*.json",
     "fix:format": "prettier --write ./src",
-    "fix": "npm-run-all -p fix:*"
+    "fix": "npm-run-all -p fix:*",
+    "test": "playwright test"
   },
   "dependencies": {
     "@emotion/react": "^11.4.1",
@@ -28,7 +27,7 @@
     "@nestjsx/crud-request": "^5.0.0-alpha.3",
     "@polyflix/di": "^1.0.0",
     "@polyflix/quizz-parser": "^1.0.1",
-    "@polyflix/vtt-parser": "^1.3.0",
+    "@polyflix/vtt-parser": "^1.4.0",
     "@react-keycloak/web": "^3.4.0",
     "@reduxjs/toolkit": "^1.8.2",
     "@uiw/react-md-editor": "^3.14.1",
@@ -57,7 +56,6 @@
     "react-helmet-async": "^1.1.2",
     "react-hook-form": "^7.17.2",
     "react-i18next": "^11.12.0",
-    "react-lottie": "^1.2.3",
     "react-markdown": "^7.1.0",
     "react-redux": "^7.2.8",
     "react-router-dom": "^5.3.0",
@@ -70,9 +68,6 @@
   "devDependencies": {
     "@babel/plugin-proposal-class-properties": "^7.14.5",
     "@babel/plugin-proposal-decorators": "^7.15.8",
-    "@cypress/react": "^5.10.1",
-    "@cypress/vite-dev-server": "^2.1.1",
-    "@testing-library/cypress": "^8.0.1",
     "@trivago/prettier-plugin-sort-imports": "^2.0.4",
     "@types/lodash": "^4.14.168",
     "@types/react": "^17.0.27",
@@ -81,7 +76,6 @@
     "@types/react-copy-to-clipboard": "^5.0.2",
     "@types/react-dom": "^17.0.0",
     "@types/react-dropzone": "^5.1.0",
-    "@types/react-lottie": "^1.2.6",
     "@types/react-redux": "^7.1.19",
     "@types/react-router-dom": "^5.3.1",
     "@types/swiper": "^5.4.3",
@@ -90,7 +84,6 @@
     "@typescript-eslint/parser": "^4.33.0",
     "@vitejs/plugin-react": "^1.0.0",
     "babel-plugin-transform-typescript-metadata": "^0.3.2",
-    "cypress": "^8.5.0",
     "eslint": "^7.32.0",
     "eslint-config-airbnb-typescript": "^14.0.1",
     "eslint-config-prettier": "^8.3.0",
@@ -103,6 +96,8 @@
     "sass": "^1.42.1",
     "typescript": "^4.3.2",
     "vite": "^2.6.5",
-    "vite-plugin-eslint": "^1.3.0"
+    "vite-plugin-eslint": "^1.3.0",
+    "playwright-core": "^1.27.1",
+    "@playwright/test": "^1.27.1"
   }
 }
