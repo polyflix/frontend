@@ -38,7 +38,7 @@
     "noImplicitAny": true,
     "noImplicitThis": true,
     "strictNullChecks": true,
-    "types": ["reflect-metadata", "cypress", "@testing-library/cypress"]
+    "types": ["reflect-metadata"]
   },
   "include": ["./src"]
 }
