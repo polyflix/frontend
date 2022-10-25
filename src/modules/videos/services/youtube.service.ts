@@ -53,13 +53,15 @@ export class YoutubeService {
   }
 
   private getIdFromYoutubeUrl(url: string): string {
-    const { searchParams } = new URL(url)
-    const id = searchParams.get('v')
-
-    if (!id) {
-      throw new Error(`Failed to get the id from the youtube url : ${url}`)
+    if (url.match('youtu.be/')) {
+      const { pathname } = new URL(url)
+      if (pathname !== '/') return pathname.substring(1)
+    } else {
+      const { searchParams } = new URL(url)
+      const id = searchParams.get('v')
+      if (id) return id
     }
 
-    return id
+    throw new Error(`Failed to get the id from the youtube url : ${url}`)
   }
 }
