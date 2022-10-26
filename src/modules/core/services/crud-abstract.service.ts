@@ -39,7 +39,7 @@ export abstract class CrudAbstractService<
   protected endpoint: string
 
   constructor(
-    protected apiVersion: ApiVersion = ApiVersion.V1,
+    protected apiVersion: ApiVersion = ApiVersion.V1, // eslint-disable-line @typescript-eslint/default-param-last
     protected apiEndpoint: string,
     protected apiType?: ApiType
   ) {
