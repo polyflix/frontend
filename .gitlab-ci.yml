@@ -2,7 +2,9 @@ include:
   - project: 'polyflix-do/ci-templates'
     file: '/templates/nodejs.yml'
     ref: main
-
+  - project: 'polyflix-do/ci-templates'
+    file: '/jobs/tests/test.e2e.yml'
+    ref: main
 # ======================================
 # REVIEW ENVIRONMENT
 # ======================================
