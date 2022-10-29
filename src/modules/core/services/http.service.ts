@@ -179,7 +179,7 @@ export class HttpService implements BaseHttpService {
   ): AxiosRequestConfig {
     const isUrl = /^(http|https).+/.test(path)
     const { auth } = store.getState()
-    const { body, headers } = options || {}
+    const { body, headers, responseType } = options || {}
     const baseConfig: AxiosRequestConfig = {
       ...(!isUrl && { baseURL: environment.api }),
       method,
@@ -195,6 +195,16 @@ export class HttpService implements BaseHttpService {
         ...baseConfig.headers,
         ...headers,
       }
+
+    // Bug with Content-type Header
+    // https://github.com/axios/axios/issues/89#issuecomment-346650868
+    if (!baseConfig.data) {
+      baseConfig.data = {}
+    }
+
+    if (responseType) {
+      baseConfig.responseType = responseType
+    }
     return baseConfig
   }
 }

@@ -1,3 +1,5 @@
+import { ResponseType } from 'axios'
+
 export interface IApiResponse<T = any> {
   status: number
   error?: any
@@ -35,6 +37,7 @@ export enum ApiVersion {
 export interface IRequestOptions {
   body?: any
   headers?: any
+  responseType?: ResponseType
 }
 
 export interface BaseHttpService {

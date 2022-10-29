@@ -1,21 +1,28 @@
 import { CreateCertificateModal } from '@admin/components/certifications/CertificateForm/EditCertificationModal'
-import { Add } from '@mui/icons-material'
+import { Add, PictureAsPdf } from '@mui/icons-material'
 import { Skeleton } from '@mui/lab'
 import {
   Button,
   Divider,
+  IconButton,
   List,
   ListItem,
   ListItemText,
+  Box,
   Stack,
 } from '@mui/material'
 import dayjs from 'dayjs'
+import { saveAs } from 'file-saver'
 import { capitalize } from 'lodash'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 
+import { useInjection } from '@polyflix/di'
+
 import { LoadingLayout } from '@core/layouts/Loading/Loading.layout'
+import { PdfService } from '@core/services/pdf.service'
+import { SnackbarService } from '@core/services/snackbar.service'
 import { buildSkeletons } from '@core/utils/gui.utils'
 
 import {
@@ -31,6 +38,7 @@ type PropsCertificatesList = {
 export const CertificatesList = ({ certification }: PropsCertificatesList) => {
   const { t } = useTranslation('administration')
   const ghosts = buildSkeletons(3)
+  const snackbarService = useInjection<SnackbarService>(SnackbarService)
   const [selected, setSelected] = useState<Certificate>()
   const {
     data: results,
@@ -39,6 +47,27 @@ export const CertificatesList = ({ certification }: PropsCertificatesList) => {
   } = useGetCertificatesByCertificationQuery({
     id: certification.id!,
   })
+
+  const pdfService = useInjection<PdfService>(PdfService)
+
+  const [isPdfLoading, setIsPdfLoading] = useState(false)
+
+  const downloadPdf = async (certificate: Certificate) => {
+    try {
+      setIsPdfLoading(true)
+      let blob = await pdfService.getCertificatePdfQuery(certificate.id!)
+      saveAs(
+        blob,
+        `polyflix_certification_${certification.name.toLocaleLowerCase()}}`
+      )
+    } catch (error) {
+      snackbarService.createSnackbar(t('certifications.page.errors.pdf'), {
+        variant: 'error',
+      })
+    } finally {
+      setIsPdfLoading(false)
+    }
+  }
 
   return !isLoading && results && results.data ? (
     <>
@@ -61,22 +90,41 @@ export const CertificatesList = ({ certification }: PropsCertificatesList) => {
         {results.data.length !== 0
           ? results?.data?.map((certificate: Certificate, i: number) => (
               <div key={certificate.id}>
-                <ListItem alignItems="flex-start">
+                <ListItem
+                  alignItems="flex-start"
+                  secondaryAction={
+                    <IconButton
+                      onClick={() => downloadPdf(certificate)}
+                      disabled={isPdfLoading}
+                    >
+                      <PictureAsPdf />
+                    </IconButton>
+                  }
+                >
                   <ListItemText
-                    primary={capitalize(
-                      `${certificate.firstName} ${certificate.lastName}`
-                    )}
-                    secondary={
-                      <Stack direction="row" spacing={1} component="span">
-                        {dayjs(certificate.createdAt).format(
-                          t('certifications.page.certificate.date')
-                        )}
+                    primary={
+                      <Stack direction="row" alignItems="center" spacing={2}>
+                        <Stack direction="column">
+                          <Box>
+                            {capitalize(
+                              `${certificate.firstName} ${certificate.lastName}`
+                            )}
+                          </Box>
+                          <Box>
+                            {dayjs(certificate.createdAt).format(
+                              t('certifications.page.certificate.date')
+                            )}
+                          </Box>
+                        </Stack>
+                        <Link
+                          to={`/certificate/${certificate.id}`}
+                          target="_blank"
+                        >
+                          {`id: ${certificate.id}`}
+                        </Link>
                       </Stack>
                     }
                   />
-                  <Link to={`/certificate/${certificate.id}`} target="_blank">
-                    <ListItemText primary={`id: ${certificate.id}`} />
-                  </Link>
                 </ListItem>
                 {i !== results.data.length - 1 && (
                   <Divider variant="inset" component="li" />

@@ -45,6 +45,9 @@
         "edit": "Modifier le groupe",
         "delete": "Supprimer le groupe",
         "info": "Info"
+      },
+      "errors": {
+        "pdf": "Échec de la création du PDF"
       }
     },
     "view": {

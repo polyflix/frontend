@@ -94,6 +94,9 @@
         "edit": "Update certification",
         "info": "Info"
       },
+      "errors": {
+        "pdf": "Failed to create PDF"
+      },
       "panel": {
         "title": "Certifications",
         "fields": {
