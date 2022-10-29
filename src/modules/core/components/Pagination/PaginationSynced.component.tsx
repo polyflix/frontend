@@ -5,19 +5,12 @@ import { QuizzFilters } from '@quizzes/types/filters.type'
 
 import { VideoFilters } from '@videos/types/filters.type'
 
-import { LinkFilters } from '@links/types/filters.type'
-
 import { CollectionFilters } from '@collections/types/filters.type'
 
 import { CoursesFilters } from '@courses/types/filters.type'
 
 type PaginationProps = {
-  filters:
-    | VideoFilters
-    | QuizzFilters
-    | CollectionFilters
-    | CoursesFilters
-    | LinkFilters
+  filters: VideoFilters | QuizzFilters | CollectionFilters | CoursesFilters
   setFilters: ({}: any) => void
   pageCount: number
 }

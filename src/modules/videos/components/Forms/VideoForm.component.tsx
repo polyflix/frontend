@@ -95,12 +95,6 @@ export const VideoForm = ({ source, video, isUpdate }: Props) => {
     },
   })
 
-  /* // Make the field "attachments" an array to use with react hook form
-  const { fields, append, remove } = useFieldArray({
-    control,
-    name: 'attachments',
-  }) */
-
   // Useful states for our compoennt
   // This boolean allow us to control when a video was autocompleted (YouTube for example)
   const [isAutocompleted, setIsAutocompleted] = useState<boolean>(false)
@@ -343,75 +337,6 @@ export const VideoForm = ({ source, video, isUpdate }: Props) => {
           </Grid>
         </Grid>
         <Divider />
-        {/* <Stack direction="row" justifyContent="space-between">
-          <Typography variant="h4">
-            {t('forms.create-update.title.attachments')}
-          </Typography>
-          <IconButton onClick={() => append({})} color="primary">
-            <Icon name="carbon:add" size={30} />
-          </IconButton>
-        </Stack>
-        <Typography variant="body1" sx={{ color: 'text.secondary' }}>
-          {t('forms.create-update.description.attachments')}
-        </Typography>
-        {fields.length === 0 && (
-          <Typography variant="body1" sx={{ color: 'text.secondary' }}>
-            {t('forms.create-update.placeholder.attachments.empty')}
-          </Typography>
-        )}
-        {fields.map((item, index) => {
-          return (
-            <Stack direction="row" key={item.id} alignItems="center">
-              <TextField
-                error={Boolean(
-                  Array.isArray(errors.attachments) &&
-                    errors.attachments[index]?.label
-                )}
-                helperText={
-                  Array.isArray(errors.attachments) &&
-                  errors.attachments[index]?.label?.message
-                }
-                label={t('forms.create-update.placeholder.attachments.label')}
-                {...getCommonTextFieldProps()}
-                {...register(`attachments.${index}.label`, {
-                  required: {
-                    value: true,
-                    message: t(
-                      'forms.create-update.validation.attachments.label.required'
-                    ),
-                  },
-                })}
-              />
-
-              <Box sx={{ px: 1 }} />
-
-              <TextField
-                error={Boolean(
-                  Array.isArray(errors.attachments) &&
-                    errors.attachments[index]?.url
-                )}
-                helperText={
-                  Array.isArray(errors.attachments) &&
-                  errors.attachments[index]?.url?.message
-                }
-                label={t('forms.create-update.placeholder.attachments.url')}
-                {...getCommonTextFieldProps()}
-                {...register(`attachments.${index}.url`, {
-                  required: {
-                    value: true,
-                    message: t(
-                      'forms.create-update.validation.attachments.url.required'
-                    ),
-                  },
-                })}
-              />
-
-              <IconButton color="primary" onClick={() => remove(index)}>
-                <Icon name="ic:round-clear" />
-              </IconButton>
-            </Stack>
-          )
-        })} */}
         <Divider />
         <Typography sx={{ mb: 3 }} variant="h4">
           {t('forms.create-update.title.status')}

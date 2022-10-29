@@ -6,7 +6,7 @@ import { PresignedURL } from '@core/models/presigned-url.model'
 
 import { PlayerVideoSource } from '@videos/types/video.type'
 
-import { Attachment } from './attachment.model'
+import { Attachment } from '@attachments/models/attachment.model'
 
 export interface Video {
   id: string

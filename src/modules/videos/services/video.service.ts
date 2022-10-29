@@ -89,6 +89,7 @@ export const videosApi = createApi({
         url: Endpoint.Videos,
         method: 'POST',
         body,
+        // body: { ...body, attachments: body.attachments.map((a) => a.id) }, // TODO #416
       }),
       // Invalidates all video-type queries providing the LIST id - after all, depending of the sort order
       // that newly created video could show up in any lists.
@@ -103,6 +104,7 @@ export const videosApi = createApi({
         url: `${Endpoint.Videos}/${slug}`,
         method: 'PUT',
         body,
+        // body: { ...body, attachments: body.attachments.map((a) => a.id) }, // TODO #416
       }),
       // Invalidates all queries that subscribe to this Video `slug` only.
       // In this case, `getVideo` will be re-run. `getVideos` *might*  rerun, if this id was under its results.

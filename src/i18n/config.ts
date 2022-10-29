@@ -28,7 +28,7 @@ i18n
       'users',
       'date',
       'courses',
-      'links',
+      'attachments',
       'collections',
       'administration',
     ],

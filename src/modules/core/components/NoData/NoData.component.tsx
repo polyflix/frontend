@@ -14,7 +14,7 @@ interface Props {
     | 'videos'
     | 'quizzes'
     | 'collections'
-    | 'links'
+    | 'attachments'
     | 'courses'
     | 'administration'
   link?: string

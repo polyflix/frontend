@@ -132,7 +132,7 @@ export const PlayerSidebar = ({ video, playerRef }: PlayerSidebarProps) => {
               {video && <SubtitlePanel video={video} playerRef={playerRef} />}
             </TabPanelStyle>
             <TabPanelStyle value={TabIndex.ATTACHEMENT}>
-              {video && <AttachmentsPanel attachments={video.attachments} />}
+              {video && <AttachmentsPanel video={video} />}
             </TabPanelStyle>
             <TabPanelStyle value={TabIndex.MODULE}>
               {query.has('c') && <CollectionPanel />}

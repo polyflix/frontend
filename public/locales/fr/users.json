@@ -54,16 +54,16 @@
           "description": "Voici la liste de vos cours. Sur cette page, vous pouvez les modifier, les supprimer ou bien consulter leurs contenu."
         }
       },
-      "links": {
-        "title": "Liens",
+      "attachments": {
+        "title": "Pièces jointes",
         "content": {
-          "title": "Mes liens",
-          "description": "Voici la liste de vos liens. Sur cette page, vous pouvez les modifier, les supprimer.",
+          "title": "Mes pièces jointes",
+          "description": "Voici la liste de vos pièces jointes. Sur cette page, vous pouvez les modifier, les supprimer ou tout simplement les consulter.",
           "list": {
             "menu": {
               "actions": {
-                "edit": "Editer le lien",
-                "delete": "Supprimer le lien"
+                "edit": "Editer la pièce jointe",
+                "delete": "Supprimer la pièce jointe"
               }
             },
             "clipboard": "URL copiée dans le presse-papier !"

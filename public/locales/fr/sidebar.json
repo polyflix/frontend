@@ -18,14 +18,13 @@
     "videos": "Vidéos",
     "courses": "Cours",
     "quizzes": "Quiz",
-    "links": "Liens",
     "collections": "Modules"
   },
   "myContent": {
     "videos": "Vidéos",
     "courses": "Cours",
     "quizzes": "Quiz",
-    "links": "Liens",
+    "attachments": "Pièces jointes",
     "collections": "Modules"
   },
   "administration": {

@@ -20,7 +20,13 @@ type Props = {
   updateHref: string
   onDelete: () => void
   publisherId?: string
-  type?: 'common' | 'videos' | 'collections' | 'courses' | 'quizzes' | 'links'
+  type?:
+    | 'common'
+    | 'videos'
+    | 'collections'
+    | 'courses'
+    | 'quizzes'
+    | 'attachments'
 }
 
 /**

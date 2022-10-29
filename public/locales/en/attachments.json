@@ -1,0 +1,47 @@
+{
+  "forms": {
+    "create-update": {
+      "title": {
+        "metadata": "Metadata",
+        "status": "Statut",
+        "create": "Create an attachment",
+        "update": "Update the attachment"
+      },
+      "description": {
+        "create": "Create your link to allow others to jump to the URL.",
+        "update": "Change the values in the form below to update you link."
+      },
+      "placeholder": {
+        "title": "Title",
+        "description": "Description",
+        "url": "Attachment URL",
+        "submit": {
+          "create": "Create the attachment",
+          "update": "Update the attachment"
+        }
+      },
+      "validation": {
+        "title": {
+          "required": "Title of the attachment is required"
+        },
+        "url": {
+          "required": "URL of the attachment is required",
+          "pattern": "Your url is not valid, consider using a valid one starting with http:// or https://"
+        }
+      },
+      "errors": {}
+    }
+  },
+  "closeModal": "Close",
+  "noData": {
+    "description": "If you have the necessary rights you can create an attachment below",
+    "buttonText": "Create an attachment"
+  },
+  "deleteModal": {
+    "title": "Delete attachment",
+    "content": "Are you sure to delete this attachment ?"
+  },
+  "actions": {
+    "copyToClipboard": "Copy link to clipboard"
+  }
+}

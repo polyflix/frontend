@@ -23,9 +23,8 @@ const BannerTabs = () => {
       '/users/profile/modules',
       '/users/profile/groups',
       '/users/profile/quizzes',
-      '/users/profile/links',
+      '/users/profile/attachments',
     ],
-    exact: true,
   })
   const currentTab = routeMatch?.path
 
@@ -74,12 +73,12 @@ const BannerTabs = () => {
         to="/users/profile/quizzes"
         component={RouterLink}
       />
-      {/* <Tab
-        label={t('profile.tabs.links.title')}
-        value="/users/profile/links"
-        to="/users/profile/links"
+      <Tab
+        label={t('profile.tabs.attachments.title')}
+        value="/users/profile/attachments"
+        to="/users/profile/attachments"
         component={RouterLink}
-      /> */}
+      />
     </Tabs>
   )
 }

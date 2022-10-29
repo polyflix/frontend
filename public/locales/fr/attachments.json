@@ -1,0 +1,47 @@
+{
+  "forms": {
+    "create-update": {
+      "title": {
+        "metadata": "Métadonnées",
+        "status": "Status",
+        "create": "Créer une pièce jointe",
+        "update": "Mise à jour de la pièce jointe"
+      },
+      "description": {
+        "create": "Créez votre lien pour permettre aux autres utilisateurs d'aller à la ressource ciblée.",
+        "update": "Changez les valeurs dans le formulaire ci-dessous pour mettre à jour votre lien."
+      },
+      "placeholder": {
+        "title": "Titre",
+        "description": "Description",
+        "url": "URL de la pièce jointe",
+        "submit": {
+          "create": "Créer la pièce jointe",
+          "update": "Mettre à jour la pièce jointe"
+        }
+      },
+      "validation": {
+        "title": {
+          "required": "Le titre de la pièce jointe est requis",
+          "pattern": "L'URL n'est pas valide, veuillez préciser http:// ou https:// au début"
+        },
+        "url": {
+          "required": "L'URL de la pièce jointe est requise"
+        }
+      },
+      "errors": {}
+    }
+  },
+  "closeModal": "Fermer",
+  "noData": {
+    "description": "Si vous avez les droits nécessaires, vous pouvez créer une pièce jointe ci-dessous",
+    "buttonText": "Créer une pièce jointe"
+  },
+  "deleteModal": {
+    "title": "Supprimer la pièce jointe",
+    "content": "Êtes-vous sûr de vouloir supprimer cette pièce jointe ?"
+  },
+  "actions": {
+    "copyToClipboard": "Copier le lien dans le presse-papier"
+  }
+}

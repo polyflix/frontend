@@ -14,6 +14,7 @@
       "@subtitles/*": ["src/modules/subtitles/*"],
       "@stats/*": ["src/modules/stats/*"],
       "@links/*": ["src/modules/links/*"],
+      "@attachments/*": ["src/modules/attachments/*"],
       "@search/*": ["src/modules/search/*"],
       "@admin/*": ["src/modules/admin/*"],
       "@certifications/*": ["src/modules/certifications/*"]

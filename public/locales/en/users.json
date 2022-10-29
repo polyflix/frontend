@@ -54,16 +54,16 @@
           "description": "Here is the list of your courses. On this page, you can edit them, delete them or consult their content."
         }
       },
-      "links": {
-        "title": "Links",
+      "attachments": {
+        "title": "Attachments",
         "content": {
-          "title": "My links",
-          "description": "Here is the list of your links. On this page, you can edit them, delete them.",
+          "title": "My attachments",
+          "description": "Here is the list of your attachments. On this page, you can edit or delete them, or just click on them.",
           "list": {
             "menu": {
               "actions": {
-                "edit": "Edit link",
-                "delete": "Delete link"
+                "edit": "Edit attachment",
+                "delete": "Delete attachment"
               }
             },
             "clipboard": "URL copied to clipboard !"

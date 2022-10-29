@@ -77,6 +77,10 @@ export default defineConfig({
         replacement: resolve(__dirname, './src/modules/links'),
       },
       {
+        find: '@attachments',
+        replacement: resolve(__dirname, './src/modules/attachments'),
+      },
+      {
         find: '@search',
         replacement: resolve(__dirname, './src/modules/search'),
       },
