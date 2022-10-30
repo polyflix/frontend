@@ -3,6 +3,7 @@ import {
   Box,
   Container,
   Fade,
+  IconButton,
   Modal,
   Paper,
   SxProps,
@@ -95,7 +96,15 @@ export const AttachmentModal = ({
                 )}
               </Typography>
               <Tooltip title={t<string>('closeModal')}>
-                <Close sx={{ cursor: 'pointer' }} onClick={() => onClose()} />
+                <IconButton
+                  aria-label="attachment close"
+                  size="small"
+                  aria-controls="basic-menu"
+                  aria-haspopup="true"
+                  onClick={() => onClose()}
+                >
+                  <Close />
+                </IconButton>
               </Tooltip>
             </Box>
             {/* Display the form when attachment is fetched (in edit mode) */}

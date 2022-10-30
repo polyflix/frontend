@@ -22,11 +22,11 @@
       },
       "validation": {
         "title": {
-          "required": "Le titre de la pièce jointe est requis",
-          "pattern": "L'URL n'est pas valide, veuillez préciser http:// ou https:// au début"
+          "required": "Le titre de la pièce jointe est requis"
         },
         "url": {
-          "required": "L'URL de la pièce jointe est requise"
+          "required": "L'URL de la pièce jointe est requise",
+          "pattern": "L'URL n'est pas valide, veuillez préciser http:// ou https:// au début"
         }
       },
       "errors": {}

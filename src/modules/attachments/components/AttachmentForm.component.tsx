@@ -105,7 +105,6 @@ export const AttachmentForm = ({
           <TextField
             error={Boolean(errors.url)}
             helperText={errors.url?.message}
-            inputProps={{ pattern: '^https?://.*$' }}
             label={t('forms.create-update.placeholder.url')}
             {...getCommonTextFieldProps()}
             {...register('url', {

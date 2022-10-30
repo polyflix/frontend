@@ -74,7 +74,7 @@ const sidebarConfiguration: SidebarItem[] = [
     roles: [Role.Contributor, Role.Admin],
     items: [
       {
-        title: 'actions.list',
+        title: 'actions.quiz',
         href: '/users/profile/quizzes',
       },
       {
