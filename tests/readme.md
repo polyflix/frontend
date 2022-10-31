@@ -1,11 +1,11 @@
 To record test interactively use 
 ```bash
-npx playwright codegen playwright.dev
+npx playwright codegen https://qapolyflix.dopolytech.fr/
 ```
 
 To run test use 
 ```bash
-npm run test
+TEST_EMAIL=x TEST_PASSWORD=x POLYFLIX_URL="https://qapolyflix.dopolytech.fr/"  npm run test
 npm run test:debug # to run in debug mode
 ```
 
