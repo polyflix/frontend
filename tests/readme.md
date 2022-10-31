@@ -5,7 +5,15 @@ npx playwright codegen https://qapolyflix.dopolytech.fr/
 
 To run test use 
 ```bash
-TEST_EMAIL=x TEST_PASSWORD=x POLYFLIX_URL="https://qapolyflix.dopolytech.fr/"  npm run test
+TEST_ADMIN_EMAIL=x \
+TEST_ADMIN_PASSWORD=x \
+TEST_CONTRIBUTOR_EMAIL=x \
+TEST_CONTRIBUTOR_PASSWORD=x \
+TEST_MEMBER_EMAIL=x \
+TEST_MEMBER_PASSWORD=x \
+POLYFLIX_URL="https://qapolyflix.dopolytech.fr/" \
+npm run test
+
 npm run test:debug # to run in debug mode
 ```
 

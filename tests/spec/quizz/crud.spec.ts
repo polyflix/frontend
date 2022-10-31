@@ -1,7 +1,10 @@
 import { test, expect } from '@playwright/test'
+import config from '../../config';
+import { LoginPage } from '../../page/login';
+import { acceptCookies } from '../../util';
 
 
-test('crud quizz as admin', async ({ page }) => {
+test('crud quizz as admin, play the quizz as member', async ({ page }) => {
     await page.goto('quizzes/create')
     await expect(page).toHaveURL('quizzes/create');
     await page.getByLabel('Name').click();
@@ -23,11 +26,33 @@ test('crud quizz as admin', async ({ page }) => {
     await page.getByRole('button', { name: 'Update the quizz' }).click();
     await expect(page).toHaveURL('users/profile/quizzes');
     await page.getByRole('button', { name: 'video menu' }).click();
-    await page.getByRole('menuitem', { name: 'Play' }).click();
+
+    const quiz_url = await page.getByRole('menuitem', { name: 'Play' }).getAttribute('href') ?? '';
+
+    // clear cookies
+    await page.context().clearCookies();
+    // login
+    const loginPage = new LoginPage(page);
+    await loginPage.goto();
+    await loginPage.authenticate(config.user.member_email, config.user.member_password);
+    await acceptCookies(page);
+
+    await page.goto(quiz_url);
+
     await page.getByRole('button', { name: 'Go !' }).click();
     await page.getByRole('button', { name: 'test' }).first().click();
     await page.getByRole('button', { name: 'Terminate the quizz' }).click();
     await page.getByRole('button', { name: 'Validate' }).click();
+    // expect to have element : page.getByRole('link', { name: 'Back to the quizzes\'s list' })
+    await expect(page.locator('[data-test-id="CircularProgressbar"] path').nth(1)).toHaveCount(1);
+
+    // clear cookies
+    await page.context().clearCookies();
+    // login
+    await loginPage.goto();
+    await loginPage.authenticate(config.user.contributor_email, config.user.contributor_password);
+    await acceptCookies(page);
+
     await page.goto('users/profile/quizzes')
     await expect(page).toHaveURL('users/profile/quizzes');
     await page.getByRole('button', { name: 'video menu' }).click();
