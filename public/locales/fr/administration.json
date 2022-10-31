@@ -128,6 +128,32 @@
       }
     }
   },
+  "report": {
+    "page": {
+      "panel": {
+        "title": "Signalements sur les vidéos",
+        "fields": {
+          "reason": "Raison",
+          "state": "État",
+          "states": {
+            "pending": "En attente de traitement",
+            "approved": "Approuvé",
+            "rejected": "Rejeté"
+          }
+        }
+      },
+      "modal": {
+        "details": "Détails sur la raison du signalement",
+        "reportFor": "Signalé pour: {{ reason }}",
+        "approve_warning": "Si vous approuvez ce signalement, la vidéo sera mise en privée.",
+        "actions": {
+          "approve": "Approuver",
+          "reject": "Rejeter",
+          "reopen": "Réouvrir"
+        }
+      }
+    }
+  },
   "video": {
     "page": {
       "panel": {

@@ -133,6 +133,32 @@
       }
     }
   },
+  "report": {
+    "page": {
+      "panel": {
+        "title": "Report on vidéos",
+        "fields": {
+          "reason": "Reason",
+          "state": "State",
+          "states": {
+            "pending": "Pending",
+            "approved": "Approved",
+            "rejected": "Rejected"
+          }
+        }
+      },
+      "modal": {
+        "details": "Details",
+        "reportFor": "Report for: {{ reason }}",
+        "approve_warning": "If you approve this report, the video will be private.",
+        "actions": {
+          "approve": "Approve",
+          "reject": "Reject",
+          "reopen": "Reopen"
+        }
+      }
+    }
+  },
   "video": {
     "page": {
       "panel": {

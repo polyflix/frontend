@@ -151,8 +151,17 @@ const sidebarConfiguration: SidebarItem[] = [
     title: 'administration.resources.videos',
     section: SidebarSection.ADMIN,
     icon: 'eva:play-circle-outline',
-    href: '/admin/videos',
     roles: [Role.Admin],
+    items: [
+      {
+        title: 'administration.resources.videos',
+        href: '/admin/videos',
+      },
+      {
+        title: 'administration.resources.reports',
+        href: '/admin/reports',
+      },
+    ],
   },
 ]
 

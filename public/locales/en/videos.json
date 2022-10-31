@@ -136,5 +136,24 @@
     "watched": "Watched",
     "watching": "Watching",
     "all": "All"
+  },
+  "report": {
+    "reasons": {
+      "NSFW_CONTENT": "Sexual content",
+      "VIOLENCE_BULLYING": "Violent or Harassing Content",
+      "DANGEROUS_ACT": "Content containing dangerous acts",
+      "SPAM": "Spam",
+      "CHILD_ABUSE": "Child abuse",
+      "OTHER": "Other"
+    },
+    "form": {
+      "title": "Report the video {{ title }}",
+      "submit": "Report",
+      "cancel": "Cancel",
+      "details": "You can add details about the reason for the report.",
+      "reason": "Reason",
+      "success": "Your report was taken into account.",
+      "failure": "Failed to report."
+    }
   }
 }

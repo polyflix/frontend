@@ -1,4 +1,4 @@
-import { Delete, Edit, MoreVertOutlined } from '@mui/icons-material'
+import { Delete, Edit, Flag, MoreVertOutlined } from '@mui/icons-material'
 import {
   IconButton,
   ListItemIcon,
@@ -27,6 +27,7 @@ type Props = {
     | 'courses'
     | 'quizzes'
     | 'attachments'
+  onReport?: () => void
 }
 
 /**
@@ -40,6 +41,7 @@ export const CardMenu: React.FC<Props> = ({
   children,
   publisherId,
   type = 'common',
+  onReport,
 }) => {
   const { t } = useTranslation('common')
   const { user } = useAuth()
@@ -75,7 +77,8 @@ export const CardMenu: React.FC<Props> = ({
       {(React.Children.count(children) > 0 ||
         !publisherId ||
         isMine ||
-        isAdmin) && (
+        isAdmin ||
+        onReport) && (
         <IconButton
           aria-label="video menu"
           size="small"
@@ -111,6 +114,14 @@ export const CardMenu: React.FC<Props> = ({
               <Delete fontSize="small" color="error" />
             </ListItemIcon>
             <ListItemText>{capitalize(t('actions.delete'))}</ListItemText>
+          </MenuItem>
+        )}
+        {onReport && (
+          <MenuItem onClick={onReport}>
+            <ListItemIcon>
+              <Flag fontSize="small" color="error" />
+            </ListItemIcon>
+            <ListItemText>{capitalize(t('actions.report'))}</ListItemText>
           </MenuItem>
         )}
       </Menu>

@@ -138,5 +138,24 @@
     "watched": "Vues",
     "watching": "En cours",
     "all": "Toutes"
+  },
+  "report": {
+    "reasons": {
+      "NSFW_CONTENT": "Contenu à caractère sexuel",
+      "VIOLENCE_BULLYING": "Contenu violent ou incitant au harcèlement",
+      "DANGEROUS_ACT": "Contenu contenant des actes dangereux ou pouvant nuire à autrui",
+      "SPAM": "Spam",
+      "CHILD_ABUSE": "Maltraitance d'enfants",
+      "OTHER": "Autre"
+    },
+    "form": {
+      "title": "Signaler la vidéo {{ title }}",
+      "submit": "Signaler",
+      "cancel": "Annuler",
+      "details": "Vous pouvez ajouter des détails sur la raison du signalement.",
+      "reason": "Raison",
+      "success": "Votre signalement a bien été pris en compte.",
+      "failure": "Échec lors du signalement."
+    }
   }
 }

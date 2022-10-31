@@ -14,6 +14,7 @@ type UseConfirmModalProps = {
   onCancel?: () => void
   title: string
   content: string
+  acceptLabel?: string
 }
 type UseConfirmModalReturnProps = {
   onClick: () => void
@@ -25,6 +26,7 @@ export const useConfirmModal = ({
   content,
   onCancel,
   onConfirm,
+  acceptLabel,
 }: UseConfirmModalProps): UseConfirmModalReturnProps => {
   const { t } = useTranslation('')
   const [isOpen, setOpen] = useState(false)
@@ -87,7 +89,7 @@ export const useConfirmModal = ({
                 {t('confirmationModal.actions.cancel')}
               </Button>
               <Button variant="contained" color="error" onClick={handleConfirm}>
-                {t('confirmationModal.actions.delete')}
+                {acceptLabel ?? t('confirmationModal.actions.delete')}
               </Button>
             </Stack>
           </Stack>

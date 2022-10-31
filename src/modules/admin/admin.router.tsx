@@ -1,6 +1,7 @@
 import { AdminFormCertificatePage } from '@admin/pages/certifications/form/form.page'
 import { AdminCertificationPage } from '@admin/pages/certifications/list/list.page'
 import { AdminViewCertificationPage } from '@admin/pages/certifications/view/view.page'
+import { AdminVideoReportPage } from '@admin/pages/videos/report.page'
 import { Route, Switch, useRouteMatch } from 'react-router-dom'
 
 import { AdminFromGroupPage } from './pages/groups/form/form.page'
@@ -36,6 +37,7 @@ export const AdminRouter = () => {
       />
 
       <Route path={`${url}/videos`} component={AdminVideoPage} />
+      <Route path={`${url}/reports`} component={AdminVideoReportPage} />
     </Switch>
   )
 }

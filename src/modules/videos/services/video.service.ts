@@ -8,6 +8,7 @@ import { RestCrudFilters } from '@core/filters/rest-crud.filter'
 import { fetchWithRefresh } from '@core/services/api.service'
 import { ApiVersion } from '@core/types/http.type'
 
+import { ReportModel, ReportState } from '@videos/models/report.model'
 import { Video } from '@videos/models/video.model'
 import { VideoFilters } from '@videos/types/filters.type'
 import { IVideoForm } from '@videos/types/form.type'
@@ -158,6 +159,42 @@ export const videosApi = createApi({
         },
       }),
     }),
+
+    reportVideo: builder.mutation<void, { slug: string; body: ReportModel }>({
+      query: ({ slug, body }: { slug: string; body: ReportModel }) => ({
+        url: `${Endpoint.Videos}/${slug}/report`,
+        method: 'POST',
+        body: body,
+      }),
+    }),
+
+    getReports: builder.query<
+      { items: ReportModel[]; totalCount: number },
+      void
+    >({
+      query: () => {
+        return `${Endpoint.Videos}/report/list`
+      },
+      providesTags: () => [{ type: Endpoint.Videos, id: 'REPORT' }],
+    }),
+
+    updateReport: builder.mutation<
+      void,
+      { body: { state: ReportState }; report: ReportModel }
+    >({
+      query: ({
+        body,
+        report,
+      }: {
+        body: { state: ReportState }
+        report: ReportModel
+      }) => ({
+        url: `${Endpoint.Videos}/${report.videoId}/report/${report.userId}`,
+        method: 'PUT',
+        body,
+      }),
+      invalidatesTags: () => [{ type: Endpoint.Videos, id: 'REPORT' }],
+    }),
   }),
 })
 
@@ -171,4 +208,7 @@ export const {
   useDeleteVideoMutation,
   useUpdateWatchtimeMutation,
   useLikeVideoMutation,
+  useReportVideoMutation,
+  useGetReportsQuery,
+  useUpdateReportMutation,
 } = videosApi

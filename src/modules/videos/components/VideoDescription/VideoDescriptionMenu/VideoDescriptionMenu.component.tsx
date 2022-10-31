@@ -1,4 +1,5 @@
 /* eslint-disable react/prop-types */
+import { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 
 import { useInjection } from '@polyflix/di'
@@ -8,6 +9,7 @@ import { Endpoint } from '@core/constants/endpoint.constant'
 import { SnackbarService } from '@core/services/snackbar.service'
 import { CrudAction } from '@core/types/http.type'
 
+import { VideoDescriptionReportModal } from '@videos/components/VideoDescription/VideoDescriptionReportModal/VideoDescriptionReportModal'
 import { Video } from '@videos/models/video.model'
 import { useDeleteVideoMutation } from '@videos/services/video.service'
 
@@ -20,6 +22,7 @@ export const VideoDescriptionMenu: React.FC<Props> = ({ video }) => {
   const history = useHistory()
 
   const [deleteVideo] = useDeleteVideoMutation()
+  const [reportedVideo, setReportedVideo] = useState<Video>()
 
   const handleDelete = async () => {
     try {
@@ -31,12 +34,23 @@ export const VideoDescriptionMenu: React.FC<Props> = ({ video }) => {
     }
   }
 
+  const handleReport = async () => {
+    setReportedVideo(video ? video : undefined)
+  }
+
   return (
-    <CardMenu
-      updateHref={`/videos/${video?.slug}/update`}
-      onDelete={handleDelete}
-      publisherId={video?.publisher?.id!}
-      type="videos"
-    />
+    <>
+      <CardMenu
+        updateHref={`/videos/${video?.slug}/update`}
+        onDelete={handleDelete}
+        onReport={handleReport}
+        publisherId={video?.publisher?.id!}
+        type="videos"
+      />
+      <VideoDescriptionReportModal
+        onClose={() => setReportedVideo(undefined)}
+        video={reportedVideo}
+      />
+    </>
   )
 }

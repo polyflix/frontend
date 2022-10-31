@@ -26,6 +26,7 @@
     "create": "créer",
     "update": "mettre à jour",
     "delete": "supprimer",
+    "report": "signaler",
     "closeModal": "Fermer la modale"
   },
   "navbar": {
