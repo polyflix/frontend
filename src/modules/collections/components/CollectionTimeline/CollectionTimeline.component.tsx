@@ -86,46 +86,50 @@ export const CollectionTimeline = ({
       )}
       {collection?.elements?.map((item, i: number) => {
         return (
-          <TimelineItem
+          <Link
             key={i}
-            sx={{
-              '&::before': {
-                content: 'none',
-              },
-            }}
+            color="inherit"
+            underline="none"
+            {...generateLinkAttribute(item, i)}
           >
-            <TimelineSeparator>
-              <TimelineDot
-                color={+query.get('index')! === i ? 'primary' : 'grey'}
-              >
-                <Icon name={elementIcon(item.type)} />
-              </TimelineDot>
-              <TimelineConnector />
-            </TimelineSeparator>
-            <TimelineContent>
-              <>
-                {item.visibility === 'private' &&
-                item?.id != item.user?.id &&
-                !isAdmin ? (
-                  <Alert severity="error">{t('visibility.private')}</Alert>
-                ) : (
-                  <Link
-                    color="inherit"
-                    underline="none"
-                    {...generateLinkAttribute(item, i)}
-                  >
-                    <Typography variant="body1">{item.name}</Typography>
-                    <Typography
-                      variant="caption"
-                      sx={{ textTransform: 'capitalize' }}
-                    >
-                      {item.type}
-                    </Typography>
-                  </Link>
+            <TimelineItem
+              sx={{
+                '&::before': {
+                  content: 'none',
+                },
+              }}
+            >
+              <TimelineSeparator>
+                <TimelineDot
+                  color={+query.get('index')! === i ? 'primary' : 'grey'}
+                >
+                  <Icon name={elementIcon(item.type)} />
+                </TimelineDot>
+                {i !== collection?.elements?.length - 1 && (
+                  <TimelineConnector />
                 )}
-              </>
-            </TimelineContent>
-          </TimelineItem>
+              </TimelineSeparator>
+              <TimelineContent>
+                <>
+                  {item.visibility === 'private' &&
+                  item?.id != item.user?.id &&
+                  !isAdmin ? (
+                    <Alert severity="error">{t('visibility.private')}</Alert>
+                  ) : (
+                    <>
+                      <Typography variant="body1">{item.name}</Typography>
+                      <Typography
+                        variant="caption"
+                        sx={{ textTransform: 'capitalize' }}
+                      >
+                        {item.type}
+                      </Typography>
+                    </>
+                  )}
+                </>
+              </TimelineContent>
+            </TimelineItem>
+          </Link>
         )
       })}
     </Timeline>
