@@ -1,0 +1,23 @@
+name: Build and containerize
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "16"
+          cache: "npm"
+      - run: npm ci
+      - run: npm lint:ci
+      - run: npm test
+  build:
+    uses: polyflix/.github/.github/workflows/spring-ci.yml@main
