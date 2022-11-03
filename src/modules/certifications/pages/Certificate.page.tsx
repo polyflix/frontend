@@ -1,3 +1,4 @@
+import { PictureAsPdf } from '@mui/icons-material'
 import ShareIcon from '@mui/icons-material/Share'
 import {
   Card,
@@ -15,6 +16,7 @@ import { useParams } from 'react-router-dom'
 import { Page } from '@core/components/Page/Page.component'
 import { PublicDashboardLayout } from '@core/layouts/Dashboard/PublicDashboard.layout'
 
+import { useDownloadCertificatePdf } from '@certifications/hooks/useDownloadCertificatePdf.hook'
 import { useGetCertificateQuery } from '@certifications/services/certification.service'
 
 export const CertificatePage = () => {
@@ -22,6 +24,7 @@ export const CertificatePage = () => {
   const { id } = useParams<{ id: string }>()
 
   const { data: certificate, isLoading } = useGetCertificateQuery({ id })
+  const { download, isPdfLoading } = useDownloadCertificatePdf()
 
   return (
     <PublicDashboardLayout>
@@ -111,6 +114,12 @@ export const CertificatePage = () => {
               >
                 <ShareIcon />
                 <Typography>{t('explore.addLinkedin')}</Typography>
+              </IconButton>
+              <IconButton
+                disabled={isPdfLoading}
+                onClick={() => download(certificate)}
+              >
+                <PictureAsPdf />
               </IconButton>
             </CardActions>
           </Card>
