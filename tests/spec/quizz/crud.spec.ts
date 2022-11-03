@@ -1,8 +1,8 @@
 import { test, expect } from '@playwright/test'
-import config from '../../config';
-import { LoginPage } from '../../page/login';
-import { acceptCookies } from '../../util';
+import { loginAsContributor, loginAsMember } from '../../util';
 
+
+test.setTimeout(60000)
 
 test('crud quizz as admin, play the quizz as member', async ({ page }) => {
     await page.goto('quizzes/create')
@@ -29,13 +29,7 @@ test('crud quizz as admin, play the quizz as member', async ({ page }) => {
 
     const quiz_url = await page.getByRole('menuitem', { name: 'Play' }).getAttribute('href') ?? '';
 
-    // clear cookies
-    await page.context().clearCookies();
-    // login
-    const loginPage = new LoginPage(page);
-    await loginPage.goto();
-    await loginPage.authenticate(config.user.member_email, config.user.member_password);
-    await acceptCookies(page);
+    await loginAsMember(page)
 
     await page.goto(quiz_url);
 
@@ -46,12 +40,7 @@ test('crud quizz as admin, play the quizz as member', async ({ page }) => {
     // expect to have element : page.getByRole('link', { name: 'Back to the quizzes\'s list' })
     await expect(page.locator('[data-test-id="CircularProgressbar"] path').nth(1)).toHaveCount(1);
 
-    // clear cookies
-    await page.context().clearCookies();
-    // login
-    await loginPage.goto();
-    await loginPage.authenticate(config.user.contributor_email, config.user.contributor_password);
-    await acceptCookies(page);
+    await loginAsContributor(page)
 
     await page.goto('users/profile/quizzes')
     await expect(page).toHaveURL('users/profile/quizzes');
