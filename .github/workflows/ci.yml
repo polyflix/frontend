@@ -1,0 +1,11 @@
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+env:
+  GITLAB_REGISTRY: ${ secrets.GITLAB_REGISTRY_TOKEN }
+
+jobs:
+  frontend:
+    uses: polyflix/.github/.github/workflows/node-ci.yml@main
