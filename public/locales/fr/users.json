@@ -69,6 +69,13 @@
             "clipboard": "URL copiée dans le presse-papier !"
           }
         }
+      },
+      "certifications": {
+        "title": "Certifications",
+        "content": {
+          "title": "Mes certifications",
+          "description": "Voici la liste de vos certifications."
+        }
       }
     }
   }

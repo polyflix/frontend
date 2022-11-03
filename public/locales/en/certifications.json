@@ -9,5 +9,8 @@
     "owner2": "successfully completed, received a passing grade, and was awarded this platform's Honor Code Certificate of Completion in:",
     "date": "Obtained on:"
   },
+  "errors": {
+    "pdf": "Failed to create PDF"
+  },
   "empty": "This certificate doesn't exist"
 }

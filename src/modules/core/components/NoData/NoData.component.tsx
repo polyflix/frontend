@@ -17,6 +17,7 @@ interface Props {
     | 'attachments'
     | 'courses'
     | 'administration'
+    | 'none'
   link?: string
   creatable?: boolean
 }
@@ -48,7 +49,7 @@ export const NoData = ({ link, variant, creatable = true }: Props) => {
       </Typography>
       {hasRoles(requiredRoles) && (
         <>
-          {creatable && (
+          {creatable && variant !== 'none' && (
             <Typography align="center" sx={{ color: 'text.secondary' }}>
               {variant
                 ? t('noData.description', { ns: variant })

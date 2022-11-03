@@ -69,6 +69,13 @@
             "clipboard": "URL copied to clipboard !"
           }
         }
+      },
+      "certifications": {
+        "title": "Certifications",
+        "content": {
+          "title": "My certifications",
+          "description": "Here is the list of your certifications."
+        }
       }
     }
   }

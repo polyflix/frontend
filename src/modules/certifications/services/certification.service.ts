@@ -43,6 +43,34 @@ export const certificationsApi = createApi({
     }),
 
     /**
+     * Get a current user certificate
+     */
+    getMyCertificate: builder.query<
+      Pagination<Certificate>,
+      CertificationFilters
+    >({
+      query: (filters?: CertificationFilters) => {
+        return `${
+          Endpoint.Certifications
+        }/certificate/${filterBuilder.createFilters(filters || {})}`
+      },
+      providesTags: (result) =>
+        result
+          ? [
+              ...result.data.map(
+                ({ id }) =>
+                  ({
+                    type: Endpoint.Certifications,
+                    id: id,
+                  } as const)
+              ),
+              { type: Endpoint.Certifications, id: 'LIST' },
+            ]
+          : // An error occured, but we still want to refetch this query when the tag is invalidated.
+            [{ type: Endpoint.Certifications, id: 'LIST' }],
+    }),
+
+    /**
      * Get a certificate from a certification by certificate id
      */
     getCertificate: builder.query<Certificate, { id: string }>({
@@ -163,6 +191,7 @@ export const certificationsApi = createApi({
 export const {
   useGetCertificationsQuery,
   useGetCertificateQuery,
+  useGetMyCertificateQuery,
   useGetCertificatesByCertificationQuery,
   useGetCertificationQuery,
   useAddCertificationMutation,

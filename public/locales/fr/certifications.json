@@ -9,5 +9,8 @@
     "owner2": "a terminé avec succès, a obtenu la note de passage et a reçu le certificat d'achèvement :",
     "date": "Obtenu le :"
   },
+  "errors": {
+    "pdf": "Échec de la création du PDF"
+  },
   "empty": "Ce certificat n'existe pas."
 }

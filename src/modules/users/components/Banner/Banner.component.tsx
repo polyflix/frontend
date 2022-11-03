@@ -24,6 +24,7 @@ const BannerTabs = () => {
       '/users/profile/groups',
       '/users/profile/quizzes',
       '/users/profile/attachments',
+      '/users/profile/certifications',
     ],
   })
   const currentTab = routeMatch?.path
@@ -77,6 +78,12 @@ const BannerTabs = () => {
         label={t('profile.tabs.attachments.title')}
         value="/users/profile/attachments"
         to="/users/profile/attachments"
+        component={RouterLink}
+      />
+      <Tab
+        label={t('profile.tabs.certifications.title')}
+        value="/users/profile/certifications"
+        to="/users/profile/certifications"
         component={RouterLink}
       />
     </Tabs>

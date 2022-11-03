@@ -7,6 +7,7 @@ import { ProfileCoursesPage } from '@users/pages/ProfileCourses/ProfileCourses.p
 
 import { ProfilePage } from './pages/Profile/Profile.page'
 import { ProfileAttachmentsPage } from './pages/ProfileAttachments/ProfileAttachments.page'
+import { ProfileCertificationsPage } from './pages/ProfileCertifications/ProfileCertifications.page'
 import { ProfileCollectionsPage } from './pages/ProfileCollections/ProfileCollections.page'
 import { ProfileQuizzesPage } from './pages/ProfileQuizzes/ProfileQuizzes.page'
 import { ProfileVideosPage } from './pages/ProfileVideos/ProfileVideos.page'
@@ -27,6 +28,11 @@ const ProfileRouter = () => {
         />
         <Route exact path={`${url}/courses`} component={ProfileCoursesPage} />
         <Route exact path={`${url}/quizzes`} component={ProfileQuizzesPage} />
+        <Route
+          exact
+          path={`${url}/certifications`}
+          component={ProfileCertificationsPage}
+        />
         <Route
           exact
           path={`${url}/attachments/:mode?/:attachmentId?`}

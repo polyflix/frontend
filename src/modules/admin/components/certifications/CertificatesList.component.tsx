@@ -12,19 +12,15 @@ import {
   Stack,
 } from '@mui/material'
 import dayjs from 'dayjs'
-import { saveAs } from 'file-saver'
 import { capitalize } from 'lodash'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 
-import { useInjection } from '@polyflix/di'
-
 import { LoadingLayout } from '@core/layouts/Loading/Loading.layout'
-import { PdfService } from '@core/services/pdf.service'
-import { SnackbarService } from '@core/services/snackbar.service'
 import { buildSkeletons } from '@core/utils/gui.utils'
 
+import { useDownloadCertificatePdf } from '@certifications/hooks/useDownloadCertificatePdf.hook'
 import {
   Certificate,
   Certification,
@@ -38,7 +34,6 @@ type PropsCertificatesList = {
 export const CertificatesList = ({ certification }: PropsCertificatesList) => {
   const { t } = useTranslation('administration')
   const ghosts = buildSkeletons(3)
-  const snackbarService = useInjection<SnackbarService>(SnackbarService)
   const [selected, setSelected] = useState<Certificate>()
   const {
     data: results,
@@ -48,26 +43,7 @@ export const CertificatesList = ({ certification }: PropsCertificatesList) => {
     id: certification.id!,
   })
 
-  const pdfService = useInjection<PdfService>(PdfService)
-
-  const [isPdfLoading, setIsPdfLoading] = useState(false)
-
-  const downloadPdf = async (certificate: Certificate) => {
-    try {
-      setIsPdfLoading(true)
-      let blob = await pdfService.getCertificatePdfQuery(certificate.id!)
-      saveAs(
-        blob,
-        `polyflix_certification_${certification.name.toLocaleLowerCase()}}`
-      )
-    } catch (error) {
-      snackbarService.createSnackbar(t('certifications.page.errors.pdf'), {
-        variant: 'error',
-      })
-    } finally {
-      setIsPdfLoading(false)
-    }
-  }
+  const { download: downloadPdf, isPdfLoading } = useDownloadCertificatePdf()
 
   return !isLoading && results && results.data ? (
     <>
