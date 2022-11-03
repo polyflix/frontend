@@ -79,6 +79,7 @@ export const AdminVideoPage = () => {
         sx={{
           height: '80vh',
           width: '100%',
+          '& .MuiDataGrid-row': { cursor: 'pointer' },
         }}
         isRowSelectable={() => false}
         loading={isLoading || isFetching}
