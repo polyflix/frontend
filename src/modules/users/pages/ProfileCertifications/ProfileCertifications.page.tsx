@@ -19,7 +19,7 @@ import { CertificationFilters } from '@certifications/types/filters.type'
 import {
   ProfileCertificationsListItem,
   ProfileCertificationsListItemSkeleton,
-} from './ProfileCertificationsListItem.component'
+} from '../../../certifications/components/ProfileCertificationsListItem.component'
 
 export const ProfileCertificationsPage = () => {
   const { t } = useTranslation('users')

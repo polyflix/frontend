@@ -1,6 +1,5 @@
 import { PictureAsPdf } from '@mui/icons-material'
 import {
-  Box,
   IconButton,
   ListItem,
   ListItemIcon,
@@ -8,8 +7,11 @@ import {
   Paper,
   Skeleton,
   Stack,
+  Typography,
 } from '@mui/material'
 import dayjs from 'dayjs'
+import { capitalize } from 'lodash'
+import { Link } from 'react-router-dom'
 
 import { Icon } from '@core/components/Icon/Icon.component'
 
@@ -37,14 +39,24 @@ export const ProfileCertificationsListItem = ({ certificate }: Props) => {
       }
     >
       <ListItemIcon>
-        <IconButton>
-          <Icon name="carbon:user-certification" size={30} />
-        </IconButton>
+        <Icon name="carbon:user-certification" size={30} />
       </ListItemIcon>
       <ListItemText>
         <Stack justifyContent="space-between" direction="column">
-          <Box>{certificate.certification.name}</Box>
-          <Box>{dayjs(certificate.createdAt).format('MM/DD/YYYY')}</Box>
+          <Typography
+            variant="body1"
+            component={Link}
+            to={`/certificate/${certificate.id}`}
+            target="_blank"
+          >
+            {certificate.certification.name}
+          </Typography>
+          <Typography variant="body1">
+            {capitalize(`${certificate.firstName} ${certificate.lastName}`)}
+          </Typography>
+          <Typography variant="caption">
+            {dayjs(certificate.createdAt).format('MM/DD/YYYY')}
+          </Typography>
         </Stack>
       </ListItemText>
     </ListItem>
