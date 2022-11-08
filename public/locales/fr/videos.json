@@ -110,7 +110,7 @@
       "tooltips": {
         "likes": "{{count}} j'aime(s)",
         "views": "{{count}} vue",
-        "seeProfile": "Voir le profile"
+        "seeProfile": "Voir le profil"
       },
       "menu": {
         "items": {

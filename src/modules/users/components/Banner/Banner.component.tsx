@@ -3,7 +3,7 @@ import Tab from '@mui/material/Tab'
 import Tabs from '@mui/material/Tabs'
 import Typography from '@mui/material/Typography'
 import { useTranslation } from 'react-i18next'
-import { Link as RouterLink, useRouteMatch } from 'react-router-dom'
+import { Link as RouterLink, useParams, useRouteMatch } from 'react-router-dom'
 
 import {
   getUserFullname,
@@ -16,15 +16,17 @@ import { BannerHead } from './Banner.style'
 
 const BannerTabs = () => {
   const { t } = useTranslation('users')
+  const { id } = useParams<{ id: string }>()
+
   const routeMatch = useRouteMatch({
     path: [
-      '/users/profile/videos',
-      '/users/profile/courses',
-      '/users/profile/modules',
-      '/users/profile/groups',
-      '/users/profile/quizzes',
       '/users/profile/attachments',
       '/users/profile/certifications',
+      `/users${id ? `/${id}` : ''}/profile/videos`,
+      `/users${id ? `/${id}` : ''}/profile/courses`,
+      `/users${id ? `/${id}` : ''}/profile/modules`,
+      `/users${id ? `/${id}` : ''}/profile/groups`,
+      `/users${id ? `/${id}` : ''}/profile/quizzes`,
     ],
   })
   const currentTab = routeMatch?.path
@@ -46,46 +48,50 @@ const BannerTabs = () => {
     >
       <Tab
         label={t('profile.tabs.videos.title')}
-        value="/users/profile/videos"
-        to="/users/profile/videos"
+        value={`/users${id ? `/${id}` : ''}/profile/videos`}
+        to={`/users${id ? `/${id}` : ''}/profile/videos`}
         component={RouterLink}
       />
       <Tab
         label={t('profile.tabs.courses.title')}
-        value="/users/profile/courses"
-        to="/users/profile/courses"
+        value={`/users${id ? `/${id}` : ''}/profile/courses`}
+        to={`/users${id ? `/${id}` : ''}/profile/courses`}
         component={RouterLink}
       />
       <Tab
         label={t('profile.tabs.collections.title')}
-        value="/users/profile/modules"
-        to="/users/profile/modules"
+        value={`/users${id ? `/${id}` : ''}/profile/modules`}
+        to={`/users${id ? `/${id}` : ''}/profile/modules`}
         component={RouterLink}
       />
       {/* <Tab
         label={t('profile.tabs.groups.title')}
-        value="/users/profile/groups"
-        to="/users/profile/groups"
+        value={`/users${id ? `/${id}` : ''}/profile/groups`}
+        to={`/users${id ? `/${id}` : ''}/profile/groups`}
         component={RouterLink}
       /> */}
       <Tab
         label={t('profile.tabs.quizzes.title')}
-        value="/users/profile/quizzes"
-        to="/users/profile/quizzes"
+        value={`/users${id ? `/${id}` : ''}/profile/quizzes`}
+        to={`/users${id ? `/${id}` : ''}/profile/quizzes`}
         component={RouterLink}
       />
-      <Tab
-        label={t('profile.tabs.attachments.title')}
-        value="/users/profile/attachments"
-        to="/users/profile/attachments"
-        component={RouterLink}
-      />
-      <Tab
-        label={t('profile.tabs.certifications.title')}
-        value="/users/profile/certifications"
-        to="/users/profile/certifications"
-        component={RouterLink}
-      />
+      {!id && (
+        <Tab
+          label={t('profile.tabs.attachments.title')}
+          value="/users/profile/attachments"
+          to="/users/profile/attachments"
+          component={RouterLink}
+        />
+      )}
+      {!id && (
+        <Tab
+          label={t('profile.tabs.certifications.title')}
+          value="/users/profile/certifications"
+          to="/users/profile/certifications"
+          component={RouterLink}
+        />
+      )}
     </Tabs>
   )
 }

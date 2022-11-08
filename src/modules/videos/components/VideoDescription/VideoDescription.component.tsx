@@ -5,15 +5,16 @@ import {
   Stack,
   Paper,
   Grid,
-  Divider, //Link,
+  Divider,
+  Link,
   Tooltip,
   Box,
   Button,
 } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { Link as RouterLink } from 'react-router-dom'
 
-//import { Link as RouterLink } from 'react-router-dom'
 import { Icon } from '@core/components/Icon/Icon.component'
 import { MarkdownBox } from '@core/components/MarkdownBox/MarkdownBox.component'
 import { stringToLongDate, stringToShortDate } from '@core/helpers/date.helper'
@@ -145,23 +146,23 @@ export const VideoDetails = ({ video }: VideoDetailsProps) => {
                 </Stack>
               </Stack>
               <Divider variant="middle" />
-              {/* <Tooltip title={t<string>('slug.details.tooltips.seeProfile')}>
+              <Tooltip title={t<string>('slug.details.tooltips.seeProfile')}>
                 <Link
                   underline="none"
                   variant="caption"
                   color="inherit"
                   component={RouterLink}
                   sx={{ width: 'max-content' }}
-                  to="#"
-                > */}
-              <Stack spacing={1} direction="row" alignItems="center">
-                <UserAvatar user={video.publisher!} />
-                <Typography variant="caption">
-                  {`${video.publisher?.firstName} ${video.publisher?.lastName}`}
-                </Typography>
-              </Stack>
-              {/* </Link>
-              </Tooltip> */}
+                  to={`/users/${video.publisher?.id}/profile/videos`}
+                >
+                  <Stack spacing={1} direction="row" alignItems="center">
+                    <UserAvatar user={video.publisher!} />
+                    <Typography variant="caption">
+                      {`${video.publisher?.firstName} ${video.publisher?.lastName}`}
+                    </Typography>
+                  </Stack>
+                </Link>
+              </Tooltip>
             </Stack>
           ) : (
             <Skeleton variant="text" width="90%" height={35} />

@@ -9,8 +9,6 @@ import { Page } from '@core/components/Page/Page.component'
 import { PaginationSynced } from '@core/components/Pagination/PaginationSynced.component'
 import { buildSkeletons } from '@core/utils/gui.utils'
 
-import { useAuth } from '@auth/hooks/useAuth.hook'
-
 import { CollectionCardSkeleton } from '@collections/components/CollectionCardSkeleton/CollectionCardSkeleton.component'
 
 import { CourseCard } from '@courses/components/CourseCard/CourseCard.component'
@@ -18,9 +16,13 @@ import { Course } from '@courses/models/course.model'
 import { useGetCoursesQuery } from '@courses/services/course.service'
 import { CoursesFilters } from '@courses/types/filters.type'
 
-export const ProfileCoursesPage = () => {
+type Props = {
+  userQuery: any
+}
+
+export const ProfileCoursesPage: React.FC<Props> = ({ userQuery }) => {
   const { t } = useTranslation('users')
-  const { user } = useAuth()
+  const { data: user } = userQuery
   let params = new URLSearchParams(window.location.search)
 
   const [filters, setFilters] = useState<CoursesFilters>({

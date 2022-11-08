@@ -22,8 +22,13 @@ import { Quizz } from '@quizzes/models/quizz.model'
 import { useGetQuizzesQuery } from '@quizzes/services/quizz.service'
 import { QuizzFilters } from '@quizzes/types/filters.type'
 
-export const ProfileQuizzesPage = () => {
-  const { user } = useAuth()
+type Props = {
+  userQuery: any
+}
+
+export const ProfileQuizzesPage: React.FC<Props> = ({ userQuery }) => {
+  const { data: user } = userQuery
+  const { user: me } = useAuth()
   const { t } = useTranslation('users')
   let params = new URLSearchParams(window.location.search)
 
@@ -53,14 +58,16 @@ export const ProfileQuizzesPage = () => {
           title={t('profile.tabs.quizzes.content.title')}
           description={t('profile.tabs.quizzes.content.description')}
         />
-        <Link
-          underline="none"
-          component={RouterLink}
-          color="inherit"
-          to="/quizzes/history"
-        >
-          {t('profile.actions.history')}
-        </Link>
+        {me.id === user.id && (
+          <Link
+            underline="none"
+            component={RouterLink}
+            color="inherit"
+            to="/quizzes/history"
+          >
+            {t('profile.actions.history')}
+          </Link>
+        )}
       </Stack>
       <Divider sx={{ my: 3 }} />
 

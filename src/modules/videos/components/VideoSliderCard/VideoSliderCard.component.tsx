@@ -147,20 +147,27 @@ export const VideoSliderCard = ({ video, isFetching = false }: Props) => {
             }}
             direction="row"
           >
-            <UserAvatar
-              sx={{
-                borderRadius: '100%',
-                width: {
-                  xs: 30,
-                  sm: 40,
-                },
-                height: {
-                  xs: 30,
-                  sm: 40,
-                },
-              }}
-              user={video.publisher!}
-            />
+            <Link
+              underline="none"
+              color="inherit"
+              to={`/users/${video.publisher?.id}/profile/videos`}
+              component={RouterLink}
+            >
+              <UserAvatar
+                sx={{
+                  borderRadius: '100%',
+                  width: {
+                    xs: 30,
+                    sm: 40,
+                  },
+                  height: {
+                    xs: 30,
+                    sm: 40,
+                  },
+                }}
+                user={video.publisher!}
+              />
+            </Link>
             <Box
               sx={{
                 pl: 1,

@@ -20,9 +20,14 @@ import { Video } from '@videos/models/video.model'
 import { useGetVideosQuery } from '@videos/services/video.service'
 import { VideoFilters } from '@videos/types/filters.type'
 
-export const ProfileVideosPage = () => {
+type Props = {
+  userQuery: any
+}
+
+export const ProfileVideosPage: React.FC<Props> = ({ userQuery }) => {
   const { t } = useTranslation('users')
-  const { user } = useAuth()
+  const { data: user } = userQuery
+  const { user: me } = useAuth()
   let params = new URLSearchParams(window.location.search)
 
   const [filters, setFilters] = useState<VideoFilters>({
@@ -52,15 +57,17 @@ export const ProfileVideosPage = () => {
           title={t('profile.tabs.videos.content.title')}
           description={t('profile.tabs.videos.content.description')}
         />
-        <Button
-          startIcon={<HistoryRounded />}
-          variant="outlined"
-          component={RouterLink}
-          color="inherit"
-          to="/videos/history"
-        >
-          {t('profile.actions.history')}
-        </Button>
+        {me.id === user.id && (
+          <Button
+            startIcon={<HistoryRounded />}
+            variant="outlined"
+            component={RouterLink}
+            color="inherit"
+            to="/videos/history"
+          >
+            {t('profile.actions.history')}
+          </Button>
+        )}
       </Stack>
 
       <Divider sx={{ my: 3 }} />

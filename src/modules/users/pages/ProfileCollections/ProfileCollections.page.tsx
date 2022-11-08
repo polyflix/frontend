@@ -17,9 +17,13 @@ import { Collection } from '@collections/models/collection.model'
 import { useGetCollectionsQuery } from '@collections/services/collection.service'
 import { CollectionFilters } from '@collections/types/filters.type'
 
-export const ProfileCollectionsPage = () => {
+type Props = {
+  userQuery: any
+}
+
+export const ProfileCollectionsPage: React.FC<Props> = ({ userQuery }) => {
   const { t } = useTranslation('users')
-  const { user } = useAuth()
+  const { data: user } = userQuery
   let params = new URLSearchParams(window.location.search)
 
   const [filters, setFilters] = useState<CollectionFilters>({

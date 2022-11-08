@@ -1,7 +1,15 @@
-import { Route, Switch, useRouteMatch } from 'react-router-dom'
+import {
+  Route,
+  Switch,
+  useHistory,
+  useParams,
+  useRouteMatch,
+} from 'react-router-dom'
 
 import { NotFoundPage } from '@core/pages/404.page'
 import { NotImplementedPage } from '@core/pages/NotImplemented.page'
+
+import { useAuth } from '@auth/hooks/useAuth.hook'
 
 import { ProfileCoursesPage } from '@users/pages/ProfileCourses/ProfileCourses.page'
 
@@ -12,22 +20,40 @@ import { ProfileCollectionsPage } from './pages/ProfileCollections/ProfileCollec
 import { ProfileQuizzesPage } from './pages/ProfileQuizzes/ProfileQuizzes.page'
 import { ProfileVideosPage } from './pages/ProfileVideos/ProfileVideos.page'
 import { EditProfilePage } from './pages/UpdateProfile/UpdateProfile.page'
+import { useGetUserQuery } from './services/user.service'
 
 const ProfileRouter = () => {
-  const { url } = useRouteMatch()
+  let { url } = useRouteMatch()
+  const history = useHistory()
+  const { id } = useParams<{ id: string }>()
+  const { user: me } = useAuth()
+  const userQuery = useGetUserQuery(id || me?.id!)
+  if (me?.id === id) history.push('/users/profile/videos')
 
   return (
-    <ProfilePage>
+    <ProfilePage userQuery={userQuery}>
       <Switch>
         <Route exact path={`${url}`} component={NotImplementedPage} />
-        <Route exact path={`${url}/videos`} component={ProfileVideosPage} />
+        <Route
+          exact
+          path={`${url}/videos`}
+          component={() => <ProfileVideosPage userQuery={userQuery} />}
+        />
         <Route
           exact
           path={`${url}/modules`}
-          component={ProfileCollectionsPage}
+          component={() => <ProfileCollectionsPage userQuery={userQuery} />}
         />
-        <Route exact path={`${url}/courses`} component={ProfileCoursesPage} />
-        <Route exact path={`${url}/quizzes`} component={ProfileQuizzesPage} />
+        <Route
+          exact
+          path={`${url}/courses`}
+          component={() => <ProfileCoursesPage userQuery={userQuery} />}
+        />
+        <Route
+          exact
+          path={`${url}/quizzes`}
+          component={() => <ProfileQuizzesPage userQuery={userQuery} />}
+        />
         <Route
           exact
           path={`${url}/certifications`}

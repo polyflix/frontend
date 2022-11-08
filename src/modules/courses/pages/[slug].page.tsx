@@ -148,11 +148,23 @@ export const CourseSlugPage = () => {
             <Grid item xs={12} md={4}>
               <Stack sx={{ height: '100%' }}>
                 {course?.user?.avatar ? (
-                  <Avatar
-                    sx={{ width: '100px', height: '100px', margin: 'auto' }}
-                    variant="rounded"
-                    src={course.user.avatar}
-                  />
+                  <Tooltip
+                    title={t<string>('slug.details.tooltips.seeProfile')}
+                  >
+                    <Link
+                      underline="none"
+                      color="inherit"
+                      component={RouterLink}
+                      sx={{ margin: 'auto' }}
+                      to={`/users/${course.user.id}/profile/videos`}
+                    >
+                      <Avatar
+                        sx={{ width: '100px', height: '100px' }}
+                        variant="rounded"
+                        src={course.user.avatar}
+                      />
+                    </Link>
+                  </Tooltip>
                 ) : (
                   <Skeleton
                     sx={{
@@ -166,9 +178,20 @@ export const CourseSlugPage = () => {
                   />
                 )}
                 {course?.user?.firstName && course?.user?.lastName ? (
-                  <Typography sx={{ textAlign: 'center' }} variant={'h5'}>
-                    {course.user.firstName} {course.user.lastName}
-                  </Typography>
+                  <Tooltip
+                    title={t<string>('slug.details.tooltips.seeProfile')}
+                  >
+                    <Link
+                      underline="none"
+                      color="inherit"
+                      component={RouterLink}
+                      to={`/users/${course.user.id}/profile/videos`}
+                    >
+                      <Typography sx={{ textAlign: 'center' }} variant={'h5'}>
+                        {course.user.firstName} {course.user.lastName}
+                      </Typography>
+                    </Link>
+                  </Tooltip>
                 ) : (
                   <Skeleton
                     sx={{

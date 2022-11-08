@@ -1,25 +1,37 @@
-import { Grid } from '@mui/material'
-import Button from '@mui/material/Button'
-import Typography from '@mui/material/Typography'
-import React, { PropsWithChildren } from 'react'
+import { Button, Grid, Typography } from '@mui/material'
+import { QueryReturnValue } from '@reduxjs/toolkit/dist/query/baseQueryTypes'
+import { PropsWithChildren, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Link as RouterLink } from 'react-router-dom'
+import { Link as RouterLink, useParams } from 'react-router-dom'
 
 import { Icon } from '@core/components/Icon/Icon.component'
 import { Page } from '@core/components/Page/Page.component'
 
 import { useAuth } from '@auth/hooks/useAuth.hook'
 
-import { ProfileBanner } from '@users/components/Banner/Banner.component'
 import { getUsernameToDisplay } from '@users/helpers/displayUsername.helper'
 
-export const ProfilePage: React.FC<PropsWithChildren<{}>> = ({ children }) => {
-  const { t } = useTranslation('users')
+import { ProfileBanner } from '../../components/Banner/Banner.component'
 
-  const { user } = useAuth()
+type Props = {
+  userQuery: any
+}
+
+export const ProfilePage: React.FC<PropsWithChildren<Props>> = ({
+  children,
+  userQuery,
+}) => {
+  const { t } = useTranslation('users')
+  const { id } = useParams<{ id: string }>()
+  const { user: me } = useAuth()
+
+  const { isLoading, isFetching, data: user, refetch, error } = userQuery
+
+  useEffect(() => refetch(), [id])
 
   return (
     <Page
+      isLoading={isLoading || isFetching}
       title={t('profile.title.view') + getUsernameToDisplay(user!)}
       maxWidth={'xl'}
       sx={{
@@ -40,14 +52,16 @@ export const ProfilePage: React.FC<PropsWithChildren<{}>> = ({ children }) => {
         <Typography sx={{ mb: 2 }} align="left" variant="h3">
           {t('profile.title.view') + getUsernameToDisplay(user!)}
         </Typography>
-        <Button
-          variant="outlined"
-          component={RouterLink}
-          to="/users/profile/settings"
-          startIcon={<Icon name="ci:settings" />}
-        >
-          {t('profile.actions.edit')}
-        </Button>
+        {me!.id === id && (
+          <Button
+            variant="outlined"
+            component={RouterLink}
+            to="/users/profile/settings"
+            startIcon={<Icon name="ci:settings" />}
+          >
+            {t('profile.actions.edit')}
+          </Button>
+        )}
       </Grid>
       <ProfileBanner user={user!} />
       {children}
