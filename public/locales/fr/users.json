@@ -28,6 +28,10 @@
         "content": {
           "title": "Mes vidéos",
           "description": "Voici la liste de vos vidéos. Sur cette page, vous pouvez les modifier, les supprimer."
+        },
+        "contentOther": {
+          "title": "Les vidéos de",
+          "description": "Voici la liste des vidéos de"
         }
       },
       "collections": {
@@ -35,6 +39,10 @@
         "content": {
           "title": "Mes modules",
           "description": "Voici la liste de vos modules. Sur cette page, vous pouvez les modifier, les supprimer ou bien consulter leurs contenu."
+        },
+        "contentOther": {
+          "title": "Les modules de",
+          "description": "Voici la liste des modules de"
         }
       },
       "groups": {
@@ -45,6 +53,10 @@
         "content": {
           "title": "Mes quiz",
           "description": "Voici la liste de vos quiz. Sur cette page, vous pouvez les modifier, les supprimer ou bien consulter leurs résultats."
+        },
+        "contentOther": {
+          "title": "Les quiz de",
+          "description": "Voici la liste des quiz de"
         }
       },
       "courses": {
@@ -52,6 +64,10 @@
         "content": {
           "title": "Mes cours",
           "description": "Voici la liste de vos cours. Sur cette page, vous pouvez les modifier, les supprimer ou bien consulter leurs contenu."
+        },
+        "contentOther": {
+          "title": "Les cours de",
+          "description": "Voici la liste des cours de"
         }
       },
       "attachments": {

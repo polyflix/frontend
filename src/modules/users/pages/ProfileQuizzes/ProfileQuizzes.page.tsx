@@ -22,13 +22,16 @@ import { Quizz } from '@quizzes/models/quizz.model'
 import { useGetQuizzesQuery } from '@quizzes/services/quizz.service'
 import { QuizzFilters } from '@quizzes/types/filters.type'
 
+import { getUsernameToDisplay } from '@users/helpers/displayUsername.helper'
+import { User } from '@users/models/user.model'
+
 type Props = {
-  userQuery: any
+  user: User | undefined
 }
 
-export const ProfileQuizzesPage: React.FC<Props> = ({ userQuery }) => {
-  const { data: user } = userQuery
+export const ProfileQuizzesPage: React.FC<Props> = ({ user }: Props) => {
   const { user: me } = useAuth()
+  const isMe = me!.id === user!.id
   const { t } = useTranslation('users')
   let params = new URLSearchParams(window.location.search)
 
@@ -51,14 +54,32 @@ export const ProfileQuizzesPage: React.FC<Props> = ({ userQuery }) => {
     <Page
       disableGutters={true}
       sx={{ mt: 3 }}
-      title={t('profile.tabs.quizzes.content.title')}
+      title={
+        isMe
+          ? t('profile.tabs.quizzes.content.title')
+          : `${t(
+              'profile.tabs.quizzes.contentOther.title'
+            )} ${getUsernameToDisplay(user!)}`
+      }
     >
       <Stack justifyContent="space-between" direction="row">
         <Header
-          title={t('profile.tabs.quizzes.content.title')}
-          description={t('profile.tabs.quizzes.content.description')}
+          title={
+            isMe
+              ? t('profile.tabs.quizzes.content.title')
+              : `${t(
+                  'profile.tabs.quizzes.contentOther.title'
+                )} ${getUsernameToDisplay(user!)}`
+          }
+          description={
+            isMe
+              ? t('profile.tabs.quizzes.content.description')
+              : `${t(
+                  'profile.tabs.quizzes.contentOther.description'
+                )} ${getUsernameToDisplay(user!)}.`
+          }
         />
-        {me.id === user.id && (
+        {me!.id === user!.id && (
           <Link
             underline="none"
             component={RouterLink}

@@ -27,32 +27,32 @@ const ProfileRouter = () => {
   const history = useHistory()
   const { id } = useParams<{ id: string }>()
   const { user: me } = useAuth()
-  const userQuery = useGetUserQuery(id || me?.id!)
+  const { data } = useGetUserQuery(id || me?.id!)
   if (me?.id === id) history.push('/users/profile/videos')
 
   return (
-    <ProfilePage userQuery={userQuery}>
+    <ProfilePage>
       <Switch>
         <Route exact path={`${url}`} component={NotImplementedPage} />
         <Route
           exact
           path={`${url}/videos`}
-          component={() => <ProfileVideosPage userQuery={userQuery} />}
+          component={() => <ProfileVideosPage user={data} />}
         />
         <Route
           exact
           path={`${url}/modules`}
-          component={() => <ProfileCollectionsPage userQuery={userQuery} />}
+          component={() => <ProfileCollectionsPage user={data} />}
         />
         <Route
           exact
           path={`${url}/courses`}
-          component={() => <ProfileCoursesPage userQuery={userQuery} />}
+          component={() => <ProfileCoursesPage user={data} />}
         />
         <Route
           exact
           path={`${url}/quizzes`}
-          component={() => <ProfileQuizzesPage userQuery={userQuery} />}
+          component={() => <ProfileQuizzesPage user={data} />}
         />
         <Route
           exact

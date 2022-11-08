@@ -17,13 +17,17 @@ import { Collection } from '@collections/models/collection.model'
 import { useGetCollectionsQuery } from '@collections/services/collection.service'
 import { CollectionFilters } from '@collections/types/filters.type'
 
+import { getUsernameToDisplay } from '@users/helpers/displayUsername.helper'
+import { User } from '@users/models/user.model'
+
 type Props = {
-  userQuery: any
+  user: User | undefined
 }
 
-export const ProfileCollectionsPage: React.FC<Props> = ({ userQuery }) => {
+export const ProfileCollectionsPage: React.FC<Props> = ({ user }: Props) => {
   const { t } = useTranslation('users')
-  const { data: user } = userQuery
+  const { user: me } = useAuth()
+  const isMe = me!.id === user!.id
   let params = new URLSearchParams(window.location.search)
 
   const [filters, setFilters] = useState<CollectionFilters>({
@@ -45,12 +49,30 @@ export const ProfileCollectionsPage: React.FC<Props> = ({ userQuery }) => {
   return (
     <Page
       disableGutters={true}
-      title={t('profile.tabs.collections.content.title')}
+      title={
+        isMe
+          ? t('profile.tabs.collections.content.title')
+          : `${t(
+              'profile.tabs.collections.contentOther.title'
+            )} ${getUsernameToDisplay(user!)}`
+      }
       sx={{ mt: 3 }}
     >
       <Header
-        title={t('profile.tabs.collections.content.title')}
-        description={t('profile.tabs.collections.content.description')}
+        title={
+          isMe
+            ? t('profile.tabs.collections.content.title')
+            : `${t(
+                'profile.tabs.collections.contentOther.title'
+              )} ${getUsernameToDisplay(user!)}`
+        }
+        description={
+          isMe
+            ? t('profile.tabs.collections.content.description')
+            : `${t(
+                'profile.tabs.collections.contentOther.description'
+              )} ${getUsernameToDisplay(user!)}.`
+        }
       />
 
       <Divider sx={{ my: 3 }} />

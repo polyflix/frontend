@@ -1,6 +1,5 @@
 import { Button, Grid, Typography } from '@mui/material'
-import { QueryReturnValue } from '@reduxjs/toolkit/dist/query/baseQueryTypes'
-import { PropsWithChildren, useEffect } from 'react'
+import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link as RouterLink, useParams } from 'react-router-dom'
 
@@ -10,22 +9,20 @@ import { Page } from '@core/components/Page/Page.component'
 import { useAuth } from '@auth/hooks/useAuth.hook'
 
 import { getUsernameToDisplay } from '@users/helpers/displayUsername.helper'
+import { useGetUserQuery } from '@users/services/user.service'
 
 import { ProfileBanner } from '../../components/Banner/Banner.component'
 
 type Props = {
-  userQuery: any
+  children?: React.ReactNode
 }
 
-export const ProfilePage: React.FC<PropsWithChildren<Props>> = ({
-  children,
-  userQuery,
-}) => {
+export const ProfilePage: React.FC = ({ children }: Props) => {
   const { t } = useTranslation('users')
   const { id } = useParams<{ id: string }>()
   const { user: me } = useAuth()
-
-  const { isLoading, isFetching, data: user, refetch, error } = userQuery
+  const userQuery = useGetUserQuery(id || me?.id!)
+  const { isLoading, isFetching, data: user, refetch } = userQuery
 
   useEffect(() => refetch(), [id])
 

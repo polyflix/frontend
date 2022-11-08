@@ -20,14 +20,17 @@ import { Video } from '@videos/models/video.model'
 import { useGetVideosQuery } from '@videos/services/video.service'
 import { VideoFilters } from '@videos/types/filters.type'
 
+import { getUsernameToDisplay } from '@users/helpers/displayUsername.helper'
+import { User } from '@users/models/user.model'
+
 type Props = {
-  userQuery: any
+  user: User | undefined
 }
 
-export const ProfileVideosPage: React.FC<Props> = ({ userQuery }) => {
+export const ProfileVideosPage: React.FC<Props> = ({ user }: Props) => {
   const { t } = useTranslation('users')
-  const { data: user } = userQuery
   const { user: me } = useAuth()
+  const isMe = me!.id === user!.id
   let params = new URLSearchParams(window.location.search)
 
   const [filters, setFilters] = useState<VideoFilters>({
@@ -50,14 +53,32 @@ export const ProfileVideosPage: React.FC<Props> = ({ userQuery }) => {
     <Page
       disableGutters={true}
       sx={{ mt: 3 }}
-      title={t('profile.tabs.videos.content.title')}
+      title={
+        isMe
+          ? t('profile.tabs.videos.content.title')
+          : `${t(
+              'profile.tabs.videos.contentOther.title'
+            )} ${getUsernameToDisplay(user!)}`
+      }
     >
       <Stack justifyContent="space-between" direction="row" alignItems="start">
         <Header
-          title={t('profile.tabs.videos.content.title')}
-          description={t('profile.tabs.videos.content.description')}
+          title={
+            isMe
+              ? t('profile.tabs.videos.content.title')
+              : `${t(
+                  'profile.tabs.videos.contentOther.title'
+                )} ${getUsernameToDisplay(user!)}`
+          }
+          description={
+            isMe
+              ? t('profile.tabs.videos.content.description')
+              : `${t(
+                  'profile.tabs.videos.contentOther.description'
+                )} ${getUsernameToDisplay(user!)}.`
+          }
         />
-        {me.id === user.id && (
+        {me!.id === user!.id && (
           <Button
             startIcon={<HistoryRounded />}
             variant="outlined"

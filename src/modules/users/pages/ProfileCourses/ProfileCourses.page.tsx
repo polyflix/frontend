@@ -9,6 +9,8 @@ import { Page } from '@core/components/Page/Page.component'
 import { PaginationSynced } from '@core/components/Pagination/PaginationSynced.component'
 import { buildSkeletons } from '@core/utils/gui.utils'
 
+import { useAuth } from '@auth/hooks/useAuth.hook'
+
 import { CollectionCardSkeleton } from '@collections/components/CollectionCardSkeleton/CollectionCardSkeleton.component'
 
 import { CourseCard } from '@courses/components/CourseCard/CourseCard.component'
@@ -16,13 +18,17 @@ import { Course } from '@courses/models/course.model'
 import { useGetCoursesQuery } from '@courses/services/course.service'
 import { CoursesFilters } from '@courses/types/filters.type'
 
+import { getUsernameToDisplay } from '@users/helpers/displayUsername.helper'
+import { User } from '@users/models/user.model'
+
 type Props = {
-  userQuery: any
+  user: User | undefined
 }
 
-export const ProfileCoursesPage: React.FC<Props> = ({ userQuery }) => {
+export const ProfileCoursesPage: React.FC<Props> = ({ user }: Props) => {
   const { t } = useTranslation('users')
-  const { data: user } = userQuery
+  const { user: me } = useAuth()
+  const isMe = me!.id === user!.id
   let params = new URLSearchParams(window.location.search)
 
   const [filters, setFilters] = useState<CoursesFilters>({
@@ -43,12 +49,30 @@ export const ProfileCoursesPage: React.FC<Props> = ({ userQuery }) => {
   return (
     <Page
       disableGutters={true}
-      title={t('profile.tabs.courses.content.title')}
+      title={
+        isMe
+          ? t('profile.tabs.courses.content.title')
+          : `${t(
+              'profile.tabs.courses.contentOther.title'
+            )} ${getUsernameToDisplay(user!)}`
+      }
       sx={{ mt: 3 }}
     >
       <Header
-        title={t('profile.tabs.courses.content.title')}
-        description={t('profile.tabs.courses.content.description')}
+        title={
+          isMe
+            ? t('profile.tabs.courses.content.title')
+            : `${t(
+                'profile.tabs.courses.contentOther.title'
+              )} ${getUsernameToDisplay(user!)}`
+        }
+        description={
+          isMe
+            ? t('profile.tabs.courses.content.description')
+            : `${t(
+                'profile.tabs.courses.contentOther.description'
+              )} ${getUsernameToDisplay(user!)}.`
+        }
       />
 
       <Divider sx={{ my: 3 }} />

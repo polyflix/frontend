@@ -28,6 +28,10 @@
         "content": {
           "title": "My videos",
           "description": "Here is the list of your videos. On this page, you can edit them, delete them."
+        },
+        "contentOther": {
+          "title": "Videos of",
+          "description": "Here is the list of videos of"
         }
       },
       "collections": {
@@ -35,6 +39,10 @@
         "content": {
           "title": "My modules",
           "description": "Here is the list of your modules. On this page, you can edit them, delete them or consult their content."
+        },
+        "contentOther": {
+          "title": "Modules of",
+          "description": "Here is the list of modules of"
         }
       },
       "groups": {
@@ -45,6 +53,10 @@
         "content": {
           "title": "My quizzes",
           "description": "Here is the list of your quizzes. On this page, you can edit them, delete them or consult their results."
+        },
+        "contentOther": {
+          "title": "Quizzes of",
+          "description": "Here is the list of quizzes of"
         }
       },
       "courses": {
@@ -52,6 +64,10 @@
         "content": {
           "title": "My courses",
           "description": "Here is the list of your courses. On this page, you can edit them, delete them or consult their content."
+        },
+        "contentOther": {
+          "title": "Courses of",
+          "description": "Here is the list of courses of"
         }
       },
       "attachments": {
