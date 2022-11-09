@@ -24,7 +24,7 @@ export const ProfilePage: React.FC = ({ children }: Props) => {
   const userQuery = useGetUserQuery(id || me?.id!)
   const { isLoading, isFetching, data: user, refetch } = userQuery
 
-  useEffect(() => refetch(), [id])
+  useEffect(refetch, [id])
 
   return (
     <Page
@@ -49,7 +49,7 @@ export const ProfilePage: React.FC = ({ children }: Props) => {
         <Typography sx={{ mb: 2 }} align="left" variant="h3">
           {t('profile.title.view') + getUsernameToDisplay(user!)}
         </Typography>
-        {me!.id === id && (
+        {me && me.id === id && (
           <Button
             variant="outlined"
             component={RouterLink}

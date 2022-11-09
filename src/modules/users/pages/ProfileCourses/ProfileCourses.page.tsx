@@ -28,7 +28,7 @@ type Props = {
 export const ProfileCoursesPage: React.FC<Props> = ({ user }: Props) => {
   const { t } = useTranslation('users')
   const { user: me } = useAuth()
-  const isMe = me!.id === user!.id
+  const isMe = me && user && me.id === user.id
   let params = new URLSearchParams(window.location.search)
 
   const [filters, setFilters] = useState<CoursesFilters>({

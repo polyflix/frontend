@@ -31,7 +31,7 @@ type Props = {
 
 export const ProfileQuizzesPage: React.FC<Props> = ({ user }: Props) => {
   const { user: me } = useAuth()
-  const isMe = me!.id === user!.id
+  const isMe = me && user && me.id === user.id
   const { t } = useTranslation('users')
   let params = new URLSearchParams(window.location.search)
 
