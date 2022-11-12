@@ -3,7 +3,10 @@
   "explore": {
     "title": "Explorer les quiz",
     "description": "Retrouvez ci-dessous tous les quiz. Vous pouvez rechercher un quiz par son nom ou par le nom de la personne qui l'a publié.",
-    "descriptionWithSearch": "Retrouvez ci-dessous tous les quiz."
+    "descriptionWithSearch": "Retrouvez ci-dessous tous les quiz.",
+    "actions": {
+      "create": "Créer un quiz"
+    }
   },
   "card": {
     "tags": {

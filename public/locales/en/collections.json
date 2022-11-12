@@ -16,6 +16,9 @@
       "tags": {
         "draft": "Draft"
       }
+    },
+    "actions": {
+      "create": "Create a module"
     }
   },
   "visibility": {

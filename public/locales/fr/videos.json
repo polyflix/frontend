@@ -3,7 +3,10 @@
   "explore": {
     "title": "Explorer les vidéos",
     "description": "Retrouvez ci-dessous toutes les vidéos.",
-    "descriptionWithSearch": "Retrouvez ci-dessous toutes les vidéos. Vous pouvez rechercher une vidéo par son nom ou par le nom de la personne qui l'a publiée."
+    "descriptionWithSearch": "Retrouvez ci-dessous toutes les vidéos. Vous pouvez rechercher une vidéo par son nom ou par le nom de la personne qui l'a publiée.",
+    "actions": {
+      "create": "Créer une vidéo"
+    }
   },
   "page": {
     "panel": {

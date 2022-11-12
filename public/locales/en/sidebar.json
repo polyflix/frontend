@@ -20,13 +20,6 @@
     "courses": "Courses",
     "collections": "Modules"
   },
-  "myContent": {
-    "videos": "Videos",
-    "quizzes": "Quizzes",
-    "courses": "Courses",
-    "attachments": "Attachments",
-    "collections": "Modules"
-  },
   "administration": {
     "resources": {
       "label": "Resources",

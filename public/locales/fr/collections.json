@@ -16,6 +16,9 @@
       "tags": {
         "draft": "Brouillon"
       }
+    },
+    "actions": {
+      "create": "Créer un module"
     }
   },
   "visibility": {
