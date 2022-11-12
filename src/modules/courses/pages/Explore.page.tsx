@@ -1,10 +1,15 @@
-import { Box, Grid, Stack, Typography } from '@mui/material'
+import { Add } from '@mui/icons-material'
+import { Box, Button, Divider, Grid } from '@mui/material'
 import { useState } from 'react'
-import { Trans, useTranslation } from 'react-i18next'
+import { useTranslation } from 'react-i18next'
+import { Link as RouterLink } from 'react-router-dom'
 
+import { Header } from '@core/components/Header/Header.component'
 import { NoData } from '@core/components/NoData/NoData.component'
 import { Page } from '@core/components/Page/Page.component'
 import { PaginationSynced } from '@core/components/Pagination/PaginationSynced.component'
+import { useRoles } from '@core/hooks/useRoles.hook'
+import { Role } from '@core/types/roles.type'
 import { buildSkeletons } from '@core/utils/gui.utils'
 
 import { CollectionCardSkeleton } from '@collections/components/CollectionCardSkeleton/CollectionCardSkeleton.component'
@@ -25,6 +30,7 @@ export const ExploreCoursesPage = () => {
 
   const { data, isLoading, isFetching } = useGetCoursesQuery(filters)
 
+  const { hasRoles } = useRoles()
   const courses: Course[] = data?.data ?? []
   const skeletons = buildSkeletons(3)
 
@@ -32,26 +38,24 @@ export const ExploreCoursesPage = () => {
 
   return (
     <Page title={t('explore.title')} isLoading={isLoading}>
-      <Grid container spacing={3}>
-        <Stack spacing={3}>
-          <Typography variant="h1">
-            <Trans
-              i18nKey="explore.bodyTitle"
-              ns={'courses'}
-              components={{
-                colored: (
-                  <Box component={'div'} sx={{ color: 'primary.main' }} />
-                ),
-              }}
-            />
-          </Typography>
-          <Typography
-            variant="h4"
-            sx={{ fontWeight: '400', color: 'text.secondary' }}
+      <Header
+        title={t('explore.title')}
+        description={t('explore.description')}
+        hideActionButton={!hasRoles([Role.Admin, Role.Contributor])}
+        actionButton={
+          <Button
+            variant="contained"
+            startIcon={<Add />}
+            component={RouterLink}
+            to={`/courses/create`}
           >
-            {t('explore.description')}
-          </Typography>
-        </Stack>
+            {t('explore.actions.create')}
+          </Button>
+        }
+      />
+      <Divider sx={{ my: 3 }} />
+
+      <Grid sx={{ my: 3 }} container spacing={3}>
         {!isFetching
           ? courses.map((course: Course) => (
               <Grid item xs={12} sm={6} lg={4} key={course.id}>

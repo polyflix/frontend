@@ -3,7 +3,10 @@
   "explore": {
     "title": "Explore quizzes",
     "description": "Find below all the quizzes.",
-    "descriptionWithSearch": "Find below all the quizzes. You can search for a quizz by its name or by the name of the person who published it."
+    "descriptionWithSearch": "Find below all the quizzes. You can search for a quizz by its name or by the name of the person who published it.",
+    "actions": {
+      "create": "Create a quizz"
+    }
   },
   "card": {
     "tags": {

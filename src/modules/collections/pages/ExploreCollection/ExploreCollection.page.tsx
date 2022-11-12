@@ -1,13 +1,17 @@
-import { Box, Divider, Grid, Stack } from '@mui/material'
+import { Add } from '@mui/icons-material'
+import { Box, Button, Divider, Grid, Stack } from '@mui/material'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { Link as RouterLink } from 'react-router-dom'
 
 import { ItemsPerPage } from '@core/components/Filters/ItemsPerPage.component'
 import { Header } from '@core/components/Header/Header.component'
 import { NoData } from '@core/components/NoData/NoData.component'
 import { Page } from '@core/components/Page/Page.component'
 import { PaginationSynced } from '@core/components/Pagination/PaginationSynced.component'
+import { useRoles } from '@core/hooks/useRoles.hook'
 import { Visibility } from '@core/models/content.model'
+import { Role } from '@core/types/roles.type'
 import { buildSkeletons } from '@core/utils/gui.utils'
 
 import { Collection } from '@collections/models/collection.model'
@@ -34,6 +38,8 @@ export const ExploreCollectionPage = () => {
     ...filters,
   })
 
+  const { hasRoles } = useRoles()
+
   const collections: Collection[] = data?.data || []
 
   const skeletons = buildSkeletons(3)
@@ -45,6 +51,17 @@ export const ExploreCollectionPage = () => {
       <Header
         title={t('explore.title')}
         description={t('explore.description')}
+        hideActionButton={!hasRoles([Role.Admin, Role.Contributor])}
+        actionButton={
+          <Button
+            variant="contained"
+            startIcon={<Add />}
+            component={RouterLink}
+            to={`/modules/create`}
+          >
+            {t('explore.actions.create')}
+          </Button>
+        }
       />
 
       <Divider sx={{ my: 3 }} />

@@ -2,7 +2,10 @@
   "explore": {
     "title": "Explorer les cours",
     "bodyTitle": "Explorer les <colored>cours</colored>",
-    "description": "Suivez des cours en ligne au travers de vidéos, quizzes ou encore des ressources externes."
+    "description": "Suivez des cours en ligne au travers de vidéos, quiz ou encore des ressources externes.",
+    "actions": {
+      "create": "Créer un cours"
+    }
   },
   "collections": "Modules",
   "introduction": "Présentation",

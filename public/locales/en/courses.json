@@ -2,7 +2,10 @@
   "explore": {
     "title": "Explore our courses",
     "bodyTitle": "Explore our <colored>courses</colored>",
-    "description": "Discover something new with our courses, through videos, quizzes and external resources."
+    "description": "Discover something new with our courses, through videos, quizzes and external resources.",
+    "actions": {
+      "create": "Create a course"
+    }
   },
   "collections": "Modules",
   "introduction": "Getting started",
