@@ -1,5 +1,3 @@
-export type VideoSource = 'YouTube' | 'File'
-
 export enum PlayerVideoSource {
   YOUTUBE = 'youtube',
   INTERNAL = 'internal',

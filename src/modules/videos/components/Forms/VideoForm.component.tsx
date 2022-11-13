@@ -32,14 +32,14 @@ import {
 } from '@videos/services/video.service'
 import { YoutubeService } from '@videos/services/youtube.service'
 import { IVideoForm } from '@videos/types/form.type'
-import { VideoSource } from '@videos/types/video.type'
+import { PlayerVideoSource } from '@videos/types/video.type'
 
 import { FrameSelector } from '../FrameSelector/FrameSelector.component'
 import { VideoPreview } from '../VideoPreview/VideoPreview.component'
 
 const urlRegex = /(https?:\/\/[^\s]+)/gi
 interface Props {
-  source?: VideoSource
+  source?: PlayerVideoSource
   video?: Video
   i18nKey: string
   isUpdate: boolean
@@ -113,7 +113,7 @@ export const VideoForm = ({ source, video, isUpdate }: Props) => {
   // Useful variables
   const videoSource = watch('source')
   const thumbnail = watch('thumbnail')
-  const isYoutube = source === 'YouTube'
+  const isYoutube = source === PlayerVideoSource.YOUTUBE
 
   // Here we define a simple effect which will
   // clear the video thumbnail file if the user put a link into it's
