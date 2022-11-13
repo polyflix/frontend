@@ -10,20 +10,30 @@
   },
   "providers": {
     "youtube": "You want to add a video from YouTube ? No problem, pick the link, and choose the template to add your video !",
-    "file": "Upload your local videos to the platform. Your video will be stored into our servers."
+    "internal": "Upload your local videos to the platform. Your video will be stored into our servers."
   },
   "preview": {
     "title": "Title",
     "description": "Edit the description on the right to preview !"
   },
   "forms": {
+    "stepper": {
+      "steps": {
+        "provider": "Provider",
+        "info": "Video informations"
+      },
+      "actions": {
+        "next": "Next",
+        "back": "Back"
+      }
+    },
     "create-update": {
       "title": {
         "default": "Choose your video provider",
         "create": "Create a new video",
         "update": "Update {{video}}",
         "youtube": "Import a video from YouTube",
-        "file": "Upload a video on Polyflix",
+        "internal": "Upload a video on Polyflix",
         "attachments": "Attachments",
         "metadata": "Metadata",
         "status": "Statut"
@@ -32,7 +42,7 @@
         "default": "To add a video on the platform, you have to choose one provider among those available below.",
         "update": "Update your video to add new attachments, or simply change the title or the description of it.",
         "youtube": "You've find a super video on YouTube and you want to save it on Polyflix ? No problem, just take the link of your video, and place it in the text field below. Our system will fetch the video metadata (title, description, thumbnail) to pre-fill all fields.",
-        "file": "You want to upload your video on the platform ? Customize your video with the form below, and start the upload process when you're ready.",
+        "internal": "You want to upload your video on the platform ? Customize your video with the form below, and start the upload process when you're ready.",
         "attachments": "You can add one or more attachments to your video such as PDF files, useful links etc. At the moment, you can only add attachments with an URL."
       },
       "placeholder": {
