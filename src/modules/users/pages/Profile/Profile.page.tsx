@@ -49,7 +49,7 @@ export const ProfilePage: React.FC = ({ children }: Props) => {
         <Typography sx={{ mb: 2 }} align="left" variant="h3">
           {t('profile.title.view') + getUsernameToDisplay(user!)}
         </Typography>
-        {me && me.id === id && (
+        {!id && (
           <Button
             variant="outlined"
             component={RouterLink}
