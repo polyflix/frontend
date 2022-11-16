@@ -8,3 +8,4 @@ on:
 jobs:
   frontend:
     uses: polyflix/.github/.github/workflows/node-ci.yml@main
+    secrets: inherit
