@@ -28,7 +28,7 @@ export const QuizzSliderOption = ({ quizz }: OptionProps) => {
   const handleDelete = async () => {
     try {
       await deleteQuizz({ id: quizz.id }).unwrap()
-      snackbarService.notify(CrudAction.DELETE, Endpoint.Videos)
+      snackbarService.notify(CrudAction.DELETE, Endpoint.Quizzes)
     } catch (e: any) {
       snackbarService.createSnackbar(e?.data?.statusText, { variant: 'error' })
     }
