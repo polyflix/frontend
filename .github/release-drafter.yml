@@ -18,6 +18,9 @@ categories:
   - title: 📄 Documentation
     labels:
       - "type: docs"
+  - title: 🔄 CI
+    labels:
+      - "type: ci"
   - title: 🧩 Dependency Updates
     labels:
       - "type: build"
