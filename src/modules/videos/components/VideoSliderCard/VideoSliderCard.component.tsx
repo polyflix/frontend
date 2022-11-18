@@ -99,18 +99,35 @@ export const VideoSliderCard = ({ video, isFetching = false }: Props) => {
               variant="rectangular"
             />
           </AspectRatioBox>
-          <Stack sx={{ mt: 2 }} direction="row">
-            <Skeleton
-              sx={{ flexShrink: 0 }}
-              animation="wave"
-              variant="circular"
-              width={40}
-              height={40}
-            />
-            <Box sx={{ pl: 1, width: '100%' }}>
+          <Stack
+            sx={{
+              mt: {
+                xs: 1,
+                md: 2,
+              },
+            }}
+          >
+            <Box
+              sx={{
+                display: 'grid',
+                gridTemplateColumns: '1fr 28px',
+              }}
+            >
               <Skeleton animation="wave" width="95%" height={25} />
-              <Skeleton animation="wave" width="60%" height={15} />
             </Box>
+            <Stack direction="row" alignItems="center" spacing={1}>
+              <Skeleton
+                sx={{ flexShrink: 0 }}
+                animation="wave"
+                variant="circular"
+                width={40}
+                height={40}
+              />
+              <Box>
+                <Skeleton animation="wave" width="60%" height={15} />
+                <Skeleton animation="wave" width="50%" height={15} />
+              </Box>
+            </Stack>
           </Stack>
         </>
       ) : (
@@ -144,77 +161,78 @@ export const VideoSliderCard = ({ video, isFetching = false }: Props) => {
                 xs: 1,
                 md: 2,
               },
+              width: '100%',
             }}
-            direction="row"
           >
-            <Link
-              underline="none"
-              color="inherit"
-              to={`/users/${video.publisher?.id}/profile/videos`}
-              component={RouterLink}
-            >
-              <UserAvatar
-                sx={{
-                  borderRadius: '100%',
-                  width: {
-                    xs: 30,
-                    sm: 40,
-                  },
-                  height: {
-                    xs: 30,
-                    sm: 40,
-                  },
-                }}
-                user={video.publisher!}
-              />
-            </Link>
             <Box
               sx={{
-                pl: 1,
-                width: '100%',
+                display: 'grid',
+                gridTemplateColumns: '1fr 28px',
               }}
             >
-              <Box
+              <Link
+                underline="none"
+                color="inherit"
+                component={RouterLink}
+                to={videoSlugLink(video)}
                 sx={{
-                  display: 'grid',
-                  gridTemplateColumns: '1fr 28px',
+                  width: '100%',
+                  overflow: 'hidden',
                 }}
               >
-                <Link
-                  underline="none"
-                  color="inherit"
-                  component={RouterLink}
-                  to={videoSlugLink(video)}
+                <Tooltip title={video?.title} followCursor>
+                  <Typography
+                    fontWeight="bold"
+                    variant="subtitle1"
+                    noWrap={false}
+                    sx={{
+                      fontSize: {
+                        xs: '0.8rem',
+                        md: '1rem',
+                        lineHeight: '1.5em',
+                        height: '3em',
+                        overflow: 'hidden',
+                      },
+                    }}
+                  >
+                    {video?.title}
+                  </Typography>
+                </Tooltip>
+              </Link>
+              {(video.publisher!.id === user!.id || isAdmin) && (
+                <VideoSliderOption video={video} />
+              )}
+            </Box>
+            <Stack direction="row" alignItems="center" spacing={1}>
+              <Link
+                underline="none"
+                color="inherit"
+                to={`/users/${video.publisher?.id}/profile/videos`}
+                component={RouterLink}
+              >
+                <UserAvatar
                   sx={{
-                    width: '100%',
-                    overflow: 'hidden',
+                    borderRadius: '100%',
+                    width: {
+                      xs: 25,
+                      sm: 30,
+                    },
+                    height: {
+                      xs: 25,
+                      sm: 30,
+                    },
                   }}
-                >
-                  <Tooltip title={video?.title} followCursor>
-                    <Typography
-                      fontWeight="bold"
-                      variant="subtitle1"
-                      noWrap={true}
-                      sx={{
-                        fontSize: {
-                          xs: '0.8rem',
-                          md: '1rem',
-                        },
-                      }}
-                    >
-                      {video?.title}
-                    </Typography>
-                  </Tooltip>
-                </Link>
-                {(video.publisher!.id === user!.id || isAdmin) && (
-                  <VideoSliderOption video={video} />
-                )}
-              </Box>
-              <Box>
+                  user={video.publisher!}
+                />
+              </Link>
+              <Box
+                sx={{
+                  width: '80%',
+                }}
+              >
                 <Typography
                   sx={{
                     color: 'text.secondary',
-                    width: 'calc(100% - 50px)',
                     fontSize: {
                       xs: '0.7rem',
                       md: '0.9rem',
@@ -229,7 +247,6 @@ export const VideoSliderCard = ({ video, isFetching = false }: Props) => {
                 <Typography
                   sx={{
                     color: 'text.secondary',
-                    width: 'calc(100% - 50px)',
                     fontSize: {
                       xs: '0.6rem',
                       md: '0.8rem',
@@ -244,7 +261,7 @@ export const VideoSliderCard = ({ video, isFetching = false }: Props) => {
                   {getPublishLabel(video?.createdAt)}
                 </Typography>
               </Box>
-            </Box>
+            </Stack>
           </Stack>
         </>
       )}
