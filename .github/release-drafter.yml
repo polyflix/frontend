@@ -24,6 +24,9 @@ categories:
   - title: 🧩 Dependency Updates
     labels:
       - "type: build"
+  - title: 🔨 Refactor
+    labels:
+      - "type: refactor"
     collapse-after: 5
 
 change-template: "- $TITLE @$AUTHOR (#$NUMBER)"
