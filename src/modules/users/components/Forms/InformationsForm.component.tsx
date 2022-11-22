@@ -62,7 +62,7 @@ export const InformationsForm = ({ user, title }: Props) => {
       const { data: updatedUser } = await updateUser({
         id: user.id,
         body: data,
-      }).unwrap()
+      })
       dispatch(setUser(updatedUser))
 
       // Display the success snackbar
