@@ -1,4 +1,5 @@
-import { Divider, Link, Stack } from '@mui/material'
+import { HistoryRounded } from '@mui/icons-material'
+import { Button, Divider, Stack } from '@mui/material'
 import Grid from '@mui/material/Grid'
 import { Box } from '@mui/system'
 import { useState } from 'react'
@@ -62,13 +63,13 @@ export const ProfileQuizzesPage: React.FC<Props> = ({ user }: Props) => {
             )} ${getUsernameToDisplay(user!)}`
       }
     >
-      <Stack justifyContent="space-between" direction="row">
+      <Stack justifyContent="space-between" direction="row" alignItems="start">
         <Header
           title={
             isMe
               ? t('profile.tabs.quizzes.content.title')
               : `${t(
-                  'profile.tabs.quizzes.contentOther.title'
+                  'profile.tabs.videos.contentOther.title'
                 )} ${getUsernameToDisplay(user!)}`
           }
           description={
@@ -80,14 +81,15 @@ export const ProfileQuizzesPage: React.FC<Props> = ({ user }: Props) => {
           }
         />
         {me!.id === user!.id && (
-          <Link
-            underline="none"
+          <Button
+            startIcon={<HistoryRounded />}
+            variant="outlined"
             component={RouterLink}
             color="inherit"
             to="/quizzes/history"
           >
             {t('profile.actions.history')}
-          </Link>
+          </Button>
         )}
       </Stack>
       <Divider sx={{ my: 3 }} />
