@@ -12,8 +12,8 @@ TEST_CONTRIBUTOR_PASSWORD=x \
 TEST_MEMBER_EMAIL=x \
 TEST_MEMBER_PASSWORD=x \
 POLYFLIX_URL="https://qapolyflix.dopolytech.fr/" \
-npm run test
+npm run test:e2e
 
-npm run test:debug # to run in debug mode
+npm run test:e2e:debug # to run in debug mode
 ```
 
