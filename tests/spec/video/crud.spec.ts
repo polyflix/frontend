@@ -4,9 +4,9 @@ import { loginAsContributor, loginAsMember } from '../../util';
 test.setTimeout(60000)
 
 test('crud video as contrib, play the video as member', async ({ page }) => {
-  await page.goto('/videos/create?src=File');
-
-  // await page.locator('input[type=file]').first().click();
+  await page.goto('/videos/create');
+  await page.getByLabel('Internal').check();
+  await page.getByRole('button', { name: 'Next' }).click();
 
   await page.locator('input[type=file]').setInputFiles('tests/assets/sample-5s.mp4');
 
@@ -23,10 +23,7 @@ test('crud video as contrib, play the video as member', async ({ page }) => {
   await page.getByRole('button', { name: 'Create video' }).click();
   await expect(page).toHaveURL('/videos/explore');
 
-  await page.getByRole('button', { name: 'Videos' }).click();
-
-  await page.getByRole('link', { name: 'My videos' }).click();
-  await expect(page).toHaveURL('/users/profile/videos');
+  await page.goto('/users/profile/videos');
 
   await page.getByRole('button', { name: 'video menu' }).click();
 
