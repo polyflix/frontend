@@ -1,0 +1,20 @@
+name: CI
+
+on:
+  schedule:
+    - cron: '42 23 * * *'
+
+jobs:
+  test_e2e:
+    runs-on: ubuntu-22.04
+    needs: code_review
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+          cache: 'npm'
+      - name: Install npm
+        run: npm ci
+      - name: Build
+        run: npm run test:e2e
