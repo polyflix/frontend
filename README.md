@@ -63,7 +63,7 @@ npm run fix
 Test code:
 
 ```bash
-npm test
+npm run test:e2e
 ```
 
 Build code with production environment
