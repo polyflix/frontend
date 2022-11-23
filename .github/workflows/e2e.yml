@@ -1,4 +1,4 @@
-name: CI
+name: Tests end-to-end
 
 on:
   schedule:
@@ -7,7 +7,6 @@ on:
 jobs:
   test_e2e:
     runs-on: ubuntu-22.04
-    needs: code_review
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
