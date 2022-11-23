@@ -14,7 +14,12 @@ export async function login(page: Page,
 
 export async function acceptCookies(page: Page) {
   await page.waitForNavigation()
-  await page.getByRole('button', { name: 'Accept cookies' }).click()
+  try {
+    await page.getByRole('button', { name: 'Accept cookies' }).click()
+  }
+  catch (e) {
+    // Ignore
+  }
 }
 
 export async function loginAsAdmin(page: Page) {
