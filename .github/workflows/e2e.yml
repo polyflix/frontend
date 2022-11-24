@@ -3,6 +3,10 @@ name: Tests end-to-end
 on:
   schedule:
     - cron: '42 23 * * *'
+  pull_request:
+    paths:
+      - .github/workflows/e2e.yml
+      - tests/**
 
 jobs:
   test_e2e:
@@ -15,5 +19,13 @@ jobs:
           cache: 'npm'
       - name: Install npm
         run: npm ci
-      - name: Build
+      - name: Run test
+        env:
+          POLYFLIX_URL: ${{ secrets.POLYFLIX_URL }}
+          TEST_ADMIN_EMAIL: ${{ secrets.TEST_ADMIN_EMAIL }}
+          TEST_ADMIN_PASSWORD: ${{ secrets.TEST_ADMIN_PASSWORD }}
+          TEST_CONTRIBUTOR_EMAIL: ${{ secrets.TEST_CONTRIBUTOR_EMAIL }}
+          TEST_CONTRIBUTOR_PASSWORD: ${{ secrets.TEST_CONTRIBUTOR_PASSWORD }}
+          TEST_MEMBER_EMAIL: ${{ secrets.TEST_MEMBER_EMAIL }}
+          TEST_MEMBER_PASSWORD: ${{ secrets.TEST_MEMBER_PASSWORD }}
         run: npm run test:e2e
