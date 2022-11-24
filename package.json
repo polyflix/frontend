@@ -27,7 +27,7 @@
     "@mui/x-data-grid": "^5.12.0",
     "@nestjsx/crud-request": "^5.0.0-alpha.3",
     "@polyflix/di": "^1.0.0",
-    "@polyflix/quizz-parser": "^1.1.0",
+    "@polyflix/quizz-parser": "^1.2.0",
     "@polyflix/vtt-parser": "^1.4.0",
     "@react-keycloak/web": "^3.4.0",
     "@reduxjs/toolkit": "^1.8.2",
