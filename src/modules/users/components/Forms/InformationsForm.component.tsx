@@ -11,10 +11,8 @@ import { useDispatch } from 'react-redux'
 
 import { useInjection } from '@polyflix/di'
 
-import { Endpoint } from '@core/constants/endpoint.constant'
 import { Regex } from '@core/constants/regex.constant'
 import { SnackbarService } from '@core/services/snackbar.service'
-import { CrudAction } from '@core/types/http.type'
 
 import { setUser } from '@auth/reducers/auth.slice'
 
@@ -66,7 +64,7 @@ export const InformationsForm = ({ user, title }: Props) => {
       dispatch(setUser(updatedUser))
 
       // Display the success snackbar
-      snackbarService.notify(CrudAction.UPDATE, Endpoint.Users)
+      snackbarService.createSnackbar(t('profile.alert.update', {ns: 'users'}), { variant: 'success' })
     } catch (e: any) {
       snackbarService.createSnackbar(e?.data?.statusText, { variant: 'error' })
     } finally {
