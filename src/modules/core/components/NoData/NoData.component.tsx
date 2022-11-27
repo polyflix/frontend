@@ -20,7 +20,7 @@ interface Props {
   creatable?: boolean
 }
 
-export const NoData = ({ link, variant, creatable = true }: Props) => {
+export const NoData = ({ link, variant }: Props) => {
   const { t } = useTranslation('common')
   const { hasRoles } = useRoles()
   const requiredRoles = [Role.Contributor, Role.Admin]
@@ -45,26 +45,15 @@ export const NoData = ({ link, variant, creatable = true }: Props) => {
       <Typography align="center" variant="h3">
         {t('noData.title')}
       </Typography>
-      {hasRoles(requiredRoles) && (
-        <>
-          {creatable && variant !== 'none' && (
-            <Typography align="center" sx={{ color: 'text.secondary' }}>
-              {variant
-                ? t('noData.description', { ns: variant })
-                : t('noData.descriptionDefault')}
-            </Typography>
-          )}
-          {link && (
-            <Button
-              to={link}
-              component={RouterLink}
-              variant="outlined"
-              size="large"
-            >
-              {t('noData.buttonText', { ns: variant })}
-            </Button>
-          )}
-        </>
+      {hasRoles(requiredRoles) && link && (
+        <Button
+          to={link}
+          component={RouterLink}
+          variant="outlined"
+          size="large"
+        >
+          {t('noData.buttonText', { ns: variant })}
+        </Button>
       )}
       <Box sx={{ pb: 2 }}>
         {/* <Lottie options={defaultOptions} height={200} width={200} /> */}
