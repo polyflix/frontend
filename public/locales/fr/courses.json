@@ -27,6 +27,11 @@
     "actions": {
       "delete": "Supprimer le module",
       "edit": "Modifier le module"
+    },
+    "details": {
+      "tooltips": {
+        "seeProfile": "Voir le profil"
+      }
     }
   },
   "form": {
