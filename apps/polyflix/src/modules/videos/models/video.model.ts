@@ -35,7 +35,7 @@ export interface Video {
     tokenAccess: string
   }
   userMeta?: WatchMetadata | undefined
-  attachments: Attachment[]
+  attachments?: Attachment[]
   watchtime?: Watchtime | undefined
   isLiked?: boolean
   availableLanguages: SubtitleLanguages[]

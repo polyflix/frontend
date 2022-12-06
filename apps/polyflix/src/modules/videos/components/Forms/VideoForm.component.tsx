@@ -1,13 +1,28 @@
+import { Delete } from '@mui/icons-material'
 import { LoadingButton } from '@mui/lab'
-import { Divider, Grid, Stack, TextField, Typography } from '@mui/material'
+import {
+  Alert,
+  Divider,
+  Grid,
+  IconButton,
+  Link,
+  List,
+  ListItem,
+  ListItemText,
+  Stack,
+  TextField,
+  Tooltip,
+  Typography,
+} from '@mui/material'
 import { useEffect, useMemo, useState } from 'react'
-import { useForm } from 'react-hook-form'
+import { useFieldArray, useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { useHistory } from 'react-router-dom'
 
 import { useInjection } from '@polyflix/di'
 
 import { Dropzone } from '@core/components/Dropzone/Dropzone.component'
+import { Icon } from '@core/components/Icon/Icon.component'
 import { MHidden } from '@core/components/MHidden/MHidden.component'
 import { StatusSelector } from '@core/components/StatusSelector/StatusSelector.component'
 import { UploadProgress } from '@core/components/UploadProgress/UploadProgress.component'
@@ -34,6 +49,10 @@ import { YoutubeService } from '@videos/services/youtube.service'
 import { IVideoForm } from '@videos/types/form.type'
 import { PlayerVideoSource } from '@videos/types/video.type'
 
+import { AttachmentAvatar } from '@attachments/components/AttachmentAvatar.component'
+import { AttachmentSelectorModal } from '@attachments/components/AttachmentSelectorModal.component'
+import { useGetVideoAttachmentsQuery } from '@attachments/services/attachment.service'
+
 import { FrameSelector } from '../FrameSelector/FrameSelector.component'
 import { VideoPreview } from '../VideoPreview/VideoPreview.component'
 
@@ -50,6 +69,7 @@ export const VideoForm = ({ source, video, isUpdate }: Props) => {
   const snackbarService = useInjection<SnackbarService>(SnackbarService)
   const minioService = useInjection<MinioService>(MinioService)
   const [isInProgress, setIsInProgress] = useState<boolean>(false)
+  const [isModalAttachmentOpen, setIsModalAttachmentOpen] = useState(false)
 
   const { t } = useTranslation('videos')
 
@@ -75,6 +95,7 @@ export const VideoForm = ({ source, video, isUpdate }: Props) => {
   }
 
   const {
+    control,
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
@@ -91,9 +112,33 @@ export const VideoForm = ({ source, video, isUpdate }: Props) => {
       visibility: video?.visibility || Visibility.PUBLIC,
       thumbnail: video?.thumbnail,
       source: video?.source.replace('-nocookie', ''),
-      attachments: video?.attachments,
+      attachments: [],
     },
   })
+
+  const attachments = useFieldArray({
+    control,
+    name: 'attachments',
+    /* Since useFieldArray overrides the `id` field, we need to set a different key here */
+    keyName: 'uniqueId',
+  })
+
+  const { data: existingAttachments, refetch: refetchAttachments } =
+    useGetVideoAttachmentsQuery(video?.id || '', {
+      skip: !video,
+    })
+
+  useEffect(() => {
+    /* Since the attachments are not invalidated after a video update, we need to refetch them here */
+    if (existingAttachments) refetchAttachments()
+  }, [])
+
+  useEffect(() => {
+    /* On update mode, if the video has already attachments, we set the field with these values  */
+    if (existingAttachments?.items) {
+      attachments.replace(existingAttachments.items)
+    }
+  }, [existingAttachments])
 
   // Useful states for our compoennt
   // This boolean allow us to control when a video was autocompleted (YouTube for example)
@@ -170,11 +215,20 @@ export const VideoForm = ({ source, video, isUpdate }: Props) => {
       }
     }
 
+    /** Need to send only attachments ids */
+    const mappedData = {
+      ...data,
+      attachments: attachments.fields.map((a) => a.id),
+    }
+
     try {
       // handle response and get video and thumbnail psu url to upload them
       const { videoPutPsu, thumbnailPutPsu } = await (isUpdate
-        ? updateVideo({ slug: video!.slug, body: data })
-        : createVideo(data)
+        ? updateVideo({
+            slug: video!.slug,
+            body: mappedData as unknown as IVideoForm,
+          })
+        : createVideo(mappedData as unknown as IVideoForm)
       ).unwrap()
 
       if (!isYoutube) {
@@ -337,6 +391,86 @@ export const VideoForm = ({ source, video, isUpdate }: Props) => {
           </Grid>
         </Grid>
         <Divider />
+
+        <Stack spacing={1}>
+          <Typography
+            variant="h5"
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+            }}
+          >
+            {t('forms.create-update.attachments.label')}
+            <Tooltip title={t<string>('forms.create-update.attachments.add')}>
+              <IconButton
+                type="button"
+                onClick={() => setIsModalAttachmentOpen(true)}
+                color="primary"
+              >
+                <Icon name="carbon:add" size={30} />
+              </IconButton>
+            </Tooltip>
+          </Typography>
+          <Typography variant="body1" sx={{ color: 'text.secondary' }}>
+            {t('forms.create-update.attachments.description')}
+          </Typography>
+          {attachments.fields.length > 0 ? (
+            <List>
+              {attachments.fields.map((attachment, i) => {
+                return (
+                  <ListItem
+                    key={i}
+                    sx={{ bgcolor: 'background.paper', borderRadius: 1, mb: 1 }}
+                    secondaryAction={
+                      <Tooltip
+                        title={t<string>(
+                          'forms.create-update.attachments.remove'
+                        )}
+                      >
+                        <IconButton
+                          edge="end"
+                          color="error"
+                          aria-label="delete"
+                          onClick={() => attachments.remove(i)}
+                        >
+                          <Delete />
+                        </IconButton>
+                      </Tooltip>
+                    }
+                  >
+                    <AttachmentAvatar
+                      url={attachment.url}
+                      copyToClipboard={false}
+                    />
+                    <Link
+                      href={attachment.url}
+                      target="_blank"
+                      rel="noopener"
+                      color="inherit"
+                      underline="hover"
+                    >
+                      <ListItemText primary={attachment.title} />
+                    </Link>
+                  </ListItem>
+                )
+              })}
+            </List>
+          ) : (
+            <Alert severity="warning">
+              {t('forms.create-update.attachments.empty')}
+            </Alert>
+          )}
+          {isModalAttachmentOpen && (
+            <AttachmentSelectorModal
+              attachments={attachments}
+              videoId={video?.id}
+              isOpen={isModalAttachmentOpen}
+              onClose={() => setIsModalAttachmentOpen(false)}
+            />
+          )}
+        </Stack>
+
         <Divider />
         <Typography sx={{ mb: 3 }} variant="h4">
           {t('forms.create-update.title.status')}

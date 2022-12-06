@@ -51,15 +51,17 @@
         "youtubeUrl": "YouTube video URL",
         "description": "Description",
         "upload": "Drag 'n' drop your video here.",
-        "attachments": {
-          "label": "Label",
-          "url": "Attachment URL",
-          "empty": "Your video doesn't have attachments."
-        },
         "submit": {
           "create": "Create video",
           "update": "Update video"
         }
+      },
+      "attachments": {
+        "label": "Attachments",
+        "description": "You can add or remove attachments to your video.",
+        "add": "Add attachments",
+        "remove": "Remove attachment",
+        "empty": "Your video does not include any attachments yet."
       },
       "errors": {
         "upload": "An error occured when uploading your file. Please see the logs for more informations."

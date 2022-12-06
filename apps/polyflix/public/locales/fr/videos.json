@@ -56,15 +56,17 @@
         "youtubeUrl": "Lien de la vidéo sur YouTube",
         "description": "Description",
         "upload": "Glissez déposer votre vidéo ici",
-        "attachments": {
-          "label": "Nom",
-          "url": "Lien de la pièce jointe",
-          "empty": "Votre vidéo n'a aucune pièces jointes."
-        },
         "submit": {
           "create": "Créer la vidéo",
           "update": "Mettre à jour la vidéo"
         }
+      },
+      "attachments": {
+        "label": "Pièces jointes",
+        "description": "Vous pouvez ajouter ou supprimer des pièces jointes à votre vidéo.",
+        "add": "Ajouter des pièces jointes",
+        "remove": "Supprimer la pièce jointe",
+        "empty": "Votre vidéo n'a aucune pièces jointes."
       },
       "errors": {
         "upload": "Une erreur est survenue lors de l'envoi de vos fichiers."

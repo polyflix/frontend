@@ -1,20 +1,12 @@
-import {
-  Alert,
-  Avatar,
-  Link,
-  List,
-  ListItem,
-  Stack,
-  Typography,
-} from '@mui/material'
+import { Alert, Link, List, ListItem, ListItemText } from '@mui/material'
+import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { AutoScrollBox } from '@core/components/AutoScrollBox/AutoScrollBox.component'
-import { Icon } from '@core/components/Icon/Icon.component'
 
 import { Video } from '@videos/models/video.model'
 
-import { getDomain } from '@attachments/helpers/favicon.helper'
+import { AttachmentAvatar } from '@attachments/components/AttachmentAvatar.component'
 import { useGetVideoAttachmentsQuery } from '@attachments/services/attachment.service'
 
 interface AttachmentPanelProps {
@@ -24,7 +16,12 @@ interface AttachmentPanelProps {
 export const AttachmentsPanel = ({ video }: AttachmentPanelProps) => {
   const { t } = useTranslation('videos')
 
-  const { data: attachments } = useGetVideoAttachmentsQuery(video.id)
+  const { data: attachments, refetch } = useGetVideoAttachmentsQuery(video.id)
+
+  useEffect(() => {
+    /* Since the attachments are not invalidated after a video update, we need to refetch them here */
+    if (attachments) refetch()
+  }, [])
 
   const content = () => {
     return attachments && attachments.items.length === 0 ? (
@@ -35,25 +32,20 @@ export const AttachmentsPanel = ({ video }: AttachmentPanelProps) => {
       </ListItem>
     ) : (
       attachments?.items.map((attachment) => (
-        <ListItem key={attachment.id}>
-          <Alert severity="info" icon={false} sx={{ width: '100%' }}>
-            <Link
-              href={attachment.url}
-              target="_blank"
-              rel="noopener"
-              color="inherit"
-              underline="hover"
-            >
-              <Stack direction="row" sx={{ alignItems: 'center' }}>
-                <Avatar src={`${getDomain(attachment.url)}/favicon.ico`}>
-                  <Icon name="akar-icons:link-chain" size={30} />
-                </Avatar>
-                <Typography variant="body2" sx={{ ml: 2 }}>
-                  {attachment.title}
-                </Typography>
-              </Stack>
-            </Link>
-          </Alert>
+        <ListItem
+          key={attachment.id}
+          sx={{ bgcolor: 'background.default', borderRadius: 1, mb: 1 }}
+        >
+          <AttachmentAvatar url={attachment.url} />
+          <Link
+            href={attachment.url}
+            target="_blank"
+            rel="noopener"
+            color="inherit"
+            underline="hover"
+          >
+            <ListItemText primary={attachment.title} />
+          </Link>
         </ListItem>
       ))
     )

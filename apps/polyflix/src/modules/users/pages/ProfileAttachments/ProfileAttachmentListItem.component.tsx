@@ -7,16 +7,11 @@ import {
   ListItemText,
   Paper,
   Skeleton,
-  Tooltip,
 } from '@mui/material'
-import CopyToClipboard from 'react-copy-to-clipboard'
-import { useTranslation } from 'react-i18next'
-
-import { useInjection } from '@polyflix/di'
 
 import { Icon } from '@core/components/Icon/Icon.component'
-import { SnackbarService } from '@core/services/snackbar.service'
 
+import { AttachmentAvatar } from '@attachments/components/AttachmentAvatar.component'
 import { Attachment } from '@attachments/models/attachment.model'
 
 import { AttachmentListMenu } from '@users/components/AttachmentListMenu/AttachmentListMenu.component'
@@ -26,10 +21,6 @@ type Props = {
   onDelete: () => void
 }
 export const ProfileAttachmentListItem = ({ attachment, onDelete }: Props) => {
-  const { t: tUsers } = useTranslation('users')
-  const { t: tAttachments } = useTranslation('attachments')
-  const snackbarService = useInjection<SnackbarService>(SnackbarService)
-
   return (
     <ListItem
       secondaryAction={
@@ -42,27 +33,7 @@ export const ProfileAttachmentListItem = ({ attachment, onDelete }: Props) => {
       variant="outlined"
       sx={{ mb: 1 }}
     >
-      <ListItemIcon>
-        <CopyToClipboard
-          onCopy={() => {
-            snackbarService.createSnackbar(
-              tUsers('profile.tabs.attachments.content.list.clipboard'),
-              {
-                variant: 'success',
-              }
-            )
-          }}
-          text={attachment.url}
-        >
-          <Tooltip title={tAttachments<string>('actions.copyToClipboard')}>
-            <IconButton>
-              <Avatar src={'' /* TODO : Issue #466 */}>
-                <Icon name="eva:link-outline" size={30} />
-              </Avatar>
-            </IconButton>
-          </Tooltip>
-        </CopyToClipboard>
-      </ListItemIcon>
+      <AttachmentAvatar url={attachment.url} />
       <Link
         href={attachment.url}
         target="_blank"

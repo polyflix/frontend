@@ -30,6 +30,10 @@
         }
       },
       "errors": {}
+    },
+    "selector": {
+      "title": "Select attachments",
+      "validate": "Close"
     }
   },
   "closeModal": "Close",
