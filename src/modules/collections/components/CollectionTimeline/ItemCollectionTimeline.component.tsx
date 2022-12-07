@@ -38,15 +38,20 @@ export const ItemCollectionTimeline = ({
   const { user } = useAuth()
   const isAdmin = user?.roles?.length && user?.roles?.includes(Role.Admin)
 
+  /** If the element is private and user is not the owner or admin, returns true */
+  const privateDisplay =
+    element.visibility === 'private' &&
+    element?.id !== element.user?.id &&
+    !isAdmin
+
   const handleMouseEnter = () => {
-    console.log('enter')
     setIsHover(true)
   }
 
   const handleMouseLeave = () => {
-    console.log('exit')
     setIsHover(false)
   }
+
   const elementIcon = (type: ElementType): string => {
     switch (type) {
       case 'video':
@@ -64,28 +69,26 @@ export const ItemCollectionTimeline = ({
       case 'link':
         return {
           to: element.data.url as string,
-          // target: '_blank',
-          // component: 'a',
         }
       case 'quizz':
         return {
           to: `/quizzes/${element.id}/play`,
-          // target: '_blank',
-          // component: 'a',
         }
       case 'video':
         return {
           to: `/videos/${element.slug}?c=${collectionSlug}&index=${index}`,
-          // target: '_self',
-          // component: RouterLink,
         }
     }
   }
+
   return (
     <RouterLink
       key={index}
       {...generateLinkAttribute()}
-      style={{ textDecoration: 'none' }}
+      style={{
+        textDecoration: 'none',
+        ...(privateDisplay && { pointerEvents: 'none' }),
+      }}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
@@ -105,9 +108,7 @@ export const ItemCollectionTimeline = ({
           {isLast && <TimelineConnector />}
         </TimelineSeparator>
         <TimelineContent>
-          {element.visibility === 'private' &&
-          element?.id != element.user?.id &&
-          !isAdmin ? (
+          {privateDisplay ? (
             <Alert severity="error">{t('visibility.private')}</Alert>
           ) : (
             <>

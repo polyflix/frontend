@@ -1,6 +1,5 @@
 import { Timeline } from '@mui/lab'
 import { Alert, Stack, Skeleton } from '@mui/material'
-// import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { CollectionTimelineSkeleton } from '@collections/components/CollectionTimelineSkeleton/CollectionTimelineSkeleton.component'
