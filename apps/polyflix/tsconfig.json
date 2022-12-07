@@ -1,5 +1,12 @@
 {
+  "extends": "tsconfig/react.json",
+  "exclude": ["node_modules"],
+  "include": ["**/*.ts", "**/*.tsx"],
   "compilerOptions": {
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "types": ["reflect-metadata"],
     "baseUrl": ".",
     "paths": {
       "@core/*": ["src/modules/core/*"],
@@ -19,27 +26,5 @@
       "@admin/*": ["src/modules/admin/*"],
       "@certifications/*": ["src/modules/certifications/*"]
     },
-    "target": "ESNext",
-    "useDefineForClassFields": true,
-    "lib": ["DOM", "DOM.Iterable", "ESNext"],
-    "allowJs": false,
-    "skipLibCheck": false,
-    "esModuleInterop": false,
-    "allowSyntheticDefaultImports": true,
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
-    "module": "ESNext",
-    "moduleResolution": "Node",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "noEmit": true,
-    "jsx": "react-jsx",
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "noImplicitAny": true,
-    "noImplicitThis": true,
-    "strictNullChecks": true,
-    "types": ["reflect-metadata"]
   },
-  "include": ["./src"]
 }

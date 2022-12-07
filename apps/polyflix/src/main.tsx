@@ -11,7 +11,7 @@ import { I18nextProvider } from 'react-i18next'
 import { Provider } from 'react-redux'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 // eslint-disable-next-line import/no-extraneous-dependencies
-import 'simplebar/src/simplebar.css'
+import 'simplebar-react/dist/simplebar.min.css'
 // eslint-disable-next-line import/no-extraneous-dependencies
 import 'swiper/css'
 
