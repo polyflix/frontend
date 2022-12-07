@@ -2,7 +2,7 @@ import react from '@vitejs/plugin-react'
 import { resolve } from 'path'
 import { defineConfig } from 'vite'
 
-import replace from './.vite/replace.plugin'
+import replace from '.vite/replace.plugin'
 
 /**
  * If we are on the development environment,

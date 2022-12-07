@@ -1,5 +1,5 @@
-import { LocalizationProvider } from '@mui/lab'
-import AdapterDayJs from '@mui/lab/AdapterDayjs'
+import { LocalizationProvider } from '@mui/x-date-pickers'
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { PaletteMode } from '@mui/material'
 import CssBaseline from '@mui/material/CssBaseline'
 import {
@@ -64,7 +64,7 @@ export const ThemeConfig: React.FC = ({ children }: PropsWithChildren<{}>) => {
 
   return (
     <ColorModeContext.Provider value={{ mode, ...colorMode }}>
-      <LocalizationProvider dateAdapter={AdapterDayJs}>
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
         <StyledEngineProvider injectFirst>
           <ThemeProvider theme={theme}>
             <CssBaseline />
