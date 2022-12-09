@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { loginAsContributor, loginAsMember } from '../../util';
+import { loginAsContributor, loginAsMember } from '../../utils/util';
 
 test.setTimeout(60000)
 
