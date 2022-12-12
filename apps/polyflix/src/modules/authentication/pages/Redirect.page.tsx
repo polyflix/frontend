@@ -7,6 +7,7 @@ import { useInjection } from '@polyflix/di'
 import { LoadingLayout } from '@core/layouts/Loading/Loading.layout'
 
 import { AuthService } from '@auth/services/auth.service'
+import { environment } from '@env/environment'
 
 /**
  * The page we lands on when keycloak auth is successful
@@ -18,6 +19,12 @@ export const RedirectPage = () => {
   const { keycloak, initialized } = useKeycloak()
 
   const isKeycloakAuthenticated = Boolean(keycloak.authenticated)
+
+  if (environment.mocked) {
+    keycloak.authenticated = true
+
+    return <Redirect to="/" />
+  }
 
   useEffect(() => {
     // Fetch the current logged in user profile and

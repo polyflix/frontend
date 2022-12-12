@@ -1,6 +1,7 @@
 import { Environment } from '@core/types/environment.type'
 
 export const environment: Environment = {
+  mocked: false,
   api: 'https://qapolyflix.dopolytech.fr',
   minioUrl: 'https://minio.qapolyflix.dopolytech.fr',
   urlRealm: 'https://sso.qapolyflix.dopolytech.fr/',

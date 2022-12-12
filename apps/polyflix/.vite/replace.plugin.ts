@@ -3,7 +3,7 @@ import { PluginOption } from 'vite'
 
 /**
  * This file contains a simple Vitejs plugin which can be used to replace content of files before the build.
- * This allow us to change configuration based on the build environment variable.
+ * This allows us to change configuration based on the build environment variable.
  */
 
 interface Replacement {

@@ -67,7 +67,8 @@
     "rxjs": "^7.5.5",
     "simplebar-react": "^2.3.6",
     "swiper": "^7.0.8",
-    "uuid": "^8.3.2"
+    "uuid": "^8.3.2",
+    "mock-server": "workspace:*"
   },
   "devDependencies": {
     "@babel/plugin-proposal-class-properties": "^7.14.5",

@@ -64,7 +64,10 @@ export const InformationsForm = ({ user, title }: Props) => {
       dispatch(setUser(updatedUser))
 
       // Display the success snackbar
-      snackbarService.createSnackbar(t('profile.alert.update', {ns: 'users'}), { variant: 'success' })
+      snackbarService.createSnackbar(
+        t('profile.alert.update', { ns: 'users' }),
+        { variant: 'success' }
+      )
     } catch (e: any) {
       snackbarService.createSnackbar(e?.data?.statusText, { variant: 'error' })
     } finally {

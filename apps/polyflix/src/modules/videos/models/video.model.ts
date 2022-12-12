@@ -2,7 +2,6 @@ import { WatchMetadata, Watchtime } from '@stats/models/userMeta.model'
 import { SubtitleLanguages } from '@subtitles/types/subtitle.type'
 
 import { Visibility } from '@core/models/content.model'
-import { PresignedURL } from '@core/models/presigned-url.model'
 
 import { PlayerVideoSource } from '@videos/types/video.type'
 
@@ -29,11 +28,12 @@ export interface Video {
   createdAt?: string
   updatedAt?: string
 
-  videoPutPsu?: PresignedURL
-  thumbnailPutPsu?: PresignedURL
-
-  // TODO
-  // tags?: Tag[];
+  videoPutPsu?: {
+    tokenAccess: string
+  }
+  thumbnailPutPsu?: {
+    tokenAccess: string
+  }
   userMeta?: WatchMetadata | undefined
   attachments: Attachment[]
   watchtime?: Watchtime | undefined
