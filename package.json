@@ -6,15 +6,17 @@
     "packages/*"
   ],
   "scripts": {
-    "start": "turbo dev",
-    "build": "turbo build"
+    "start": "turbo start",
+    "build": "turbo build",
+    "lint": "turbo lint",
+    "format": "turbo format"
   },
   "dependencies": {},
   "devDependencies": {
     "turbo": "latest"
   },
   "engines": {
-    "node": ">=14.0.0"
+    "node": ">=16.0.0"
   },
   "packageManager": "pnpm@7.17.1"
 }
