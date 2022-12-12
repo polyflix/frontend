@@ -131,6 +131,7 @@ importers:
       js-abbreviation-number: 1.4.0
       keycloak-js: 18.0.1
       lodash: 4.17.21
+      mock-server: link:../../packages/mock-server
       notistack: 2.0.8_mjghleb3ddvzmwvemiskn4czfe
       npm-run-all: 4.1.5
       react: 17.0.2
@@ -181,7 +182,6 @@ importers:
       eslint-plugin-prettier: 4.2.1_kjhx2shkugzcp3bn3vq4dztnny
       eslint-plugin-react: 7.31.11_eslint@8.29.0
       eslint-plugin-react-hooks: 4.6.0_eslint@8.29.0
-      mock-server: link:../../packages/mock-server
       playwright: 1.28.1
       prettier: 2.4.1
       sass: 1.56.2
