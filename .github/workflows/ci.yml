@@ -13,5 +13,5 @@ on:
 
 jobs:
   frontend:
-    uses: polyflix/.github/.github/workflows/node-ci.yml@main
+    uses: polyflix/.github/.github/workflows/frontend-v2.yml@main
     secrets: inherit
