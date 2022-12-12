@@ -2,23 +2,5 @@
   "trailingComma": "es5",
   "tabWidth": 2,
   "semi": false,
-  "singleQuote": true,
-  "importOrder": [
-    "^@polyflix/(.*)$",
-    "^@core/(.*)$",
-    "^@auth/(.*)$",
-    "^@quizzes/(.*)$",
-    "^@videos/(.*)$",
-    "^@links/(.*)$",
-    "^@attachments/(.*)$",
-    "^@collections/(.*)$",
-    "^@courses/(.*)$",
-    "^@users/(.*)$",
-    "^@courses/(.*)$",
-    "^@certifications/(.*)$",
-    "^@theme/(.*)$",
-    "^@assets/(.*)$",
-    "^[./]"
-  ],
-  "importOrderSeparation": true
+  "singleQuote": true
 }

@@ -1,0 +1,12 @@
+{
+  "name": "mock-server",
+  "private": true,
+  "main": "./index.ts",
+  "types": "./index.ts",
+  "dependencies": {
+    "@faker-js/faker": "^7.6.0",
+    "miragejs": "^0.1.46",
+    "tsconfig": "workspace:*",
+    "typescript": "^4.5.2"
+  }
+}

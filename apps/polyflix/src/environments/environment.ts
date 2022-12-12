@@ -8,19 +8,9 @@ import { Environment } from '@core/types/environment.type'
  * You should ALWAYS import only this file in the app in order to access variables.
  */
 export const environment: Environment = {
-  api: 'http://localhost:4000',
+  mocked: true,
+  api: 'http://localhost:3000',
   minioUrl: 'http://localhost:9000',
-  debugMode: true,
-  debugCredentials: [
-    {
-      name: 'Unverified',
-      email: 'unverified@gmail.com',
-      password: '123456789',
-    },
-    { name: 'Student', email: 'student@gmail.com', password: '123456789' },
-    { name: 'Professor', email: 'professor@gmail.com', password: '123456789' },
-    { name: 'Admin', email: 'admin@gmail.com', password: '123456789' },
-  ],
   urlRealm: 'http://localhost:3002/',
   realm: 'Polyflix',
   clientIdReald: 'polyflix-front',

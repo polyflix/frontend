@@ -41,7 +41,7 @@ export class AuthService {
         })
       )
     } catch (error) {
-      console.log(
+      console.error(
         'Failed to refresh the token, or the session has expired:',
         error
       )

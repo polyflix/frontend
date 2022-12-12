@@ -1,3 +1,4 @@
+import { environment } from '@env/environment'
 import { ReactKeycloakProvider, useKeycloak } from '@react-keycloak/web'
 import '@vime/core/themes/default.css'
 import { isUndefined } from 'lodash'
@@ -51,6 +52,10 @@ import { AdminRouter } from './modules/admin/admin.router'
 import { CertificatePage } from './modules/certifications/pages/Certificate.page'
 import './styles/index.scss'
 
+import { initMockServer } from 'mock-server'
+
+initMockServer()
+
 /**
  * This functional component is the main entrypoint of our app.
  * It should contains every routers of the app.
@@ -71,7 +76,8 @@ const PolyflixApp = () => {
 
   // We consider that the user is authenticated when
   // the user value in the state is defined
-  const isKeycloakAuthenticated = Boolean(keycloak.authenticated)
+  const isKeycloakAuthenticated =
+    environment.mocked || Boolean(keycloak.authenticated)
   const isAuthenticated = !isUndefined(user) && isKeycloakAuthenticated
 
   // If the user is not authenticated and we didn't try to refresh the authentication
@@ -81,8 +87,9 @@ const PolyflixApp = () => {
   }
 
   // We want to return the loading screen only in the case of the refresh authentication
-  // or if we are waiting for informations from the server
-  if (isAuthRefreshing || !initialized) return <LoadingLayout />
+  // or if we are waiting for information from the server
+  if (!environment.mocked && (isAuthRefreshing || !initialized))
+    return <LoadingLayout />
 
   return (
     <Router>
