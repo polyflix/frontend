@@ -1,8 +1,12 @@
-# Polyflix - Front
+# Polyflix
 
-This repository contains the source code of the Polyflix front-end.
+This repository is a monorepo powered by [Turbo](https://turbo.build/repo) which contains all our front-end applications and packages. We use the [pnpm](https://pnpm.io/fr/installation) as our package manager.
 
-The application runs in production at : [https://polyflix.dopolytech.fr/](https://polyflix.dopolytech.fr/)
+## Requirements
+
+**Please install `pnpm`. Other package manager will not work with the current tools.**
+
+- [pnpm](https://pnpm.io/fr/installation)
 
 ## Technologies
 
@@ -18,7 +22,7 @@ In order to maintain consistent coding styles across various editors and IDEs in
 
 https://editorconfig.org/#download
 
-According to code policies you might need additionnal library:
+According to code policies you might need additional library:
 
 - Prettier
 - Eslint
@@ -27,49 +31,34 @@ You might lint and format code before pushing it!
 
 ## Development
 
-### Get started
+To start front-end applications, you will generally require an up and running backend to integrate your feature or to deal with real use cases. We are doing our best effort to have an easy-to-use development environment, but this is still in reflexion on our side.
 
-In order to run the app locally, you must have a [back-end](https://gitlab.polytech.umontpellier.fr/polyflix-do/back-end) up and running. See the README for instructions.  
-(Take care being up-to-date)
+To fix issues or update packages, we recently integrated a new developer experience feature: the mock server. By default, it is **enabled**. If you wish to disable it to use a real Polyflix API, please set the `mocked` attribute to `false` in the `apps/polyflix/src/environments/environment.ts`.
+
+### Getting started
 
 Clone the repository:
 
 ```bash
-git clone git@gitlab.polytech.umontpellier.fr:polyflix-do/front-end.git
+git clone git@github.com:polyflix/frontend.git
 ```
 
 Install dependencies :
 
 ```bash
-npm i
+pnpm install
 ```
 
 Run the app :
 
 ```bash
-npm start
+pnpm start
 ```
 
 Your app should now be accessible at http://localhost:3000.
 
-### More Commands
-
-Fix code format and lint:
-
 ```bash
-npm run fix
-```
-
-Test code:
-
-```bash
-npm run test:e2e
-```
-
-Build code with production environment
-
-```bash
-npm run build
+pnpm build
 ```
 
 ## Contributing
