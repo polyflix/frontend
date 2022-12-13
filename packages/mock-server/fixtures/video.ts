@@ -32,9 +32,6 @@ export class VideoMock implements Mock {
   }
 
   routes(server: Server<AnyRegistry>): void {
-    // server.get("search", () => {
-    //   return {};
-    // });
     server.get("videos", (schema) => {
       const { models } = (schema as any).videos.all();
       return {

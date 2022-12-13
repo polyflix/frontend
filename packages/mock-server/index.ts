@@ -4,10 +4,11 @@ import { UserMock } from "./fixtures/user";
 import { Mock } from "./fixtures/generic";
 import { VideoMock } from "./fixtures/video";
 import { FactoryDefinition, ModelDefinition } from "miragejs/-types";
+import { SearchMock } from "./fixtures/search";
 
 // Add future mock implementation here
 // The server will autoconfigure itself thanks to the following array
-const mocks: Mock[] = [new UserMock(), new VideoMock()];
+const mocks: Mock[] = [new UserMock(), new VideoMock(), new SearchMock()];
 
 function initModels(): { [key: string]: ModelDefinition } {
   const models: { [key: string]: ModelDefinition } = {};
