@@ -24,8 +24,8 @@
     "@mui/x-data-grid": "^5.12.0",
     "@mui/x-date-pickers": "^5.0.9",
     "@nestjsx/crud-request": "^5.0.0-alpha.3",
-    "@polyflix/di": "^1.0.0",
-    "@polyflix/quizz-parser": "^1.1.0",
+    "@polyflix/di": "^1.2.0",
+    "@polyflix/quizz-parser": "^1.2.0",
     "@polyflix/vtt-parser": "^1.4.0",
     "@react-keycloak/web": "^3.4.0",
     "@reduxjs/toolkit": "^1.8.2",
@@ -44,6 +44,7 @@
     "js-abbreviation-number": "^1.2.0",
     "keycloak-js": "^18.0.0",
     "lodash": "^4.17.21",
+    "mock-server": "workspace:*",
     "notistack": "^2.0.2",
     "npm-run-all": "^4.1.5",
     "react": "^17.0.0",
@@ -63,8 +64,7 @@
     "rxjs": "^7.5.5",
     "simplebar-react": "^2.3.6",
     "swiper": "^7.0.8",
-    "uuid": "^8.3.2",
-    "mock-server": "workspace:*"
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "@babel/plugin-proposal-class-properties": "^7.14.5",
