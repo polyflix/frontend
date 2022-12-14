@@ -7,31 +7,25 @@ import { useInjection } from '@polyflix/di'
 import { LoadingLayout } from '@core/layouts/Loading/Loading.layout'
 
 import { AuthService } from '@auth/services/auth.service'
-import { environment } from '@env/environment'
 
 /**
- * The page we lands on when keycloak auth is successful
- * @returns
+ * The page we land on when keycloak auth is successful
  */
 export const RedirectPage = () => {
   const authService = useInjection<AuthService>(AuthService)
+
   const [isFetching, setIsFetching] = useState<boolean>(true)
   const { keycloak, initialized } = useKeycloak()
 
   const isKeycloakAuthenticated = Boolean(keycloak.authenticated)
 
-  if (environment.mocked) {
-    keycloak.authenticated = true
-
-    return <Redirect to="/" />
-  }
-
   useEffect(() => {
-    // Fetch the current logged in user profile and
+    // Fetch the current logged-in user profile and
     // add it to the global state, before redirecting
     // to the application.
-    if (isKeycloakAuthenticated)
+    if (isKeycloakAuthenticated) {
       authService.getUser().finally(() => setIsFetching(false))
+    }
   }, [keycloak])
 
   if (!isKeycloakAuthenticated) keycloak.login()

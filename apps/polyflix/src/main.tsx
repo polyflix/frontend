@@ -54,48 +54,71 @@ import './styles/index.scss'
 
 import { initMockServer } from 'mock-server'
 
-initMockServer()
+if (environment.mocked) {
+  initMockServer()
+}
 
 /**
  * This functional component is the main entrypoint of our app.
- * It should contains every routers of the app.
+ * It should contain every router of the app.
  */
 const PolyflixApp = () => {
   const authService = useInjection<AuthService>(AuthService)
 
+  let { keycloak, initialized } = useKeycloak()
   const { user, hasRefreshedAuth, isAuthRefreshing } = useAuth()
-  const { initialized, keycloak } = useKeycloak()
   const { isUnhealthy } = useServerHealth()
+
+  // If the environment is currently mocked,
+  // We don't care about the status of a potential Keycloak install
+  // So we can force the `initialized` param to be true
+  if (environment.mocked) {
+    initialized = true
+    // We force `keycloak.authenticated` to be truthy
+    // So that when the developer will choose the user to
+    // mock, it will directly access the app
+    keycloak.authenticated = true
+  }
+
+  // If Keycloak isn't initialized yet,
+  // We can't perform any requests on it.
+  if (!initialized) {
+    return <LoadingLayout />
+  }
+
   // If the server is unavailable, display the 503 page
-  if (isUnhealthy)
+  if (isUnhealthy) {
     return (
       <Router>
         <ServiceUnavailablePage />
       </Router>
     )
-
-  // We consider that the user is authenticated when
-  // the user value in the state is defined
-  const isKeycloakAuthenticated =
-    environment.mocked || Boolean(keycloak.authenticated)
-  const isAuthenticated = !isUndefined(user) && isKeycloakAuthenticated
-
-  // If the user is not authenticated and we didn't try to refresh the authentication
-  // we should try to automatically renew the authentication of the user.
-  if (!isAuthenticated && !hasRefreshedAuth && initialized) {
-    authService.refreshAuth()
   }
 
-  // We want to return the loading screen only in the case of the refresh authentication
-  // or if we are waiting for information from the server
-  if (!environment.mocked && (isAuthRefreshing || !initialized))
-    return <LoadingLayout />
+  const isAuthenticated = Boolean(keycloak.authenticated) && !isUndefined(user)
+
+  if (!environment.mocked) {
+    // If the user isn't authenticated, and we didn't try to refresh the authentication
+    // we should try to automatically renew the authentication of the user.
+    if (!isAuthenticated && !hasRefreshedAuth) {
+      authService.refreshAuth()
+    }
+
+    // We return the loading screen if the authentication is currently being refreshed and
+    // if the mock server isn't enabled.
+    if (isAuthRefreshing) {
+      return <LoadingLayout />
+    }
+  }
 
   return (
     <Router>
       <Switch>
         {/* We want the user to be redirected to home page if already logged in */}
-        <Route path="/auth" component={AuthRouter} />
+        <Route
+          path="/auth"
+          render={() => <AuthRouter isAuthenticated={isAuthenticated} />}
+        />
         <Route path="/certificate/:id" component={CertificatePage} />
 
         {/* We restrict these route to an authenticated user*/}
