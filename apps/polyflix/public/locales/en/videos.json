@@ -120,7 +120,7 @@
     "details": {
       "tooltips": {
         "likes": "{{count}} like(s)",
-        "views": "{{count}} view",
+        "views": "view",
         "seeProfile": "See profile"
       },
       "menu": {
