@@ -5,9 +5,11 @@ import { useInjection } from '@polyflix/di'
 import { useKeycloak } from '@react-keycloak/web'
 import { User } from '@users/models/user.model'
 import { BaseUsers } from 'mock-server'
+import { useHistory } from 'react-router-dom'
 
 export function MockAuthenticationPage() {
   const authService = useInjection<AuthService>(AuthService)
+  const history = useHistory()
   let { keycloak } = useKeycloak()
 
   function login(user: User) {
@@ -15,9 +17,9 @@ export function MockAuthenticationPage() {
     authService
       .getUser()
       .catch(console.error)
-      .then(() => {
-        keycloak.authenticated = true
+      .finally(() => {
         keycloak.token = 'my-mock-token'
+        history.push('/')
       })
   }
 

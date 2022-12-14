@@ -1,23 +1,19 @@
-import { isUndefined } from 'lodash'
 import { Route, Switch, useRouteMatch } from 'react-router-dom'
 
 import { PrivateRoute } from '@auth/components/PrivateRoute/PrivateRoute.component'
-import { useAuth } from '@auth/hooks/useAuth.hook'
 
 import { RedirectPage } from './pages/Redirect.page'
 import { environment } from '@env/environment'
 import { MockAuthenticationPage } from './pages/Mock.page'
 
-/**
- * This is the Authentication module router. It handles every routes behind /auth.
- */
-export const AuthRouter = () => {
+interface Props {
+  isAuthenticated: boolean
+}
+
+export const AuthRouter = ({ isAuthenticated }: Props) => {
   const { url } = useRouteMatch()
-  const { user } = useAuth()
 
-  const isAuthenticated = !isUndefined(user)
-
-  if (environment.mocked && !isAuthenticated) {
+  if (!isAuthenticated && environment.mocked) {
     return <MockAuthenticationPage />
   }
 
