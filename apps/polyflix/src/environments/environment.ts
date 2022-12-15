@@ -13,6 +13,6 @@ export const environment: Environment = {
   minioUrl: 'http://localhost:9000',
   urlRealm: 'http://localhost:3002/',
   redirectUri: 'http://localhost:3000/auth/redirect',
-  realm: 'polyflix',
-  clientIdReald: 'polyflix-localhost',
+  realm: 'Polyflix',
+  clientIdReald: 'polyflix-front',
 }
