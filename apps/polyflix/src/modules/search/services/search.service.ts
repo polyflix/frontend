@@ -38,6 +38,14 @@ export class SearchService {
   public async searchFor(
     filters: SearchFilters
   ): Promise<SortedPaginatedSearchResult> {
+    if (filters.query === '') {
+      return this.sortSearchResults({
+        results: [],
+        currentPage: 0,
+        totalPages: 0,
+        totalElements: 0,
+      })
+    }
     const { status, response, error } = await this.httpService.get(
       `${this.endpoint}?q=${filters.query}&page=${filters.page}&size=${filters.size}`
     )
