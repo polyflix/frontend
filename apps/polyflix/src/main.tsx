@@ -111,13 +111,22 @@ const PolyflixApp = () => {
     }
   }
 
+  // We want to redirect the user to the wanted page after the authentication
+  // So we get the current url and pass it to the AuthRouter
+  const wantedUri = window.location.href
+
   return (
     <Router>
       <Switch>
-        {/* We want the user to be redirected to home page if already logged in */}
+        {/* We want the user to be redirected if already logged in or not */}
         <Route
           path="/auth"
-          render={() => <AuthRouter isAuthenticated={isAuthenticated} />}
+          render={() => (
+            <AuthRouter
+              isAuthenticated={isAuthenticated}
+              redirectUrl={wantedUri}
+            />
+          )}
         />
         <Route path="/certificate/:id" component={CertificatePage} />
 
