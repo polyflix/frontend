@@ -7,11 +7,16 @@ import { useInjection } from '@polyflix/di'
 import { LoadingLayout } from '@core/layouts/Loading/Loading.layout'
 
 import { AuthService } from '@auth/services/auth.service'
+import { KeycloakLoginOptions } from 'keycloak-js'
+
+interface Props {
+  redirectUri: string | undefined
+}
 
 /**
  * The page we land on when keycloak auth is successful
  */
-export const RedirectPage = () => {
+export const RedirectPage = ({ redirectUri: redirectUri }: Props) => {
   const authService = useInjection<AuthService>(AuthService)
 
   const [isFetching, setIsFetching] = useState<boolean>(true)
@@ -28,9 +33,18 @@ export const RedirectPage = () => {
     }
   }, [keycloak])
 
-  if (!isKeycloakAuthenticated) keycloak.login()
+  const loginOptions: KeycloakLoginOptions = {
+    redirectUri,
+  }
+  if (!isKeycloakAuthenticated) {
+    if (redirectUri) {
+      keycloak.login(loginOptions)
+    } else {
+      keycloak.login()
+    }
+  }
 
   if (!initialized || isFetching) return <LoadingLayout />
 
-  return <Redirect to="/" />
+  return <Redirect to={redirectUri ?? '/'} />
 }

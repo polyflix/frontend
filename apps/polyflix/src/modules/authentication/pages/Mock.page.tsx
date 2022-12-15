@@ -7,19 +7,23 @@ import { User } from '@users/models/user.model'
 import { BaseUsers } from 'mock-server'
 import { useHistory } from 'react-router-dom'
 
-export function MockAuthenticationPage() {
+interface Props {
+  redirectUri: string
+}
+
+export function MockAuthenticationPage({ redirectUri: redirectUri }: Props) {
   const authService = useInjection<AuthService>(AuthService)
   const history = useHistory()
   let { keycloak } = useKeycloak()
 
-  function login(user: User) {
+  function login(user: User, redirectUrl: string = '/') {
     keycloak.subject = user.id
     authService
       .getUser()
       .catch(console.error)
       .finally(() => {
         keycloak.token = 'my-mock-token'
-        history.push('/')
+        history.push(redirectUrl)
       })
   }
 
@@ -47,7 +51,7 @@ export function MockAuthenticationPage() {
             <Button
               sx={{ mr: 3 }}
               variant="contained"
-              onClick={() => login(user as unknown as User)}
+              onClick={() => login(user as unknown as User, redirectUri)}
               key={user.id}
             >
               Use app as {user.username}
