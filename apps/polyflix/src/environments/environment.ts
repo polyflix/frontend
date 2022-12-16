@@ -9,7 +9,7 @@ import { Environment } from '@core/types/environment.type'
  */
 export const environment: Environment = {
   mocked: true,
-  api: 'http://localhost:3000',
+  api: 'http://localhost:4000',
   minioUrl: 'http://localhost:9000',
   urlRealm: 'http://localhost:3002/',
   redirectUri: 'http://localhost:3000/auth/redirect',
