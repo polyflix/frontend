@@ -170,5 +170,9 @@
       "success": "Votre signalement a bien été pris en compte.",
       "failure": "Échec lors du signalement."
     }
+  },
+  "card": {
+    "view": "{{ count }} vue",
+    "views": "{{ count }} vues"
   }
 }

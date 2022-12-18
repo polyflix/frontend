@@ -2,13 +2,12 @@
   "page": {
     "title": "Home"
   },
-  "sliders": {
+  "sections": {
     "titles": {
-      "continueWatching": "Continuer à regarder",
-      "latest": "Les plus récentes",
-      "popular": "Populaire",
-      "watchAgain": "Regardez à nouveau",
-      "rated": "Les plus aimées"
+      "popularCourse": "Cours populaires",
+      "lastVideos": "Dernières vidéos",
+      "popularVideos": "Vidéos populaires",
+      "mostLikedVideos": "Vidéos les plus aimées"
     },
     "videoCard": {
       "infoMenu": {
@@ -17,5 +16,11 @@
       }
     }
   },
-  "goBack": "Retour en arrière"
+  "jumbotron": {
+    "slider": {
+      "titles": {
+        "continue": "Continue..."
+      }
+    }
+  }
 }

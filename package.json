@@ -11,12 +11,18 @@
     "lint": "turbo lint",
     "format": "turbo format"
   },
-  "dependencies": {},
   "devDependencies": {
     "turbo": "latest"
   },
   "engines": {
     "node": ">=16.0.0"
   },
-  "packageManager": "pnpm@7.17.1"
+  "packageManager": "pnpm@7.17.1",
+  "pnpm": {
+    "overrides": {
+      "json5@<1.0.2": ">=1.0.2",
+      "json5@>=2.0.0 <2.2.2": ">=2.2.2",
+      "debug@<3.1.0": ">=3.1.0"
+    }
+  }
 }

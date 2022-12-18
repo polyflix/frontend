@@ -4,7 +4,7 @@ import { alpha, styled } from '@mui/system'
 
 export const Search = styled('div')(({ theme }) => ({
   position: 'relative',
-  bgcolor: 'background.paper',
+  backgroundColor: theme.palette.background.paper,
   borderRadius: theme.shape.borderRadius,
   margin: theme.spacing(0, 0, 0, 0),
   width: '100%',
@@ -75,7 +75,7 @@ export const SearchCard = styled(Link)(({ theme }) => ({
   borderRadius: theme.shape.borderRadius,
   transition: 'background ease 300ms',
   '&:hover': {
-    backgroundColor: alpha(theme.palette.grey[400], 0.3),
+    backgroundColor: alpha(theme.palette.grey[400], 0.5),
   },
 }))
 

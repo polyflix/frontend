@@ -27,7 +27,8 @@
     "update": "update",
     "delete": "delete",
     "closeModal": "Close modal",
-    "report": "report"
+    "report": "report",
+    "seeMore": "See more"
   },
   "navbar": {
     "actions": {
@@ -36,6 +37,9 @@
         "default": "Search for",
         "fast": "Quick search"
       },
+      "profile": "Profile",
+      "contentManagement": "Content management",
+      "settings": "Settings",
       "logout": "Log out",
       "language": "Language",
       "notifications": "Notifications",
@@ -53,6 +57,10 @@
   "noData": {
     "title": "No data was found",
     "descriptionDefault": "If you have the necessary rights you can create the associated resource"
+  },
+  "error": {
+    "title": "An error has occurred",
+    "description": "An error has occurred, please try again later."
   },
   "confirmationModal": {
     "actions": {

@@ -8,3 +8,11 @@ export abstract class HttpUtils {
     return params
   }
 }
+
+export const buildQueryParams = (object: { [k: string]: any }): string => {
+  const params = new URLSearchParams()
+  Object.keys(object).forEach((key) => {
+    params.set(key, object[key])
+  })
+  return params.toString()
+}

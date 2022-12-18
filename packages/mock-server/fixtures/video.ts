@@ -1,3 +1,5 @@
+import { Mock } from "./generic";
+import { BaseUsers, User } from "./user";
 import { faker } from "@faker-js/faker";
 import { Factory, Model, Server } from "miragejs";
 import {
@@ -5,8 +7,14 @@ import {
   FactoryDefinition,
   ModelDefinition,
 } from "miragejs/-types";
-import { Mock } from "./generic";
-import { BaseUsers, User } from "./user";
+
+export interface Watchtime {
+  videoId: string;
+  userId?: string;
+  watchedSeconds: number;
+  watchedPercent: number;
+  isWatched: boolean;
+}
 
 export interface Video {
   id: string;
@@ -24,6 +32,7 @@ export interface Video {
   createdAt?: string;
   updatedAt?: string;
   isLiked?: boolean;
+  watchtime?: Watchtime | undefined;
 }
 
 export class VideoMock implements Mock {
@@ -32,10 +41,13 @@ export class VideoMock implements Mock {
   }
 
   routes(server: Server<AnyRegistry>): void {
-    server.get("videos", (schema) => {
+    server.timing = 1000;
+
+    server.get("videos", (schema, request) => {
+      const { pageSize } = request.queryParams;
       const { models } = (schema as any).videos.all();
       return {
-        items: models,
+        items: models.slice(0, pageSize ?? 100),
         totalCount: models.length,
       };
     });
@@ -77,10 +89,10 @@ export class VideoMock implements Mock {
         return "Ata9cSC2WpM";
       },
       visibility() {
-        return "public";
+        return Math.random() > 0.2 ? "public" : "private";
       },
       draft() {
-        return false;
+        return Math.random() < 0.4;
       },
       createdAt() {
         return faker.date.past(2);
@@ -90,6 +102,15 @@ export class VideoMock implements Mock {
       },
       isLiked() {
         return false;
+      },
+      watchtime() {
+        return {
+          videoId: faker.datatype.uuid(),
+          userId: BaseUsers[0].id,
+          watchedSeconds: faker.random.numeric(3),
+          watchedPercent: Math.random(),
+          isWatched: Math.random() > 0.2,
+        };
       },
     });
   }

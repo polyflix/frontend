@@ -9,7 +9,7 @@ export const VideoCardRootStyle = styled(Stack)<any>(() => ({
 }))
 
 export const VideoCardThumbnailContainer = styled<any>(Box)(
-  ({ theme, watchedPercent }) => ({
+  ({ theme, watchedpercent }) => ({
     width: '100%',
     height: '100%',
     position: 'relative',
@@ -21,7 +21,7 @@ export const VideoCardThumbnailContainer = styled<any>(Box)(
       bottom: 0,
       left: 0,
       height: '5px',
-      width: `${(watchedPercent ?? 0) * 100}%`,
+      width: `${(watchedpercent ?? 0) * 100}%`,
       background: theme.palette.primary.main,
       borderRadius: 'inherit',
     },

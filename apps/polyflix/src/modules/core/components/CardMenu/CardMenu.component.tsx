@@ -92,6 +92,7 @@ export const CardMenu: React.FC<Props> = ({
       )}
       <Menu
         id="basic-menu"
+        elevation={1}
         anchorEl={anchorEl}
         open={open}
         onClose={handleClose}

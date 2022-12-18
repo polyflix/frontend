@@ -1,16 +1,13 @@
-import { Box, Stack, Tooltip, Typography } from '@mui/material'
-import { capitalize } from 'lodash'
-import { useTranslation } from 'react-i18next'
-
+import { useAuth } from '@auth/hooks/useAuth.hook'
 import { useSidebar } from '@core/hooks/useSidebar.hook'
 import { Role } from '@core/types/roles.type'
 import { fadeInAnnimation } from '@core/utils/animation'
-
-import { useAuth } from '@auth/hooks/useAuth.hook'
-
+import { Box, Stack, Tooltip, Typography } from '@mui/material'
 import { UserAvatar } from '@users/components/UserAvatar/UserAvatar.component'
 import { getUsernameToDisplay } from '@users/helpers/displayUsername.helper'
 import { User } from '@users/models/user.model'
+import { capitalize } from 'lodash'
+import { useTranslation } from 'react-i18next'
 
 const getHighestRole = (user: Partial<User> & Pick<User, 'roles'>): string => {
   if (!user.roles) return ''

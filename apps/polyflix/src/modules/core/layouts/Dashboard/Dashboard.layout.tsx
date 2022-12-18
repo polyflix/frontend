@@ -1,7 +1,6 @@
 import { PropsWithChildren } from 'react'
 
 import { DashboardNavbar } from '@core/components/Dashboard/Navbar/Navbar.component'
-import { DashboardSidebar } from '@core/components/Dashboard/Sidebar/Sidebar.component'
 import { SidebarProvider } from '@core/contexts/Sidebar.context'
 
 import { MainStyle, RootStyle } from './Dashboard.style'
@@ -13,7 +12,7 @@ export const DashboardLayout: React.FC = ({
     <SidebarProvider>
       <RootStyle>
         <DashboardNavbar />
-        <DashboardSidebar />
+        {/* <DashboardSidebar /> */}
         <MainStyle>{children}</MainStyle>
       </RootStyle>
     </SidebarProvider>

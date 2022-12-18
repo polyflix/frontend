@@ -9,6 +9,6 @@ export interface Course extends ContentModel {
   slug: string
   description: string
   content: string
-  user?: Partial<User>
+  user?: Partial<User> & Pick<User, 'firstName'> & Pick<User, 'lastName'>
   modules?: Collection[]
 }

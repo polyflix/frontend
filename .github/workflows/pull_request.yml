@@ -18,13 +18,13 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 16.x
-          cache: 'pnpm'
+          cache: "pnpm"
 
       - name: Install dependencies
         run: pnpm install
 
       - name: Audit dependencies
-        run: pnpm audit
+        run: pnpm audit --audit-level critical
 
       - name: Linting code
         run: pnpm run --if-present lint
