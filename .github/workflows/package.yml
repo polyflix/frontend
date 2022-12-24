@@ -1,0 +1,41 @@
+name: Package
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - v*
+
+jobs:
+  package:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v3
+      - uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - id: meta
+        uses: docker/metadata-action@v4
+        with:
+          images: ghcr.io/${{ github.repository }}
+          flavor: ${{ inputs.docker-metadata-flavor }}
+      - id: extract-env
+        run: |
+          if  [[ "$GITHUB_REF_TYPE" == tag ]]
+          then
+            echo "environment=production" >> $GITHUB_OUTPUT
+          else
+            echo "environment=qa" >> $GITHUB_OUTPUT
+          fi
+      - uses: docker/build-push-action@v3
+        with:
+          build-args: |
+            BUILD_MODE=${{ steps.extract-env.outputs.environment }}
+          context: .
+          file: Dockerfile.app
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
