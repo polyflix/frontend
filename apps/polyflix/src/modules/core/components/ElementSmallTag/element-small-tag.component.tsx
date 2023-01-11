@@ -2,14 +2,22 @@ import { alpha, SxProps, Theme, Typography } from '@mui/material'
 
 type ElementSmallTagProps = {
   text: string
+  startIcon?: React.ReactNode
   position?: 'absolute' | 'relative'
   sx?: SxProps<Theme>
 }
 
-export const ElementSmallTag = ({ text, sx }: ElementSmallTagProps) => {
+export const ElementSmallTag = ({
+  text,
+  startIcon,
+  sx,
+}: ElementSmallTagProps) => {
   return (
     <Typography
       sx={{
+        display: 'flex',
+        alignItems: 'center',
+        gap: 0.5,
         borderRadius: 0.5,
         px: 0.5,
         backgroundColor: (theme) => alpha(theme.palette.common.black, 0.8),
@@ -18,6 +26,7 @@ export const ElementSmallTag = ({ text, sx }: ElementSmallTagProps) => {
       }}
       variant="caption"
     >
+      {startIcon && startIcon}
       {text}
     </Typography>
   )
