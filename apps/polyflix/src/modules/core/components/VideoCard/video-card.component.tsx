@@ -1,4 +1,12 @@
-import { Chip, Link, Paper, Skeleton, Stack, Tooltip } from '@mui/material'
+import {
+  Chip,
+  Link,
+  Paper,
+  Skeleton,
+  Stack,
+  Tooltip,
+  useTheme,
+} from '@mui/material'
 import { Video } from '@videos/models/video.model'
 import { AspectRatioBox } from '../AspectRatioBox/AspectRation.component'
 import { Link as RouterLink } from 'react-router-dom'
@@ -30,6 +38,8 @@ export const VideoCard = ({ video, showInfo = true }: VideoCardProps) => {
   }
 
   const isVideoPrivate = video.visibility === 'private'
+
+  const theme = useTheme()
 
   const { t } = useTranslation('videos')
 
@@ -82,6 +92,21 @@ export const VideoCard = ({ video, showInfo = true }: VideoCardProps) => {
           }}
           text="20 min"
         /> */}
+        <ElementSmallTag
+          sx={{
+            position: 'absolute',
+            left: 8,
+            bottom: 8,
+          }}
+          startIcon={
+            <Icon
+              size={12}
+              name={'mdi:heart'}
+              color={theme.palette.primary.light}
+            />
+          }
+          text={`${video.likes ?? 0}`}
+        />
       </Link>
       <Stack direction="column" spacing={0.5}>
         <Stack
