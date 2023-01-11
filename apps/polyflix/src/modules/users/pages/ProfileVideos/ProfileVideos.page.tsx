@@ -15,13 +15,13 @@ import { buildSkeletons } from '@core/utils/gui.utils'
 import { useAuth } from '@auth/hooks/useAuth.hook'
 
 import { VideoCardSkeleton } from '@videos/components/Skeleton/VideoCardSkeleton/VideoCardSkeleton.component'
-import { VideoSliderCard } from '@videos/components/VideoSliderCard/VideoSliderCard.component'
 import { Video } from '@videos/models/video.model'
 import { useGetVideosQuery } from '@videos/services/video.service'
 import { VideoFilters } from '@videos/types/filters.type'
 
 import { getUsernameToDisplay } from '@users/helpers/displayUsername.helper'
 import { User } from '@users/models/user.model'
+import { VideoCard } from '@core/components/VideoCard/video-card.component'
 
 type Props = {
   user: User | undefined
@@ -108,11 +108,7 @@ export const ProfileVideosPage: React.FC<Props> = ({ user }: Props) => {
         {!isFetching
           ? videos.map((video: Video) => (
               <Grid key={video.slug} item xs={12} sm={6} md={4} lg={3}>
-                <VideoSliderCard
-                  key={video.slug}
-                  video={video}
-                  isFetching={isFetching}
-                />
+                <VideoCard key={video.slug} video={video} />
               </Grid>
             ))
           : skeletons.map((_, i: number) => (
