@@ -86,6 +86,9 @@ export const CardMenu: React.FC<Props> = ({
           aria-haspopup="true"
           aria-expanded={open ? 'true' : undefined}
           onClick={handleClick}
+          sx={{
+            p: '0 !important',
+          }}
         >
           <MoreVertOutlined fontSize="inherit" />
         </IconButton>
