@@ -3,4 +3,3 @@ User-agent: *
 Disallow: *
 Allow: /auth/login
 Allow: /auth/register
-Allow: /auth/forgotten-password
