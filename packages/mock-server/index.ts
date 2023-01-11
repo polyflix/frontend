@@ -1,14 +1,19 @@
-import { createServer } from "miragejs";
-
-import { UserMock } from "./fixtures/user";
+import { CourseMock } from "./fixtures/course";
 import { Mock } from "./fixtures/generic";
-import { VideoMock } from "./fixtures/video";
-import { FactoryDefinition, ModelDefinition } from "miragejs/-types";
 import { SearchMock } from "./fixtures/search";
+import { UserMock } from "./fixtures/user";
+import { VideoMock } from "./fixtures/video";
+import { createServer } from "miragejs";
+import { FactoryDefinition, ModelDefinition } from "miragejs/-types";
 
 // Add future mock implementation here
 // The server will autoconfigure itself thanks to the following array
-const mocks: Mock[] = [new UserMock(), new VideoMock(), new SearchMock()];
+const mocks: Mock[] = [
+  new UserMock(),
+  new VideoMock(),
+  new SearchMock(),
+  new CourseMock(),
+];
 
 function initModels(): { [key: string]: ModelDefinition } {
   const models: { [key: string]: ModelDefinition } = {};

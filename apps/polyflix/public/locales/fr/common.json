@@ -27,7 +27,8 @@
     "update": "mettre à jour",
     "delete": "supprimer",
     "report": "signaler",
-    "closeModal": "Fermer la modale"
+    "closeModal": "Fermer la modale",
+    "seeMore": "Voir Plus"
   },
   "navbar": {
     "actions": {
@@ -36,6 +37,9 @@
         "default": "Rechercher",
         "fast": "Recherche rapide"
       },
+      "profile": "Profil",
+      "contentManagement": "Gestion du contenu",
+      "settings": "Paramètres",
       "logout": "Déconnexion",
       "language": "Langue",
       "notifications": "Notifications",

@@ -168,5 +168,9 @@
       "success": "Your report was taken into account.",
       "failure": "Failed to report."
     }
+  },
+  "card": {
+    "view": "{{ count }} view",
+    "views": "{{ count }} views"
   }
 }

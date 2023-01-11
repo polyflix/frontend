@@ -1,195 +1,188 @@
-import { Grid, Typography } from '@mui/material'
 import { isEmpty } from 'lodash'
-import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { NoData } from '@core/components/NoData/NoData.component'
 import { Page } from '@core/components/Page/Page.component'
-import { Slider } from '@core/components/Slider/Slider.component'
+import {
+  APP_BAR_DESKTOP,
+  APP_BAR_MOBILE,
+} from '@core/layouts/Dashboard/Dashboard.style'
 import { Visibility } from '@core/models/content.model'
 
-import { VideoSliderCard } from '@videos/components/VideoSliderCard/VideoSliderCard.component'
 import { useGetVideosQuery } from '@videos/services/video.service'
-import { VideoFilters } from '@videos/types/filters.type'
 
-export const HomePage = () => {
-  const [filters] = useState<VideoFilters>({
-    page: 1,
-    pageSize: 10,
-  })
+import 'swiper/css'
+import 'swiper/css/pagination'
+import { useGetCoursesQuery } from '@courses/services/course.service'
+import { PageSection } from '@core/components/PageSection/page-section.component'
+import { Jumbotron } from '@core/components/Jumbotron/jumbotron.component'
+import { ElementsRow } from '@core/components/ElementsRow/elements-row.component'
+import { CourseCard } from '@core/components/CourseCard/course-card.component'
+import { VideoCard } from '@core/components/VideoCard/video-card.component'
+import { Footer } from '@core/components/Footer/footer.component'
+import { buildQueryParams } from '@core/utils/http-utils'
+import { Course } from '@courses/models/course.model'
 
-  const lastVideosQuery = useGetVideosQuery({
-    visibility: Visibility.PUBLIC,
+const PopularCoursesSection = () => {
+  const filters = {
     draft: false,
-    order: '-createdAt',
+  }
+  const { data, isLoading, isError } = useGetCoursesQuery({
+    page: 0,
+    pageSize: 5,
     ...filters,
   })
-
-  const popularVideosQuery = useGetVideosQuery({
-    visibility: Visibility.PUBLIC,
-    draft: false,
-    order: '-views',
-    ...filters,
-  })
-
-  const mostLikedVideosQuery = useGetVideosQuery({
-    visibility: Visibility.PUBLIC,
-    draft: false,
-    order: '-likes',
-    ...filters,
-  })
-
-  const watchingVideosQuery = useGetVideosQuery({
-    visibility: Visibility.PUBLIC,
-    draft: false,
-    ...filters,
-    isWatching: true,
-  })
-
-  const watchedVideosQuery = useGetVideosQuery({
-    visibility: Visibility.PUBLIC,
-    draft: false,
-    ...filters,
-    isWatched: true,
-  })
-
-  const lastVideos = lastVideosQuery.data?.items || []
-  const popularVideos = popularVideosQuery.data?.items || []
-  const mostLikedVideos = mostLikedVideosQuery.data?.items || []
-
-  const watchingVideos = watchingVideosQuery.data?.items || []
-  const watchedVideos = watchedVideosQuery.data?.items || []
+  const seeMoreRoute = `courses/explore?${buildQueryParams(filters)}`
 
   const { t } = useTranslation('home')
 
-  if (
-    isEmpty(lastVideos) &&
-    isEmpty(popularVideos) &&
-    isEmpty(mostLikedVideos) &&
-    isEmpty(watchingVideos) &&
-    isEmpty(watchedVideos) &&
-    !lastVideosQuery.isLoading &&
-    !popularVideosQuery.isLoading &&
-    !mostLikedVideosQuery.isLoading &&
-    !watchingVideosQuery.isLoading &&
-    !watchedVideosQuery.isLoading
-  ) {
-    return <NoData variant="videos" link="/videos/create" />
+  return (
+    <PageSection sx={{ pt: 10 }}>
+      <ElementsRow
+        title={t('sections.titles.popularCourse')}
+        seeMoreRoute={seeMoreRoute}
+        icon="gg:align-left"
+        loading={isLoading}
+        hasNoData={isEmpty(data?.data)}
+        isError={isError}
+      >
+        {(data?.data || []).map((course: Course, index: number) => (
+          <CourseCard key={index} course={course} />
+        ))}
+      </ElementsRow>
+    </PageSection>
+  )
+}
+const LastVideosSection = () => {
+  const filters = {
+    visibility: Visibility.PUBLIC,
+    draft: false,
+    order: '-createdAt',
   }
+  const { data, isLoading, isError } = useGetVideosQuery({
+    page: 1,
+    pageSize: 5,
+    ...filters,
+  })
+
+  const seeMoreRoute = `videos/explore?${buildQueryParams(filters)}`
+
+  const { t } = useTranslation('home')
 
   return (
-    <Page title={t('page.title')} maxWidth={false}>
-      <Grid container spacing={5}>
-        {/** CURRENTLY WATCHING VIDEOS SLIDER **/}
-        <Grid
-          item
-          xs={12}
-          hidden={!watchingVideosQuery.isLoading && watchingVideos.length === 0}
-        >
-          <Slider
-            isLoading={watchingVideosQuery.isLoading}
-            heading={
-              <Typography variant="h4">
-                {t('sliders.titles.continueWatching')}
-              </Typography>
-            }
-            freeMode
-          >
-            {watchingVideos.map((video) => (
-              <VideoSliderCard key={video.slug} video={video} />
-            ))}
-          </Slider>
-        </Grid>
-        {/** END CURRENTLY WATCHING VIDEOS SLIDER **/}
+    <PageSection sx={{ pt: 10 }}>
+      <ElementsRow
+        title={t('sections.titles.lastVideos')}
+        seeMoreRoute={seeMoreRoute}
+        icon="eva:play-circle-outline"
+        loading={isLoading}
+        hasNoData={isEmpty(data?.items)}
+        isError={isError}
+      >
+        {(data?.items || []).map((video, index) => (
+          <VideoCard key={index} video={video} />
+        ))}
+      </ElementsRow>
+    </PageSection>
+  )
+}
+const PopularVideosSection = () => {
+  const filters = {
+    visibility: Visibility.PUBLIC,
+    draft: false,
+    order: '-views',
+  }
+  const { data, isLoading, isError } = useGetVideosQuery({
+    page: 1,
+    pageSize: 5,
+  })
 
-        {/** LATEST VIDEOS SLIDER **/}
-        <Grid
-          item
-          xs={12}
-          hidden={!lastVideosQuery.isLoading && lastVideos.length === 0}
-        >
-          <Slider
-            isLoading={lastVideosQuery.isLoading}
-            heading={
-              <Typography variant="h4">{t('sliders.titles.latest')}</Typography>
-            }
-            freeMode
-          >
-            {lastVideos.map((video) => (
-              <VideoSliderCard key={video.slug} video={video} />
-            ))}
-          </Slider>
-        </Grid>
-        {/** END LATEST VIDEOS SLIDER **/}
+  const seeMoreRoute = `videos/explore?${buildQueryParams(filters)}`
 
-        {/** POPULAR VIDEOS SLIDER **/}
-        <Grid
-          item
-          xs={12}
-          hidden={!popularVideosQuery.isLoading && popularVideos.length === 0}
-        >
-          <Slider
-            isLoading={popularVideosQuery.isLoading}
-            heading={
-              <Typography variant="h4">
-                {t('sliders.titles.popular')}
-              </Typography>
-            }
-            freeMode
-          >
-            {/** We slice the array as it is a frozen object to create a clone of it **/}
-            {popularVideos.map((video) => (
-              <VideoSliderCard key={video.slug} video={video} />
-            ))}
-          </Slider>
-        </Grid>
-        {/** END POPULAR VIDEOS SLIDER **/}
+  const { t } = useTranslation('home')
 
-        {/** MOST LIKED VIDEOS SLIDER **/}
-        <Grid
-          item
-          xs={12}
-          hidden={
-            !mostLikedVideosQuery.isLoading && mostLikedVideos.length === 0
-          }
-        >
-          <Slider
-            isLoading={mostLikedVideosQuery.isLoading}
-            heading={
-              <Typography variant="h4">{t('sliders.titles.rated')}</Typography>
-            }
-            freeMode
-          >
-            {/** We slice the array as it is a frozen object to create a clone of it **/}
-            {mostLikedVideos.map((video) => (
-              <VideoSliderCard key={video.slug} video={video} />
-            ))}
-          </Slider>
-        </Grid>
-        {/** END MOST LIKED VIDEOS SLIDER **/}
+  return (
+    <PageSection sx={{ pt: 10 }}>
+      <ElementsRow
+        title={t('sections.titles.popularVideos')}
+        seeMoreRoute={seeMoreRoute}
+        icon="eva:play-circle-outline"
+        loading={isLoading}
+        hasNoData={isEmpty(data?.items)}
+        isError={isError}
+      >
+        {(data?.items || []).map((video, index) => (
+          <VideoCard key={index} video={video} />
+        ))}
+      </ElementsRow>
+    </PageSection>
+  )
+}
+const MostLikedVideoSection = () => {
+  const filters = {
+    visibility: Visibility.PUBLIC,
+    draft: false,
+    order: '-likes',
+  }
 
-        {/** WATCHED VIDEOS SLIDER **/}
-        <Grid
-          item
-          xs={12}
-          hidden={!watchedVideosQuery.isLoading && watchedVideos.length === 0}
-        >
-          <Slider
-            isLoading={watchedVideosQuery.isLoading}
-            heading={
-              <Typography variant="h4">
-                {t('sliders.titles.watchAgain')}
-              </Typography>
-            }
-            freeMode
-          >
-            {watchedVideos.map((video) => (
-              <VideoSliderCard key={video.slug} video={video} />
-            ))}
-          </Slider>
-        </Grid>
-        {/** END WATCHED VIDEOS SLIDER **/}
-      </Grid>
+  const { data, isLoading, isError } = useGetVideosQuery({
+    page: 1,
+    pageSize: 5,
+  })
+
+  const seeMoreRoute = `videos/explore?${buildQueryParams(filters)}`
+
+  const { t } = useTranslation('home')
+
+  return (
+    <PageSection sx={{ pt: 10 }}>
+      <ElementsRow
+        title={t('sections.titles.mostLikedVideos')}
+        seeMoreRoute={seeMoreRoute}
+        icon="eva:play-circle-outline"
+        loading={isLoading}
+        hasNoData={isEmpty(data?.items)}
+        isError={isError}
+      >
+        {(data?.items || []).map((video, index) => (
+          <VideoCard key={index} video={video} />
+        ))}
+      </ElementsRow>
+    </PageSection>
+  )
+}
+
+export const HomePage = () => {
+  const { t } = useTranslation('home')
+  return (
+    <Page
+      title={t('page.title')}
+      maxWidth={false}
+      disableGutters
+      sx={{
+        pt: 0,
+      }}
+    >
+      <PageSection
+        innerProps={{
+          alignItems: 'center',
+          spacing: 2,
+        }}
+        sx={{
+          backgroundColor: '#f0f0f0',
+          pt: {
+            xs: `${APP_BAR_MOBILE + 16}px`,
+            lg: `${APP_BAR_DESKTOP}px`,
+          },
+        }}
+      >
+        <Jumbotron />
+      </PageSection>
+
+      <PopularCoursesSection />
+      <LastVideosSection />
+      <PopularVideosSection />
+      <MostLikedVideoSection />
+      <Footer />
     </Page>
   )
 }

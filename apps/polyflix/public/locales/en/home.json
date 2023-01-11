@@ -2,20 +2,24 @@
   "page": {
     "title": "Home"
   },
-  "sliders": {
+  "sections": {
     "titles": {
-      "continueWatching": "Continue watching",
-      "latest": "Latest",
-      "popular": "Popular",
-      "watchAgain": "Watch again",
-      "rated": "Top rated"
+      "popularCourse": "Popular Courses",
+      "lastVideos": "Last Video",
+      "popularVideos": "Popular videos",
+      "mostLikedVideos": "Most liked videos"
     },
     "videoCard": {
       "infoMenu": {
-        "info": "Info",
-        "addToPlayList": "Add to Playlist"
+        "info": "Info"
       }
     }
   },
-  "goBack": "Go back"
+  "jumbotron": {
+    "slider": {
+      "titles": {
+        "continue": "Continue..."
+      }
+    }
+  }
 }
