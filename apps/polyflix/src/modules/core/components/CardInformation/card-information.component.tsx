@@ -6,7 +6,9 @@ import { NullableTypography } from '../NullableTypography/nullable-typography.co
 import { UserDisplayName } from '../UserDisplayName/user-display-name'
 
 type CardInformationProps = {
-  user: (Pick<User, 'firstName'> & Pick<User, 'lastName'>) | undefined
+  user:
+    | (Pick<User, 'firstName'> & Pick<User, 'lastName'> & Pick<User, 'avatar'>)
+    | undefined
   createdDate: Date | string | undefined
 }
 export const CardInformation = ({
@@ -29,6 +31,7 @@ export const CardInformation = ({
       }}
     >
       <UserAvatar
+        user={user}
         sx={{
           width: 25,
           height: 25,
