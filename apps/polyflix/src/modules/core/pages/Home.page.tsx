@@ -27,7 +27,7 @@ const PopularCoursesSection = () => {
     draft: false,
   }
   const { data, isLoading, isError } = useGetCoursesQuery({
-    page: 0,
+    page: 1,
     pageSize: 5,
     ...filters,
   })
