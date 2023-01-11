@@ -1,6 +1,5 @@
 import {
   Box,
-  Chip,
   Link,
   Paper,
   Skeleton,
@@ -17,8 +16,6 @@ import { ElementLockIcon } from '../ElementLockIcon/element-lock-icon.component'
 import { NullableTypography } from '../NullableTypography/nullable-typography.component'
 import { VideoCardMenu } from '../VideoCardMenu/element-option.component'
 import { CardInformation } from '../CardInformation/card-information.component'
-import { useTranslation } from 'react-i18next'
-import { Icon } from '../Icon/Icon.component'
 
 type ListVideoCardProps = {
   video?: Video | null
@@ -60,8 +57,6 @@ export const ListVideoCard = ({
   }
 
   const isVideoPrivate = video.visibility === 'private'
-
-  const { t } = useTranslation('videos')
 
   return (
     <Stack direction="row" spacing={1}>
@@ -162,19 +157,6 @@ export const ListVideoCard = ({
               user={video.publisher}
               createdDate={video.createdAt}
             />
-            <Stack direction="row" spacing={1} alignItems="center">
-              <Tooltip
-                title={t(`card.${video.views > 1 ? 'views' : 'view'}`, {
-                  count: video.views || 0,
-                })}
-              >
-                <Chip
-                  label={video.views}
-                  size="small"
-                  icon={<Icon name={'mdi:eye-circle'} />}
-                />
-              </Tooltip>
-            </Stack>
           </Stack>
         )}
       </Stack>
