@@ -25,6 +25,7 @@ import { UserAvatar } from '@users/components/UserAvatar/UserAvatar.component'
 import { RootStyle, ToolbarStyle } from './Navbar.style'
 import { useRef } from 'react'
 import { useTranslation } from 'react-i18next'
+import { Logout } from '@auth/components/Logout/Logout.component'
 
 type UsePopOverModalReturnProps = {
   onClick: (event: React.MouseEvent<HTMLButtonElement>) => void
@@ -154,9 +155,11 @@ export const DashboardNavbar: React.FC<PropsWithChildren<{}>> = () => {
             {!isHomePage() && <Spotlight />}
             {/* <LanguageButton />
           <Logout /> */}
+
             <IconButton onClick={onClick}>
               <UserAvatar />
             </IconButton>
+            <Logout />
             <PopOver>
               <List>
                 <ListItemButton
