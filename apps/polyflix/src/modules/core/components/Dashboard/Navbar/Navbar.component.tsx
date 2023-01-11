@@ -129,7 +129,7 @@ export const DashboardNavbar: React.FC<PropsWithChildren<{}>> = () => {
             sx={{
               display: {
                 md: 'none',
-                sm: 'flex',
+                xs: 'flex',
               },
               color: 'grey.600',
               alignItems: 'center',
