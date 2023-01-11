@@ -1,11 +1,11 @@
 import {
-  Chip,
   Link,
   Paper,
   Skeleton,
   Stack,
   Tooltip,
   useTheme,
+  Typography,
 } from '@mui/material'
 import { Video } from '@videos/models/video.model'
 import { AspectRatioBox } from '../AspectRatioBox/AspectRation.component'
@@ -19,6 +19,7 @@ import { NullableTypography } from '../NullableTypography/nullable-typography.co
 import { VideoCardMenu } from '../VideoCardMenu/element-option.component'
 import { CardInformation } from '../CardInformation/card-information.component'
 import { useTranslation } from 'react-i18next'
+import { abbreviateNumber } from 'js-abbreviation-number'
 import { Icon } from '../Icon/Icon.component'
 
 type VideoCardProps = {
@@ -154,11 +155,11 @@ export const VideoCard = ({ video, showInfo = true }: VideoCardProps) => {
                   count: video.views || 0,
                 })}
               >
-                <Chip
-                  label={video.views}
-                  size="small"
-                  icon={<Icon name={'mdi:eye-circle'} />}
-                />
+                <Typography variant="caption">{`${abbreviateNumber(
+                  video?.views || 0
+                )} ${t<string>('slug.details.tooltips.views')}${
+                  video?.views && video?.views > 1 ? 's' : ''
+                }`}</Typography>
               </Tooltip>
             </Stack>
           </Stack>
