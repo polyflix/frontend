@@ -28,6 +28,7 @@ import { useTranslation } from 'react-i18next'
 
 type UsePopOverModalReturnProps = {
   onClick: (event: React.MouseEvent<HTMLButtonElement>) => void
+  handleClose: () => void
   PopOver: ({
     children,
     sx,
@@ -47,7 +48,7 @@ export const usePopOverModal = (): UsePopOverModalReturnProps => {
     setOpen(!isOpen)
   }
 
-  const handleClone = () => {
+  const handleClose = () => {
     setAnchor(null)
     setOpen(false)
   }
@@ -68,7 +69,7 @@ export const usePopOverModal = (): UsePopOverModalReturnProps => {
         },
       }}
       open={isOpen}
-      onClose={handleClone}
+      onClose={handleClose}
       anchorEl={anchor}
     >
       <ArrowStyle className="arrow" />
@@ -77,7 +78,7 @@ export const usePopOverModal = (): UsePopOverModalReturnProps => {
     </Popover>
   )
 
-  return { PopOver, onClick }
+  return { PopOver, onClick, handleClose }
 }
 
 export const DashboardNavbar: React.FC<PropsWithChildren<{}>> = () => {
@@ -87,7 +88,7 @@ export const DashboardNavbar: React.FC<PropsWithChildren<{}>> = () => {
 
   const isHomePage = (): boolean => pathname === '/'
   const theme = useTheme()
-  const { PopOver, onClick } = usePopOverModal()
+  const { PopOver, onClick, handleClose } = usePopOverModal()
 
   const toolBarRef = useRef<HTMLElement>()
   const toolBarContainerRef = useRef<HTMLElement>()
@@ -160,6 +161,7 @@ export const DashboardNavbar: React.FC<PropsWithChildren<{}>> = () => {
               <List>
                 <ListItemButton
                   component={RouterLink}
+                  onClick={handleClose}
                   to="/users/profile/videos"
                 >
                   <ListItemIcon>
@@ -167,7 +169,7 @@ export const DashboardNavbar: React.FC<PropsWithChildren<{}>> = () => {
                   </ListItemIcon>
                   <ListItemText primary={t('navbar.actions.profile')} />
                 </ListItemButton>
-                <ListItemButton>
+                <ListItemButton disabled={true} onClick={handleClose}>
                   <ListItemIcon>
                     <ManageSearch />
                   </ListItemIcon>
@@ -175,7 +177,11 @@ export const DashboardNavbar: React.FC<PropsWithChildren<{}>> = () => {
                     primary={t('navbar.actions.contentManagement')}
                   />
                 </ListItemButton>
-                <ListItemButton>
+                <ListItemButton
+                  component={RouterLink}
+                  onClick={handleClose}
+                  to="/users/profile/settings"
+                >
                   <ListItemIcon>
                     <Settings />
                   </ListItemIcon>
