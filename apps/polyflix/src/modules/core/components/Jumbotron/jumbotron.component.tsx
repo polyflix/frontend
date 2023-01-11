@@ -29,6 +29,8 @@ import { useTranslation } from 'react-i18next'
 import { buildSkeletons } from '@core/utils/gui.utils'
 import { Link as RouterLink } from 'react-router-dom'
 import { videoSlugLink } from '@core/helpers/video.helper'
+import { SpotlightModal } from '../Spotlight/SpotlightModal.component'
+import { useState } from 'react'
 
 const HomeSearchBarRootStyled = styled(Paper)(({ theme }) => ({
   maxWidth: 'clamp(900px, 70vw, 1450px)',
@@ -51,17 +53,29 @@ type SearchBarProps = {
 }
 
 export const HomeSearchBar = ({ sx }: SearchBarProps) => {
+  const [modalOpened, setOpen] = useState(false)
+  const handleOpen = () => setOpen(true)
+  const handleClose = () => setOpen(false)
+
   return (
-    <HomeSearchBarRootStyled variant="outlined" sx={sx}>
-      <InputBase
-        sx={{ ml: 1, flex: 1, width: '100%' }}
-        placeholder="Search"
-        inputProps={{ 'aria-label': 'search' }}
+    <>
+      <HomeSearchBarRootStyled variant="outlined" sx={sx}>
+        <InputBase
+          sx={{ ml: 1, flex: 1, width: '100%' }}
+          placeholder="Search"
+          inputProps={{ 'aria-label': 'search' }}
+          onClick={handleOpen}
+        />
+        <IconButton type="button" sx={{ p: '10px' }} aria-label="search">
+          <SearchIcon />
+        </IconButton>
+      </HomeSearchBarRootStyled>
+      <SpotlightModal
+        opened={modalOpened}
+        handleOpen={handleOpen}
+        handleClose={handleClose}
       />
-      <IconButton type="button" sx={{ p: '10px' }} aria-label="search">
-        <SearchIcon />
-      </IconButton>
-    </HomeSearchBarRootStyled>
+    </>
   )
 }
 
