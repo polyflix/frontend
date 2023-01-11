@@ -30,6 +30,10 @@
         }
       },
       "errors": {}
+    },
+    "selector": {
+      "title": "Veuillez sélectionner les pièces jointes",
+      "validate": "Fermer"
     }
   },
   "closeModal": "Fermer",

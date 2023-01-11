@@ -40,7 +40,7 @@ export const attachmentsApi = createApi({
     }),
     getVideoAttachments: builder.query<PaginatedAttachments, string>({
       query: (videoId: string) => {
-        return `${Endpoint.Attachments}/video/${videoId}`
+        return `${Endpoint.Attachments}/video/${videoId}?pageSize=50&page=1` // TODO : remove pagination from attachment service (only for /video/id)
       },
       providesTags: (result) =>
         result
