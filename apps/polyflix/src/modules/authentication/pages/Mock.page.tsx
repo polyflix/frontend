@@ -5,7 +5,7 @@ import { useInjection } from '@polyflix/di'
 import { useKeycloak } from '@react-keycloak/web'
 import { User } from '@users/models/user.model'
 import { BaseUsers } from 'mock-server'
-import { useHistory } from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 
 interface Props {
   redirectUri: string
@@ -13,7 +13,6 @@ interface Props {
 
 export function MockAuthenticationPage({ redirectUri: redirectUri }: Props) {
   const authService = useInjection<AuthService>(AuthService)
-  const history = useHistory()
   let { keycloak } = useKeycloak()
 
   function login(user: User, redirectUrl: string = '/') {
@@ -23,7 +22,7 @@ export function MockAuthenticationPage({ redirectUri: redirectUri }: Props) {
       .catch(console.error)
       .finally(() => {
         keycloak.token = 'my-mock-token'
-        history.push(redirectUrl)
+        return <Redirect to={redirectUrl} />
       })
   }
 
