@@ -168,7 +168,7 @@ export const HomePage = () => {
           spacing: 2,
         }}
         sx={{
-          backgroundColor: '#f0f0f0',
+          backgroundColor: 'bg',
           pt: {
             xs: `${APP_BAR_MOBILE + 16}px`,
             lg: `${APP_BAR_DESKTOP}px`,
