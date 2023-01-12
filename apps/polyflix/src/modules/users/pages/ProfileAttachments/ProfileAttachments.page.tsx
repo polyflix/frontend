@@ -60,7 +60,7 @@ export const ProfileAttachmentsPage = () => {
   return (
     <Page
       disableGutters={true}
-      sx={{ mt: 3 }}
+      sx={{ mt: 3, pt: 0 }}
       title={tUsers('profile.tabs.attachments.content.title')}
     >
       <Stack
@@ -69,6 +69,7 @@ export const ProfileAttachmentsPage = () => {
         sx={{ alignItems: 'center' }}
       >
         <Header
+          sx={{ mb: 0 }}
           title={tUsers('profile.tabs.attachments.content.title')}
           description={tUsers('profile.tabs.attachments.content.description')}
         />

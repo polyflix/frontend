@@ -56,9 +56,10 @@ export const ProfileCollectionsPage: React.FC<Props> = ({ user }: Props) => {
               'profile.tabs.collections.contentOther.title'
             )} ${getUsernameToDisplay(user!)}`
       }
-      sx={{ mt: 3 }}
+      sx={{ mt: 3, pt: 0 }}
     >
       <Header
+        sx={{ mb: 0 }}
         title={
           isMe
             ? t('profile.tabs.collections.content.title')

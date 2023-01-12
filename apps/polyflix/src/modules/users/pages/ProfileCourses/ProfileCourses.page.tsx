@@ -56,9 +56,12 @@ export const ProfileCoursesPage: React.FC<Props> = ({ user }: Props) => {
               'profile.tabs.courses.contentOther.title'
             )} ${getUsernameToDisplay(user!)}`
       }
-      sx={{ mt: 3 }}
+      sx={{ mt: 3, pt: 0 }}
     >
       <Header
+        sx={{
+          mb: 0,
+        }}
         title={
           isMe
             ? t('profile.tabs.courses.content.title')
