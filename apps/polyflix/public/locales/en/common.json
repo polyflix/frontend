@@ -49,6 +49,26 @@
       }
     }
   },
+  "footer": {
+    "navigation": {
+      "title": "Navigation",
+      "homepage": "Homepage",
+      "videos": "Videos",
+      "courses": "Courses"
+    },
+    "account": {
+      "title": "My account",
+      "profile": "My profile",
+      "settings": "My settings"
+    },
+    "help": {
+      "title": "Support",
+      "cgu": "Terms of service",
+      "mentions": "Terms and conditions",
+      "bug": "Report a bug"
+    },
+    "rights": "All rights reserved."
+  },
   "speedDial": {
     "video": "Video",
     "quizz": "Quizz"
