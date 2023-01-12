@@ -41,11 +41,12 @@ export const ProfileCertificationsPage = () => {
   return (
     <Page
       disableGutters={true}
-      sx={{ mt: 3 }}
+      sx={{ mt: 3, pt: 0 }}
       title={t('profile.tabs.certifications.content.title')}
     >
       <Stack justifyContent="space-between" direction="row">
         <Header
+          sx={{ mb: 0 }}
           title={t('profile.tabs.certifications.content.title')}
           description={t('profile.tabs.certifications.content.description')}
         />

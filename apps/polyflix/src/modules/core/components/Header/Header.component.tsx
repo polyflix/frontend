@@ -1,10 +1,12 @@
 import { Stack, Typography } from '@mui/material'
+import { SxProps, Theme } from '@mui/system'
 
 interface Props {
   title?: string
   description?: string
   actionButton?: React.ReactNode
   hideActionButton?: boolean
+  sx?: SxProps<Theme>
 }
 
 // A simple component to display a page header
@@ -13,12 +15,14 @@ export const Header = ({
   title,
   actionButton,
   hideActionButton = false,
+  sx,
 }: Props) => {
   return (
     <Stack
       spacing={1}
       sx={{
         mb: 3,
+        ...sx,
       }}
       direction={{
         xs: 'column',

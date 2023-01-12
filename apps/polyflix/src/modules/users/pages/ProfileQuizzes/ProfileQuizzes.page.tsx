@@ -54,7 +54,7 @@ export const ProfileQuizzesPage: React.FC<Props> = ({ user }: Props) => {
   return (
     <Page
       disableGutters={true}
-      sx={{ mt: 3 }}
+      sx={{ mt: 3, pt: 0 }}
       title={
         isMe
           ? t('profile.tabs.quizzes.content.title')
@@ -65,6 +65,7 @@ export const ProfileQuizzesPage: React.FC<Props> = ({ user }: Props) => {
     >
       <Stack justifyContent="space-between" direction="row" alignItems="start">
         <Header
+          sx={{ mb: 0 }}
           title={
             isMe
               ? t('profile.tabs.quizzes.content.title')
