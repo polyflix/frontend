@@ -5,6 +5,7 @@
       "delete": "Your profile was deleted"
     },
     "actions": {
+      "view": "View profile",
       "update": "Update profile",
       "edit": "Edit your profile",
       "delete": "Delete your account",

@@ -5,6 +5,7 @@
       "delete": "Vous avez supprimé votre profil"
     },
     "actions": {
+      "view": "Voir le profil",
       "update": "Mettre à jour le profil",
       "edit": "Modifier votre profil",
       "delete": "Supprimer votre profil",
