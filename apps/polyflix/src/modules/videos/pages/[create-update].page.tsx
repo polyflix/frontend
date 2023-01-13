@@ -188,9 +188,10 @@ export const CreateUpdatePage = () => {
           {displayStepperContent()}
         </Box>
 
-        <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
+        <Box sx={{ display: 'flex', flexDirection: 'row', py: 4 }}>
           <Button
             color="inherit"
+            variant="contained"
             disabled={activeStep === 0}
             onClick={handleBack}
             sx={{ mr: 1 }}
@@ -198,7 +199,11 @@ export const CreateUpdatePage = () => {
             {t('forms.stepper.actions.back')}
           </Button>
           <Box sx={{ flex: '1 1 auto' }} />
-          <Button onClick={handleNext} disabled={disableNextButton}>
+          <Button
+            variant="contained"
+            onClick={handleNext}
+            disabled={disableNextButton}
+          >
             {t('forms.stepper.actions.next')}
           </Button>
         </Box>
