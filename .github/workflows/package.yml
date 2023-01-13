@@ -22,6 +22,10 @@ jobs:
         with:
           images: ghcr.io/${{ github.repository }}
           flavor: ${{ inputs.docker-metadata-flavor }}
+          tags: |
+            type=ref,event=branch
+            type=semver,pattern={{version}},event=tag
+            type=sha,event=branch
       - id: extract-env
         run: |
           if  [[ "$GITHUB_REF_TYPE" == tag ]]
