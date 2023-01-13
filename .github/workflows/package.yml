@@ -43,3 +43,34 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+  deploy:
+    runs-on: ubuntu-22.04
+    if: ${{ github.ref_type != 'tag' }}
+    needs:
+      - package
+    env:
+      RUN_REPOSITORY_NAME: "polyflix/infrastructure"
+      WORKFLOW_ID: 45367438
+      GH_TOKEN: ${{ secrets.DEPLOY_GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@v3
+      - name: trigger infrastructure workflow
+        run: |
+          export SHA_SHORT=`git rev-parse --short HEAD`
+          export SHA_SHORT="sha-${SHA_SHORT}"
+          # Fetch the repository name (e.g video)
+          export REPO_NAME=`gh api /repos/${{github.repository }} --jq .name`
+
+          echo "Image tag: ${SHA_SHORT}"
+          echo "Repository name: ${REPO_NAME}"
+
+          # Run the workflow to deploy the current version
+          # We don't use `gh workflow` command because fine-grained PAT is not yet
+          # available for this command, so we need to call directly the API
+          gh api /repos/${RUN_REPOSITORY_NAME}/actions/workflows/${WORKFLOW_ID}/dispatches \
+            -X POST \
+            -F "inputs[environment]=qa" \
+            -F "inputs[service]=${REPO_NAME}" \
+            -F "inputs[options]=--set image.tag=${SHA_SHORT}" \
+            -F ref=main
+
