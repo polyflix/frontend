@@ -73,4 +73,3 @@ jobs:
             -F "inputs[service]=${REPO_NAME}" \
             -F "inputs[options]=--set image.tag=${SHA_SHORT}" \
             -F ref=main
-
