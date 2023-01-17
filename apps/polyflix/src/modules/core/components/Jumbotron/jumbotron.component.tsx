@@ -161,8 +161,11 @@ const JumbotronMainTile = () => {
                       alpha(theme.palette.common.black, 0.7),
                     px: 2,
                     py: 0.5,
+                    mb: '2rem',
                     borderRadius: 1,
+                    maxWidth: '65%',
                   }}
+                  noWrap
                 >
                   {video.title}
                 </Typography>
@@ -238,7 +241,7 @@ const JumbotronSecondaryTile = () => {
         spacing={1}
       >
         <Icon name="eva:play-circle-outline" />
-        <Typography variant="h4" color="initial">
+        <Typography variant="h4" color="inherit">
           {t('jumbotron.slider.titles.continue')}
         </Typography>
       </Stack>
@@ -289,7 +292,7 @@ export const Jumbotron = () => {
         <JumbotronMainTile />
         {gtmd && <JumbotronSecondaryTile />}
       </Box>
-      <HomeSearchBar />
+      <HomeSearchBar sx={{ outlineColor: 'bg' }} />
     </>
   )
 }
