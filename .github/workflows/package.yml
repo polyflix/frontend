@@ -9,7 +9,19 @@ on:
 
 jobs:
   package:
+    name: Build
     runs-on: ubuntu-22.04
+    strategy:
+      matrix:
+        target:
+          - polyflix
+          - studio
+        include:
+          - target: polyflix
+            dockerfile: apps/polyflix/Dockerfile
+          - target: studio
+            flavor_prefix: -studio
+            dockerfile: apps/studio/Dockerfile
     steps:
       - uses: actions/checkout@v3
       - uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9
@@ -21,7 +33,7 @@ jobs:
         uses: docker/metadata-action@v4
         with:
           images: ghcr.io/${{ github.repository }}
-          flavor: ${{ inputs.docker-metadata-flavor }}
+          flavor: prefix=${{ matrix.flavor_prefix }}
           tags: |
             type=ref,event=branch
             type=semver,pattern={{version}},event=tag
@@ -39,10 +51,11 @@ jobs:
           build-args: |
             BUILD_MODE=${{ steps.extract-env.outputs.environment }}
           context: .
-          file: Dockerfile.app
+          file: ${{ matrix.dockerfile }}
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+
   deploy:
     runs-on: ubuntu-22.04
     if: ${{ github.ref_type != 'tag' }}
@@ -73,4 +86,3 @@ jobs:
             -F "inputs[service]=${REPO_NAME}" \
             -F "inputs[options]=--set image.tag=${SHA_SHORT}" \
             -F ref=main
-

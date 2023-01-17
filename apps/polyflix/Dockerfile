@@ -1,5 +1,5 @@
 ARG BUILD_MODE=production
-ARG WORKSPACE_APP=studio
+ARG WORKSPACE_APP=polyflix
 
 FROM node:16 AS builder
 ARG WORKSPACE_APP
