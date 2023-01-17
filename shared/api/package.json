@@ -1,0 +1,8 @@
+{
+  "name": "api",
+  "version": "1.0.0",
+  "main": "index.ts",
+  "dependencies": {
+    "axios": "^0.22.0"
+  }
+}
