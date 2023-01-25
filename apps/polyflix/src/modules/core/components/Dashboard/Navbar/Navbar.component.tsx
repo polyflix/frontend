@@ -173,7 +173,11 @@ export const DashboardNavbar: React.FC<PropsWithChildren<{}>> = () => {
                   </ListItemIcon>
                   <ListItemText primary={t('navbar.actions.profile')} />
                 </ListItemButton>
-                <ListItemButton disabled={true} onClick={handleClose}>
+                <ListItemButton
+                  component={RouterLink}
+                  onClick={handleClose}
+                  to="/studio"
+                >
                   <ListItemIcon>
                     <ManageSearch />
                   </ListItemIcon>

@@ -53,6 +53,8 @@ import { CertificatePage } from './modules/certifications/pages/Certificate.page
 import './styles/index.scss'
 
 import { initMockServer } from 'mock-server'
+import { StudioRouter } from '@studio/studio.router'
+import { StudioLayout } from '@core/layouts/Studio/StudioLayout'
 
 if (environment.mocked) {
   initMockServer()
@@ -129,7 +131,13 @@ const PolyflixApp = () => {
           )}
         />
         <Route path="/certificate/:id" component={CertificatePage} />
-
+        <PrivateRoute condition={isAuthenticated} path="/studio">
+          <Switch>
+            <StudioLayout>
+              <Route path="/studio" component={StudioRouter} />
+            </StudioLayout>
+          </Switch>
+        </PrivateRoute>
         {/* We restrict these route to an authenticated user*/}
         <PrivateRoute condition={isAuthenticated}>
           <DashboardLayout>
@@ -140,12 +148,12 @@ const PolyflixApp = () => {
               <Route path="/videos" component={VideoRouter} />
               <Route path="/modules" component={CollectionRouter} />
               <Route exact path="/" component={HomePage} />
-              <PrivateRoute
-                condition={user?.roles.includes(Role.Admin) || false}
-              >
-                <Route path="/admin" component={AdminRouter} />
-              </PrivateRoute>
               <Route component={NotFoundPage} />
+              {/* <PrivateRoute
+                condition={user?.roles.includes(Role.Admin) || false}
+                >
+                <Route path="/admin" component={AdminRouter} />
+              </PrivateRoute> */}
             </Switch>
           </DashboardLayout>
         </PrivateRoute>
