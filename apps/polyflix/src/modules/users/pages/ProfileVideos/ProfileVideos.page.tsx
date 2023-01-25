@@ -22,6 +22,7 @@ import { VideoFilters } from '@videos/types/filters.type'
 import { getUsernameToDisplay } from '@users/helpers/displayUsername.helper'
 import { User } from '@users/models/user.model'
 import { VideoCard } from '@core/components/VideoCard/video-card.component'
+import { polyfilxRouter } from '@core/utils/routes'
 
 type Props = {
   user: User | undefined
@@ -130,7 +131,12 @@ export const ProfileVideosPage: React.FC<Props> = ({ user }: Props) => {
           />
         </Box>
       ) : (
-        !isLoading && <NoData variant="videos" link="/videos/create" />
+        !isLoading && (
+          <NoData
+            variant="videos"
+            link={polyfilxRouter().studio.videos.create}
+          />
+        )
       )}
     </Page>
   )

@@ -37,6 +37,7 @@ import {
   useGetCourseQuery,
 } from '@courses/services/course.service'
 import { CoursesFilters } from '@courses/types/filters.type'
+import { polyfilxRouter } from '@core/utils/routes'
 
 export const CourseSlugPage = () => {
   const { slug } = useParams<{ slug: string }>()
@@ -85,7 +86,7 @@ export const CourseSlugPage = () => {
           >
             <Button
               component={RouterLink}
-              to={`/courses/${course!.slug}/update`}
+              to={polyfilxRouter().studio.courses.update(course!.slug)}
               startIcon={<Edit />}
               variant="outlined"
             >

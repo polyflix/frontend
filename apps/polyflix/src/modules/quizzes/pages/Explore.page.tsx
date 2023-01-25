@@ -20,6 +20,7 @@ import { QuizzCardSkeleton } from '@quizzes/components/QuizzCardSkeleton/QuizzCa
 import { Quizz } from '@quizzes/models/quizz.model'
 import { useGetQuizzesQuery } from '@quizzes/services/quizz.service'
 import { QuizzFilters } from '@quizzes/types/filters.type'
+import { polyfilxRouter } from '@core/utils/routes'
 
 export const ExploreQuizzesPage = () => {
   const { t } = useTranslation('quizzes')
@@ -53,7 +54,7 @@ export const ExploreQuizzesPage = () => {
             variant="contained"
             startIcon={<Add />}
             component={RouterLink}
-            to={`/quizzes/create`}
+            to={polyfilxRouter().studio.quizzes.create}
           >
             {t('explore.actions.create')}
           </Button>
@@ -106,7 +107,10 @@ export const ExploreQuizzesPage = () => {
           />
         </Box>
       ) : (
-        <NoData variant="quizzes" link="/quizzes/create" />
+        <NoData
+          variant="quizzes"
+          link={polyfilxRouter().studio.quizzes.create}
+        />
       )}
     </Page>
   )

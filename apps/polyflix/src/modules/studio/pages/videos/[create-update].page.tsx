@@ -26,7 +26,7 @@ import { PlayerVideoSource } from '@videos/types/video.type'
 
 const steps = ['forms.stepper.steps.provider', 'forms.stepper.steps.info']
 
-export const CreateUpdatePage = () => {
+export const CreateUpdateVideoPage = () => {
   const { slug } = useParams<{ slug: string }>()
 
   // We want to fetch the video only if the slug is defined, in case of update mode.
@@ -143,6 +143,9 @@ export const CreateUpdatePage = () => {
 
   return (
     <Page
+      sx={{
+        pt: 0,
+      }}
       isLoading={isLoading}
       title={t(`forms.create-update.title.${i18nKey}`, { video: video?.title })}
     >

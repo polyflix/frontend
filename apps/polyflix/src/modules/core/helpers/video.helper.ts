@@ -1,6 +1,7 @@
 import { Video } from '@videos/models/video.model'
 
 export const videoSlugLink = (video: Video): string => `/videos/${video?.slug}`
+
 export const getShortDescription = (video: Video): string => {
   const description = video?.description
   if (!description) return ''
