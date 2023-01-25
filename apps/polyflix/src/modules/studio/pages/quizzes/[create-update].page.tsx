@@ -30,6 +30,9 @@ export const CreateUpdateQuizzPage = () => {
 
   return (
     <Page
+      sx={{
+        pt: 0,
+      }}
       isLoading={isLoading}
       title={t(`forms.create-update.title.${i18nKey}`, { quizz: data?.name })}
     >

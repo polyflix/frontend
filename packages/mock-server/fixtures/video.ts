@@ -71,7 +71,7 @@ export class VideoMock implements Mock {
         return faker.lorem.lines(5);
       },
       thumbnail() {
-        return `https://cataas.com/cat/says/${faker.random.word()}?size=50&color=red`;
+        return `https://picsum.photos/seed/${faker.random.word()}/500/700`;
       },
       publisher() {
         return BaseUsers[0];

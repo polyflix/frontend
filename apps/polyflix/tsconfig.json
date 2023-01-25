@@ -24,7 +24,8 @@
       "@attachments/*": ["src/modules/attachments/*"],
       "@search/*": ["src/modules/search/*"],
       "@admin/*": ["src/modules/admin/*"],
-      "@certifications/*": ["src/modules/certifications/*"]
-    },
-  },
+      "@certifications/*": ["src/modules/certifications/*"],
+      "@studio/*": ["src/modules/studio/*"]
+    }
+  }
 }

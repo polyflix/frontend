@@ -9,12 +9,12 @@ import { useSidebar } from '@core/hooks/useSidebar.hook'
 import { OPEN_DRAWER_WIDTH } from '@core/layouts/Dashboard/Dashboard.style'
 import { ease } from '@core/utils/transition'
 
-import { UserMinimalCard } from '../../UserMinimalCard/UserMinimalCard.component'
 import { Section } from './Section/Section.component'
 import { getSidebarSections } from './Sidebar.config'
 import { AccountStyle, RootStyle } from './Sidebar.style'
+import { UserMinimalCard } from './UserMinimalCard/UserMinimalCard.component'
 
-export const DashboardSidebar = () => {
+export const StudioSidebar = () => {
   const th = useTheme()
   const ltsm: boolean = useMediaQuery(th.breakpoints.down('md'))
 

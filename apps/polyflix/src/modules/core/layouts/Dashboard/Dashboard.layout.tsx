@@ -12,7 +12,6 @@ export const DashboardLayout: React.FC = ({
     <SidebarProvider>
       <RootStyle>
         <DashboardNavbar />
-        {/* <DashboardSidebar /> */}
         <MainStyle>{children}</MainStyle>
       </RootStyle>
     </SidebarProvider>

@@ -5,19 +5,16 @@ import {
   ListItemButton,
   ListItemIcon,
   ListItemText,
-  Popover,
   Stack,
-  SxProps,
+  Tooltip,
   useTheme,
 } from '@mui/material'
-import { Theme } from '@mui/material'
 import Box from '@mui/material/Box'
-import React, { PropsWithChildren, useEffect, useState } from 'react'
+import React, { PropsWithChildren, useEffect } from 'react'
 import { Link as RouterLink, useLocation } from 'react-router-dom'
 
 import { Icon } from '@core/components/Icon/Icon.component'
 import { Logo } from '@core/components/Logo/Logo.component'
-import { ArrowStyle } from '@core/components/MenuPopOver/MenuPopOver.style'
 import { Spotlight } from '@core/components/Spotlight/Spotlight.component'
 
 import { UserAvatar } from '@users/components/UserAvatar/UserAvatar.component'
@@ -26,61 +23,8 @@ import { RootStyle, ToolbarStyle } from './Navbar.style'
 import { useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Logout } from '@auth/components/Logout/Logout.component'
-
-type UsePopOverModalReturnProps = {
-  onClick: (event: React.MouseEvent<HTMLButtonElement>) => void
-  handleClose: () => void
-  PopOver: ({
-    children,
-    sx,
-  }: PropsWithChildren<MenuPopoverProps>) => JSX.Element
-}
-
-type MenuPopoverProps = {
-  sx?: SxProps<Theme>
-}
-
-export const usePopOverModal = (): UsePopOverModalReturnProps => {
-  const [isOpen, setOpen] = useState(false)
-  const [anchor, setAnchor] = useState<null | HTMLElement>(null)
-
-  const onClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchor(event.currentTarget)
-    setOpen(!isOpen)
-  }
-
-  const handleClose = () => {
-    setAnchor(null)
-    setOpen(false)
-  }
-
-  const PopOver = ({ children, sx }: PropsWithChildren<MenuPopoverProps>) => (
-    <Popover
-      anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-      PaperProps={{
-        sx: {
-          mt: 1.5,
-          ml: 0.5,
-          overflow: 'inherit',
-          boxShadow: (theme) => theme.shadows[2],
-          border: (theme) => `solid 1px ${theme.palette.background.paper}`,
-          background: (theme) => theme.palette.background.paper,
-          ...sx,
-        },
-      }}
-      open={isOpen}
-      onClose={handleClose}
-      anchorEl={anchor}
-    >
-      <ArrowStyle className="arrow" />
-
-      {children}
-    </Popover>
-  )
-
-  return { PopOver, onClick, handleClose }
-}
+import { usePopOverModal } from '@studio/hooks/use-pop-over-modal.hook'
+import { polyfilxRouter } from '@core/utils/routes'
 
 export const DashboardNavbar: React.FC<PropsWithChildren<{}>> = () => {
   const { pathname } = useLocation()
@@ -89,7 +33,16 @@ export const DashboardNavbar: React.FC<PropsWithChildren<{}>> = () => {
 
   const isHomePage = (): boolean => pathname === '/'
   const theme = useTheme()
-  const { PopOver, onClick, handleClose } = usePopOverModal()
+  const {
+    PopOver: AvatarPopOver,
+    onClick: onClickAvatar,
+    handleClose: handleCloseAvatar,
+  } = usePopOverModal()
+  const {
+    PopOver: StudioPopOver,
+    onClick: onClickStudio,
+    handleClose: handleCloseStudio,
+  } = usePopOverModal()
 
   const toolBarRef = useRef<HTMLElement>()
   const toolBarContainerRef = useRef<HTMLElement>()
@@ -155,17 +108,58 @@ export const DashboardNavbar: React.FC<PropsWithChildren<{}>> = () => {
           >
             {!isHomePage() && <Spotlight />}
             {/* <LanguageButton />
-          <Logout /> */}
+            <Logout /> */}
 
-            <IconButton onClick={onClick}>
+            <Tooltip title={t('navbar.tooltip.create')}>
+              <IconButton onClick={onClickStudio} color="primary">
+                <Icon name="uil:create-dashboard" />
+              </IconButton>
+            </Tooltip>
+            <IconButton onClick={onClickAvatar}>
               <UserAvatar />
             </IconButton>
             <Logout />
-            <PopOver>
+
+            <StudioPopOver>
               <List>
                 <ListItemButton
                   component={RouterLink}
-                  onClick={handleClose}
+                  onClick={handleCloseStudio}
+                  to={polyfilxRouter().studio.videos.create}
+                >
+                  <ListItemIcon>
+                    <Icon name="eva:play-circle-outline" />
+                  </ListItemIcon>
+                  <ListItemText primary={t('navbar.actions.createVideo')} />
+                </ListItemButton>
+                <ListItemButton
+                  component={RouterLink}
+                  onClick={handleCloseStudio}
+                  to={polyfilxRouter().studio.quizzes.create}
+                >
+                  <ListItemIcon>
+                    <Icon name="healthicons:i-exam-multiple-choice" />
+                  </ListItemIcon>
+                  <ListItemText primary={t('navbar.actions.createQuizz')} />
+                </ListItemButton>
+                <ListItemButton
+                  component={RouterLink}
+                  onClick={handleCloseStudio}
+                  to={polyfilxRouter().studio.courses.create}
+                >
+                  <ListItemIcon>
+                    <Icon name="gg:align-left" />
+                  </ListItemIcon>
+                  <ListItemText primary={t('navbar.actions.createCourse')} />
+                </ListItemButton>
+              </List>
+            </StudioPopOver>
+
+            <AvatarPopOver>
+              <List>
+                <ListItemButton
+                  component={RouterLink}
+                  onClick={handleCloseAvatar}
                   to="/users/profile/videos"
                 >
                   <ListItemIcon>
@@ -173,7 +167,11 @@ export const DashboardNavbar: React.FC<PropsWithChildren<{}>> = () => {
                   </ListItemIcon>
                   <ListItemText primary={t('navbar.actions.profile')} />
                 </ListItemButton>
-                <ListItemButton disabled={true} onClick={handleClose}>
+                <ListItemButton
+                  component={RouterLink}
+                  onClick={handleCloseAvatar}
+                  to="/studio"
+                >
                   <ListItemIcon>
                     <ManageSearch />
                   </ListItemIcon>
@@ -183,7 +181,7 @@ export const DashboardNavbar: React.FC<PropsWithChildren<{}>> = () => {
                 </ListItemButton>
                 <ListItemButton
                   component={RouterLink}
-                  onClick={handleClose}
+                  onClick={handleCloseAvatar}
                   to="/users/profile/settings"
                 >
                   <ListItemIcon>
@@ -192,7 +190,7 @@ export const DashboardNavbar: React.FC<PropsWithChildren<{}>> = () => {
                   <ListItemText primary={t('navbar.actions.settings')} />
                 </ListItemButton>
               </List>
-            </PopOver>
+            </AvatarPopOver>
           </Stack>
         </Stack>
       </ToolbarStyle>

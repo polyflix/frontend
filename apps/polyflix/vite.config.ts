@@ -92,6 +92,10 @@ export default defineConfig({
         find: '@certifications',
         replacement: resolve(__dirname, './src/modules/certifications'),
       },
+      {
+        find: '@studio',
+        replacement: resolve(__dirname, './src/modules/studio'),
+      },
     ],
   },
   plugins: [

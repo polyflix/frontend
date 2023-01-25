@@ -31,6 +31,9 @@
     "seeMore": "See more"
   },
   "navbar": {
+    "tooltip": {
+      "create": "Create"
+    },
     "actions": {
       "search": {
         "hint": "Write at least {{count}} characters",
@@ -44,9 +47,9 @@
       "language": "Language",
       "notifications": "Notifications",
       "bugReport": "Report a bug",
-      "add": {
-        "media": "Add medias"
-      }
+      "createVideo": "Create a video",
+      "createQuizz": "Create a quizz",
+      "createCourse": "Create a course"
     }
   },
   "footer": {
