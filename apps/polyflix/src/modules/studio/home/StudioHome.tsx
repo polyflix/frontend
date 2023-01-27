@@ -18,6 +18,8 @@ export const StudioHome = () => {
       direction="column"
       sx={{
         pt: 2,
+        px: 2,
+        width: '100%',
       }}
     >
       <header>
