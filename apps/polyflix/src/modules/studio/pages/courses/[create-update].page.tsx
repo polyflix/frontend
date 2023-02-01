@@ -24,7 +24,13 @@ export const CreateUpdateCoursePage = () => {
   const i18nKey = isUndefined(data) ? 'create' : 'update'
 
   return (
-    <Page isLoading={isLoading} title={t('form.upsert.title.create')}>
+    <Page
+      sx={{
+        pt: 0,
+      }}
+      isLoading={isLoading}
+      title={t('form.upsert.title.create')}
+    >
       <Header
         title={t(`form.upsert.title.${i18nKey}`)}
         description={t(`form.upsert.description.${i18nKey}`)}

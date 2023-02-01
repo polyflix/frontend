@@ -1,5 +1,6 @@
 import { Edit, MoreVert } from '@mui/icons-material'
 import {
+  Alert,
   Box,
   IconButton,
   List,
@@ -11,24 +12,19 @@ import {
   Paper,
   Stack,
 } from '@mui/material'
-import { Header } from '../components/header.component'
-import { GhostList } from '../components/ghost-list.component'
+import { Header } from '../../components/header.component'
+import { GhostList } from '../../components/ghost-list.component'
 import { Link as RouterLink } from 'react-router-dom'
 import { useGetVideosQuery } from '@videos/services/video.service'
-import { Visibility } from '@core/models/content.model'
+import { usePopOverModal } from '@studio/hooks/use-pop-over-modal.hook'
 import { Icon } from '@core/components/Icon/Icon.component'
-import { usePopOverModal } from '@core/hooks/use-pop-over-modal.hook'
+import { useGetCoursesQuery } from '@courses/services/course.service'
+import { polyfilxRouter } from '@core/utils/routes'
 
-const Video = () => {
-  const filters = {
-    visibility: Visibility.PUBLIC,
-    draft: false,
-    order: '-createdAt',
-  }
-  const { data, isLoading, isFetching } = useGetVideosQuery({
+export const CoursesListPage = () => {
+  const { data, isLoading, isFetching, isError } = useGetCoursesQuery({
     page: 1,
     pageSize: 5,
-    ...filters,
   })
 
   const { PopOver, onClick, handleClose, outputData } = usePopOverModal()
@@ -38,14 +34,34 @@ const Video = () => {
       return <GhostList />
     }
 
-    const videos = data?.items || []
+    if (isError) {
+      return (
+        <Box sx={{ pt: 2 }}>
+          <Alert severity="error">
+            Something went wrong. Please try again later.
+          </Alert>
+        </Box>
+      )
+    }
+
+    const courses = data?.data || []
+
+    if (courses.length === 0) {
+      return (
+        <Box sx={{ pt: 2 }}>
+          <Alert severity="info">
+            No courses found. Please create a new one.
+          </Alert>
+        </Box>
+      )
+    }
 
     return (
       <>
-        <List component={Stack} direction="column" gap={1}>
-          {videos.map((video: any) => (
+        <List component={Stack} direction="column" gap={1} sx={{ pt: 2 }}>
+          {courses.map((course: any) => (
             <ListItem
-              key={video.id}
+              key={course.id}
               component={Paper}
               variant="outlined"
               disablePadding
@@ -53,17 +69,20 @@ const Video = () => {
                 <IconButton
                   edge="end"
                   aria-label="comments"
-                  onClick={(e) => onClick(e, video)}
+                  onClick={(e) => onClick(e, course)}
                 >
                   <MoreVert />
                 </IconButton>
               }
             >
-              <ListItemButton component={RouterLink} to={`view/${video.id}`}>
+              <ListItemButton
+                component={RouterLink}
+                to={polyfilxRouter().studio.courses.view(course?.id)}
+              >
                 <ListItemAvatar>
                   <Icon name="eva:npm-fill" />
                 </ListItemAvatar>
-                <ListItemText primary={video.title} />
+                <ListItemText primary={course.name} />
               </ListItemButton>
             </ListItem>
           ))}
@@ -73,7 +92,7 @@ const Video = () => {
             <ListItemButton
               component={RouterLink}
               onClick={handleClose}
-              to={`view/${outputData?.id}`}
+              to={polyfilxRouter().studio.courses.view(outputData?.id)}
             >
               <ListItemIcon>
                 <Icon name="eva:eye-outline" />
@@ -83,7 +102,7 @@ const Video = () => {
             <ListItemButton
               component={RouterLink}
               onClick={handleClose}
-              to={`form/${outputData?.id}`}
+              to={polyfilxRouter().studio.courses.update(outputData?.id)}
             >
               <ListItemIcon>
                 <Edit />
@@ -97,11 +116,14 @@ const Video = () => {
   }
 
   return (
-    <Box>
-      <Header title="Videos" description="List of videos" />
+    <Box
+      sx={{
+        width: '100%',
+        px: 2,
+      }}
+    >
+      <Header title="Courses" description="List of courses" />
       {content()}
     </Box>
   )
 }
-
-export default Video

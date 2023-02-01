@@ -1,5 +1,5 @@
 import { Button, Divider, Stack, Typography } from '@mui/material'
-import { Link as RouterLink } from 'react-router-dom'
+import { Link as RouterLink, useRouteMatch } from 'react-router-dom'
 
 type HeaderProps = {
   title: string
@@ -7,6 +7,8 @@ type HeaderProps = {
 }
 
 export const Header = ({ title, description }: HeaderProps) => {
+  const { url } = useRouteMatch()
+
   return (
     <Stack direction="column">
       <Stack
@@ -18,7 +20,7 @@ export const Header = ({ title, description }: HeaderProps) => {
         <Typography variant="h3" color="initial">
           {title}
         </Typography>
-        <Button component={RouterLink} to="form" variant="contained">
+        <Button component={RouterLink} to={`${url}/create`} variant="contained">
           Create
         </Button>
       </Stack>

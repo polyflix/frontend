@@ -24,7 +24,8 @@ export const QuickAccessCard = ({ quickLinks }: QuickAccessCardProps) => {
     >
       <Paper
         sx={{
-          p: 3,
+          px: 3,
+          py: 2,
           width: '100%',
           height: '100%',
           color: 'text.primary',
@@ -35,10 +36,19 @@ export const QuickAccessCard = ({ quickLinks }: QuickAccessCardProps) => {
         variant="outlined"
         component={Stack}
         direction="column"
-        gap={1}
+        gap={2}
       >
         <Stack direction="row" gap={1} alignItems="center">
-          <Icon name={quickLinks.icon} />
+          <Paper
+            component={Stack}
+            variant="outlined"
+            sx={{
+              m: 0,
+              p: 0.5,
+            }}
+          >
+            <Icon name={quickLinks.icon} />
+          </Paper>
           <Typography variant="h5">{quickLinks.title}</Typography>
         </Stack>
         <Typography variant="body1">{quickLinks.description}</Typography>

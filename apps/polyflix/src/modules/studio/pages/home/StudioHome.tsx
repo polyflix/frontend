@@ -1,13 +1,26 @@
+import { polyfilxRouter } from '@core/utils/routes'
 import { Stack, Typography } from '@mui/material'
-import { QuickAccess, QuickLink } from '../components/quick-link.component'
+import { QuickAccess, QuickLink } from '../../components/quick-link.component'
 
 export const StudioHome = () => {
   const quickLinks: QuickLink[] = [
     {
       title: 'Video',
-      description: 'Create, view, list videos',
+      description: 'Create a video',
       icon: 'eva:film-outline',
-      to: '/studio/video',
+      to: polyfilxRouter().studio.videos.create,
+    },
+    {
+      title: 'Quizz',
+      description: 'Create a quizz',
+      icon: 'healthicons:i-exam-multiple-choice',
+      to: polyfilxRouter().studio.quizzes.create,
+    },
+    {
+      title: 'Cours',
+      description: 'Create a cours',
+      icon: 'gg:align-left',
+      to: polyfilxRouter().studio.courses.create,
     },
   ]
 
@@ -17,7 +30,6 @@ export const StudioHome = () => {
       gap={8}
       direction="column"
       sx={{
-        pt: 2,
         px: 2,
         width: '100%',
       }}
