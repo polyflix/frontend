@@ -19,6 +19,8 @@ import { VideoSliderCard } from '@videos/components/VideoSliderCard/VideoSliderC
 import { Video } from '@videos/models/video.model'
 import { useGetVideosQuery } from '@videos/services/video.service'
 import { VideoFilters } from '@videos/types/filters.type'
+import { polyfilxRouter } from '@core/utils/routes'
+import { VideoCard } from '@core/components/VideoCard/video-card.component'
 
 export const ExploreVideosPage = () => {
   const { t } = useTranslation('videos')
@@ -54,7 +56,7 @@ export const ExploreVideosPage = () => {
             variant="contained"
             startIcon={<Add />}
             component={RouterLink}
-            to={`/videos/create`}
+            to={polyfilxRouter().studio.videos.create}
           >
             {t('explore.actions.create')}
           </Button>
@@ -77,11 +79,7 @@ export const ExploreVideosPage = () => {
         {!isFetching
           ? videos.map((video: Video) => (
               <Grid key={video.slug} item xs={12} sm={6} md={6} lg={4}>
-                <VideoSliderCard
-                  key={video.slug}
-                  video={video}
-                  isFetching={isFetching}
-                />
+                <VideoCard key={video.slug} video={video} />
               </Grid>
             ))
           : skeletons.map((_, i: number) => (
@@ -100,7 +98,7 @@ export const ExploreVideosPage = () => {
           />
         </Box>
       ) : (
-        <NoData variant="videos" link="/videos/create" />
+        <NoData variant="videos" link={polyfilxRouter().studio.videos.create} />
       )}
     </Page>
   )

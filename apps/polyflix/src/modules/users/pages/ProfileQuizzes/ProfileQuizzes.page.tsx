@@ -25,6 +25,7 @@ import { QuizzFilters } from '@quizzes/types/filters.type'
 
 import { getUsernameToDisplay } from '@users/helpers/displayUsername.helper'
 import { User } from '@users/models/user.model'
+import { polyfilxRouter } from '@core/utils/routes'
 
 type Props = {
   user: User | undefined
@@ -155,7 +156,12 @@ export const ProfileQuizzesPage: React.FC<Props> = ({ user }: Props) => {
           />
         </Box>
       ) : (
-        !isLoading && <NoData variant="quizzes" link="/quizzes/create" />
+        !isLoading && (
+          <NoData
+            variant="quizzes"
+            link={polyfilxRouter().studio.quizzes.create}
+          />
+        )
       )}
     </Page>
   )
