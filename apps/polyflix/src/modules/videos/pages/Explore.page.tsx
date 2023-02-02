@@ -15,7 +15,6 @@ import { Role } from '@core/types/roles.type'
 import { buildSkeletons } from '@core/utils/gui.utils'
 
 import { VideoCardSkeleton } from '@videos/components/Skeleton/VideoCardSkeleton/VideoCardSkeleton.component'
-import { VideoSliderCard } from '@videos/components/VideoSliderCard/VideoSliderCard.component'
 import { Video } from '@videos/models/video.model'
 import { useGetVideosQuery } from '@videos/services/video.service'
 import { VideoFilters } from '@videos/types/filters.type'

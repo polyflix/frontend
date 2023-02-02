@@ -7,19 +7,6 @@ import { CreateUpdateQuizzPage } from './pages/quizzes/[create-update].page'
 import { VideosListPage } from './pages/videos/videos-list.page'
 import { CreateUpdateVideoPage } from './pages/videos/[create-update].page'
 
-export const StudioRouter = () => {
-  const { url } = useRouteMatch()
-
-  return (
-    <Switch>
-      <Route exact path={`${url}`} component={StudioHome} />
-      <Route path={`${url}/videos`} component={VideosRouter} />
-      <Route path={`${url}/quizzes`} component={QuizzesRouter} />
-      <Route path={`${url}/courses`} component={CoursesRouter} />
-    </Switch>
-  )
-}
-
 export const VideosRouter = () => {
   const { url } = useRouteMatch()
 
@@ -56,6 +43,19 @@ export const CoursesRouter = () => {
         path={`${url}/:slug?/(create|update)`}
         component={CreateUpdateCoursePage}
       />
+    </Switch>
+  )
+}
+
+export const StudioRouter = () => {
+  const { url } = useRouteMatch()
+
+  return (
+    <Switch>
+      <Route exact path={`${url}`} component={StudioHome} />
+      <Route path={`${url}/videos`} component={VideosRouter} />
+      <Route path={`${url}/quizzes`} component={QuizzesRouter} />
+      <Route path={`${url}/courses`} component={CoursesRouter} />
     </Switch>
   )
 }

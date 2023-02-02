@@ -15,7 +15,6 @@ import {
 import { Header } from '../../components/header.component'
 import { GhostList } from '../../components/ghost-list.component'
 import { Link as RouterLink } from 'react-router-dom'
-import { useGetVideosQuery } from '@videos/services/video.service'
 import { usePopOverModal } from '@studio/hooks/use-pop-over-modal.hook'
 import { Icon } from '@core/components/Icon/Icon.component'
 import { useGetCoursesQuery } from '@courses/services/course.service'

@@ -5,20 +5,16 @@ import {
   ListItemButton,
   ListItemIcon,
   ListItemText,
-  Popover,
   Stack,
-  SxProps,
   Tooltip,
   useTheme,
 } from '@mui/material'
-import { Theme } from '@mui/material'
 import Box from '@mui/material/Box'
-import React, { PropsWithChildren, useEffect, useState } from 'react'
+import React, { PropsWithChildren, useEffect } from 'react'
 import { Link as RouterLink, useLocation } from 'react-router-dom'
 
 import { Icon } from '@core/components/Icon/Icon.component'
 import { Logo } from '@core/components/Logo/Logo.component'
-import { ArrowStyle } from '@core/components/MenuPopOver/MenuPopOver.style'
 import { Spotlight } from '@core/components/Spotlight/Spotlight.component'
 
 import { UserAvatar } from '@users/components/UserAvatar/UserAvatar.component'
@@ -29,10 +25,6 @@ import { useTranslation } from 'react-i18next'
 import { Logout } from '@auth/components/Logout/Logout.component'
 import { usePopOverModal } from '@studio/hooks/use-pop-over-modal.hook'
 import { polyfilxRouter } from '@core/utils/routes'
-
-type MenuPopoverProps = {
-  sx?: SxProps<Theme>
-}
 
 export const DashboardNavbar: React.FC<PropsWithChildren<{}>> = () => {
   const { pathname } = useLocation()

@@ -2,7 +2,7 @@ import React from 'react'
 import { SxProps, Theme, Popover as Modal, styled } from '@mui/material'
 import { PropsWithChildren, useState } from 'react'
 
-const Popover = styled(Modal)(({ theme }) => ({
+const Popover = styled(Modal)(() => ({
   '& .MuiList-root': {
     padding: '0',
   },
