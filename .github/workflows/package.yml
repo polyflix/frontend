@@ -20,7 +20,7 @@ jobs:
           - target: polyflix
             dockerfile: apps/polyflix/Dockerfile
           - target: studio
-            flavor_suffix: -studio
+            flavor_prefix: -studio
             dockerfile: apps/studio/Dockerfile
     steps:
       - uses: actions/checkout@v3
@@ -33,7 +33,7 @@ jobs:
         uses: docker/metadata-action@v4
         with:
           images: ghcr.io/${{ github.repository }}
-          flavor: suffix=${{ matrix.flavor_suffix }}
+          flavor: prefix=${{ matrix.flavor_prefix }}
           tags: |
             type=ref,event=branch
             type=semver,pattern={{version}},event=tag
