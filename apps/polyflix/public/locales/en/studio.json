@@ -1,0 +1,48 @@
+{
+  "home": {
+    "title": "Welcome to Studio 👋",
+    "description": "Here you can edit, create and list all Polyflix's elements",
+    "quickAccess": {
+      "title": "Quick actions",
+      "cards": {
+        "video": {
+          "title": "Video",
+          "description": "Create a new video"
+        },
+        "quizz": {
+          "title": "Quizz",
+          "description": "Create a new quizz"
+        },
+        "cours": {
+          "title": "Cours",
+          "description": "Create a new cours"
+        }
+      }
+    }
+  },
+  "common": {
+    "header": {
+      "actions": {
+        "create": "Create"
+      }
+    },
+    "errors": {
+      "global": "Something went wrong, please try again later"
+    }
+  },
+  "quizzes": {
+    "noData": "No quizzes found. Please create a new one.",
+    "title": "Quizzes",
+    "description": "List of all quizzes"
+  },
+  "videos": {
+    "noData": "No videos found. Please create a new one.",
+    "title": "Videos",
+    "description": "List of all videos"
+  },
+  "courses": {
+    "noData": "No courses found. Please create a new one.",
+    "title": "Courses",
+    "description": "List of all courses"
+  }
+}

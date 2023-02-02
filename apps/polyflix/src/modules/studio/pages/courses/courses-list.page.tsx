@@ -19,6 +19,7 @@ import { usePopOverModal } from '@studio/hooks/use-pop-over-modal.hook'
 import { Icon } from '@core/components/Icon/Icon.component'
 import { useGetCoursesQuery } from '@courses/services/course.service'
 import { polyfilxRouter } from '@core/utils/routes'
+import { useTranslation } from 'react-i18next'
 
 export const CoursesListPage = () => {
   const { data, isLoading, isFetching, isError } = useGetCoursesQuery({
@@ -28,6 +29,8 @@ export const CoursesListPage = () => {
 
   const { PopOver, onClick, handleClose, outputData } = usePopOverModal()
 
+  const { t } = useTranslation('studio')
+
   const content = () => {
     if (isLoading || isFetching) {
       return <GhostList />
@@ -36,9 +39,7 @@ export const CoursesListPage = () => {
     if (isError) {
       return (
         <Box sx={{ pt: 2 }}>
-          <Alert severity="error">
-            Something went wrong. Please try again later.
-          </Alert>
+          <Alert severity="error">{t('common.errors.global')}</Alert>
         </Box>
       )
     }
@@ -48,9 +49,7 @@ export const CoursesListPage = () => {
     if (courses.length === 0) {
       return (
         <Box sx={{ pt: 2 }}>
-          <Alert severity="info">
-            No courses found. Please create a new one.
-          </Alert>
+          <Alert severity="info">{t('courses.noData')}</Alert>
         </Box>
       )
     }
@@ -121,7 +120,10 @@ export const CoursesListPage = () => {
         px: 2,
       }}
     >
-      <Header title="Courses" description="List of courses" />
+      <Header
+        title={t('courses.title')}
+        description={t('courses.description')}
+      />
       {content()}
     </Box>
   )

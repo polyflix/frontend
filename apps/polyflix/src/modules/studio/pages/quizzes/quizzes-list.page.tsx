@@ -19,6 +19,7 @@ import { usePopOverModal } from '@studio/hooks/use-pop-over-modal.hook'
 import { Icon } from '@core/components/Icon/Icon.component'
 import { useGetQuizzesQuery } from '@quizzes/services/quizz.service'
 import { polyfilxRouter } from '@core/utils/routes'
+import { useTranslation } from 'react-i18next'
 
 export const QuizzesListPage = () => {
   const { data, isLoading, isFetching, isError } = useGetQuizzesQuery({
@@ -28,6 +29,8 @@ export const QuizzesListPage = () => {
 
   const { PopOver, onClick, handleClose, outputData } = usePopOverModal()
 
+  const { t } = useTranslation('studio')
+
   const content = () => {
     if (isLoading || isFetching) {
       return <GhostList />
@@ -36,9 +39,7 @@ export const QuizzesListPage = () => {
     if (isError) {
       return (
         <Box sx={{ pt: 2 }}>
-          <Alert severity="error">
-            Something went wrong. Please try again later.
-          </Alert>
+          <Alert severity="error">{t('common.errors.global')}</Alert>
         </Box>
       )
     }
@@ -48,9 +49,7 @@ export const QuizzesListPage = () => {
     if (quizzes.length === 0) {
       return (
         <Box sx={{ pt: 2 }}>
-          <Alert severity="info">
-            No quizzes found. Please create a new one.
-          </Alert>
+          <Alert severity="info">{t('quizzes.noData')}</Alert>
         </Box>
       )
     }
@@ -121,7 +120,10 @@ export const QuizzesListPage = () => {
         px: 2,
       }}
     >
-      <Header title="Quizzes" description="List of quizzes" />
+      <Header
+        title={t('quizzes.title')}
+        description={t('videos.description')}
+      />
       {content()}
     </Box>
   )

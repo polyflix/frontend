@@ -1,5 +1,6 @@
 import { Icon } from '@core/components/Icon/Icon.component'
 import { Button, Paper, Stack, Typography } from '@mui/material'
+import { useTranslation } from 'react-i18next'
 import { Link as RouterLink } from 'react-router-dom'
 import { QuickLink } from './quick-link.component'
 
@@ -7,6 +8,8 @@ type QuickAccessCardProps = {
   quickLinks: QuickLink
 }
 export const QuickAccessCard = ({ quickLinks }: QuickAccessCardProps) => {
+  const { t } = useTranslation('studio')
+
   return (
     <Button
       component={RouterLink}
@@ -49,9 +52,9 @@ export const QuickAccessCard = ({ quickLinks }: QuickAccessCardProps) => {
           >
             <Icon name={quickLinks.icon} />
           </Paper>
-          <Typography variant="h5">{quickLinks.title}</Typography>
+          <Typography variant="h5">{t(quickLinks.title)}</Typography>
         </Stack>
-        <Typography variant="body1">{quickLinks.description}</Typography>
+        <Typography variant="body1">{t(quickLinks.description)}</Typography>
       </Paper>
     </Button>
   )

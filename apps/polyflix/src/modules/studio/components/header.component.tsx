@@ -1,4 +1,5 @@
 import { Button, Divider, Stack, Typography } from '@mui/material'
+import { useTranslation } from 'react-i18next'
 import { Link as RouterLink, useRouteMatch } from 'react-router-dom'
 
 type HeaderProps = {
@@ -8,6 +9,7 @@ type HeaderProps = {
 
 export const Header = ({ title, description }: HeaderProps) => {
   const { url } = useRouteMatch()
+  const { t } = useTranslation('studio')
 
   return (
     <Stack direction="column">
@@ -21,7 +23,7 @@ export const Header = ({ title, description }: HeaderProps) => {
           {title}
         </Typography>
         <Button component={RouterLink} to={`${url}/create`} variant="contained">
-          Create
+          {t('common.header.actions.create')}
         </Button>
       </Stack>
       <Typography
