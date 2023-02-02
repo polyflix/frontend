@@ -1,10 +1,11 @@
 node_modules
-apps/*/node_modules
+dist
 .turbo
 .vite
 README.md
 .github
 .idea
 .editorconfig
+.gitignore
 CONTRIBUTING.md
 sonar-project.properties
