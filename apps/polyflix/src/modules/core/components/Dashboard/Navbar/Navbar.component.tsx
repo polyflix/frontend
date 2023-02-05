@@ -25,6 +25,9 @@ import { useTranslation } from 'react-i18next'
 import { Logout } from '@auth/components/Logout/Logout.component'
 import { usePopOverModal } from '@studio/hooks/use-pop-over-modal.hook'
 import { polyfilxRouter } from '@core/utils/routes'
+import { HasRoles } from '@core/components/HasRoles/HasRoles.component'
+import { Role } from '@core/types/roles.type'
+import { LanguageButton } from '@core/components/LanguageButton/LanguageButton.component'
 
 export const DashboardNavbar: React.FC<PropsWithChildren<{}>> = () => {
   const { pathname } = useLocation()
@@ -107,17 +110,18 @@ export const DashboardNavbar: React.FC<PropsWithChildren<{}>> = () => {
             }}
           >
             {!isHomePage() && <Spotlight />}
-            {/* <LanguageButton />
-            <Logout /> */}
-
-            <Tooltip title={t('navbar.tooltip.create')}>
-              <IconButton onClick={onClickStudio} color="primary">
-                <Icon name="uil:create-dashboard" />
-              </IconButton>
-            </Tooltip>
             <IconButton onClick={onClickAvatar}>
               <UserAvatar />
             </IconButton>
+            <HasRoles roles={[Role.Admin, Role.Contributor]}>
+              <Tooltip title={t('navbar.tooltip.create')}>
+                <IconButton onClick={onClickStudio}>
+                  <Icon name="uil:create-dashboard" />
+                </IconButton>
+              </Tooltip>
+            </HasRoles>
+
+            <LanguageButton />
             <Logout />
 
             <StudioPopOver>
@@ -167,18 +171,20 @@ export const DashboardNavbar: React.FC<PropsWithChildren<{}>> = () => {
                   </ListItemIcon>
                   <ListItemText primary={t('navbar.actions.profile')} />
                 </ListItemButton>
-                <ListItemButton
-                  component={RouterLink}
-                  onClick={handleCloseAvatar}
-                  to="/studio"
-                >
-                  <ListItemIcon>
-                    <ManageSearch />
-                  </ListItemIcon>
-                  <ListItemText
-                    primary={t('navbar.actions.contentManagement')}
-                  />
-                </ListItemButton>
+                <HasRoles roles={[Role.Admin, Role.Contributor]}>
+                  <ListItemButton
+                    component={RouterLink}
+                    onClick={handleCloseAvatar}
+                    to="/studio"
+                  >
+                    <ListItemIcon>
+                      <ManageSearch />
+                    </ListItemIcon>
+                    <ListItemText
+                      primary={t('navbar.actions.contentManagement')}
+                    />
+                  </ListItemButton>
+                </HasRoles>
                 <ListItemButton
                   component={RouterLink}
                   onClick={handleCloseAvatar}

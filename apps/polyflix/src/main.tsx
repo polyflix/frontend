@@ -53,6 +53,8 @@ import './styles/index.scss'
 import { initMockServer } from 'mock-server'
 import { StudioRouter } from '@studio/studio.router'
 import { StudioLayout } from '@core/layouts/Studio/StudioLayout'
+import { useRoles } from '@core/hooks/useRoles.hook'
+import { Role } from '@core/types/roles.type'
 
 if (environment.mocked) {
   initMockServer()
@@ -67,6 +69,7 @@ const PolyflixApp = () => {
 
   let { keycloak, initialized } = useKeycloak()
   const { user, hasRefreshedAuth, isAuthRefreshing } = useAuth()
+  const { hasRoles } = useRoles()
   const { isUnhealthy } = useServerHealth()
 
   // If the environment is currently mocked,
@@ -129,7 +132,12 @@ const PolyflixApp = () => {
           )}
         />
         <Route path="/certificate/:id" component={CertificatePage} />
-        <PrivateRoute condition={isAuthenticated} path="/studio">
+        <PrivateRoute
+          condition={
+            isAuthenticated && hasRoles([Role.Admin, Role.Contributor])
+          }
+          path="/studio"
+        >
           <Switch>
             <StudioLayout>
               <Route path="/studio" component={StudioRouter} />
