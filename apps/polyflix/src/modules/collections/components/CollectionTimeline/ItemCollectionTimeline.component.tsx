@@ -16,7 +16,7 @@ import { Element } from '@core/models/element.model'
 import { ElementType } from '@core/types/element.type'
 import { Role } from '@core/types/roles.type'
 
-import { useAuth } from '@auth/hooks/useAuth.hook'
+import { useRoles } from '@core/hooks/useRoles.hook'
 
 type ItemCollectionTimelineProps = {
   index: number
@@ -35,8 +35,8 @@ export const ItemCollectionTimeline = ({
   const [isHover, setIsHover] = useState(false)
 
   const query = useQuery() as URLSearchParams
-  const { user } = useAuth()
-  const isAdmin = user?.roles?.length && user?.roles?.includes(Role.Admin)
+  const { hasRoles } = useRoles()
+  const isAdmin = hasRoles([Role.Admin])
 
   /** If the element is private and user is not the owner or admin, returns true */
   const privateDisplay =

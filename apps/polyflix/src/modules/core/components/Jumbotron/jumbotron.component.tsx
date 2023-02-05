@@ -156,12 +156,11 @@ const JumbotronMainTile = () => {
                   sx={{
                     position: 'absolute',
                     left: 8,
-                    bottom: 8,
+                    top: 8,
                     background: (theme) =>
                       alpha(theme.palette.common.black, 0.7),
                     px: 2,
                     py: 0.5,
-                    mb: '2rem',
                     borderRadius: 1,
                     maxWidth: '65%',
                   }}

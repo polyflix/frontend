@@ -38,6 +38,7 @@ import {
   VideoCardThumbnail,
   VideoCardThumbnailContainer,
 } from './VideoSliderCard.style'
+import { useRoles } from '@core/hooks/useRoles.hook'
 
 interface PropsVideo {
   video: Video
@@ -82,7 +83,8 @@ interface Props {
 export const VideoSliderCard = ({ video, isFetching = false }: Props) => {
   const { t } = useTranslation('videos')
   const { user } = useAuth()
-  const isAdmin = user?.roles?.length && user?.roles?.includes(Role.Admin)
+  const { hasRoles } = useRoles()
+  const isAdmin = hasRoles([Role.Admin])
 
   return (
     <VideoCardRootStyle>
