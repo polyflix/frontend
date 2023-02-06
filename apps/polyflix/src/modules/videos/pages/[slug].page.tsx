@@ -31,7 +31,7 @@ export const SlugPage = () => {
       title={video?.title}
       maxWidth={false}
       sx={{
-        maxWidth: '2000px',
+        maxWidth: 'clamp(1100px, 80vw, 1750px)',
       }}
     >
       <Grid container spacing={2}>
@@ -46,7 +46,7 @@ export const SlugPage = () => {
           <AspectRatioBox
             ratio={16 / 9}
             sx={{
-              maxWidth: '2000px',
+              maxWidth: 'clamp(1100px, 80vw, 1750px)',
               margin: '0 auto',
             }}
           >
