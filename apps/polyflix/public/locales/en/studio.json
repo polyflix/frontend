@@ -44,5 +44,10 @@
     "noData": "No courses found. Please create a new one.",
     "title": "Courses",
     "description": "List of all courses"
+  },
+  "users": {
+    "noData": "No users found.",
+    "title": "Users",
+    "description": "List of all users"
   }
 }

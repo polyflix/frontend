@@ -4,6 +4,8 @@ import { CreateUpdateCoursePage } from './pages/courses/[create-update].page'
 import { StudioHome } from './pages/home/StudioHome'
 import { QuizzesListPage } from './pages/quizzes/quizzes-list.page'
 import { CreateUpdateQuizzPage } from './pages/quizzes/[create-update].page'
+import { UsersListPage } from './pages/users/users-list.page'
+import { CreateUpdateUserPage } from './pages/users/[create-update].page'
 import { VideosListPage } from './pages/videos/videos-list.page'
 import { CreateUpdateVideoPage } from './pages/videos/[create-update].page'
 
@@ -47,6 +49,20 @@ export const CoursesRouter = () => {
   )
 }
 
+export const UsersRouter = () => {
+  const { url } = useRouteMatch()
+
+  return (
+    <Switch>
+      <Route exact path={url} component={UsersListPage} />
+      <Route
+        path={`${url}/:id?/(create|update)`}
+        component={CreateUpdateUserPage}
+      />
+    </Switch>
+  )
+}
+
 export const StudioRouter = () => {
   const { url } = useRouteMatch()
 
@@ -56,6 +72,7 @@ export const StudioRouter = () => {
       <Route path={`${url}/videos`} component={VideosRouter} />
       <Route path={`${url}/quizzes`} component={QuizzesRouter} />
       <Route path={`${url}/courses`} component={CoursesRouter} />
+      <Route path={`${url}/users`} component={UsersRouter} />
     </Switch>
   )
 }
