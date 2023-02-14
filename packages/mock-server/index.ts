@@ -5,6 +5,7 @@ import { Mock } from "./fixtures/generic";
 import { SearchMock } from "./fixtures/search";
 import { UserMock } from "./fixtures/user";
 import { VideoMock } from "./fixtures/video";
+import { NoteMock } from "./fixtures/note";
 
 // Add future mock implementation here
 // The server will autoconfigure itself thanks to the following array
@@ -13,6 +14,7 @@ const mocks: Mock[] = [
   new VideoMock(),
   new SearchMock(),
   new CourseMock(),
+  new NoteMock(),
 ];
 
 function initModels(): { [key: string]: ModelDefinition } {
@@ -40,7 +42,7 @@ export function initMockServer() {
       mocks.forEach((mock) => mock.seeds(server));
     },
     routes() {
-      this.urlPrefix = 'http://localhost:4000';
+      this.urlPrefix = "http://localhost:4000";
       mocks.forEach((mock) => mock.routes(this));
     },
   });

@@ -103,7 +103,8 @@
         },
         "notes": {
           "title": "Notes",
-          "saved": "Note saved"
+          "saved": "Saved",
+          "unsaved": "Unsaved"
         },
         "attachments": {
           "title": "Attachments",

@@ -96,5 +96,10 @@
     "darkmode": {
       "informations": "Activate the dark mode to preserve your eyes."
     }
+  },
+  "form": {
+    "placeHolder": {
+      "typeHere": "Please input here..."
+    }
   }
 }

@@ -92,5 +92,10 @@
     "darkmode": {
       "informations": "Activer le mode sombre pour préserver vos yeux."
     }
+  },
+  "form": {
+    "placeHolder": {
+      "typeHere": "Veuillez saisir ici..."
+    }
   }
 }
