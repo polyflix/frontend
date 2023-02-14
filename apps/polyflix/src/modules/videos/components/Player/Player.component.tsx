@@ -67,11 +67,6 @@ export const Player: React.FC<Props> = ({ playerRef, video }) => {
     setSubtitles(subtitles)
     setState(subtitleState)
   }, [setState, setSubtitles, subtitles, subtitleState])
-  useEffect(() => {
-    window.onkeypress = (e: KeyboardEvent) => {
-      return !(e.key === ' ' && e.target !== document.body)
-    }
-  }, [])
 
   const [mediaError, setMediaError] = useState<string>()
 
