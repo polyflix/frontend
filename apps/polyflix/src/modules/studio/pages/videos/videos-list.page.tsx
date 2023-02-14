@@ -11,6 +11,7 @@ import {
   ListItemText,
   Paper,
   Stack,
+  TablePagination,
   Tooltip,
   Typography,
 } from '@mui/material'
@@ -25,11 +26,14 @@ import { useTranslation } from 'react-i18next'
 import { ImageCover } from '@core/components/ImageCover/image-cover.component'
 import { Video } from '@videos/models/video.model'
 import { abbreviateNumber } from 'js-abbreviation-number'
+import { useState } from 'react'
 
 export const VideosListPage = () => {
+  const [page, setPage] = useState(1)
+  const [pageSize, setPageSize] = useState(5)
   const { data, isLoading, isFetching, isError } = useGetVideosQuery({
-    page: 1,
-    pageSize: 5,
+    page,
+    pageSize,
   })
 
   const { PopOver, onClick, handleClose, outputData } = usePopOverModal()
@@ -38,7 +42,7 @@ export const VideosListPage = () => {
 
   const content = () => {
     if (isLoading || isFetching) {
-      return <GhostList />
+      return <GhostList skeletonsNumber={pageSize} />
     }
 
     if (isError) {
@@ -173,6 +177,16 @@ export const VideosListPage = () => {
     >
       <Header title={t('videos.title')} description={t('videos.description')} />
       {content()}
+      <TablePagination
+        component="div"
+        count={data?.totalCount || 0}
+        page={page - 1}
+        onPageChange={(e, newPage) => setPage(newPage + 1)}
+        rowsPerPage={pageSize}
+        onRowsPerPageChange={(e) => setPageSize(Number(e.target.value))}
+        rowsPerPageOptions={[5, 10, 25, 50, 100]}
+        labelRowsPerPage={t('common.informations.rowsPerPage')}
+      />
     </Box>
   )
 }

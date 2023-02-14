@@ -43,7 +43,7 @@ export class CourseMock implements Mock {
       const { models } = (schema as any).courses.all();
       return {
         data: models.slice(0, pageSize ?? 100),
-        totalCount: models.length,
+        total: models.length,
       };
     });
 

@@ -12,8 +12,12 @@ import {
   Stack,
 } from '@mui/material'
 
-export const GhostList = () => {
-  const skeletons = buildSkeletons(5)
+export const GhostList = ({
+  skeletonsNumber = 5,
+}: {
+  skeletonsNumber?: number
+}) => {
+  const skeletons = buildSkeletons(skeletonsNumber)
   return (
     <List component={Stack} direction="column" gap={1}>
       {skeletons.map((_, i: number) => (
