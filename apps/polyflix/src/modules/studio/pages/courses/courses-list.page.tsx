@@ -11,6 +11,7 @@ import {
   ListItemText,
   Paper,
   Stack,
+  TablePagination,
 } from '@mui/material'
 import { Header } from '../../components/header.component'
 import { GhostList } from '../../components/ghost-list.component'
@@ -20,11 +21,14 @@ import { Icon } from '@core/components/Icon/Icon.component'
 import { useGetCoursesQuery } from '@courses/services/course.service'
 import { polyflixRouter } from '@core/utils/routes'
 import { useTranslation } from 'react-i18next'
+import { useState } from 'react'
 
 export const CoursesListPage = () => {
+  const [page, setPage] = useState(1)
+  const [pageSize, setPageSize] = useState(5)
   const { data, isLoading, isFetching, isError } = useGetCoursesQuery({
-    page: 1,
-    pageSize: 5,
+    page,
+    pageSize,
   })
 
   const { PopOver, onClick, handleClose, outputData } = usePopOverModal()
@@ -33,7 +37,7 @@ export const CoursesListPage = () => {
 
   const content = () => {
     if (isLoading || isFetching) {
-      return <GhostList />
+      return <GhostList skeletonsNumber={pageSize} />
     }
 
     if (isError) {
@@ -125,6 +129,16 @@ export const CoursesListPage = () => {
         description={t('courses.description')}
       />
       {content()}
+      <TablePagination
+        component="div"
+        count={data?.total || 0}
+        page={page - 1}
+        onPageChange={(e, newPage) => setPage(newPage + 1)}
+        rowsPerPage={pageSize}
+        onRowsPerPageChange={(e) => setPageSize(Number(e.target.value))}
+        rowsPerPageOptions={[5, 10, 25, 50, 100]}
+        labelRowsPerPage={t('common.informations.rowsPerPage')}
+      />
     </Box>
   )
 }

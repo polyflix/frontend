@@ -29,11 +29,13 @@ export class UserMock implements Mock {
   }
 
   routes(server: Server<AnyRegistry>): void {
-    server.get("users", (schema) => {
+    server.get("users", (schema, request) => {
+      const { size: pageSize } = request.queryParams;
+
       const { models } = (schema as any).users.all();
       return {
         currentPage: 0,
-        data: models,
+        data: models.slice(0, pageSize ?? 100),
         totalElements: models.length,
         totalPages: 1,
       };

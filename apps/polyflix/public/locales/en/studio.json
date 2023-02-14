@@ -30,7 +30,8 @@
       "global": "Something went wrong, please try again later"
     },
     "informations": {
-      "publish": "published by"
+      "publish": "published by",
+      "rowsPerPage": "Rows per page"
     }
   },
   "quizzes": {
