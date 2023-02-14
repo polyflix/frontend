@@ -18,7 +18,7 @@ import { Link as RouterLink } from 'react-router-dom'
 import { usePopOverModal } from '@studio/hooks/use-pop-over-modal.hook'
 import { Icon } from '@core/components/Icon/Icon.component'
 import { useGetCoursesQuery } from '@courses/services/course.service'
-import { polyfilxRouter } from '@core/utils/routes'
+import { polyflixRouter } from '@core/utils/routes'
 import { useTranslation } from 'react-i18next'
 
 export const CoursesListPage = () => {
@@ -75,7 +75,7 @@ export const CoursesListPage = () => {
             >
               <ListItemButton
                 component={RouterLink}
-                to={polyfilxRouter().studio.courses.view(course?.id)}
+                to={polyflixRouter().studio.courses.view(course?.id)}
               >
                 <ListItemAvatar>
                   <Icon name="eva:npm-fill" />
@@ -90,7 +90,7 @@ export const CoursesListPage = () => {
             <ListItemButton
               component={RouterLink}
               onClick={handleClose}
-              to={polyfilxRouter().studio.courses.view(outputData?.id)}
+              to={polyflixRouter().studio.courses.view(outputData?.id)}
             >
               <ListItemIcon>
                 <Icon name="eva:eye-outline" />
@@ -100,7 +100,7 @@ export const CoursesListPage = () => {
             <ListItemButton
               component={RouterLink}
               onClick={handleClose}
-              to={polyfilxRouter().studio.courses.update(outputData?.id)}
+              to={polyflixRouter().studio.courses.update(outputData?.id)}
             >
               <ListItemIcon>
                 <Edit />

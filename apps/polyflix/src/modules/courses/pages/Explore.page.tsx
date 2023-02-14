@@ -17,7 +17,7 @@ import { CollectionCardSkeleton } from '@collections/components/CollectionCardSk
 import { CourseCard } from '@courses/components/CourseCard/CourseCard.component'
 import { Course } from '@courses/models/course.model'
 import { useGetCoursesQuery } from '@courses/services/course.service'
-import { polyfilxRouter } from '@core/utils/routes'
+import { polyflixRouter } from '@core/utils/routes'
 
 export const ExploreCoursesPage = () => {
   const { t } = useTranslation('courses')
@@ -48,7 +48,7 @@ export const ExploreCoursesPage = () => {
             variant="contained"
             startIcon={<Add />}
             component={RouterLink}
-            to={polyfilxRouter().studio.courses.create}
+            to={polyflixRouter().studio.courses.create}
           >
             {t('explore.actions.create')}
           </Button>
@@ -81,7 +81,7 @@ export const ExploreCoursesPage = () => {
       ) : (
         <NoData
           variant="courses"
-          link={polyfilxRouter().studio.courses.create}
+          link={polyflixRouter().studio.courses.create}
         />
       )}
     </Page>

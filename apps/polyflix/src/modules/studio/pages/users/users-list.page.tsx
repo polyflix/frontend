@@ -5,19 +5,20 @@ import {
   IconButton,
   List,
   ListItem,
-  ListItemAvatar,
   ListItemButton,
   ListItemIcon,
   ListItemText,
   Paper,
   Stack,
+  Tooltip,
+  Typography,
 } from '@mui/material'
 import { Header } from '../../components/header.component'
 import { GhostList } from '../../components/ghost-list.component'
 import { Link as RouterLink } from 'react-router-dom'
 import { usePopOverModal } from '@studio/hooks/use-pop-over-modal.hook'
 import { Icon } from '@core/components/Icon/Icon.component'
-import { polyfilxRouter } from '@core/utils/routes'
+import { polyflixRouter } from '@core/utils/routes'
 import { useTranslation } from 'react-i18next'
 import { useGetUsersQuery } from '@users/services/user.service'
 import { User } from '@users/models/user.model'
@@ -75,27 +76,42 @@ export const UsersListPage = () => {
                 </IconButton>
               }
             >
-              <ListItemButton
-                component={RouterLink}
-                to={polyfilxRouter().studio.users.view(user?.id)}
+              <Tooltip
+                title={'ID: ' + user.id}
+                placement="top"
+                arrow
+                disableFocusListener
               >
-                <UserAvatar
-                  sx={{
-                    borderRadius: '100%',
-                    width: {
-                      xs: 30,
-                      sm: 40,
-                    },
-                    height: {
-                      xs: 30,
-                      sm: 40,
-                    },
-                    marginRight: 2,
-                  }}
-                  user={user}
-                />
-                <ListItemText primary={user.username} />
-              </ListItemButton>
+                <ListItemButton
+                  component={RouterLink}
+                  to={polyflixRouter().studio.users.view(user?.id)}
+                >
+                  <UserAvatar
+                    sx={{
+                      borderRadius: '100%',
+                      width: {
+                        xs: 20,
+                        sm: 30,
+                      },
+                      height: {
+                        xs: 20,
+                        sm: 30,
+                      },
+                      marginRight: 2,
+                    }}
+                    user={user}
+                  />
+                  <Stack direction="column" spacing={0}>
+                    <Typography variant="body1" display="flex" lineHeight={1}>
+                      {user.firstName} {user.lastName}{' '}
+                      <Typography sx={{ fontSize: '0.8em', marginLeft: 1 }}>
+                        aka: {user.username}
+                      </Typography>
+                    </Typography>
+                    <Typography variant="caption">{user.email}</Typography>
+                  </Stack>
+                </ListItemButton>
+              </Tooltip>
             </ListItem>
           ))}
         </List>
@@ -104,7 +120,7 @@ export const UsersListPage = () => {
             <ListItemButton
               component={RouterLink}
               onClick={handleClose}
-              to={polyfilxRouter().studio.users.view(outputData?.id)}
+              to={polyflixRouter().studio.users.view(outputData?.id)}
             >
               <ListItemIcon>
                 <Icon name="eva:eye-outline" />
@@ -114,7 +130,7 @@ export const UsersListPage = () => {
             <ListItemButton
               component={RouterLink}
               onClick={handleClose}
-              to={polyfilxRouter().studio.users.update(outputData?.id)}
+              to={polyflixRouter().studio.users.update(outputData?.id)}
             >
               <ListItemIcon>
                 <Edit />

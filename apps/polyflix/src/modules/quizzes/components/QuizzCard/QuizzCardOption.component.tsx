@@ -13,7 +13,7 @@ import { CrudAction } from '@core/types/http.type'
 
 import { Quizz } from '@quizzes/models/quizz.model'
 import { useDeleteQuizzMutation } from '@quizzes/services/quizz.service'
-import { polyfilxRouter } from '@core/utils/routes'
+import { polyflixRouter } from '@core/utils/routes'
 
 interface OptionProps {
   quizz: Element<Quizz>
@@ -37,7 +37,7 @@ export const QuizzSliderOption = ({ quizz }: OptionProps) => {
 
   return (
     <CardMenu
-      updateHref={polyfilxRouter().studio.quizzes.update(quizz.id)}
+      updateHref={polyflixRouter().studio.quizzes.update(quizz.id)}
       onDelete={handleDelete}
       publisherId={quizz?.user?.id!}
       type="quizzes"

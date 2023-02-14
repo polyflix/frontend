@@ -95,5 +95,47 @@
         }
       }
     }
+  },
+  "form": {
+    "upsert": {
+      "title": {
+        "status": "Status",
+        "create": "Create a new user",
+        "update": "Update the profile of {{user}}",
+        "metadata": "General informations"
+      },
+      "description": {
+        "create": "A user is a person who can connect to the platform. You can create a user and give him a role to give him access to the platform.",
+        "update": "Update the personnal data of {{user}}"
+      },
+      "label": {
+        "avatar": "Avatar",
+        "lastname": "Lastname",
+        "firstname": "Firstname",
+        "username": "Username",
+        "email": "Email address"
+      },
+      "helper": {
+        "avatar": "Choose an avatar for your profile",
+        "lastname": "Family name",
+        "firstname": "Firstname",
+        "username": "A username that will allow you to be identified",
+        "email": "An email address that will allow you to connect to the platform"
+      },
+      "error": {
+        "requiredField": "This field {{field}} is required",
+        "minLength": "This field required at least {{count}} characters",
+        "maxLength": "This field required a maximum of {{count}} characters"
+      },
+      "fields": {
+        "avatar": "avatar",
+        "lastname": "lastname",
+        "firstname": "firstname",
+        "username": "username",
+        "email": "email"
+      },
+      "submit": "Submit",
+      "update": "Update profile"
+    }
   }
 }

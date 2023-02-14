@@ -28,6 +28,9 @@
     },
     "errors": {
       "global": "Quelque chose a mal tourné, veuillez réessayer plus tard"
+    },
+    "informations": {
+      "publish": "publié par"
     }
   },
   "quizzes": {

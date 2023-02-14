@@ -18,7 +18,7 @@ import { VideoCardSkeleton } from '@videos/components/Skeleton/VideoCardSkeleton
 import { Video } from '@videos/models/video.model'
 import { useGetVideosQuery } from '@videos/services/video.service'
 import { VideoFilters } from '@videos/types/filters.type'
-import { polyfilxRouter } from '@core/utils/routes'
+import { polyflixRouter } from '@core/utils/routes'
 import { VideoCard } from '@core/components/VideoCard/video-card.component'
 
 export const ExploreVideosPage = () => {
@@ -55,7 +55,7 @@ export const ExploreVideosPage = () => {
             variant="contained"
             startIcon={<Add />}
             component={RouterLink}
-            to={polyfilxRouter().studio.videos.create}
+            to={polyflixRouter().studio.videos.create}
           >
             {t('explore.actions.create')}
           </Button>
@@ -97,7 +97,7 @@ export const ExploreVideosPage = () => {
           />
         </Box>
       ) : (
-        <NoData variant="videos" link={polyfilxRouter().studio.videos.create} />
+        <NoData variant="videos" link={polyflixRouter().studio.videos.create} />
       )}
     </Page>
   )

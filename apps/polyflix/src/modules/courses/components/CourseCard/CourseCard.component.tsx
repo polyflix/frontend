@@ -16,7 +16,7 @@ import {
 
 import { Course } from '@courses/models/course.model'
 import { useDeleteCourseMutation } from '@courses/services/course.service'
-import { polyfilxRouter } from '@core/utils/routes'
+import { polyflixRouter } from '@core/utils/routes'
 
 interface Props {
   course: Course
@@ -84,7 +84,7 @@ export const CourseCard = ({ course }: Props) => {
           </Typography>
           {course?.user?.id === user?.id && (
             <CardMenu
-              updateHref={polyfilxRouter().studio.courses.update(course.slug)}
+              updateHref={polyflixRouter().studio.courses.update(course.slug)}
               onDelete={handleDelete}
               type="courses"
             />

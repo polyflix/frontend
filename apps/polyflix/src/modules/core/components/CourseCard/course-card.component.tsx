@@ -18,7 +18,7 @@ import { ElementLockIcon } from '../ElementLockIcon/element-lock-icon.component'
 import { VisibilityIcons } from '../Visibility/Icons/VisibilityIcons.component'
 import { clampString } from '@core/utils/text.utils'
 import { CardMenu } from '../CardMenu/CardMenu.component'
-import { polyfilxRouter } from '@core/utils/routes'
+import { polyflixRouter } from '@core/utils/routes'
 
 export const CourseCardRootStyled = styled<any>(Paper)(() => ({
   position: 'relative',
@@ -120,7 +120,7 @@ export const CourseCard = ({ course }: CourseCardProps) => {
           </Typography>
           {course?.user?.id === user?.id && (
             <CardMenu
-              updateHref={polyfilxRouter().studio.courses.update(course.slug)}
+              updateHref={polyflixRouter().studio.courses.update(course.slug)}
               onDelete={handleDelete}
               publisherId={course.user?.id}
               type="courses"

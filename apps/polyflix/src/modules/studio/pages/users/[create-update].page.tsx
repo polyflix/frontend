@@ -6,7 +6,7 @@ import { useParams } from 'react-router-dom'
 import { Header } from '@core/components/Header/Header.component'
 import { Page } from '@core/components/Page/Page.component'
 
-import { useGetUserQuery, useGetUsersQuery } from '@users/services/user.service'
+import { useGetUserQuery } from '@users/services/user.service'
 import { InformationsForm } from '@users/components/Forms/InformationsForm.component'
 
 export const CreateUpdateUserPage = () => {
@@ -14,8 +14,6 @@ export const CreateUpdateUserPage = () => {
   const { id } = useParams<{ id: string }>()
 
   const { data: user, isLoading } = useGetUserQuery(id)
-  // const { data, isLoading } = useGetUsersQuery({ page: 1, pageSize: 1 })
-  // const user = data?.data[0]
 
   const i18nKey = isUndefined(user) ? 'create' : 'update'
 
@@ -28,7 +26,7 @@ export const CreateUpdateUserPage = () => {
       title={t('form.upsert.title.create')}
     >
       <Header
-        title={t(`form.upsert.title.${i18nKey}`)}
+        title={t(`form.upsert.title.${i18nKey}`, { user: user?.lastName })}
         description={t(`form.upsert.description.${i18nKey}`)}
       />
       <Divider sx={{ my: 3 }} />
