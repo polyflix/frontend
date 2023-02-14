@@ -38,10 +38,10 @@ export const StudioHome = () => {
       }}
     >
       <header>
-        <Typography variant="h2" color="initial">
+        <Typography variant="h2" color="inherit">
           {t('home.title')}
         </Typography>
-        <Typography variant="subtitle1" color="initial">
+        <Typography variant="subtitle1" color="inherit">
           {t('home.description')}
         </Typography>
       </header>

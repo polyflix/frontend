@@ -20,7 +20,7 @@ export const QuickAccess = ({ quickLinks }: QuickAccesstProps) => {
     <Stack direction="column" gap={2}>
       <Stack direction="row" gap={1} alignItems="center">
         <Icon name="eva:flash-fill" />
-        <Typography variant="h6" color="initial">
+        <Typography variant="h6" color="inherit">
           {t('home.quickAccess.title')}
         </Typography>
       </Stack>
