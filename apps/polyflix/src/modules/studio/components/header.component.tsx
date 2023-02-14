@@ -5,9 +5,14 @@ import { Link as RouterLink, useRouteMatch } from 'react-router-dom'
 type HeaderProps = {
   title: string
   description: string
+  createAvailable?: boolean
 }
 
-export const Header = ({ title, description }: HeaderProps) => {
+export const Header = ({
+  title,
+  description,
+  createAvailable = true,
+}: HeaderProps) => {
   const { url } = useRouteMatch()
   const { t } = useTranslation('studio')
 
@@ -19,16 +24,22 @@ export const Header = ({ title, description }: HeaderProps) => {
         gap={1}
         justifyContent="space-between"
       >
-        <Typography variant="h3" color="initial">
+        <Typography variant="h3" color="inherit">
           {title}
         </Typography>
-        <Button component={RouterLink} to={`${url}/create`} variant="contained">
-          {t('common.header.actions.create')}
-        </Button>
+        {createAvailable && (
+          <Button
+            component={RouterLink}
+            to={`${url}/create`}
+            variant="contained"
+          >
+            {t('common.header.actions.create')}
+          </Button>
+        )}
       </Stack>
       <Typography
         variant="body2"
-        color="initial"
+        color="inherit"
         sx={{
           pb: 1,
         }}
