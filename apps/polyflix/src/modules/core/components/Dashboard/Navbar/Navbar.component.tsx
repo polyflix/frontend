@@ -24,7 +24,7 @@ import { useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Logout } from '@auth/components/Logout/Logout.component'
 import { usePopOverModal } from '@studio/hooks/use-pop-over-modal.hook'
-import { polyfilxRouter } from '@core/utils/routes'
+import { polyflixRouter } from '@core/utils/routes'
 import { HasRoles } from '@core/components/HasRoles/HasRoles.component'
 import { Role } from '@core/types/roles.type'
 import { LanguageButton } from '@core/components/LanguageButton/LanguageButton.component'
@@ -129,7 +129,7 @@ export const DashboardNavbar: React.FC<PropsWithChildren<{}>> = () => {
                 <ListItemButton
                   component={RouterLink}
                   onClick={handleCloseStudio}
-                  to={polyfilxRouter().studio.videos.create}
+                  to={polyflixRouter().studio.videos.create}
                 >
                   <ListItemIcon>
                     <Icon name="eva:play-circle-outline" />
@@ -139,7 +139,7 @@ export const DashboardNavbar: React.FC<PropsWithChildren<{}>> = () => {
                 <ListItemButton
                   component={RouterLink}
                   onClick={handleCloseStudio}
-                  to={polyfilxRouter().studio.quizzes.create}
+                  to={polyflixRouter().studio.quizzes.create}
                 >
                   <ListItemIcon>
                     <Icon name="healthicons:i-exam-multiple-choice" />
@@ -149,7 +149,7 @@ export const DashboardNavbar: React.FC<PropsWithChildren<{}>> = () => {
                 <ListItemButton
                   component={RouterLink}
                   onClick={handleCloseStudio}
-                  to={polyfilxRouter().studio.courses.create}
+                  to={polyflixRouter().studio.courses.create}
                 >
                   <ListItemIcon>
                     <Icon name="gg:align-left" />

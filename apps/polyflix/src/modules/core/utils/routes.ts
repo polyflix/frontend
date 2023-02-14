@@ -1,4 +1,4 @@
-export const polyfilxRouter = () => ({
+export const polyflixRouter = () => ({
   home: '/',
   login: '/login',
   video: {

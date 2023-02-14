@@ -20,7 +20,7 @@ import { CoursesFilters } from '@courses/types/filters.type'
 
 import { getUsernameToDisplay } from '@users/helpers/displayUsername.helper'
 import { User } from '@users/models/user.model'
-import { polyfilxRouter } from '@core/utils/routes'
+import { polyflixRouter } from '@core/utils/routes'
 
 type Props = {
   user: User | undefined
@@ -143,7 +143,7 @@ export const ProfileCoursesPage: React.FC<Props> = ({ user }: Props) => {
         !isLoading && (
           <NoData
             variant="courses"
-            link={polyfilxRouter().studio.courses.create}
+            link={polyflixRouter().studio.courses.create}
           />
         )
       )}

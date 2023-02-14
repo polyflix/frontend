@@ -12,7 +12,7 @@ import { CrudAction } from '@core/types/http.type'
 import { VideoDescriptionReportModal } from '@videos/components/VideoDescription/VideoDescriptionReportModal/VideoDescriptionReportModal'
 import { Video } from '@videos/models/video.model'
 import { useDeleteVideoMutation } from '@videos/services/video.service'
-import { polyfilxRouter } from '@core/utils/routes'
+import { polyflixRouter } from '@core/utils/routes'
 
 type Props = {
   video?: Video | null
@@ -42,7 +42,7 @@ export const VideoDescriptionMenu: React.FC<Props> = ({ video }) => {
   return (
     <>
       <CardMenu
-        updateHref={polyfilxRouter().studio.videos.update(video?.slug!!)}
+        updateHref={polyflixRouter().studio.videos.update(video?.slug!!)}
         onDelete={handleDelete}
         onReport={handleReport}
         publisherId={video?.publisher?.id!}

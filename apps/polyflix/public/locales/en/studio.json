@@ -28,6 +28,9 @@
     },
     "errors": {
       "global": "Something went wrong, please try again later"
+    },
+    "informations": {
+      "publish": "published by"
     }
   },
   "quizzes": {

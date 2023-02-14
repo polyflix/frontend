@@ -1,4 +1,4 @@
-import { polyfilxRouter } from '@core/utils/routes'
+import { polyflixRouter } from '@core/utils/routes'
 import { Video } from '@videos/models/video.model'
 import { CardMenu } from '../CardMenu/CardMenu.component'
 
@@ -11,7 +11,7 @@ export const VideoCardMenu = ({ video }: VideoCardMenuProps) => {
 
   return (
     <CardMenu
-      updateHref={polyfilxRouter().studio.videos.update(video.id)}
+      updateHref={polyflixRouter().studio.videos.update(video.id)}
       onDelete={handleDelete}
       publisherId={video.publisher?.id}
       type="videos"

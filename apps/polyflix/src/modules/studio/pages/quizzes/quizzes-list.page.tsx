@@ -18,7 +18,7 @@ import { Link as RouterLink } from 'react-router-dom'
 import { usePopOverModal } from '@studio/hooks/use-pop-over-modal.hook'
 import { Icon } from '@core/components/Icon/Icon.component'
 import { useGetQuizzesQuery } from '@quizzes/services/quizz.service'
-import { polyfilxRouter } from '@core/utils/routes'
+import { polyflixRouter } from '@core/utils/routes'
 import { useTranslation } from 'react-i18next'
 
 export const QuizzesListPage = () => {
@@ -75,7 +75,7 @@ export const QuizzesListPage = () => {
             >
               <ListItemButton
                 component={RouterLink}
-                to={polyfilxRouter().studio.quizzes.view(quizz?.id)}
+                to={polyflixRouter().studio.quizzes.view(quizz?.id)}
               >
                 <ListItemAvatar>
                   <Icon name="eva:npm-fill" />
@@ -90,7 +90,7 @@ export const QuizzesListPage = () => {
             <ListItemButton
               component={RouterLink}
               onClick={handleClose}
-              to={polyfilxRouter().studio.quizzes.view(outputData?.id)}
+              to={polyflixRouter().studio.quizzes.view(outputData?.id)}
             >
               <ListItemIcon>
                 <Icon name="eva:eye-outline" />
@@ -100,7 +100,7 @@ export const QuizzesListPage = () => {
             <ListItemButton
               component={RouterLink}
               onClick={handleClose}
-              to={polyfilxRouter().studio.quizzes.update(outputData?.id)}
+              to={polyflixRouter().studio.quizzes.update(outputData?.id)}
             >
               <ListItemIcon>
                 <Edit />

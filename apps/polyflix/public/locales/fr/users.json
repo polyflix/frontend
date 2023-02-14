@@ -105,8 +105,8 @@
         "metadata": "Informations générales"
       },
       "description": {
-        "create": "Un cours peut contenir plusieurs modules, ce qui permet à votre utilisateurs de suivre des cursus complexes.",
-        "update": "Un cours peut contenir plusieurs modules, ce qui permet à votre utilisateurs de suivre des cursus complexes."
+        "create": "Un utilisateur peut être un élève, un enseignant ou un administrateur.",
+        "update": "Modifié les informations sur le compte de l'utilisateur {{user}}"
       },
       "label": {
         "avatar": "Avatar",
@@ -124,8 +124,8 @@
       },
       "error": {
         "requiredField": "Le champ {{field}} est exigé",
-        "minLength": "Ce champ demande au moins {{count}} characters",
-        "maxLength": "Ce champ demande au plus {{count}} characters"
+        "minLength": "Ce champ demande au moins {{count}} caractères",
+        "maxLength": "Ce champ demande au plus {{count}} caractères"
       },
       "fields": {
         "avatar": "avatar",
@@ -135,14 +135,7 @@
         "email": "email"
       },
       "submit": "Soumettre",
-      "update": "Mettre à jour",
-      "deleteChoice": "Supprimer ce choix",
-      "addCollection": "Attacher un module",
-      "search": "Rechercher un module",
-      "seeCollection": "Voir le module",
-      "createModule": "Créer le module",
-      "deleteModule": "Supprimer le module",
-      "validate": "Valider - {{selected}} module(s) sélectionné"
+      "update": "Mettre à jour"
     }
   }
 }

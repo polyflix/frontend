@@ -43,7 +43,7 @@ import {
   useUpdateAdminVideoMutation,
 } from '@videos/services/video.service'
 import { PlayerVideoSource } from '@videos/types/video.type'
-import { polyfilxRouter } from '@core/utils/routes'
+import { polyflixRouter } from '@core/utils/routes'
 
 interface Props {
   video?: Video
@@ -162,7 +162,7 @@ export const EditVideoModal = ({ video, onClose }: Props) => {
                         <Link
                           underline="none"
                           color="inherit"
-                          to={polyfilxRouter().video.watch(video?.slug!!)}
+                          to={polyflixRouter().video.watch(video?.slug!!)}
                           component={RouterLink}
                         >
                           <Typography variant="h4">{video?.title}</Typography>
