@@ -24,5 +24,11 @@ export const polyfilxRouter = () => ({
       view: (id: string) => `/studio/courses/view/${id}`,
       update: (id: string) => `/studio/courses/${id}/update`,
     },
+    users: {
+      list: '/studio/users',
+      create: '/studio/users/create',
+      view: (id: string) => `/studio/users/view/${id}`,
+      update: (id: string) => `/studio/users/${id}/update`,
+    },
   },
 })

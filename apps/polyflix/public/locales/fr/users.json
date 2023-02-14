@@ -95,5 +95,54 @@
         }
       }
     }
+  },
+  "form": {
+    "upsert": {
+      "title": {
+        "status": "Status",
+        "create": "Créer un nouvel utilisateur",
+        "update": "Mettre à jour l' utilisateur {{user}}",
+        "metadata": "Informations générales"
+      },
+      "description": {
+        "create": "Un cours peut contenir plusieurs modules, ce qui permet à votre utilisateurs de suivre des cursus complexes.",
+        "update": "Un cours peut contenir plusieurs modules, ce qui permet à votre utilisateurs de suivre des cursus complexes."
+      },
+      "label": {
+        "avatar": "Avatar",
+        "lastname": "Nom",
+        "firstname": "Prénom",
+        "username": "Nom d'utilisateur",
+        "email": "Adresse e-mail"
+      },
+      "helper": {
+        "avatar": "Choisissez une image pour votre avatar",
+        "lastname": "Nom de famille",
+        "firstname": "Prénom",
+        "username": "Un nom d'utilisateur unique qui sera utilisé pour vous identifier",
+        "email": "Une adresse e-mail valide qui vous permettra de vous connecter"
+      },
+      "error": {
+        "requiredField": "Le champ {{field}} est exigé",
+        "minLength": "Ce champ demande au moins {{count}} characters",
+        "maxLength": "Ce champ demande au plus {{count}} characters"
+      },
+      "fields": {
+        "avatar": "avatar",
+        "lastname": "lastname",
+        "firstname": "firstname",
+        "username": "username",
+        "email": "email"
+      },
+      "submit": "Soumettre",
+      "update": "Mettre à jour",
+      "deleteChoice": "Supprimer ce choix",
+      "addCollection": "Attacher un module",
+      "search": "Rechercher un module",
+      "seeCollection": "Voir le module",
+      "createModule": "Créer le module",
+      "deleteModule": "Supprimer le module",
+      "validate": "Valider - {{selected}} module(s) sélectionné"
+    }
   }
 }

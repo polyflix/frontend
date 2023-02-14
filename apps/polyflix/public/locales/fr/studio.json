@@ -44,5 +44,10 @@
     "noData": "Aucun cours trouvé. Veuillez en créer un nouveau.",
     "title": "Cours",
     "description": "Liste de tous les cours"
+  },
+  "users": {
+    "noData": "Aucun utilisateurs trouvé.",
+    "title": "Utilisateurs",
+    "description": "Liste de tous les utilisateurs"
   }
 }
