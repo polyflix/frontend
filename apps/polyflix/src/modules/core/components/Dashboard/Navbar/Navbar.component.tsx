@@ -54,11 +54,8 @@ export const DashboardNavbar: React.FC<PropsWithChildren<{}>> = () => {
       return
     }
     if (window.scrollY > 0) {
-      toolBarRef.current.style.backgroundColor =
-        theme.palette.background.default
       toolBarContainerRef.current.style.border = 'none'
     } else {
-      toolBarRef.current.style.backgroundColor = 'transparent'
       toolBarContainerRef.current.style.borderBottom = `1px solid ${theme.palette.grey[400]}`
     }
   }
