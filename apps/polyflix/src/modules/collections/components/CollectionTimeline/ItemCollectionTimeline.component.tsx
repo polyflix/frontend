@@ -102,6 +102,7 @@ export const ItemCollectionTimeline = ({
         <TimelineSeparator>
           <TimelineDot
             color={+query.get('index')! === index ? 'primary' : 'grey'}
+            sx={{ textAlign: 'center' }}
           >
             <Icon name={elementIcon(element.type)} />
           </TimelineDot>
@@ -116,8 +117,12 @@ export const ItemCollectionTimeline = ({
                 variant="body1"
                 sx={{
                   textDecoration: isHover ? 'underline' : 'none',
-                  color: 'black',
                 }}
+                color={(theme) =>
+                  +query.get('index')! === index
+                    ? theme.palette.primary.main
+                    : theme.palette.grey[500]
+                }
               >
                 {element.name}
               </Typography>
@@ -125,8 +130,9 @@ export const ItemCollectionTimeline = ({
                 variant="caption"
                 sx={{
                   textTransform: 'capitalize',
-                  color: 'black',
+                  opacity: 0.7,
                 }}
+                color={(theme) => theme.palette.grey[500]}
               >
                 {element.type}
               </Typography>

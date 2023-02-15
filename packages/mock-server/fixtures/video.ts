@@ -1,4 +1,4 @@
-import { Mock } from "./generic";
+import { BaseModel, Mock } from "./generic";
 import { BaseUsers, User } from "./user";
 import { faker } from "@faker-js/faker";
 import { Factory, Model, Server } from "miragejs";
@@ -16,8 +16,7 @@ export interface Watchtime {
   isWatched: boolean;
 }
 
-export interface Video {
-  id: string;
+export interface Video extends BaseModel {
   slug: string;
   title: string;
   description: string;
@@ -29,8 +28,6 @@ export interface Video {
   source: string;
   visibility?: string;
   draft?: boolean;
-  createdAt?: string;
-  updatedAt?: string;
   isLiked?: boolean;
   watchtime?: Watchtime | undefined;
 }
@@ -124,7 +121,7 @@ export class VideoMock implements Mock {
   }
 }
 
-const readableVideo: Video = {
+export const readableVideo: Video = {
   id: "50d4ec43-4e66-48ff-9149-d6678243815c",
   slug: "angular-in-100-seconds",
   title: "Angular in 100 seconds",

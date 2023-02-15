@@ -2,6 +2,7 @@ import { createServer } from "miragejs";
 import { FactoryDefinition, ModelDefinition } from "miragejs/-types";
 import { CourseMock } from "./fixtures/course";
 import { Mock } from "./fixtures/generic";
+import { ModuleMock } from "./fixtures/module";
 import { SearchMock } from "./fixtures/search";
 import { UserMock } from "./fixtures/user";
 import { VideoMock } from "./fixtures/video";
@@ -13,6 +14,7 @@ const mocks: Mock[] = [
   new VideoMock(),
   new SearchMock(),
   new CourseMock(),
+  new ModuleMock(),
 ];
 
 function initModels(): { [key: string]: ModelDefinition } {
@@ -40,7 +42,7 @@ export function initMockServer() {
       mocks.forEach((mock) => mock.seeds(server));
     },
     routes() {
-      this.urlPrefix = 'http://localhost:4000';
+      this.urlPrefix = "http://localhost:4000";
       mocks.forEach((mock) => mock.routes(this));
     },
   });

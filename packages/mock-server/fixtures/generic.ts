@@ -1,6 +1,13 @@
 import { Server } from "miragejs";
 import { FactoryDefinition, ModelDefinition } from "miragejs/-types";
 
+export interface BaseModel {
+  id: string;
+  createdAt?: string;
+  updatedAt?: string;
+  __v?: number;
+}
+
 export interface Mock {
   name(): string;
   /**
