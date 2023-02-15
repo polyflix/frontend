@@ -217,7 +217,7 @@ export const CourseSlugPage = () => {
             <>
               <Stack spacing={2}>
                 <Typography variant="h4">{t('collections')}</Typography>
-                {course?.modules?.map((module) => (
+                {course?.modules?.map((module, index) => (
                   <>
                     {module.visibility === 'private' &&
                     user?.id != module.user?.id &&
@@ -230,6 +230,7 @@ export const CourseSlugPage = () => {
                             width: 'auto',
                           }}
                         >
+                          {t('collectionNumber', { number: index + 1 })} -{' '}
                           {module.name}
                         </Typography>
                         <Alert severity="error">
@@ -251,6 +252,7 @@ export const CourseSlugPage = () => {
                               width: 'auto',
                             }}
                           >
+                            {t('collectionNumber', { number: index + 1 })} -{' '}
                             {module.name}
                           </Typography>
                         </Link>

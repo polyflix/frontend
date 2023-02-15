@@ -8,6 +8,7 @@
     }
   },
   "collections": "Modules",
+  "collectionNumber": "Module {{number}}",
   "introduction": "Getting started",
   "courseCard": {
     "footerElements": "{{count}} module(s) in this course",
