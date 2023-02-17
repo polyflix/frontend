@@ -1,5 +1,3 @@
-import { Mock } from "./generic";
-import { BaseUsers, User } from "./user";
 import { faker } from "@faker-js/faker";
 import { Factory, Model, Server } from "miragejs";
 import {
@@ -7,27 +5,37 @@ import {
   FactoryDefinition,
   ModelDefinition,
 } from "miragejs/-types";
+import { Mock } from "./generic";
+import { BaseUsers, User } from "./user";
 
-export interface Watchtime {
-  videoId: string;
-  userId?: string;
-  watchedSeconds: number;
-  watchedPercent: number;
-  isWatched: boolean;
+export enum VISIBILITY {
+  PUBLIC = "PUBLIC",
+  PROTECTED = "PROTECTED",
+  PRIVATE = "PRIVATE",
 }
 
 export interface Course {
-  id: string;
-  createdAt?: string;
-  updatedAt?: string;
-  visibility?: string;
-  draft?: boolean;
-  name: string;
-  slug: string;
+  title: string;
   description: string;
-  content: string;
-  user?: User;
-  modules?: any[]; // TODO
+  visibility: VISIBILITY;
+  sections: Section[];
+  id: string;
+  userId: string;
+  user?: User; // INJECTED BY AGGREGATOR
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface Section {
+  title: string;
+  elements: Element[];
+  id: string;
+}
+
+export interface Element {
+  type: "VIDEO" | "PAGE" | "QUIZ";
+  id: string;
+  order: number;
 }
 
 export class CourseMock implements Mock {
@@ -39,16 +47,46 @@ export class CourseMock implements Mock {
     server.timing = 1000;
 
     server.get("courses", (schema, request) => {
-      const { pageSize } = request.queryParams;
+      const { pageSize, page, visibility, userId } = request.queryParams;
       const { models } = (schema as any).courses.all();
+
       return {
-        data: models.slice(0, pageSize ?? 100),
+        page: parseInt(page) || 1,
+        pageSize: parseInt(pageSize) || 10,
         total: models.length,
+        data: models
+          .filter((course: Course) => {
+            if (visibility && course.visibility !== visibility) {
+              return false;
+            }
+            if (userId && course.userId !== userId) {
+              return false;
+            }
+            return true;
+          })
+          .slice(0, parseInt(pageSize) || 10),
       };
     });
 
     server.get("courses/:id", (schema) => {
       return schema.first("course");
+    });
+
+    server.post("courses", (schema, request) => {
+      const attrs = JSON.parse(request.requestBody);
+      return schema.create("course", attrs);
+    });
+
+    server.put("courses/:id", (schema, request) => {
+      const attrs = JSON.parse(request.requestBody);
+      schema.findBy("course", { id: request.params.id })?.update(attrs);
+      return schema.findBy("course", { id: request.params.id });
+    });
+
+    server.delete("courses/:id", (schema, request) => {
+      const course = schema.findBy("course", { id: request.params.id });
+      course?.destroy();
+      return course;
     });
   }
 
@@ -57,35 +95,76 @@ export class CourseMock implements Mock {
       id() {
         return faker.datatype.uuid();
       },
-      slug() {
-        return faker.datatype.uuid();
-      },
-      name() {
+      title() {
         return faker.name.jobTitle();
       },
       description() {
         return faker.lorem.lines(5);
       },
+      userId() {
+        return BaseUsers[0].id;
+      },
       user() {
+        // INJECTED BY AGGREGATOR
         return BaseUsers[0];
       },
       visibility() {
-        return Math.random() > 0.2 ? "public" : "private";
+        return Math.random() > 0.2 ? "PUBLIC" : "PRIVATE";
       },
-      draft() {
-        return Math.random() < 0.4;
+      content() {
+        return faker.lorem.lines(5);
+      },
+      sections() {
+        return [
+          {
+            id: faker.datatype.uuid(),
+            title: faker.name.jobTitle(),
+            elements: [
+              {
+                type: "VIDEO",
+                id: faker.datatype.uuid(),
+                order: 0,
+              },
+              {
+                type: "PAGE",
+                id: faker.datatype.uuid(),
+                order: 1,
+              },
+              {
+                type: "QUIZ",
+                id: faker.datatype.uuid(),
+                order: 2,
+              },
+            ],
+          },
+          {
+            id: faker.datatype.uuid(),
+            title: faker.name.jobTitle(),
+            elements: [
+              {
+                type: "VIDEO",
+                id: faker.datatype.uuid(),
+                order: 0,
+              },
+              {
+                type: "PAGE",
+                id: faker.datatype.uuid(),
+                order: 1,
+              },
+              {
+                type: "VIDEO",
+                id: faker.datatype.uuid(),
+                order: 2,
+              },
+            ],
+          },
+        ];
       },
       createdAt() {
         return faker.date.past(2);
       },
       updatedAt() {
         return faker.date.recent(1);
-      },
-      content() {
-        return faker.lorem.lines(5);
-      },
-      modules() {
-        return new Array(faker.datatype.number(1)).fill(0);
       },
     });
   }
