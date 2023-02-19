@@ -32,6 +32,7 @@ export const notesApi = createApi({
         method: 'PUT',
         body,
       }),
+      invalidatesTags: (_0, _1, { slug }) => [{ type: Endpoint.Notes, slug }],
     }),
   }),
 })
