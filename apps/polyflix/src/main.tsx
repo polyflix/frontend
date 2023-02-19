@@ -55,6 +55,7 @@ import { StudioRouter } from '@studio/studio.router'
 import { StudioLayout } from '@core/layouts/Studio/StudioLayout'
 import { useRoles } from '@core/hooks/useRoles.hook'
 import { Role } from '@core/types/roles.type'
+import { CloseSnackbarButton } from '@core/components/SnackBar/CloseSnackbarButton.component'
 
 if (environment.mocked) {
   initMockServer()
@@ -177,7 +178,10 @@ ReactDOM.render(
         <ThemeConfig>
           <GlobalStyles />
           <I18nextProvider i18n={i18n}>
-            <SnackbarProvider maxSnack={5}>
+            <SnackbarProvider
+              maxSnack={5}
+              action={(key) => <CloseSnackbarButton key={key} />}
+            >
               <DIProvider>
                 <HelmetProvider>
                   <ReactKeycloakProvider authClient={keycloakClient}>

@@ -54,7 +54,7 @@
     "keycloak-js": "^18.0.0",
     "lodash": "^4.17.21",
     "mock-server": "workspace:*",
-    "notistack": "^2.0.2",
+    "notistack": "^2.0.8",
     "npm-run-all": "^4.1.5",
     "react": "^17.0.0",
     "react-beautiful-dnd": "^13.1.0",

@@ -174,6 +174,7 @@ export const NotesPanel = ({ videoId }: NotesProps) => {
       t('slug.sidebar.tabs.notes.snackBar.saved'),
       {
         variant: 'success',
+        preventDuplicate: true,
       }
     )
   }
