@@ -25,12 +25,15 @@ import { CertificatePage } from '@certifications/pages/Certificate.page'
 // hooks
 import { useRoles } from '@core/hooks/useRoles.hook'
 
-type RouterProps = {
+type PolyflixRouterProps = {
   isAuthenticated: boolean
   wantedUri: string
 }
 
-export const Router = ({ isAuthenticated, wantedUri }: RouterProps) => {
+export const PolyflixRouter = ({
+  isAuthenticated,
+  wantedUri,
+}: PolyflixRouterProps) => {
   const { hasRoles } = useRoles()
 
   return (

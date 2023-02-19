@@ -1,3 +1,4 @@
+import { store } from '@core/store'
 import { environment } from '@env/environment'
 import { ReactKeycloakProvider, useKeycloak } from '@react-keycloak/web'
 import '@vime/core/themes/default.css'
@@ -10,7 +11,8 @@ import ReactDOM from 'react-dom'
 import { HelmetProvider } from 'react-helmet-async'
 import { I18nextProvider } from 'react-i18next'
 import { Provider } from 'react-redux'
-import { Router } from '@routes/router'
+import { PolyflixRouter } from '@routes/router'
+import { BrowserRouter } from 'react-router-dom'
 // eslint-disable-next-line import/no-extraneous-dependencies
 import 'simplebar-react/dist/simplebar.min.css'
 // eslint-disable-next-line import/no-extraneous-dependencies
@@ -21,7 +23,6 @@ import { useInjection } from '@polyflix/di'
 import { DIProvider } from '@core/components/DIProvider/DIProvider'
 import { LoadingLayout } from '@layouts/Loading/Loading.layout'
 import { ServiceUnavailablePage } from '@core/pages/503.page'
-import { store } from '@core/store'
 
 import { useAuth } from '@auth/hooks/useAuth.hook'
 import { useServerHealth } from '@auth/hooks/useServerHealth.hook'
@@ -72,9 +73,9 @@ const PolyflixApp = () => {
   // If the server is unavailable, display the 503 page
   if (isUnhealthy) {
     return (
-      <Router>
+      <BrowserRouter>
         <ServiceUnavailablePage />
-      </Router>
+      </BrowserRouter>
     )
   }
 
@@ -98,7 +99,9 @@ const PolyflixApp = () => {
   // So we get the current url and pass it to the AuthRouter
   const wantedUri = window.location.href
 
-  return <Router isAuthenticated={isAuthenticated} wantedUri={wantedUri} />
+  return (
+    <PolyflixRouter isAuthenticated={isAuthenticated} wantedUri={wantedUri} />
+  )
 }
 
 // We render our app here, by wrapping it with some providers such as the Redux store provider, the DI provider
