@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { Ctx, defaultValueCtx, Editor, rootCtx } from '@milkdown/core'
 import { getNord } from '@milkdown/theme-nord'
 import { ReactEditor, useEditor } from '@milkdown/react'
@@ -15,6 +15,8 @@ import { useInterval } from '@core/hooks/useInterval.hook'
 import { placeholder, placeholderCtx } from './PlaceHolder.plugin'
 import { gfm } from '@milkdown/preset-gfm'
 import { useTranslation } from 'react-i18next'
+import { useInjection } from '@polyflix/di'
+import { SnackbarService } from '@core/services/snackbar.service'
 
 const StyledEditor = styled('div')(({ theme }) => ({
   '& .milkdown': {
@@ -50,20 +52,52 @@ type MarkdonwEditorProps = {
     markdown: string,
     prevMarkdown: string | null
   ) => void
+  handleSave: () => void
   defaultValue: string
 }
 
 const MarkdonwEditor = ({
   handleChange,
   defaultValue,
+  handleSave,
 }: MarkdonwEditorProps) => {
   const { t } = useTranslation('common')
+  const savedCallback: React.MutableRefObject<any> = useRef()
   const darkMode = false
+
+  const [rootEditorContainer, setRootEditorContainer] =
+    useState<HTMLElement | null>(null)
+
+  useEffect(() => {
+    savedCallback.current = handleSave
+  }, [handleSave])
+
+  const handleKeyDown = useCallback((e: KeyboardEvent) => {
+    if (e.ctrlKey && e.key === 's') {
+      e.preventDefault()
+      savedCallback.current()
+    }
+  }, [])
+
+  useEffect(() => {
+    if (rootEditorContainer) {
+      rootEditorContainer.addEventListener('keydown', handleKeyDown)
+    }
+    return () => {
+      if (rootEditorContainer) {
+        rootEditorContainer.removeEventListener('keydown', handleKeyDown)
+      }
+    }
+  })
+
   const { editor } = useEditor((root) =>
     Editor.make()
       .config((ctx) => {
         ctx.set(rootCtx, root)
         ctx.get(listenerCtx).markdownUpdated(handleChange)
+        ctx.get(listenerCtx).mounted(() => {
+          setRootEditorContainer(root)
+        })
         ctx.set(defaultValueCtx, defaultValue)
         ctx.set(placeholderCtx, t('form.placeHolder.typeHere'))
       })
@@ -90,18 +124,20 @@ export const NotesPanel = ({ videoId }: NotesProps) => {
   const [updateNote] = useUpdateNoteMutation()
   let { data, isLoading, isError, isSuccess } = useGetNoteQuery(videoId)
   const { t } = useTranslation('videos')
+  const [noteContent, setNoteContent] = useState<string>()
+  const snackbarService = useInjection<SnackbarService>(SnackbarService)
 
-  const noteContent = data?.content || ''
-
-  const saveChange: () => any = useCallback(() => {
-    updateNote({
-      slug: videoId,
-      body: {
-        content: noteContent,
-      },
-    })
-    setUnsavedChange(false)
-  }, [noteContent])
+  const saveChange = () => {
+    if (noteContent) {
+      updateNote({
+        slug: videoId,
+        body: {
+          content: noteContent,
+        },
+      })
+      setUnsavedChange(false)
+    }
+  }
 
   useInterval(() => {
     if (unsavedChange) {
@@ -117,18 +153,30 @@ export const NotesPanel = ({ videoId }: NotesProps) => {
     }
   }, [])
 
-  const handleChange = useCallback(
-    (ctx: Ctx, markdown: string, prevMarkdown: string | null) => {
-      if (
-        markdown !== prevMarkdown &&
-        markdown.trim() !== noteContent?.trim() &&
-        !isLoading
-      ) {
-        setUnsavedChange(true)
+  const handleChange = (
+    ctx: Ctx,
+    markdown: string,
+    prevMarkdown: string | null
+  ) => {
+    if (
+      markdown !== prevMarkdown &&
+      markdown.trim() !== data?.content?.trim() &&
+      !isLoading
+    ) {
+      setNoteContent(markdown)
+      setUnsavedChange(true)
+    }
+  }
+
+  const handleSave = () => {
+    saveChange()
+    snackbarService.createSnackbar(
+      t('slug.sidebar.tabs.notes.snackBar.saved'),
+      {
+        variant: 'success',
       }
-    },
-    [noteContent, isLoading]
-  )
+    )
+  }
 
   if (isError) {
     return (
@@ -175,7 +223,8 @@ export const NotesPanel = ({ videoId }: NotesProps) => {
           </Box>
           <MarkdonwEditor
             handleChange={handleChange}
-            defaultValue={noteContent}
+            defaultValue={data?.content || ''}
+            handleSave={handleSave.bind(this)}
           />
         </>
       )}
