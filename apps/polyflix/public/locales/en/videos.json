@@ -104,7 +104,10 @@
         "notes": {
           "title": "Notes",
           "saved": "Saved",
-          "unsaved": "Unsaved"
+          "unsaved": "Unsaved",
+          "snackBar": {
+            "saved": "Note saved"
+          }
         },
         "attachments": {
           "title": "Attachments",

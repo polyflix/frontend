@@ -105,7 +105,11 @@
         },
         "notes": {
           "title": "Notes",
-          "saved": "Note sauvegardée"
+          "saved": "Sauvegardée",
+          "unsaved": "Non sauvegardée",
+          "snackBar": {
+            "saved": "Notes sauvegardées"
+          }
         },
         "attachments": {
           "title": "Pièces jointes",
