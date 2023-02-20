@@ -18,7 +18,7 @@ import { useGetCollectionsQuery } from '@collections/services/collection.service
 import { CollectionFilters } from '@collections/types/filters.type'
 
 import { getUsernameToDisplay } from '@users/helpers/displayUsername.helper'
-import { User } from '@users/models/user.model'
+import { User } from '@types_/user.type'
 
 type Props = {
   user: User | undefined

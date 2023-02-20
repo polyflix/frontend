@@ -4,7 +4,7 @@ import {
   SearchUser,
   SearchVideo,
   SortedPaginatedSearchResult,
-} from '@search/models/search.model'
+} from '@types_/resources/search.type'
 import { SearchFilters } from '@search/types/filters.type'
 import { StatusCodes } from 'http-status-codes'
 import { groupBy } from 'lodash'

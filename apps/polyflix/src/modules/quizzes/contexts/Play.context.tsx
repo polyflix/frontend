@@ -1,7 +1,7 @@
 import { createContext, PropsWithChildren, useState } from 'react'
 
-import { Attempt } from '@quizzes/models/attempt.model'
-import { QuizzAnswers, Step } from '@quizzes/types/play.type'
+import { Attempt } from '@types_/resources/quizz.type'
+import { QuizzAnswers, Step } from '@types_/resources/quizz.type'
 
 export interface IPlayQuizzState {
   /**

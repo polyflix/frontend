@@ -22,7 +22,8 @@ import { Icon } from '@core/components/Icon/Icon.component'
 import { polyflixRouter } from '@routes/index'
 import { useTranslation } from 'react-i18next'
 import { useGetUsersQuery } from '@users/services/user.service'
-import { User } from '@users/models/user.model'
+import { User } from '@types_/user.type'
+
 import { UserAvatar } from '@users/components/UserAvatar/UserAvatar.component'
 import { useState } from 'react'
 

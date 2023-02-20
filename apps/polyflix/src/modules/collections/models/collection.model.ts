@@ -1,5 +1,5 @@
-import { ContentModel } from '@core/models/content.model'
-import { Element } from '@core/models/element.model'
+import { ContentModel } from '@types_/resources/content.type'
+import { Element } from '@types_/resources/element.type'
 
 import { Quizz } from '@quizzes/models/quizz.model'
 
@@ -7,7 +7,7 @@ import { Video } from '@videos/models/video.model'
 
 import { Link } from '@links/models/link.model'
 
-import { User } from '@users/models/user.model'
+import { User } from '@types_/user.type'
 
 import { Password } from './password.model'
 

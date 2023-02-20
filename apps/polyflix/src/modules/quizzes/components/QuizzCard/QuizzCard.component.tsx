@@ -21,16 +21,16 @@ import { DraftTag } from '@core/components/Chip/Draft.component'
 import { NewTag } from '@core/components/Chip/New.component'
 import { Icon } from '@core/components/Icon/Icon.component'
 import { VisibilityIcons } from '@core/components/Visibility/Icons/VisibilityIcons.component'
-import { Element } from '@core/models/element.model'
+import { Element } from '@types_/resources/element.type'
 
 import { useAuth } from '@auth/hooks/useAuth.hook'
 
-import { Attempt } from '@quizzes/models/attempt.model'
+import { Attempt } from '@types_/resources/quizz.type'
 import { Quizz } from '@quizzes/models/quizz.model'
 import { useGetAttemptsQuery } from '@quizzes/services/attempt.service'
 
 import { UserAvatar } from '@users/components/UserAvatar/UserAvatar.component'
-import { User } from '@users/models/user.model'
+import { User } from '@types_/user.type'
 
 import { getFeedbackColor, percentage } from '../../helpers/score.helper'
 import { QuizzAttemptCard } from '../QuizzAttemptCard/QuizzAttemptCard.component'

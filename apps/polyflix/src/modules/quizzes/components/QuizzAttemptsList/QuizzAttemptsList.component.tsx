@@ -1,10 +1,10 @@
 import { Box } from '@mui/system'
 
 import { NoData } from '@core/components/NoData/NoData.component'
-import { Element } from '@core/models/element.model'
+import { Element } from '@types_/resources/element.type'
 import { buildSkeletons } from '@core/utils/gui.utils'
 
-import { Attempt } from '@quizzes/models/attempt.model'
+import { Attempt } from '@types_/resources/quizz.type'
 import { Quizz } from '@quizzes/models/quizz.model'
 
 import { QuizzAttemptCard } from '../QuizzAttemptCard/QuizzAttemptCard.component'

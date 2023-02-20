@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next'
 
 import { ThemeButton } from '@core/components/ThemeButton/ThemeButton.component'
 
-import { User } from '@users/models/user.model'
+import { User } from '@types_/user.type'
 
 interface Props {
   user: User

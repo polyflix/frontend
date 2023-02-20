@@ -14,12 +14,13 @@ import { useAuth } from '@auth/hooks/useAuth.hook'
 import { CollectionCardSkeleton } from '@collections/components/CollectionCardSkeleton/CollectionCardSkeleton.component'
 
 import { CourseCard } from '@courses/components/CourseCard/CourseCard.component'
-import { Course } from '@courses/models/course.model'
+import { Course } from '@types_/resources/course.type'
 import { useGetCoursesQuery } from '@courses/services/course.service'
 import { CoursesFilters } from '@courses/types/filters.type'
 
 import { getUsernameToDisplay } from '@users/helpers/displayUsername.helper'
-import { User } from '@users/models/user.model'
+import { User } from '@types_/user.type'
+
 import { polyflixRouter } from '@routes/index'
 
 type Props = {

@@ -15,7 +15,7 @@ import { usePlayQuizz } from '@quizzes/hooks/usePlayQuizz.hook'
 import { useGetAttemptsQuery } from '@quizzes/services/attempt.service'
 import { useGetQuizzQuery } from '@quizzes/services/quizz.service'
 import { QuizzAttemptFilters, QuizzFilters } from '@quizzes/types/filters.type'
-import { PlayComponentProps, Step } from '@quizzes/types/play.type'
+import { PlayComponentProps, Step } from '@types_/resources/quizz.type'
 
 export const PlayQuizzPage = () => {
   const { t } = useTranslation('quizzes', { keyPrefix: 'play' })

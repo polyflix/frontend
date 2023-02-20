@@ -6,7 +6,7 @@ import { ApiVersion } from '@types_/http.type'
 
 import keycloak from '@auth/keycloak/config'
 
-import { User } from '@users/models/user.model'
+import { User } from '@types_/user.type'
 
 @Injectable()
 export class MeService {

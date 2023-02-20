@@ -2,7 +2,7 @@ import { Container } from '@polyflix/di'
 
 import { Endpoint } from '@constants/endpoint.constant'
 import { CrudFilters } from '@core/filters/nestjsx-crud.filter'
-import { Element } from '@core/models/element.model'
+import { Element } from '@types_/resources/element.type'
 import { api } from '@services/api.service'
 import { Pagination } from '@types_/nestjsx-crud.type'
 

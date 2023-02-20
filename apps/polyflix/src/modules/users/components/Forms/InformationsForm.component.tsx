@@ -16,7 +16,8 @@ import { SnackbarService } from '@services/snackbar.service'
 
 import { setUser } from '@auth/reducers/auth.slice'
 
-import { User } from '@users/models/user.model'
+import { User } from '@types_/user.type'
+
 import { useUpdateUserMutation } from '@users/services/user.service'
 
 interface Props {

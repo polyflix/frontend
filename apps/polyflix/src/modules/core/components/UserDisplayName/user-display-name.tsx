@@ -1,5 +1,6 @@
 import { TypographyProps } from '@mui/material'
-import { User } from '@users/models/user.model'
+import { User } from '@types_/user.type'
+
 import { NullableTypography } from '../NullableTypography/nullable-typography.component'
 
 type UserDisplayNameProps = TypographyProps & {

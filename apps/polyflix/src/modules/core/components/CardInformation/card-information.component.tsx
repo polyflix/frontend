@@ -1,6 +1,7 @@
 import { Stack, Tooltip, Link } from '@mui/material'
 import { UserAvatar } from '@users/components/UserAvatar/UserAvatar.component'
-import { User } from '@users/models/user.model'
+import { User } from '@types_/user.type'
+
 import dayjs from 'dayjs'
 import { useTranslation } from 'react-i18next'
 import { NullableTypography } from '../NullableTypography/nullable-typography.component'

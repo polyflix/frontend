@@ -1,8 +1,8 @@
-import { Visibility } from '@core/models/content.model'
+import { Visibility } from '@types_/resources/content.type'
 
-import { Question } from '@quizzes/models/question.model'
+import { Question } from '@types_/resources/quizz.type'
 
-import { User } from '@users/models/user.model'
+import { User } from '@types_/user.type'
 
 export interface IQuizzForm {
   name: string

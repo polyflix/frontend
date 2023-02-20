@@ -9,7 +9,7 @@ import {
   getUserFullname,
   getUsernameToDisplay,
 } from '@users/helpers/displayUsername.helper'
-import { User } from '@users/models/user.model'
+import { User } from '@types_/user.type'
 
 import { UserAvatar } from '../UserAvatar/UserAvatar.component'
 import { BannerHead } from './Banner.style'

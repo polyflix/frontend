@@ -1,4 +1,4 @@
-import { Subtitle } from '@subtitles/models/subtitle.model'
+import { Subtitle } from '@shared/types/resources/subtitle.model'
 import { useGetVideoSubtitleQuery } from '@subtitles/services/subtitle.service'
 import { useCallback, useEffect, useState } from 'react'
 

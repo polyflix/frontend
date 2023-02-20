@@ -1,6 +1,6 @@
-import { ContentModel } from '@core/models/content.model'
+import { ContentModel } from '@types_/resources/content.type'
 
-import { User } from '@users/models/user.model'
+import { User } from '@types_/user.type'
 
 export interface Link extends ContentModel {
   url: string

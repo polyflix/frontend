@@ -1,5 +1,5 @@
 import { createApi } from '@reduxjs/toolkit/dist/query/react'
-import { SubtitleResponse } from '@subtitles/models/subtitle.model'
+import { SubtitleResponse } from '@shared/types/resources/subtitle.model'
 import { SubtitleLanguages } from '@subtitles/types/subtitle.type'
 
 import { Endpoint } from '@constants/endpoint.constant'

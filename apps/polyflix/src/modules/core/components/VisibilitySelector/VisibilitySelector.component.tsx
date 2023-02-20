@@ -2,7 +2,7 @@ import { Box, Paper, Stack, Typography } from '@mui/material'
 import { alpha } from '@mui/system'
 import { useTranslation } from 'react-i18next'
 
-import { Visibility } from '@core/models/content.model'
+import { Visibility } from '@types_/resources/content.type'
 import { ease } from '@core/utils/transition'
 
 import { Icon } from '../Icon/Icon.component'

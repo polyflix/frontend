@@ -36,7 +36,6 @@ import i18n from './i18n/config'
 import './styles/index.scss'
 
 import { initMockServer } from 'mock-server'
-import { useRoles } from '@core/hooks/useRoles.hook'
 
 if (environment.mocked) {
   initMockServer()

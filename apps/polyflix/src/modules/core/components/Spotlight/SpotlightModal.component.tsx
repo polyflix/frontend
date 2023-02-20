@@ -9,7 +9,7 @@ import {
   Pagination,
   Typography,
 } from '@mui/material'
-import { SortedPaginatedSearchResult } from '@search/models/search.model'
+import { SortedPaginatedSearchResult } from '@types_/resources/search.type'
 import { SearchService } from '@search/services/search.service'
 import { useEffect, useState } from 'react'
 import { isMacOs } from 'react-device-detect'

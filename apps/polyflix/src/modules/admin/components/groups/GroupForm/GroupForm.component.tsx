@@ -29,7 +29,8 @@ import {
 import { SnackbarService } from '@services/snackbar.service'
 import { CrudAction } from '@types_/http.type'
 
-import { User } from '@users/models/user.model'
+import { User } from '@types_/user.type'
+
 import { useGetUsersQuery } from '@users/services/user.service'
 
 import { MembersList } from '../MembersList.component'

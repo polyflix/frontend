@@ -5,7 +5,8 @@ import { fadeInAnnimation } from '@core/utils/animation'
 import { Box, Stack, Tooltip, Typography } from '@mui/material'
 import { UserAvatar } from '@users/components/UserAvatar/UserAvatar.component'
 import { getUsernameToDisplay } from '@users/helpers/displayUsername.helper'
-import { User } from '@users/models/user.model'
+import { User } from '@types_/user.type'
+
 import { capitalize } from 'lodash'
 import { useTranslation } from 'react-i18next'
 

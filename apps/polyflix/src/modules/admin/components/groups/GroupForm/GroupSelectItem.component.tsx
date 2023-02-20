@@ -1,6 +1,6 @@
 import { Avatar, capitalize, Stack, Typography } from '@mui/material'
 
-import { User } from '@users/models/user.model'
+import { User } from '@types_/user.type'
 
 interface PropsGroupSelectItem {
   user: User

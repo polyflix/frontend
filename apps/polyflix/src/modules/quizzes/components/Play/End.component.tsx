@@ -5,7 +5,7 @@ import { Link as RouterLink } from 'react-router-dom'
 
 import { getFeedbackColor, percentage } from '@quizzes/helpers/score.helper'
 import { usePlayQuizz } from '@quizzes/hooks/usePlayQuizz.hook'
-import { PlayComponentProps } from '@quizzes/types/play.type'
+import { PlayComponentProps } from '@types_/resources/quizz.type'
 
 // This component should be displayed to the user when it has successfully submitted his attempt.
 export const End = ({ quizz }: PlayComponentProps) => {

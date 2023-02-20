@@ -4,7 +4,7 @@ import {
   SearchTypes,
   SearchUser,
   SearchVideo,
-} from '@search/models/search.model'
+} from '@types_/resources/search.type'
 import { useEffect, useState } from 'react'
 import { Link as RouterLink } from 'react-router-dom'
 

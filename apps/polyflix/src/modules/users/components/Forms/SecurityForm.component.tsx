@@ -12,7 +12,8 @@ import { useTranslation } from 'react-i18next'
 
 import { useInjection } from '@polyflix/di'
 
-import { User } from '@users/models/user.model'
+import { User } from '@types_/user.type'
+
 import { UseroldService } from '@users/services/userold.service'
 import { IUserPasswordForm } from '@users/types/users.type'
 

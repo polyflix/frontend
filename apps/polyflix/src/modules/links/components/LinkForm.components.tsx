@@ -11,8 +11,8 @@ import {
   getCommonSubmitButtonProps,
   getCommonTextFieldProps,
 } from '@core/helpers/form.helper'
-import { Visibility } from '@core/models/content.model'
-import { Element } from '@core/models/element.model'
+import { Visibility } from '@types_/resources/content.type'
+import { Element } from '@types_/resources/element.type'
 import { SnackbarService } from '@services/snackbar.service'
 import { CrudAction } from '@types_/http.type'
 

@@ -16,7 +16,7 @@ import { useTranslation } from 'react-i18next'
 
 import { Icon } from '@core/components/Icon/Icon.component'
 import { Scrollbar } from '@core/components/Scrollbar/Scrollbar.component'
-import { ElementType } from '@types_/element.type'
+import { ElementType } from '@types_/resources/element.type'
 import { ease } from '@core/utils/transition'
 
 import { ICollectionForm } from '@collections/types/form.type'

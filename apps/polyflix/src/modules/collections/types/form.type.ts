@@ -1,5 +1,5 @@
-import { ContentModel } from '@core/models/content.model'
-import { Element } from '@core/models/element.model'
+import { ContentModel } from '@types_/resources/content.type'
+import { Element } from '@types_/resources/element.type'
 import { Link } from '@types_/element.type'
 
 import { Quizz } from '@quizzes/models/quizz.model'
@@ -8,7 +8,7 @@ import { Video } from '@videos/models/video.model'
 
 import { Password } from '@collections/models/password.model'
 
-import { User } from '@users/models/user.model'
+import { User } from '@types_/user.type'
 
 export interface ICollectionForm extends ContentModel {
   description: string

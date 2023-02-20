@@ -14,7 +14,7 @@ import { useTranslation } from 'react-i18next'
 
 import { buildSkeletons } from '@core/utils/gui.utils'
 
-import { User } from '@users/models/user.model'
+import { User } from '@types_/user.type'
 
 type PropsMemberList = {
   members: User[]

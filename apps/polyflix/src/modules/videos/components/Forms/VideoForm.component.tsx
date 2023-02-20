@@ -19,7 +19,7 @@ import {
   getCommonSubmitButtonProps,
   getCommonTextFieldProps,
 } from '@core/helpers/form.helper'
-import { Visibility } from '@core/models/content.model'
+import { Visibility } from '@types_/resources/content.type'
 import { MinioService } from '@services/minio.service'
 import { SnackbarService } from '@services/snackbar.service'
 import { CrudAction } from '@types_/http.type'

@@ -7,7 +7,7 @@ import { Header } from '@core/components/Header/Header.component'
 import { NoData } from '@core/components/NoData/NoData.component'
 import { Page } from '@core/components/Page/Page.component'
 import { PaginationSynced } from '@core/components/Pagination/PaginationSynced.component'
-import { Element } from '@core/models/element.model'
+import { Element } from '@types_/resources/element.type'
 import { buildSkeletons } from '@core/utils/gui.utils'
 
 import { useAuth } from '@auth/hooks/useAuth.hook'

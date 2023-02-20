@@ -15,7 +15,7 @@ import { buildSkeletons } from '@core/utils/gui.utils'
 import { CollectionCardSkeleton } from '@collections/components/CollectionCardSkeleton/CollectionCardSkeleton.component'
 
 import { CourseCard } from '@courses/components/CourseCard/CourseCard.component'
-import { Course } from '@courses/models/course.model'
+import { Course } from '@types_/resources/course.type'
 import { useGetCoursesQuery } from '@courses/services/course.service'
 import { polyflixRouter } from '@routes/index'
 

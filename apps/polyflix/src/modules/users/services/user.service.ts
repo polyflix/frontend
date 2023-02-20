@@ -5,7 +5,7 @@ import { fetchWithRefresh } from '@services/api.service'
 import { PaginationFilter } from '@types_/filters.type'
 import { ApiVersion } from '@types_/http.type'
 
-import { User } from '@users/models/user.model'
+import { User } from '@types_/user.type'
 
 export const usersApi = createApi({
   reducerPath: 'api/users',

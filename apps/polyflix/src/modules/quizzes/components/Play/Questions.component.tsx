@@ -4,7 +4,7 @@ import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { usePlayQuizz } from '@quizzes/hooks/usePlayQuizz.hook'
-import { PlayComponentProps, Step } from '@quizzes/types/play.type'
+import { PlayComponentProps, Step } from '@types_/resources/quizz.type'
 
 import { QuestionPaginationItem } from './Play.style'
 

@@ -11,8 +11,8 @@ import { Header } from '@core/components/Header/Header.component'
 import { NoData } from '@core/components/NoData/NoData.component'
 import { Page } from '@core/components/Page/Page.component'
 import { PaginationSynced } from '@core/components/Pagination/PaginationSynced.component'
-import { Visibility } from '@core/models/content.model'
-import { Element } from '@core/models/element.model'
+import { Visibility } from '@types_/resources/content.type'
+import { Element } from '@types_/resources/element.type'
 import { buildSkeletons } from '@core/utils/gui.utils'
 
 import { useAuth } from '@auth/hooks/useAuth.hook'
@@ -24,7 +24,8 @@ import { useGetQuizzesQuery } from '@quizzes/services/quizz.service'
 import { QuizzFilters } from '@quizzes/types/filters.type'
 
 import { getUsernameToDisplay } from '@users/helpers/displayUsername.helper'
-import { User } from '@users/models/user.model'
+import { User } from '@types_/user.type'
+
 import { polyflixRouter } from '@routes/index'
 
 type Props = {

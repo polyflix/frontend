@@ -11,7 +11,8 @@ import { useInjection } from '@polyflix/di'
 
 import { Regex } from '@constants/regex.constant'
 
-import { User } from '@users/models/user.model'
+import { User } from '@types_/user.type'
+
 import { UseroldService } from '@users/services/userold.service'
 
 interface Props {

@@ -19,7 +19,8 @@ import { useTranslation } from 'react-i18next'
 
 import { getCommonSubmitButtonProps } from '@core/helpers/form.helper'
 
-import { User } from '@users/models/user.model'
+import { User } from '@types_/user.type'
+
 import { useGetUsersQuery } from '@users/services/user.service'
 
 import { Certification } from '@certifications/models/certification.model'
