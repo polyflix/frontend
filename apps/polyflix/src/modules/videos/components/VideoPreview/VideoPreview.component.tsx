@@ -2,7 +2,7 @@ import { Typography } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 
 import { MarkdownBox } from '@core/components/MarkdownBox/MarkdownBox.component'
-import { Image } from '@core/styles/Image.style'
+import { Image } from '@app/styles/Image.style'
 
 interface Props {
   title?: string
