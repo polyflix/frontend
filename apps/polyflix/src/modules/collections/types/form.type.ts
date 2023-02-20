@@ -1,6 +1,6 @@
 import { ContentModel } from '@core/models/content.model'
 import { Element } from '@core/models/element.model'
-import { Link } from '@core/types/element.type'
+import { Link } from '@types_/element.type'
 
 import { Quizz } from '@quizzes/models/quizz.model'
 

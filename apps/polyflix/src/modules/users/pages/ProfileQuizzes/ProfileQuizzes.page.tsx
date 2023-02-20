@@ -25,7 +25,7 @@ import { QuizzFilters } from '@quizzes/types/filters.type'
 
 import { getUsernameToDisplay } from '@users/helpers/displayUsername.helper'
 import { User } from '@users/models/user.model'
-import { polyflixRouter } from '@core/utils/routes'
+import { polyflixRouter } from '@routes/index'
 
 type Props = {
   user: User | undefined

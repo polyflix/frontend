@@ -1,4 +1,4 @@
-import { Role } from '@core/types/roles.type'
+import { Role } from '@types_/roles.type'
 
 export interface AdminUserForm {
   avatar?: string

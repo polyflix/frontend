@@ -6,14 +6,14 @@ import { Link as RouterLink } from 'react-router-dom'
 import { useInjection } from '@polyflix/di'
 
 import { CardMenu } from '@core/components/CardMenu/CardMenu.component'
-import { Endpoint } from '@core/constants/endpoint.constant'
+import { Endpoint } from '@constants/endpoint.constant'
 import { Element } from '@core/models/element.model'
-import { SnackbarService } from '@core/services/snackbar.service'
-import { CrudAction } from '@core/types/http.type'
+import { SnackbarService } from '@services/snackbar.service'
+import { CrudAction } from '@types_/http.type'
 
 import { Quizz } from '@quizzes/models/quizz.model'
 import { useDeleteQuizzMutation } from '@quizzes/services/quizz.service'
-import { polyflixRouter } from '@core/utils/routes'
+import { polyflixRouter } from '@routes/index'
 
 interface OptionProps {
   quizz: Element<Quizz>

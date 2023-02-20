@@ -9,7 +9,7 @@ import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { Icon } from '@core/components/Icon/Icon.component'
-import { PolyflixLanguage } from '@core/types/language.type'
+import { PolyflixLanguage } from '@types_/language.type'
 
 import { MenuPopover } from '../MenuPopOver/MenuPopOver.component'
 

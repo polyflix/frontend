@@ -9,9 +9,9 @@ import type { TFunction } from 'react-i18next'
 
 import { Inject, Injectable } from '@polyflix/di'
 
-import { APP_SNACKBAR, APP_TRANSLATION } from '@core/constants/app.constant'
-import { Endpoint } from '@core/constants/endpoint.constant'
-import { CrudAction } from '@core/types/http.type'
+import { APP_SNACKBAR, APP_TRANSLATION } from '@constants/app.constant'
+import { Endpoint } from '@constants/endpoint.constant'
+import { CrudAction } from '@types_/http.type'
 
 /**
  * This service is used to create snackbars to notify the user.

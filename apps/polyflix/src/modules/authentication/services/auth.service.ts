@@ -1,9 +1,9 @@
 import { Inject, Injectable } from '@polyflix/di'
 
-import { APP_DISPATCHER } from '@core/constants/app.constant'
-import { ApiService } from '@core/services/endpoint.service'
+import { APP_DISPATCHER } from '@constants/app.constant'
+import { ApiService } from '@services/endpoint.service'
 import type { AppDispatch } from '@core/store'
-import { ApiVersion } from '@core/types/http.type'
+import { ApiVersion } from '@types_/http.type'
 
 import keycloakClient from '@auth/keycloak/config'
 import {

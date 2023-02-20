@@ -24,7 +24,7 @@ import { useInjection } from '@polyflix/di'
 import { Icon } from '@core/components/Icon/Icon.component'
 import { StatusSelector } from '@core/components/StatusSelector/StatusSelector.component'
 import { VisibilitySelector } from '@core/components/VisibilitySelector/VisibilitySelector.component'
-import { Endpoint } from '@core/constants/endpoint.constant'
+import { Endpoint } from '@constants/endpoint.constant'
 import {
   getCommonSubmitButtonProps,
   getCommonTextFieldProps,
@@ -32,8 +32,8 @@ import {
 } from '@core/helpers/form.helper'
 import { Visibility } from '@core/models/content.model'
 import { Element } from '@core/models/element.model'
-import { SnackbarService } from '@core/services/snackbar.service'
-import { CrudAction } from '@core/types/http.type'
+import { SnackbarService } from '@services/snackbar.service'
+import { CrudAction } from '@types_/http.type'
 
 import { useAuth } from '@auth/hooks/useAuth.hook'
 

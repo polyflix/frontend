@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 
 import { useInjection } from '@polyflix/di'
 
-import { MinioService } from '@core/services/minio.service'
+import { MinioService } from '@services/minio.service'
 
 import { useAuth } from '@auth/hooks/useAuth.hook'
 

@@ -21,13 +21,13 @@ import { useHistory } from 'react-router-dom'
 
 import { useInjection } from '@polyflix/di'
 
-import { Endpoint } from '@core/constants/endpoint.constant'
+import { Endpoint } from '@constants/endpoint.constant'
 import {
   getCommonSubmitButtonProps,
   getCommonTextFieldProps,
 } from '@core/helpers/form.helper'
-import { SnackbarService } from '@core/services/snackbar.service'
-import { CrudAction } from '@core/types/http.type'
+import { SnackbarService } from '@services/snackbar.service'
+import { CrudAction } from '@types_/http.type'
 
 import { User } from '@users/models/user.model'
 import { useGetUsersQuery } from '@users/services/user.service'

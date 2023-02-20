@@ -1,9 +1,9 @@
 import { createApi } from '@reduxjs/toolkit/dist/query/react'
 
-import { Endpoint } from '@core/constants/endpoint.constant'
-import { fetchWithRefresh } from '@core/services/api.service'
-import { PaginationFilter } from '@core/types/filters.type'
-import { ApiVersion } from '@core/types/http.type'
+import { Endpoint } from '@constants/endpoint.constant'
+import { fetchWithRefresh } from '@services/api.service'
+import { PaginationFilter } from '@types_/filters.type'
+import { ApiVersion } from '@types_/http.type'
 
 import { User } from '@users/models/user.model'
 

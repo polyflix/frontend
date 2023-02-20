@@ -18,7 +18,7 @@ import { ElementLockIcon } from '../ElementLockIcon/element-lock-icon.component'
 import { VisibilityIcons } from '../Visibility/Icons/VisibilityIcons.component'
 import { clampString } from '@core/utils/text.utils'
 import { CardMenu } from '../CardMenu/CardMenu.component'
-import { polyflixRouter } from '@core/utils/routes'
+import { polyflixRouter } from '@routes/index'
 
 export const CourseCardRootStyled = styled<any>(Paper)(() => ({
   position: 'relative',

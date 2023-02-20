@@ -28,10 +28,10 @@ import { useInjection } from '@polyflix/di'
 import { AsyncListItemText } from '@core/components/AsyncListItem/AsyncListItem.component'
 import { AsyncText } from '@core/components/AsyncText/AsyncListItem.component'
 import { UserName } from '@core/components/UserName/UserName.component'
-import { Endpoint } from '@core/constants/endpoint.constant'
+import { Endpoint } from '@constants/endpoint.constant'
 import { useConfirmModal } from '@core/hooks/useConfirmModal.hook'
-import { SnackbarService } from '@core/services/snackbar.service'
-import { CrudAction } from '@core/types/http.type'
+import { SnackbarService } from '@services/snackbar.service'
+import { CrudAction } from '@types_/http.type'
 
 export const AdminViewGroupPage = () => {
   const snackbarService = useInjection<SnackbarService>(SnackbarService)

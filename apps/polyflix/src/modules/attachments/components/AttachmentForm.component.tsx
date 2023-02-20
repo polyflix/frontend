@@ -5,13 +5,13 @@ import { useTranslation } from 'react-i18next'
 
 import { useInjection } from '@polyflix/di'
 
-import { Endpoint } from '@core/constants/endpoint.constant'
+import { Endpoint } from '@constants/endpoint.constant'
 import {
   getCommonSubmitButtonProps,
   getCommonTextFieldProps,
 } from '@core/helpers/form.helper'
-import { SnackbarService } from '@core/services/snackbar.service'
-import { CrudAction } from '@core/types/http.type'
+import { SnackbarService } from '@services/snackbar.service'
+import { CrudAction } from '@types_/http.type'
 
 import { useAuth } from '@auth/hooks/useAuth.hook'
 

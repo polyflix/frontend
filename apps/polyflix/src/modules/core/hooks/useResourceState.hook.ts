@@ -4,7 +4,7 @@ import { shallowEqual, useSelector } from 'react-redux'
 import { isAGenericResourceState } from '@core/helpers/interface.helper'
 import { BaseModel } from '@core/models/base.model'
 import { RootState } from '@core/store'
-import { GenericResourceState } from '@core/types/state.type'
+import { GenericResourceState } from '@types_/state.type'
 
 const badTypeError = new TypeError(
   `The hook useResourceState should be used with a GenericResourceState.`

@@ -17,8 +17,8 @@ import { QuizzParser } from '@polyflix/quizz-parser'
 import { Dropzone } from '@core/components/Dropzone/Dropzone.component'
 import { Visibility } from '@core/models/content.model'
 import { Element } from '@core/models/element.model'
-import { LocalFileService } from '@core/services/local-file.service'
-import { SnackbarService } from '@core/services/snackbar.service'
+import { LocalFileService } from '@services/local-file.service'
+import { SnackbarService } from '@services/snackbar.service'
 
 import { Quizz } from '@quizzes/models/quizz.model'
 

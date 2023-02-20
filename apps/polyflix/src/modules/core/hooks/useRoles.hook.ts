@@ -1,4 +1,4 @@
-import { Role } from '@core/types/roles.type'
+import { Role } from '@types_/roles.type'
 
 import { useAuth } from '@auth/hooks/useAuth.hook'
 

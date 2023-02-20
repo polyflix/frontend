@@ -26,7 +26,7 @@ import {
   getCommonSubmitButtonProps,
   getCommonTextFieldProps,
 } from '@core/helpers/form.helper'
-import { SnackbarService } from '@core/services/snackbar.service'
+import { SnackbarService } from '@services/snackbar.service'
 
 import { ReportModel, ReportReason } from '@videos/models/report.model'
 import { Video } from '@videos/models/video.model'

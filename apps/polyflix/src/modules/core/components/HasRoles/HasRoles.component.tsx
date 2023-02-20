@@ -1,5 +1,5 @@
 import { useRoles } from '@core/hooks/useRoles.hook'
-import { Role } from '@core/types/roles.type'
+import { Role } from '@types_/roles.type'
 import { PropsWithChildren } from 'react'
 
 type HasRolesProps = {

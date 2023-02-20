@@ -12,17 +12,17 @@ import { MHidden } from '@core/components/MHidden/MHidden.component'
 import { StatusSelector } from '@core/components/StatusSelector/StatusSelector.component'
 import { UploadProgress } from '@core/components/UploadProgress/UploadProgress.component'
 import { VisibilitySelector } from '@core/components/VisibilitySelector/VisibilitySelector.component'
-import { Endpoint } from '@core/constants/endpoint.constant'
-import { Regex } from '@core/constants/regex.constant'
+import { Endpoint } from '@constants/endpoint.constant'
+import { Regex } from '@constants/regex.constant'
 import { generateFilename } from '@core/helpers/file.helper'
 import {
   getCommonSubmitButtonProps,
   getCommonTextFieldProps,
 } from '@core/helpers/form.helper'
 import { Visibility } from '@core/models/content.model'
-import { MinioService } from '@core/services/minio.service'
-import { SnackbarService } from '@core/services/snackbar.service'
-import { CrudAction } from '@core/types/http.type'
+import { MinioService } from '@services/minio.service'
+import { SnackbarService } from '@services/snackbar.service'
+import { CrudAction } from '@types_/http.type'
 
 import { useStreamUrl } from '@videos/hooks/useStreamUrl.hook'
 import { Video } from '@videos/models/video.model'

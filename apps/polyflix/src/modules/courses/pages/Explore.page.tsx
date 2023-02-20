@@ -9,7 +9,7 @@ import { NoData } from '@core/components/NoData/NoData.component'
 import { Page } from '@core/components/Page/Page.component'
 import { PaginationSynced } from '@core/components/Pagination/PaginationSynced.component'
 import { useRoles } from '@core/hooks/useRoles.hook'
-import { Role } from '@core/types/roles.type'
+import { Role } from '@types_/roles.type'
 import { buildSkeletons } from '@core/utils/gui.utils'
 
 import { CollectionCardSkeleton } from '@collections/components/CollectionCardSkeleton/CollectionCardSkeleton.component'
@@ -17,7 +17,7 @@ import { CollectionCardSkeleton } from '@collections/components/CollectionCardSk
 import { CourseCard } from '@courses/components/CourseCard/CourseCard.component'
 import { Course } from '@courses/models/course.model'
 import { useGetCoursesQuery } from '@courses/services/course.service'
-import { polyflixRouter } from '@core/utils/routes'
+import { polyflixRouter } from '@routes/index'
 
 export const ExploreCoursesPage = () => {
   const { t } = useTranslation('courses')

@@ -1,5 +1,5 @@
 import { useRoles } from '@core/hooks/useRoles.hook'
-import { Role } from '@core/types/roles.type'
+import { Role } from '@types_/roles.type'
 
 import i18n from '../../../../../i18n/config'
 

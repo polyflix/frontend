@@ -3,13 +3,13 @@ import { StatusCodes } from 'http-status-codes'
 
 import { Injectable } from '@polyflix/di'
 
-import { CrudAbstractService } from '@core/services/crud-abstract.service'
+import { CrudAbstractService } from '@services/crud-abstract.service'
 import {
   ApiVersion,
   CrudAction,
   IApiResponse,
   WithPagination,
-} from '@core/types/http.type'
+} from '@types_/http.type'
 
 import { logoutUser, setUser } from '@auth/reducers/auth.slice'
 

@@ -12,7 +12,7 @@ import { PaginationSynced } from '@core/components/Pagination/PaginationSynced.c
 import { useRoles } from '@core/hooks/useRoles.hook'
 import { Visibility } from '@core/models/content.model'
 import { Element } from '@core/models/element.model'
-import { Role } from '@core/types/roles.type'
+import { Role } from '@types_/roles.type'
 import { buildSkeletons } from '@core/utils/gui.utils'
 
 import { QuizzCard } from '@quizzes/components/QuizzCard/QuizzCard.component'
@@ -20,7 +20,7 @@ import { QuizzCardSkeleton } from '@quizzes/components/QuizzCardSkeleton/QuizzCa
 import { Quizz } from '@quizzes/models/quizz.model'
 import { useGetQuizzesQuery } from '@quizzes/services/quizz.service'
 import { QuizzFilters } from '@quizzes/types/filters.type'
-import { polyflixRouter } from '@core/utils/routes'
+import { polyflixRouter } from '@routes/index'
 
 export const ExploreQuizzesPage = () => {
   const { t } = useTranslation('quizzes')

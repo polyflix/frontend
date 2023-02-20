@@ -1,9 +1,9 @@
 import { useInjection } from '@polyflix/di'
 
 import { CardMenu } from '@core/components/CardMenu/CardMenu.component'
-import { Endpoint } from '@core/constants/endpoint.constant'
-import { SnackbarService } from '@core/services/snackbar.service'
-import { CrudAction } from '@core/types/http.type'
+import { Endpoint } from '@constants/endpoint.constant'
+import { SnackbarService } from '@services/snackbar.service'
+import { CrudAction } from '@types_/http.type'
 
 import { Attachment } from '@attachments/models/attachment.model'
 import { useDeleteAttachmentMutation } from '@attachments/services/attachment.service'

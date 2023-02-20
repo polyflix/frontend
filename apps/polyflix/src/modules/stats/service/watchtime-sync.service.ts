@@ -5,8 +5,8 @@
  */
 import { UpsertUserVideoMeta } from '@stats/types/userMeta.type'
 
-import { Endpoint } from '@core/constants/endpoint.constant'
-import { api } from '@core/services/api.service'
+import { Endpoint } from '@constants/endpoint.constant'
+import { api } from '@services/api.service'
 
 export const statsApi = api.injectEndpoints({
   endpoints: (builder) => ({

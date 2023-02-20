@@ -1,4 +1,4 @@
-import { ElementType } from '@core/types/element.type'
+import { ElementType } from '@types_/element.type'
 
 import { User } from '@users/models/user.model'
 

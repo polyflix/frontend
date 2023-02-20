@@ -5,7 +5,7 @@ import type { TFunction } from 'react-i18next'
 
 import { Inject, Injectable } from '@polyflix/di'
 
-import { APP_DISPATCHER, APP_TRANSLATION } from '@core/constants/app.constant'
+import { APP_DISPATCHER, APP_TRANSLATION } from '@constants/app.constant'
 import { PresignedURL } from '@core/models/presigned-url.model'
 import {
   end,
@@ -14,11 +14,11 @@ import {
   start,
 } from '@core/reducers/file-upload.slice'
 import type { AppDispatch } from '@core/store'
-import { ApiVersion } from '@core/types/http.type'
+import { ApiVersion } from '@types_/http.type'
 
-import { ApiService } from './endpoint.service'
-import { HttpService } from './http.service'
-import { SnackbarService } from './snackbar.service'
+import { ApiService } from '@services/endpoint.service'
+import { HttpService } from '@services/http.service'
+import { SnackbarService } from '@services/snackbar.service'
 
 @Injectable()
 export class MinioService {

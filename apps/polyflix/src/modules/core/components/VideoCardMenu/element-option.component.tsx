@@ -1,4 +1,4 @@
-import { polyflixRouter } from '@core/utils/routes'
+import { polyflixRouter } from '@routes/index'
 import { Video } from '@videos/models/video.model'
 import { CardMenu } from '../CardMenu/CardMenu.component'
 

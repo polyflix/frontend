@@ -21,11 +21,11 @@ import { useInjection } from '@polyflix/di'
 
 import { MarkdownBox } from '@core/components/MarkdownBox/MarkdownBox.component'
 import { Page } from '@core/components/Page/Page.component'
-import { Endpoint } from '@core/constants/endpoint.constant'
+import { Endpoint } from '@constants/endpoint.constant'
 import { useConfirmModal } from '@core/hooks/useConfirmModal.hook'
-import { SnackbarService } from '@core/services/snackbar.service'
-import { CrudAction } from '@core/types/http.type'
-import { Role } from '@core/types/roles.type'
+import { SnackbarService } from '@services/snackbar.service'
+import { CrudAction } from '@types_/http.type'
+import { Role } from '@types_/roles.type'
 
 import { useAuth } from '@auth/hooks/useAuth.hook'
 
@@ -37,7 +37,7 @@ import {
   useGetCourseQuery,
 } from '@courses/services/course.service'
 import { CoursesFilters } from '@courses/types/filters.type'
-import { polyflixRouter } from '@core/utils/routes'
+import { polyflixRouter } from '@routes/index'
 
 export const CourseSlugPage = () => {
   const { slug } = useParams<{ slug: string }>()

@@ -27,7 +27,7 @@ import { certificationsApi } from '@certifications/services/certification.servic
 
 import uploadReducer from './reducers/file-upload.slice'
 import serverReducer from './reducers/server.slice'
-import { api } from './services/api.service'
+import { api } from '../../shared/services/api.service'
 
 export const store = configureStore({
   reducer: {

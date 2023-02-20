@@ -2,7 +2,7 @@ import { Box, Stack, Typography } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 import { useHistory } from 'react-router-dom'
 
-import { APP_NAME } from '@core/constants/app.constant'
+import { APP_NAME } from '@constants/app.constant'
 
 interface Props {
   minimal?: boolean
