@@ -1,4 +1,4 @@
-import { Environment } from '@core/types/environment.type'
+import { Environment } from '@types_/environment.type'
 
 export const environment: Environment = {
   mocked: false,

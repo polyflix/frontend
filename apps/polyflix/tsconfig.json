@@ -12,6 +12,21 @@
       "@core/*": ["src/modules/core/*"],
       "@env/*": ["src/environments/*"],
       "@theme/*": ["src/theme/*"],
+      "@assets/*": ["src/assets/*"],
+      "@constants/*": ["src/config/constants/*"],
+      "@routes/*": ["src/config/routes/*"],
+      // Shared lib between apps
+      "@shared/*": ["src/shared/*"],
+      "@components/*": ["src/shared/components/*"],
+      "@services/*": ["src/shared/services/*"],
+      "@layouts/*": ["src/shared/layouts/*"],
+      "@types_/*": ["src/shared/types/*"],
+      // App libraries
+      "@app/*": ["src/app/*"],
+      "@app/pages/*": ["src/app/pages/*"],
+      "@app/styles/*": ["src/app/styles/*"],
+      "@app/contexts/*": ["src/app/contexts/*"],
+      // TODO: remove this when we have a better way to share libs between apps
       "@auth/*": ["src/modules/authentication/*"],
       "@users/*": ["src/modules/users/*"],
       "@collections/*": ["src/modules/collections/*"],
