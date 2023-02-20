@@ -1,4 +1,4 @@
-import { polyflixRouter } from '@core/utils/routes'
+import { polyflixRouter } from '@routes/index'
 import { Stack, Typography } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 import { QuickAccess, QuickLink } from '../../components/quick-link.component'

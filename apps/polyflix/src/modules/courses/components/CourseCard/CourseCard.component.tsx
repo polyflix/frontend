@@ -16,7 +16,7 @@ import {
 
 import { Course } from '@courses/models/course.model'
 import { useDeleteCourseMutation } from '@courses/services/course.service'
-import { polyflixRouter } from '@core/utils/routes'
+import { polyflixRouter } from '@routes/index'
 
 interface Props {
   course: Course

@@ -2,11 +2,11 @@ import { createApi } from '@reduxjs/toolkit/dist/query/react'
 
 import { Container } from '@polyflix/di'
 
-import { Endpoint } from '@core/constants/endpoint.constant'
+import { Endpoint } from '@constants/endpoint.constant'
 import { RestCrudFilters } from '@core/filters/rest-crud.filter'
-import { fetchWithRefresh } from '@core/services/api.service'
-import { ApiVersion } from '@core/types/http.type'
-import { Pagination } from '@core/types/nestjsx-crud.type'
+import { fetchWithRefresh } from '@services/api.service'
+import { ApiVersion } from '@types_/http.type'
+import { Pagination } from '@types_/nestjsx-crud.type'
 
 import { Attempt } from '@quizzes/models/attempt.model'
 import { QuizzAttemptFilters, QuizzFilters } from '@quizzes/types/filters.type'

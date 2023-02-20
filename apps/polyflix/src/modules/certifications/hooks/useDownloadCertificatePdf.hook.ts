@@ -4,8 +4,8 @@ import { useTranslation } from 'react-i18next'
 
 import { useInjection } from '@polyflix/di'
 
-import { PdfService } from '@core/services/pdf.service'
-import { SnackbarService } from '@core/services/snackbar.service'
+import { PdfService } from '@services/pdf.service'
+import { SnackbarService } from '@services/snackbar.service'
 
 import { Certificate } from '@certifications/models/certification.model'
 

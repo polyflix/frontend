@@ -11,14 +11,14 @@ import { Page } from '@core/components/Page/Page.component'
 import { PaginationSynced } from '@core/components/Pagination/PaginationSynced.component'
 import { useRoles } from '@core/hooks/useRoles.hook'
 import { Visibility } from '@core/models/content.model'
-import { Role } from '@core/types/roles.type'
+import { Role } from '@types_/roles.type'
 import { buildSkeletons } from '@core/utils/gui.utils'
 
 import { VideoCardSkeleton } from '@videos/components/Skeleton/VideoCardSkeleton/VideoCardSkeleton.component'
 import { Video } from '@videos/models/video.model'
 import { useGetVideosQuery } from '@videos/services/video.service'
 import { VideoFilters } from '@videos/types/filters.type'
-import { polyflixRouter } from '@core/utils/routes'
+import { polyflixRouter } from '@routes/index'
 import { VideoCard } from '@core/components/VideoCard/video-card.component'
 
 export const ExploreVideosPage = () => {

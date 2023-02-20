@@ -24,9 +24,9 @@ import { useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Logout } from '@auth/components/Logout/Logout.component'
 import { usePopOverModal } from '@studio/hooks/use-pop-over-modal.hook'
-import { polyflixRouter } from '@core/utils/routes'
+import { polyflixRouter } from '@routes/index'
 import { HasRoles } from '@core/components/HasRoles/HasRoles.component'
-import { Role } from '@core/types/roles.type'
+import { Role } from '@types_/roles.type'
 import { LanguageButton } from '@core/components/LanguageButton/LanguageButton.component'
 
 export const DashboardNavbar: React.FC<PropsWithChildren<{}>> = () => {

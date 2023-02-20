@@ -18,7 +18,7 @@ import { useInjection } from '@polyflix/di'
 
 import { videoSlugLink } from '@core/helpers/video.helper'
 import { useConfirmModal } from '@core/hooks/useConfirmModal.hook'
-import { SnackbarService } from '@core/services/snackbar.service'
+import { SnackbarService } from '@services/snackbar.service'
 
 import { ReportModel, ReportState } from '@videos/models/report.model'
 import { useUpdateReportMutation } from '@videos/services/video.service'

@@ -15,7 +15,7 @@ import { useTranslation } from 'react-i18next'
 import { useInjection } from '@polyflix/di'
 
 import { Icon } from '@core/components/Icon/Icon.component'
-import { SnackbarService } from '@core/services/snackbar.service'
+import { SnackbarService } from '@services/snackbar.service'
 
 import { Attachment } from '@attachments/models/attachment.model'
 

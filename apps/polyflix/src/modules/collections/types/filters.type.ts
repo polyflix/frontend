@@ -1,5 +1,5 @@
 import { Visibility } from '@core/models/content.model'
-import { PaginationFilter } from '@core/types/filters.type'
+import { PaginationFilter } from '@types_/filters.type'
 
 export interface CollectionFilters extends PaginationFilter {
   visibility?: Visibility

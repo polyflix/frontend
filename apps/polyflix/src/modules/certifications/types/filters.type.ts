@@ -1,3 +1,3 @@
-import { PaginationFilter } from '@core/types/filters.type'
+import { PaginationFilter } from '@types_/filters.type'
 
 export interface CertificationFilters extends PaginationFilter {}

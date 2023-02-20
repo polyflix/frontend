@@ -2,7 +2,7 @@ import { environment } from '@env/environment'
 
 import { Injectable } from '@polyflix/di'
 
-import { Environment } from '@core/types/environment.type'
+import { Environment } from '@types_/environment.type'
 
 /**
  * Allows you to manage everything related to environment

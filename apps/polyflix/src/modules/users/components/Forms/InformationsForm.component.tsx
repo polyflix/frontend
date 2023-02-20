@@ -11,8 +11,8 @@ import { useDispatch } from 'react-redux'
 
 import { useInjection } from '@polyflix/di'
 
-import { Regex } from '@core/constants/regex.constant'
-import { SnackbarService } from '@core/services/snackbar.service'
+import { Regex } from '@constants/regex.constant'
+import { SnackbarService } from '@services/snackbar.service'
 
 import { setUser } from '@auth/reducers/auth.slice'
 

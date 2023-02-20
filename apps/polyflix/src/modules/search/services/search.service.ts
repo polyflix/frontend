@@ -11,10 +11,10 @@ import { groupBy } from 'lodash'
 
 import { Injectable } from '@polyflix/di'
 
-import { Endpoint } from '@core/constants/endpoint.constant'
-import { ApiService } from '@core/services/endpoint.service'
-import { HttpService } from '@core/services/http.service'
-import { ApiVersion } from '@core/types/http.type'
+import { Endpoint } from '@constants/endpoint.constant'
+import { ApiService } from '@services/endpoint.service'
+import { HttpService } from '@services/http.service'
+import { ApiVersion } from '@types_/http.type'
 
 @Injectable()
 export class SearchService {

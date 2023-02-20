@@ -5,10 +5,10 @@ import { createApi } from '@reduxjs/toolkit/dist/query/react'
 
 import { Container } from '@polyflix/di'
 
-import { Endpoint } from '@core/constants/endpoint.constant'
+import { Endpoint } from '@constants/endpoint.constant'
 import { RestCrudFilters } from '@core/filters/rest-crud.filter'
-import { fetchWithRefresh } from '@core/services/api.service'
-import { ApiVersion } from '@core/types/http.type'
+import { ApiVersion } from '@types_/http.type'
+import { fetchWithRefresh } from '@services/api.service'
 
 const filterBuilder =
   Container.get<RestCrudFilters<GroupFilters>>(RestCrudFilters)

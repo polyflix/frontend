@@ -29,8 +29,8 @@ import {
   getCommonSubmitButtonProps,
   getCommonTextFieldProps,
 } from '@core/helpers/form.helper'
-import { SnackbarService } from '@core/services/snackbar.service'
-import { Role } from '@core/types/roles.type'
+import { SnackbarService } from '@services/snackbar.service'
+import { Role } from '@types_/roles.type'
 
 import { User } from '@users/models/user.model'
 import { useUpdateUserMutation } from '@users/services/user.service'

@@ -2,11 +2,11 @@ import { StatusCodes } from 'http-status-codes'
 
 import { Injectable } from '@polyflix/di'
 
-import { Endpoint } from '@core/constants/endpoint.constant'
-import { ApiVersion } from '@core/types/http.type'
+import { Endpoint } from '@constants/endpoint.constant'
+import { ApiVersion } from '@types_/http.type'
 
-import { ApiService } from './endpoint.service'
-import { HttpService } from './http.service'
+import { ApiService } from '@services/endpoint.service'
+import { HttpService } from '@services/http.service'
 
 @Injectable()
 export class PdfService {

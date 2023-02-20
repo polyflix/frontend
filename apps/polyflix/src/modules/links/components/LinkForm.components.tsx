@@ -6,15 +6,15 @@ import { useHistory } from 'react-router-dom'
 
 import { useInjection } from '@polyflix/di'
 
-import { Endpoint } from '@core/constants/endpoint.constant'
+import { Endpoint } from '@constants/endpoint.constant'
 import {
   getCommonSubmitButtonProps,
   getCommonTextFieldProps,
 } from '@core/helpers/form.helper'
 import { Visibility } from '@core/models/content.model'
 import { Element } from '@core/models/element.model'
-import { SnackbarService } from '@core/services/snackbar.service'
-import { CrudAction } from '@core/types/http.type'
+import { SnackbarService } from '@services/snackbar.service'
+import { CrudAction } from '@types_/http.type'
 
 import { Link } from '@links/models/link.model'
 import {

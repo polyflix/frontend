@@ -3,10 +3,10 @@ import { UpsertUserVideoMeta } from '@stats/types/userMeta.type'
 
 import { Container } from '@polyflix/di'
 
-import { Endpoint } from '@core/constants/endpoint.constant'
+import { Endpoint } from '@constants/endpoint.constant'
 import { RestCrudFilters } from '@core/filters/rest-crud.filter'
-import { fetchWithRefresh } from '@core/services/api.service'
-import { ApiVersion } from '@core/types/http.type'
+import { fetchWithRefresh } from '@services/api.service'
+import { ApiVersion } from '@types_/http.type'
 
 import { ReportModel, ReportState } from '@videos/models/report.model'
 import { Video } from '@videos/models/video.model'

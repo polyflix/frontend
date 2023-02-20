@@ -22,14 +22,14 @@ import { FieldArrayDragDropWrapper } from '@core/components/FieldArrayDragDropWr
 import { Icon } from '@core/components/Icon/Icon.component'
 import { StatusSelector } from '@core/components/StatusSelector/StatusSelector.component'
 import { VisibilitySelector } from '@core/components/VisibilitySelector/VisibilitySelector.component'
-import { Endpoint } from '@core/constants/endpoint.constant'
+import { Endpoint } from '@constants/endpoint.constant'
 import {
   getCommonSubmitButtonProps,
   getCommonTextFieldProps,
 } from '@core/helpers/form.helper'
 import { Visibility } from '@core/models/content.model'
-import { SnackbarService } from '@core/services/snackbar.service'
-import { CrudAction } from '@core/types/http.type'
+import { SnackbarService } from '@services/snackbar.service'
+import { CrudAction } from '@types_/http.type'
 
 import { CollectionDragDrop } from '@collections/CollectionDragElement/CollectionDragDrop.component'
 import { Collection } from '@collections/models/collection.model'

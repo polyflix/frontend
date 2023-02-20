@@ -8,7 +8,7 @@ import { isUndefined } from 'lodash'
 
 import { Injectable } from '@polyflix/di'
 
-import { QueryFilter } from '@core/types/nestjsx-crud.type'
+import { QueryFilter } from '@types_/nestjsx-crud.type'
 
 import { CanFilter } from './abstract.filter'
 

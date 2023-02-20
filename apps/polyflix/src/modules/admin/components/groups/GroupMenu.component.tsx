@@ -8,9 +8,9 @@ import { Link as RouterLink } from 'react-router-dom'
 import { useInjection } from '@polyflix/di'
 
 import { CardMenu } from '@core/components/CardMenu/CardMenu.component'
-import { Endpoint } from '@core/constants/endpoint.constant'
-import { SnackbarService } from '@core/services/snackbar.service'
-import { CrudAction } from '@core/types/http.type'
+import { Endpoint } from '@constants/endpoint.constant'
+import { SnackbarService } from '@services/snackbar.service'
+import { CrudAction } from '@types_/http.type'
 
 interface PropsGroupMenu {
   group: Group

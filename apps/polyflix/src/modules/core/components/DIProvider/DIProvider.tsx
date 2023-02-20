@@ -9,7 +9,7 @@ import {
   APP_DISPATCHER,
   APP_SNACKBAR,
   APP_TRANSLATION,
-} from '@core/constants/app.constant'
+} from '@constants/app.constant'
 
 type DIProviderProps = {
   providers?: Provider[]

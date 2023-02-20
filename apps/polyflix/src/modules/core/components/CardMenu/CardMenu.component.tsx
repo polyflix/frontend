@@ -12,7 +12,7 @@ import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 
 import { useConfirmModal } from '@core/hooks/useConfirmModal.hook'
-import { Role } from '@core/types/roles.type'
+import { Role } from '@types_/roles.type'
 
 import { useAuth } from '@auth/hooks/useAuth.hook'
 

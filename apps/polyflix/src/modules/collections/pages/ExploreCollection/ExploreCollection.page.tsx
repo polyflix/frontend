@@ -11,7 +11,7 @@ import { Page } from '@core/components/Page/Page.component'
 import { PaginationSynced } from '@core/components/Pagination/PaginationSynced.component'
 import { useRoles } from '@core/hooks/useRoles.hook'
 import { Visibility } from '@core/models/content.model'
-import { Role } from '@core/types/roles.type'
+import { Role } from '@types_/roles.type'
 import { buildSkeletons } from '@core/utils/gui.utils'
 
 import { Collection } from '@collections/models/collection.model'

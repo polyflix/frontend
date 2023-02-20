@@ -7,7 +7,7 @@ import { TFunction } from 'i18next'
 
 import { Container } from '@polyflix/di'
 
-import { APP_DISPATCHER, APP_TRANSLATION } from '@core/constants/app.constant'
+import { APP_DISPATCHER, APP_TRANSLATION } from '@constants/app.constant'
 import { BaseModel } from '@core/models/base.model'
 import type { AppDispatch } from '@core/store'
 
@@ -16,11 +16,11 @@ import {
   ApiVersion,
   CrudAction,
   WithPagination,
-} from '../types/http.type'
-import { HttpUtils } from '../utils/http-utils'
-import { ApiService } from './endpoint.service'
-import { HttpService } from './http.service'
-import { SnackbarService } from './snackbar.service'
+} from '@types_/http.type'
+import { HttpUtils } from '@core/utils/http-utils'
+import { ApiService } from '@services/endpoint.service'
+import { HttpService } from '@services/http.service'
+import { SnackbarService } from '@services/snackbar.service'
 
 export abstract class CrudAbstractService<
   Type extends BaseModel,

@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next'
 import { Link as RouterLink } from 'react-router-dom'
 
 import { useRoles } from '@core/hooks/useRoles.hook'
-import { Role } from '@core/types/roles.type'
+import { Role } from '@types_/roles.type'
 
 interface Props {
   variant?:

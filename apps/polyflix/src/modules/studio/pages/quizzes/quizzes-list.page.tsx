@@ -19,7 +19,7 @@ import { Link as RouterLink } from 'react-router-dom'
 import { usePopOverModal } from '@studio/hooks/use-pop-over-modal.hook'
 import { Icon } from '@core/components/Icon/Icon.component'
 import { useGetQuizzesQuery } from '@quizzes/services/quizz.service'
-import { polyflixRouter } from '@core/utils/routes'
+import { polyflixRouter } from '@routes/index'
 import { useTranslation } from 'react-i18next'
 import { useState } from 'react'
 

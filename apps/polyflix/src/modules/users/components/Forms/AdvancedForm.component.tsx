@@ -9,7 +9,7 @@ import { useTranslation } from 'react-i18next'
 
 import { useInjection } from '@polyflix/di'
 
-import { Regex } from '@core/constants/regex.constant'
+import { Regex } from '@constants/regex.constant'
 
 import { User } from '@users/models/user.model'
 import { UseroldService } from '@users/services/userold.service'

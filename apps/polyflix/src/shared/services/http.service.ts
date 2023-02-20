@@ -9,7 +9,7 @@ import { StatusCodes } from 'http-status-codes'
 
 import { Inject, Injectable } from '@polyflix/di'
 
-import { APP_DISPATCHER } from '@core/constants/app.constant'
+import { APP_DISPATCHER } from '@constants/app.constant'
 import { healthy, unhealthy } from '@core/reducers/server.slice'
 import type { AppDispatch } from '@core/store'
 import { store } from '@core/store'

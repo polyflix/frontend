@@ -3,9 +3,9 @@
  */
 import { Injectable } from '@polyflix/di'
 
-import { ApiType } from '@core/types/http.type'
+import { ApiType } from '@types_/http.type'
 
-import { EnvironmentService } from './environment.service'
+import { EnvironmentService } from '@services/environment.service'
 
 @Injectable()
 export class ApiService {

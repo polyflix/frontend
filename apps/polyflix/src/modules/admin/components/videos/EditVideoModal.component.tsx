@@ -31,7 +31,7 @@ import {
   getCommonTextFieldProps,
 } from '@core/helpers/form.helper'
 import { Visibility } from '@core/models/content.model'
-import { SnackbarService } from '@core/services/snackbar.service'
+import { SnackbarService } from '@services/snackbar.service'
 import {
   i18nLanguageToSubtitleLanguage,
   PolyflixLanguage,
@@ -43,7 +43,7 @@ import {
   useUpdateAdminVideoMutation,
 } from '@videos/services/video.service'
 import { PlayerVideoSource } from '@videos/types/video.type'
-import { polyflixRouter } from '@core/utils/routes'
+import { polyflixRouter } from '@routes/index'
 
 interface Props {
   video?: Video

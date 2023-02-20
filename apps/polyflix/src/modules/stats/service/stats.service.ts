@@ -1,8 +1,8 @@
 import { Injectable } from '@polyflix/di'
 
-import { ApiService } from '@core/services/endpoint.service'
-import { HttpService } from '@core/services/http.service'
-import { ApiVersion } from '@core/types/http.type'
+import { ApiService } from '@services/endpoint.service'
+import { HttpService } from '@services/http.service'
+import { ApiVersion } from '@types_/http.type'
 
 import { IVideoStatsFilter } from '../filters/date.filter'
 import { StatView } from '../types/StatView.type'

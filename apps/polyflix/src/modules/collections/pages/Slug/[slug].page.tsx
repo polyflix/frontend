@@ -15,13 +15,13 @@ import { Link, useHistory, useParams } from 'react-router-dom'
 import { useInjection } from '@polyflix/di'
 
 import { Page } from '@core/components/Page/Page.component'
-import { Endpoint } from '@core/constants/endpoint.constant'
+import { Endpoint } from '@constants/endpoint.constant'
 import { useConfirmModal } from '@core/hooks/useConfirmModal.hook'
 import { useRoles } from '@core/hooks/useRoles.hook'
 import { useSearchQuery } from '@core/hooks/useSearchQuery.hook'
-import { SnackbarService } from '@core/services/snackbar.service'
-import { CrudAction } from '@core/types/http.type'
-import { Role } from '@core/types/roles.type'
+import { SnackbarService } from '@services/snackbar.service'
+import { CrudAction } from '@types_/http.type'
+import { Role } from '@types_/roles.type'
 
 import { CollectionTimeline } from '@collections/components/CollectionTimeline/CollectionTimeline.component'
 import {

@@ -5,14 +5,14 @@ import { useHistory } from 'react-router-dom'
 import { useInjection } from '@polyflix/di'
 
 import { CardMenu } from '@core/components/CardMenu/CardMenu.component'
-import { Endpoint } from '@core/constants/endpoint.constant'
-import { SnackbarService } from '@core/services/snackbar.service'
-import { CrudAction } from '@core/types/http.type'
+import { Endpoint } from '@constants/endpoint.constant'
+import { SnackbarService } from '@services/snackbar.service'
+import { CrudAction } from '@types_/http.type'
 
 import { VideoDescriptionReportModal } from '@videos/components/VideoDescription/VideoDescriptionReportModal/VideoDescriptionReportModal'
 import { Video } from '@videos/models/video.model'
 import { useDeleteVideoMutation } from '@videos/services/video.service'
-import { polyflixRouter } from '@core/utils/routes'
+import { polyflixRouter } from '@routes/index'
 
 type Props = {
   video?: Video | null

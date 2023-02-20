@@ -1,6 +1,6 @@
 import { useAuth } from '@auth/hooks/useAuth.hook'
 import { useSidebar } from '@core/hooks/useSidebar.hook'
-import { Role } from '@core/types/roles.type'
+import { Role } from '@types_/roles.type'
 import { fadeInAnnimation } from '@core/utils/animation'
 import { Box, Stack, Tooltip, Typography } from '@mui/material'
 import { UserAvatar } from '@users/components/UserAvatar/UserAvatar.component'

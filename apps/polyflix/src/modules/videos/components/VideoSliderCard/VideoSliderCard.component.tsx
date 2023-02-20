@@ -19,12 +19,12 @@ import { useInjection } from '@polyflix/di'
 
 import { AspectRatioBox } from '@core/components/AspectRatioBox/AspectRation.component'
 import { CardMenu } from '@core/components/CardMenu/CardMenu.component'
-import { Endpoint } from '@core/constants/endpoint.constant'
+import { Endpoint } from '@constants/endpoint.constant'
 import { getPublishLabel } from '@core/helpers/date.helper'
 import { videoSlugLink } from '@core/helpers/video.helper'
-import { SnackbarService } from '@core/services/snackbar.service'
-import { CrudAction } from '@core/types/http.type'
-import { Role } from '@core/types/roles.type'
+import { SnackbarService } from '@services/snackbar.service'
+import { CrudAction } from '@types_/http.type'
+import { Role } from '@types_/roles.type'
 
 import { useAuth } from '@auth/hooks/useAuth.hook'
 
