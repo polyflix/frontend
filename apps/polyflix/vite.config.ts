@@ -37,6 +37,53 @@ export default defineConfig({
         replacement: resolve(__dirname, './src/assets'),
       },
       {
+        find: '@constants',
+        replacement: resolve(__dirname, './src/config/constants'),
+      },
+      {
+        find: '@routes',
+        replacement: resolve(__dirname, './src/config/routes'),
+      },
+      // Shared folder between app and studio
+      {
+        find: '@shared',
+        replacement: resolve(__dirname, './src/shared'),
+      },
+      {
+        find: '@components',
+        replacement: resolve(__dirname, './src/shared/components'),
+      },
+      {
+        find: '@services',
+        replacement: resolve(__dirname, './src/shared/services'),
+      },
+      {
+        find: '@layouts',
+        replacement: resolve(__dirname, './src/shared/layouts'),
+      },
+      {
+        find: '@types_',
+        replacement: resolve(__dirname, './src/shared/types'),
+      },
+      // App specific folder
+      {
+        find: '@app',
+        replacement: resolve(__dirname, './src/app'),
+      },
+      {
+        find: '@app/pages',
+        replacement: resolve(__dirname, './src/app/pages'),
+      },
+      {
+        find: '@app/styles',
+        replacement: resolve(__dirname, './src/app/styles'),
+      },
+      {
+        find: '@app/contexts',
+        replacement: resolve(__dirname, './src/app/contexts'),
+      },
+      // TODO: Remove this aliases
+      {
         find: '@core',
         replacement: resolve(__dirname, './src/modules/core'),
       },

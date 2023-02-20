@@ -10,7 +10,7 @@ import ReactDOM from 'react-dom'
 import { HelmetProvider } from 'react-helmet-async'
 import { I18nextProvider } from 'react-i18next'
 import { Provider } from 'react-redux'
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import { Router } from '@routes/router'
 // eslint-disable-next-line import/no-extraneous-dependencies
 import 'simplebar-react/dist/simplebar.min.css'
 // eslint-disable-next-line import/no-extraneous-dependencies
@@ -19,43 +19,23 @@ import 'swiper/css'
 import { useInjection } from '@polyflix/di'
 
 import { DIProvider } from '@core/components/DIProvider/DIProvider'
-import { DashboardLayout } from '@core/layouts/Dashboard/Dashboard.layout'
-import { LoadingLayout } from '@core/layouts/Loading/Loading.layout'
-import { NotFoundPage } from '@core/pages/404.page'
+import { LoadingLayout } from '@layouts/Loading/Loading.layout'
 import { ServiceUnavailablePage } from '@core/pages/503.page'
-import { HomePage } from '@core/pages/Home.page'
 import { store } from '@core/store'
 
-import { AuthRouter } from '@auth/auth.router'
-import { PrivateRoute } from '@auth/components/PrivateRoute/PrivateRoute.component'
 import { useAuth } from '@auth/hooks/useAuth.hook'
 import { useServerHealth } from '@auth/hooks/useServerHealth.hook'
 import keycloakClient from '@auth/keycloak/config'
 import { AuthService } from '@auth/services/auth.service'
 
-import { QuizzRouter } from '@quizzes/quizzes.router'
-
-import { VideoRouter } from '@videos/video.router'
-
-import { CollectionRouter } from '@collections/collection.router'
-
-import { CourseRouter } from '@courses/course.router'
-
-import { UserRouter } from '@users/user.router'
-
 import { GlobalStyles } from '@theme/globalStyles'
 import { ThemeConfig } from '@theme/theme'
 
 import i18n from './i18n/config'
-import { CertificatePage } from './modules/certifications/pages/Certificate.page'
 import './styles/index.scss'
 
 import { initMockServer } from 'mock-server'
-import { StudioRouter } from '@studio/studio.router'
-import { StudioLayout } from '@core/layouts/Studio/StudioLayout'
 import { useRoles } from '@core/hooks/useRoles.hook'
-import { Role } from '@core/types/roles.type'
-import { CloseSnackbarButton } from '@core/components/SnackBar/CloseSnackbarButton.component'
 
 if (environment.mocked) {
   initMockServer()
@@ -70,7 +50,6 @@ const PolyflixApp = () => {
 
   let { keycloak, initialized } = useKeycloak()
   const { user, hasRefreshedAuth, isAuthRefreshing } = useAuth()
-  const { hasRoles } = useRoles()
   const { isUnhealthy } = useServerHealth()
 
   // If the environment is currently mocked,
@@ -119,54 +98,7 @@ const PolyflixApp = () => {
   // So we get the current url and pass it to the AuthRouter
   const wantedUri = window.location.href
 
-  return (
-    <Router>
-      <Switch>
-        {/* We want the user to be redirected if already logged in or not */}
-        <Route
-          path="/auth"
-          render={() => (
-            <AuthRouter
-              isAuthenticated={isAuthenticated}
-              redirectUrl={wantedUri}
-            />
-          )}
-        />
-        <Route path="/certificate/:id" component={CertificatePage} />
-        <PrivateRoute
-          condition={
-            isAuthenticated && hasRoles([Role.Admin, Role.Contributor])
-          }
-          path="/studio"
-        >
-          <Switch>
-            <StudioLayout>
-              <Route path="/studio" component={StudioRouter} />
-            </StudioLayout>
-          </Switch>
-        </PrivateRoute>
-        {/* We restrict these route to an authenticated user*/}
-        <PrivateRoute condition={isAuthenticated}>
-          <DashboardLayout>
-            <Switch>
-              <Route path="/courses" component={CourseRouter} />
-              <Route path="/quizzes" component={QuizzRouter} />
-              <Route path="/users" component={UserRouter} />
-              <Route path="/videos" component={VideoRouter} />
-              <Route path="/modules" component={CollectionRouter} />
-              <Route exact path="/" component={HomePage} />
-              <Route component={NotFoundPage} />
-              {/* <PrivateRoute
-                condition={user?.roles.includes(Role.Admin) || false}
-                >
-                <Route path="/admin" component={AdminRouter} />
-              </PrivateRoute> */}
-            </Switch>
-          </DashboardLayout>
-        </PrivateRoute>
-      </Switch>
-    </Router>
-  )
+  return <Router isAuthenticated={isAuthenticated} wantedUri={wantedUri} />
 }
 
 // We render our app here, by wrapping it with some providers such as the Redux store provider, the DI provider
