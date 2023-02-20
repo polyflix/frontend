@@ -6,8 +6,8 @@ import {
   useRouteMatch,
 } from 'react-router-dom'
 
-import { NotFoundPage } from '@core/pages/404.page'
-import { NotImplementedPage } from '@core/pages/NotImplemented.page'
+import { NotFoundPage } from '@app/pages/404.page'
+import { NotImplementedPage } from '@app/pages/NotImplemented.page'
 
 import { useAuth } from '@auth/hooks/useAuth.hook'
 

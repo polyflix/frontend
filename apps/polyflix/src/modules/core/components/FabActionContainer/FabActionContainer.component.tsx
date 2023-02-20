@@ -1,7 +1,7 @@
 import { Box, Container, Stack } from '@mui/material'
 import React, { PropsWithChildren } from 'react'
 
-import { OPEN_DRAWER_WIDTH } from '@core/layouts/Dashboard/Dashboard.style'
+import { OPEN_DRAWER_WIDTH } from '@layouts/Dashboard/Dashboard.style'
 
 export const FabActionContainer: React.FC<PropsWithChildren<{}>> = ({
   children,

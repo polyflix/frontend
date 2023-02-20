@@ -2,7 +2,7 @@ import { AppBar, Toolbar, styled } from '@mui/material'
 
 import {
   MINIATURIZED_DRAWER_WIDTH, // OPEN_DRAWER_WIDTH,
-} from '@core/layouts/Dashboard/Dashboard.style'
+} from '@layouts/Dashboard/Dashboard.style'
 import { ease } from '@core/utils/transition'
 
 const APPBAR_MOBILE = 64

@@ -4,7 +4,7 @@ import { Redirect } from 'react-router-dom'
 
 import { useInjection } from '@polyflix/di'
 
-import { LoadingLayout } from '@core/layouts/Loading/Loading.layout'
+import { LoadingLayout } from '@layouts/Loading/Loading.layout'
 
 import { AuthService } from '@auth/services/auth.service'
 import { KeycloakLoginOptions } from 'keycloak-js'
