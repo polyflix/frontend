@@ -14,7 +14,7 @@ import { useTranslation } from 'react-i18next'
 import { useParams } from 'react-router-dom'
 
 import { Page } from '@core/components/Page/Page.component'
-import { PublicDashboardLayout } from '@core/layouts/Dashboard/PublicDashboard.layout'
+import { PublicDashboardLayout } from '@layouts/Dashboard/PublicDashboard.layout'
 
 import { useDownloadCertificatePdf } from '@certifications/hooks/useDownloadCertificatePdf.hook'
 import { useGetCertificateQuery } from '@certifications/services/certification.service'

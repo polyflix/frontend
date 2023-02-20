@@ -1,5 +1,5 @@
 import { Page } from '@core/components/Page/Page.component'
-import { ErrorLayout } from '@core/layouts/Error/Error.layout'
+import { ErrorLayout } from '@layouts/Error/Error.layout'
 
 export const ServiceUnavailablePage = () => {
   return (

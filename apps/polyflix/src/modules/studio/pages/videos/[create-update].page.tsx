@@ -18,7 +18,7 @@ import { useParams } from 'react-router-dom'
 
 import { Header } from '@core/components/Header/Header.component'
 import { Page } from '@core/components/Page/Page.component'
-import { ErrorLayout } from '@core/layouts/Error/Error.layout'
+import { ErrorLayout } from '@layouts/Error/Error.layout'
 
 import { VideoForm } from '@videos/components/Forms/VideoForm.component'
 import { useGetVideoQuery } from '@videos/services/video.service'

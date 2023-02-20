@@ -5,7 +5,7 @@ import { Page } from '@core/components/Page/Page.component'
 import {
   APP_BAR_DESKTOP,
   APP_BAR_MOBILE,
-} from '@core/layouts/Dashboard/Dashboard.style'
+} from '@layouts/Dashboard/Dashboard.style'
 import { Visibility } from '@core/models/content.model'
 
 import { useGetVideosQuery } from '@videos/services/video.service'

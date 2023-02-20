@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next'
 
 import { Page } from '@core/components/Page/Page.component'
-import { ErrorLayout } from '@core/layouts/Error/Error.layout'
+import { ErrorLayout } from '@layouts/Error/Error.layout'
 
 interface Props {
   isPage?: boolean

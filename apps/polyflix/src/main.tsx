@@ -22,7 +22,7 @@ import { useInjection } from '@polyflix/di'
 
 import { DIProvider } from '@core/components/DIProvider/DIProvider'
 import { LoadingLayout } from '@layouts/Loading/Loading.layout'
-import { ServiceUnavailablePage } from '@core/pages/503.page'
+import { ServiceUnavailablePage } from '@app/pages/503.page'
 
 import { useAuth } from '@auth/hooks/useAuth.hook'
 import { useServerHealth } from '@auth/hooks/useServerHealth.hook'

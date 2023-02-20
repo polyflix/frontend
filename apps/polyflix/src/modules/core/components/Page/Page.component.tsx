@@ -8,9 +8,9 @@ import { Helmet } from 'react-helmet-async'
 import {
   APP_BAR_DESKTOP,
   APP_BAR_MOBILE,
-} from '@core/layouts/Dashboard/Dashboard.style'
-import { ErrorLayout } from '@core/layouts/Error/Error.layout'
-import { LoadingLayout } from '@core/layouts/Loading/Loading.layout'
+} from '@layouts/Dashboard/Dashboard.style'
+import { ErrorLayout } from '@layouts/Error/Error.layout'
+import { LoadingLayout } from '@layouts/Loading/Loading.layout'
 
 type PageProps = {
   title?: string

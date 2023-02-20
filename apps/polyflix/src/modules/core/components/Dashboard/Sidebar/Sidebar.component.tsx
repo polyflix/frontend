@@ -6,7 +6,7 @@ import { BugReport } from '@core/components/BugReport/BugReport.component'
 import { Scrollbar } from '@core/components/Scrollbar/Scrollbar.component'
 import { ThemeButton } from '@core/components/ThemeButton/ThemeButton.component'
 import { useSidebar } from '@core/hooks/useSidebar.hook'
-import { OPEN_DRAWER_WIDTH } from '@core/layouts/Dashboard/Dashboard.style'
+import { OPEN_DRAWER_WIDTH } from '@layouts/Dashboard/Dashboard.style'
 import { ease } from '@core/utils/transition'
 
 import { Section } from './Section/Section.component'
