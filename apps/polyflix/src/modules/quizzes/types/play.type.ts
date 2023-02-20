@@ -1,18 +1,6 @@
-import { Element } from '@core/models/element.model'
+import { Element } from '@types_/resources/element.type'
 
-import { Quizz } from '@quizzes/models/quizz.model'
-
-// The different steps of our play quizz system
-export enum Step {
-  Onboard,
-  Questions,
-  Recap,
-  End,
-}
-
-export interface QuizzAnswers {
-  [questionId: string]: string[]
-}
+import { Quizz } from '@types_/resources/quizz.type'
 
 export interface PlayComponentProps {
   quizz: Element<Quizz>

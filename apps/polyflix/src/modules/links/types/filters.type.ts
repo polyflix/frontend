@@ -1,6 +1,6 @@
 import { QueryFilter as NjxQueryFilter } from '@nestjsx/crud-request'
 
-import { Visibility } from '@core/models/content.model'
+import { Visibility } from '@types_/resources/content.type'
 import { QueryFilter } from '@types_/nestjsx-crud.type'
 
 export interface LinkFilters extends QueryFilter {

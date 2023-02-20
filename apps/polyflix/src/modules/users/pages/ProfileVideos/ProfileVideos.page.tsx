@@ -20,7 +20,8 @@ import { useGetVideosQuery } from '@videos/services/video.service'
 import { VideoFilters } from '@videos/types/filters.type'
 
 import { getUsernameToDisplay } from '@users/helpers/displayUsername.helper'
-import { User } from '@users/models/user.model'
+import { User } from '@types_/user.type'
+
 import { VideoCard } from '@core/components/VideoCard/video-card.component'
 import { polyflixRouter } from '@routes/index'
 

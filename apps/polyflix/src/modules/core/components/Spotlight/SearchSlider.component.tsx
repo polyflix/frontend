@@ -3,7 +3,7 @@ import {
   SearchQuiz,
   SearchUser,
   SearchVideo,
-} from '@search/models/search.model'
+} from '@types_/resources/search.type'
 import SwiperCore, { FreeMode, Mousewheel } from 'swiper'
 import { Swiper, SwiperSlide } from 'swiper/react'
 

@@ -10,7 +10,7 @@ import { NoData } from '@core/components/NoData/NoData.component'
 import { Page } from '@core/components/Page/Page.component'
 import { PaginationSynced } from '@core/components/Pagination/PaginationSynced.component'
 import { useRoles } from '@core/hooks/useRoles.hook'
-import { Visibility } from '@core/models/content.model'
+import { Visibility } from '@types_/resources/content.type'
 import { Role } from '@types_/roles.type'
 import { buildSkeletons } from '@core/utils/gui.utils'
 

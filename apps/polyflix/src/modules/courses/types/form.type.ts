@@ -1,4 +1,4 @@
-import { Visibility } from '@core/models/content.model'
+import { Visibility } from '@types_/resources/content.type'
 
 import { Collection } from '@collections/models/collection.model'
 

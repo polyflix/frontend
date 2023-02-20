@@ -1,4 +1,4 @@
-import { Subtitle } from '@subtitles/models/subtitle.model'
+import { Subtitle } from '@shared/types/resources/subtitle.model'
 import { createContext, PropsWithChildren, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 

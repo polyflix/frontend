@@ -2,13 +2,13 @@ import { alpha, Card, Typography, useTheme } from '@mui/material'
 import dayjs from 'dayjs'
 import { useTranslation } from 'react-i18next'
 
-import { Element } from '@core/models/element.model'
+import { Element } from '@types_/resources/element.type'
 
 import { useAuth } from '@auth/hooks/useAuth.hook'
 
 import { getFeedbackColor, percentage } from '@quizzes/helpers/score.helper'
-import { Attempt } from '@quizzes/models/attempt.model'
-import { Quizz } from '@quizzes/models/quizz.model'
+import { Attempt } from '@types_/resources/quizz.type'
+import { Quizz } from '@types_/resources/quizz.type'
 
 interface Props {
   attempt: Attempt

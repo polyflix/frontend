@@ -4,7 +4,7 @@ import { Container } from '@polyflix/di'
 
 import { Endpoint } from '@constants/endpoint.constant'
 import { RestCrudFilters } from '@core/filters/rest-crud.filter'
-import { Element } from '@core/models/element.model'
+import { Element } from '@types_/resources/element.type'
 import { fetchWithRefresh } from '@services/api.service'
 import { ApiVersion } from '@types_/http.type'
 import { Pagination } from '@types_/nestjsx-crud.type'

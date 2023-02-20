@@ -15,8 +15,8 @@ import { useInjection } from '@polyflix/di'
 import { QuizzParser } from '@polyflix/quizz-parser'
 
 import { Dropzone } from '@core/components/Dropzone/Dropzone.component'
-import { Visibility } from '@core/models/content.model'
-import { Element } from '@core/models/element.model'
+import { Visibility } from '@types_/resources/content.type'
+import { Element } from '@types_/resources/element.type'
 import { LocalFileService } from '@services/local-file.service'
 import { SnackbarService } from '@services/snackbar.service'
 

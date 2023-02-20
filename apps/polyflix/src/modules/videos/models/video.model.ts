@@ -1,7 +1,7 @@
 import { WatchMetadata, Watchtime } from '@stats/models/userMeta.model'
 import { SubtitleLanguages } from '@subtitles/types/subtitle.type'
 
-import { Visibility } from '@core/models/content.model'
+import { Visibility } from '@types_/resources/content.type'
 
 import { PlayerVideoSource } from '@videos/types/video.type'
 

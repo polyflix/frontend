@@ -1,7 +1,7 @@
 import { Theme } from '@mui/material'
 import { max } from 'lodash'
 
-import { Element } from '@core/models/element.model'
+import { Element } from '@types_/resources/element.type'
 
 import { Quizz } from '@quizzes/models/quizz.model'
 

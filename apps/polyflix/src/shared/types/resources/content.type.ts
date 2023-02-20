@@ -1,4 +1,4 @@
-import { BaseModel } from './base.model'
+import { BaseModel } from './base.type'
 
 export enum Visibility {
   PUBLIC = 'public',

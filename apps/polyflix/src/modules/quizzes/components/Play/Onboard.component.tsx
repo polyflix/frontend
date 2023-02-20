@@ -2,7 +2,7 @@ import { Alert, Button, Paper, Stack, Typography } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 
 import { usePlayQuizz } from '@quizzes/hooks/usePlayQuizz.hook'
-import { PlayComponentProps, Step } from '@quizzes/types/play.type'
+import { PlayComponentProps, Step } from '@types_/resources/quizz.type'
 
 // This component should be displayed to the user before start the quizz.
 export const Onboard = ({ quizz }: PlayComponentProps) => {

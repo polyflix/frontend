@@ -31,7 +31,7 @@ import { useAuth } from '@auth/hooks/useAuth.hook'
 
 import { CollectionTimeline } from '@collections/components/CollectionTimeline/CollectionTimeline.component'
 
-import { Course } from '@courses/models/course.model'
+import { Course } from '@types_/resources/course.type'
 import {
   useDeleteCourseMutation,
   useGetCourseQuery,

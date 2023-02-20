@@ -26,7 +26,7 @@ import { Link as RouterLink } from 'react-router-dom'
 import { NoData } from '@core/components/NoData/NoData.component'
 import { buildSkeletons } from '@core/utils/gui.utils'
 
-import { User } from '@users/models/user.model'
+import { User } from '@types_/user.type'
 
 import { GroupMenu } from '../../../components/groups/GroupMenu.component'
 import { StyledAvatarGroup } from './list.style'

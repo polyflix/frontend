@@ -14,7 +14,7 @@ import {
   RootStyle,
 } from '@collections/components/CollectionCard/CollectionCard.style'
 
-import { Course } from '@courses/models/course.model'
+import { Course } from '@types_/resources/course.type'
 import { useDeleteCourseMutation } from '@courses/services/course.service'
 import { polyflixRouter } from '@routes/index'
 

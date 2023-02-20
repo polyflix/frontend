@@ -1,5 +1,5 @@
 import { useAuth } from '@auth/hooks/useAuth.hook'
-import { Course } from '@courses/models/course.model'
+import { Course } from '@types_/resources/course.type'
 import {
   Avatar,
   Box,

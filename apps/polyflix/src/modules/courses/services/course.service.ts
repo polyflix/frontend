@@ -7,7 +7,7 @@ import { RestCrudFilters } from '@core/filters/rest-crud.filter'
 import { fetchWithRefresh } from '@services/api.service'
 import { ApiVersion } from '@types_/http.type'
 
-import { Course } from '@courses/models/course.model'
+import { Course } from '@types_/resources/course.type'
 import { CoursesFilters } from '@courses/types/filters.type'
 import { ICourseForm } from '@courses/types/form.type'
 

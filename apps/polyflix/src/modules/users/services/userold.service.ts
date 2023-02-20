@@ -13,7 +13,8 @@ import {
 
 import { logoutUser, setUser } from '@auth/reducers/auth.slice'
 
-import { User } from '@users/models/user.model'
+import { User } from '@types_/user.type'
+
 import { IUserPasswordForm } from '@users/types/users.type'
 
 @Injectable()

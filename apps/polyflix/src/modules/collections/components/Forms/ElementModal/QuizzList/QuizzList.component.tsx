@@ -13,8 +13,8 @@ import {
 import { useState } from 'react'
 import { UseFieldArrayReturn } from 'react-hook-form'
 
-import { Visibility } from '@core/models/content.model'
-import { Element } from '@core/models/element.model'
+import { Visibility } from '@types_/resources/content.type'
+import { Element } from '@types_/resources/element.type'
 import { buildSkeletons } from '@core/utils/gui.utils'
 
 import { useAuth } from '@auth/hooks/useAuth.hook'

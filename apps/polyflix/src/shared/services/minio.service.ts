@@ -6,7 +6,7 @@ import type { TFunction } from 'react-i18next'
 import { Inject, Injectable } from '@polyflix/di'
 
 import { APP_DISPATCHER, APP_TRANSLATION } from '@constants/app.constant'
-import { PresignedURL } from '@core/models/presigned-url.model'
+import { PresignedURL } from '@types_/presigned-url.type'
 import {
   end,
   resetProgress,

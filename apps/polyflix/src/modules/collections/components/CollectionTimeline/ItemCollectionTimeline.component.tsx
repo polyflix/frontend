@@ -12,8 +12,8 @@ import { Link as RouterLink } from 'react-router-dom'
 
 import { Icon } from '@core/components/Icon/Icon.component'
 import { useQuery } from '@core/hooks/useQuery'
-import { Element } from '@core/models/element.model'
-import { ElementType } from '@types_/element.type'
+import { Element } from '@types_/resources/element.type'
+import { ElementType } from '@types_/resources/element.type'
 import { Role } from '@types_/roles.type'
 
 import { useRoles } from '@core/hooks/useRoles.hook'

@@ -1,4 +1,4 @@
-import { Subtitle } from '@subtitles/models/subtitle.model'
+import { Subtitle } from '@shared/types/resources/subtitle.model'
 import { Video as VideoVime, Youtube } from '@vime/react'
 import React, { PropsWithChildren } from 'react'
 

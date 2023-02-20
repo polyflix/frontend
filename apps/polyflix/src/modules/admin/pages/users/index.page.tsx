@@ -7,7 +7,8 @@ import { useTranslation } from 'react-i18next'
 
 import { useAuth } from '@auth/hooks/useAuth.hook'
 
-import { User } from '@users/models/user.model'
+import { User } from '@types_/user.type'
+
 import { useGetUsersQuery } from '@users/services/user.service'
 
 import { EditUserModal } from '../../components/users/EditUserModal.component'

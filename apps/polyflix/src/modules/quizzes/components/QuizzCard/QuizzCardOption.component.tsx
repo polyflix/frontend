@@ -7,7 +7,7 @@ import { useInjection } from '@polyflix/di'
 
 import { CardMenu } from '@core/components/CardMenu/CardMenu.component'
 import { Endpoint } from '@constants/endpoint.constant'
-import { Element } from '@core/models/element.model'
+import { Element } from '@types_/resources/element.type'
 import { SnackbarService } from '@services/snackbar.service'
 import { CrudAction } from '@types_/http.type'
 

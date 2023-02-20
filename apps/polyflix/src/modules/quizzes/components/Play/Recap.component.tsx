@@ -11,7 +11,7 @@ import { useAuth } from '@auth/hooks/useAuth.hook'
 
 import { usePlayQuizz } from '@quizzes/hooks/usePlayQuizz.hook'
 import { useSubmitAttemptMutation } from '@quizzes/services/attempt.service'
-import { PlayComponentProps, Step } from '@quizzes/types/play.type'
+import { PlayComponentProps, Step } from '@types_/resources/quizz.type'
 
 // This component should be displayed to the user when the quizz step is Recap
 export const Recap = ({ quizz }: PlayComponentProps) => {

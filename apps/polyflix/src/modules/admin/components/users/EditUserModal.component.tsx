@@ -32,7 +32,8 @@ import {
 import { SnackbarService } from '@services/snackbar.service'
 import { Role } from '@types_/roles.type'
 
-import { User } from '@users/models/user.model'
+import { User } from '@types_/user.type'
+
 import { useUpdateUserMutation } from '@users/services/user.service'
 
 interface Props {

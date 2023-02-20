@@ -6,7 +6,7 @@ import {
   APP_BAR_DESKTOP,
   APP_BAR_MOBILE,
 } from '@layouts/Dashboard/Dashboard.style'
-import { Visibility } from '@core/models/content.model'
+import { Visibility } from '@types_/resources/content.type'
 
 import { useGetVideosQuery } from '@videos/services/video.service'
 
@@ -20,7 +20,7 @@ import { CourseCard } from '@core/components/CourseCard/course-card.component'
 import { VideoCard } from '@core/components/VideoCard/video-card.component'
 import { Footer } from '@core/components/Footer/footer.component'
 import { buildQueryParams } from '@core/utils/http-utils'
-import { Course } from '@courses/models/course.model'
+import { Course } from '@types_/resources/course.type'
 
 const PopularCoursesSection = () => {
   const filters = {

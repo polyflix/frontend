@@ -1,6 +1,6 @@
 import { SubtitleLanguages } from '@subtitles/types/subtitle.type'
 
-import { Visibility } from '@core/models/content.model'
+import { Visibility } from '@types_/resources/content.type'
 
 export enum Draft {
   True = 'true',

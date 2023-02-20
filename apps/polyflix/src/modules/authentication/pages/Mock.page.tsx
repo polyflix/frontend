@@ -3,7 +3,8 @@ import { AuthService } from '@auth/services/auth.service'
 import { Box, Button, Container, Typography } from '@mui/material'
 import { useInjection } from '@polyflix/di'
 import { useKeycloak } from '@react-keycloak/web'
-import { User } from '@users/models/user.model'
+import { User } from '@types_/user.type'
+
 import { BaseUsers } from 'mock-server'
 import { Redirect } from 'react-router-dom'
 

@@ -8,11 +8,11 @@ import { fetchWithRefresh } from '@services/api.service'
 import { ApiVersion } from '@types_/http.type'
 import { Pagination } from '@types_/nestjsx-crud.type'
 
-import { Attempt } from '@quizzes/models/attempt.model'
+import { Attempt } from '@types_/resources/quizz.type'
 import { QuizzAttemptFilters, QuizzFilters } from '@quizzes/types/filters.type'
-import { QuizzAnswers } from '@quizzes/types/play.type'
+import { QuizzAnswers } from '@types_/resources/quizz.type'
 
-import { User } from '@users/models/user.model'
+import { User } from '@types_/user.type'
 
 // Get the filter builder from our DI system
 const filterBuilder =

@@ -1,4 +1,4 @@
-import { User } from '@users/models/user.model'
+import { User } from '@types_/user.type'
 
 export interface Group {
   id: string

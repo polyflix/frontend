@@ -6,7 +6,7 @@ import { useParams } from 'react-router-dom'
 
 import { Header } from '@core/components/Header/Header.component'
 import { Page } from '@core/components/Page/Page.component'
-import { Element } from '@core/models/element.model'
+import { Element } from '@types_/resources/element.type'
 
 import { QuizzForm } from '@quizzes/components/Forms/QuizzForm.component'
 import { ImportQuizzModal } from '@quizzes/components/ImportQuizzModal/ImportQuizzModal.component'

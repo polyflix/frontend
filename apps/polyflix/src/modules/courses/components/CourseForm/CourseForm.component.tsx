@@ -30,11 +30,11 @@ import {
   getCommonSubmitButtonProps,
   getCommonTextFieldProps,
 } from '@core/helpers/form.helper'
-import { Visibility } from '@core/models/content.model'
+import { Visibility } from '@types_/resources/content.type'
 import { SnackbarService } from '@services/snackbar.service'
 import { CrudAction } from '@types_/http.type'
 
-import { Course } from '@courses/models/course.model'
+import { Course } from '@types_/resources/course.type'
 import {
   useAddCourseMutation,
   useUpdateCourseMutation,

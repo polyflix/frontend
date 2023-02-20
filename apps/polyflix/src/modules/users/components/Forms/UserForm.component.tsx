@@ -7,7 +7,7 @@ import Tab from '@mui/material/Tab'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { User } from '@users/models/user.model'
+import { User } from '@types_/user.type'
 
 import { AdvancedForm } from './AdvancedForm.component'
 import { AppearanceForm } from './AppearanceForm.component'

@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next'
 
 import { Header } from '@core/components/Header/Header.component'
 import { Page } from '@core/components/Page/Page.component'
-import { Visibility } from '@core/models/content.model'
+import { Visibility } from '@types_/resources/content.type'
 import { buildSkeletons } from '@core/utils/gui.utils'
 
 import { ViewingState } from '@videos/components/Filters/ViewingState.component'
