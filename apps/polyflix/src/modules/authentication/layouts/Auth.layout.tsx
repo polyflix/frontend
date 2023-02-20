@@ -7,7 +7,7 @@ import { LanguageButton } from '@core/components/LanguageButton/LanguageButton.c
 import { Logo } from '@core/components/Logo/Logo.component'
 import { MHidden } from '@core/components/MHidden/MHidden.component'
 import { ThemeButton } from '@core/components/ThemeButton/ThemeButton.component'
-import { HeaderBaseStyle } from '@core/styles/HeaderBase.style'
+import { HeaderBaseStyle } from '@app/styles/HeaderBase.style'
 
 export const AuthLayout = ({ children }: PropsWithChildren<{}>) => {
   return (

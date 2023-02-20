@@ -4,7 +4,7 @@ import { Link as RouterLink } from 'react-router-dom'
 
 import { Icon } from '@core/components/Icon/Icon.component'
 import { Logo } from '@core/components/Logo/Logo.component'
-import { HeaderBaseStyle } from '@core/styles/HeaderBase.style'
+import { HeaderBaseStyle } from '@app/styles/HeaderBase.style'
 
 import { ErrorRootStyle } from './Error.style'
 
