@@ -11,7 +11,7 @@ import { ViewingState } from '@videos/components/Filters/ViewingState.component'
 import { VideoCardSkeleton } from '@videos/components/Skeleton/VideoCardSkeleton/VideoCardSkeleton.component'
 import { VideoSliderCard } from '@videos/components/VideoSliderCard/VideoSliderCard.component'
 import { Video } from '@videos/models/video.model'
-import { useGetVideosQuery } from '@videos/services/video.service'
+import { useGetVideosQuery } from '@shared/services/resources/videos/video.service'
 import { VideoFilters } from '@videos/types/filters.type'
 
 // This component displays the user video history.

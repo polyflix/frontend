@@ -18,7 +18,7 @@ import { buildSkeletons } from '@core/utils/gui.utils'
 import { QuizzCard } from '@quizzes/components/QuizzCard/QuizzCard.component'
 import { QuizzCardSkeleton } from '@quizzes/components/QuizzCardSkeleton/QuizzCardSkeleton.component'
 import { Quizz } from '@quizzes/models/quizz.model'
-import { useGetQuizzesQuery } from '@quizzes/services/quizz.service'
+import { useGetQuizzesQuery } from '@services/resources/quizz.service'
 import { QuizzFilters } from '@quizzes/types/filters.type'
 import { polyflixRouter } from '@routes/index'
 

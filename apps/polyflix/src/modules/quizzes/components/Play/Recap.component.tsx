@@ -10,7 +10,7 @@ import { SnackbarService } from '@services/snackbar.service'
 import { useAuth } from '@auth/hooks/useAuth.hook'
 
 import { usePlayQuizz } from '@quizzes/hooks/usePlayQuizz.hook'
-import { useSubmitAttemptMutation } from '@quizzes/services/attempt.service'
+import { useSubmitAttemptMutation } from '@services/resources/attempt.service'
 import { PlayComponentProps, Step } from '@types_/resources/quizz.type'
 
 // This component should be displayed to the user when the quizz step is Recap

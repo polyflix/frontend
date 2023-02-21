@@ -20,7 +20,7 @@ import { buildSkeletons } from '@core/utils/gui.utils'
 import { useAuth } from '@auth/hooks/useAuth.hook'
 
 import { Quizz } from '@quizzes/models/quizz.model'
-import { useGetQuizzesQuery } from '@quizzes/services/quizz.service'
+import { useGetQuizzesQuery } from '@services/resources/quizz.service'
 import { QuizzFilters } from '@quizzes/types/filters.type'
 
 import { ICollectionForm } from '@collections/types/form.type'

@@ -36,6 +36,7 @@ import i18n from './i18n/config'
 import './styles/index.scss'
 
 import { initMockServer } from 'mock-server'
+import { CloseSnackbarButton } from '@core/components/SnackBar/CloseSnackbarButton.component'
 
 if (environment.mocked) {
   initMockServer()

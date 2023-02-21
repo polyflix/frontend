@@ -16,7 +16,7 @@ import { buildSkeletons } from '@core/utils/gui.utils'
 
 import { VideoCardSkeleton } from '@videos/components/Skeleton/VideoCardSkeleton/VideoCardSkeleton.component'
 import { Video } from '@videos/models/video.model'
-import { useGetVideosQuery } from '@videos/services/video.service'
+import { useGetVideosQuery } from '@shared/services/resources/videos/video.service'
 import { VideoFilters } from '@videos/types/filters.type'
 import { polyflixRouter } from '@routes/index'
 import { VideoCard } from '@core/components/VideoCard/video-card.component'

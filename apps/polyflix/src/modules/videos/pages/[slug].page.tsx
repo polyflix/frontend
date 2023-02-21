@@ -8,7 +8,7 @@ import { Page } from '@core/components/Page/Page.component'
 import { Player } from '@videos/components/Player/Player.component'
 import { PlayerSidebar } from '@videos/components/PlayerSidebar/PlayerSidebar.component'
 import { VideoDetails } from '@videos/components/VideoDescription/VideoDescription.component'
-import { useGetVideoQuery } from '@videos/services/video.service'
+import { useGetVideoQuery } from '@shared/services/resources/videos/video.service'
 
 export const SlugPage = () => {
   const { slug } = useParams<{ slug: string }>()

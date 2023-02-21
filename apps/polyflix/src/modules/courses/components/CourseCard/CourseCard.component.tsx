@@ -15,7 +15,7 @@ import {
 } from '@collections/components/CollectionCard/CollectionCard.style'
 
 import { Course } from '@types_/resources/course.type'
-import { useDeleteCourseMutation } from '@courses/services/course.service'
+import { useDeleteCourseMutation } from '@shared/services/resources/course.service'
 import { polyflixRouter } from '@routes/index'
 
 interface Props {

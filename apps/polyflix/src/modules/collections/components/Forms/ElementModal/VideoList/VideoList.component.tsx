@@ -20,7 +20,7 @@ import { buildSkeletons } from '@core/utils/gui.utils'
 import { useAuth } from '@auth/hooks/useAuth.hook'
 
 import { Video } from '@videos/models/video.model'
-import { useGetVideosQuery } from '@videos/services/video.service'
+import { useGetVideosQuery } from '@shared/services/resources/videos/video.service'
 import { VideoFilters } from '@videos/types/filters.type'
 
 import { ICollectionForm } from '@collections/types/form.type'

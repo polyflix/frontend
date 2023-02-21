@@ -30,7 +30,7 @@ import { SnackbarService } from '@services/snackbar.service'
 
 import { ReportModel, ReportReason } from '@videos/models/report.model'
 import { Video } from '@videos/models/video.model'
-import { useReportVideoMutation } from '@videos/services/video.service'
+import { useReportVideoMutation } from '@shared/services/resources/videos/video.service'
 
 interface Props {
   video?: Video

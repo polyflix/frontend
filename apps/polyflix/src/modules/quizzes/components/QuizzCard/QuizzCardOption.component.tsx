@@ -12,7 +12,7 @@ import { SnackbarService } from '@services/snackbar.service'
 import { CrudAction } from '@types_/http.type'
 
 import { Quizz } from '@quizzes/models/quizz.model'
-import { useDeleteQuizzMutation } from '@quizzes/services/quizz.service'
+import { useDeleteQuizzMutation } from '@services/resources/quizz.service'
 import { polyflixRouter } from '@routes/index'
 
 interface OptionProps {

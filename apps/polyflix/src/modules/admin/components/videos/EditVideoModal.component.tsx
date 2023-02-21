@@ -41,7 +41,7 @@ import { Video } from '@videos/models/video.model'
 import {
   useDeleteVideoMutation,
   useUpdateAdminVideoMutation,
-} from '@videos/services/video.service'
+} from '@shared/services/resources/videos/video.service'
 import { PlayerVideoSource } from '@videos/types/video.type'
 import { polyflixRouter } from '@routes/index'
 

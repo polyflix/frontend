@@ -15,7 +15,7 @@ import { CollectionCardSkeleton } from '@collections/components/CollectionCardSk
 
 import { CourseCard } from '@courses/components/CourseCard/CourseCard.component'
 import { Course } from '@types_/resources/course.type'
-import { useGetCoursesQuery } from '@courses/services/course.service'
+import { useGetCoursesQuery } from '@shared/services/resources/course.service'
 import { CoursesFilters } from '@courses/types/filters.type'
 
 import { getUsernameToDisplay } from '@users/helpers/displayUsername.helper'
