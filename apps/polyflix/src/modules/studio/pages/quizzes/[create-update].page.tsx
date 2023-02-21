@@ -11,7 +11,7 @@ import { Element } from '@types_/resources/element.type'
 import { QuizzForm } from '@quizzes/components/Forms/QuizzForm.component'
 import { ImportQuizzModal } from '@quizzes/components/ImportQuizzModal/ImportQuizzModal.component'
 import { Quizz } from '@quizzes/models/quizz.model'
-import { useGetQuizzQuery } from '@quizzes/services/quizz.service'
+import { useGetQuizzQuery } from '@services/resources/quizz.service'
 
 export const CreateUpdateQuizzPage = () => {
   const { t } = useTranslation('quizzes')

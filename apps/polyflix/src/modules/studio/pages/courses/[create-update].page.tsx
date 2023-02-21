@@ -8,7 +8,7 @@ import { Header } from '@core/components/Header/Header.component'
 import { Page } from '@core/components/Page/Page.component'
 
 import { CourseForm } from '@courses/components/CourseForm/CourseForm.component'
-import { useGetCourseQuery } from '@courses/services/course.service'
+import { useGetCourseQuery } from '@shared/services/resources/course.service'
 import { CoursesFilters } from '@courses/types/filters.type'
 
 export const CreateUpdateCoursePage = () => {

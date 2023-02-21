@@ -10,13 +10,13 @@ import { listener, listenerCtx } from '@milkdown/plugin-listener'
 import {
   useGetNoteQuery,
   useUpdateNoteMutation,
-} from '@videos/services/notes.service'
+} from '@shared/services/resources/videos/notes.service'
 import { useInterval } from '@core/hooks/useInterval.hook'
 import { placeholder, placeholderCtx } from './PlaceHolder.plugin'
 import { gfm } from '@milkdown/preset-gfm'
 import { useTranslation } from 'react-i18next'
 import { useInjection } from '@polyflix/di'
-import { SnackbarService } from '@core/services/snackbar.service'
+import { SnackbarService } from '@services/snackbar.service'
 
 const StyledEditor = styled('div')(({ theme }) => ({
   '& .milkdown': {
@@ -216,6 +216,7 @@ export const NotesPanel = ({ videoId }: NotesProps) => {
               px: 2,
               color: unsavedChange ? 'warning.main' : 'success.main',
               textAlign: 'end',
+              fontSize: '0.7rem',
             }}
           >
             {t(

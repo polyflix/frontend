@@ -11,7 +11,7 @@ import { CrudAction } from '@types_/http.type'
 
 import { VideoDescriptionReportModal } from '@videos/components/VideoDescription/VideoDescriptionReportModal/VideoDescriptionReportModal'
 import { Video } from '@videos/models/video.model'
-import { useDeleteVideoMutation } from '@videos/services/video.service'
+import { useDeleteVideoMutation } from '@shared/services/resources/videos/video.service'
 import { polyflixRouter } from '@routes/index'
 
 type Props = {

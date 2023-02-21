@@ -6,19 +6,19 @@ import snackBarReducer from '@core/reducers/snackbar.slice'
 
 import authReducer from '@auth/reducers/auth.slice'
 
-import { quizzesAttemptsApi } from '@quizzes/services/attempt.service'
-import { quizzesApi } from '@quizzes/services/quizz.service'
+import { quizzesAttemptsApi } from '@services/resources/attempt.service'
+import { quizzesApi } from '@services/resources/quizz.service'
 
 import notesReducer from '@videos/reducers/notes.slice'
 import videosReducer from '@videos/reducers/video.slice'
-import { notesApi } from '@videos/services/notes.service'
-import { videosApi } from '@videos/services/video.service'
+import { notesApi } from '@shared/services/resources/videos/notes.service'
+import { videosApi } from '@shared/services/resources/videos/video.service'
 
 import { attachmentsApi } from '@attachments/services/attachment.service'
 
 import { collectionsApi as modulesApi } from '@collections/services/collection.service'
 
-import { coursesApi } from '@courses/services/course.service'
+import { coursesApi } from '@shared/services/resources/course.service'
 
 import usersReducer from '@users/reducers/user.slice'
 import { usersApi } from '@users/services/user.service'

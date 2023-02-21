@@ -21,7 +21,7 @@ import { useConfirmModal } from '@core/hooks/useConfirmModal.hook'
 import { SnackbarService } from '@services/snackbar.service'
 
 import { ReportModel, ReportState } from '@videos/models/report.model'
-import { useUpdateReportMutation } from '@videos/services/video.service'
+import { useUpdateReportMutation } from '@shared/services/resources/videos/video.service'
 
 interface Props {
   report?: ReportModel

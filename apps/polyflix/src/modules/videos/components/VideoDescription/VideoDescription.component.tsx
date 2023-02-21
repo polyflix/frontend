@@ -20,7 +20,7 @@ import { MarkdownBox } from '@core/components/MarkdownBox/MarkdownBox.component'
 import { stringToLongDate, stringToShortDate } from '@core/helpers/date.helper'
 
 import { Video } from '@videos/models/video.model'
-import { useLikeVideoMutation } from '@videos/services/video.service'
+import { useLikeVideoMutation } from '@shared/services/resources/videos/video.service'
 
 import { UserAvatar } from '@users/components/UserAvatar/UserAvatar.component'
 

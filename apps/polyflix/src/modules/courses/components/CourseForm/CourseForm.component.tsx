@@ -38,7 +38,7 @@ import { Course } from '@types_/resources/course.type'
 import {
   useAddCourseMutation,
   useUpdateCourseMutation,
-} from '@courses/services/course.service'
+} from '@shared/services/resources/course.service'
 import { ICourseForm } from '@courses/types/form.type'
 
 import { CourseFormattachedCollectionModal } from './CourseFormattachedCollectionModal/CourseFormattachedCollectionModal.component'

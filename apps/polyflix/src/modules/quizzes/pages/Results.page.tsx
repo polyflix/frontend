@@ -9,8 +9,8 @@ import { Header } from '@core/components/Header/Header.component'
 import { Page } from '@core/components/Page/Page.component'
 
 import { QuizzAttemptsList } from '@quizzes/components/QuizzAttemptsList/QuizzAttemptsList.component'
-import { useGetAttemptsQuery } from '@quizzes/services/attempt.service'
-import { useGetQuizzQuery } from '@quizzes/services/quizz.service'
+import { useGetAttemptsQuery } from '@services/resources/attempt.service'
+import { useGetQuizzQuery } from '@services/resources/quizz.service'
 import { QuizzAttemptFilters } from '@quizzes/types/filters.type'
 
 export const QuizzResultsPage = () => {

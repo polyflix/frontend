@@ -17,7 +17,7 @@ import {
   Link,
 } from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search'
-import { useGetVideosQuery } from '@videos/services/video.service'
+import { useGetVideosQuery } from '@shared/services/resources/videos/video.service'
 import { Autoplay, EffectFade, Pagination } from 'swiper'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { AspectRatioBox } from '../AspectRatioBox/AspectRation.component'

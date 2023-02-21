@@ -6,7 +6,7 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { ReportModel, ReportState } from '@videos/models/report.model'
-import { useGetReportsQuery } from '@videos/services/video.service'
+import { useGetReportsQuery } from '@shared/services/resources/videos/video.service'
 
 export const AdminVideoReportPage = () => {
   // Pagination state

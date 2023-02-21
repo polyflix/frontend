@@ -9,7 +9,7 @@ import { fetchWithRefresh } from '@services/api.service'
 import { ApiVersion } from '@types_/http.type'
 import { Pagination } from '@types_/nestjsx-crud.type'
 
-import { Quizz } from '@quizzes/models/quizz.model'
+import { Quizz } from '@types_/resources/quizz.type'
 import { QuizzFilters } from '@quizzes/types/filters.type'
 import { IQuizzForm } from '@quizzes/types/form.type'
 

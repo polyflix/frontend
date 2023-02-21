@@ -35,7 +35,7 @@ import { Course } from '@types_/resources/course.type'
 import {
   useDeleteCourseMutation,
   useGetCourseQuery,
-} from '@courses/services/course.service'
+} from '@shared/services/resources/course.service'
 import { CoursesFilters } from '@courses/types/filters.type'
 import { polyflixRouter } from '@routes/index'
 

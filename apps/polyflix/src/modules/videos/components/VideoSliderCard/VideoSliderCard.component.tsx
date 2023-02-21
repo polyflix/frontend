@@ -29,7 +29,7 @@ import { Role } from '@types_/roles.type'
 import { useAuth } from '@auth/hooks/useAuth.hook'
 
 import { Video } from '@videos/models/video.model'
-import { useDeleteVideoMutation } from '@videos/services/video.service'
+import { useDeleteVideoMutation } from '@shared/services/resources/videos/video.service'
 
 import { UserAvatar } from '@users/components/UserAvatar/UserAvatar.component'
 

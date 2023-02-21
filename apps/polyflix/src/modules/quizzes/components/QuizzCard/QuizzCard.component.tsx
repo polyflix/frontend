@@ -27,7 +27,7 @@ import { useAuth } from '@auth/hooks/useAuth.hook'
 
 import { Attempt } from '@types_/resources/quizz.type'
 import { Quizz } from '@quizzes/models/quizz.model'
-import { useGetAttemptsQuery } from '@quizzes/services/attempt.service'
+import { useGetAttemptsQuery } from '@services/resources/attempt.service'
 
 import { UserAvatar } from '@users/components/UserAvatar/UserAvatar.component'
 import { User } from '@types_/user.type'

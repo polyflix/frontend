@@ -21,7 +21,7 @@ import { Page } from '@core/components/Page/Page.component'
 import { ErrorLayout } from '@layouts/Error/Error.layout'
 
 import { VideoForm } from '@videos/components/Forms/VideoForm.component'
-import { useGetVideoQuery } from '@videos/services/video.service'
+import { useGetVideoQuery } from '@shared/services/resources/videos/video.service'
 import { PlayerVideoSource } from '@videos/types/video.type'
 
 const steps = ['forms.stepper.steps.provider', 'forms.stepper.steps.info']

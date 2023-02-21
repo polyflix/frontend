@@ -29,8 +29,8 @@ import { Video } from '@videos/models/video.model'
 import {
   useAddVideoMutation,
   useUpdateVideoMutation,
-} from '@videos/services/video.service'
-import { YoutubeService } from '@videos/services/youtube.service'
+} from '@shared/services/resources/videos/video.service'
+import { YoutubeService } from '@services/resources/videos/youtube.service'
 import { IVideoForm } from '@videos/types/form.type'
 import { PlayerVideoSource } from '@videos/types/video.type'
 

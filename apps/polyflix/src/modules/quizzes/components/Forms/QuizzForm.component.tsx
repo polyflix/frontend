@@ -41,7 +41,7 @@ import { Quizz } from '@quizzes/models/quizz.model'
 import {
   useAddQuizzMutation,
   useUpdateQuizzMutation,
-} from '@quizzes/services/quizz.service'
+} from '@services/resources/quizz.service'
 
 import { IQuizzForm } from '../../types/form.type'
 

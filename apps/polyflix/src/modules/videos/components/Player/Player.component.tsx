@@ -25,7 +25,7 @@ import { useAuth } from '@auth/hooks/useAuth.hook'
 import { useStreamUrl } from '@videos/hooks/useStreamUrl.hook'
 import { useSubtitlesContext } from '@videos/hooks/useSubtitlesContext.hook'
 import { Video } from '@videos/models/video.model'
-import { useUpdateWatchtimeMutation } from '@videos/services/video.service'
+import { useUpdateWatchtimeMutation } from '@shared/services/resources/videos/video.service'
 
 import { ErrorCard } from '../ErrorCard/ErrorCard.component'
 import { Provider } from '../PlayerProvider/Provider.component'

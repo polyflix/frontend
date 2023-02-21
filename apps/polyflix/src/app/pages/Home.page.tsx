@@ -8,11 +8,11 @@ import {
 } from '@layouts/Dashboard/Dashboard.style'
 import { Visibility } from '@types_/resources/content.type'
 
-import { useGetVideosQuery } from '@videos/services/video.service'
+import { useGetVideosQuery } from '@shared/services/resources/videos/video.service'
 
 import 'swiper/css'
 import 'swiper/css/pagination'
-import { useGetCoursesQuery } from '@courses/services/course.service'
+import { useGetCoursesQuery } from '@shared/services/resources/course.service'
 import { PageSection } from '@core/components/PageSection/page-section.component'
 import { Jumbotron } from '@core/components/Jumbotron/jumbotron.component'
 import { ElementsRow } from '@core/components/ElementsRow/elements-row.component'
