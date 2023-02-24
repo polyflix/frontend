@@ -7,11 +7,12 @@ import {
   ListItemText,
   Stack,
   Tooltip,
+  Typography,
   useTheme,
 } from '@mui/material'
 import Box from '@mui/material/Box'
 import React, { PropsWithChildren, useEffect } from 'react'
-import { Link as RouterLink, useLocation } from 'react-router-dom'
+import { Link as RouterLink, useLocation, useHistory } from 'react-router-dom'
 
 import { Icon } from '@core/components/Icon/Icon.component'
 import { Logo } from '@core/components/Logo/Logo.component'
@@ -70,6 +71,11 @@ export const DashboardNavbar: React.FC<PropsWithChildren<{}>> = () => {
     }
   }, [])
 
+  const history = useHistory()
+  const goBack = () => {
+    history.goBack()
+  }
+
   return (
     <RootStyle>
       <ToolbarStyle ref={toolBarRef}>
@@ -100,6 +106,20 @@ export const DashboardNavbar: React.FC<PropsWithChildren<{}>> = () => {
             <Icon name="eva:menu-fill" />
           </Box>
           <Logo />
+          <Typography
+            variant="caption"
+            sx={{
+              color: 'grey.500',
+              alignSelf: 'center',
+              paddingX: 2,
+              cursor: 'pointer',
+              fontSize: '0.8rem',
+              textTransform: 'uppercase',
+            }}
+            onClick={goBack}
+          >
+            {t('actions.goBack')}
+          </Typography>
           <Box sx={{ flexGrow: 1 }} />
           <Stack
             direction="row"

@@ -28,7 +28,8 @@
     "delete": "supprimer",
     "report": "signaler",
     "closeModal": "Fermer la modale",
-    "seeMore": "Voir Plus"
+    "seeMore": "Voir Plus",
+    "goBack": "Retour"
   },
   "navbar": {
     "tooltip": {
