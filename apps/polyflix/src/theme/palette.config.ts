@@ -60,6 +60,51 @@ const ERROR: PaletteColor = {
   contrastText: '#ffffff',
 }
 
+const bgTheme = {
+  light: '#f5f5f5',
+  dark: '#202020',
+}
+
+const dividerTheme = {
+  light: GREY[200],
+  dark: '#47494b',
+}
+
+const backgroundTheme = {
+  light: {
+    paper: '#ffffff',
+    default: '#fafafa',
+  },
+  dark: {
+    paper: '#292929',
+    default: '#161616',
+  },
+}
+
+const textTheme = {
+  light: {
+    primary: GREY[900],
+    secondary: GREY[700],
+    disabled: GREY[500],
+  },
+  dark: {
+    primary: alpha('#f2f1ff', 0.85),
+    secondary: alpha('#f2f1ff', 0.6),
+    disabled: alpha('#f2f1ff', 0.38),
+  },
+}
+
+const actionTheme = {
+  light: {
+    active: '#0000008a',
+    hover: '#0000000a',
+  },
+  dark: {
+    active: '#c4cdd5',
+    hover: '#363636',
+  },
+}
+
 const getPalette: (mode: PaletteMode) => PaletteOptions = (
   mode: PaletteMode
 ) => ({
@@ -71,31 +116,12 @@ const getPalette: (mode: PaletteMode) => PaletteOptions = (
   warning: { ...WARNING },
   error: { ...ERROR },
   grey: GREY,
-  bg: mode === 'light' ? GREY[100] : '#202020',
-  divider: mode === 'light' ? GREY[200] : '#161c24',
-  ...(mode === 'light'
-    ? {
-        background: { paper: '#ffffff', default: '#fafafa' },
-        text: { primary: GREY[900], secondary: GREY[700], disabled: GREY[500] },
-      }
-    : {
-        background: { paper: '#292929', default: '#121212' },
-        text: {
-          primary: '#FFFFFF',
-          secondary: alpha('#FFFFFF', 0.6),
-          disabled: alpha('#FFFFFF', 0.38),
-        },
-      }),
+  bg: bgTheme[mode],
+  divider: dividerTheme[mode],
+  background: backgroundTheme[mode],
+  text: textTheme[mode],
   action: {
-    ...(mode === 'light'
-      ? {
-          active: '#0000008a',
-          hover: '#0000000a',
-        }
-      : {
-          active: GREY[400],
-          hover: '#363636',
-        }),
+    ...actionTheme[mode],
     hoverOpacity: 0.03,
     selected: '#00000014',
     selectedOpacity: 0.08,

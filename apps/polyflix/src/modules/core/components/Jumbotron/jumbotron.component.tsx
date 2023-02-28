@@ -39,7 +39,7 @@ const HomeSearchBarRootStyled = styled(Paper)(({ theme }) => ({
   margin: '0 auto',
   display: 'flex',
   transition: ' outline-color .2s cubic-bezier(0,1,1,.5)',
-  outline: `solid 2px ${'#f0f0f0'}`,
+  outline: `solid 2px ${theme.palette.divider}`,
   [theme.breakpoints.down('md')]: {
     marginBottom: `${theme.spacing(2)} !important`,
   },

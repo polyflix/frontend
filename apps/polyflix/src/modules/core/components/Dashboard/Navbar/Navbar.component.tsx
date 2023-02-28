@@ -59,7 +59,7 @@ export const DashboardNavbar: React.FC<PropsWithChildren<{}>> = () => {
       toolBarContainerRef.current.style.border = 'none'
     } else {
       toolBarRef.current.style.backgroundColor = 'transparent'
-      toolBarContainerRef.current.style.borderBottom = `1px solid ${theme.palette.grey[400]}`
+      toolBarContainerRef.current.style.borderBottom = `1px solid ${theme.palette.divider}`
     }
   }
 
@@ -81,7 +81,7 @@ export const DashboardNavbar: React.FC<PropsWithChildren<{}>> = () => {
             height: '100%',
             width: '100%',
             maxWidth: 'clamp(1100px, 80vw, 1750px)',
-            borderBottom: (th) => `1px solid ${th.palette.grey[400]}`,
+            borderBottom: (th) => `1px solid ${th.palette.divider}`,
           }}
         >
           <Box
