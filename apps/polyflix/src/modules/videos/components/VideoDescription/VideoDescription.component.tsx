@@ -3,9 +3,7 @@ import {
   Skeleton,
   Typography,
   Stack,
-  Paper,
   Grid,
-  Divider,
   Link,
   Tooltip,
   Box,
@@ -58,11 +56,11 @@ export const VideoDetails = ({ video }: VideoDetailsProps) => {
   }, [])
 
   return (
-    <Paper variant="outlined" sx={{ padding: 2, position: 'relative' }}>
+    <Box sx={{ p: 1, position: 'relative' }}>
       <Grid container>
         <Grid item xs={12}>
           {video ? (
-            <Stack spacing={1}>
+            <Stack spacing={3}>
               <Stack
                 direction={{
                   xs: 'column',
@@ -145,7 +143,6 @@ export const VideoDetails = ({ video }: VideoDetailsProps) => {
                   </Box>
                 </Stack>
               </Stack>
-              <Divider variant="middle" />
               <Tooltip title={t<string>('slug.details.tooltips.seeProfile')}>
                 <Link
                   underline="none"
@@ -156,7 +153,13 @@ export const VideoDetails = ({ video }: VideoDetailsProps) => {
                   to={`/users/${video.publisher?.id}/profile/videos`}
                 >
                   <Stack spacing={1} direction="row" alignItems="center">
-                    <UserAvatar user={video.publisher!} />
+                    <UserAvatar
+                      user={video.publisher!}
+                      sx={{
+                        width: 30,
+                        height: 30,
+                      }}
+                    />
                     <Typography variant="caption">
                       {`${video.publisher?.firstName} ${video.publisher?.lastName}`}
                     </Typography>
@@ -181,6 +184,6 @@ export const VideoDetails = ({ video }: VideoDetailsProps) => {
           )}
         </Grid>
       </Grid>
-    </Paper>
+    </Box>
   )
 }

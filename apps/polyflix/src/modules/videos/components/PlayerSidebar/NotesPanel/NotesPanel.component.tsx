@@ -23,6 +23,7 @@ const StyledEditor = styled('div')(({ theme }) => ({
     minHeight: '400px',
     backgroundColor: theme.palette.background.paper,
     color: theme.palette.text.primary,
+    boxShadow: 'none',
   },
   '& .milkdown .editor': {
     padding: theme.spacing(1, 2),
