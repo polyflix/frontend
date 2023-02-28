@@ -21,6 +21,8 @@ import { SnackbarService } from '@services/snackbar.service'
 const StyledEditor = styled('div')(({ theme }) => ({
   '& .milkdown': {
     minHeight: '400px',
+    backgroundColor: theme.palette.background.paper,
+    color: theme.palette.text.primary,
   },
   '& .milkdown .editor': {
     padding: theme.spacing(1, 2),
