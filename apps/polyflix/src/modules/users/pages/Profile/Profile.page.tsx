@@ -28,10 +28,11 @@ export const ProfilePage: React.FC = ({ children }: Props) => {
 
   return (
     <Page
+      maxWidth="full"
       isLoading={isLoading || isFetching}
       title={t('profile.title.view') + getUsernameToDisplay(user!)}
-      maxWidth={'xl'}
       sx={{
+        maxWidth: 'clamp(1100px, 80vw, 1750px)',
         display: 'flex',
         flexDirection: 'column',
       }}
