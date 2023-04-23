@@ -21,6 +21,7 @@ import { ProfileQuizzesPage } from './pages/ProfileQuizzes/ProfileQuizzes.page'
 import { ProfileVideosPage } from './pages/ProfileVideos/ProfileVideos.page'
 import { EditProfilePage } from './pages/UpdateProfile/UpdateProfile.page'
 import { useGetUserQuery } from './services/user.service'
+import { ProfileRecommendationsPage } from './pages/ProfileRecommendations/ProfileRecommendations.page'
 
 const ProfileRouter = () => {
   let { url } = useRouteMatch()
@@ -63,6 +64,11 @@ const ProfileRouter = () => {
           exact
           path={`${url}/attachments/:mode?/:attachmentId?`}
           component={ProfileAttachmentsPage}
+        />
+        <Route
+          exact
+          path={`${url}/recommendations`}
+          component={() => <ProfileRecommendationsPage user={data} />}
         />
         <Route component={NotFoundPage} />
       </Switch>

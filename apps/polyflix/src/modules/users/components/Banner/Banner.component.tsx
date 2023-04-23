@@ -23,6 +23,7 @@ const BannerTabs = () => {
     path: [
       '/users/profile/attachments',
       '/users/profile/certifications',
+      '/users/profile/recommendations',
       `/users${userId}/profile/videos`,
       `/users${userId}/profile/courses`,
       `/users${userId}/profile/modules`,
@@ -90,6 +91,14 @@ const BannerTabs = () => {
           label={t('profile.tabs.certifications.title')}
           value="/users/profile/certifications"
           to="/users/profile/certifications"
+          component={RouterLink}
+        />
+      )}
+      {!id && (
+        <Tab
+          label={'Recommandations'}
+          value="/users/profile/recommendations"
+          to="/users/profile/recommendations"
           component={RouterLink}
         />
       )}
